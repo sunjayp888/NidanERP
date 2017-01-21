@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
-using DocumentService.API.RESTClient.Interfaces;
-using DocumentService.API.RESTClient.Models;
 using Newtonsoft.Json;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;

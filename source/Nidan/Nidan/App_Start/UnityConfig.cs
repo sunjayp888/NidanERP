@@ -1,7 +1,5 @@
 using System;
 using System.Configuration;
-using DocumentService.API.RESTClient;
-using DocumentService.API.RESTClient.Interfaces;
 using Microsoft.Practices.Unity;
 using Nidan.Business;
 using Nidan.Business.Interfaces;
@@ -43,18 +41,16 @@ namespace Nidan
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            
-
             container.RegisterType<INidanDatabaseFactory, NidanDatabaseFactory>(new InjectionConstructor(
                     new InjectionParameter<string>(ConfigHelper.DefaultConnection)
                  ));
 
-            container.RegisterType<IDocumentServiceRestClient, DocumentServiceRestClient>(
-                new InjectionConstructor(
-                    new InjectionParameter<Uri>(new Uri(ConfigurationManager.AppSettings["DocumentRESTApiAddress"])),
-                    new InjectionParameter<string>(ConfigurationManager.AppSettings["Username"]),
-                    new InjectionParameter<string>(ConfigurationManager.AppSettings["Password"])
-                ));
+            //container.RegisterType<IDocumentServiceRestClient, DocumentServiceRestClient>(
+            //    new InjectionConstructor(
+            //        new InjectionParameter<Uri>(new Uri(ConfigurationManager.AppSettings["DocumentRESTApiAddress"])),
+            //        new InjectionParameter<string>(ConfigurationManager.AppSettings["Username"]),
+            //        new InjectionParameter<string>(ConfigurationManager.AppSettings["Password"])
+            //    ));
 
             // let's enforce a singleton on CacheProvider, even though it accesses a static MemoryCache.Default
             container.RegisterType<ICacheProvider, MemoryCacheProvider>(new ContainerControlledLifetimeManager());
