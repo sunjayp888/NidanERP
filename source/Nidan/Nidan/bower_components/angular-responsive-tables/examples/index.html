@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../release/angular-responsive-tables.js"></script>
+    <script src="controller.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../release/angular-responsive-tables.css">
+    
+    <!--[if IE 9]>
+    <style>
+    /* rules for IE9 only */
+    .responsive {
+        overflow: hidden;
+    }
+    .responsive td:nth-child(odd), .responsive td:nth-child(even) {
+        float: left;
+        width: 100%;
+    }
+    </style>
+    <![endif]-->
+</head>
+<body ng-controller="TestController as ctrl">
+    <h1>Angular Responsive Tables</h1>
+    
+    <h2>Simple styling</h2>
+    
+    <h3>Static table</h3>
+    <table wt-responsive-table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Language</th>
+                <th>Maintainer</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>AngularJS</td>
+                <td>1.5</td>
+                <td>JavaScript</td>
+                <td>Google</td>
+                <td>35000</td>
+            </tr>
+            <tr>
+                <td>Bootstrap</td>
+                <td>3.3</td>
+                <td>CSS</td>
+                <td>Twitter</td>
+                <td>23000</td>
+            </tr>
+            <tr>
+                <td>UI-Router</td>
+                <td>0.13</td>
+                <td>JavaScript</td>
+                <td>AngularUI</td>
+                <td>15000</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Simple table with ng-repeat</h3>
+    <table wt-responsive-table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Language</th>
+                <th>Maintainer</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in ctrl.projects">
+                <td>{{item.name}}</td>
+                <td>{{item.version}}</td>
+                <td>{{item.language}}</td>
+                <td>{{item.maintainer}}</td>
+                <td>{{item.stars}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Simple table with no thead, tbody</h3>
+    <table wt-responsive-table>
+        <tr>
+            <th>Name</th>
+            <th>Version</th>
+            <th>Language</th>
+            <th>Maintainer</th>
+            <th>Stars</th>
+        </tr>
+        <tr ng-repeat="item in ctrl.projects">
+            <td>{{item.name}}</td>
+            <td>{{item.version}}</td>
+            <td>{{item.language}}</td>
+            <td>{{item.maintainer}}</td>
+            <td>{{item.stars}}</td>
+        </tr>
+    </table>
+
+    <h3>Simple table with colspan</h3>
+    <table wt-responsive-table>
+        <thead>
+            <tr>
+                <th>First title</th>
+                <th>Second title</th>
+                <th>Third title</th>
+                <th>Forth title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">This cell spans for 3 columns</td>
+                <td>Forth column</td>
+            </tr>
+            <tr>
+                <td>First column</td>
+                <td>Second column</td>
+                <td>Third column</td>
+                <td>Forth column</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Simple table, headers on first column</h3>
+    <table wt-responsive-table>
+        <tbody ng-repeat="item in ctrl.projects">
+            <tr>
+                <th>Name</th>
+                <td>{{item.name}}</td>
+            </tr>
+            <tr>
+                <th>Version</th>
+                <td>{{item.version}}</td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{item.language}}</td>
+            </tr>
+            <tr>
+                <th>Maintainer</th>
+                <td>{{item.maintainer}}</td>
+            </tr>
+            <tr>
+                <th>Stars</th>
+                <td>{{item.stars}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>With Bootstrap</h2>
+    
+    <h3>Static table</h3>
+    <table class="table table-striped" wt-responsive-table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Language</th>
+                <th>Maintainer</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>AngularJS</td>
+                <td>1.5</td>
+                <td>JavaScript</td>
+                <td>Google</td>
+                <td>35000</td>
+            </tr>
+            <tr>
+                <td>Bootstrap</td>
+                <td>3.3</td>
+                <td>CSS</td>
+                <td>Twitter</td>
+                <td>23000</td>
+            </tr>
+            <tr>
+                <td>UI-Router</td>
+                <td>0.13</td>
+                <td>JavaScript</td>
+                <td>AngularUI</td>
+                <td>15000</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Simple table with ng-repeat</h3>
+    <table class="table table-striped" wt-responsive-table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Language</th>
+                <th>Maintainer</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in ctrl.projects">
+                <td>{{item.name}}</td>
+                <td>{{item.version}}</td>
+                <td>{{item.language}}</td>
+                <td>{{item.maintainer}}</td>
+                <td>{{item.stars}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Simple table with no thead, tbody</h3>
+    <table class="table table-striped" wt-responsive-table>
+        <tr>
+            <th>Name</th>
+            <th>Version</th>
+            <th>Language</th>
+            <th>Maintainer</th>
+            <th>Stars</th>
+        </tr>
+        <tr ng-repeat="item in ctrl.projects">
+            <td>{{item.name}}</td>
+            <td>{{item.version}}</td>
+            <td>{{item.language}}</td>
+            <td>{{item.maintainer}}</td>
+            <td>{{item.stars}}</td>
+        </tr>
+    </table>
+
+    <h2>Nested tables</h2>
+
+    <h3>Non-responsive nested table</h3>
+    <table wt-responsive-table>
+        <thead>
+            <tr>
+                <th>First title</th>
+                <th>Second title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>First column</td>
+                <td>
+                    <table border=1>
+                        <tr>
+                            <th>nested title</th>
+                            <td>nested table</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Responsive nested table</h3>
+    <table wt-responsive-table>
+        <thead>
+            <tr>
+                <th>First title</th>
+                <th>Second title</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>First column</td>
+                <td>
+                    <table wt-responsive-table>
+                        <tr>
+                            <th>nested title</th>
+                            <td>nested table</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

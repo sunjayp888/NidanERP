@@ -1,0 +1,129 @@
+﻿@using Microsoft.Ajax.Utilities
+@model Nidan.Models.EventViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Company ({0})", Model.Event.Name);
+}
+
+<h2>View</h2>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    @Model.Event.Name <small>Edit event</small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+            {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        @Html.HiddenFor(model => Model.Event.EventId)
+                        @Html.HiddenFor(model => Model.Event.CreatedBy)
+                        @Html.HiddenFor(model => Model.Event.CreatedDateTime)
+                        @Html.HiddenFor(model => Model.Event.ApprovedBy)
+                        <div class="item form-group">
+                            @Html.LabelFor(model => model.Event.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Event.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.Event.Name, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*Test*@
+<div>
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Event Planner<small>Sessions</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tab_content_brainstorming" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Brain Storming</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#tab_content_planning" role="tab" id="profile_tab_planning" data-toggle="tab" aria-expanded="false">Planning</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#tab_content_budget" role="tab" id="profile_tab_budget" data-toggle="tab" aria-expanded="false">Budget</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#tab_content_eventday" role="tab" id="profile_tab_eventday" data-toggle="tab" aria-expanded="false">Event Day</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#tab_content_postevent" role="tab" id="profile_tab_postevent" data-toggle="tab" aria-expanded="false">Post Event</a>
+                    </li>
+                </ul>
+                <div id="myTabContent2" class="tab-content">
+                    @Html.Partial("_BrainStorming")
+                    @Html.Partial("_Planning")
+                    @Html.Partial("_Budget")
+                    @Html.Partial("_EventDay")
+                    @Html.Partial("_PostEvent")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Test*@
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Smart Wizard
+            $('#wizard').smartWizard();
+
+            function onFinishCallback() {
+                $('#wizard').smartWizard('showMessage', 'Finish Clicked');
+                //alert('Finish Clicked');
+            }
+        });
+
+        $(document).ready(function () {
+            // Smart Wizard
+            $('#wizard_verticle').smartWizard({
+                transitionEffect: 'slide'
+            });
+
+        });
+    </script>
+}

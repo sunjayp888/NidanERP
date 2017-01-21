@@ -1,0 +1,115 @@
+﻿@using Nidan.Extensions
+@using Nidan.Extensions
+@{
+    ViewBag.Title = "Area Of Interest";
+}
+<div ng-controller="AreaOfInterestController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Area Of Interest <small></small>
+            </h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchAreaOfInterest(searchField)" class="form-control" placeholder="Search for Area Of Interest...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchAreaOfInterest(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-app" href="@Url.Action("Create", "AreaOfInterest")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Area Of Interest <small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="interest in model.areaOfInterests" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAreaOfInterest(interest.AreaOfInterestId)">
+                                            <td><span ng-bind="interest.Name"></span></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/AreaOfInterest/Edit/{{interest.AreaOfInterestId}}">
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Area Of Interest {{interest.Name}}" ng-bootbox-confirm-action="model.deleteAreaOfInterest(interest.AreaOfInterestId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                    Delete
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Confirmation</h2>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" ng-model='model.AreaOfInterestId' />
+                    Are you sure, you want to delete Area Of Interest <span ng-bind="model.AreaOfInterestName"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
+                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

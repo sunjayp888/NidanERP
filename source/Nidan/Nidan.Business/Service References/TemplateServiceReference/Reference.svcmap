@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="de3844ff-1c1e-405e-b34b-5e772973eace" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:814/TemplateService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TemplateService.xsd" MetadataType="Schema" ID="0cbc19b1-410f-4005-9f4b-ab0795290b75" SourceId="1" SourceUrl="http://localhost:814/TemplateService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TemplateService1.xsd" MetadataType="Schema" ID="910b2f61-e4f0-4b9e-9a7b-fcf0b5317109" SourceId="1" SourceUrl="http://localhost:814/TemplateService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TemplateService.disco" MetadataType="Disco" ID="2fbabf37-f8e4-4f2f-9fbc-3421f313b262" SourceId="1" SourceUrl="http://localhost:814/TemplateService.svc?disco" />
+    <MetadataFile FileName="TemplateService.wsdl" MetadataType="Wsdl" ID="20f1a6b6-409e-44c7-b7dc-821412b5a8a0" SourceId="1" SourceUrl="http://localhost:814/TemplateService.svc?wsdl" />
+    <MetadataFile FileName="TemplateService2.xsd" MetadataType="Schema" ID="c326522c-8b12-4bce-a021-4050ee59576b" SourceId="1" SourceUrl="http://localhost:814/TemplateService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

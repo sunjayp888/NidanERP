@@ -1,0 +1,11 @@
+﻿<ui-select ng-model="model.showColourBy" ng-change="model.filterSelected()">
+    <ui-select-match>
+        <span ng-bind="$select.selected.text"></span>
+    </ui-select-match>
+    <ui-select-choices repeat="item in (model.chartColours | filter: $select.search) track by item.id">
+        <span ng-bind="item.text"></span>
+    </ui-select-choices>
+</ui-select>
+<div ng-repeat="Legend in (model.showColourBy.id == 1 && (model.organisationalChartViewModel.PersonnelDetailFilter.Company) || (model.showColourBy.id == 2 && (model.organisationalChartViewModel.PersonnelDetailFilter.Division) || (model.organisationalChartViewModel.PersonnelDetailFilter.Department)))">
+    <span class="square" ng-style="{'background-color' : '#' + Legend.Hex }"></span> {{Legend.Name}}
+</div>

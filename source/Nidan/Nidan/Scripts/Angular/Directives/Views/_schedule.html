@@ -1,0 +1,48 @@
+﻿<div class="scheduler">
+    <div class="labels">
+        <div class="srow text-right ng-binding"></div>
+        <div class="srow text-right ng-binding"></div>
+        <div class="srow text-right ng-binding"></div>
+        <div class="double-top-border"></div>
+        <div class="srow striped" ng-repeat="item in vm.items" ng-attr-title="{{item.name}}">
+            <span class="square" ng-style="{'background-color' : '#' + item.Hex }"></span><a ng-if="item.Permissions.CanViewProfile" ng-href="{{vm.itemUrl}}{{item.PersonnelId}}" ng-bind="item.name"></a>
+            <span ng-if="!item.Permissions.CanViewProfile" ng-bind="item.name"></span>
+        </div>
+    </div>
+    <div class="schedule-area-container">
+        <div class="schedule-area">
+            <div class="srow timestamps">
+                <div class="grid-container">
+                    <div class="grid-item absence-days-7 btn-group">
+                        <a class="btn btn-dark pull-left" ng-click="vm.changeDate(-7)"> < </a>
+                        <span ng-bind="vm.dateLabel"></span>
+                        <a class="btn btn-dark pull-right" ng-click="vm.changeDate(7)"> > </a>
+                    </div>
+                </div>
+            </div>
+            <div class="srow timestamps">
+                <div class="grid-container">
+                    <div class="grid-item absence-days-1" ng-repeat="day in vm.days" ng-bind="day.name" ng-class="{faded:!day.isDisplayMonth}"></div>
+                </div>
+            </div>
+            <div class="srow timestamps">
+                <div class="grid-container">
+                    <div class="grid-item absence-days-1" ng-repeat="day in vm.days" ng-bind="day.number" ng-class="{faded:!day.isDisplayMonth}"></div>
+                </div>
+            </div>
+            <div class="double-top-border"></div>
+            <div class="srow striped" ng-repeat="item in vm.items">
+                <div class="grid-container">
+                    <div class="grid-item absence-days-1" ng-repeat="day in vm.days"></div>
+                </div>
+                <div class="absences-row">
+                    <div ng-repeat="absence in item.absences" ng-class="vm.retrieveAbsenceClass(absence)" ng-style="{'background-color' : '#' + absence.colour }" inject>
+                        <div ng-attr-title="{{absence.title}}">
+                            <div><span ng-bind="absence.details"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

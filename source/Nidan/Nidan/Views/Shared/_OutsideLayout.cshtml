@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - Nidan</title>
+    @Styles.Render("~/Content/bower")
+    @Styles.Render("~/Content/bower/gentelella")
+    @Styles.Render("~/Content/Application")
+    <meta name="description" content="Nidan" />
+</head>
+
+<body class="login">
+    <div>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                @RenderBody()
+                <div class="clearfix"></div>
+                <div class="separator">
+                    <div>
+                        <h1><i class="fa fa-leaf"></i> Nidan</h1>
+                        <p>&copy; @DateTime.Today.Year All Rights Reserved. Nidan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/Scripts/bower")
+    @Scripts.Render("~/Scripts/bower/gentelella")
+    @Scripts.Render("~/Scripts/Application")
+</body>
+</html>

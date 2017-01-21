@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D8119AD-3F77-4EF7-BCED-C1AAF638E2EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nidan.Business</RootNamespace>
+    <AssemblyName>Nidan.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentService.API.RESTClient, Version=1.0.0.28026, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentService.API.RESTClient.1.0.0.22\lib\net452\DocumentService.API.RESTClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authorisation.cs" />
+    <Compile Include="ConfigHelper.cs" />
+    <Compile Include="EmailService.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtension.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\NodeExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="NidanBusinessService.cs" />
+    <Compile Include="Interfaces\IAuthorisation.cs" />
+    <Compile Include="Interfaces\ICacheProvider.cs" />
+    <Compile Include="Interfaces\IEmailService.cs" />
+    <Compile Include="Interfaces\INidanBusinessService.cs" />
+    <Compile Include="Interfaces\ITemplateService.cs" />
+    <Compile Include="Interfaces\ITenantOrganisationService.cs" />
+    <Compile Include="MemoryCacheProvider.cs" />
+    <Compile Include="Models\PersonnelDetailFilter.cs" />
+    <Compile Include="Models\DivisionFilter.cs" />
+    <Compile Include="Models\DepartmentFilter.cs" />
+    <Compile Include="Models\CompanyFilter.cs" />
+    <Compile Include="Models\Node.cs" />
+    <Compile Include="Models\OrganisationalChart.cs" />
+    <Compile Include="Models\PersonnelDetails.cs" />
+    <Compile Include="Models\ValidationResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\EmailServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\TemplateServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nidan.Data\Nidan.Data.csproj">
+      <Project>{BBAF06D0-C7E6-454F-96C3-801AD6076243}</Project>
+      <Name>Nidan.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nidan.Entity\Nidan.Entity.csproj">
+      <Project>{4829285D-04B9-46DD-A961-5B90E7200473}</Project>
+      <Name>Nidan.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EmailServiceReference\EmailService.wsdl" />
+    <None Include="Service References\EmailServiceReference\EmailService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EmailServiceReference\EmailService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EmailServiceReference\EmailService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EmailServiceReference\EmailService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TemplateServiceReference\TemplateService.wsdl" />
+    <None Include="Service References\TemplateServiceReference\TemplateService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TemplateServiceReference\TemplateService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TemplateServiceReference\TemplateService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\EmailServiceReference\" />
+    <WCFMetadataStorage Include="Service References\TemplateServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TemplateServiceReference\TemplateService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TemplateServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TemplateServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TemplateServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EmailServiceReference\EmailService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EmailServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EmailServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\EmailServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Partial\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

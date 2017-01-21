@@ -1,0 +1,7 @@
+﻿<div class="legend" ng-repeat="item in vm.items">
+    <div class="absence absence-days-7" ng-style="{'background-color' : '#' + item.colour }" ng-transclude>
+        <div ng-attr-title="{{item.name}}">
+            <div ng-bind="item.name"></div>
+        </div>
+    </div>
+</div>

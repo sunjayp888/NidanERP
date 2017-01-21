@@ -1,0 +1,49 @@
+﻿@model List<HR.Entity.WorkingPatternDay>
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Working Pattern</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <table class="table table-striped table-hover dataTable no-footer">
+            <thead>
+                <tr>
+                    @for (var i = 0; i < Model.Count(); i++)
+                    {
+
+                        <th>
+                            <label>
+                                @Model[i].DayOfWeekName
+                            </label>
+                            @Html.HiddenFor(m => Model[i].DayOfWeek)
+                            @Html.HiddenFor(m => Model[i].WorkingPatternDayId)
+                            @Html.HiddenFor(m => Model[i].WorkingPatternId)
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @for (var i = 0; i < Model.Count(); i++)
+                    {
+                        <td>
+                            <label class="btn btn-info">
+                                @Html.CheckBoxFor(model => model[i].AM, new { autocomplete = "off" })
+                                AM
+                            </label>
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    @for (var i = 0; i < Model.Count(); i++)
+                    {
+                        <td>
+
+                            <label class="btn btn-info">
+                                @Html.CheckBoxFor(model => model[i].PM, new { autocomplete = "off" })
+                                PM
+                            </label>
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

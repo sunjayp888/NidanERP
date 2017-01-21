@@ -1,0 +1,87 @@
+﻿@model Nidan.Models.MobilizationViewModel
+<div class="form-control-required-example"> = Required</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Event Id</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.Mobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.Mobile, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.Mobile, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.InterestedCourse, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.InterestedCourse, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.InterestedCourse, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.Qualification, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.Qualification, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.Qualification, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.CreatedDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.Mobilization.CreatedDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.Mobilization.CreatedDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.FollowUpDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.Mobilization.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.Mobilization.FollowUpDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.Remark, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Enquiry Status</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div id="gender" class="btn-group" data-toggle="buttons">
+            <label class='@(Model.Mobilization.MobilizerStatus=="Open"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Mobilization.MobilizerStatus, "Open")
+                <input type="radio" name="EnquiryStatus" value="open" data-parsley-multiple="gender"> &nbsp; Open &nbsp;
+            </label>
+            <label class='@(Model.Mobilization.MobilizerStatus=="Closed"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Mobilization.MobilizerStatus, "Closed")
+                <input type="radio" name="EnquiryStatus" value="closed" data-parsley-multiple="gender"> Closed
+            </label>
+        </div>
+    </div>
+</div>

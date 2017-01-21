@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-4 xs-mb-15">
+        Filter Companies:
+        <ui-select multiple tagging ng-model="model.companies" class="form-control" ng-change="model.filterSelected()" style="width:100%" ng-disabled="model.organisationalChartViewModel.PersonnelDetailFilter.Company.length <= 1">
+            <ui-select-match placeholder="Select Company"><span class="square" ng-style="{'background-color' : '#' + $item.Hex }"></span> <span ng-bind-html="$item.Name"></span></ui-select-match>
+            <ui-select-choices repeat="Company in model.organisationalChartViewModel.PersonnelDetailFilter.Company | filter:$select.search">
+                <span class="square" ng-style="{'background-color' : '#' + Company.Hex }"></span> <span ng-bind-html="Company.Name"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 xs-mb-15">
+        Filter Departments:
+        <ui-select multiple tagging ng-model="model.departments" class="form-control" ng-change="model.filterSelected()" style="width:100%" ng-disabled="model.organisationalChartViewModel.PersonnelDetailFilter.Department.length <= 1">
+            <ui-select-match placeholder="Select Department"><span class="square" ng-style="{'background-color' : '#' + $item.Hex }"></span> <span ng-bind-html="$item.Name"></span></ui-select-match>
+            <ui-select-choices repeat="Department in model.organisationalChartViewModel.PersonnelDetailFilter.Department | filter:$select.search">
+                <span class="square" ng-style="{'background-color' : '#' + Department.Hex }"></span> <span ng-bind-html="Department.Name"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 xs-mb-15">
+        Filter Divisions:
+        <ui-select multiple tagging ng-model="model.divisions" class="form-control" ng-change="model.filterSelected()" style="width:100%" ng-disabled="model.organisationalChartViewModel.PersonnelDetailFilter.Division.length <= 1">
+            <ui-select-match placeholder="Select Division"><span class="square" ng-style="{'background-color' : '#' + $item.Hex }"></span> <span ng-bind-html="$item.Name"></span></ui-select-match>
+            <ui-select-choices repeat="Division in model.organisationalChartViewModel.PersonnelDetailFilter.Division | filter:$select.search">
+                <span class="square" ng-style="{'background-color' : '#' + Division.Hex }"></span> <span ng-bind-html="Division.Name"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>

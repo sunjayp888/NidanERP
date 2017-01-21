@@ -1,0 +1,26 @@
+{
+  "name": "Nidan",
+  "dependencies": {
+    "jquery": "3.1.0",
+    "jquery-validation": "1.15.1",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "bootstrap": "3.3.7",
+    "font-awesome": "4.7.0",
+    "angular": "1.5.8",
+    "angular-animate": "1.5.8",
+    "angular-sanitize": "1.5.8",
+    "angular-bootstrap": "2.1.3",
+    "angular-responsive-tables": "0.4.1",
+    "angular-ui-select": "0.19.6",
+    "gentelella": "1.3.0",
+    "datatables.net-bs": "1.10.12",
+    "bootstrap-daterangepicker": "2.1.24",
+    "bootbox": "4.4.0",
+    "ngBootbox": "0.1.4",
+    "less-space": "1.1.1",
+    "cropper": "2.3.0"
+  },
+  "resolutions": {
+    "jquery": "~3.1.0"
+  }
+}

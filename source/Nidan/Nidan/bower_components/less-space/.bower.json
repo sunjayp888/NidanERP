@@ -1,0 +1,21 @@
+{
+  "name": "less-space",
+  "version": "1.1.1",
+  "description": "Responsive CSS position classes",
+  "ignore": [
+    ".editorconfig",
+    ".gitignore"
+  ],
+  "main": "dist/less-space.css",
+  "dependencies": {},
+  "homepage": "https://github.com/Eomerx/less-space",
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.1",
+    "commit": "24a7127052135d8b50482adfa794809464107f74"
+  },
+  "_source": "https://github.com/Eomerx/less-space.git",
+  "_target": "1.1.1",
+  "_originalSource": "less-space"
+}

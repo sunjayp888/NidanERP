@@ -1,0 +1,34 @@
+﻿@{
+    int squareRoot = Convert.ToInt32(Math.Sqrt(Model.Count));
+    int counter = 0;
+}
+<div class="dropdown">
+    <button class="btn btn-default btn-md dropdown-toggle required" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span id="ColourDropDown" class="square" style="background-color:#@ViewData["ColourHex"]"></span>
+        <span class="caret"></span>
+    </button>
+    <div class="table-responsive dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <table class="table-condensed">
+            <tbody>
+                <tr>
+                    @foreach (var Colour in Model)
+                    {
+                        <td><a href="#" onclick="SetSelectedColour(@Colour.ColourId,'@Colour.Hex')"><span class="square" style="background-color: #@Colour.Hex"></span></a></td>
+                        counter++;
+                        if (counter == squareRoot)
+                        {
+                            counter = 0;
+                            @Html.Raw(" </tr><tr>");
+                        }
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function SetSelectedColour(ColourId, ColourHex) {
+        document.getElementById("ColourDropDown").style.backgroundColor = "#" + ColourHex;
+        document.getElementById("ColourId").value = ColourId;
+    }
+</script>

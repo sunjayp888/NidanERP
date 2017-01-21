@@ -1,0 +1,37 @@
+﻿@model Nidan.Models.AbsenceTypeViewModel
+<div class="form-control-required-example"> = Required</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.AbsenceType.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.AbsenceType.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.AbsenceType.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(model => model.AbsenceType.ColourId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <input id="ColourId" type="hidden" name="AbsenceType.ColourId" value="@Model.AbsenceType.ColourId">
+        @Html.Partial("_Colour", Model.ColoursList, new ViewDataDictionary { { "ColourHex", Model.AbsenceType.Hex } })
+        @*<input id="AbsenceType_ColourId" type="hidden" name="AbsenceType.ColourId" value="Norway">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="ColourDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                    style="background-color:#@Model.AbsenceType.Colour.Hex">
+                Colour
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                @foreach (var Colour in Model.ColoursList)
+                {
+                    <li><a href="#" onclick="SetSelectedColour(@Colour.ColourId,'@Colour.Hex')"><span class="square" style="background-color: #@Colour.Hex"></span>@Colour.Hex</a></li>
+                }
+            </ul>
+        </div>
+        <script>
+            function SetSelectedColour(ColourId, ColourHex) {
+                document.getElementById("ColourDropDown").style.backgroundColor = "#" + ColourHex;
+                document.getElementById("AbsenceType_ColourId").value = ColourId;
+            }
+        </script>*@
+    </div>
+</div>

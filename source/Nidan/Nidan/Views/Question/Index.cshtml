@@ -1,0 +1,108 @@
+﻿
+@using Nidan.Extensions
+@{
+    ViewBag.Title = "Question";
+}
+<div ng-controller="QuestionController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Personnel <small></small></h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchPersonnel(searchField)" class="form-control" placeholder="Search for personnel...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchPersonnel(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-app" href="@Url.Action("Create", "Question")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Question <small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div ng-if="model.question.length !=0">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    @Html.Partial("Pagination/_pageSize")
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th>Description</th>
+                                                <th ng-click="model.order('Title')" ng-class="model.orderClass('Title')">Title</th>
+                                                <th ng-click="model.order('Forenames')" ng-class="model.orderClass('Forenames')">Forenames</th>
+                                                <th ng-click="model.order('Surname')" ng-class="model.orderClass('Surname')">Surname</th>
+                                                <th ng-click="model.order('DOB')" ng-class="model.orderClass('DOB')">DOB</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="person in model.personnel" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewPersonnelProfile(person.PersonnelId)">
+                                                <td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>
+                                                <td><span ng-bind="person.Title"></span></td>
+                                                <td><span ng-bind="person.Forenames"></span></td>
+                                                <td><span ng-bind="person.Surname"></span></td>
+                                                <td><span ng-bind-template="{{ person.DOB | date:'dd/MM/yyyy'}}"></span></td>
+                                                <td>
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                            <i class="fa fa-chevron-down"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu slidedown">
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-click="model.viewPersonnelProfile(person.PersonnelId)">
+                                                                    View Profile
+                                                                </a>
+                                                            </li>
+                                                            @if (User.IsInAnyRoles("Admin"))
+                                                            {
+                                                                <li>
+                                                                    <a style="cursor: pointer;" ng-href="/Personnel/Edit/{{person.PersonnelId}}">
+                                                                        Edit Profile
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @Html.Partial("Pagination/_pagination")
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label ng-bind="model.searchMessage"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
