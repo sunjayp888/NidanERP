@@ -388,6 +388,42 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveFollowUp(organisationId, followUpId, p => true);
         }
 
+        public List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Course>(organisationId, e => true);
+        }
+
+        public List<Qualification> RetrieveQualifications(int organisationId, Expression<Func<Qualification, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Qualification>(organisationId, e => true);
+        }
+
+        public List<Religion> RetrieveReligions(int organisationId, Expression<Func<Religion, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Religion>(organisationId, e => true);
+        }
+
+        public List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<CasteCategory>(organisationId, e => true);
+        }
+
+        public List<HowDidYouKnowAbout> RetrieveHowDidYouKnowAbouts(int organisationId, Expression<Func<HowDidYouKnowAbout, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<HowDidYouKnowAbout>(organisationId, e => true);
+        }
+
+        public List<Occupation> RetrieveOccupations(int organisationId, Expression<Func<Occupation, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Occupation>(organisationId, e => true);
+        }
+
+        //public List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate)
+        //{
+        //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
+        //}
+
+
         #endregion
 
         #region // Update
@@ -496,6 +532,8 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveEnquiries(organisationId, p => true, orderBy, paging);
         }
+
+       
 
         #endregion
     }

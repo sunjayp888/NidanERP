@@ -62,7 +62,7 @@ namespace Nidan.Entity
         public string AreaOfInterest { get; set; }
 
         [StringLength(500)]
-        public string HowDidYouKnowAboutUs { get; set; }
+        public string HowDidYouKnowAbout { get; set; }
 
         [StringLength(100)]
         public string PreTrainingStatus { get; set; }

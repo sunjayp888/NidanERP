@@ -39,6 +39,14 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            var organisationId = UserOrganisationId;
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
+            var casteCategories = NidanBusinessService.RetrieveCasteCategories(organisationId, e => true);
+            //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
+            var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var viewModel = new EnquiryViewModel
             {
                 Enquiry = new Enquiry
@@ -60,11 +68,11 @@ namespace Nidan.Controllers
                     YearOFPassOut = "",
                     Marks = "",
                     AreaOfInterest = "",
-                    HowDidYouKnowAboutUs = "",
+                    HowDidYouKnowAbout = "",
                     PreTrainingStatus = "",
                     EmploymentStatus = "",
                     Promotional = "",
-                    EnquiryDate = DateTime.Today,
+                    //EnquiryDate = DateTime.Today,
                     Place="Thane",
                     CounselledBy="Deepali",
                     CourseOffered=".net",
@@ -73,7 +81,13 @@ namespace Nidan.Controllers
                     FollowUpDate=DateTime.Today,
                     CentreId=1,
                 },
-                
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Religions = new SelectList(religions, "ReligionId", "Name"),
+                CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
+                // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutUsId", "Name")
             };
             return View(viewModel);
         }
@@ -84,14 +98,22 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EnquiryViewModel enquiryViewModel)
         {
-           
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = 1;
+                enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
                 return RedirectToAction("Index");
             }
+            enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
+            enquiryViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());
+            enquiryViewModel.Religions = new SelectList(NidanBusinessService.RetrieveReligions(organisationId, e => true).ToList());
+            enquiryViewModel.CasteCategories = new SelectList(NidanBusinessService.RetrieveCasteCategories(organisationId, e => true).ToList());
+            //enquiryViewModel.AreaOfInterests = new SelectList(NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true).ToList());
+            enquiryViewModel.HowDidYouKnowAbouts = new SelectList(NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true).ToList());
+            enquiryViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -123,6 +145,7 @@ namespace Nidan.Controllers
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = 1;
+                enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
             }
             var viewModel = new EnquiryViewModel
