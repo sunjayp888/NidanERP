@@ -35,21 +35,27 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            var organisationId = UserOrganisationId;
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var qualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
+           // var events = NidanBusinessService.RetrieveEvents(organisationId, e => true);
             var viewModel = new MobilizationViewModel
             {
                 Mobilization = new Mobilization
                 {
                     OrganisationId = UserOrganisationId,
-                    EventId = 3,
                     CentreId = 1,
                     Name = "Shraddha",
                     Mobile = 9870754355,
                     InterestedCourse = ".net",
                     Qualification = "BSCIT",
-                    CreatedDate=DateTime.Now,
-                    FollowUpDate=DateTime.Now.AddDays(2),
-                    Remark="",
+                    GeneratedDate = DateTime.Now,
+                    FollowUpDate = DateTime.Now.AddDays(2),
+                    Remark = "",
                 },
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                //Events = new SelectList(events, "EventId", "Name"),
+                Qualifications = new SelectList(qualifications, "QualificationId", "Name")
             };
             return View(viewModel);
         }
@@ -60,14 +66,20 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = 1;
                 mobilizationViewModel.Mobilization.EventId = 3;
+                mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
+                mobilizationViewModel.Mobilization.MobilizerStatus = "Open";
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
+            mobilizationViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            //mobilizationViewModel.Events = new SelectList(NidanBusinessService.RetrieveEvents(organisationId, e => true).ToList());
+            mobilizationViewModel.Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             return View(mobilizationViewModel);
         }
 
@@ -100,6 +112,8 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = 1;
                 mobilizationViewModel.Mobilization.EventId = 3;
+                mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
+                mobilizationViewModel.Mobilization.MobilizerStatus = "Open";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }

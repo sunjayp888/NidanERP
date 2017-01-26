@@ -44,6 +44,19 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
+        [Required]
+        [StringLength(500)]
+        public string MobilizedBy { get; set; }
+
+        [StringLength(500)]
+        public string StudentLocation { get; set; }
+
+        [StringLength(1000)]
+        public string OtherInterestedCourse { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime GeneratedDate { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }

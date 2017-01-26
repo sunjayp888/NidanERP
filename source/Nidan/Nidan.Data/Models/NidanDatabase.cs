@@ -32,6 +32,11 @@ namespace Nidan.Data.Models
         public virtual DbSet<AreaOfInterest> AreaOfInterests { get; set; }
         public virtual DbSet<CasteCategory> CasteCategories { get; set; }
         public virtual DbSet<FollowUp> FollowUps { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<HowDidYouKnowAbout> HowDidYouKnowAbouts { get; set; }
+        public virtual DbSet<Qualification> Qualifications { get; set; }
+        public virtual DbSet<Religion> Religions { get; set; }
+        public virtual DbSet<Occupation> Occupations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -316,7 +321,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.HowDidYouKnowAboutUs)
+                .Property(e => e.HowDidYouKnowAbout)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -384,8 +389,28 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CasteCategory>()
-                .Property(e => e.Caste)
+                 .Property(e => e.Caste)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<HowDidYouKnowAbout>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Qualification>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Religion>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Occupation>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

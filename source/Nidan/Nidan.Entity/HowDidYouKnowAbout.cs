@@ -6,14 +6,15 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("CasteCategory")]
-    public partial class CasteCategory
+    [Table("HowDidYouKnowAbout")]
+    public partial class HowDidYouKnowAbout
     {
-        public int CasteCategoryId { get; set; }
+        [Key]
+        public int HowDidYouKnowAboutUsId { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public string Caste { get; set; }
+        [StringLength(1000)]
+        public string Name { get; set; }
 
         public int OrganisationId { get; set; }
 
