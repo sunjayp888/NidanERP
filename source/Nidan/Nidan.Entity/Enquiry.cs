@@ -9,7 +9,6 @@ namespace Nidan.Entity
     [Table("Enquiry")]
     public partial class Enquiry
     {
-        [Key]
         public int EnquiryId { get; set; }
 
         [Required]
@@ -58,8 +57,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string Marks { get; set; }
 
-        [StringLength(500)]
-        public string AreaOfInterest { get; set; }
+        public int IntrestedCourseId { get; set; }
 
         [StringLength(500)]
         public string HowDidYouKnowAbout { get; set; }
@@ -92,19 +90,22 @@ namespace Nidan.Entity
 
         public string Remarks { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime FollowUpDate { get; set; }
-
-        [StringLength(100)]
-        public string EnquiryStatus { get; set; }
-
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? FollowUpDate { get; set; }
+
+        [StringLength(100)]
+        public string EnquiryStatus { get; set; }
+
+        public virtual Course Course { get; set; }
+
+        public virtual Enquiry Enquiry1 { get; set; }
+
+        public virtual Enquiry Enquiry2 { get; set; }
+
         public virtual Organisation Organisation { get; set; }
-
-        public virtual Centre Centre { get; set; }
     }
-
 }

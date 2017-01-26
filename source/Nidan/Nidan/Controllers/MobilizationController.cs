@@ -38,7 +38,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var qualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
-           // var events = NidanBusinessService.RetrieveEvents(organisationId, e => true);
+            var events = NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList();
             var viewModel = new MobilizationViewModel
             {
                 Mobilization = new Mobilization
@@ -47,14 +47,13 @@ namespace Nidan.Controllers
                     CentreId = 1,
                     Name = "Shraddha",
                     Mobile = 9870754355,
-                    InterestedCourse = ".net",
                     Qualification = "BSCIT",
                     GeneratedDate = DateTime.Now,
                     FollowUpDate = DateTime.Now.AddDays(2),
                     Remark = "",
                 },
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                //Events = new SelectList(events, "EventId", "Name"),
+                Events = new SelectList(events, "EventId", "Name"),
                 Qualifications = new SelectList(qualifications, "QualificationId", "Name")
             };
             return View(viewModel);
@@ -97,7 +96,10 @@ namespace Nidan.Controllers
             }
             var viewModel = new MobilizationViewModel
             {
-                Mobilization = mobilization
+                Mobilization = mobilization,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name"),
+                Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(UserOrganisationId, e => true).ToList(), "QualificationId", "Name")
             };
             return View(viewModel);
         }
@@ -129,6 +131,6 @@ namespace Nidan.Controllers
         {
             return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, orderBy, paging));
         }
-    
+
     }
 }

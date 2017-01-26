@@ -99,7 +99,7 @@ namespace Nidan.Business
                 MobilizationId = data.MobilizationId,
                 Remark = mobilization.Remark,
                 Name = mobilization.Name,
-                AreaOfInterest = mobilization.InterestedCourse,
+                IntrestedCourseId = mobilization.Course.CourseId,
                 Mobile = mobilization.Mobile,
                 CreatedDateTime = DateTime.Now
             };
@@ -119,7 +119,7 @@ namespace Nidan.Business
                 EnquiryId = data.EnquiryId,
                 Remark = data.Remarks,
                 Name = data.CandidateName,
-                AreaOfInterest = data.AreaOfInterest,
+                IntrestedCourseId = data.IntrestedCourseId,
                 Mobile = data.ContactNo,
                 CreatedDateTime = DateTime.Now
             };

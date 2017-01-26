@@ -67,7 +67,6 @@ namespace Nidan.Controllers
                     EducationalQualification = "BSCIT",
                     YearOFPassOut = "",
                     Marks = "",
-                    AreaOfInterest = "",
                     HowDidYouKnowAbout = "",
                     PreTrainingStatus = "",
                     EmploymentStatus = "",

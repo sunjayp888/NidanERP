@@ -34,14 +34,15 @@ namespace Nidan.Entity
 
         public long Mobile { get; set; }
 
-        [StringLength(1000)]
-        public string AreaOfInterest { get; set; }
+        public int IntrestedCourseId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
         public virtual Mobilization Mobilization { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }
+
+        public virtual Course Course { get; set; }
 
     }
 }

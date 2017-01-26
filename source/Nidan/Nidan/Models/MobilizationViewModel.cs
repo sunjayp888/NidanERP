@@ -11,6 +11,6 @@ namespace Nidan.Models
         public Mobilization Mobilization { get; set; }
         public SelectList Courses { get; set; }
         public SelectList Qualifications { get; set; }
-       // public SelectList Events { get; set; }
+        public SelectList Events { get; set; }
     }
 }

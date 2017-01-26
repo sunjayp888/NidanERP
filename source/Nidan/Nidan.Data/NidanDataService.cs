@@ -369,6 +369,7 @@ namespace Nidan.Data
                 return context
                     .Mobilizations
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

@@ -90,7 +90,7 @@
                 <input type="radio" name="gender" value="male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
             </label>
             <label class='@(Model.Enquiry.Gender=="Female"?"btn btn-primary":"btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model=> model.Enquiry.Gender,"Female")
+                @Html.RadioButtonFor(model => model.Enquiry.Gender, "Female")
                 <input type="radio" name="gender" value="female" data-parsley-multiple="gender"> Female
             </label>
         </div>
@@ -121,13 +121,13 @@
     </div>
 </div>
 
-@*<div class="form-group">
-        @Html.LabelFor(model => model.Enquiry.AreaOfInterest, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            @Html.DropDownListFor(model => model.Enquiry.AreaOfInterest, Model.AreaOfInterests, null, new { @class = "form-control col-md-7 col-xs-12" })
-            @Html.ValidationMessageFor(model => model.Enquiry.AreaOfInterest, "", new { @class = "help-block" })
-        </div>
-    </div>*@
+<div class="form-group">
+    @Html.LabelFor(model => model.Enquiry.IntrestedCourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Enquiry.IntrestedCourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Enquiry.IntrestedCourseId, "", new { @class = "help-block" })
+    </div>
+</div>
 
 <div class="form-group">
     @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAbout, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -186,12 +186,12 @@
 </div>
 
 @*<div class="form-group">
-    @Html.LabelFor(model => model.Enquiry.EnquiryDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.Enquiry.EnquiryDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-        @Html.ValidationMessageFor(model => model.Enquiry.EnquiryDate, "", new { @class = "help-block" })
-    </div>
-</div>*@
+        @Html.LabelFor(model => model.Enquiry.EnquiryDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12 dob">
+            @Html.TextBoxFor(model => model.Enquiry.EnquiryDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+            @Html.ValidationMessageFor(model => model.Enquiry.EnquiryDate, "", new { @class = "help-block" })
+        </div>
+    </div>*@
 
 <div class="form-group">
     @Html.LabelFor(model => model.Enquiry.Place, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -242,17 +242,17 @@
 </div>
 
 @*<div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Enquiry Status</label>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div id="gender" class="btn-group" data-toggle="buttons">
-            <label class='@(Model.Enquiry.EnquiryStatus=="Open"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Enquiry.EnquiryStatus, "Open")
-                <input type="radio" name="EnquiryStatus" value="open" data-parsley-multiple="gender"> &nbsp; Open &nbsp;
-            </label>
-            <label class='@(Model.Enquiry.EnquiryStatus=="Closed"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Enquiry.EnquiryStatus, "Closed")
-                <input type="radio" name="EnquiryStatus" value="closed" data-parsley-multiple="gender"> Closed
-            </label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Enquiry Status</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div id="gender" class="btn-group" data-toggle="buttons">
+                <label class='@(Model.Enquiry.EnquiryStatus=="Open"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
+                    @Html.RadioButtonFor(model => model.Enquiry.EnquiryStatus, "Open")
+                    <input type="radio" name="EnquiryStatus" value="open" data-parsley-multiple="gender"> &nbsp; Open &nbsp;
+                </label>
+                <label class='@(Model.Enquiry.EnquiryStatus=="Closed"?"btn btn-primary":"btn btn-default")' data-toggle-passive-class="btn-default">
+                    @Html.RadioButtonFor(model => model.Enquiry.EnquiryStatus, "Closed")
+                    <input type="radio" name="EnquiryStatus" value="closed" data-parsley-multiple="gender"> Closed
+                </label>
+            </div>
         </div>
-    </div>
-</div>*@
+    </div>*@

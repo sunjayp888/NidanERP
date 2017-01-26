@@ -69,7 +69,7 @@
                                             @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
                                             <td><span ng-bind="mobilizer.Name"></span></td>
                                             <td><span ng-bind="mobilizer.Mobile"></span></td>
-                                            <td><span ng-bind="mobilizer.InterestedCourse"></span></td>
+                                            <td><span ng-bind="mobilizer.Course.Name"></span></td>
                                             <td><span ng-bind="mobilizer.Qualification"></span></td>
                                             <td><span ng-bind="mobilizer.CreatedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="mobilizer.FollowUpDate|date : format : shortDate"></span></td>

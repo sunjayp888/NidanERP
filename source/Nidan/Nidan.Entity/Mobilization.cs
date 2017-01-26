@@ -9,7 +9,6 @@ namespace Nidan.Entity
     [Table("Mobilization")]
     public partial class Mobilization
     {
-      
         public int MobilizationId { get; set; }
 
         public int EventId { get; set; }
@@ -18,18 +17,14 @@ namespace Nidan.Entity
 
         public int CentreId { get; set; }
 
-       
         [Required]
         [StringLength(500)]
         public string Name { get; set; }
 
         public long Mobile { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string InterestedCourse { get; set; }
+        public int InterestedCourseId { get; set; }
 
-        [Required]
         [StringLength(255)]
         public string Qualification { get; set; }
 
@@ -37,7 +32,7 @@ namespace Nidan.Entity
         public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime FollowUpDate { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         public string Remark { get; set; }
 
@@ -57,11 +52,12 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
+        public virtual Course Course { get; set; }
+
+        public virtual Mobilization Mobilization1 { get; set; }
+
+        public virtual Mobilization Mobilization2 { get; set; }
+
         public virtual Organisation Organisation { get; set; }
-
-        public virtual Centre Centre { get; set; }
-
-        public virtual Event Event { get; set; }
-
     }
 }
