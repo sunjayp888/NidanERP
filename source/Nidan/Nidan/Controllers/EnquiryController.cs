@@ -23,7 +23,7 @@ namespace Nidan.Controllers
     {
         private static string EnquiryName { get; set; }
         private ApplicationRoleManager _roleManager;
-      
+
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
@@ -37,9 +37,10 @@ namespace Nidan.Controllers
 
         // GET: Enquiry/Create
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            id = id ?? 0;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
@@ -47,17 +48,20 @@ namespace Nidan.Controllers
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, id.Value);
+
             var viewModel = new EnquiryViewModel
             {
                 Enquiry = new Enquiry
                 {
                     OrganisationId = UserOrganisationId,
-                    CandidateName = "Shraddha",
-                    ContactNo = 9812398123,
+                    CandidateName = mobilization == null ? string.Empty : mobilization.Name,
+                    ContactNo = mobilization?.Mobile ?? 0,
                     EmailId = string.Format("{0}@hr.com", Guid.NewGuid()),
                     Age = 24,
-                    Qualification = "BSCIT",
-                    Address = "Koperkhairane",
+                    Qualification = mobilization?.Qualification ?? string.Empty,
+                    Address = mobilization?.StudentLocation ?? string.Empty,
+                    IntrestedCourseId = mobilization?.InterestedCourseId ?? courses.FirstOrDefault().CourseId,
                     GuardianName = "",
                     GuardianContactNo = 123,
                     Occupation = "",
@@ -72,13 +76,13 @@ namespace Nidan.Controllers
                     EmploymentStatus = "",
                     Promotional = "",
                     //EnquiryDate = DateTime.Today,
-                    Place="Thane",
-                    CounselledBy="Deepali",
-                    CourseOffered=".net",
-                    PreferTiming= DateTime.Now,
-                    Remarks="",
-                    FollowUpDate=DateTime.Today,
-                    CentreId=1,
+                    Place = "Thane",
+                    CounselledBy = "Deepali",
+                    CourseOffered = ".net",
+                    PreferTiming = DateTime.Now,
+                    Remarks = "",
+                    FollowUpDate = DateTime.Today,
+                    CentreId = 1,
                 },
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
@@ -157,7 +161,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId,orderBy,paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, orderBy, paging));
         }
 
         //[HttpPost]
