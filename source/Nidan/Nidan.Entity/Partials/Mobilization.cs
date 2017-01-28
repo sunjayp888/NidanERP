@@ -8,14 +8,33 @@ namespace Nidan.Entity
     [MetadataType(typeof(MobilizationMetadata))]
     public partial class Mobilization : IOrganisationFilterable
     {
-        public static implicit operator Mobilization(Personnel v)
-        {
-            throw new NotImplementedException();
-        }
-
         private class MobilizationMetadata
         {
-            
+            [Display(Name = "Event")]
+            public int EventId { get; set; }
+
+            [Display(Name = "Interested Course")]
+            public int InterestedCourseId { get; set; }
+
+            [Display(Name = "Created Date")]
+            [Column(TypeName = "date")]
+            public DateTime CreatedDate { get; set; }
+
+            [Display(Name = "FollowUp Date")]
+            [Column(TypeName = "date")]
+            public DateTime? FollowUpDate { get; set; }
+
+            [Display(Name = "Student Location")]
+            [StringLength(500)]
+            public string StudentLocation { get; set; }
+
+            [Display(Name = "Other Interested Course")]
+            [StringLength(1000)]
+            public string OtherInterestedCourse { get; set; }
+
+            [Display(Name = "Mobilized Date")]
+            [Column(TypeName = "date")]
+            public DateTime GeneratedDate { get; set; }
         }
     }
 }
