@@ -32,9 +32,13 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string Name { get; set; }
 
-        public long Mobile { get; set; }
+        public long? Mobile { get; set; }
 
         public int IntrestedCourseId { get; set; }
+
+        //public virtual FollowUp FollowUp1 { get; set; }
+
+        //public virtual FollowUp FollowUp2 { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
@@ -42,7 +46,6 @@ namespace Nidan.Entity
 
         public virtual Enquiry Enquiry { get; set; }
 
-        public virtual Course Course { get; set; }
 
     }
 }

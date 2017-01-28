@@ -6,17 +6,17 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("AreaOfInterest")]
-    public partial class AreaOfInterest
+    [Table("Site")]
+    public partial class Site
     {
-        public int AreaOfInterestId { get; set; }
+        public int SiteId { get; set; }
 
         [Required]
-        [StringLength(500)]
+        [StringLength(100)]
         public string Name { get; set; }
 
-        public int OrganisationId { get; set; }
+        public int CountryId { get; set; }
 
-        public Organisation Organisation { get; set; }
+        public int OrganisationId { get; set; }
     }
 }
