@@ -23,10 +23,6 @@ namespace Nidan.Entity
         public int Age { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public string Qualification { get; set; }
-
-        [Required]
         public string Address { get; set; }
 
         [StringLength(500)]
@@ -34,22 +30,17 @@ namespace Nidan.Entity
 
         public long? GuardianContactNo { get; set; }
 
-        [StringLength(500)]
-        public string Occupation { get; set; }
+        public int OccupationId { get; set; }
 
-        [StringLength(500)]
-        public string Religion { get; set; }
+        public int ReligionId { get; set; }
 
-        [StringLength(100)]
-        public string CategoryCode { get; set; }
+        public int CasteCategoryId { get; set; }
 
         [Required]
         [StringLength(100)]
         public string Gender { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string EducationalQualification { get; set; }
+        public int EducationalQualificationId { get; set; }
 
         [StringLength(100)]
         public string YearOFPassOut { get; set; }
@@ -59,8 +50,7 @@ namespace Nidan.Entity
 
         public int IntrestedCourseId { get; set; }
 
-        [StringLength(500)]
-        public string HowDidYouKnowAbout { get; set; }
+        public int HowDidYouKnowAboutId { get; set; }
 
         [StringLength(100)]
         public string PreTrainingStatus { get; set; }
@@ -72,7 +62,7 @@ namespace Nidan.Entity
         public string Promotional { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime EnquiryDate { get; set; }
+        public DateTime? EnquiryDate { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -82,9 +72,7 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string CounselledBy { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string CourseOffered { get; set; }
+        public int CourseOfferedId { get; set; }
 
         public DateTime? PreferTiming { get; set; }
 
@@ -100,12 +88,25 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string EnquiryStatus { get; set; }
 
+        public virtual CasteCategory CasteCategory { get; set; }
+
+        public virtual Centre Centre { get; set; }
+
+        //public virtual Enquiry Enquiry1 { get; set; }
+
+        //public virtual Enquiry Enquiry2 { get; set; }
+
+        public virtual HowDidYouKnowAbout HowDidYouKnowAbout { get; set; }
+
+        public virtual Occupation Occupation { get; set; }
+
+        public virtual Qualification Qualification { get; set; }
+
+        public virtual Religion Religion { get; set; }
+
         public virtual Course Course { get; set; }
 
-        public virtual Enquiry Enquiry1 { get; set; }
-
-        public virtual Enquiry Enquiry2 { get; set; }
-
         public virtual Organisation Organisation { get; set; }
+
     }
 }

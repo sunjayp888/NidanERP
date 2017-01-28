@@ -57,8 +57,8 @@ namespace Nidan.Data
                 return enquiry;
             }
         }
-        
-         public Mobilization CreateMobilization(int organisationId, Mobilization mobilization)
+
+        public Mobilization CreateMobilization(int organisationId, Mobilization mobilization)
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
@@ -81,7 +81,7 @@ namespace Nidan.Data
             }
 
         }
-    
+
         public T Create<T>(int organisationId, T t) where T : class
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -120,7 +120,7 @@ namespace Nidan.Data
 
         public PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-           
+
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
@@ -446,6 +446,10 @@ namespace Nidan.Data
                 return context
                     .Enquiries
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .Include(p => p.Qualification)
+                    .Include(p => p.Religion)
+                    .Include(p => p.CasteCategory)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -536,7 +540,7 @@ namespace Nidan.Data
 
                 return context.Database
                     .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList().AsQueryable().
-                    
+
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -589,7 +593,7 @@ namespace Nidan.Data
             }
         }
 
-        
+
 
 
         #endregion

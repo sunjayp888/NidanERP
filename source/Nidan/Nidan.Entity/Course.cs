@@ -15,7 +15,6 @@ namespace Nidan.Entity
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
         }
-
         public int CourseId { get; set; }
 
         [Required]
