@@ -51,14 +51,14 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
-        public virtual Course Course { get; set; }
-
-        public virtual Qualification Qualification { get; set; }
-
         public virtual Mobilization Mobilization1 { get; set; }
 
         public virtual Mobilization Mobilization2 { get; set; }
 
+        public virtual Course Course { get; set; }
+
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Qualification Qualification { get; set; }
     }
 }

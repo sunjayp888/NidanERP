@@ -64,22 +64,21 @@ namespace Nidan.Controllers
                     IntrestedCourseId = mobilization?.InterestedCourseId ?? courses.FirstOrDefault().CourseId,
                     GuardianName = "",
                     GuardianContactNo = 123,
-                    Occupation = "",
-                    Religion = "",
-                    CategoryCode = "",
+                    //Occupation = "",
+                   // Religion = "",
+                    //CategoryCode = "",
                     Gender = "Female",
-                    EducationalQualification = "BSCIT",
+                    //EducationalQualification = "BSCIT",
                     YearOFPassOut = "",
                     Marks = "",
-                    HowDidYouKnowAbout = "",
+                    //HowDidYouKnowAbout = "",
                     PreTrainingStatus = "",
                     EmploymentStatus = "",
                     Promotional = "",
                     //EnquiryDate = DateTime.Today,
                     Place = "Thane",
                     CounselledBy = "Deepali",
-                    CourseOffered = ".net",
-                    PreferTiming = DateTime.Now,
+                    //CourseOffered = ".net",
                     Remarks = "",
                     FollowUpDate = DateTime.Today,
                     CentreId = 1,
@@ -90,7 +89,7 @@ namespace Nidan.Controllers
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutUsId", "Name")
+                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
         }
@@ -127,6 +126,14 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var organisationId = UserOrganisationId;
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
+            var casteCategories = NidanBusinessService.RetrieveCasteCategories(organisationId, e => true);
+            //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
+            var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
             if (enquiry == null)
             {
@@ -134,7 +141,14 @@ namespace Nidan.Controllers
             }
             var viewModel = new EnquiryViewModel
             {
-                Enquiry = enquiry
+                Enquiry = enquiry,
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Religions = new SelectList(religions, "ReligionId", "Name"),
+                CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
+                // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
         }
