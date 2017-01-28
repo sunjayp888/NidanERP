@@ -90,22 +90,26 @@
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
+    <Compile Include="Course.cs" />
     <Compile Include="Dto\Permissions.cs" />
     <Compile Include="Dto\TenantOrganisation.cs" />
+    <Compile Include="Enquiry.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventActivityType.cs" />
-    <Compile Include="Enquiry.cs" />
     <Compile Include="EnquirySearchField.cs" />
     <Compile Include="EventBudget.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="Host.cs" />
+    <Compile Include="HowDidYouKnowAbout.cs" />
     <Compile Include="Interfaces\INotAbsenceDay.cs" />
     <Compile Include="Interfaces\IOrganisationFilterable.cs" />
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
+    <Compile Include="Model1.cs" />
+    <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
@@ -124,7 +128,9 @@
     <Compile Include="Dto\Schedule.cs" />
     <Compile Include="Dto\ScheduleItem.cs" />
     <Compile Include="Dto\ScheduleItemType.cs" />
+    <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Religion.cs" />
     <Compile Include="UserAuthorisationFilter.cs" />
     <Compile Include="Validation\DateGreaterThanAttribute.cs" />
   </ItemGroup>

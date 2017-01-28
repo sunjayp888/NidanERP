@@ -423,6 +423,10 @@ namespace Nidan.Business
         //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
         //}
 
+        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+        }
 
         #endregion
 

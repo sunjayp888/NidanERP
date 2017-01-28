@@ -370,6 +370,7 @@ namespace Nidan.Data
                     .Mobilizations
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.Qualification)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -526,6 +527,27 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                return context.Database
+                    .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList().AsQueryable().
+                    
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
 
 
         #endregion

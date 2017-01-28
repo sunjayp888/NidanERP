@@ -11,7 +11,8 @@
         var service = {
             retrieveMobilizations: retrieveMobilizations,
             canDeleteMobilization: canDeleteMobilization,
-            deleteMobilization: deleteMobilization
+            deleteMobilization: deleteMobilization,
+            searchMobilization: searchMobilization
         };
 
         return service;
@@ -23,6 +24,17 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+
+            return $http.post(url, data);
+        }
+
+        function searchMobilization(SearchKeyword, Paging, OrderBy) {
+            var url = "/Mobilization/Search",
+            data = {
+                searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
             return $http.post(url, data);
         }

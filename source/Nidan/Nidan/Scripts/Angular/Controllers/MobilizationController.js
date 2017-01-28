@@ -19,6 +19,9 @@
         vm.editMobilization = editMobilization;
         vm.canDeleteMobilization = canDeleteMobilization;
         vm.deleteMobilization = deleteMobilization;
+        vm.searchMobilization = searchMobilization;
+        vm.searchKeyword = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
@@ -33,6 +36,18 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.mobilizations;
                 });
+        }
+
+        function searchMobilization(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return MobilizationService.searchMobilization(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.mobilizations = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.mobilizations.length === 0 ? "No Records Found" : "";
+                  return vm.mobilizations;
+              });
         }
 
         function pageChanged() {

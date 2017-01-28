@@ -59,7 +59,7 @@ namespace Nidan.Controllers
                     ContactNo = mobilization?.Mobile ?? 0,
                     EmailId = string.Format("{0}@hr.com", Guid.NewGuid()),
                     Age = 24,
-                    Qualification = mobilization?.Qualification ?? string.Empty,
+                    //Qualification = mobilization?.Qualification ?? string.Empty,
                     Address = mobilization?.StudentLocation ?? string.Empty,
                     IntrestedCourseId = mobilization?.InterestedCourseId ?? courses.FirstOrDefault().CourseId,
                     GuardianName = "",

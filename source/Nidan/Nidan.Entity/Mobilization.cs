@@ -25,8 +25,7 @@ namespace Nidan.Entity
 
         public int InterestedCourseId { get; set; }
 
-        [StringLength(255)]
-        public string Qualification { get; set; }
+        public int QualificationId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
@@ -53,6 +52,8 @@ namespace Nidan.Entity
         public DateTime GeneratedDate { get; set; }
 
         public virtual Course Course { get; set; }
+
+        public virtual Qualification Qualification { get; set; }
 
         public virtual Mobilization Mobilization1 { get; set; }
 

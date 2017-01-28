@@ -424,9 +424,9 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Mobilization>()
-                .Property(e => e.Qualification)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Mobilization>()
+            //    .Property(e => e.QualificationId)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<Mobilization>()
                 .Property(e => e.Remark)
@@ -509,9 +509,9 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
         
-            modelBuilder.Entity<Mobilization>()
-                .Property(e => e.Qualification)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Mobilization>()
+            //    .Property(e => e.QualificationId)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<AreaOfInterest>()
                 .Property(e => e.Name)
@@ -540,6 +540,38 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Occupation>()
                .Property(e => e.Name)
                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            //modelBuilder.Entity<MobilizationSearchField>()
+            //    .Property(e => e.QualificationId)
+            //    .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.MobilizerStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.MobilizedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.StudentLocation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

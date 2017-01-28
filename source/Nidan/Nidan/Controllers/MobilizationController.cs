@@ -47,7 +47,7 @@ namespace Nidan.Controllers
                     CentreId = 1,
                     Name = "Shraddha",
                     Mobile = 9870754355,
-                    Qualification = "BSCIT",
+                    //Qualification = "BSCIT",
                     GeneratedDate = DateTime.Now,
                     FollowUpDate = DateTime.Now.AddDays(2),
                     Remark = "",
@@ -130,6 +130,12 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
         }
 
     }

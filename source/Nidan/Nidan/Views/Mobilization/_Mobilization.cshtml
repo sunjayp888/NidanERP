@@ -68,10 +68,10 @@
 
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Mobilization.Qualification, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Mobilization.QualificationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Mobilization.Qualification, Model.Qualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Mobilization.Qualification, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Mobilization.QualificationId, Model.Qualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.QualificationId, "", new { @class = "help-block" })
     </div>
 </div>
 
