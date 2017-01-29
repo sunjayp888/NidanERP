@@ -19,6 +19,9 @@
         vm.editEnquiry = editEnquiry;
         vm.canDeleteEnquiry = canDeleteEnquiry;
         //vm.deleteEnquiry = deleteEnquiry;
+        vm.searchEnquiry = searchEnquiry;
+        vm.searchKeyword = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
@@ -33,6 +36,18 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.enquiries;
                 });
+        }
+
+        function searchEnquiry(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return EnquiryService.searchEnquiry(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.enquiries = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.enquiries.length === 0 ? "No Records Found" : "";
+                  return vm.enquiries;
+              });
         }
 
         function pageChanged() {

@@ -178,24 +178,24 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, orderBy, paging));
         }
 
-        //[HttpPost]
-        //public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
-        //{
-        //    return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
-        //}
-
-        protected override void Dispose(bool disposing)
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
-            if (disposing)
-            {
-                if (_roleManager != null)
-                {
-                    _roleManager.Dispose();
-                    _roleManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        if (_roleManager != null)
+        //        {
+        //            _roleManager.Dispose();
+        //            _roleManager = null;
+        //        }
+        //    }
+
+        //    base.Dispose(disposing);
+        //}
     }
 }
