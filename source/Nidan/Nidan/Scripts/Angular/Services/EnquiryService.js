@@ -11,7 +11,8 @@
         var service = {
             retrieveEnquiries: retrieveEnquiries,
             canDeleteEnquiry: canDeleteEnquiry,
-           // deleteEnquiry: deleteEnquiry
+            // deleteEnquiry: deleteEnquiry
+            searchEnquiry: searchEnquiry
         };
 
         return service;
@@ -23,6 +24,17 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+
+            return $http.post(url, data);
+        }
+
+        function searchEnquiry(SearchKeyword, Paging, OrderBy) {
+            var url = "/Enquiry/Search",
+            data = {
+                searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
             return $http.post(url, data);
         }
