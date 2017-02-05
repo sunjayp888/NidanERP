@@ -259,6 +259,38 @@
             </div>
 
             <div class="form-group">
+                @Html.LabelFor(model => model.Enquiry.EmployerName, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.Enquiry.EmployerName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.Enquiry.EmployerName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Enquiry.EmployerContactNo, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.Enquiry.EmployerContactNo, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.Enquiry.EmployerContactNo, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Enquiry.EmployerAddress, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.Enquiry.EmployerAddress, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.Enquiry.EmployerAddress, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Enquiry.AnnualIncome, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.Enquiry.AnnualIncome, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.Enquiry.AnnualIncome, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label col-md-6 col-sm-6 col-xs-12">E-mails / Newsletter / SMS</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div id="gender" class="btn-group" data-toggle="buttons">

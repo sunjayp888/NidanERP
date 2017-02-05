@@ -51,6 +51,7 @@ namespace Nidan.Business.Interfaces
         List<Occupation> RetrieveOccupations(int organisationId, Expression<Func<Occupation, bool>> predicate);
         PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
+        List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
 
         // Update

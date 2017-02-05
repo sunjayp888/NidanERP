@@ -11,6 +11,8 @@ namespace Nidan.Entity
     {
         public int MobilizationId { get; set; }
 
+        public int MobilizationTypeId { get; set; }
+
         public int EventId { get; set; }
 
         public int OrganisationId { get; set; }
@@ -60,5 +62,7 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Qualification Qualification { get; set; }
+
+        public virtual MobilizationType MobilizationType { get; set; }
     }
 }

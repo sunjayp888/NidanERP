@@ -88,6 +88,16 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string EnquiryStatus { get; set; }
 
+        [StringLength(500)]
+        public string EmployerName { get; set; }
+
+        [StringLength(50)]
+        public string EmployerContactNo { get; set; }
+
+        public string EmployerAddress { get; set; }
+
+        public int AnnualIncome { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }

@@ -20,7 +20,7 @@ namespace Nidan.Entity
             [Column(TypeName = "date")]
             public DateTime CreatedDate { get; set; }
 
-            [Display(Name = "FollowUp Date")]
+            [Display(Name = "Follow-Up Date")]
             [Column(TypeName = "date")]
             public DateTime? FollowUpDate { get; set; }
 
@@ -35,6 +35,12 @@ namespace Nidan.Entity
             [Display(Name = "Mobilized Date")]
             [Column(TypeName = "date")]
             public DateTime GeneratedDate { get; set; }
+
+            [Display(Name = "Mobilization Type")]
+            public int MobilizationTypeId { get; set; }
+
+            [Display(Name = "Qualification")]
+            public int QualificationId { get; set; }
         }
     }
 }

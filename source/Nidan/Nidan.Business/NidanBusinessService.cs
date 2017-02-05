@@ -418,6 +418,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Occupation>(organisationId, e => true);
         }
 
+        public List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<MobilizationType>(organisationId, e => true);
+        }
+
         //public List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate)
         //{
         //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
