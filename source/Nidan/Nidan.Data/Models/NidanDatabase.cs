@@ -38,6 +38,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Religion> Religions { get; set; }
         public virtual DbSet<Occupation> Occupations { get; set; }
         public virtual DbSet<EnquirySearchField> EnquirySearchFields { get; set; }
+        public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -589,6 +590,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationType>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

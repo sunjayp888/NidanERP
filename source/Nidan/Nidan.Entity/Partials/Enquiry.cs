@@ -73,6 +73,20 @@ namespace Nidan.Entity
             [Display(Name = "Follow-Up Date")]
             [Column(TypeName = "date")]
             public DateTime? FollowUpDate { get; set; }
+
+            [Display(Name = "Employer Name")]
+            [StringLength(500)]
+            public string EmployerName { get; set; }
+
+            [Display(Name = "Employer Contact No")]
+            [StringLength(50)]
+            public string EmployerContactNo { get; set; }
+
+            [Display(Name = "Employer Address")]
+            public string EmployerAddress { get; set; }
+
+            [Display(Name = "Annual Income")]
+            public int AnnualIncome { get; set; }
         }
     }
 }

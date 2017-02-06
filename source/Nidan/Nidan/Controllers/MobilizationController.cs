@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Excel;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Nidan.Attributes;
@@ -10,8 +11,11 @@ using Nidan.Models;
 using Nidan.Models.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -37,6 +41,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var mobilizationTypes = NidanBusinessService.RetrieveMobilizationTypes(organisationId, e => true);
             var qualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var events = NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList();
             var viewModel = new MobilizationViewModel
@@ -53,6 +58,7 @@ namespace Nidan.Controllers
                     Remark = "",
                 },
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                MobilizationTypes = new SelectList(mobilizationTypes, "MobilizationTypeId", "Name"),
                 Events = new SelectList(events, "EventId", "Name"),
                 Qualifications = new SelectList(qualifications, "QualificationId", "Name")
             };
@@ -98,6 +104,7 @@ namespace Nidan.Controllers
             {
                 Mobilization = mobilization,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                MobilizationTypes = new SelectList(NidanBusinessService.RetrieveMobilizationTypes(UserOrganisationId, e => true).ToList(), "MobilizationTypeId", "Name"),
                 Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name"),
                 Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(UserOrganisationId, e => true).ToList(), "QualificationId", "Name")
             };
@@ -124,6 +131,85 @@ namespace Nidan.Controllers
                 Mobilization = mobilizationViewModel.Mobilization
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    // ExcelDataReader works with the binary Excel file, so it needs a FileStream
+                    // to get started. This is how we avoid dependencies on ACE or Interop:
+                    Stream stream = upload.InputStream;
+
+                    // We return the interface, so that
+                    IExcelDataReader reader = null;
+
+
+                    if (upload.FileName.EndsWith(".xls"))
+                    {
+                        reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                    }
+                    else if (upload.FileName.EndsWith(".xlsx"))
+                    {
+                        reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "This file format is not supported");
+                        return View();
+                    }
+
+                    reader.IsFirstRowAsColumnNames = true;
+
+                    DataSet result = reader.AsDataSet();
+                    reader.Close();
+
+                    var table = result.Tables[0];
+                   // var data = table.ToList<Mobilization>();
+
+
+                    return View(result.Tables[0]);
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "Please Upload Your file");
+                }
+            }
+            return View();
+        }
+
+        private static List<T> ConvertDataTable<T>(DataTable dt)
+        {
+            List<T> data = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                T item = GetItem<T>(row);
+                data.Add(item);
+            }
+            return data;
+        }
+
+        private static T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                        pro.SetValue(obj, dr[column.ColumnName], null);
+                    else
+                        continue;
+                }
+            }
+            return obj;
         }
 
         [HttpPost]
