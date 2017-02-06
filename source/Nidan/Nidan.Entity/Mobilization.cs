@@ -40,9 +40,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string MobilizedBy { get; set; }
+        public int MobilizedBy { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
@@ -64,5 +62,7 @@ namespace Nidan.Entity
         public virtual Qualification Qualification { get; set; }
 
         public virtual MobilizationType MobilizationType { get; set; }
+
+        public virtual Personnel Personnel { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -43,8 +44,6 @@ namespace Nidan.Business
         {
             return _nidanDataService.CreatePersonnel(organisationId, personnel);
         }
-
-
 
         public ValidationResult<AbsenceType> CreateAbsenceType(int organisationId, AbsenceType absenceType)
         {
@@ -107,8 +106,6 @@ namespace Nidan.Business
             return data;
         }
 
-
-
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             var data = _nidanDataService.Create<Enquiry>(organisationId, enquiry);
@@ -126,6 +123,41 @@ namespace Nidan.Business
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
         }
+
+        public void UploadMobilization(int organisationId, int eventId, DateTime generateDateTime, List<Mobilization> mobilizations)
+        {
+            var interestedCourses = RetrieveCourses(organisationId, c => true);
+            var qualifications = RetrieveQualifications(organisationId, q => true);
+            var mobilizationList = new List<Mobilization>();
+            foreach (var item in mobilizations)
+            {
+                var interestedCourseId = interestedCourses.FirstOrDefault(e => e.Name.ToLower() == item.InterestedCourse.ToLower())?.CourseId ??
+                                         interestedCourses.First(e => e.Name.ToLower() == "others").CourseId;
+                var qualificationId = qualifications.FirstOrDefault(q => q.Name.ToLower() == item.InterestedCourse.ToLower())?.QualificationId ??
+                                       qualifications.First(e => e.Name.ToLower() == "others").QualificationId;
+
+                mobilizationList.Add(new Mobilization()
+                {
+                    InterestedCourseId = interestedCourseId,
+                    CentreId = 1,
+                    CreatedDate = DateTime.Now,
+                    GeneratedDate = generateDateTime,
+                    EventId = eventId,
+                    QualificationId = qualificationId,
+                    Mobile = item.Mobile,
+                    Name = item.Name,
+                    OrganisationId = organisationId,
+                    Remark = item.Remark,
+                    StudentLocation = item.StudentLocation
+                });
+                _nidanDataService.Create(organisationId, mobilizationList);
+            }
+
+
+
+
+        }
+
         #endregion
 
         #region // Retrieve
@@ -547,7 +579,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiries(organisationId, p => true, orderBy, paging);
         }
 
-       
+
 
         #endregion
     }

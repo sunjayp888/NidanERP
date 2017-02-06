@@ -8,6 +8,10 @@ namespace Nidan.Entity
     [MetadataType(typeof(MobilizationMetadata))]
     public partial class Mobilization : IOrganisationFilterable
     {
+        [NotMapped]
+        public string HighestQualification { get; set; }
+        [NotMapped]
+        public string InterestedCourse { get; set; }
         private class MobilizationMetadata
         {
             [Display(Name = "Event")]

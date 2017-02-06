@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Personnel()
         {
+            Mobilizations = new HashSet<Mobilization>();
         }
 
         public int PersonnelId { get; set; }
@@ -94,8 +96,10 @@ namespace Nidan.Entity
 
         public int? CurrentEmploymentId { get; set; }
 
-
         public virtual Organisation Organisation { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mobilization> Mobilizations { get; set; }
 
     }
 }

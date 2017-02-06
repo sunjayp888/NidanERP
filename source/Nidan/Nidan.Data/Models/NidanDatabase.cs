@@ -484,9 +484,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.MobilizerStatus)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Mobilization>()
-                .Property(e => e.MobilizedBy)
-                .IsUnicode(false);
+           
 
             modelBuilder.Entity<Mobilization>()
                 .Property(e => e.StudentLocation)

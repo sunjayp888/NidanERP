@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using System.Security.Policy;
 using Nidan.Business.Models;
@@ -17,6 +18,7 @@ namespace Nidan.Business.Interfaces
         Enquiry CreateEnquiry(int organisationId, Enquiry enquiry);
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
+        void UploadMobilization(int organisationId, int eventId, DateTime generateDateTime, List<Mobilization> mobilizations);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);

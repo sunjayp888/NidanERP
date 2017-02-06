@@ -19,6 +19,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.HtmlControls;
 
 namespace Nidan.Controllers
 {
@@ -135,49 +136,41 @@ namespace Nidan.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Upload(HttpPostedFileBase upload)
+        public ActionResult Upload(MobilizationViewModel mobilizationViewModel)
         {
             if (ModelState.IsValid)
             {
-
-                if (upload != null && upload.ContentLength > 0)
+                if (mobilizationViewModel.Files != null && mobilizationViewModel.Files[0].ContentLength > 0)
                 {
                     // ExcelDataReader works with the binary Excel file, so it needs a FileStream
                     // to get started. This is how we avoid dependencies on ACE or Interop:
-                    Stream stream = upload.InputStream;
-
+                    var stream = mobilizationViewModel.Files[0].InputStream;
                     // We return the interface, so that
                     IExcelDataReader reader = null;
 
-
-                    if (upload.FileName.EndsWith(".xls"))
+                    if (mobilizationViewModel.Files[0].FileName.EndsWith(".xls"))
                     {
                         reader = ExcelReaderFactory.CreateBinaryReader(stream);
                     }
-                    else if (upload.FileName.EndsWith(".xlsx"))
+                    else if (mobilizationViewModel.Files[0].FileName.EndsWith(".xlsx"))
                     {
                         reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
                     else
                     {
-                        ModelState.AddModelError("File", "This file format is not supported");
+                        ModelState.AddModelError("", "This file format is not supported");
                         return View();
                     }
-
                     reader.IsFirstRowAsColumnNames = true;
-
                     DataSet result = reader.AsDataSet();
                     reader.Close();
-
-                    var table = result.Tables[0];
-                   // var data = table.ToList<Mobilization>();
-
-
-                    return View(result.Tables[0]);
+                    var mobilizations = result.Tables[0].ToList<Mobilization>();
+                    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    ModelState.AddModelError("File", "Please Upload Your file");
+                    ModelState.AddModelError("", "Please Upload Your file");
                 }
             }
             return View();
