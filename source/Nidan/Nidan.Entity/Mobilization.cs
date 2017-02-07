@@ -40,7 +40,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        public int MobilizedBy { get; set; }
+        public int PersonnelId { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
@@ -51,9 +51,9 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
-        public virtual Mobilization Mobilization1 { get; set; }
+        //public virtual Mobilization Mobilization1 { get; set; }
 
-        public virtual Mobilization Mobilization2 { get; set; }
+        //public virtual Mobilization Mobilization2 { get; set; }
 
         public virtual Course Course { get; set; }
 

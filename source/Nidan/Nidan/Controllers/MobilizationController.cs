@@ -20,6 +20,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.HtmlControls;
+using Nidan.Business.Dto;
 
 namespace Nidan.Controllers
 {
@@ -134,10 +135,21 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Upload()
+        {
+            var viewModel = new MobilizationViewModel
+            {
+                Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name")
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(MobilizationViewModel mobilizationViewModel)
         {
+            mobilizationViewModel.Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name");
+
             if (ModelState.IsValid)
             {
                 if (mobilizationViewModel.Files != null && mobilizationViewModel.Files[0].ContentLength > 0)
@@ -165,7 +177,7 @@ namespace Nidan.Controllers
                     DataSet result = reader.AsDataSet();
                     reader.Close();
                     var mobilizations = result.Tables[0].ToList<Mobilization>();
-                    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
+                    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
                     return RedirectToAction("Index");
                 }
                 else

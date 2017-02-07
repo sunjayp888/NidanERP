@@ -494,9 +494,9 @@ namespace Nidan.Data.Models
                 .Property(e => e.OtherInterestedCourse)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Mobilization>()
-                .HasOptional(e => e.Mobilization1)
-                .WithRequired(e => e.Mobilization2);
+            //modelBuilder.Entity<Mobilization>()
+            //    .HasOptional(e => e.Mobilization1)
+            //    .WithRequired(e => e.Mobilization2);
 
             modelBuilder.Entity<Occupation>()
                 .Property(e => e.Name)

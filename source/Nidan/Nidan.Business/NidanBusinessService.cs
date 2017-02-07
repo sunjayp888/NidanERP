@@ -124,10 +124,11 @@ namespace Nidan.Business
             return data;
         }
 
-        public void UploadMobilization(int organisationId, int eventId, DateTime generateDateTime, List<Mobilization> mobilizations)
+        public void UploadMobilization(int organisationId, int eventId,int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
         {
             var interestedCourses = RetrieveCourses(organisationId, c => true);
             var qualifications = RetrieveQualifications(organisationId, q => true);
+            var mobilizationType = RetrieveMobilizationTypes(organisationId, e => e.Name.ToLower() == "event").FirstOrDefault();
             var mobilizationList = new List<Mobilization>();
             foreach (var item in mobilizations)
             {
@@ -148,14 +149,13 @@ namespace Nidan.Business
                     Name = item.Name,
                     OrganisationId = organisationId,
                     Remark = item.Remark,
-                    StudentLocation = item.StudentLocation
+                    StudentLocation = item.StudentLocation,
+                    MobilizationTypeId = mobilizationType.MobilizationTypeId,
+                    PersonnelId =  personnelId
                 });
-                _nidanDataService.Create(organisationId, mobilizationList);
+              
             }
-
-
-
-
+            _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
         }
 
         #endregion

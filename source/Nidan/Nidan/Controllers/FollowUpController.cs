@@ -21,7 +21,7 @@ namespace Nidan.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
         }
 
         // GET: FollowUp/Edit/{id}

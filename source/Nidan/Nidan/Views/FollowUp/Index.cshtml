@@ -63,7 +63,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="followUp in model.followUps" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewMobilization(mobilizer.MobilizationId)">
+                                        <tr ng-repeat="followUp in model.followUps" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewFollowUp(followUp.FollowUpId)">
                                             @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
                                             <td><span ng-bind="followUp.Name"></span></td>
                                             <td><span ng-bind="followUp.Mobile"></span></td>
@@ -79,13 +79,13 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{mobilizer.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{followUp.MobilizationId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
 
                                                             @*<li >
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{followUp.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
                                                                         Archive
                                                                     </a>
                                                                 </li>*@

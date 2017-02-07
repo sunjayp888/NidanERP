@@ -58,10 +58,12 @@
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        [Key]
-        [Column(Order = 8)]
-        [StringLength(500)]
-        public string MobilizedBy { get; set; }
+        //[Key]
+        //[Column(Order = 8)]
+        //[StringLength(500)]
+        //public string MobilizedBy { get; set; }
+
+        public int PersonnelId { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
