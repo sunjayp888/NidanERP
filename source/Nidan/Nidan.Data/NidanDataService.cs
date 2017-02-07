@@ -377,7 +377,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "Name",
+                            Property = "GeneratedDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -545,7 +545,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "Name",
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })

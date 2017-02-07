@@ -18,7 +18,7 @@ namespace Nidan.Business.Interfaces
         Enquiry CreateEnquiry(int organisationId, Enquiry enquiry);
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
-        void UploadMobilization(int organisationId, int eventId, DateTime generateDateTime, List<Mobilization> mobilizations);
+        void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
