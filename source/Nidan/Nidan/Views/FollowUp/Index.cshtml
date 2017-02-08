@@ -79,8 +79,13 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{followUp.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
                                                                     Edit
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/FollowUP/MarkAsRead/{{followUp.FollowUpId}}">
+                                                                    Mark As Read
                                                                 </a>
                                                             </li>
 
