@@ -47,6 +47,17 @@ namespace Nidan.Data
             }
         }
 
+        public Centre CreateCentre(int organisationId, Centre centre)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                centre = context.Centres.Add(centre);
+                context.SaveChanges();
+
+                return centre;
+            }
+        }
+
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -575,9 +586,47 @@ namespace Nidan.Data
             }
         }
 
+        public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Centres
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CentreId == centreId);
+
+            }
+        }
+
+        public PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Centres
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         #endregion
 
         #region // Update
+
 
         public T UpdateEntityEntry<T>(T t) where T : class
         {

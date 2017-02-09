@@ -83,6 +83,11 @@ namespace Nidan.Business
             return validationResult;
         }
 
+        public Centre CreateCentre(int organisationId, Centre centre)
+        {
+            return _nidanDataService.CreateCentre(organisationId, centre);
+        }
+
         public Question CreateQuestion(int organisationId, Question question)
         {
             return _nidanDataService.Create<Question>(organisationId, question);
@@ -455,6 +460,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<MobilizationType>(organisationId, e => true);
         }
 
+        public PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentres(organisationId, p => true, orderBy, paging);
+        }
+
         //public List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate)
         //{
         //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
@@ -545,6 +555,17 @@ namespace Nidan.Business
             return validationResult;
         }
 
+        public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
+        {
+            var centre = _nidanDataService.RetrieveCentre(organisationId, centreId, p => true);
+            return centre;
+        }
+
+        public Centre RetrieveCentre(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCentre(organisationId, id, p => true);
+        }
+
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);
@@ -563,6 +584,11 @@ namespace Nidan.Business
         public FollowUp UpdateFollowUp(int organisationId, FollowUp followUp)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+        }
+
+        public Centre UpdateCentre(int organisationId, Centre centre)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centre);
         }
 
         #endregion

@@ -22,6 +22,7 @@ namespace Nidan.Data.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
 
         AreaOfInterest CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
+        Centre CreateCentre(int organisationId, Centre centre);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -50,6 +51,8 @@ namespace Nidan.Data.Interfaces
         FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate);
         PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
 
         // Update
 
