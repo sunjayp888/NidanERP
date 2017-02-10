@@ -87,42 +87,52 @@ namespace Nidan.Controllers
         }
 
         //Get FollowUp/MarkAsRead/{id}
-        public ActionResult MarkAsRead(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var followUp = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id.Value);
-            if (followUp == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = new FollowUpViewModel
-            {
-                FollowUp = followUp,
-        };
-            return View(viewModel);
-        }
+        //public ActionResult MarkAsRead(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var followUp = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id.Value);
+        //    if (followUp == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    var viewModel = new FollowUpViewModel
+        //    {
+        //        FollowUp = followUp
+        //    };
+        //    return View(viewModel);
+        //}
 
         //post FollowUp/MarkAsRead/{id}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult MarkAsRead(FollowUpViewModel followUpViewModel)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult MarkAsRead(FollowUpViewModel followUpViewModel)
+        //{
+        //    var organisationId = UserOrganisationId;
+        //    if (ModelState.IsValid)
+        //    {
+        //        followUpViewModel.FollowUp.OrganisationId = UserOrganisationId;
+        //        followUpViewModel.FollowUp.CentreId = 1;
+        //        followUpViewModel.FollowUp.ReadDateTime=DateTime.Now;
+        //        followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(UserOrganisationId, followUpViewModel.FollowUp);
+        //        return RedirectToAction("Index");
+        //    }
+        //    var viewModel = new FollowUpViewModel
+        //    {
+        //        FollowUp = followUpViewModel.FollowUp
+               
+        //    };
+        //    return RedirectToAction("Index");
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult MarkAsRead(int? id)
         {
-            //var organisationId = UserOrganisationId;
-            if (ModelState.IsValid)
-            {
-                followUpViewModel.FollowUp.OrganisationId = UserOrganisationId;
-                followUpViewModel.FollowUp.CentreId = 1;
-                followUpViewModel.FollowUp.ReadDateTime=DateTime.Now;
-                followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(UserOrganisationId, followUpViewModel.FollowUp);
-                return RedirectToAction("Index");
-            }
-            var viewModel = new FollowUpViewModel
-            {
-                FollowUp = followUpViewModel.FollowUp
-            };
+            var folloup=new FollowUpViewModel();
+            folloup.FollowUp.ReadDateTime=DateTime.Now;
             return RedirectToAction("Index");
         }
 
