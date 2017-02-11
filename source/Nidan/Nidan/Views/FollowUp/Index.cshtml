@@ -56,9 +56,9 @@
                                         <tr role="row">
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                            <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
+                                            <th ng-click="model.order('IntrestedCourse')" ng-class="model.orderClass('IntrestedCourse')">Interested Course</th>
                                     @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
-                                            <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
+                                            <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -69,7 +69,7 @@
                                             <td><span ng-bind="followUp.Mobile"></span></td>
                                             <td><span ng-bind="followUp.Course.Name"></span></td>
                                           @*<td><span ng-bind="followUp.Qualification.Name"></span></td>*@
-                                            <td><span ng-bind="followUp.FollowUpDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="followUp.FollowUpDateTime|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -79,8 +79,13 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{followUp.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
                                                                     Edit
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/FollowUP/MarkAsRead/{{followUp.FollowUpId}}">
+                                                                    Mark As Read
                                                                 </a>
                                                             </li>
 

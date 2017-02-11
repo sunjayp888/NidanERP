@@ -18,6 +18,7 @@ namespace Nidan.Business.Interfaces
         Enquiry CreateEnquiry(int organisationId, Enquiry enquiry);
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
+        Centre CreateCentre(int organisationId, Centre centre);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
 
         // Retrieve
@@ -54,6 +55,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
+        PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
+        Centre RetrieveCentre(int organisationId, int id);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
 
         // Update
@@ -63,6 +67,7 @@ namespace Nidan.Business.Interfaces
         Mobilization UpdateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> UpdateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
+        Centre UpdateCentre(int organisationId, Centre centre);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
