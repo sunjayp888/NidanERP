@@ -10,8 +10,8 @@
     function FollowUpService($http) {
         var service = {
             retrieveFollowUps: retrieveFollowUps,
-            canDeleteAbsenceType: canDeleteAbsenceType,
-            deleteAbsenceType: deleteAbsenceType
+            canDeleteFollowUp: canDeleteFollowUp,
+            deleteFollowUp: deleteFollowUp
         };
 
         return service;
@@ -27,15 +27,15 @@
             return $http.post(url, data);
         }
 
-        function canDeleteAbsenceType(id) {
-            var url = "/AbsenceType/CanDeleteAbsenceType",
+        function canDeleteFollowUp(id) {
+            var url = "/FollowUp/CanDeleteFollowUp",
                 data = {id: id};
 
             return $http.post(url, data);
         }
 
-          function deleteAbsenceType(id) {
-            var url = "/AbsenceType/Delete",
+        function deleteFollowUp(id) {
+            var url = "/FollowUp/Delete",
                 data = {id: id};
 
             return $http.post(url, data);
