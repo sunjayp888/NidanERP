@@ -86,54 +86,13 @@ namespace Nidan.Controllers
             return this.JsonNet(count);
         }
 
-        //Get FollowUp/MarkAsRead/{id}
-        //public ActionResult MarkAsRead(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var followUp = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id.Value);
-        //    if (followUp == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var viewModel = new FollowUpViewModel
-        //    {
-        //        FollowUp = followUp
-        //    };
-        //    return View(viewModel);
-        //}
-
-        //post FollowUp/MarkAsRead/{id}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult MarkAsRead(FollowUpViewModel followUpViewModel)
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    if (ModelState.IsValid)
-        //    {
-        //        followUpViewModel.FollowUp.OrganisationId = UserOrganisationId;
-        //        followUpViewModel.FollowUp.CentreId = 1;
-        //        followUpViewModel.FollowUp.ReadDateTime=DateTime.Now;
-        //        followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(UserOrganisationId, followUpViewModel.FollowUp);
-        //        return RedirectToAction("Index");
-        //    }
-        //    var viewModel = new FollowUpViewModel
-        //    {
-        //        FollowUp = followUpViewModel.FollowUp
-               
-        //    };
-        //    return RedirectToAction("Index");
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult MarkAsRead(int? id)
+    [HttpPost]
+    public void MarkAsRead(int id)
         {
-            var folloup=new FollowUpViewModel();
-            folloup.FollowUp.ReadDateTime=DateTime.Now;
-            return RedirectToAction("Index");
+            var data = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id);
+            data.ReadDateTime = DateTime.Now;
+            NidanBusinessService.UpdateFollowUp(UserOrganisationId, data);
+            //return RedirectToAction("Index");
         }
 
     }

@@ -19,6 +19,7 @@
         vm.editFollowUp = editFollowUp;
         vm.canDeleteFollowUp = canDeleteFollowUp;
         vm.deleteFollowUp = deleteFollowUp;
+        vm.markAsReadFollowUp = markAsReadFollowUp;
         initialise();
 
         function initialise() {
@@ -62,6 +63,10 @@
        
         function deleteFollowUp(id) {
             return FollowUpService.deleteFollowUp(id).then(function () { initialise(); });
+        };
+
+        function markAsReadFollowUp(id) {
+            return FollowUpService.markAsReadFollowUp(id).then(function () { initialise(); });
         };
 
     }
