@@ -11,7 +11,8 @@
         var service = {
             retrieveFollowUps: retrieveFollowUps,
             canDeleteFollowUp: canDeleteFollowUp,
-            deleteFollowUp: deleteFollowUp
+            deleteFollowUp: deleteFollowUp,
+            markAsReadFollowUp:markAsReadFollowUp
         };
 
         return service;
@@ -37,6 +38,13 @@
         function deleteFollowUp(id) {
             var url = "/FollowUp/Delete",
                 data = {id: id};
+
+            return $http.post(url, data);
+        }
+
+        function markAsReadFollowUp(id) {
+            var url = "/FollowUp/MarkAsRead",
+                data = { id: id };
 
             return $http.post(url, data);
         }

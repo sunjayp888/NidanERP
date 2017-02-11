@@ -600,6 +600,13 @@ namespace Nidan.Business
             _nidanDataService.Delete<Personnel>(organisationId, e => e.PersonnelId == personnelId);
         }
 
+        public FollowUp MarkAsReadFollowUp(int organisationId, int id)
+        {
+            //return _nidanDataService.RetrieveFollowUp(organisationId, id, p => true);
+            var data = _nidanDataService.RetrieveFollowUp(organisationId, id, p => true);
+            return data;
+        }
+
         public PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveEnquiries(organisationId, p => true, orderBy, paging);
