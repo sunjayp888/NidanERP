@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Authorisation.cs" />
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="Dto\Extensions.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />

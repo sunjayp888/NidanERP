@@ -108,7 +108,7 @@
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
-    <Compile Include="Model1.cs" />
+    <Compile Include="MobilizationType.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />

@@ -11,7 +11,7 @@ namespace Nidan.Entity
     {
         public int FollowUpId { get; set; }
 
-        public DateTime? FollowUpDateTime { get; set; }
+        public DateTime FollowUpDateTime { get; set; }
 
         public int? MobilizationId { get; set; }
 
@@ -21,7 +21,7 @@ namespace Nidan.Entity
 
         public bool? Closed { get; set; }
 
-        public DateTime? ReadDateTime { get; set; }
+        public DateTime ReadDateTime { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 

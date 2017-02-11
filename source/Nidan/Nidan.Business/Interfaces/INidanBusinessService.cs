@@ -71,6 +71,8 @@ namespace Nidan.Business.Interfaces
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
-        
+
+        void MarkAsReadFollowUp(int organisationId, int id);
+
     }
 }

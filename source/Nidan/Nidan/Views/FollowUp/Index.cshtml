@@ -1,7 +1,7 @@
 ﻿@using Nidan.Extensions
 @using Nidan.Extensions
 @{
-    ViewBag.Title = "Mobilization";
+    ViewBag.Title = "FollowUp";
 }
 <div ng-controller="FollowUpController as model">
     <div class="page-title">
@@ -84,16 +84,12 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-click="model.markAsRead(followUp.FollowUpId)">
+                                                                <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
                                                                     Mark As Read
                                                                 </a>
                                                             </li>
 
-                                                            @*<li >
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{followUp.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                        Archive
-                                                                    </a>
-                                                                </li>*@
+                                                        
                                                         }
                                                     </ul>
                                                 </div>
