@@ -467,7 +467,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CandidateName",
+                            Property = "EnquiryDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -512,6 +512,7 @@ namespace Nidan.Data
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -542,16 +543,19 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
-                return context.Database
-                    .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList().AsQueryable().
+                var searchData = context.Database
+                    .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList();
 
+                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification);
+
+                var data = searchData.Join(mobilizations, e => e.MobilizationId, m => m.MobilizationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -561,6 +565,7 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+                return data;
             }
         }
 

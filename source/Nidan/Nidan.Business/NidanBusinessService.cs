@@ -103,9 +103,9 @@ namespace Nidan.Business
                 MobilizationId = data.MobilizationId,
                 Remark = mobilization.Remark,
                 Name = mobilization.Name,
-                IntrestedCourseId = mobilization.Course.CourseId,
+                IntrestedCourseId = mobilization.InterestedCourseId,
                 Mobile = mobilization.Mobile,
-                CreatedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.Now,
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
@@ -470,7 +470,7 @@ namespace Nidan.Business
         //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
         //}
 
-        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
         }

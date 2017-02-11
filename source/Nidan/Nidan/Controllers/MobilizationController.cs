@@ -80,7 +80,7 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.CentreId = 1;
                 mobilizationViewModel.Mobilization.EventId = 3;
                 mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
-                mobilizationViewModel.Mobilization.MobilizerStatus = "Open";
+                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }

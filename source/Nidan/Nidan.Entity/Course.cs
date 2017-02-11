@@ -12,9 +12,11 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
+            FollowUps = new HashSet<FollowUp>();
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
         }
+
         public int CourseId { get; set; }
 
         [Required]
@@ -22,6 +24,9 @@ namespace Nidan.Entity
         public string Name { get; set; }
 
         public int OrganisationId { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FollowUp> FollowUps { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }

@@ -54,6 +54,21 @@ namespace Nidan.Data.Models
                 .Property(e => e.Hex)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Course>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.FollowUps)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.IntrestedCourseId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FollowUp>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+
             //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)
@@ -99,7 +114,7 @@ namespace Nidan.Data.Models
             //    .WithRequired(e => e.CountryAbsenceType)
             //    .WillCascadeOnDelete(false);
 
-          
+
             //modelBuilder.Entity<Division>()
             //    .HasMany(e => e.DivisionCountryAbsencePeriods)
             //    .WithRequired(e => e.Division)
@@ -130,14 +145,14 @@ namespace Nidan.Data.Models
             //    .WithRequired(e => e.DivisionCountryAbsencePeriod)
             //    .WillCascadeOnDelete(false);
 
-           
+
 
             //modelBuilder.Entity<Frequency>()
             //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
             //    .WithRequired(e => e.Frequency)
             //    .WillCascadeOnDelete(false);
 
-       
+
 
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Alerts)
