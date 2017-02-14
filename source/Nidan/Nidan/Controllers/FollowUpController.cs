@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,6 +17,7 @@ namespace Nidan.Controllers
     public class FollowUpController : BaseController
     {
         // GET: FollowUp
+        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
         public FollowUpController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
@@ -60,16 +62,17 @@ namespace Nidan.Controllers
             }
             var viewModel = new FollowUpViewModel
             {
-                FollowUp = followUpViewModel.FollowUp
+                FollowUp = followUpViewModel.FollowUp,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name")
             };
-            return RedirectToAction("Index");
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveFollowUps(UserOrganisationId, f => true, orderBy, paging);
-            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId, f => true, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+                e =>e.FollowUpDateTime == _today && e.ReadDateTime != _today, orderBy, paging));
         }
 
         public void Read(int id)
@@ -82,18 +85,14 @@ namespace Nidan.Controllers
         public ActionResult Count()
         {
             var count = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-                e => e.CreatedDateTime == DateTime.Now && e.ReadDateTime.Value.Date != DateTime.Now.Date);
+                e => e.FollowUpDateTime.Date == DateTime.Now.Date && e.ReadDateTime.Date != DateTime.Now.Date);
             return this.JsonNet(count);
         }
 
-    [HttpPost]
-    public void MarkAsRead(int id)
+        [HttpPost]
+        public void MarkAsRead(int id)
         {
-            var data = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id);
-            data.ReadDateTime = DateTime.Now;
-            NidanBusinessService.UpdateFollowUp(UserOrganisationId, data);
-            //return RedirectToAction("Index");
+            NidanBusinessService.MarkAsReadFollowUp(UserOrganisationId, id);
         }
-
     }
 }

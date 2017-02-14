@@ -29,6 +29,7 @@ namespace Nidan.Business
         private object lockObject = new object();
         readonly string PersonnelPhotoKey = "PersonnelPhoto";
         readonly string PersonnelProfileCategory = "ProfileImage";
+        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
         public NidanBusinessService(INidanDataService nidanDataService, ICacheProvider cacheProvider, ITemplateService templateService, IEmailService emailService)
         {
@@ -99,13 +100,14 @@ namespace Nidan.Business
             var followUp = new FollowUp
             {
                 CentreId = mobilization.CentreId,
-                FollowUpDateTime = mobilization.FollowUpDate,
+                FollowUpDateTime = mobilization.FollowUpDate.Value,
                 MobilizationId = data.MobilizationId,
                 Remark = mobilization.Remark,
                 Name = mobilization.Name,
-                IntrestedCourseId = mobilization.Course.CourseId,
+                IntrestedCourseId = mobilization.InterestedCourseId,
                 Mobile = mobilization.Mobile,
-                CreatedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.Now,
+                ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
@@ -117,19 +119,20 @@ namespace Nidan.Business
             var followUp = new FollowUp
             {
                 CentreId = data.CentreId,
-                FollowUpDateTime = data.FollowUpDate,
+                FollowUpDateTime = data.FollowUpDate.Value,
                 EnquiryId = data.EnquiryId,
                 Remark = data.Remarks,
                 Name = data.CandidateName,
                 IntrestedCourseId = data.IntrestedCourseId,
                 Mobile = data.ContactNo,
-                CreatedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.Now,
+                ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
         }
 
-        public void UploadMobilization(int organisationId, int eventId,int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
+        public void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
         {
             var interestedCourses = RetrieveCourses(organisationId, c => true);
             var qualifications = RetrieveQualifications(organisationId, q => true);
@@ -156,9 +159,9 @@ namespace Nidan.Business
                     Remark = item.Remark,
                     StudentLocation = item.StudentLocation,
                     MobilizationTypeId = mobilizationType.MobilizationTypeId,
-                    PersonnelId =  personnelId
+                    PersonnelId = personnelId
                 });
-              
+
             }
             _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
         }
@@ -470,7 +473,7 @@ namespace Nidan.Business
         //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
         //}
 
-        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
         }
@@ -600,11 +603,11 @@ namespace Nidan.Business
             _nidanDataService.Delete<Personnel>(organisationId, e => e.PersonnelId == personnelId);
         }
 
-        public FollowUp MarkAsReadFollowUp(int organisationId, int id)
+        public void MarkAsReadFollowUp(int organisationId, int id)
         {
-            //return _nidanDataService.RetrieveFollowUp(organisationId, id, p => true);
-            var data = _nidanDataService.RetrieveFollowUp(organisationId, id, p => true);
-            return data;
+            var data = RetrieveFollowUp(organisationId, id);
+            data.ReadDateTime = _today;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
 
         public PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)

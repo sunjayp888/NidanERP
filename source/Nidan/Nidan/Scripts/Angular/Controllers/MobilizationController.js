@@ -25,7 +25,10 @@
         initialise();
 
         function initialise() {
-            order("Name");
+            vm.orderBy.property = "GeneratedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "desc";
+            order("GeneratedDate");
         }
 
         function retrieveMobilizations() {

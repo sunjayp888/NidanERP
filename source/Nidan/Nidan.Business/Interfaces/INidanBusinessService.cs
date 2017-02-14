@@ -52,7 +52,7 @@ namespace Nidan.Business.Interfaces
         List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate);
         List<HowDidYouKnowAbout> RetrieveHowDidYouKnowAbouts(int organisationId, Expression<Func<HowDidYouKnowAbout, bool>> predicate);
         List<Occupation> RetrieveOccupations(int organisationId, Expression<Func<Occupation, bool>> predicate);
-        PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
         PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
@@ -72,7 +72,7 @@ namespace Nidan.Business.Interfaces
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
 
-        FollowUp MarkAsReadFollowUp(int organisationId, int id);
+        void MarkAsReadFollowUp(int organisationId, int id);
 
     }
 }

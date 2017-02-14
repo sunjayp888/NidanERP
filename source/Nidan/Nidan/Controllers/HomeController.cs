@@ -21,7 +21,7 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
             var count = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => e.FollowUpDateTime.Value == _today).Items.Count();
+               e => e.FollowUpDateTime == _today).Items.Count();
             if (User.IsInRole("User") && !permissions.IsManager)
                 return RedirectToAction("Profile", "Personnel", new { id = personnelId });
 

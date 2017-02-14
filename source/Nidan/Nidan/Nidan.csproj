@@ -55,6 +55,14 @@
       <HintPath>..\packages\DocumentService.API.RESTClient.1.0.0.22\lib\net452\DocumentService.API.RESTClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.2\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -225,6 +233,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
@@ -245,6 +254,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
@@ -1392,6 +1402,9 @@
     <Content Include="Views\AreaOfInterest\Create.cshtml" />
     <Content Include="Views\AreaOfInterest\_AreaOfInterest.cshtml" />
     <Content Include="Views\AreaOfInterest\Edit.cshtml" />
+    <Content Include="Views\FollowUp\Edit.cshtml" />
+    <Content Include="Views\FollowUp\Index.cshtml" />
+    <Content Include="Views\FollowUp\_FollowUp.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

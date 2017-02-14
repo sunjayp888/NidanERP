@@ -48,17 +48,7 @@ namespace Nidan.Controllers
             var events = NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList();
             var viewModel = new MobilizationViewModel
             {
-                Mobilization = new Mobilization
-                {
-                    OrganisationId = UserOrganisationId,
-                    CentreId = 1,
-                    Name = "Shraddha",
-                    Mobile = 9870754355,
-                    //Qualification = "BSCIT",
-                    GeneratedDate = DateTime.Now,
-                    FollowUpDate = DateTime.Now.AddDays(2),
-                    Remark = "",
-                },
+                Mobilization = new Mobilization(),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 MobilizationTypes = new SelectList(mobilizationTypes, "MobilizationTypeId", "Name"),
                 Events = new SelectList(events, "EventId", "Name"),
@@ -74,13 +64,14 @@ namespace Nidan.Controllers
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
             var organisationId = UserOrganisationId;
+            mobilizationViewModel.GeneratedDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = 1;
                 mobilizationViewModel.Mobilization.EventId = 3;
                 mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
-                mobilizationViewModel.Mobilization.MobilizerStatus = "Open";
+                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
