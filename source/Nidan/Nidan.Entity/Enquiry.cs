@@ -35,6 +35,8 @@ namespace Nidan.Entity
         public int ReligionId { get; set; }
 
         public int CasteCategoryId { get; set; }
+        
+        public int SchemeId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -117,6 +119,8 @@ namespace Nidan.Entity
         public virtual Course Course { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Scheme Scheme { get; set; }
 
     }
 }

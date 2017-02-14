@@ -15,5 +15,6 @@ namespace Nidan.Models
         //public SelectList AreaOfInterests { get; set; }
         public SelectList HowDidYouKnowAbouts { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Schemes { get; set; }
     }
 }
