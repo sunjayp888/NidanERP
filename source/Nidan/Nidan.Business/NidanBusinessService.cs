@@ -443,6 +443,16 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Religion>(organisationId, e => true);
         }
 
+        public List<Scheme> RetrieveSchemes(int organisationId, Expression<Func<Scheme, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Scheme>(organisationId, e => true);
+        }
+
+        public List<SchemeType> RetrieveSchemeTypes(int organisationId, Expression<Func<SchemeType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<SchemeType>(organisationId, e => true);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate)
         {
             return _nidanDataService.Retrieve<CasteCategory>(organisationId, e => true);

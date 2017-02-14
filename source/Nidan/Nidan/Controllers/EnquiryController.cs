@@ -49,6 +49,7 @@ namespace Nidan.Controllers
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, id.Value);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
 
             var viewModel = new EnquiryViewModel
             {
@@ -59,6 +60,7 @@ namespace Nidan.Controllers
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
@@ -86,6 +88,7 @@ namespace Nidan.Controllers
             //enquiryViewModel.AreaOfInterests = new SelectList(NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true).ToList());
             enquiryViewModel.HowDidYouKnowAbouts = new SelectList(NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true).ToList());
             enquiryViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            enquiryViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -105,6 +108,7 @@ namespace Nidan.Controllers
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -118,6 +122,7 @@ namespace Nidan.Controllers
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);

@@ -39,6 +39,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<Occupation> Occupations { get; set; }
         public virtual DbSet<EnquirySearchField> EnquirySearchFields { get; set; }
         public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
+        public virtual DbSet<Scheme> Schemes { get; set; }
+        public virtual DbSet<SchemeType> SchemeTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -608,6 +610,19 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<MobilizationType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Scheme>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SchemeType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SchemeType>()
+                .HasMany(e => e.Schemes)
+                .WithRequired(e => e.SchemeType)
+                .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
         }

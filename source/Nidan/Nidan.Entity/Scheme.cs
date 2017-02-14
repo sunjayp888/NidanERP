@@ -6,22 +6,20 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Occupation")]
-    public partial class Occupation
+    [Table("Scheme")]
+    public partial class Scheme
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Occupation()
-        {
-            Enquiries = new HashSet<Enquiry>();
-        }
-
-        public int OccupationId { get; set; }
+        public int SchemeId { get; set; }
 
         [Required]
         [StringLength(500)]
         public string Name { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public int SchemeTypeId { get; set; }
+
+        public virtual SchemeType SchemeType { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
