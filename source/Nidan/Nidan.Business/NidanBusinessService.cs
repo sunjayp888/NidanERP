@@ -453,6 +453,26 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<SchemeType>(organisationId, e => true);
         }
 
+        public List<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Sector>(organisationId, e => true);
+        }
+
+        public List<BatchTimePrefer> RetrieveBatchTimePrefers(int organisationId, Expression<Func<BatchTimePrefer, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<BatchTimePrefer>(organisationId, e => true);
+        }
+
+        public List<StudentType> RetrieveStudentTypes(int organisationId, Expression<Func<StudentType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<StudentType>(organisationId, e => true);
+        }
+
+        public List<EnquiryType> RetrieveEnquiryTypes(int organisationId, Expression<Func<EnquiryType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<EnquiryType>(organisationId, e => true);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate)
         {
             return _nidanDataService.Retrieve<CasteCategory>(organisationId, e => true);

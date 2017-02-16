@@ -41,6 +41,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
         public virtual DbSet<Scheme> Schemes { get; set; }
         public virtual DbSet<SchemeType> SchemeTypes { get; set; }
+        public virtual DbSet<BatchTimePrefer> BatchTimePrefers { get; set; }
+        public virtual DbSet<Sector> Sectors { get; set; }
+        public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
+        public virtual DbSet<StudentType> StudentTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -327,7 +331,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.EducationalQualificationId);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.YearOFPassOut)
+                .Property(e => e.YearOfPassOut)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -433,7 +437,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.YearOFPassOut)
+                .Property(e => e.YearOfPassOut)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -623,6 +627,22 @@ namespace Nidan.Data.Models
                 .HasMany(e => e.Schemes)
                 .WithRequired(e => e.SchemeType)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BatchTimePrefer>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Sector>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<StudentType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }
