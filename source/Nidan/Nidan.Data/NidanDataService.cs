@@ -389,7 +389,7 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "GeneratedDate",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);

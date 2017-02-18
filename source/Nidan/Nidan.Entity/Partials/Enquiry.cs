@@ -54,7 +54,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Pre-Training Status")]
             [StringLength(100)]
-            public string PreTrainingStatus { get; set; }
+            public string PreTrainingStatus { get; set; } 
+
+            public string Gender { get; set; }
 
             [Display(Name = "Employment Status")]
             [StringLength(100)]

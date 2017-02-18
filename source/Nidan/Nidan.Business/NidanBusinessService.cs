@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using Newtonsoft.Json;
 using Nidan.Business.Extensions;
@@ -138,18 +139,18 @@ namespace Nidan.Business
             var qualifications = RetrieveQualifications(organisationId, q => true);
             var mobilizationType = RetrieveMobilizationTypes(organisationId, e => e.Name.ToLower() == "event").FirstOrDefault();
             var mobilizationList = new List<Mobilization>();
+            var followUpList = new List<FollowUp>();
             foreach (var item in mobilizations)
             {
-                var interestedCourseId = interestedCourses.FirstOrDefault(e => e.Name.ToLower() == item.InterestedCourse.ToLower())?.CourseId ??
+                var interestedCourseId = interestedCourses.FirstOrDefault(e => e.Name.Trim().ToLower() == item.InterestedCourse.Trim().ToLower())?.CourseId ??
                                          interestedCourses.First(e => e.Name.ToLower() == "others").CourseId;
-                var qualificationId = qualifications.FirstOrDefault(q => q.Name.ToLower() == item.InterestedCourse.ToLower())?.QualificationId ??
+                var qualificationId = qualifications.FirstOrDefault(q => q.Name.Trim().ToLower() == item.HighestQualification.Trim().ToLower())?.QualificationId ??
                                        qualifications.First(e => e.Name.ToLower() == "others").QualificationId;
 
                 mobilizationList.Add(new Mobilization()
                 {
                     InterestedCourseId = interestedCourseId,
                     CentreId = 1,
-                    CreatedDate = DateTime.Now,
                     GeneratedDate = generateDateTime,
                     EventId = eventId,
                     QualificationId = qualificationId,
@@ -159,11 +160,25 @@ namespace Nidan.Business
                     Remark = item.Remark,
                     StudentLocation = item.StudentLocation,
                     MobilizationTypeId = mobilizationType.MobilizationTypeId,
-                    PersonnelId = personnelId
+                    PersonnelId = personnelId,
+                    FollowUpDate = DateTime.Now.AddDays(2),
+                    OtherInterestedCourse = item.OtherInterestedCourse
                 });
-
+                followUpList.Add(new FollowUp
+                {
+                    CentreId = item.CentreId,
+                    FollowUpDateTime = DateTime.Now.AddDays(2),
+                    MobilizationId = item.MobilizationId,
+                    Remark = item.Remark,
+                    Name = item.Name,
+                    IntrestedCourseId = interestedCourseId,
+                    Mobile = item.Mobile,
+                    CreatedDateTime = DateTime.Now,
+                    ReadDateTime = _today.AddYears(-100),
+                });
             }
             _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
+            _nidanDataService.Create<FollowUp>(organisationId, followUpList);
         }
 
         #endregion

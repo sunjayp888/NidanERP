@@ -47,6 +47,31 @@
 @section scripts {
     <script>
         jQuery(function () {
+
+            if ($('#Enquiry_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
+            else { $('.experience-year-textbox').show(); }
+
+            $('#experienceRadioButton').click(function () {
+                $('.experience-year-textbox').show();
+            });
+
+            $('#fresherRadioButton').click(function () {
+                $('.experience-year-textbox').hide();
+            });
+
+            if (!$('#Enquiry_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
+            else { $('.employment-status-textbox').show(); }
+
+            $('#employedRadioButton').click(function () {
+                $('.employment-status-textbox').show();
+            });
+
+            $('#unemployedRadioButton').click(function () {
+                $('.employment-status-textbox').hide();
+            });
+
+            jQuery(".end-date, .termination-date").remove();
+
             jQuery(".date").daterangepicker({
                 autoApply: true,
                 singleDatePicker: true,
@@ -59,5 +84,6 @@
                 }
             });
         });
+
     </script>
 }

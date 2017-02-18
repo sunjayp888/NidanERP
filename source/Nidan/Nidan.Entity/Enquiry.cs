@@ -15,6 +15,8 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string CandidateName { get; set; }
 
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long ContactNo { get; set; }
 
         [StringLength(500)]
@@ -40,7 +42,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(100)]
-        public string Gender { get; set; }
+        public string Gender { get; set; } = "Female";
 
         public int EducationalQualificationId { get; set; }
 
@@ -55,10 +57,10 @@ namespace Nidan.Entity
         public int HowDidYouKnowAboutId { get; set; }
 
         [StringLength(100)]
-        public string PreTrainingStatus { get; set; }
+        public string PreTrainingStatus { get; set; } = "Fresher";
 
         [StringLength(100)]
-        public string EmploymentStatus { get; set; }
+        public string EmploymentStatus { get; set; } = "UnEmployed";
 
         [StringLength(100)]
         public string Promotional { get; set; }
