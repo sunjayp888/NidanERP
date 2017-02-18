@@ -6,6 +6,7 @@ namespace Nidan.Models
     {
         public string OrganisationName { get; set; }
         public int PersonnelId { get; set; }
+        public int CentreId { get; set; }
         public Permissions Permissions { get; set; }
     }
 }

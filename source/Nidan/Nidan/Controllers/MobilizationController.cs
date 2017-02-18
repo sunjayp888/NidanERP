@@ -1,25 +1,16 @@
 ﻿using Excel;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Nidan.Attributes;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using Nidan.Models;
-using Nidan.Models.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using System.Web.UI.HtmlControls;
 using Nidan.Business.Dto;
 
 namespace Nidan.Controllers

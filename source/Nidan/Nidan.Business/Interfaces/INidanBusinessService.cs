@@ -29,7 +29,7 @@ namespace Nidan.Business.Interfaces
         Organisation RetrieveOrganisation(int organisationId);
         IAuthorisation RetrieveUserAuthorisation(string aspNetUserId);
         Permissions RetrievePersonnelPermissions(bool isAdmin, int organisationId, int userPersonnelId, int? personnelId = null);
-        PagedResult<Personnel> RetrievePersonnel(int organisationId, List<OrderBy> orderBy, Paging paging);
+        PagedResult<Personnel> RetrievePersonnel(int organisationId,int centreId, List<OrderBy> orderBy, Paging paging);
         Personnel RetrievePersonnel(int organisationId, int id);
         PagedResult<PersonnelSearchField> RetrievePersonnelBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Question> RetrieveQuestions(int organisationId, Expression<Func<Question, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -55,6 +55,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
+        List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

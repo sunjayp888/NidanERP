@@ -124,7 +124,7 @@ namespace Nidan.Business
             return data;
         }
 
-        public void UploadMobilization(int organisationId, int eventId,int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
+        public void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
         {
             var interestedCourses = RetrieveCourses(organisationId, c => true);
             var qualifications = RetrieveQualifications(organisationId, q => true);
@@ -151,9 +151,9 @@ namespace Nidan.Business
                     Remark = item.Remark,
                     StudentLocation = item.StudentLocation,
                     MobilizationTypeId = mobilizationType.MobilizationTypeId,
-                    PersonnelId =  personnelId
+                    PersonnelId = personnelId
                 });
-              
+
             }
             _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
         }
@@ -168,9 +168,9 @@ namespace Nidan.Business
             return personnel;
         }
 
-        public PagedResult<Personnel> RetrievePersonnel(int organisationId, List<OrderBy> orderBy, Paging paging)
+        public PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging)
         {
-            return _nidanDataService.RetrievePersonnel(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrievePersonnel(organisationId, p => p.CentreId == centreId, orderBy, paging);
         }
 
 
@@ -470,6 +470,10 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
         }
 
+        public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
+        }
         #endregion
 
         #region // Update

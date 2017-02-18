@@ -22,13 +22,13 @@ namespace Nidan.Controllers
                 return _nidanBusinessService;
             }
         }
-        
+
         public BaseController(INidanBusinessService nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
         }
 
-       
+
 
         protected ApplicationUserManager UserManager
         {
@@ -59,7 +59,8 @@ namespace Nidan.Controllers
 
         protected int UserOrganisationId => ApplicationUser?.OrganisationId ?? 0;
         protected int UserPersonnelId => ApplicationUser?.PersonnelId ?? 0;
-       // protected int UserEnquiryId => ApplicationUser?.EnquiryId?? 0;
+        protected int UserCentreId => ApplicationUser?.CentreId ?? 0;
+        // protected int UserEnquiryId => ApplicationUser?.EnquiryId?? 0;
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -70,7 +71,8 @@ namespace Nidan.Controllers
                 var organisation = UserManager.TenantOrganisation;
                 viewModel.OrganisationName = organisation?.Name ?? string.Empty;
                 viewModel.PersonnelId = UserPersonnelId;
-               // viewModel.EnquiryId = UserEnquiryId;
+                viewModel.CentreId = UserCentreId;
+                // viewModel.EnquiryId = UserEnquiryId;
 
             }
 

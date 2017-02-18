@@ -18,6 +18,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int CentreId { get; set; }
+
         [Required]
         [StringLength(50)]
         public string Title { get; set; }
@@ -97,6 +99,8 @@ namespace Nidan.Entity
         public int? CurrentEmploymentId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Centre Centre { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mobilization> Mobilizations { get; set; }

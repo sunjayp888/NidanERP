@@ -1,9 +1,21 @@
-﻿@model Nidan.Models.PersonnelProfileViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.PersonnelProfileViewModel
 <div class="form-control-required-example"> = Required</div>
+
+@*@if (User.IsInAnyRoles("SuperAdmin"))
+{*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Personnel.CentreId, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Personnel.CentreId, Model.Centres, new {@class = "form-control col-md-7 col-xs-12"})
+            @Html.ValidationMessageFor(model => model.Personnel.CentreId, "", new {@class = "help-block"})
+        </div>
+    </div>
+@*}*@
 
 <div class="form-group">
     @Html.LabelFor(model => model.Personnel.Title, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">        
+    <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Personnel.Title, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Personnel.Title, "", new { @class = "help-block" })
     </div>
@@ -37,12 +49,12 @@
     </div>
 </div>
 @*<div class="form-group">
-    @Html.LabelFor(model => model.Personnel.CountryId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Personnel.CountryId, Model.Countries, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Personnel.CountryId, "", new { @class = "help-block" })
-    </div>
-</div>*@
+        @Html.LabelFor(model => model.Personnel.CountryId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Personnel.CountryId, Model.Countries, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Personnel.CountryId, "", new { @class = "help-block" })
+        </div>
+    </div>*@
 <div class="form-group">
     @Html.LabelFor(model => model.Personnel.Address1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -51,7 +63,7 @@
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(model => model.Personnel.Address2, " ", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })    
+    @Html.LabelFor(model => model.Personnel.Address2, " ", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Personnel.Address2, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Personnel.Address2, "", new { @class = "help-block" })

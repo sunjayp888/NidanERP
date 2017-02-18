@@ -78,8 +78,11 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
             var viewModel = new PersonnelProfileViewModel
             {
+                
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 Personnel = new Personnel
                 {
                     OrganisationId = UserOrganisationId,
@@ -110,7 +113,8 @@ namespace Nidan.Controllers
 
             if (ModelState.IsValid)
             {
-                //Create Personnel               
+                //Create Personnel
+                personnelViewModel.Personnel.CentreId = personnelViewModel.Personnel.CentreId == 0? UserCentreId:personnelViewModel.Personnel.CentreId;
                 personnelViewModel.Personnel = NidanBusinessService.CreatePersonnel(UserOrganisationId, personnelViewModel.Personnel);
 
                 var result = CreateUserAndRole(personnelViewModel.Personnel);
@@ -135,7 +139,8 @@ namespace Nidan.Controllers
                 UserName = personnel.Email,
                 Email = personnel.Email,
                 OrganisationId = UserOrganisationId,
-                PersonnelId = personnel.PersonnelId
+                PersonnelId = personnel.PersonnelId,
+                CentreId = personnel.CentreId
             };
 
             var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "User").Id;
@@ -158,9 +163,12 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
+            var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
+           
             personnel.Email = UserManager.FindByPersonnelId(personnel.PersonnelId)?.Email;
             var viewModel = new PersonnelProfileViewModel
             {
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 Personnel = personnel
             };
             return View(viewModel);
@@ -174,6 +182,7 @@ namespace Nidan.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 personnelViewModel.Personnel = NidanBusinessService.UpdatePersonnel(UserOrganisationId, personnelViewModel.Personnel);
 
                 var editUser = UserManager.FindByPersonnelId(personnelViewModel.Personnel.PersonnelId);
@@ -221,7 +230,7 @@ namespace Nidan.Controllers
                 }
                 return this.JsonNet("");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return this.JsonNet(ex);
             }
@@ -250,7 +259,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrievePersonnel(UserOrganisationId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrievePersonnel(UserOrganisationId, UserCentreId, orderBy, paging));
         }
 
         [HttpPost]

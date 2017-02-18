@@ -9,5 +9,6 @@ namespace Nidan.Models
     {
         public Personnel Personnel { get; set; }        
         public string PhotoBytes { get; set; }
+        public SelectList Centres { get; set; }
     }
 }

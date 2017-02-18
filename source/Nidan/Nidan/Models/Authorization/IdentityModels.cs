@@ -27,7 +27,8 @@ namespace Nidan.Models.Authorization
 
         public int? OrganisationId { get; set; }
         public int? PersonnelId { get; set; }
-        
+        public int? CentreId { get; set; }
+
     }
 
     public class ApplicationRole : IdentityRole
