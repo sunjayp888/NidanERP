@@ -53,25 +53,6 @@
     <script>
         $(function () {
 
-
-            //$('.date').daterangepicker({
-            //    autoApply: true,
-            //    singleDatePicker: true,
-            //    showDropdowns: true,
-            //    showCustomRangeLabel: false,
-            //    opens: 'left',
-            //    locale: {
-            //        format: 'DD MMMM YYYY'
-            //    }
-            //});
-            //$(".generated .date").on('apply.daterangepicker', function (ev, picker) {
-            //    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            //});
-            //$('.date').daterangepicker({
-            //    singleDatePicker: true,
-            //    showDropdowns: true
-            //});
-
             $('#publicHolidayErrorSummary').hide();
             var daterangepickerOptions = {
                 autoApply: true,
@@ -79,8 +60,8 @@
                 showDropdowns: true,
                 showCustomRangeLabel: false,
                 opens: 'left',
-                //minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
-                //maxDate: moment().format('DD MMMM YYYY'),
+                minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
                 onSelect: function () {
                     selectedDate = moment().format('DD MMMM YYYY');
                 },
@@ -92,16 +73,8 @@
             jQuery(function () {
                 jQuery(".date").daterangepicker(daterangepickerOptions);
                 $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
-                $(".generated .date, .termination .date, .previousemploymentend .date").on('apply.daterangepicker', function (ev, picker) {
+                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
                     $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
-                $("#years a").click(function () {
-                    var year = $(this).text();
-                    var daterangepickerOptionsExtended = {
-                        minDate: moment("01/01/" + year).format('DD MMMM YYYY'),
-                        maxDate: moment("12/31/" + year).format('DD MMMM YYYY')
-                    };
-                    jQuery('.date').daterangepicker(jQuery.extend(daterangepickerOptions, daterangepickerOptionsExtended));
                 });
             });
         });

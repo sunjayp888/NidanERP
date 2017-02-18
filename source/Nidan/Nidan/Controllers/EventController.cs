@@ -60,17 +60,17 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        //[HttpPost]
-        //public ActionResult Create(EventViewModel events)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var data = _businessService.CreateEvent(events.Event);
-        //        return RedirectToAction("Index");
-        //    }
-        //    var model = new EventViewModel();
-        //    return View(model);
-        //}
+        [HttpPost]
+        public ActionResult Create(EventViewModel events)
+        {
+            if (ModelState.IsValid)
+            {
+               // var data = _nidanBusinessService.CreateEvent(events.Event);
+                return RedirectToAction("Index");
+            }
+            var model = new EventViewModel();
+            return View(model);
+        }
 
         //public ActionResult Edit(int? id)
         //{

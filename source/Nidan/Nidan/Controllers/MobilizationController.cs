@@ -69,14 +69,14 @@ namespace Nidan.Controllers
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = 1;
-                mobilizationViewModel.Mobilization.EventId = 3;
-                mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
+                mobilizationViewModel.Mobilization.FollowUpDate = DateTime.Now.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
             mobilizationViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-            //mobilizationViewModel.Events = new SelectList(NidanBusinessService.RetrieveEvents(organisationId, e => true).ToList());
+            mobilizationViewModel.Events = new SelectList(NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList());
             mobilizationViewModel.Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             return View(mobilizationViewModel);
         }
@@ -99,6 +99,7 @@ namespace Nidan.Controllers
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 MobilizationTypes = new SelectList(NidanBusinessService.RetrieveMobilizationTypes(UserOrganisationId, e => true).ToList(), "MobilizationTypeId", "Name"),
                 Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name"),
+                EventId = mobilization.EventId,
                 Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(UserOrganisationId, e => true).ToList(), "QualificationId", "Name")
             };
             return View(viewModel);
@@ -113,9 +114,8 @@ namespace Nidan.Controllers
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = 1;
-                mobilizationViewModel.Mobilization.EventId = 3;
-                mobilizationViewModel.Mobilization.CreatedDate = DateTime.Now;
-                mobilizationViewModel.Mobilization.MobilizerStatus = "Open";
+                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
@@ -177,35 +177,6 @@ namespace Nidan.Controllers
                 }
             }
             return View();
-        }
-
-        private static List<T> ConvertDataTable<T>(DataTable dt)
-        {
-            List<T> data = new List<T>();
-            foreach (DataRow row in dt.Rows)
-            {
-                T item = GetItem<T>(row);
-                data.Add(item);
-            }
-            return data;
-        }
-
-        private static T GetItem<T>(DataRow dr)
-        {
-            Type temp = typeof(T);
-            T obj = Activator.CreateInstance<T>();
-
-            foreach (DataColumn column in dr.Table.Columns)
-            {
-                foreach (PropertyInfo pro in temp.GetProperties())
-                {
-                    if (pro.Name == column.ColumnName)
-                        pro.SetValue(obj, dr[column.ColumnName], null);
-                    else
-                        continue;
-                }
-            }
-            return obj;
         }
 
         [HttpPost]

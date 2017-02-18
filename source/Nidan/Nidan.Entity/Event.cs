@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Event")]
     public partial class Event
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Event()
+        {
+            Mobilizations = new HashSet<Mobilization>();
+        }
         public int EventId { get; set; }
 
         [StringLength(200)]
@@ -27,6 +32,8 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
-        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mobilization> Mobilizations { get; set; }
+
     }
 }

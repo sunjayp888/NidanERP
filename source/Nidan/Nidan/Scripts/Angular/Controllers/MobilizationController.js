@@ -20,6 +20,7 @@
         vm.canDeleteMobilization = canDeleteMobilization;
         vm.deleteMobilization = deleteMobilization;
         vm.searchMobilization = searchMobilization;
+        vm.viewMobilization = viewMobilization;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
@@ -81,6 +82,10 @@
         function deleteMobilization(id) {
             return MobilizationService.deleteMobilization(id).then(function () { initialise(); });
         };
+
+        function viewMobilization(mobilizationId) {
+            $window.location.href = "/Mobilization/Edit/" + mobilizationId;
+        }
 
     }
 

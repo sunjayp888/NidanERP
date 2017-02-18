@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public string HighestQualification { get; set; }
         [NotMapped]
         public string InterestedCourse { get; set; }
+      
         private class MobilizationMetadata
         {
             [Display(Name = "Event")]

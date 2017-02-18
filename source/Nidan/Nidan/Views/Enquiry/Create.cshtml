@@ -46,8 +46,51 @@
 @section scripts {
     <script src="~/Scripts/App/EmploymentWorkingPattern.js"></script>
     <script>
-        jQuery(function () {
+        $('#Enquiry_ContactNo').val("");
+        $('#Enquiry_Age').val("");
+        jQuery(function() {
+            if ($('#Enquiry_PreTrainingStatus').is(':checked')) {
+                $('.experience-year-textbox').hide();
+            } else {
+                $('.experience-year-textbox').show();
+            }
+
+            $('#experienceRadioButton').click(function() {
+                $('.experience-year-textbox').show();
+            });
+
+            $('#fresherRadioButton').click(function() {
+                $('.experience-year-textbox').hide();
+            });
+
+            if (!$('#Enquiry_EmploymentStatus').is(':checked')) {
+                $('.employment-status-textbox').hide();
+            } else {
+                $('.employment-status-textbox').show();
+            }
+
+            $('#employedRadioButton').click(function() {
+                $('.employment-status-textbox').show();
+            });
+
+            $('#unemployedRadioButton').click(function() {
+                $('.employment-status-textbox').hide();
+            });
+
             jQuery(".end-date, .termination-date").remove();
         });
+
+        function phoneno() {
+            $('#phone').keypress(function(e) {
+                var a = [];
+                var k = e.which;
+
+                for (i = 48; i < 58; i++)
+                    a.push(i);
+
+                if (!(a.indexOf(k) >= 0))
+                    e.preventDefault();
+            });
+        }
     </script>
 }

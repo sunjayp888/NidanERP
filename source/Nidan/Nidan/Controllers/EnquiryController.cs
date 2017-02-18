@@ -50,6 +50,10 @@ namespace Nidan.Controllers
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, id.Value);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
+            var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
 
             var viewModel = new EnquiryViewModel
             {
@@ -61,6 +65,10 @@ namespace Nidan.Controllers
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
+                EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
@@ -89,6 +97,10 @@ namespace Nidan.Controllers
             enquiryViewModel.HowDidYouKnowAbouts = new SelectList(NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true).ToList());
             enquiryViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             enquiryViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
+            enquiryViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            enquiryViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
+            enquiryViewModel.StudentTypes = new SelectList(NidanBusinessService.RetrieveStudentTypes(organisationId, e => true).ToList());
+            enquiryViewModel.EnquiryTypes = new SelectList(NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -109,6 +121,11 @@ namespace Nidan.Controllers
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
+            var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
+
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -123,6 +140,10 @@ namespace Nidan.Controllers
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
+                EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
