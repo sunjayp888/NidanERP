@@ -6,27 +6,30 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("CasteCategory")]
-    public partial class CasteCategory
+    [Table("District")]
+    public partial class District
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CasteCategory()
+        public District()
         {
-            Enquiries = new HashSet<Enquiry>();
+            Talukas = new HashSet<Taluka>();
         }
 
-        public int CasteCategoryId { get; set; }
+        public int DistrictId { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string Caste { get; set; }
+        public string Name { get; set; }
 
         public int OrganisationId { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
+        public int StateId { get; set; }
+
+        public virtual State State { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admission> Admissions { get; set; }
+        public virtual ICollection<Taluka> Talukas { get; set; }
     }
 }
