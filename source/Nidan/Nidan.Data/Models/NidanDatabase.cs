@@ -45,6 +45,11 @@ namespace Nidan.Data.Models
         public virtual DbSet<Sector> Sectors { get; set; }
         public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
         public virtual DbSet<StudentType> StudentTypes { get; set; }
+        public virtual DbSet<Counselling> Counsellings { get; set; }
+        public virtual DbSet<Admission> Admissions { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Taluka> Talukas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -641,6 +646,131 @@ namespace Nidan.Data.Models
                .IsUnicode(false);
 
             modelBuilder.Entity<StudentType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                 .Property(e => e.CounselledBy)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                 .Property(e => e.Name)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.Salutation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PermanentAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PTalukaId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PDistrictId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PStateId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.CommunicationAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.CTalukaId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.CDistrictId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.CStateId);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.ProfessionalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TechnicalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmployerAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<District>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<District>()
+                .HasMany(e => e.Talukas)
+                .WithRequired(e => e.District)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<State>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<State>()
+                .HasMany(e => e.Districts)
+                .WithRequired(e => e.State)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<State>()
+                .HasMany(e => e.Talukas)
+                .WithRequired(e => e.State)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Taluka>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 

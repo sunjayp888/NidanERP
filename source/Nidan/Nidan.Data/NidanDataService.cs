@@ -58,6 +58,18 @@ namespace Nidan.Data
             }
         }
 
+        public Admission CreateAdmission(int organisationId, Admission admission)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                admission = context.Admissions.Add(admission);
+                context.SaveChanges();
+
+                return admission;
+            }
+        }
+
+
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -468,7 +480,7 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "EnquiryDate",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);
@@ -613,6 +625,80 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CentreId == centreId);
+
+            }
+        }
+
+        public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Counsellings
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Counsellings
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CounsellingId == counsellingId);
+
+            }
+        }
+
+        public PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Admissions
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Admissions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.AdmissionId == admissionId);
 
             }
         }

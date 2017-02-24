@@ -20,6 +20,7 @@ namespace Nidan.Business.Interfaces
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
+        Admission CreateAdmission(int organisationId, Admission admission);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -58,12 +59,22 @@ namespace Nidan.Business.Interfaces
         List<BatchTimePrefer> RetrieveBatchTimePrefers(int organisationId, Expression<Func<BatchTimePrefer, bool>> predicate);
         List<StudentType> RetrieveStudentTypes(int organisationId, Expression<Func<StudentType, bool>> predicate);
         List<EnquiryType> RetrieveEnquiryTypes(int organisationId, Expression<Func<EnquiryType, bool>> predicate);
+        List<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate);
+        List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate);
+        List<District> RetrieveDistricts(int organisationId, Expression<Func<District, bool>> predicate);
+        List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
         PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Centre RetrieveCentre(int organisationId, int id);
+        PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
+        Counselling RetrieveCounselling(int organisationId, int id);
+        PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
+        Admission RetrieveAdmission(int organisationId, int id);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
 
         // Update
@@ -74,6 +85,8 @@ namespace Nidan.Business.Interfaces
         ValidationResult<AreaOfInterest> UpdateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
         Centre UpdateCentre(int organisationId, Centre centre);
+        Counselling UpdateCounselling(int organisationId, Counselling counselling);
+        Admission UpdateAdmission(int organisationId, Admission admission);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

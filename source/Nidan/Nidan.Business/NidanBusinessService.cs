@@ -129,6 +129,15 @@ namespace Nidan.Business
                 CreatedDateTime = DateTime.Now,
                 ReadDateTime = _today.AddYears(-100)
             };
+
+            var counselling = new Counselling
+            {
+                EnquiryId = data.EnquiryId,
+                CentreId = data.CentreId,
+                CourseOfferedId = data.IntrestedCourseId,
+                Name = data.CandidateName
+            };
+            _nidanDataService.Create<Counselling>(organisationId, counselling);
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
         }
@@ -179,6 +188,11 @@ namespace Nidan.Business
             }
             _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
             _nidanDataService.Create<FollowUp>(organisationId, followUpList);
+        }
+
+        public Admission CreateAdmission(int organisationId, Admission admission)
+        {
+            return _nidanDataService.CreateAdmission(organisationId, admission);
         }
 
         #endregion
@@ -488,6 +502,26 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<EnquiryType>(organisationId, e => true);
         }
 
+        public List<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Enquiry>(organisationId, e => true);
+        }
+
+        public List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<State>(organisationId, e => true);
+        }
+
+        public List<District> RetrieveDistricts(int organisationId, Expression<Func<District, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<District>(organisationId, e => true);
+        }
+
+        public List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Taluka>(organisationId, e => true);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate)
         {
             return _nidanDataService.Retrieve<CasteCategory>(organisationId, e => true);
@@ -614,6 +648,38 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentre(organisationId, id, p => true);
         }
 
+        public PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCounsellings(organisationId, p => true, orderBy, paging);
+        }
+
+        public Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate)
+        {
+            var counselling = _nidanDataService.RetrieveCounselling(organisationId, counsellingId, p => true);
+            return counselling;
+        }
+
+        public Counselling RetrieveCounselling(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCounselling(organisationId, id, p => true);
+        }
+
+        public PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAdmissions(organisationId, p => true, orderBy, paging);
+        }
+
+        public Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate)
+        {
+            var admission = _nidanDataService.RetrieveAdmission(organisationId, admissionId, p => true);
+            return admission;
+        }
+
+        public Admission RetrieveAdmission(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveAdmission(organisationId, id, p => true);
+        }
+
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);
@@ -637,6 +703,16 @@ namespace Nidan.Business
         public Centre UpdateCentre(int organisationId, Centre centre)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centre);
+        }
+
+        public Counselling UpdateCounselling(int organisationId, Counselling counselling)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+        }
+
+        public Admission UpdateAdmission(int organisationId, Admission admission)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 
         #endregion
