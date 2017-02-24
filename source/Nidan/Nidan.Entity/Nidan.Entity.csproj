@@ -84,16 +84,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbsenceType.cs" />
+    <Compile Include="Admission.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
+    <Compile Include="Counselling.cs" />
     <Compile Include="Course.cs" />
+    <Compile Include="District.cs" />
     <Compile Include="Dto\Permissions.cs" />
     <Compile Include="Dto\TenantOrganisation.cs" />
     <Compile Include="Enquiry.cs" />
+    <Compile Include="EnquiryType.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventActivityType.cs" />
     <Compile Include="EnquirySearchField.cs" />
@@ -131,6 +136,12 @@
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Religion.cs" />
+    <Compile Include="Scheme.cs" />
+    <Compile Include="SchemeType.cs" />
+    <Compile Include="Sector.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="StudentType.cs" />
+    <Compile Include="Taluka.cs" />
     <Compile Include="UserAuthorisationFilter.cs" />
     <Compile Include="Validation\DateGreaterThanAttribute.cs" />
   </ItemGroup>
