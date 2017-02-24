@@ -45,6 +45,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Sector> Sectors { get; set; }
         public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
         public virtual DbSet<StudentType> StudentTypes { get; set; }
+        public virtual DbSet<Batch> Batches { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -642,6 +643,18 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<StudentType>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.TrainingType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.SubSector)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.Remarks)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

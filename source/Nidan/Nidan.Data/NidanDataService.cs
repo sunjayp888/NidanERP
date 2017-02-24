@@ -58,6 +58,17 @@ namespace Nidan.Data
             }
         }
 
+        public Batch CreateBatch(int organisationId, Batch batch)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                batch = context.Batches.Add(batch);
+                context.SaveChanges();
+
+                return batch;
+            }
+        }
+
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -617,6 +628,20 @@ namespace Nidan.Data
             }
         }
 
+        public Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Batches
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.BatchId == batchId);
+
+            }
+        }
+
         public PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -634,6 +659,29 @@ namespace Nidan.Data
                         {
                             Property = "Name",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Batches
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);

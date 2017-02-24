@@ -19,6 +19,7 @@ namespace Nidan.Business.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
+        Batch CreateBatch(int organisationId, Batch batch);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
 
         // Retrieve
@@ -64,6 +65,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Centre RetrieveCentre(int organisationId, int id);
+        Batch RetrieveBatch(int organisationId, int id);
+        PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
 
         // Update
@@ -74,6 +78,7 @@ namespace Nidan.Business.Interfaces
         ValidationResult<AreaOfInterest> UpdateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
         Centre UpdateCentre(int organisationId, Centre centre);
+        Batch UpdateBatch(int organisationId, Batch batch);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
