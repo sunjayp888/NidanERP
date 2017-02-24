@@ -15,6 +15,8 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string CandidateName { get; set; }
 
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long ContactNo { get; set; }
 
         [StringLength(500)]
@@ -35,15 +37,17 @@ namespace Nidan.Entity
         public int ReligionId { get; set; }
 
         public int CasteCategoryId { get; set; }
+        
+        public int SchemeId { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string Gender { get; set; }
+        public string Gender { get; set; } = "Female";
 
         public int EducationalQualificationId { get; set; }
 
         [StringLength(100)]
-        public string YearOFPassOut { get; set; }
+        public string YearOfPassOut { get; set; }
 
         [StringLength(100)]
         public string Marks { get; set; }
@@ -53,10 +57,10 @@ namespace Nidan.Entity
         public int HowDidYouKnowAboutId { get; set; }
 
         [StringLength(100)]
-        public string PreTrainingStatus { get; set; }
+        public string PreTrainingStatus { get; set; } = "Fresher";
 
         [StringLength(100)]
-        public string EmploymentStatus { get; set; }
+        public string EmploymentStatus { get; set; } = "UnEmployed";
 
         [StringLength(100)]
         public string Promotional { get; set; }
@@ -98,6 +102,29 @@ namespace Nidan.Entity
 
         public int AnnualIncome { get; set; }
 
+        public int EnquiryTypeId { get; set; }
+
+        public int StudentTypeId { get; set; }
+
+        public int SectorId { get; set; }
+
+        public int BatchTimePreferId { get; set; }
+
+        [StringLength(500)]
+        public string AppearingQualification { get; set; }
+
+        public int YearOfExperience { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? EnquiryFollowUpDate { get; set; }
+
+        [StringLength(100)]
+        public string PlacementNeeded { get; set; }
+
+        public string WhyEnquiryClosed { get; set; }
+
+        public string RemarkByBm { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }
@@ -118,5 +145,14 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
+        public virtual Scheme Scheme { get; set; }
+
+        public virtual BatchTimePrefer BatchTimePrefer { get; set; }
+
+        public virtual Sector Sector { get; set; }
+
+        public virtual EnquiryType EnquiryType { get; set; }
+
+        public virtual StudentType StudentType { get; set; }
     }
 }

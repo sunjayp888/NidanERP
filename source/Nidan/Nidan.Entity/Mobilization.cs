@@ -23,6 +23,8 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string Name { get; set; }
 
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
 
         public int InterestedCourseId { get; set; }
@@ -30,7 +32,7 @@ namespace Nidan.Entity
         public int QualificationId { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
@@ -64,5 +66,7 @@ namespace Nidan.Entity
         public virtual MobilizationType MobilizationType { get; set; }
 
         public virtual Personnel Personnel { get; set; }
+
+        public virtual Event Event { get; set; }
     }
 }

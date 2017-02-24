@@ -20,12 +20,16 @@
         vm.canDeleteMobilization = canDeleteMobilization;
         vm.deleteMobilization = deleteMobilization;
         vm.searchMobilization = searchMobilization;
+        vm.viewMobilization = viewMobilization;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
 
         function initialise() {
-            order("Name");
+            vm.orderBy.property = "GeneratedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "desc";
+            order("GeneratedDate");
         }
 
         function retrieveMobilizations() {
@@ -78,6 +82,10 @@
         function deleteMobilization(id) {
             return MobilizationService.deleteMobilization(id).then(function () { initialise(); });
         };
+
+        function viewMobilization(mobilizationId) {
+            $window.location.href = "/Mobilization/Edit/" + mobilizationId;
+        }
 
     }
 

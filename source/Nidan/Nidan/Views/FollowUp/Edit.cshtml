@@ -1,12 +1,12 @@
-﻿@model Nidan.Models.EnquiryViewModel
+﻿@model Nidan.Models.FollowUpViewModel
 @{
-    ViewBag.Title = string.Format("Edit Enquiry ({0})", Model.Enquiry.CandidateName);
+    ViewBag.Title = string.Format("Edit Follow-Up ({0})", Model.FollowUp.Name);
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.Enquiry.CandidateName<small>Edit Enquiry</small></h2>
+                <h2>@Model.FollowUp.Name<small>Edit Follow-Up</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -23,8 +23,13 @@
                             </div>
 
                         }
-                        @Html.HiddenFor(model => Model.Enquiry.EnquiryId)
-                        @Html.Partial("_Enquiry", Model)
+                        @Html.HiddenFor(model => Model.FollowUp.FollowUpId)
+                        @Html.HiddenFor(model => Model.FollowUp.MobilizationId)
+                        @Html.HiddenFor(model => Model.FollowUp.ReadDateTime)
+                        @Html.HiddenFor(model => Model.FollowUp.CreatedDateTime)
+                        @Html.HiddenFor(model => Model.FollowUp.CentreId)
+                        @Html.HiddenFor(model => Model.FollowUp.IntrestedCourseId)
+                        @Html.Partial("_FollowUp", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
@@ -43,47 +48,35 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
-
 @section scripts {
+
     <script>
-        jQuery(function () {
+        $(function () {
 
-            if ($('#Enquiry_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
-            else { $('.experience-year-textbox').show(); }
-
-            $('#experienceRadioButton').click(function () {
-                $('.experience-year-textbox').show();
-            });
-
-            $('#fresherRadioButton').click(function () {
-                $('.experience-year-textbox').hide();
-            });
-
-            if (!$('#Enquiry_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
-            else { $('.employment-status-textbox').show(); }
-
-            $('#employedRadioButton').click(function () {
-                $('.employment-status-textbox').show();
-            });
-
-            $('#unemployedRadioButton').click(function () {
-                $('.employment-status-textbox').hide();
-            });
-
-            jQuery(".end-date, .termination-date").remove();
-
-            jQuery(".date").daterangepicker({
+            $('#publicHolidayErrorSummary').hide();
+            var daterangepickerOptions = {
                 autoApply: true,
                 singleDatePicker: true,
                 showDropdowns: true,
                 showCustomRangeLabel: false,
                 opens: 'left',
-                startDate: '@Model.Enquiry.EnquiryDate.Value.ToString("dd/MMMM/yyyy")',
+                minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
                 locale: {
-                    format: 'DD MMMM YYYY'
+                    "format": "DD MMMM YYYY"
                 }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
             });
         });
-
     </script>
 }

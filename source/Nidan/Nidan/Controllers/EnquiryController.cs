@@ -49,46 +49,26 @@ namespace Nidan.Controllers
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, id.Value);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
+            var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
 
             var viewModel = new EnquiryViewModel
             {
-                Enquiry = new Enquiry
-                {
-                    OrganisationId = UserOrganisationId,
-                    CandidateName = mobilization == null ? string.Empty : mobilization.Name,
-                    ContactNo = mobilization?.Mobile ?? 0,
-                    EmailId = string.Format("{0}@hr.com", Guid.NewGuid()),
-                    Age = 24,
-                    //Qualification = mobilization?.Qualification ?? string.Empty,
-                    Address = mobilization?.StudentLocation ?? string.Empty,
-                    IntrestedCourseId = mobilization?.InterestedCourseId ?? courses.FirstOrDefault().CourseId,
-                    GuardianName = "",
-                    GuardianContactNo = 123,
-                    //Occupation = "",
-                   // Religion = "",
-                    //CategoryCode = "",
-                    Gender = "Female",
-                    //EducationalQualification = "BSCIT",
-                    YearOFPassOut = "",
-                    Marks = "",
-                    //HowDidYouKnowAbout = "",
-                    PreTrainingStatus = "",
-                    EmploymentStatus = "",
-                    Promotional = "",
-                    //EnquiryDate = DateTime.Today,
-                    Place = "Thane",
-                    CounselledBy = "Deepali",
-                    //CourseOffered = ".net",
-                    Remarks = "",
-                    FollowUpDate = DateTime.Today,
-                    CentreId = 1,
-                },
+                Enquiry = new Enquiry(),
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
                 Religions = new SelectList(religions, "ReligionId", "Name"),
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
+                EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);
@@ -116,6 +96,11 @@ namespace Nidan.Controllers
             //enquiryViewModel.AreaOfInterests = new SelectList(NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true).ToList());
             enquiryViewModel.HowDidYouKnowAbouts = new SelectList(NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true).ToList());
             enquiryViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            enquiryViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
+            enquiryViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            enquiryViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
+            enquiryViewModel.StudentTypes = new SelectList(NidanBusinessService.RetrieveStudentTypes(organisationId, e => true).ToList());
+            enquiryViewModel.EnquiryTypes = new SelectList(NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -135,6 +120,12 @@ namespace Nidan.Controllers
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
+            var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
+
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -148,6 +139,11 @@ namespace Nidan.Controllers
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
+                EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             return View(viewModel);

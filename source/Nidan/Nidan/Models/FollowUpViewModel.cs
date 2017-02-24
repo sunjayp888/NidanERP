@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nidan.Entity;
+using System.Web.Mvc;
 
 namespace Nidan.Models
 {
     public class FollowUpViewModel:BaseViewModel
     {
         public FollowUp FollowUp { get; set; }
+        public SelectList Courses { get; set; }
     }
 
     public class FollowUpDto 

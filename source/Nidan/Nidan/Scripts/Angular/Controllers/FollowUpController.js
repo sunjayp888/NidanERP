@@ -16,9 +16,10 @@
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
-        vm.editAbsenceType = editAbsenceType;
-        vm.canDeleteAbsenceType = canDeleteAbsenceType;
-        vm.deleteAbsenceType = deleteAbsenceType;
+        vm.editFollowUp = editFollowUp;
+        vm.canDeleteFollowUp = canDeleteFollowUp;
+        vm.deleteFollowUp = deleteFollowUp;
+        vm.markAsReadFollowUp = markAsReadFollowUp;
         initialise();
 
         function initialise() {
@@ -48,20 +49,24 @@
             return OrderService.orderClass(vm.orderBy, property);
         }
 
-        function editAbsenceType(id) {
-            $window.location.href = "/AbsenceType/Edit/" + id;
+        function editFollowUp(id) {
+            $window.location.href = "/FollowUp/Edit/" + id;
         }
 
-        function canDeleteAbsenceType(id) {
+        function canDeleteFollowUp(id) {
             vm.loadingActions = true;
-            vm.CanDeleteAbsenceType = false;
+            vm.CanDeleteFollowUp = false;
             $('.dropdown-menu').slideUp('fast');
             $('.' + id).toggle();
-            FollowUpService.canDeleteAbsenceType(id).then(function (response) { vm.CanDeleteAbsenceType = response.data, vm.loadingActions = false });
+            FollowUpService.canDeleteFollowUp(id).then(function (response) { vm.CanDeleteFollowUp = response.data, vm.loadingActions = false });
         }
        
-        function deleteAbsenceType(id) {
-            return FollowUpService.deleteAbsenceType(id).then(function () { initialise(); });
+        function deleteFollowUp(id) {
+            return FollowUpService.deleteFollowUp(id).then(function () { initialise(); });
+        };
+
+        function markAsReadFollowUp(id) {
+            return FollowUpService.markAsReadFollowUp(id).then(function () { initialise(); });
         };
 
     }

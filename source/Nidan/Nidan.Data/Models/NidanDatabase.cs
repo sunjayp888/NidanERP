@@ -39,6 +39,12 @@ namespace Nidan.Data.Models
         public virtual DbSet<Occupation> Occupations { get; set; }
         public virtual DbSet<EnquirySearchField> EnquirySearchFields { get; set; }
         public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
+        public virtual DbSet<Scheme> Schemes { get; set; }
+        public virtual DbSet<SchemeType> SchemeTypes { get; set; }
+        public virtual DbSet<BatchTimePrefer> BatchTimePrefers { get; set; }
+        public virtual DbSet<Sector> Sectors { get; set; }
+        public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
+        public virtual DbSet<StudentType> StudentTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -53,6 +59,21 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Colour>()
                 .Property(e => e.Hex)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.FollowUps)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.IntrestedCourseId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FollowUp>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
 
             //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
@@ -99,7 +120,7 @@ namespace Nidan.Data.Models
             //    .WithRequired(e => e.CountryAbsenceType)
             //    .WillCascadeOnDelete(false);
 
-          
+
             //modelBuilder.Entity<Division>()
             //    .HasMany(e => e.DivisionCountryAbsencePeriods)
             //    .WithRequired(e => e.Division)
@@ -130,14 +151,14 @@ namespace Nidan.Data.Models
             //    .WithRequired(e => e.DivisionCountryAbsencePeriod)
             //    .WillCascadeOnDelete(false);
 
-           
+
 
             //modelBuilder.Entity<Frequency>()
             //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
             //    .WithRequired(e => e.Frequency)
             //    .WillCascadeOnDelete(false);
 
-       
+
 
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Alerts)
@@ -310,7 +331,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.EducationalQualificationId);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.YearOFPassOut)
+                .Property(e => e.YearOfPassOut)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -416,7 +437,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.YearOFPassOut)
+                .Property(e => e.YearOfPassOut)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -591,6 +612,35 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Scheme>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SchemeType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SchemeType>()
+                .HasMany(e => e.Schemes)
+                .WithRequired(e => e.SchemeType)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<BatchTimePrefer>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Sector>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<StudentType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 

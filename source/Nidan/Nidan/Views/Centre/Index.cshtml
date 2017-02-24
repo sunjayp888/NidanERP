@@ -1,42 +1,42 @@
 ﻿@using Nidan.Extensions
-@using Nidan.Extensions
 @{
-    ViewBag.Title = "FollowUp";
+    ViewBag.Title = "Centre";
 }
-<div ng-controller="FollowUpController as model">
+
+<div ng-controller="CentreController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
-               Today's Follow Ups <small></small>
+                Centres <small></small>
             </h3>
         </div>
         @*<div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchMobilization(searchField)" class="form-control" placeholder="Search for mobilizer...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCentre(searchField)" class="form-control" placeholder="Search for Centre...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchFollowUp(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchCentre(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
         </div>*@
     </div>
-    @*@if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Mobilization")">
+                <a class="btn btn-app" href="@Url.Action("Create", "Centre")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
         </div>
-    }*@
+    }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 @*<div class="x_title">
                     <h2>
-                        FollowUps <small></small>
+                        Centres <small></small>
                     </h2>
                     <div class="clearfix"></div>
                 </div>*@
@@ -55,21 +55,12 @@
                                     <thead>
                                         <tr role="row">
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
-                                            <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                            <th ng-click="model.order('IntrestedCourse')" ng-class="model.orderClass('IntrestedCourse')">Interested Course</th>
-                                    @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
-                                            <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="followUp in model.followUps" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewFollowUp(followUp.FollowUpId)">
-                                            @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
-                                            <td><span ng-bind="followUp.Name"></span></td>
-                                            <td><span ng-bind="followUp.Mobile"></span></td>
-                                            <td><span ng-bind="followUp.Course.Name"></span></td>
-                                          @*<td><span ng-bind="followUp.Qualification.Name"></span></td>*@
-                                            <td><span ng-bind="followUp.FollowUpDateTime|date : format : shortDate"></span></td>
+                                        <tr ng-repeat="centre in model.centres" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentre(centre.CentreId)">
+                                            <td><span ng-bind="centre.Name"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -79,17 +70,15 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Centre/Edit/{{centre.CentreId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
-                                                                    Mark As Read
-                                                                </a>
-                                                            </li>
-
-                                                        
+                                                            @*<li >
+                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                        Archive
+                                                                    </a>
+                                                                </li>*@
                                                         }
                                                     </ul>
                                                 </div>
@@ -106,23 +95,6 @@
                             <label ng-bind="model.searchMessage"></label>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Confirmation</h2>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" ng-model='model.MobilizationId' />
-                    Are you sure, you want to delete Mobilization <span ng-bind="model.MobilizationName"></span> ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

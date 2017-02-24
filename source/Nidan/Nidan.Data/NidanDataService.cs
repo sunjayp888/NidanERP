@@ -47,6 +47,17 @@ namespace Nidan.Data
             }
         }
 
+        public Centre CreateCentre(int organisationId, Centre centre)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                centre = context.Centres.Add(centre);
+                context.SaveChanges();
+
+                return centre;
+            }
+        }
+
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -378,7 +389,7 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "GeneratedDate",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);
@@ -456,7 +467,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CandidateName",
+                            Property = "EnquiryDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -497,10 +508,23 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+                var data = context
+                    .FollowUps
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(e => e.FollowUpDateTime.Year == DateTime.Now.Year
+                    && e.FollowUpDateTime.Month == DateTime.Now.Month
+                    && e.FollowUpDateTime.Day == DateTime.Now.Day &&
+                    (
+                     e.ReadDateTime != DateTime.Now
+                    )
+                    ).ToList();
 
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -508,7 +532,7 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "FollowUpDateTime",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);
@@ -531,16 +555,19 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<MobilizationSearchField> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
-                return context.Database
-                    .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList().AsQueryable().
+                var searchData = context.Database
+                    .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList();
 
+                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification);
+
+                var data = searchData.Join(mobilizations, e => e.MobilizationId, m => m.MobilizationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -550,6 +577,7 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+                return data;
             }
         }
 
@@ -575,9 +603,47 @@ namespace Nidan.Data
             }
         }
 
+        public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Centres
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CentreId == centreId);
+
+            }
+        }
+
+        public PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Centres
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         #endregion
 
         #region // Update
+
 
         public T UpdateEntityEntry<T>(T t) where T : class
         {

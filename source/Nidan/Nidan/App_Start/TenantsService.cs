@@ -35,6 +35,7 @@ namespace Nidan
 
         public TenantOrganisation CurrentTenantOrganisation(string hostname)
         {
+            hostname = "nidanserver";
             return TenantOrganisations().SingleOrDefault(t => t.HostName.Equals(hostname, StringComparison.InvariantCultureIgnoreCase));
         }
     }
