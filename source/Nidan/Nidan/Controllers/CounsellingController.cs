@@ -74,7 +74,7 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new CounsellingViewModel
+            var viewModel = new EnquiryViewModel
             {
                 //Counselling = counselling,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name")
@@ -85,18 +85,18 @@ namespace Nidan.Controllers
         // POST: Counselling/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CounsellingViewModel counsellingViewModel)
+        public ActionResult Edit(EnquiryViewModel enquiryViewModel)
         {
             if (ModelState.IsValid)
             {
-                counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
-                counsellingViewModel.Counselling.CentreId = 1;
-                counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
+                enquiryViewModel.Counselling.OrganisationId = UserOrganisationId;
+                enquiryViewModel.Counselling.CentreId = UserCentreId;
+                enquiryViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, enquiryViewModel.Counselling);
                 return RedirectToAction("Index");
             }
-            var viewModel = new CounsellingViewModel
+            var viewModel = new EnquiryViewModel
             {
-                Counselling = counsellingViewModel.Counselling
+                Counselling = enquiryViewModel.Counselling
             };
             return View(viewModel);
         }

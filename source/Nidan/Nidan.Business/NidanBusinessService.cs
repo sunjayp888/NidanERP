@@ -90,6 +90,11 @@ namespace Nidan.Business
             return _nidanDataService.CreateCentre(organisationId, centre);
         }
 
+        public Batch CreateBatch(int organisationId, Batch batch)
+        {
+            return _nidanDataService.CreateBatch(organisationId, batch);
+        }
+
         public Question CreateQuestion(int organisationId, Question question)
         {
             return _nidanDataService.Create<Question>(organisationId, question);
@@ -548,10 +553,10 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentres(organisationId, p => true, orderBy, paging);
         }
 
-        //public List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate)
-        //{
-        //    return _nidanDataService.Retrieve<Event>(organisationId, e => true);
-        //}
+        public PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatches(organisationId, p => true, orderBy, paging);
+        }
 
         public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -648,6 +653,12 @@ namespace Nidan.Business
             return centre;
         }
 
+        public Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate)
+        {
+            var batch = _nidanDataService.RetrieveBatch(organisationId, batchId, p => true);
+            return batch;
+        }
+
         public Centre RetrieveCentre(int organisationId, int id)
         {
             return _nidanDataService.RetrieveCentre(organisationId, id, p => true);
@@ -656,6 +667,10 @@ namespace Nidan.Business
         public PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCounsellings(organisationId, p => true, orderBy, paging);
+        }
+            public Batch RetrieveBatch(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveBatch(organisationId, id, p => true);
         }
 
         public Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate)
@@ -720,6 +735,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 
+        public Batch UpdateBatch(int organisationId, Batch batch)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
+        }
+
         #endregion
 
         #region //Delete
@@ -740,9 +760,6 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveEnquiries(organisationId, p => true, orderBy, paging);
         }
-
-
-
         #endregion
     }
 }

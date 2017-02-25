@@ -1,15 +1,15 @@
 ﻿@using Nidan.Extensions
 @{
-    ViewBag.Title = "Enquiry";
+    ViewBag.Title = "Batch";
 }
-<div ng-controller="EnquiryController as model">
+<div ng-controller="BatchController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Enquiries <small></small>
+                Batches <small></small>
             </h3>
         </div>
-        <div class="title_right">
+        @*<div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
                     <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
@@ -18,14 +18,14 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 
     @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Enquiry")">
+                <a class="btn btn-app" href="@Url.Action("Create", "Batch")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
@@ -36,7 +36,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Enquiries<small></small>
+                        Batches<small></small>
                     </h2>
                     <div class="clearfix"></div>
                 </div>
@@ -55,25 +55,21 @@
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                            <th ng-click="model.order('ContactNo')" ng-class="model.orderClass('ContactNo')">Contact No</th>
-                                            <th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>
-                                            @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
-                                            @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
-                                            <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                            @*<th ng-click="model.order('EnquiryStatus')" ng-class="model.orderClass('EnquiryStatus')">Enquiry Status</th>*@
+                                            <th ng-click="model.order('Scheme.Name')" ng-class="model.orderClass('Scheme.Name')">Scheme</th>
+                                            <th ng-click="model.order('Sector.Name')" ng-class="model.orderClass('Sector.Name')">Sector</th>
+                                            <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
+                                            <th ng-click="model.order('BatchStartDate')" ng-class="model.orderClass('BatchStartDate')">Batch Start Date</th>
+                                            <th ng-click="model.order('BatchEndDate')" ng-class="model.orderClass('BatchEndDate')">Batch End Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="person in model.enquiries" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
-                                            <td><span ng-bind="person.CandidateName"></span></td>
-                                            <td><span ng-bind="person.ContactNo"></span></td>
-                                            <td><span ng-bind="person.EmailId"></span></td>
-                                            @*<td><span ng-bind="person.Course.Name"></span></td>*@
-                                            @*<td><span ng-bind="person.Remarks"></span></td>*@
-                                            <td><span ng-bind="person.FollowUpDate|date : format : shortDate"></span></td>
-                                           @* <td><span ng-bind="person.EnquiryStatus"></span></td>*@
+                                        <tr ng-repeat="batch in model.batches" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBatch(batch.BatchId)">
+                                            <td><span ng-bind="batch.Scheme.Name"></span></td>
+                                            <td><span ng-bind="batch.Sector.Name"></span></td>
+                                            <td><span ng-bind="batch.Course.Name"></span></td>
+                                            <td><span ng-bind="batch.BatchStartDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="batch.BatchEndDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -83,14 +79,8 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{person.EnquiryId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Batch/Edit/{{batch.BatchId}}">
                                                                     Edit
-                                                                </a>
-                                                            </li>
-
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Enquiry {{person.CandidateName}}" ng-bootbox-confirm-action="model.deleteEnquiry(person.EnquiryId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                    Delete
                                                                 </a>
                                                             </li>
                                                         }
@@ -113,22 +103,5 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Confirmation</h2>
-                </div>
-
-                <div class="modal-body">
-                    <input type="hidden" ng-model='model.EnquiryId' />
-                    Are you sure, you want to delete Enquiry <span ng-bind="model.EnquiryName"></span> ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+

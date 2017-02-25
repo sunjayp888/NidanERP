@@ -46,6 +46,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
         public virtual DbSet<StudentType> StudentTypes { get; set; }
         public virtual DbSet<Counselling> Counsellings { get; set; }
+        public virtual DbSet<Batch> Batches { get; set; }
         public virtual DbSet<Admission> Admissions { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -772,6 +773,18 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Taluka>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.TrainingType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.SubSector)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.Remarks)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -231,9 +231,12 @@
     <Compile Include="Constraints\TenantRouteConstraint.cs" />
     <Compile Include="Controllers\AbsenceTypeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
+    <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
@@ -252,9 +255,12 @@
     <Compile Include="Interfaces\ITenantsService.cs" />
     <Compile Include="Models\AbsenceTypeViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
+    <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
@@ -1360,6 +1366,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Dev.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
+    <None Include="Properties\PublishProfiles\sanjay.pubxml" />
     <None Include="Properties\PublishProfiles\UAT.pubxml" />
     <Content Include="Views\Personnel\Index.cshtml" />
     <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
@@ -1405,6 +1412,20 @@
     <Content Include="Views\FollowUp\Edit.cshtml" />
     <Content Include="Views\FollowUp\Index.cshtml" />
     <Content Include="Views\FollowUp\_FollowUp.cshtml" />
+    <Content Include="Views\Admission\Create.cshtml" />
+    <Content Include="Views\Admission\Edit.cshtml" />
+    <Content Include="Views\Admission\Index.cshtml" />
+    <Content Include="Views\Admission\_Admission.cshtml" />
+    <Content Include="Views\Batch\Create.cshtml" />
+    <Content Include="Views\Batch\Edit.cshtml" />
+    <Content Include="Views\Batch\Index.cshtml" />
+    <Content Include="Views\Batch\_Batch.cshtml" />
+    <Content Include="Views\Centre\Create.cshtml" />
+    <Content Include="Views\Centre\Edit.cshtml" />
+    <Content Include="Views\Centre\Index.cshtml" />
+    <Content Include="Views\Counselling\Edit.cshtml" />
+    <Content Include="Views\Counselling\Index.cshtml" />
+    <Content Include="Views\Shared\_Counselling.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

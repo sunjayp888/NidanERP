@@ -192,7 +192,7 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
-  background: #6699cc;
+  background: #2A3F54;
   border-radius: 0;
   height: 57px;
 }
@@ -313,7 +313,7 @@ body .container.body .right_col {
 }
 body {
   color: #73879C;
-  background: #6699cc;
+  background: #2A3F54;
   /*#ECF0F1; #FCFCFC*/
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
@@ -556,10 +556,10 @@ a:hover, a:focus {
 .nav.side-menu> li.active > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5b6479), color-stop(100%, #4c5566)), #686e78;
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6699cc;
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6699cc;
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6699cc;
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6699cc;
+  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #2A3F54;
+  background: -moz-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #2A3F54;
+  background: -o-linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #2A3F54;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #2A3F54;
   -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   -moz-box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0;
@@ -1500,7 +1500,7 @@ span.right {
   position: fixed;
   width: 230px;
   z-index: 1000;
-  background: #6699cc;
+  background: #2A3F54;
 }
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -2226,7 +2226,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 }
 .autocomplete-suggestions strong {
   font-weight: normal;
-  color: #6699cc;
+  color: #2A3F54;
   font-weight: bolder;
 }
 /* ***** /autocomplete *****/

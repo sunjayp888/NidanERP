@@ -14,13 +14,13 @@ namespace Nidan.Models
         //public SelectList Enquiries { get; set; }
     }
 
-    public class Counselling
-    {
-        public string Name { get; set; }
-        public string RemarkByBm { get; set; }
-        public DateTime FollowUpDate { get; set; }
-        public string Remarks { get; set; }
-        public string PreferTiming { get; set; }
-        public string CounselledBy { get; set; }
-    }
+    //public class Counselling
+    //{
+    //    public string Name { get; set; }
+    //    public string RemarkByBm { get; set; }
+    //    public DateTime FollowUpDate { get; set; }
+    //    public string Remarks { get; set; }
+    //    public string PreferTiming { get; set; }
+    //    public string CounselledBy { get; set; }
+    //}
 }

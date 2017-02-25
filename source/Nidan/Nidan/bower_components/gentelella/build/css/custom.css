@@ -1,6 +1,6 @@
 ﻿@charset "UTF-8";
 .left_col {
-  background: #6699cc; }
+  background: #2A3F54; }
 
 .nav-sm .container.body .col-md-3.left_col {
   width: 70px;
@@ -208,7 +208,7 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
-  background: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2)), #6699cc;
+  background: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2)), #2A3F54;
   border-radius: 0;
   height: 58px; }
 
@@ -327,7 +327,7 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
-  background: #6699cc;
+  background: #2A3F54;
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -555,7 +555,7 @@ a:hover, a:focus {
 
 .nav.side-menu > li.active > a {
   text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #6699cc;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), #2A3F54;
   box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0; }
 
 .navbar-brand, .navbar-nav > li > a {
@@ -1462,7 +1462,7 @@ span.right {
   padding: 5px 0 0 0;
   position: fixed;
   width: 230px;
-  background: #6699cc; }
+  background: #2A3F54; }
 
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -2103,7 +2103,7 @@ input.parsley-error, textarea.parsley-error, select.parsley-error {
 
 .autocomplete-suggestions strong {
   font-weight: normal;
-  color: #6699cc;
+  color: #2A3F54;
   font-weight: bolder; }
 
 /* ***** /autocomplete *****/

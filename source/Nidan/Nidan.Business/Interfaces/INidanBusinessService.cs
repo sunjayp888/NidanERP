@@ -19,6 +19,7 @@ namespace Nidan.Business.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
+        Batch CreateBatch(int organisationId, Batch batch);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         Admission CreateAdmission(int organisationId, Admission admission);
 
@@ -72,6 +73,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
         Counselling RetrieveCounselling(int organisationId, int id);
+        Batch RetrieveBatch(int organisationId, int id);
+        PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         Admission RetrieveAdmission(int organisationId, int id);
@@ -87,6 +91,7 @@ namespace Nidan.Business.Interfaces
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
         Centre UpdateCentre(int organisationId, Centre centre);
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
+        Batch UpdateBatch(int organisationId, Batch batch);
         Admission UpdateAdmission(int organisationId, Admission admission);
 
         //Delete

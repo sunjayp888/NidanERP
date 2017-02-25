@@ -20,5 +20,6 @@ namespace Nidan.Models
         public SelectList BatchTimePrefers { get; set; }
         public SelectList StudentTypes { get; set; }
         public SelectList EnquiryTypes { get; set; }
+        public Counselling Counselling { get; set; }
     }
 }
