@@ -48,7 +48,7 @@
     <script>
         jQuery(function () {
 
-            if ($('#Enquiry_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
+            if ($('#Admission_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
             else { $('.experience-year-textbox').show(); }
 
             $('#experienceRadioButton').click(function () {
@@ -59,7 +59,7 @@
                 $('.experience-year-textbox').hide();
             });
 
-            if (!$('#Enquiry_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
+            if (!$('#Admission_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
             else { $('.employment-status-textbox').show(); }
 
             $('#employedRadioButton').click(function () {
@@ -72,17 +72,17 @@
 
             jQuery(".end-date, .termination-date").remove();
 
-            jQuery(".date").daterangepicker({
+            @*jQuery(".date").daterangepicker({
                 autoApply: true,
                 singleDatePicker: true,
                 showDropdowns: true,
                 showCustomRangeLabel: false,
                 opens: 'left',
-                startDate: '@Model.Admission.DateOfBirth.ToString("dd/MMMM/yyyy")',
+                startDate: '@Model.Admission.DateOfBirth.Value.ToString("dd/MMMM/yyyy")',
                 locale: {
                     format: 'DD MMMM YYYY'
                 }
-            });
+            });*@
         });
 
     </script>

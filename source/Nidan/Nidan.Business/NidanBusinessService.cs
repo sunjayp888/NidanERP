@@ -198,7 +198,7 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, Admission admission)
         {
-            return _nidanDataService.CreateAdmission(organisationId, admission);
+            return _nidanDataService.Create<Admission>(organisationId, admission);
         }
 
         #endregion
@@ -528,6 +528,26 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Taluka>(organisationId, e => true);
         }
 
+        public List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Batch>(organisationId, e => true);
+        }
+
+        public List<SubSector> RetrieveSubSectors(int organisationId, Expression<Func<SubSector, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<SubSector>(organisationId, e => true);
+        }
+
+        public List<Disability> RetrieveDisabilities(int organisationId, Expression<Func<Disability, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Disability>(organisationId, e => true);
+        }
+
+        public List<AlternateIdType> RetrieveAlternateIdTypes(int organisationId, Expression<Func<AlternateIdType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<AlternateIdType>(organisationId, e => true);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate)
         {
             return _nidanDataService.Retrieve<CasteCategory>(organisationId, e => true);
@@ -566,6 +586,12 @@ namespace Nidan.Business
         public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+        }
+
+        public PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAdmissionBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
         }
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)

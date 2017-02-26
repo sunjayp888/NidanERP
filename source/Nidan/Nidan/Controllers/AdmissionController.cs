@@ -36,6 +36,14 @@ namespace Nidan.Controllers
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var schemeTypes = NidanBusinessService.RetrieveSchemeTypes(organisationId, e => true);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var subSectors = NidanBusinessService.RetrieveSubSectors(organisationId, e => true);
+            var disabilities = NidanBusinessService.RetrieveDisabilities(organisationId, e => true);
+            var alternateIdTypes = NidanBusinessService.RetrieveAlternateIdTypes(organisationId, e => true);
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var viewModel = new AdmissionViewModel
             {
@@ -44,6 +52,14 @@ namespace Nidan.Controllers
                 Religions = new SelectList(religions, "ReligionId", "Name"),
                 Talukas = new SelectList(talukas, "TalukaId", "Name"),
                 Districts = new SelectList(districts, "DistrictId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                SchemeTypes = new SelectList(schemeTypes, "SchemeTypeId", "Name"),
+                Batches = new SelectList(batches, "BatcheId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                SubSectors = new SelectList(subSectors, "SubSectorId", "Name"),
+                Disabilities = new SelectList(disabilities, "DisabilityId", "Name"),
+                AlternateIdTypes = new SelectList(alternateIdTypes, "AlternateIdTypeId", "Name"),
                 States = new SelectList(states, "StateId", "Name"),
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name")
             };
@@ -61,6 +77,7 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = UserOrganisationId;
                 admissionViewModel.Admission.CentreId = 1;
+                admissionViewModel.Admission.EnquiryId = 7;
                 admissionViewModel.Admission.AdmissionDate = DateTime.Now;
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(UserOrganisationId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
@@ -77,6 +94,22 @@ namespace Nidan.Controllers
                 new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             admissionViewModel.EducationalQualifications =
                 new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
+            admissionViewModel.Courses =
+               new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            admissionViewModel.Schemes =
+               new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
+            admissionViewModel.SchemeTypes =
+               new SelectList(NidanBusinessService.RetrieveSchemeTypes(organisationId, e => true).ToList());
+            admissionViewModel.Batches =
+               new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList());
+            admissionViewModel.Sectors =
+               new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            admissionViewModel.SubSectors =
+               new SelectList(NidanBusinessService.RetrieveSubSectors(organisationId, e => true).ToList());
+            admissionViewModel.Disabilities =
+               new SelectList(NidanBusinessService.RetrieveDisabilities(organisationId, e => true).ToList());
+            admissionViewModel.AlternateIdTypes =
+               new SelectList(NidanBusinessService.RetrieveAlternateIdTypes(organisationId, e => true).ToList());
             return View(admissionViewModel);
         }
 
@@ -94,6 +127,14 @@ namespace Nidan.Controllers
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var schemeTypes = NidanBusinessService.RetrieveSchemeTypes(organisationId, e => true);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var subSectors = NidanBusinessService.RetrieveSubSectors(organisationId, e => true);
+            var disabilities = NidanBusinessService.RetrieveDisabilities(organisationId, e => true);
+            var alternateIdTypes = NidanBusinessService.RetrieveAlternateIdTypes(organisationId, e => true);
             var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
             if (admission == null)
             {
@@ -101,12 +142,20 @@ namespace Nidan.Controllers
             }
             var viewModel = new AdmissionViewModel
             {
-                Admission = new Admission(),
+                Admission = admission,
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
                 Religions = new SelectList(religions, "ReligionId", "Name"),
                 Talukas = new SelectList(talukas, "TalukaId", "Name"),
                 Districts = new SelectList(districts, "DistrictId", "Name"),
                 States = new SelectList(states, "StateId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                SchemeTypes = new SelectList(schemeTypes, "SchemeTypeId", "Name"),
+                Batches = new SelectList(batches, "BatcheId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                SubSectors = new SelectList(subSectors, "SubSectorId", "Name"),
+                Disabilities = new SelectList(disabilities, "DisabilityId", "Name"),
+                AlternateIdTypes = new SelectList(alternateIdTypes, "AlternateIdTypeId", "Name"),
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name")
             };
             return View(viewModel);
@@ -121,6 +170,7 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = UserOrganisationId;
                 admissionViewModel.Admission.CentreId = 1;
+                admissionViewModel.Admission.EnquiryId = 7;
                 admissionViewModel.Admission.AdmissionDate = DateTime.Now;
                 admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(UserOrganisationId, admissionViewModel.Admission);
             }
@@ -135,6 +185,12 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             return this.JsonNet(NidanBusinessService.RetrieveAdmissions(UserOrganisationId, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveAdmissionBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
         }
     }
 }

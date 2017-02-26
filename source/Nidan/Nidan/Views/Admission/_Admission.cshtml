@@ -2,6 +2,38 @@
 <div class="form-control-required-example"> = Required</div>
 
 <div class="form-group">
+    @Html.LabelFor(model => model.Admission.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.SectorId, Model.Sectors, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.SchemeTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.SchemeTypeId, Model.SchemeTypes, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.SchemeTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.SchemeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.SchemeId, Model.Schemes, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.SchemeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.CourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.CourseId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
     @Html.LabelFor(model => model.Admission.Salutation, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Admission.Salutation, new { @class = "form-control col-md-7 col-xs-12" })
@@ -38,6 +70,14 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Admission.Mobile, new { @class = "form-control col-md-7 col-xs-12", @onkeypress = "phoneno()", @maxlength = "10" })
         @Html.ValidationMessageFor(model => model.Admission.Mobile, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.LandlineNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.LandlineNo, new { @class = "form-control col-md-7 col-xs-12", @onkeypress = "phoneno()", @maxlength = "10" })
+        @Html.ValidationMessageFor(model => model.Admission.LandlineNo, "", new { @class = "help-block" })
     </div>
 </div>
 
@@ -106,34 +146,42 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.PermanentAddress, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.Address, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.PermanentAddress, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PermanentAddress, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.Address, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.Address, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.PTalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.TalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PTalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PTalukaId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.TalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.TalukaId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.PDistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.DistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PDistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PDistrictId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.DistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.DistrictId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.PStateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.StateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PStateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PStateId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.StateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.StateId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.PinCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.PinCode, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.PinCode, "", new { @class = "help-block" })
     </div>
 </div>
 
@@ -146,34 +194,42 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.CTalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.CommunicationTalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CTalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CTalukaId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.CommunicationTalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.CommunicationTalukaId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.CDistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.CommunicationDistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CDistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CDistrictId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.CommunicationDistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.CommunicationDistrictId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.CStateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.CommunicationStateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CStateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CStateId, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.CommunicationStateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.CommunicationStateId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.EducaticationalQualificationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.CommunicationPinCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.EducaticationalQualificationId, Model.EducationalQualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EducaticationalQualificationId, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.CommunicationPinCode, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.CommunicationPinCode, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.QualificationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.QualificationId, Model.EducationalQualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.QualificationId, "", new { @class = "help-block" })
     </div>
 </div>
 

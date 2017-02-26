@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Enquiry")]
     public partial class Enquiry
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Enquiry()
+        {
+            Admissions = new HashSet<Admission>();
+        }
         public int EnquiryId { get; set; }
 
         [Required]

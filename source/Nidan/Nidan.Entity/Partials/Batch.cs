@@ -34,8 +34,8 @@ namespace Nidan.Entity
             [Display(Name = "Batch End Date")]
             public DateTime BatchEndDate { get; set; }
 
-            [Display(Name = "Prefferd Assesment Date")]
-            public DateTime PrefferdAssesmentDate { get; set; }
+            [Display(Name = "Preferred Assessment Date")]
+            public DateTime PreferredAssessmentDate { get; set; }
         }
     }
 }

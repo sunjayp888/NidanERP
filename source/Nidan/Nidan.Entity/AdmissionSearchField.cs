@@ -6,12 +6,14 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Admission")]
-    public partial class Admission
+    [Table("AdmissionSearchField")]
+    public partial class AdmissionSearchField
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AdmissionId { get; set; }
 
-        public int EnquiryId { get; set; }
+        public int? EnquiryId { get; set; }
 
         [StringLength(1000)]
         public string StudentCode { get; set; }
@@ -41,7 +43,7 @@ namespace Nidan.Entity
         public int? YearOfBirth { get; set; }
 
         [StringLength(100)]
-        public string Gender { get; set; } = "Male";
+        public string Gender { get; set; }
 
         [StringLength(500)]
         public string FatherName { get; set; }
@@ -103,12 +105,12 @@ namespace Nidan.Entity
         public string TechnicalQualification { get; set; }
 
         [StringLength(100)]
-        public string PreTrainingStatus { get; set; } = "Fresher";
+        public string PreTrainingStatus { get; set; }
 
-        public int YearOfExperience { get; set; }
+        public int? YearOfExperience { get; set; }
 
         [StringLength(100)]
-        public string EmploymentStatus { get; set; } = "UnEmployed";
+        public string EmploymentStatus { get; set; }
 
         [StringLength(500)]
         public string EmployerName { get; set; }
@@ -149,7 +151,7 @@ namespace Nidan.Entity
 
         public int? BatchId { get; set; }
 
-        public int OrganisationId { get; set; }
+        public int? OrganisationId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? AdmissionDate { get; set; }
@@ -168,39 +170,6 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string SdmsCandidateId { get; set; }
 
-        public virtual Organisation Organisation { get; set; }
-
-        public virtual Enquiry Enquiry { get; set; }
-
-        public virtual CasteCategory CasteCategory { get; set; }
-
-        public virtual Religion Religion { get; set; }
-
-        public virtual Taluka Taluka { get; set; }
-
-        public virtual District District { get; set; }
-
-        public virtual State State { get; set; }
-
-        public virtual Qualification Qualification { get; set; }
-
-        public virtual SchemeType SchemeType { get; set; }
-
-        public virtual Centre Centre { get; set; }
-
-        public virtual Batch Batch { get; set; }
-
-        public virtual Scheme Scheme { get; set; }
-
-        public virtual Sector Sector { get; set; }
-
-        public virtual Course Course { get; set; }
-
-        public virtual SubSector SubSector { get; set; }
-
-        public virtual Disability Disability { get; set; }
-
-        public virtual AlternateIdType AlternateIdType { get; set; }
-
+        public int? SearchField { get; set; }
     }
 }

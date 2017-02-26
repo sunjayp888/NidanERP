@@ -36,7 +36,7 @@ namespace Nidan.Entity
         public DateTime BatchEndDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime PrefferdAssesmentDate { get; set; }
+        public DateTime PreferredAssessmentDate { get; set; }
 
         public int? PersonnelId { get; set; }
 
@@ -57,5 +57,8 @@ namespace Nidan.Entity
         public virtual Scheme Scheme { get; set; }
 
         public virtual Sector Sector { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

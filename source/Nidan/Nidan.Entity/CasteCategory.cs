@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public CasteCategory()
         {
             Enquiries = new HashSet<Enquiry>();
+            Admissions=new HashSet<Admission>();
         }
 
         public int CasteCategoryId { get; set; }

@@ -79,7 +79,7 @@
 
         jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
-            $('#PrefferdAssesmentDate').val(moment().format('DD MMMM YYYY'));
+            $('#PreferredAssessmentDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
                 $(this).val(picker.startDate.format('DD MMMM YYYY'));
             });

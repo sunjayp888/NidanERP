@@ -25,6 +25,9 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string Name { get; set; }
 
+        [StringLength(500)]
+        public string Place { get; set; }
+
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }

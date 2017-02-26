@@ -2,23 +2,23 @@
 @{
     ViewBag.Title = "Admission";
 }
-<div ng-controller="EnquiryController as model">
+<div ng-controller="AdmissionController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
                 Admissions <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
+        <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchAdmission(searchField)" class="form-control" placeholder="Search for Admission...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchAdmission(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
-        </div>*@
+        </div>
     </div>
     @if (User.IsInAnyRoles("Admin"))
     {

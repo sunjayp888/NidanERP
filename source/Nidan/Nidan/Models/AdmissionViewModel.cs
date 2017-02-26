@@ -16,5 +16,13 @@ namespace Nidan.Models
         public SelectList States { get; set; }
         public SelectList Districts { get; set; }
         public SelectList EducationalQualifications { get; set; }
+        public SelectList Courses { get; set; }
+        public SelectList SchemeTypes { get; set; }
+        public SelectList Batches { get; set; }
+        public SelectList Schemes { get; set; }
+        public SelectList Sectors { get; set; }
+        public SelectList SubSectors { get; set; }
+        public SelectList Disabilities { get; set; }
+        public SelectList AlternateIdTypes { get; set; }
     }
 }

@@ -26,5 +26,8 @@ namespace Nidan.Entity
         public virtual State State { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

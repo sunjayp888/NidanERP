@@ -120,7 +120,7 @@ namespace Nidan.Entity
             [Display(Name = "Why Enquiry Closed?")]
             public string WhyEnquiryClosed { get; set; }
 
-            [Display(Name = "Remark By BM")]
+            [Display(Name = "Remark By Branch Manager")]
             public string RemarkByBm { get; set; }
 
             [Display(Name = "Scheme")]

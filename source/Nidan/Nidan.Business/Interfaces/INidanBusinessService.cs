@@ -64,6 +64,10 @@ namespace Nidan.Business.Interfaces
         List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate);
         List<District> RetrieveDistricts(int organisationId, Expression<Func<District, bool>> predicate);
         List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate);
+        List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
+        List<SubSector> RetrieveSubSectors(int organisationId, Expression<Func<SubSector, bool>> predicate);
+        List<Disability> RetrieveDisabilities(int organisationId, Expression<Func<Disability, bool>> predicate);
+        List<AlternateIdType> RetrieveAlternateIdTypes(int organisationId, Expression<Func<AlternateIdType, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -79,6 +83,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         Admission RetrieveAdmission(int organisationId, int id);
+        PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
         List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate);
 

@@ -51,6 +51,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Taluka> Talukas { get; set; }
+        public virtual DbSet<AlternateIdType> AlternateIdTypes { get; set; }
+        public virtual DbSet<Disability> Disabilities { get; set; }
+        public virtual DbSet<SubSector> SubSectors { get; set; }
+        public virtual DbSet<AdmissionSearchField> AdmissionSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -670,83 +674,83 @@ namespace Nidan.Data.Models
                  .Property(e => e.Name)
                  .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.Salutation)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.Salutation)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.FirstName)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.FirstName)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.MiddleName)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.MiddleName)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.LastName)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.LastName)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmailId)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.EmailId)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.Gender)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.Gender)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.FatherName)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.FatherName)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PermanentAddress)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.PermanentAddress)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PTalukaId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.PTalukaId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PDistrictId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.PDistrictId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PStateId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.PStateId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CommunicationAddress)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.CommunicationAddress)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CTalukaId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.CTalukaId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CDistrictId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.CDistrictId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CStateId);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.CStateId);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.ProfessionalQualification)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.ProfessionalQualification)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.TechnicalQualification)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.TechnicalQualification)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PreTrainingStatus)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.PreTrainingStatus)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmploymentStatus)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.EmploymentStatus)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmployerName)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.EmployerName)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmployerAddress)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Admission_Old>()
+            //    .Property(e => e.EmployerAddress)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<District>()
                 .Property(e => e.Name)
@@ -785,6 +789,250 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Batch>()
                 .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+               .Property(e => e.StudentCode)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.Salutation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.Address)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.CommunicationAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.AadhaarVerificationStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.NameAsInBank)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.IfscCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.ProfessionalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TechnicalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.EmployerAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TrainingType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.ConveyanceAndBoardingPreference)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PaymentType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.DurationOfCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TcName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TcId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PartnerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.TcAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.SdmsCandidateId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AlternateIdType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Disability>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SubSector>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.Salutation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.Address)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.CommunicationAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.AadhaarVerificationStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.NameAsInBank)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.IfscCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.ProfessionalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.TechnicalQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.EmployerAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.TrainingType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.ConveyanceAndBoardingPreference)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.PaymentType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.DurationOfCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.TcName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.TcId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.PartnerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.TcAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.SdmsCandidateId)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

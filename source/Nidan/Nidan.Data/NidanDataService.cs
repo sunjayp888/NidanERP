@@ -714,6 +714,29 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                return context.Database
+                    .SqlQuery<AdmissionSearchField>("SearchAdmission @SearchKeyword", category).ToList().AsQueryable().
+
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FirstName",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
