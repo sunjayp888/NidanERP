@@ -12,7 +12,8 @@
             retrieveEnquiries: retrieveEnquiries,
             canDeleteEnquiry: canDeleteEnquiry,
             // deleteEnquiry: deleteEnquiry
-            searchEnquiry: searchEnquiry
+            searchEnquiry: searchEnquiry,
+            searchEnquiryByDate: searchEnquiryByDate
         };
 
         return service;
@@ -32,6 +33,18 @@
             var url = "/Enquiry/Search",
             data = {
                 searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
+
+            return $http.post(url, data);
+        }
+
+        function searchEnquiryByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Enquiry/SearchByDate",
+            data = {
+                fromDate: FromDate,
+                toDate: ToDate,
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };

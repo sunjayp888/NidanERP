@@ -30,10 +30,7 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
-        public string RemarkByBm { get; set; }
-
-        [StringLength(500)]
-        public string Name { get; set; }
+        public string RemarkByBranchManager { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 

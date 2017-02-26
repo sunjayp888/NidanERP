@@ -20,7 +20,10 @@
         vm.canDeleteEnquiry = canDeleteEnquiry;
         //vm.deleteEnquiry = deleteEnquiry;
         vm.searchEnquiry = searchEnquiry;
+        vm.searchEnquiryByDate = searchEnquiryByDate;
         vm.searchKeyword = "";
+        vm.fromDate = "";
+        vm.toDate = "";
         vm.searchMessage = "";
         initialise();
 
@@ -41,6 +44,19 @@
         function searchEnquiry(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return EnquiryService.searchEnquiry(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.enquiries = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.enquiries.length === 0 ? "No Records Found" : "";
+                  return vm.enquiries;
+              });
+        }
+
+        function searchEnquiryByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return EnquiryService.searchEnquiryByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.enquiries = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;

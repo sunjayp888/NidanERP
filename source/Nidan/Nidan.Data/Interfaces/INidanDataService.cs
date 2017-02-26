@@ -25,6 +25,7 @@ namespace Nidan.Data.Interfaces
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
         Batch CreateBatch(int organisationId, Batch batch);
+       
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);

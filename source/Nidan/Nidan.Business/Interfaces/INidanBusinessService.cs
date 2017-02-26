@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq.Expressions;
-using System.Security.Policy;
 using Nidan.Business.Models;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
-using System.Linq.Expressions;
 
 namespace Nidan.Business.Interfaces
 {
@@ -22,6 +19,7 @@ namespace Nidan.Business.Interfaces
         Batch CreateBatch(int organisationId, Batch batch);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         Admission CreateAdmission(int organisationId, Admission admission);
+        Counselling CreateCounselling(int organisationId, Counselling admission);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -38,7 +36,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<Question> RetrieveQuestions(int organisationId, Expression<Func<Question, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Question RetrieveQuestion(int organisationId, int questionId, Expression<Func<Question, bool>> predicate);
         List<EventActivityType> RetrieveActivityTypes(int organisationId); 
-        PagedResult<Enquiry> RetrieveEnquiries(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Enquiry RetrieveEnquiry(int organisationId, int enquiryId, Expression<Func<Enquiry, bool>> predicate);
         Mobilization RetrieveMobilization(int organisationId, int id);
         PagedResult<Mobilization> RetrieveMobilizations(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);

@@ -1,4 +1,5 @@
 ﻿@using Nidan.Extensions
+
 @{
     ViewBag.Title = "Enquiry";
 }
@@ -31,6 +32,58 @@
             </div>
         </div>
     }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="button" ng-click="model.searchEnquiryByDate(fromDate,toDate)"  value="Search" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -73,7 +126,7 @@
                                             @*<td><span ng-bind="person.Course.Name"></span></td>*@
                                             @*<td><span ng-bind="person.Remarks"></span></td>*@
                                             <td><span ng-bind="person.FollowUpDate|date : format : shortDate"></span></td>
-                                           @* <td><span ng-bind="person.EnquiryStatus"></span></td>*@
+                                            @* <td><span ng-bind="person.EnquiryStatus"></span></td>*@
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -88,11 +141,11 @@
                                                                 </a>
                                                             </li>
 
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Enquiry {{person.CandidateName}}" ng-bootbox-confirm-action="model.deleteEnquiry(person.EnquiryId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                    Delete
-                                                                </a>
-                                                            </li>
+                                                                <li>
+                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Enquiry {{person.CandidateName}}" ng-bootbox-confirm-action="model.deleteEnquiry(person.EnquiryId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                        Delete
+                                                                    </a>
+                                                                </li>
                                                         }
                                                     </ul>
                                                 </div>
@@ -132,3 +185,34 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+<script>
+    $(function () {
+
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            //minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            onSelect: function () {
+                selectedDate = moment().format('DD MMMM YYYY');
+            },
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('.date').val(moment().format('DD MMMM YYYY'));
+            $(".date").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+        });
+    });
+</script>
+}

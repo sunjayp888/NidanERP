@@ -62,16 +62,6 @@ namespace Nidan.Entity
             [StringLength(100)]
             public string EmploymentStatus { get; set; }
 
-            [Display(Name = "Counselled By")]
-            [StringLength(500)]
-            public string CounselledBy { get; set; }
-
-            [Display(Name = "Course Offered")]
-            public int CourseOfferedId { get; set; }
-
-            [Display(Name = "Prefer Timing")]
-            public DateTime? PreferTiming { get; set; }
-
             [Display(Name = "Follow-Up Date")]
             [Column(TypeName = "date")]
             public DateTime? FollowUpDate { get; set; }
@@ -108,11 +98,7 @@ namespace Nidan.Entity
 
             [Display(Name = "Experience in Year(s)")]
             public int YearOfExperience { get; set; }
-
-            [Display(Name = "Enquiry Follow-Up Date")]
-            [Column(TypeName = "date")]
-            public DateTime? EnquiryFollowUpDate { get; set; }
-
+                        
             [Display(Name = "Placement Needed")]
             [StringLength(100)]
             public string PlacementNeeded { get; set; }
@@ -120,8 +106,8 @@ namespace Nidan.Entity
             [Display(Name = "Why Enquiry Closed?")]
             public string WhyEnquiryClosed { get; set; }
 
-            [Display(Name = "Remark By BM")]
-            public string RemarkByBm { get; set; }
+            [Display(Name = "Remarks")]
+            public string Remarks { get; set; }
 
             [Display(Name = "Scheme")]
             public int SchemeId { get; set; }

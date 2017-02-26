@@ -72,22 +72,9 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string Place { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string CounselledBy { get; set; }
-
-        public int CourseOfferedId { get; set; }
-
-        public DateTime? PreferTiming { get; set; }
-
-        public string Remarks { get; set; }
-
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? FollowUpDate { get; set; }
 
         [StringLength(100)]
         public string EnquiryStatus { get; set; }
@@ -116,14 +103,14 @@ namespace Nidan.Entity
         public int YearOfExperience { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? EnquiryFollowUpDate { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
 
         public string WhyEnquiryClosed { get; set; }
 
-        public string RemarkByBm { get; set; }
+        public string Remarks { get; set; }
 
         public virtual CasteCategory CasteCategory { get; set; }
 

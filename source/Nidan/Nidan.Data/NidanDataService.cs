@@ -649,6 +649,8 @@ namespace Nidan.Data
                 return context
                     .Counsellings
                     .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry)
+                    .Include(p => p.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

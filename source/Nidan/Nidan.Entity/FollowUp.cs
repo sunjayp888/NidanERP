@@ -36,6 +36,9 @@ namespace Nidan.Entity
 
         public int IntrestedCourseId { get; set; }
 
+        [StringLength(200)]
+        public string FollowUpType { get; set; }
+
         public virtual Course Course { get; set; }
 
         public virtual Mobilization Mobilization { get; set; }

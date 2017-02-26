@@ -1,20 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Nidan.Attributes;
-using Nidan.Business.Interfaces;
+﻿using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using Nidan.Models;
-using Nidan.Models.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace Nidan.Controllers
 {
@@ -84,9 +77,18 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
-                enquiryViewModel.Enquiry.CentreId = 1;
+                enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
+                var counselling = new Counselling
+                {
+                    OrganisationId = UserOrganisationId,
+                    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
+                    CentreId = UserCentreId,
+                    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
+                    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate
+                };
+                NidanBusinessService.CreateCounselling(UserOrganisationId, counselling);
                 return RedirectToAction("Index");
             }
             enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
@@ -157,9 +159,19 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
-                enquiryViewModel.Enquiry.CentreId = 1;
-                enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
+                enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
+                var counselling = new Counselling
+                {
+                    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
+                    CentreId = UserCentreId,
+                    OrganisationId = UserOrganisationId,
+                    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
+                    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate,
+                    Remarks = enquiryViewModel.Counselling.Remarks,
+                    RemarkByBranchManager = enquiryViewModel.Counselling.RemarkByBranchManager,
+                };
+                NidanBusinessService.UpdateCounselling(UserOrganisationId, counselling);
             }
             var viewModel = new EnquiryViewModel
             {
@@ -171,13 +183,20 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => true, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         //protected override void Dispose(bool disposing)

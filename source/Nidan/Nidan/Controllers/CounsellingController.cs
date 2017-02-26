@@ -74,9 +74,9 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new EnquiryViewModel
+            var viewModel = new CounsellingViewModel
             {
-                //Counselling = counselling,
+                Counselling = counselling,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name")
             };
             return View(viewModel);
@@ -85,21 +85,56 @@ namespace Nidan.Controllers
         // POST: Counselling/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EnquiryViewModel enquiryViewModel)
+        public ActionResult Edit(CounsellingViewModel counsellingViewModel)
         {
             if (ModelState.IsValid)
             {
-                enquiryViewModel.Counselling.OrganisationId = UserOrganisationId;
-                enquiryViewModel.Counselling.CentreId = UserCentreId;
-                enquiryViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, enquiryViewModel.Counselling);
+                counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
+                counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
             var viewModel = new EnquiryViewModel
             {
-                Counselling = enquiryViewModel.Counselling
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                Counselling = counsellingViewModel.Counselling
             };
             return View(viewModel);
         }
+
+        public ActionResult Upload(CounsellingViewModel counsellingViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (counsellingViewModel.Files != null && counsellingViewModel.Files[0].ContentLength > 0)
+                {
+                    // ExcelDataReader works with the binary Excel file, so it needs a FileStream
+                    // to get started. This is how we avoid dependencies on ACE or Interop:
+                    var stream = counsellingViewModel.Files[0].InputStream;
+                    // We return the interface, so that
+
+                    if (counsellingViewModel.Files[0].FileName.EndsWith(".pdf"))
+                    {
+                       //Create and Upload document
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "This file format is not supported");
+                        return View();
+                    }
+                //    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Please Upload Your file");
+                }
+            }
+            return View();
+        }
+
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)

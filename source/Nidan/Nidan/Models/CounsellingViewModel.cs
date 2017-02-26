@@ -9,18 +9,12 @@ namespace Nidan.Models
 {
     public class CounsellingViewModel : BaseViewModel
     {
+        public CounsellingViewModel()
+        {
+            Files = new List<HttpPostedFileBase>();
+        }
         public Counselling Counselling { get; set; }
         public SelectList Courses { get; set; }
-        //public SelectList Enquiries { get; set; }
+        public List<HttpPostedFileBase> Files { get; set; }
     }
-
-    //public class Counselling
-    //{
-    //    public string Name { get; set; }
-    //    public string RemarkByBm { get; set; }
-    //    public DateTime FollowUpDate { get; set; }
-    //    public string Remarks { get; set; }
-    //    public string PreferTiming { get; set; }
-    //    public string CounselledBy { get; set; }
-    //}
 }

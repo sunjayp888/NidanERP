@@ -76,6 +76,12 @@ namespace Nidan.Data.Models
                 .HasForeignKey(e => e.IntrestedCourseId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Course>()
+               .HasMany(e => e.Counsellings)
+               .WithRequired(e => e.Course)
+               .HasForeignKey(e => e.CourseOfferedId)
+               .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<FollowUp>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -467,14 +473,6 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.CounselledBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Enquiry>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Enquiry>()
                 .Property(e => e.EnquiryStatus)
                 .IsUnicode(false);
 
@@ -663,13 +661,10 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                .Property(e => e.RemarkByBm)
+                .Property(e => e.RemarkByBranchManager)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Counselling>()
-                 .Property(e => e.Name)
-                 .IsUnicode(false);
-
+            
             modelBuilder.Entity<Admission>()
                 .Property(e => e.Salutation)
                 .IsUnicode(false);
