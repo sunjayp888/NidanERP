@@ -17,8 +17,7 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        [StringLength(500)]
-        public string CounselledBy { get; set; }
+        public int PersonnelId { get; set; }
 
         public int CourseOfferedId { get; set; }
 
@@ -32,6 +31,11 @@ namespace Nidan.Entity
 
         public string RemarkByBranchManager { get; set; }
 
+        public int SectorId { get; set; }
+
+        [StringLength(100)]
+        public string PsychomatricTest { get; set; } = "Female";
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }
@@ -39,5 +43,9 @@ namespace Nidan.Entity
         public virtual Centre Centre { get; set; }
 
         public virtual Course Course { get; set; }
+
+        public virtual Sector Sector { get; set; }
+
+        public virtual Personnel Personnel { get; set; }
     }
 }

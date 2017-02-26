@@ -716,6 +716,29 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                return context.Database
+                    .SqlQuery<CounsellingSearchField>("SearchCounselling @SearchKeyword", category).ToList().AsQueryable().
+
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)

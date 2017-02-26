@@ -4,10 +4,10 @@
 @Html.HiddenFor(m => m.Counselling.CounsellingId)
 @Html.HiddenFor(m => m.Counselling.EnquiryId)
 <div class="form-group">
-    @Html.LabelFor(model => model.Counselling.CounselledBy, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+    @Html.LabelFor(model => model.Counselling.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
     <div class="col-md-4 col-sm-4 col-xs-12">
-        @Html.TextBoxFor(model => model.Counselling.CounselledBy, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Counselling.CounselledBy, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Counselling.SectorId, Model.Sectors, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Counselling.SectorId, "", new { @class = "help-block" })
     </div>
 </div>
 
@@ -24,6 +24,22 @@
     <div class="col-md-4 col-sm-4 col-xs-12">
         @Html.TextBoxFor(model => model.Counselling.PreferTiming, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-4 col-sm-4 col-xs-12">Psychomatric Test Done</label>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
+            <label class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-primary")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
+                <input type="radio" name="psychomatricTest" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+            </label>
+            <label class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "No")
+                <input type="radio" name="psychomatricTest" value="No" data-parsley-multiple="gender"> No
+            </label>
+        </div>
     </div>
 </div>
 
