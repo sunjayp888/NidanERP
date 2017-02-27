@@ -12,7 +12,14 @@ namespace Nidan.Entity
     {
         private class FollowUpMetaData
         {
-            
+            [Display(Name = "Interested Course")]
+            public int IntrestedCourseId { get; set; }
+
+            [Display(Name = "Follow-Up Date")]
+            public DateTime FollowUpDateTime { get; set; }
+
+            [Display(Name = "Remarks")]
+            public string Remark { get; set; }
         }
     }
 }

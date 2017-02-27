@@ -645,6 +645,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
         }
 
+        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -741,7 +746,7 @@ namespace Nidan.Business
         public PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveCounsellings(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveCounsellings(organisationId, predicate, orderBy, paging);
         }
 
         public Batch RetrieveBatch(int organisationId, int id)
@@ -835,6 +840,8 @@ namespace Nidan.Business
             data.ReadDateTime = _today;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
+
+       
 
         #endregion
 

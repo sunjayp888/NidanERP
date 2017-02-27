@@ -82,7 +82,8 @@ namespace Nidan.Controllers
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name")
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
             };
             return View(viewModel);
         }
@@ -95,6 +96,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
+                counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
@@ -102,6 +104,7 @@ namespace Nidan.Controllers
             var viewModel = new CounsellingViewModel
             {
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
                 Counselling = counsellingViewModel.Counselling
             };
             return View(viewModel);
@@ -165,7 +168,20 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => true, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellingBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
         }
     }
 }

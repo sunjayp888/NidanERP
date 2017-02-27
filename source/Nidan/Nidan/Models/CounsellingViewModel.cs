@@ -11,6 +11,7 @@ namespace Nidan.Models
     {
         public Counselling Counselling { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Sectors { get; set; }
         public List<HttpPostedFileBase> Files { get; set; }
         public SelectList DocumentTypes { get; set; }
         public Entity.Document Document { get; set; }

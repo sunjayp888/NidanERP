@@ -12,7 +12,9 @@
             retrieveCounsellings: retrieveCounsellings,
             canDeleteCounselling: canDeleteCounselling,
             // deleteEnquiry: deleteEnquiry
-            searchCounselling: searchCounselling
+            searchCounselling: searchCounselling,
+            searchCounsellingByDate: searchCounsellingByDate
+
         };
 
         return service;
@@ -32,6 +34,18 @@
             var url = "/Counselling/Search",
             data = {
                 searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
+
+            return $http.post(url, data);
+        }
+
+        function searchCounsellingByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Counselling/SearchByDate",
+            data = {
+                fromDate: FromDate,
+                toDate: ToDate,
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };

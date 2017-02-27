@@ -33,6 +33,7 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             id = id ?? 0;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
@@ -75,6 +76,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             enquiryViewModel.Enquiry.StudentCode = "ABC";
+            var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
@@ -107,6 +109,7 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
@@ -154,17 +157,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
-                //var counselling = new Counselling
-                //{
-                //    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
-                //    CentreId = UserCentreId,
-                //    OrganisationId = UserOrganisationId,
-                //    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
-                //    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate,
-                //    Remarks = enquiryViewModel.Counselling.Remarks,
-                //    RemarkByBranchManager = enquiryViewModel.Counselling.RemarkByBranchManager,
-                //};
-                //NidanBusinessService.UpdateCounselling(UserOrganisationId, counselling);
+                
             }
             var viewModel = new EnquiryViewModel
             {

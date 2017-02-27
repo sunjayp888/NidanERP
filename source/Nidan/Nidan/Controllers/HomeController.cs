@@ -19,6 +19,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
+            var centreId = UserCentreId;
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
             var count = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.FollowUpDateTime == _today).Items.Count();
@@ -29,6 +30,8 @@ namespace Nidan.Controllers
             {
                 Permissions = permissions,
                 FollowUpCount = count,
+                EnquiryCount = count,
+                CounsellingCount = count,
                 //Divisions = initialDivisions,
                 //SelectedDivisionIds = permissions.IsAdmin ? null : initialDivisions.Select(c => c.DivisionId).ToList()
             };

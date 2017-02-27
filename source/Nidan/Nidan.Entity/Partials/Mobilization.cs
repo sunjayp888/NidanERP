@@ -46,6 +46,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Qualification")]
             public int QualificationId { get; set; }
+
+            [Display(Name = "Remarks")]
+            public string Remark { get; set; }
         }
     }
 }

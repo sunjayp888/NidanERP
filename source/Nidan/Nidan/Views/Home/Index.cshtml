@@ -5,7 +5,7 @@
 
 <div class="">
     <div class="row top_tiles">
-        <a href='@Url.Action("Index","FollowUp")'>
+        @*<a href='@Url.Action("Index","FollowUp")'>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                     <div class="icon">
@@ -13,11 +13,11 @@
                     </div>
                     <div class="count">@Model.FollowUpCount</div>
                     <h3>Follow Ups</h3>
-                    <p>follow up for enquiry and mobilization</p>
+                    <p>follow up for Enquiry and Mobilization</p>
                 </div>
             </div>
-        </a>
-        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        </a>*@
+        @*<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="tile-stats">
                 <div class="icon"><i class="fa fa-tachometer"></i>
                 </div>
@@ -25,7 +25,31 @@
                 <h3>Bradford Factor</h3>
                 <p>Warnings.</p>
             </div>
-        </div>
+        </div>*@
+        <a href='@Url.Action("Index","Enquiry")'>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon">
+                        <i class="fa fa-calendar-check-o"></i>
+                    </div>
+                    <div class="count">@Model.EnquiryCount</div>
+                    <h3>Enquiry</h3>
+                    <p>follow up for Enquiry</p>
+                </div>
+            </div>
+        </a>
+        <a href='@Url.Action("Index","Counselling")'>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon">
+                        <i class="fa fa-calendar-check-o"></i>
+                    </div>
+                    <div class="count">@Model.CounsellingCount</div>
+                    <h3>Counselling</h3>
+                    <p>follow up for Counselling</p>
+                </div>
+            </div>
+        </a>
         <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="tile-stats">
                 <div class="icon"><i class="fa fa-square-o"></i>
