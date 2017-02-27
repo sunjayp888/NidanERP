@@ -3,44 +3,82 @@
 @{
     ViewBag.Title = "Edit Counselling";
 }
+<div ng-controller="DocumentController as model">
+    <div class="row">
+        <div class="col-md-9 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>@*@Model.Counselling.CandidateName*@<small>Edit Counselling</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>@*@Model.Counselling.CandidateName*@<small>Edit Enquiry</small></h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                @using (Html.BeginForm())
-
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-horizontal">
-                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
-                        {
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
                                 </div>
-                            </div>
 
-                        }
-                       
-                        @Html.Partial("_Counselling", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                            }
+
+                            @Html.Partial("_Counselling", Model)
+
+                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Quick Actions<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @if (ViewContext.ViewData.ModelState.Any(x => x.Key == "EntitlementError"))
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                            </div>
+                        </div>
+                    }
+                    <a id="uploadDocument" class="btn btn-lg btn-success col-md-10 col-sm-12">Upload Document</a>
+                    <a  id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')"  class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="documentDiv">
+        @Html.Partial("_Document");
+    </div>
 </div>
+
+
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
@@ -49,8 +87,9 @@
 @section scripts {
     <script>
         $(function () {
-
             $('#publicHolidayErrorSummary').hide();
+            $('#documentDiv').hide();
+
             var daterangepickerOptions = {
                 autoApply: true,
                 singleDatePicker: true,
@@ -73,6 +112,10 @@
                 $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
                     $(this).val(picker.startDate.format('DD MMMM YYYY'));
                 });
+            });
+
+            $("#uploadDocument").click(function() {
+                window.location.href="/Counselling/Upload/"+@Model.Counselling.EnquiryId;
             });
         });
     </script>

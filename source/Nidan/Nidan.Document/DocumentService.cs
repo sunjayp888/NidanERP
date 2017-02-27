@@ -5,32 +5,67 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nidan.Data;
+using Nidan.Data.Interfaces;
 
 namespace Nidan.Document
 {
     public class DocumentService : IDocumentService
     {
+        public readonly INidanDataService _nidanDataService;
+
+        public DocumentService(INidanDataService nidanDataService)
+        {
+            _nidanDataService = nidanDataService;
+        }
         public byte[] Bytes(Guid guid)
         {
             throw new NotImplementedException();
         }
 
-        public Guid Create(string category, string basePath, string documentCode, string studentName, string fileName, byte[] contents)
+        public Guid Create(int organisationId, int centreId, int categoryId, string studentCode, string studentName, string description, string fileName, byte[] contents)
         {
             var newGuid = Guid.NewGuid();
-            var categoryFileName = string.Concat(category, "_", newGuid, "_", fileName);
-            var employeeDirectory = GetStudentDirectory(basePath, documentCode) ?? CreateEmployeeDirectory(basePath, studentName, documentCode);
-            var categoryDirectory = Path.Combine(employeeDirectory, category);
+            var category =
+                _nidanDataService.RetrieveDocumentTypes(organisationId)
+                    .FirstOrDefault(e => e.DocumentTypeId == categoryId);
+            var centre = _nidanDataService.RetrieveCentre(organisationId, centreId, e => true);
+            var basePath = CreateCentreBase(category.BasePath, centre.Name);
+            var categoryFileName = string.Concat(category.Name, "_", newGuid, "_", fileName);
+            var employeeDirectory = GetStudentDirectory(basePath, studentCode) ?? CreateStudentDirectory(basePath, studentName, studentCode);
+            var categoryDirectory = Path.Combine(employeeDirectory, category.Name);
             var filePath = Path.Combine(categoryDirectory, categoryFileName);
-            var createdDateTime = DateTime.UtcNow;
+
             Directory.CreateDirectory(categoryDirectory);
             File.WriteAllBytes(filePath, contents);
+            var document = new Entity.Document()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                DocumentTypeId = categoryId,
+                StudentCode = studentCode,
+                CreatedDateTime = DateTime.Now,
+                Description = description,
+                FileName = fileName,
+                Location = filePath,
+                StudentName = studentName,
+                Guid = newGuid
+            };
+
+            _nidanDataService.Create<Entity.Document>(organisationId, document);
             return newGuid;
         }
 
-        private static string CreateStudentDirectory(string basePath, string studentName, string documentCode)
+        private static string CreateCentreBase(string basepath, string centreName)
         {
-            var directoryName = Path.Combine(basePath, CleanFilename(String.Format("{0}_{1}", studentName, documentCode)));
+            if (!Directory.Exists(Path.Combine(basepath, centreName)))
+                Directory.CreateDirectory(Path.Combine(basepath, centreName));
+            return Path.Combine(basepath, centreName);
+        }
+
+        private static string CreateStudentDirectory(string basePath, string studentName, string studentCode)
+        {
+            var directoryName = Path.Combine(basePath, CleanFilename(String.Format("{0}_{1}", studentName, studentCode)));
             Directory.CreateDirectory(directoryName);
             return directoryName;
         }
@@ -42,6 +77,7 @@ namespace Nidan.Document
 
         private static string GetStudentDirectory(string basePath, string studentCode)
         {
+
             var employeeDirectories = Directory.GetDirectories(basePath, String.Format("*_{0}", studentCode));
             if (!employeeDirectories.Any())
                 return null;
@@ -60,6 +96,11 @@ namespace Nidan.Document
         public byte[] GetDocumentBytes(string path)
         {
             return File.ReadAllBytes(path);
+        }
+
+        public List<Entity.Document> RetrieveDocuments(int organisationId, int centreId, string category, string studentCode)
+        {
+            return _nidanDataService.RetrieveDocuments(organisationId, centreId, category, studentCode).ToList();
         }
     }
 }

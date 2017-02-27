@@ -77,6 +77,9 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         [StringLength(100)]
+        public string StudentCode { get; set; }
+
+        [StringLength(100)]
         public string EnquiryStatus { get; set; }
 
         [StringLength(500)]

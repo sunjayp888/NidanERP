@@ -25,7 +25,7 @@ namespace Nidan.Data.Interfaces
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
         Batch CreateBatch(int organisationId, Batch batch);
-       
+
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -63,6 +63,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
 
+
         // Update
 
         T UpdateEntityEntry<T>(T t) where T : class;
@@ -70,5 +71,11 @@ namespace Nidan.Data.Interfaces
         // Delete
         void Delete<T>(int organisationId, Expression<Func<T, bool>> predicate) where T : class;
 
+
+        //Document
+        IEnumerable<DocumentType> RetrieveDocumentTypes(int organisationId);
+        IEnumerable<Document> RetrieveDocuments(int organisationId, int centreId, string category, string studentCode);
+        PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Document RetrieveDocument(int organisationId, Guid documentGuid);
     }
 }

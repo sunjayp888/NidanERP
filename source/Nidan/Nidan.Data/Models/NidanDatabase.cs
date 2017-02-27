@@ -51,6 +51,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Taluka> Talukas { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<DocumentType> DocumentTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -303,6 +305,31 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Centre>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Document>()
+                .Property(e => e.FileName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Document>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Document>()
+                .Property(e => e.Location)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DocumentType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DocumentType>()
+                .Property(e => e.BasePath)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DocumentType>()
+                .HasMany(e => e.Documents)
+                .WithRequired(e => e.DocumentType)
+                .WillCascadeOnDelete(false);
 
             //modelBuilder.Entity<Centre>()
             //    .HasMany(e => e.Events)

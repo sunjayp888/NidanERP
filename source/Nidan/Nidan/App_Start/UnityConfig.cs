@@ -7,6 +7,8 @@ using Nidan.Data;
 using Nidan.Data.Interfaces;
 using Nidan.Data.Models;
 using Nidan.Interfaces;
+using Nidan.Document.Interfaces;
+using Nidan.Document;
 
 namespace Nidan
 {
@@ -58,12 +60,12 @@ namespace Nidan
             container.RegisterType<INidanBusinessService, NidanBusinessService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITenantOrganisationService, NidanBusinessService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IEmailService, EmailService>(new ContainerControlledLifetimeManager(), 
-                new InjectionConstructor( 
+            container.RegisterType<IEmailService, EmailService>(new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(
                     new InjectionParameter<string>(ConfigHelper.OverrideEmailAddresses)
                 )
             );
-
+            container.RegisterType<IDocumentService, DocumentService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITenantsService, TenantsService>(new ContainerControlledLifetimeManager());
 
         }

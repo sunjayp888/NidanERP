@@ -44,7 +44,20 @@
     <Compile Include="Interfaces\IDocumentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Nidan.Business\Nidan.Business.csproj">
+      <Project>{4d8119ad-3f77-4ef7-bced-c1aaf638e2ec}</Project>
+      <Name>Nidan.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nidan.Data\Nidan.Data.csproj">
+      <Project>{bbaf06d0-c7e6-454f-96c3-801ad6076243}</Project>
+      <Name>Nidan.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nidan.Entity\Nidan.Entity.csproj">
+      <Project>{4829285D-04B9-46DD-A961-5B90E7200473}</Project>
+      <Name>Nidan.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

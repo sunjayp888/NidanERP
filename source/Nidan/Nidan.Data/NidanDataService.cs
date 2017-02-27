@@ -68,8 +68,8 @@ namespace Nidan.Data
                 return admission;
             }
         }
-        
-                public Batch CreateBatch(int organisationId, Batch batch)
+
+        public Batch CreateBatch(int organisationId, Batch batch)
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
@@ -672,6 +672,7 @@ namespace Nidan.Data
             {
                 return context
                     .Counsellings
+                    .Include(e => e.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CounsellingId == counsellingId);
@@ -817,5 +818,69 @@ namespace Nidan.Data
         }
 
         #endregion
+
+        //Document
+
+        public IEnumerable<DocumentType> RetrieveDocumentTypes(int organisationId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .DocumentTypes
+                    .AsNoTracking().ToList();
+            }
+        }
+
+        public IEnumerable<Document> RetrieveDocuments(int organisationId, int centreId, string category, string studentCode)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Documents
+                    .Include(e => e.DocumentType)
+                    .AsNoTracking()
+                    .Where(e =>
+                     e.CentreId == centreId && e.DocumentType.Name.ToLower() == category.ToLower() &&
+                     e.StudentCode == studentCode);
+            }
+        }
+
+        public PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Documents
+                    .Include(p => p.Organisation)
+                    .Include(p => p.DocumentType)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDateTime",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Document RetrieveDocument(int organisationId, Guid documentGuid)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Documents
+                    .FirstOrDefault(e=>e.Guid==documentGuid);
+                  
+            }
+        }
     }
 }

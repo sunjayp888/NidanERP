@@ -97,5 +97,11 @@ namespace Nidan.Business.Interfaces
 
         void MarkAsReadFollowUp(int organisationId, int id);
 
+        //Document
+        List<DocumentType> RetrieveDocumentTypes(int organisationId);
+        PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Document RetrieveDocument(int organisationId, Guid documentGuid);
+        //Document CreateDocument(int organisationId, int centreId, int documentTypeId, string filePath,
+        //    string studentCode, string studentName, string description, string fileName);
     }
 }

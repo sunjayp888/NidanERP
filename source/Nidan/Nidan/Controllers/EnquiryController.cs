@@ -74,23 +74,16 @@ namespace Nidan.Controllers
         public ActionResult Create(EnquiryViewModel enquiryViewModel)
         {
             var organisationId = UserOrganisationId;
+            enquiryViewModel.Enquiry.StudentCode = "ABC";
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
-                var counselling = new Counselling
-                {
-                    OrganisationId = UserOrganisationId,
-                    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
-                    CentreId = UserCentreId,
-                    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
-                    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate
-                };
-                NidanBusinessService.CreateCounselling(UserOrganisationId, counselling);
                 return RedirectToAction("Index");
             }
+            var error = ModelState.Values.Where(e => e.Errors.Count > 0);
             enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             enquiryViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());
             enquiryViewModel.Religions = new SelectList(NidanBusinessService.RetrieveReligions(organisationId, e => true).ToList());
@@ -161,17 +154,17 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
-                var counselling = new Counselling
-                {
-                    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
-                    CentreId = UserCentreId,
-                    OrganisationId = UserOrganisationId,
-                    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
-                    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate,
-                    Remarks = enquiryViewModel.Counselling.Remarks,
-                    RemarkByBranchManager = enquiryViewModel.Counselling.RemarkByBranchManager,
-                };
-                NidanBusinessService.UpdateCounselling(UserOrganisationId, counselling);
+                //var counselling = new Counselling
+                //{
+                //    EnquiryId = enquiryViewModel.Enquiry.EnquiryId,
+                //    CentreId = UserCentreId,
+                //    OrganisationId = UserOrganisationId,
+                //    CourseOfferedId = enquiryViewModel.Counselling.CourseOfferedId,
+                //    FollowUpDate = enquiryViewModel.Counselling.FollowUpDate,
+                //    Remarks = enquiryViewModel.Counselling.Remarks,
+                //    RemarkByBranchManager = enquiryViewModel.Counselling.RemarkByBranchManager,
+                //};
+                //NidanBusinessService.UpdateCounselling(UserOrganisationId, counselling);
             }
             var viewModel = new EnquiryViewModel
             {
@@ -198,19 +191,5 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        if (_roleManager != null)
-        //        {
-        //            _roleManager.Dispose();
-        //            _roleManager = null;
-        //        }
-        //    }
-
-        //    base.Dispose(disposing);
-        //}
     }
 }

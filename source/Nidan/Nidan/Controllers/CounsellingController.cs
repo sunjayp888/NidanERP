@@ -5,6 +5,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
+using Nidan.Data;
+using Nidan.Document;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -15,10 +18,12 @@ namespace Nidan.Controllers
     public class CounsellingController : BaseController
     {
         private readonly INidanBusinessService _nidanBusinessService;
+        private readonly IDocumentService _documentService ;
 
-        public CounsellingController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        public CounsellingController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
+            _documentService = documentService;
         }
         // GET: Counselling
         [Authorize(Roles = "Admin")]
@@ -94,7 +99,7 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
-            var viewModel = new EnquiryViewModel
+            var viewModel = new CounsellingViewModel
             {
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 Counselling = counsellingViewModel.Counselling
@@ -102,13 +107,29 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Upload(int id)
+        {
+            var viewModel = new CounsellingViewModel
+            {
+                EnquiryId = id,
+                Files = new List<HttpPostedFileBase>(),
+                DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload(CounsellingViewModel counsellingViewModel)
         {
+            counsellingViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId),
+                "DocumentTypeId", "Name");
 
-            if (ModelState.IsValid)
+            if (counsellingViewModel.Files != null)
             {
                 if (counsellingViewModel.Files != null && counsellingViewModel.Files[0].ContentLength > 0)
                 {
+                    var enquiryData = _nidanBusinessService.RetrieveEnquiry(UserOrganisationId, counsellingViewModel.EnquiryId);
                     // ExcelDataReader works with the binary Excel file, so it needs a FileStream
                     // to get started. This is how we avoid dependencies on ACE or Interop:
                     var stream = counsellingViewModel.Files[0].InputStream;
@@ -116,15 +137,20 @@ namespace Nidan.Controllers
 
                     if (counsellingViewModel.Files[0].FileName.EndsWith(".pdf"))
                     {
-                       //Create and Upload document
+                        //Create and Upload document
+
+                        _documentService.Create(UserOrganisationId, UserCentreId,
+                            counsellingViewModel.Document.DocumentTypeId, enquiryData.StudentCode,
+                            enquiryData.CandidateName, "Counselling Document", counsellingViewModel.Files[0].FileName,
+                            counsellingViewModel.Files[0].InputStream.ToBytes());
 
                     }
                     else
                     {
-                        ModelState.AddModelError("", "This file format is not supported");
-                        return View();
+                        ModelState.AddModelError("FileFormat", "This file format is not supported");
+                        return View(counsellingViewModel);
                     }
-                //    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
+                    //    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
                     return RedirectToAction("Index");
                 }
                 else

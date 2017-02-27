@@ -9,12 +9,11 @@ namespace Nidan.Models
 {
     public class CounsellingViewModel : BaseViewModel
     {
-        public CounsellingViewModel()
-        {
-            Files = new List<HttpPostedFileBase>();
-        }
         public Counselling Counselling { get; set; }
         public SelectList Courses { get; set; }
         public List<HttpPostedFileBase> Files { get; set; }
+        public SelectList DocumentTypes { get; set; }
+        public Entity.Document Document { get; set; }
+        public int EnquiryId { get; set; }
     }
 }

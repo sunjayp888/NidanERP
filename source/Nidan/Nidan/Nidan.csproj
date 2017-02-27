@@ -237,6 +237,7 @@
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\FileExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\RouteExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -1061,6 +1063,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\less\Site.less" />
+    <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
     <Content Include="Scripts\Angular\Controllers\AreaOfInterestController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchController.js" />
@@ -1073,6 +1076,7 @@
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Services\DocumentService.js" />
     <Content Include="Scripts\Angular\Services\AdmissionService.js" />
     <Content Include="Scripts\Angular\Services\AreaOfInterestService.js" />
     <Content Include="Scripts\Angular\Services\BatchService.js" />
@@ -1146,6 +1150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Document\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -1435,6 +1440,8 @@
     <Content Include="Views\Counselling\Index.cshtml" />
     <Content Include="Views\Shared\_Counselling.cshtml" />
     <Content Include="Views\Mobilization\Upload.cshtml" />
+    <Content Include="Views\Counselling\Upload.cshtml" />
+    <Content Include="Views\Shared\_Document.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1450,6 +1457,10 @@
     <ProjectReference Include="..\Nidan.Data\Nidan.Data.csproj">
       <Project>{BBAF06D0-C7E6-454F-96C3-801AD6076243}</Project>
       <Name>Nidan.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nidan.Document\Nidan.Document.csproj">
+      <Project>{7a42d2fd-4c04-4470-9fe2-377fd84fb169}</Project>
+      <Name>Nidan.Document</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nidan.Entity\Nidan.Entity.csproj">
       <Project>{4829285D-04B9-46DD-A961-5B90E7200473}</Project>
@@ -1489,7 +1500,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58514/</IISUrl>
+          <IISUrl>http://localhost:58515/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
