@@ -123,7 +123,7 @@
                                         <td><span ng-bind="counselling.Course.Name"></span></td>
                                         <td><span ng-bind="counselling.PreferTiming"></span></td>
                                         <td><span ng-bind="counselling.Remarks"></span></td>
-                                        <td><span ng-bind="counselling.FollowUpDate"></span></td>
+                                        <td><span ng-bind="counselling.FollowUpDate|date : format : shortDate""></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
