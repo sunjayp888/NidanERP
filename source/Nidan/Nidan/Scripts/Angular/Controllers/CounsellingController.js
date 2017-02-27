@@ -17,10 +17,16 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCounselling = editCounselling;
+        vm.searchCounselling = searchCounselling;
+        vm.searchCounsellingByDate = searchCounsellingByDate;
+        vm.searchKeyword = "";
+        vm.fromDate = "";
+        vm.toDate = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
-            order("CounselledBy");
+            order("FollowUpDate");
         }
 
         function retrieveCounsellings() {
@@ -31,6 +37,31 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.counsellings;
                 });
+        }
+
+        function searchCounselling(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return CounsellingService.searchCounselling(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.counsellings = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.counsellings.length === 0 ? "No Records Found" : "";
+                  return vm.counsellings;
+              });
+        }
+
+        function searchCounsellingByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return CounsellingService.searchCounsellingByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.counsellings = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.counsellings.length === 0 ? "No Records Found" : "";
+                  return vm.counsellings;
+              });
         }
 
         function pageChanged() {

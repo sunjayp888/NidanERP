@@ -51,6 +51,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Taluka> Talukas { get; set; }
+        public virtual DbSet<CounsellingSearchField> CounsellingSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -649,8 +650,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                 .Property(e => e.CounselledBy)
-                 .IsUnicode(false);
+                .Property(e => e.PersonnelId);
+                 
 
             modelBuilder.Entity<Counselling>()
                 .Property(e => e.PreferTiming)
@@ -780,6 +781,26 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Batch>()
                 .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.PsychomatricTest)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
