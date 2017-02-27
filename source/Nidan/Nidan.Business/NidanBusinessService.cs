@@ -743,8 +743,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentre(organisationId, id, p => true);
         }
 
-        public PagedResult<Counselling> RetrieveCounsellings(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCounsellings(organisationId, predicate, orderBy, paging);
         }
@@ -841,7 +840,7 @@ namespace Nidan.Business
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
 
-       
+
 
         #endregion
 

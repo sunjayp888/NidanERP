@@ -94,6 +94,7 @@
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
     <Compile Include="Counselling.cs" />
+    <Compile Include="CounsellingSearchField.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="District.cs" />
     <Compile Include="Document.cs" />
@@ -117,14 +118,13 @@
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
-    <Compile Include="Model1.cs" />
-    <Compile Include="Model2.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Batch.cs" />
+    <Compile Include="Partials\Counselling.cs" />
     <Compile Include="Partials\Event.cs" />
     <Compile Include="Partials\Enquiry.cs" />
     <Compile Include="Partials\FollowUp.cs" />
