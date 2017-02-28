@@ -205,6 +205,33 @@
                     @Html.ValidationMessageFor(model => model.Enquiry.BatchTimePreferId, "", new { @class = "help-block" })
                 </div>
             </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining,
+           new SelectList(
+                  new List<Object>{
+                       new { value ="January" , text = "January"  },
+                       new { value = "February" , text = "February" },
+                       new { value = "March" , text = "March"},
+                       new { value ="April" , text = "April"  },
+                       new { value = "May" , text = "May" },
+                       new { value = "June" , text = "June"},
+                       new { value ="July" , text = "July"  },
+                       new { value = "August" , text = "August" },
+                       new { value = "September" , text = "September"},
+                       new { value ="October" , text = "October"  },
+                       new { value = "November" , text = "November" },
+                       new { value = "December" , text = "December"}
+                    },
+                  "value",
+                  "text",
+                   Model.Enquiry.PreferredMonthForJoining
+           ), null, new { @class = "form-control col-md-7 col-xs-12" }
+        )
+                </div>
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAboutId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
@@ -326,7 +353,7 @@
                     </div>
                 </div>*@
 
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.Enquiry.Place, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     @Html.TextBoxFor(model => model.Enquiry.Place, new { @class = "form-control col-md-7 col-xs-12" })
@@ -348,7 +375,7 @@
                     @Html.TextBoxFor(model => model.Enquiry.WhyEnquiryClosed, new { @class = "form-control col-md-7 col-xs-12" })
                     @Html.ValidationMessageFor(model => model.Enquiry.WhyEnquiryClosed, "", new { @class = "help-block" })
                 </div>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Enquiry.Remarks, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })

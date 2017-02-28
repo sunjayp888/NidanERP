@@ -71,8 +71,9 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-                e =>e.FollowUpDateTime == _today && e.ReadDateTime != _today, orderBy, paging));
+                p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
         public void Read(int id)

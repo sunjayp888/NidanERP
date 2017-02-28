@@ -21,6 +21,7 @@
         //vm.deleteEnquiry = deleteEnquiry;
         vm.searchEnquiry = searchEnquiry;
         vm.searchEnquiryByDate = searchEnquiryByDate;
+        vm.viewEnquiry = viewEnquiry;
         vm.searchKeyword = "";
         vm.fromDate = "";
         vm.toDate = "";
@@ -89,6 +90,10 @@
             $('.dropdown-menu').slideUp('fast');
             $('.' + id).toggle();
             EnquiryService.canDeleteEnquiry(id).then(function (response) { vm.CanDeleteEnquiry = response.data, vm.loadingActions = false });
+        }
+
+        function viewEnquiry(enquiryId) {
+            $window.location.href = "/Enquiry/Edit/" + enquiryId;
         }
 
         //function deleteAEnquiry(id) {
