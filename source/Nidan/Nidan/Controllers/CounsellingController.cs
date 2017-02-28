@@ -18,7 +18,7 @@ namespace Nidan.Controllers
     public class CounsellingController : BaseController
     {
         private readonly INidanBusinessService _nidanBusinessService;
-        private readonly IDocumentService _documentService ;
+        private readonly IDocumentService _documentService;
 
         public CounsellingController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
@@ -133,37 +133,24 @@ namespace Nidan.Controllers
                 if (counsellingViewModel.Files != null && counsellingViewModel.Files[0].ContentLength > 0)
                 {
                     var enquiryData = _nidanBusinessService.RetrieveEnquiry(UserOrganisationId, counsellingViewModel.EnquiryId);
-                    // ExcelDataReader works with the binary Excel file, so it needs a FileStream
-                    // to get started. This is how we avoid dependencies on ACE or Interop:
-                    var stream = counsellingViewModel.Files[0].InputStream;
-                    // We return the interface, so that
-
                     if (counsellingViewModel.Files[0].FileName.EndsWith(".pdf"))
                     {
-                        //Create and Upload document
-
                         _documentService.Create(UserOrganisationId, UserCentreId,
                             counsellingViewModel.Document.DocumentTypeId, enquiryData.StudentCode,
                             enquiryData.CandidateName, "Counselling Document", counsellingViewModel.Files[0].FileName,
                             counsellingViewModel.Files[0].InputStream.ToBytes());
-
                     }
                     else
                     {
                         ModelState.AddModelError("FileFormat", "This file format is not supported");
                         return View(counsellingViewModel);
                     }
-                    //    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Please Upload Your file");
-                }
+                ModelState.AddModelError("", "Please Upload Your file");
             }
             return View();
         }
-
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)

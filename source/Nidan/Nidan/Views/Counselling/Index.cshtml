@@ -31,7 +31,7 @@
             </div>
         </div>*@
     }
-    @*---------------------------------------------------------------------Search*@
+    @*Search*@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -120,10 +120,10 @@
                                     <tr ng-repeat="counselling in model.counsellings" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCounselling(counselling.CounsellingId)">
                                         <td><span ng-bind="counselling.Enquiry.CandidateName"></span></td>
                                         @*<td><span ng-bind="counselling.CounselledBy"></span></td>*@
-                                        @*<td><span ng-bind="counselling.Course.Name"></span></td>*@
+                                        <td><span ng-bind="counselling.Course.Name"></span></td>
                                         <td><span ng-bind="counselling.PreferTiming"></span></td>
                                         <td><span ng-bind="counselling.Remarks"></span></td>
-                                        <td><span ng-bind="counselling.FollowUpDate|date : format : shortDate""></span></td>
+                                        <td><span ng-bind="counselling.FollowUpDate|date : format : shortDate"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

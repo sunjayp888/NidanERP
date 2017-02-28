@@ -128,7 +128,7 @@ namespace Nidan.Business
             return data;
         }
 
-        public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
+        public Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry)
         {
             var data = _nidanDataService.Create<Enquiry>(organisationId, enquiry);
             //Update student code
@@ -142,7 +142,8 @@ namespace Nidan.Business
                 CourseOfferedId = enquiry.IntrestedCourseId,
                 EnquiryId = data.EnquiryId,
                 FollowUpDate = _today.AddDays(2),
-                OrganisationId = organisationId
+                OrganisationId = organisationId,
+                PersonnelId = personnelId
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
 
@@ -167,7 +168,7 @@ namespace Nidan.Business
         private string GenerateStudentCode(int organisationId, int enquiryId, int centreId)
         {
             var centre = RetrieveCentre(organisationId, centreId, e => true);
-            return string.Format("{0}{1}", centre.Name.Substring(0, 3), enquiryId);
+            return enquiryId.ToString(); //string.Format("{0}{1}", centre.Name.Substring(0, 3), enquiryId);
         }
 
         public void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime,

@@ -12,7 +12,7 @@ namespace Nidan.Business.Interfaces
         //Create
         Personnel CreatePersonnel(int organisationId, Personnel personnel);
         Question CreateQuestion(int organisationId, Question personnel);
-        Enquiry CreateEnquiry(int organisationId, Enquiry enquiry);
+        Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry);
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);

@@ -29,11 +29,11 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-
+        @Html.HiddenFor(e => e.Enquiry.StudentCode)
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.CandidateName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.CandidateName, new { @class = "form-control has-feedback-left" })
+                @Html.TextBoxFor(model => model.Enquiry.CandidateName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Enquiry.CandidateName, "", new { @class = "help-block" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.GuardianName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.GuardianName, new { @class = "form-control has-feedback-left" })
+                @Html.TextBoxFor(model => model.Enquiry.GuardianName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Enquiry.GuardianName, "", new { @class = "help-block" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.ContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.ContactNo, new { @class = "form-control has-feedback-left" })
+                @Html.TextBoxFor(model => model.Enquiry.ContactNo, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Enquiry.ContactNo, "", new { @class = "help-block" })
             </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.EmailId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.EmailId, new { @class = "form-control has-feedback-left" })
+                @Html.TextBoxFor(model => model.Enquiry.EmailId, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Enquiry.EmailId, "", new { @class = "help-block" })
             </div>
         </div>
