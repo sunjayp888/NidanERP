@@ -68,10 +68,6 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? EnquiryDate { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string Place { get; set; }
-
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
@@ -111,8 +107,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
 
-        public string WhyEnquiryClosed { get; set; }
-
         public string Remarks { get; set; }
 
         public virtual CasteCategory CasteCategory { get; set; }
@@ -144,6 +138,9 @@ namespace Nidan.Entity
         public virtual EnquiryType EnquiryType { get; set; }
 
         public virtual StudentType StudentType { get; set; }
+
+        [StringLength(500)]
+        public string PreferredMonthForJoining { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }

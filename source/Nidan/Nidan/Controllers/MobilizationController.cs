@@ -59,7 +59,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = 1;
+                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.FollowUpDate = DateTime.Now.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
@@ -104,7 +104,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = 1;
+                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
@@ -173,13 +173,15 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
     }

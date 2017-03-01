@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-12 col-xs-12">
+        <div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Quick Actions<small></small></h2>
@@ -89,7 +89,12 @@
         $(function () {
             $('#publicHolidayErrorSummary').hide();
             $('#documentDiv').hide();
-
+            //var counsellingPsychomatricTest= $("input[name='Counselling.PsychomatricTest']:checked").val();
+            //if (counsellingPsychomatricTest == "No") {
+            //    $('#quickActions').hide();
+            //} else {
+            //    $('#quickActions').show();
+            //}
             var daterangepickerOptions = {
                 autoApply: true,
                 singleDatePicker: true,
@@ -105,6 +110,14 @@
                     "format": "DD MMMM YYYY"
                 }
             };
+
+            //$('#psychomatricTestYes').click(function () {
+            //    $('#quickActions').show();
+            //});
+
+            //$('#psychomatricTestNo').click(function () {
+            //    $('#quickActions').hide();
+            //});
 
             jQuery(function () {
                 jQuery(".date").daterangepicker(daterangepickerOptions);

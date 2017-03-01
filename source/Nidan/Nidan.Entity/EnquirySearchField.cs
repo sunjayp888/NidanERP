@@ -67,7 +67,7 @@ namespace Nidan.Entity
         public int EducationalQualificationId { get; set; }
 
         [StringLength(100)]
-        public string YearOFPassOut { get; set; }
+        public string YearOfPassOut { get; set; }
 
         [StringLength(100)]
         public string Marks { get; set; }
@@ -96,39 +96,70 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 12)]
-        [StringLength(100)]
-        public string Place { get; set; }
-
-        [Key]
-        [Column(Order = 13)]
-        [StringLength(500)]
-        public string CounselledBy { get; set; }
-
-        [Key]
-        [Column(Order = 14)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseOfferedId { get; set; }
-
-        public DateTime? PreferTiming { get; set; }
-
-        public string Remarks { get; set; }
-
-        [Key]
-        [Column(Order = 15)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 16)]
+        [Column(Order = 13)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? FollowUpDate { get; set; }
+        [Key]
+        [Column(Order = 14)]
+        [StringLength(100)]
+        public string StudentCode { get; set; }
 
         [StringLength(100)]
         public string EnquiryStatus { get; set; }
 
+        [StringLength(500)]
+        public string EmployerName { get; set; }
+
+        [StringLength(50)]
+        public string EmployerContactNo { get; set; }
+
+        public string EmployerAddress { get; set; }
+
+        public int? AnnualIncome { get; set; }
+
+        public int? SchemeId { get; set; }
+
+        [Key]
+        [Column(Order = 15)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int EnquiryTypeId { get; set; }
+
+        [Key]
+        [Column(Order = 16)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StudentTypeId { get; set; }
+
+        [Key]
+        [Column(Order = 17)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int SectorId { get; set; }
+
+        [Key]
+        [Column(Order = 18)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int BatchTimePreferId { get; set; }
+
+        [StringLength(500)]
+        public string AppearingQualification { get; set; }
+
+        public int? YearOfExperience { get; set; }
+
+        [StringLength(100)]
+        public string PlacementNeeded { get; set; }
+
+        public string Remarks { get; set; }
+
+        public DateTime? FollowUpDate { get; set; }
+
+        [StringLength(500)]
+        public string PreferredMonthForJoining { get; set; }
+
+        [StringLength(6270)]
         public string SearchField { get; set; }
     }
 }

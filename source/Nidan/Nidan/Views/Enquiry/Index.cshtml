@@ -119,13 +119,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="person in model.enquiries" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
-                                            <td><span ng-bind="person.CandidateName"></span></td>
-                                            <td><span ng-bind="person.ContactNo"></span></td>
-                                            <td><span ng-bind="person.EmailId"></span></td>
+                                        <tr ng-repeat="enquiry in model.enquiries" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
+                                            <td><span ng-bind="enquiry.CandidateName"></span></td>
+                                            <td><span ng-bind="enquiry.ContactNo"></span></td>
+                                            <td><span ng-bind="enquiry.EmailId"></span></td>
                                             @*<td><span ng-bind="person.Course.Name"></span></td>*@
                                             @*<td><span ng-bind="person.Remarks"></span></td>*@
-                                            <td><span ng-bind="person.FollowUpDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
                                             @* <td><span ng-bind="person.EnquiryStatus"></span></td>*@
                                             <td>
                                                 <div class="btn-group pull-right">
@@ -136,13 +136,13 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{person.EnquiryId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
 
                                                                 <li>
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Enquiry {{person.CandidateName}}" ng-bootbox-confirm-action="model.deleteEnquiry(person.EnquiryId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to delete Enquiry {{enquiry.CandidateName}}" ng-bootbox-confirm-action="model.deleteEnquiry(enquiry.EnquiryId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
                                                                         Delete
                                                                     </a>
                                                                 </li>

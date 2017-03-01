@@ -57,6 +57,12 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PsychomatricTest { get; set; }
 
-        public int? SearchField { get; set; }
+        [StringLength(100)]
+        public string ConversionProspect { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
+        [StringLength(2320)]
+        public string SearchField { get; set; }
     }
 }

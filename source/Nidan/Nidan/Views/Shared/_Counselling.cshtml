@@ -31,11 +31,11 @@
     <label class="control-label col-md-4 col-sm-4 col-xs-12">Psychomatric Test Done</label>
     <div class="col-md-8 col-sm-8 col-xs-12">
         <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
-            <label class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-primary")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+            <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                 @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
                 <input type="radio" name="psychomatricTest" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
             </label>
-            <label class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+            <label id="psychomatricTestNo" class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                 @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "No")
                 <input type="radio" name="psychomatricTest" value="No" data-parsley-multiple="gender"> No
             </label>
@@ -50,7 +50,7 @@
            new SelectList(
                   new List<Object>{
                        new { value ="High" , text = "High"  },
-                       new { value = "Mid" , text = "Midium" },
+                       new { value = "Medium" , text = "Medium" },
                        new { value = "Low" , text = "Low"}
                     },
                   "value",

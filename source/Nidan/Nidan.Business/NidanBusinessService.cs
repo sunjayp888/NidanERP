@@ -290,7 +290,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiries(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<Mobilization> RetrieveMobilizations(int organisationId, List<OrderBy> orderBy = null,
+        public PagedResult<Mobilization> RetrieveMobilizations(int organisationId, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
             return _nidanDataService.RetrieveMobilizations(organisationId, p => true, orderBy, paging);
@@ -612,6 +612,12 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Occupation>(organisationId, e => true);
         }
 
+        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         public List<MobilizationType> RetrieveMobilizationTypes(int organisationId,
             Expression<Func<MobilizationType, bool>> predicate)
         {
@@ -629,26 +635,26 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBatches(organisationId, p => true, orderBy, paging);
         }
 
-        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword,
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+            return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
-        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword,
-            List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
-        }
+        //public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate,
+        //    List<OrderBy> orderBy = null, Paging paging = null)
+        //{
+        //    return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        //}
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
         }
 
-        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+            return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
         #endregion

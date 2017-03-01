@@ -107,7 +107,9 @@ namespace Nidan.Controllers
         public ActionResult Create(PersonnelProfileViewModel personnelViewModel)
         {
             // check if user with this email already exists for the current organisation
+            var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
             var userExists = UserManager.FindByEmail(personnelViewModel.Personnel.Email);
+            personnelViewModel.Centres = new SelectList(centres, "CentreId", "Name");
             if (userExists != null)
                 ModelState.AddModelError("", string.Format("An account already exists for the email address {0}", personnelViewModel.Personnel.Email));
 

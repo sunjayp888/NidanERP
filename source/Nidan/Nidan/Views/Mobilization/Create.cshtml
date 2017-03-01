@@ -121,5 +121,14 @@
                $('.eventId').hide();
            }
         });
+
+        $('.interestedCourseId').hide();
+        $("#Mobilization_InterestedCourseId").change(function () {
+            if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
+                $('.interestedCourseId').show();
+            } else {
+                $('.interestedCourseId').hide();
+            }
+        });
     </script>
 }

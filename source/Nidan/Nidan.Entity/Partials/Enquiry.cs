@@ -103,14 +103,14 @@ namespace Nidan.Entity
             [StringLength(100)]
             public string PlacementNeeded { get; set; }
 
-            [Display(Name = "Why Enquiry Closed?")]
-            public string WhyEnquiryClosed { get; set; }
-
             [Display(Name = "Remarks")]
             public string Remarks { get; set; }
 
             [Display(Name = "Scheme")]
             public int SchemeId { get; set; }
+
+            [Display(Name = "Preferred Month For Joining")]
+            public int PreferredMonthForJoining { get; set; }
         }
     }
 }

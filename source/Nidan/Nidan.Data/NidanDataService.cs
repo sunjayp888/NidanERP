@@ -578,7 +578,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -604,7 +604,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -717,17 +717,21 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+        public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
-                return context.Database
-                    .SqlQuery<CounsellingSearchField>("SearchCounselling @SearchKeyword", category).ToList().AsQueryable().
+                var searchData = context.Database
+                    .SqlQuery<CounsellingSearchField>("SearchCounselling @SearchKeyword", category).ToList();
 
+                var counsellings = context.Counsellings.Include(e => e.Course).Include(e=>e.Enquiry);
+
+                var data = searchData.Join(counsellings, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -737,6 +741,7 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+                return data;
             }
         }
 
