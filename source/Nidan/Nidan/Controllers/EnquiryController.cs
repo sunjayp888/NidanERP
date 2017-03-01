@@ -49,10 +49,24 @@ namespace Nidan.Controllers
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
+            var enquiryFromMobilization = id.HasValue && id.Value != 0
+                ? new Enquiry
+                {
+                    OrganisationId = UserOrganisationId,
+                    CandidateName = mobilization == null ? string.Empty : mobilization.Name,
+                    ContactNo = mobilization.Mobile,
+                    EducationalQualificationId = mobilization.QualificationId,
+                    Address = mobilization?.StudentLocation ?? string.Empty,
+                    IntrestedCourseId = mobilization.InterestedCourseId,
+                    FollowUpDate = DateTime.Today.AddDays(2),
+                    CentreId = UserCentreId,
+
+                }
+                : new Enquiry();
 
             var viewModel = new EnquiryViewModel
             {
-                Enquiry = new Enquiry(),
+                Enquiry = enquiryFromMobilization,
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
                 Religions = new SelectList(religions, "ReligionId", "Name"),
@@ -82,7 +96,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
-                enquiryViewModel.Enquiry.FollowUpDate=DateTime.Now.AddDays(2);
+                enquiryViewModel.Enquiry.FollowUpDate = DateTime.Now.AddDays(2);
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry);
                 return RedirectToAction("Index");
             }

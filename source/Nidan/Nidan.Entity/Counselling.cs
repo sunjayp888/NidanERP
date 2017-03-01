@@ -34,7 +34,7 @@ namespace Nidan.Entity
         public int SectorId { get; set; }
 
         [StringLength(100)]
-        public string PsychomatricTest { get; set; } = "Female";
+        public string PsychomatricTest { get; set; } = "No";
 
         [StringLength(100)]
         public string ConversionProspect { get; set; }

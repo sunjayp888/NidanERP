@@ -59,7 +59,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = 1;
+                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.FollowUpDate = DateTime.Now.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
@@ -104,7 +104,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = 1;
+                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);

@@ -56,7 +56,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 followUpViewModel.FollowUp.OrganisationId = UserOrganisationId;
-                followUpViewModel.FollowUp.CentreId = 1;
+                followUpViewModel.FollowUp.CentreId = UserCentreId;
                 followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(UserOrganisationId, followUpViewModel.FollowUp);
                 return RedirectToAction("Index");
             }

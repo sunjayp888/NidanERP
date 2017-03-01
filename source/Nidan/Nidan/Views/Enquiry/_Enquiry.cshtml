@@ -38,9 +38,6 @@
             </div>
         </div>
 
-
-
-
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.GuardianName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
@@ -52,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Enquiry.ContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
             <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.ContactNo, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Enquiry.ContactNo, new { @class = "form-control", @onkeypress = "phoneno()", @maxlength = "10" })
                 @Html.ValidationMessageFor(model => model.Enquiry.ContactNo, "", new { @class = "help-block" })
             </div>
         </div>
