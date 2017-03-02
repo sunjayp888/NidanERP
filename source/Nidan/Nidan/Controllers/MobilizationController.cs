@@ -106,6 +106,7 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.FollowUpDate = DateTime.Now.AddDays(2);
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
@@ -174,7 +175,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => isSuperAdmin || p.CentreId == UserCentreId && p.Close!="Yes", orderBy, paging));
         }
 
         [HttpPost]

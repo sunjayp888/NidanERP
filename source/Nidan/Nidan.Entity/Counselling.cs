@@ -36,7 +36,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PsychomatricTest { get; set; } = "No";
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string ConversionProspect { get; set; }
 
         public virtual Organisation Organisation { get; set; }

@@ -4,6 +4,39 @@
 @Html.HiddenFor(m => m.Counselling.CounsellingId)
 @Html.HiddenFor(m => m.Counselling.EnquiryId)
 <div class="form-group">
+    @Html.LabelFor(model => model.Counselling.Enquiry.CandidateName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        @Html.TextBoxFor(model => model.Counselling.Enquiry.CandidateName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+        @Html.ValidationMessageFor(model => model.Counselling.Enquiry.CandidateName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Counselling.Enquiry.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        @Html.DropDownListFor(model => model.Counselling.Enquiry.IntrestedCourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+        @Html.ValidationMessageFor(model => model.Counselling.Enquiry.IntrestedCourseId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Counselling.Enquiry.Mobile, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        @Html.TextBoxFor(model => model.Counselling.Enquiry.Mobile, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+        @Html.ValidationMessageFor(model => model.Counselling.Enquiry.Mobile, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Counselling.Enquiry.FollowUpDate, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+    <div class="col-md-4 col-sm-4 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.Counselling.Enquiry.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = "true" })
+        @Html.ValidationMessageFor(model => model.Counselling.Enquiry.FollowUpDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+
+<div class="form-group">
     @Html.LabelFor(model => model.Counselling.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
     <div class="col-md-4 col-sm-4 col-xs-12">
         @Html.DropDownListFor(model => model.Counselling.SectorId, Model.Sectors, null, new { @class = "form-control col-md-7 col-xs-12" })
@@ -49,9 +82,13 @@
         @Html.DropDownListFor(model => model.Counselling.ConversionProspect,
            new SelectList(
                   new List<Object>{
-                       new { value ="High" , text = "High"  },
-                       new { value = "Medium" , text = "Medium" },
-                       new { value = "Low" , text = "Low"}
+                       new { value ="90-100" , text = "90-100"  },
+                       new { value = "80-90" , text = "80-90" },
+                       new { value = "70-80" , text = "70-80"},
+                       new { value ="60-70" , text = "60-70"  },
+                       new { value = "50-60" , text = "50-60" },
+                       new { value = "40-50" , text = "40-50"},
+                       new { value = "Below 40" , text = "Below 40 "}
                     },
                   "value",
                   "text",

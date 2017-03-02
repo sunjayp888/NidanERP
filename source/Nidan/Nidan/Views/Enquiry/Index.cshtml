@@ -109,7 +109,7 @@
                                     <thead>
                                         <tr role="row">
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                            <th ng-click="model.order('ContactNo')" ng-class="model.orderClass('ContactNo')">Contact No</th>
+                                            <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>
                                             @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
                                             @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
@@ -121,7 +121,7 @@
                                     <tbody>
                                         <tr ng-repeat="enquiry in model.enquiries" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
                                             <td><span ng-bind="enquiry.CandidateName"></span></td>
-                                            <td><span ng-bind="enquiry.ContactNo"></span></td>
+                                            <td><span ng-bind="enquiry.Mobile"></span></td>
                                             <td><span ng-bind="enquiry.EmailId"></span></td>
                                             @*<td><span ng-bind="person.Course.Name"></span></td>*@
                                             @*<td><span ng-bind="person.Remarks"></span></td>*@

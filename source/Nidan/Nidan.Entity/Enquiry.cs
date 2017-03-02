@@ -17,7 +17,7 @@ namespace Nidan.Entity
 
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
-        public long ContactNo { get; set; }
+        public long Mobile { get; set; }
 
         [StringLength(500)]
         public string EmailId { get; set; }

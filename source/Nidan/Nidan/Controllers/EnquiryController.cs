@@ -54,7 +54,7 @@ namespace Nidan.Controllers
                 {
                     OrganisationId = UserOrganisationId,
                     CandidateName = mobilization == null ? string.Empty : mobilization.Name,
-                    ContactNo = mobilization.Mobile,
+                    Mobile = mobilization.Mobile,
                     EducationalQualificationId = mobilization.QualificationId,
                     Address = mobilization?.StudentLocation ?? string.Empty,
                     IntrestedCourseId = mobilization.InterestedCourseId,

@@ -155,7 +155,7 @@ namespace Nidan.Business
             //    Remark = data.Remarks,
             //    Name = data.CandidateName,
             //    IntrestedCourseId = data.IntrestedCourseId,
-            //    Mobile = data.ContactNo,
+            //    Mobile = data.Mobile,
             //    CreatedDateTime = DateTime.Now,
             //    FollowUpType = "Enquiry",
             //    ReadDateTime = _today.AddYears(-100)
@@ -243,7 +243,7 @@ namespace Nidan.Business
                 Remark = data.Remarks,
                 Name = enquiry.CandidateName,
                 IntrestedCourseId = data.CourseOfferedId,
-                Mobile = enquiry.ContactNo,
+                Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.Now,
                 FollowUpType = "Enquiry",
                 ReadDateTime = _today.AddYears(-100)

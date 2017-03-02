@@ -53,6 +53,11 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
+
         //public virtual Mobilization Mobilization1 { get; set; }
 
         //public virtual Mobilization Mobilization2 { get; set; }

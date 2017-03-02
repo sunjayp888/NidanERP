@@ -59,6 +59,7 @@
                                             <th ng-click="model.order('IntrestedCourse')" ng-class="model.orderClass('IntrestedCourse')">Interested Course</th>
                                     @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
                                             <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
+                                            <th ng-click="model.order('FollowUpType')" ng-class="model.orderClass('FollowUpType')">Follow-Up Type</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,7 @@
                                             <td><span ng-bind="followUp.Course.Name"></span></td>
                                           @*<td><span ng-bind="followUp.Qualification.Name"></span></td>*@
                                             <td><span ng-bind="followUp.FollowUpDateTime|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="followUp.FollowUpType"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -80,7 +82,7 @@
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
-                                                                    Edit
+                                                                    Follow-Up
                                                                 </a>
                                                             </li>
                                                             @*<li>
