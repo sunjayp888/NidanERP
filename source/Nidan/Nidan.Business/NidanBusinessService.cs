@@ -120,8 +120,10 @@ namespace Nidan.Business
                 Name = mobilization.Name,
                 IntrestedCourseId = mobilization.InterestedCourseId,
                 Mobile = mobilization.Mobile,
+                AlternateMobile = mobilization.AlternateMobile,
                 CreatedDateTime = DateTime.Now,
                 FollowUpType = "Mobilization",
+                FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
                 ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
@@ -135,7 +137,6 @@ namespace Nidan.Business
             data.StudentCode = GenerateStudentCode(organisationId, data.EnquiryId, enquiry.CentreId);
             _nidanDataService.UpdateEntityEntry(data);
             //Create Counselling
-
             var conselling = new Counselling()
             {
                 CentreId = enquiry.CentreId,
@@ -146,22 +147,22 @@ namespace Nidan.Business
                 PersonnelId = personnelId
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
-
-            //var followUp = new FollowUp
-            //{
-            //    CentreId = data.CentreId,
-            //    FollowUpDateTime = data.FollowUpDate.Value,
-            //    EnquiryId = data.EnquiryId,
-            //    Remark = data.Remarks,
-            //    Name = data.CandidateName,
-            //    IntrestedCourseId = data.IntrestedCourseId,
-            //    Mobile = data.ContactNo,
-            //    CreatedDateTime = DateTime.Now,
-            //    FollowUpType = "Enquiry",
-            //    ReadDateTime = _today.AddYears(-100)
-            //};
-
-            //_nidanDataService.Create<FollowUp>(organisationId, followUp);
+            var followUp = new FollowUp
+            {
+                CentreId = data.CentreId,
+                FollowUpDateTime = data.FollowUpDate.Value,
+                EnquiryId = data.EnquiryId,
+                Remark = data.Remarks,
+                Name = data.CandidateName,
+                IntrestedCourseId = data.IntrestedCourseId,
+                Mobile = data.Mobile,
+                CreatedDateTime = DateTime.Now,
+                FollowUpType = "Enquiry",
+                FollowUpURL = string.Format("/Enquiry/Edit/{0}", data.EnquiryId),
+                AlternateMobile = enquiry.AlternateMobile,
+                ReadDateTime = _today.AddYears(-100)
+            };
+            _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
         }
 
@@ -243,13 +244,14 @@ namespace Nidan.Business
                 Remark = data.Remarks,
                 Name = enquiry.CandidateName,
                 IntrestedCourseId = data.CourseOfferedId,
-                Mobile = enquiry.ContactNo,
+                Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.Now,
-                FollowUpType = "Enquiry",
+                FollowUpType = "Counselling",
+                FollowUpURL = string.Format("/Counselling/Edit/{0}",data.CounsellingId),
                 ReadDateTime = _today.AddYears(-100)
             };
-            return data;
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            return data;
         }
 
         #endregion
@@ -817,6 +819,23 @@ namespace Nidan.Business
 
         public Counselling UpdateCounselling(int organisationId, Counselling counselling)
         {
+            //Create Follow up
+            var followUp = new FollowUp
+            {
+                CentreId = counselling.CentreId,
+                FollowUpDateTime = counselling.FollowUpDate.Value,
+                MobilizationId = counselling.CounsellingId,
+                Remark = counselling.Remarks,
+                Name = counselling.Enquiry.CandidateName,
+                IntrestedCourseId = counselling.CourseOfferedId,
+                Mobile = counselling.Enquiry.Mobile,
+                AlternateMobile = counselling.Enquiry.AlternateMobile,
+                CreatedDateTime = DateTime.Now,
+                FollowUpType = "Counselling",
+                ReadDateTime = _today.AddYears(-100)
+            };
+            _nidanDataService.Create<FollowUp>(organisationId, followUp);
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
         }
 

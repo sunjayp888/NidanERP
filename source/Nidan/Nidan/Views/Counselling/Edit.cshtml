@@ -31,9 +31,30 @@
                                 </div>
 
                             }
-                       @Html.HiddenFor(model => Model.Counselling.CentreId)
+                            @Html.HiddenFor(model => Model.Counselling.CentreId)
                             @Html.Partial("_Counselling", Model)
-
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <div id="gender" class="btn-group" data-toggle="buttons">
+                                        <label class='@(Model.Counselling.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Counselling.Close, "Yes")
+                                            <input type="radio" name="close" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                        </label>
+                                        <label class='@(Model.Counselling.Close == "No" || Model.Counselling.Close==null? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Counselling.Close, "No")
+                                            <input type="radio" name="close" value="No" data-parsley-multiple="gender"> No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Counselling.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Counselling.ClosingRemark, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Counselling.ClosingRemark, "", new { @class = "help-block" })
+                                </div>
+                            </div>
                             <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">

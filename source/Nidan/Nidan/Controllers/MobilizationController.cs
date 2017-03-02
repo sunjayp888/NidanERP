@@ -18,7 +18,7 @@ namespace Nidan.Controllers
     [Authorize]
     public class MobilizationController : BaseController
     {
-
+        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
         public MobilizationController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
         {
         }
@@ -174,7 +174,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today, orderBy, paging));
         }
 
         [HttpPost]

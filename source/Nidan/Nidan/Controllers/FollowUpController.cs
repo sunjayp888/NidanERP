@@ -76,6 +76,7 @@ namespace Nidan.Controllers
                 p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
+
         public void Read(int id)
         {
             var data = NidanBusinessService.RetrieveFollowUp(UserOrganisationId, id);

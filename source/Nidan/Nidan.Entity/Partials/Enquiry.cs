@@ -17,7 +17,7 @@ namespace Nidan.Entity
             public string CandidateName { get; set; }
 
             [Display(Name = "Contact No")]
-            public long ContactNo { get; set; }
+            public long Mobile { get; set; }
 
             [Display(Name = "Email Id")]
             [StringLength(500)]

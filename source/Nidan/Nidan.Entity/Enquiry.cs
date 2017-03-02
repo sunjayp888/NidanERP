@@ -17,7 +17,9 @@ namespace Nidan.Entity
 
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
-        public long ContactNo { get; set; }
+        public long Mobile { get; set; }
+
+        public long? AlternateMobile { get; set; }
 
         [StringLength(500)]
         public string EmailId { get; set; }
@@ -109,6 +111,11 @@ namespace Nidan.Entity
 
         public string Remarks { get; set; }
 
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }
@@ -141,7 +148,7 @@ namespace Nidan.Entity
 
         [StringLength(500)]
         public string PreferredMonthForJoining { get; set; }
-
+  
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }
 

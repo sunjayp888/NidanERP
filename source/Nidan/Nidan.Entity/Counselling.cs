@@ -39,6 +39,11 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string ConversionProspect { get; set; }
 
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }

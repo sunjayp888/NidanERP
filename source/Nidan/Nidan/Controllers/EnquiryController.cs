@@ -17,6 +17,7 @@ namespace Nidan.Controllers
     {
         private static string EnquiryName { get; set; }
         private ApplicationRoleManager _roleManager;
+        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
 
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
@@ -54,13 +55,13 @@ namespace Nidan.Controllers
                 {
                     OrganisationId = UserOrganisationId,
                     CandidateName = mobilization == null ? string.Empty : mobilization.Name,
-                    ContactNo = mobilization.Mobile,
+                    Mobile = mobilization.Mobile,
+                    AlternateMobile = mobilization.AlternateMobile,
                     EducationalQualificationId = mobilization.QualificationId,
                     Address = mobilization?.StudentLocation ?? string.Empty,
                     IntrestedCourseId = mobilization.InterestedCourseId,
                     FollowUpDate = DateTime.Today.AddDays(2),
                     CentreId = UserCentreId,
-
                 }
                 : new Enquiry();
 
@@ -191,7 +192,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate==_today, orderBy, paging));
         }
 
         [HttpPost]

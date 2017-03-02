@@ -27,6 +27,8 @@ namespace Nidan.Entity
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
 
+        public long? AlternateMobile { get; set; }
+
         public int InterestedCourseId { get; set; }
 
         public int QualificationId { get; set; }
@@ -52,6 +54,11 @@ namespace Nidan.Entity
 
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
+
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
 
         //public virtual Mobilization Mobilization1 { get; set; }
 

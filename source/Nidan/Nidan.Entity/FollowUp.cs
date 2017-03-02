@@ -17,6 +17,8 @@ namespace Nidan.Entity
 
         public int? EnquiryId { get; set; }
 
+        public int? CounsellingId { get; set; }
+
         public string Remark { get; set; }
 
         public bool? Closed { get; set; }
@@ -34,10 +36,15 @@ namespace Nidan.Entity
 
         public long? Mobile { get; set; }
 
+        public long? AlternateMobile { get; set; }
+
         public int IntrestedCourseId { get; set; }
 
         [StringLength(200)]
         public string FollowUpType { get; set; }
+
+        [StringLength(2000)]
+        public string FollowUpURL { get; set; }
 
         public virtual Course Course { get; set; }
 
