@@ -7,7 +7,9 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><i class="fa fa-bars"></i> Personal Information <small>fill personal information</small></h2>
+            <h2>
+                <i class="fa fa-bars"></i> Personal Information <small>fill personal information</small>
+            </h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li>
                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -30,129 +32,172 @@
             <div class="clearfix"></div>
         </div>
         @Html.HiddenFor(e => e.Enquiry.StudentCode)
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.CandidateName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.CandidateName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.CandidateName, "", new { @class = "help-block" })
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.CandidateName, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.CandidateName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.CandidateName, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.GuardianName, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.GuardianName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.GuardianName, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.Mobile, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.Mobile, new { @class = "form-control", @onkeypress = "phoneno()", @maxlength = "10" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.Mobile, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.GuardianName, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.GuardianName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.GuardianName, "", new { @class = "help-block" })
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.AlternateMobile, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.AlternateMobile, new { @class = "form-control", @onkeypress = "phoneno()", @maxlength = "10" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.AlternateMobile, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.EmailId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.EmailId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.EmailId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.EnquiryTypeId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Enquiry.EnquiryTypeId, Model.EnquiryTypes, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.EnquiryTypeId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.Mobile, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.Mobile, new { @class = "form-control", @onkeypress = "phoneno()", @maxlength = "10" })
-                @Html.ValidationMessageFor(model => model.Enquiry.Mobile, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.AlternateMobile, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.AlternateMobile, new { @class = "form-control", @onkeypress = "phoneno()", @maxlength = "10" })
-                @Html.ValidationMessageFor(model => model.Enquiry.AlternateMobile, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.EmailId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.EmailId, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.EmailId, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.EnquiryTypeId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(model => model.Enquiry.EnquiryTypeId, Model.EnquiryTypes, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.EnquiryTypeId, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.StudentTypeId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(model => model.Enquiry.StudentTypeId, Model.StudentTypes, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.StudentTypeId, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.Age, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.Age, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.Age, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.Address, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.Address, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.Address, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.GuardianContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.TextBoxFor(model => model.Enquiry.GuardianContactNo, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.GuardianContactNo, "", new { @class = "help-block" })
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.StudentTypeId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Enquiry.StudentTypeId, Model.StudentTypes, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.StudentTypeId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.Age, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.Age, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.Age, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.Address, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.Address, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.OccupationId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(model => model.Enquiry.OccupationId, Model.Occupations, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.OccupationId, "", new { @class = "help-block" })
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.GuardianContactNo, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Enquiry.GuardianContactNo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.GuardianContactNo, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.OccupationId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Enquiry.OccupationId, Model.Occupations, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.OccupationId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.ReligionId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Enquiry.ReligionId, Model.Religions, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.ReligionId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.ReligionId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(model => model.Enquiry.ReligionId, Model.Religions, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.ReligionId, "", new { @class = "help-block" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Enquiry.CasteCategoryId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                @Html.DropDownListFor(model => model.Enquiry.CasteCategoryId, Model.CasteCategories, null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Enquiry.CasteCategoryId, "", new { @class = "help-block" })
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Enquiry.CasteCategoryId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Enquiry.CasteCategoryId, Model.CasteCategories, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.CasteCategoryId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-6 col-sm-6 col-xs-12">Gender</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div id="gender" class="btn-group" data-toggle="buttons">
+                                <label class='@(Model.Enquiry.Gender == "Male" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Enquiry.Gender, "Male")
+                                    <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
+                                </label>
+                                <label class='@(Model.Enquiry.Gender == "Female" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Enquiry.Gender, "Female")
+                                    <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
 
-        <div class="form-group">
-            <label class="control-label col-md-4 col-sm-4 col-xs-12">Gender</label>
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <div id="gender" class="btn-group" data-toggle="buttons">
-                    <label class='@(Model.Enquiry.Gender == "Male" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                        @Html.RadioButtonFor(model => model.Enquiry.Gender, "Male")
-                        <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
-                    </label>
-                    <label class='@(Model.Enquiry.Gender == "Female" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                        @Html.RadioButtonFor(model => model.Enquiry.Gender, "Female")
-                        <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
-                    </label>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -393,7 +438,6 @@
         </div>
     </div>
 </div>
-
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
@@ -420,38 +464,58 @@
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Enquiry.EducationalQualificationId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    @Html.DropDownListFor(model => model.Enquiry.EducationalQualificationId, Model.EducationalQualifications, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.EducationalQualificationId, "", new { @class = "help-block" })
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.EducationalQualificationId, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DropDownListFor(model => model.Enquiry.EducationalQualificationId, Model.EducationalQualifications, null, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.EducationalQualificationId, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.YearOfPassOut, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Enquiry.YearOfPassOut, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.YearOfPassOut, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.Marks, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Enquiry.Marks, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.Marks, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Enquiry.YearOfPassOut, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(model => model.Enquiry.YearOfPassOut, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.YearOfPassOut, "", new { @class = "help-block" })
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.AppearingQualification, new { @class = "control-label col-md-6 col-sm-6 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Enquiry.AppearingQualification, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.AppearingQualification, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
+                    <div class="col-lg-4">
+
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Enquiry.Marks, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(model => model.Enquiry.Marks, new { @class = "form-control col-md-7 col-xs-12" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.Marks, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Enquiry.AppearingQualification, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    @Html.TextBoxFor(model => model.Enquiry.AppearingQualification, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.AppearingQualification, "", new { @class = "help-block" })
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

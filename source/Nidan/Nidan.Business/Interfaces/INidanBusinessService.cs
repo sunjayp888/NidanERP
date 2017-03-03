@@ -17,7 +17,7 @@ namespace Nidan.Business.Interfaces
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Batch CreateBatch(int organisationId, Batch batch);
-        void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
+        void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         Admission CreateAdmission(int organisationId, Admission admission);
         Counselling CreateCounselling(int organisationId, Counselling admission);
         Enquiry CreateEnquiryFromMobilization(int organisationId,int centreId, int mobilizationId);

@@ -62,7 +62,7 @@ namespace Nidan.Entity
             [StringLength(100)]
             public string EmploymentStatus { get; set; }
 
-            [Display(Name = "Follow-Up Date")]
+            [Display(Name = "Enquiry Follow-Up Date")]
             [Column(TypeName = "date")]
             public DateTime? FollowUpDate { get; set; }
 

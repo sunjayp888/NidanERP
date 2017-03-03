@@ -35,7 +35,6 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
             id = id ?? 0;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
@@ -44,19 +43,21 @@ namespace Nidan.Controllers
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var followUp = NidanBusinessService.RetrieveFollowUp(organisationId, id.Value);
+
+            var followUp = NidanBusinessService.RetrieveFollowUps(organisationId, e => e.MobilizationId == (id.Value == 0 ? -1 : id.Value)).Items.FirstOrDefault();
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
-            var enquiryFromMobilization = id.HasValue && id.Value != 0
+            var enquiryFromMobilization = id.Value != 0
                 ? NidanBusinessService.CreateEnquiryFromMobilization(UserOrganisationId, UserCentreId, id.Value)
                 : new Enquiry();
 
             var viewModel = new EnquiryViewModel
             {
                 CreateEnquiryFromMobilizationFollowUpId = followUp?.FollowUpId ?? 0,
+                MobilizationId = id.Value,
                 Enquiry = enquiryFromMobilization,
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
@@ -85,7 +86,13 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 if (enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId != 0)
+                {
+                    //Close Mobilization 
+                    var mobilization = NidanBusinessService.RetrieveMobilization(UserOrganisationId, enquiryViewModel.MobilizationId);
+                    mobilization.Close = "Yes";
+                    NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilization);
                     NidanBusinessService.DeleteFollowUp(UserOrganisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                }
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;

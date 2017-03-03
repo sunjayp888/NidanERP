@@ -16,5 +16,6 @@ namespace Nidan.Models
         public SelectList DocumentTypes { get; set; }
         public Entity.Document Document { get; set; }
         public int EnquiryId { get; set; }
+        public int CounsellingId { get; set; }
     }
 }

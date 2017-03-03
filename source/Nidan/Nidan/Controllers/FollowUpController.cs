@@ -72,20 +72,20 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var followUpType = RouteData.Values["followUpType"].ToString();
-            if (followUpType == "Enquiry")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-                   p => (isSuperAdmin || p.CentreId == UserCentreId)
-                   && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
+            //var followUpType = RouteData.Values["followUpType"].ToString();
+            //if (followUpType == "Enquiry")
+            //    return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+            //       p => (isSuperAdmin || p.CentreId == UserCentreId)
+            //       && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
 
-            if (followUpType == "Counselling")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-                   p => (isSuperAdmin || p.CentreId == UserCentreId)
-                   && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
+            //if (followUpType == "Counselling")
+            //    return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+            //       p => (isSuperAdmin || p.CentreId == UserCentreId)
+            //       && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
 
             return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
              p => (isSuperAdmin || p.CentreId == UserCentreId)
-             && p.FollowUpDateTime == _today, orderBy, paging));
+             && p.FollowUpDateTime == _today && !p.Closed.Value, orderBy, paging));
         }
 
         [HttpPost]

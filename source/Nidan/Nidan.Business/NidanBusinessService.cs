@@ -172,14 +172,12 @@ namespace Nidan.Business
             return enquiryId.ToString(); //string.Format("{0}{1}", centre.Name.Substring(0, 3), enquiryId);
         }
 
-        public void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime,
-            List<Mobilization> mobilizations)
+        public void UploadMobilization(int organisationId, int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations)
         {
             var interestedCourses = RetrieveCourses(organisationId, c => true);
             var qualifications = RetrieveQualifications(organisationId, q => true);
             var mobilizationType =
                 RetrieveMobilizationTypes(organisationId, e => e.Name.ToLower() == "event").FirstOrDefault();
-            var mobilizationList = new List<Mobilization>();
             var followUpList = new List<FollowUp>();
             foreach (var item in mobilizations)
             {
@@ -192,10 +190,10 @@ namespace Nidan.Business
                         q => q.Name.Trim().ToLower() == item.HighestQualification.Trim().ToLower())?.QualificationId ??
                     qualifications.First(e => e.Name.ToLower() == "others").QualificationId;
 
-                mobilizationList.Add(new Mobilization()
+                var mobilizer = new Mobilization()
                 {
                     InterestedCourseId = interestedCourseId,
-                    CentreId = 1,
+                    CentreId = centreId,
                     GeneratedDate = generateDateTime,
                     EventId = eventId,
                     QualificationId = qualificationId,
@@ -208,22 +206,26 @@ namespace Nidan.Business
                     PersonnelId = personnelId,
                     FollowUpDate = DateTime.Now.AddDays(2),
                     OtherInterestedCourse = item.OtherInterestedCourse
-                });
+                };
+                var data = _nidanDataService.CreateMobilization(organisationId, mobilizer);
+
                 followUpList.Add(new FollowUp
                 {
-                    CentreId = item.CentreId,
+                    CentreId = centreId,
                     FollowUpDateTime = DateTime.Now.AddDays(2),
-                    MobilizationId = item.MobilizationId,
+                    MobilizationId = data.MobilizationId,
                     Remark = item.Remark,
                     Name = item.Name,
                     IntrestedCourseId = interestedCourseId,
                     Mobile = item.Mobile,
                     CreatedDateTime = DateTime.Now,
                     ReadDateTime = _today.AddYears(-100),
+                    FollowUpType = "Mobilization",
+                    FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId)
                 });
 
             }
-            _nidanDataService.Create<Mobilization>(organisationId, mobilizationList);
+
             _nidanDataService.Create<FollowUp>(organisationId, followUpList);
         }
 
@@ -819,16 +821,52 @@ namespace Nidan.Business
 
         public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry)
         {
+            //update follow Up
+            var enquiryFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
+            enquiryFollowUp.FollowUpDateTime = enquiry.FollowUpDate ?? enquiryFollowUp.FollowUpDateTime;
+            enquiryFollowUp.Closed = enquiry.Close == "Yes";
+
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
 
         public Mobilization UpdateMobilization(int organisationId, Mobilization mobilization)
         {
+            //update follow Up
+            var mobilizationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.MobilizationId == mobilization.MobilizationId).Items.FirstOrDefault();
+            mobilizationFollowUp.FollowUpDateTime = mobilization.FollowUpDate ?? mobilizationFollowUp.FollowUpDateTime;
+            mobilizationFollowUp.Closed = mobilization.Close == "Yes";
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilizationFollowUp);
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
         }
 
         public FollowUp UpdateFollowUp(int organisationId, FollowUp followUp)
         {
+            //Update Mobilization Date
+            if (followUp.MobilizationId.HasValue && followUp.MobilizationId.Value != 0)
+            {
+                var mobilization = _nidanDataService.RetrieveMobilization(organisationId, followUp.MobilizationId.Value, e => true);
+                mobilization.FollowUpDate = followUp.FollowUpDateTime;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            }
+
+            //Update Enquiry Date
+            if (followUp.EnquiryId.HasValue && followUp.EnquiryId.Value != 0)
+            {
+                var enquiry = _nidanDataService.RetrieveEnquiry(organisationId, followUp.EnquiryId.Value, e => true);
+                enquiry.FollowUpDate = followUp.FollowUpDateTime;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+            }
+
+            //Update Counselling Date
+            if (followUp.CounsellingId.HasValue && followUp.CounsellingId.Value != 0)
+            {
+                var counselling = _nidanDataService.RetrieveEnquiry(organisationId, followUp.CounsellingId.Value, e => true);
+                counselling.FollowUpDate = followUp.FollowUpDateTime;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+            }
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
         }
 

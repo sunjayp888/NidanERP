@@ -505,6 +505,7 @@ namespace Nidan.Data
             {
                 return context
                     .Enquiries
+                    .Include(e => e.Counsellings)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EnquiryId == enquiryId);
@@ -729,7 +730,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<CounsellingSearchField>("SearchCounselling @SearchKeyword", category).ToList();
 
-                var counsellings = context.Counsellings.Include(e => e.Course).Include(e=>e.Enquiry);
+                var counsellings = context.Counsellings.Include(e => e.Course).Include(e => e.Enquiry);
 
                 var data = searchData.Join(counsellings, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -906,8 +907,8 @@ namespace Nidan.Data
             {
                 return context
                     .Documents
-                    .FirstOrDefault(e=>e.Guid==documentGuid);
-                  
+                    .FirstOrDefault(e => e.Guid == documentGuid);
+
             }
         }
     }

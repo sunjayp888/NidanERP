@@ -159,7 +159,7 @@ namespace Nidan.Controllers
                     DataSet result = reader.AsDataSet();
                     reader.Close();
                     var mobilizations = result.Tables[0].ToList<Mobilization>();
-                    NidanBusinessService.UploadMobilization(UserOrganisationId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
+                    NidanBusinessService.UploadMobilization(UserOrganisationId, UserCentreId, mobilizationViewModel.EventId, UserPersonnelId, mobilizationViewModel.GeneratedDate, mobilizations.ToList());
                     return RedirectToAction("Index");
                 }
                 else

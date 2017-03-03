@@ -21,6 +21,7 @@ namespace Nidan.Models
         public SelectList StudentTypes { get; set; }
         public SelectList EnquiryTypes { get; set; }
         public int CreateEnquiryFromMobilizationFollowUpId { get; set; }
+        public int MobilizationId { get; set; }
         //  public Counselling Counselling { get; set; }
     }
 }

@@ -134,6 +134,7 @@ namespace Nidan.Controllers
                 if (counsellingViewModel.Files != null && counsellingViewModel.Files[0].ContentLength > 0)
                 {
                     var enquiryData = _nidanBusinessService.RetrieveEnquiry(UserOrganisationId, counsellingViewModel.EnquiryId);
+
                     if (counsellingViewModel.Files[0].FileName.EndsWith(".pdf"))
                     {
                         _documentService.Create(UserOrganisationId, UserCentreId,
@@ -146,11 +147,11 @@ namespace Nidan.Controllers
                         ModelState.AddModelError("FileFormat", "This file format is not supported");
                         return View(counsellingViewModel);
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = enquiryData.Counsellings.FirstOrDefault().CounsellingId });
                 }
                 ModelState.AddModelError("", "Please Upload Your file");
             }
-            return View();
+            return View(counsellingViewModel);
         }
 
         [HttpPost]
