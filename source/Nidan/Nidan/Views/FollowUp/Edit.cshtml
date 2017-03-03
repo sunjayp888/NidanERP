@@ -29,6 +29,8 @@
                         @Html.HiddenFor(model => Model.FollowUp.CreatedDateTime)
                         @Html.HiddenFor(model => Model.FollowUp.CentreId)
                         @Html.HiddenFor(model => Model.FollowUp.IntrestedCourseId)
+                        @Html.HiddenFor(model => Model.FollowUp.FollowUpType)
+                        @Html.HiddenFor(model => Model.FollowUp.FollowUpURL)
                         @Html.Partial("_FollowUp", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">

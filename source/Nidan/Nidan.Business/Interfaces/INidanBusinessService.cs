@@ -20,6 +20,7 @@ namespace Nidan.Business.Interfaces
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         Admission CreateAdmission(int organisationId, Admission admission);
         Counselling CreateCounselling(int organisationId, Counselling admission);
+        Enquiry CreateEnquiryFromMobilization(int organisationId,int centreId, int mobilizationId);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -95,6 +96,7 @@ namespace Nidan.Business.Interfaces
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
+        void DeleteFollowUp(int organisationId, int followUpId);
 
         void MarkAsReadFollowUp(int organisationId, int id);
 

@@ -247,11 +247,31 @@ namespace Nidan.Business
                 Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.Now,
                 FollowUpType = "Counselling",
-                FollowUpURL = string.Format("/Counselling/Edit/{0}",data.CounsellingId),
+                FollowUpURL = string.Format("/Counselling/Edit/{0}", data.CounsellingId),
                 ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
             return data;
+        }
+
+        public Enquiry CreateEnquiryFromMobilization(int organisationId, int centreId, int mobilizationId)
+        {
+            //var followUp = RetrieveFollowUps(organisationId, e => e.MobilizationId == mobilizationId).Items.FirstOrDefault();
+            var mobilization = RetrieveMobilization(organisationId, mobilizationId);
+            //Delete follow Up
+            //_nidanDataService.Delete<FollowUp>(organisationId, e => e.FollowUpId == followUp.FollowUpId);
+            return new Enquiry
+            {
+                OrganisationId = organisationId,
+                CandidateName = mobilization == null ? string.Empty : mobilization.Name,
+                Mobile = mobilization.Mobile,
+                AlternateMobile = mobilization.AlternateMobile,
+                EducationalQualificationId = mobilization.QualificationId,
+                Address = mobilization?.StudentLocation ?? string.Empty,
+                IntrestedCourseId = mobilization.InterestedCourseId,
+                FollowUpDate = DateTime.Today.AddDays(2),
+                CentreId = centreId,
+            };
         }
 
         #endregion
@@ -295,7 +315,7 @@ namespace Nidan.Business
         public PagedResult<Mobilization> RetrieveMobilizations(int organisationId, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveMobilizations(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveMobilizations(organisationId, predicate, orderBy, paging);
         }
 
         public Mobilization RetrieveMobilization(int organisationId, int mobilizationId,
@@ -857,6 +877,11 @@ namespace Nidan.Business
         public void DeletePersonnel(int organisationId, int personnelId)
         {
             _nidanDataService.Delete<Personnel>(organisationId, e => e.PersonnelId == personnelId);
+        }
+
+        public void DeleteFollowUp(int organisationId, int followUpId)
+        {
+            _nidanDataService.Delete<FollowUp>(organisationId, e => e.FollowUpId == followUpId);
         }
 
         public void MarkAsReadFollowUp(int organisationId, int id)

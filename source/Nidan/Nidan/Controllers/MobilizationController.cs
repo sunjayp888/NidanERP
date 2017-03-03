@@ -174,7 +174,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]

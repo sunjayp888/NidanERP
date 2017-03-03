@@ -72,8 +72,41 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var followUpType = RouteData.Values["followUpType"].ToString();
+            if (followUpType == "Enquiry")
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+                   p => (isSuperAdmin || p.CentreId == UserCentreId)
+                   && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
+
+            if (followUpType == "Counselling")
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+                   p => (isSuperAdmin || p.CentreId == UserCentreId)
+                   && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
+
             return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-                p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+             p => (isSuperAdmin || p.CentreId == UserCentreId)
+             && p.FollowUpDateTime == _today, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult EnquiryList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+               p => (isSuperAdmin || p.CentreId == UserCentreId)
+               && p.FollowUpType == "Enquiry"
+               && p.FollowUpDateTime == _today, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult CounsellingList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+               p => (isSuperAdmin || p.CentreId == UserCentreId)
+               && p.FollowUpDateTime == _today
+               && p.FollowUpType == "Counselling"
+               , orderBy, paging));
         }
 
 

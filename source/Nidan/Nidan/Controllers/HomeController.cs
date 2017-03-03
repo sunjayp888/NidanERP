@@ -21,17 +21,19 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
-            var count = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => e.FollowUpDateTime == _today).Items.Count();
+            var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+               e => e.CentreId==UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower()=="enquiry").Items.Count();
+            var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
+               e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
+
             if (User.IsInRole("User") && !permissions.IsManager)
                 return RedirectToAction("Profile", "Personnel", new { id = personnelId });
 
             var viewModel = new HomeViewModel
             {
                 Permissions = permissions,
-                FollowUpCount = count,
-                EnquiryCount = count,
-                CounsellingCount = count,
+                EnquiryCount = enquiryCount,
+                CounsellingCount = counsellingCount,
                 //Divisions = initialDivisions,
                 //SelectedDivisionIds = permissions.IsAdmin ? null : initialDivisions.Select(c => c.DivisionId).ToList()
             };

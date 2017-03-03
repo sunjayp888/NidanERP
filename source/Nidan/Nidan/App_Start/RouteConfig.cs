@@ -34,6 +34,12 @@ namespace Nidan
                 defaults: new { controller = "PersonnelAbsenceEntitlement", action = "Edit", personnelAbsenceEntitlementId = UrlParameter.Optional }
                 );
 
+            //routes.MapRouteWithTenantConstraint(
+            //  name: "FollowUp",
+            //  url: "FollowUp/{followUpType}",
+            //  defaults: new { controller = "FollowUp", action = "Index", followUpType = UrlParameter.Optional }
+            //  );
+
 
             // The last default route
             routes.MapRouteWithTenantConstraint(

@@ -25,9 +25,18 @@
                         }
                         @Html.HiddenFor(model => Model.Mobilization.MobilizationId)
                         @Html.Partial("_Mobilization", Model)
+                        
                         <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
+                            @Html.LabelFor(model => model.Mobilization.FollowUpDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                                @Html.TextBoxFor(model => model.Mobilization.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date followUpDate" })
+                                @Html.ValidationMessageFor(model => model.Mobilization.FollowUpDate, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Close</label>
+                            <div class="col-md-7 col-sm-7 col-xs-12">
                                 <div id="gender" class="btn-group" data-toggle="buttons">
                                     <label class='@(Model.Mobilization.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                         @Html.RadioButtonFor(model => model.Mobilization.Close, "Yes")
@@ -41,8 +50,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Mobilization.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.LabelFor(model => model.Mobilization.ClosingRemark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
                                 @Html.TextBoxFor(model => model.Mobilization.ClosingRemark, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Mobilization.ClosingRemark, "", new { @class = "help-block" })
                             </div>
@@ -91,7 +100,7 @@
             showDropdowns: true,
             showCustomRangeLabel: false,
             opens: 'left',
-            minDate: moment('@Model.Mobilization.FollowUpDate.Value.ToString("dd MMMM yyyy")'),
+            minDate: moment('@Model.Mobilization.FollowUpDate.Value.AddDays(-2).ToString("dd MMMM yyyy")'),
             onSelect: function () {
                 selectedDate = moment().format('DD MMMM YYYY');
             },

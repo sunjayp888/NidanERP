@@ -44,29 +44,19 @@ namespace Nidan.Controllers
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, id.Value);
+            var followUp = NidanBusinessService.RetrieveFollowUp(organisationId, id.Value);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
             var enquiryFromMobilization = id.HasValue && id.Value != 0
-                ? new Enquiry
-                {
-                    OrganisationId = UserOrganisationId,
-                    CandidateName = mobilization == null ? string.Empty : mobilization.Name,
-                    Mobile = mobilization.Mobile,
-                    AlternateMobile = mobilization.AlternateMobile,
-                    EducationalQualificationId = mobilization.QualificationId,
-                    Address = mobilization?.StudentLocation ?? string.Empty,
-                    IntrestedCourseId = mobilization.InterestedCourseId,
-                    FollowUpDate = DateTime.Today.AddDays(2),
-                    CentreId = UserCentreId,
-                }
+                ? NidanBusinessService.CreateEnquiryFromMobilization(UserOrganisationId, UserCentreId, id.Value)
                 : new Enquiry();
 
             var viewModel = new EnquiryViewModel
             {
+                CreateEnquiryFromMobilizationFollowUpId = followUp?.FollowUpId ?? 0,
                 Enquiry = enquiryFromMobilization,
                 EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
@@ -94,6 +84,8 @@ namespace Nidan.Controllers
             enquiryViewModel.Enquiry.StudentCode = "ABC";
             if (ModelState.IsValid)
             {
+                if (enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId != 0)
+                    NidanBusinessService.DeleteFollowUp(UserOrganisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
@@ -185,14 +177,14 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate==_today, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today, orderBy, paging));
         }
 
         [HttpPost]
