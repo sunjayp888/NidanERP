@@ -19,6 +19,7 @@ namespace Nidan.Entity
 
         public int? CounsellingId { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         public bool? Closed { get; set; }

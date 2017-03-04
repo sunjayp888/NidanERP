@@ -78,7 +78,15 @@
 </div>
 @section scripts {
     <script>
-        // $('#Enquiry_ContactNo').val("");
+        var mobile = $("#Enquiry_Mobile");
+
+        if (mobile.val() == "0") {
+            $('#Enquiry_Mobile').val("");
+        }
+        //if ($('#Enquiry_Mobile').value == "0") {
+        //    $('#Enquiry_Mobile').val("");
+        //}
+       
         $('#Enquiry_Age').val("");
 
 

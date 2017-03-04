@@ -39,6 +39,7 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         [StringLength(100)]
@@ -58,6 +59,7 @@ namespace Nidan.Entity
         [StringLength(5)]
         public string Close { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
         //public virtual Mobilization Mobilization1 { get; set; }

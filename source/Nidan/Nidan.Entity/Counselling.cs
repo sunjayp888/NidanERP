@@ -24,11 +24,13 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string PreferTiming { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string RemarkByBranchManager { get; set; }
 
         public int SectorId { get; set; }
@@ -42,6 +44,7 @@ namespace Nidan.Entity
         [StringLength(5)]
         public string Close { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
         public virtual Organisation Organisation { get; set; }

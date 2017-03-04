@@ -49,6 +49,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Remarks")]
             public string Remark { get; set; }
+
+            [Display(Name = "Closing Remarks")]
+            public string ClosingRemark { get; set; }
         }
     }
 }

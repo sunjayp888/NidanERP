@@ -19,6 +19,7 @@
         vm.editFollowUp = editFollowUp;
         vm.canDeleteFollowUp = canDeleteFollowUp;
         vm.deleteFollowUp = deleteFollowUp;
+        vm.viewFollowUp = viewFollowUp;
         vm.markAsReadFollowUp = markAsReadFollowUp;
         initialise();
 
@@ -69,6 +70,9 @@
             return FollowUpService.markAsReadFollowUp(id).then(function () { initialise(); });
         };
 
+        function viewFollowUp(followUpId) {
+            $window.location.href = "/FollowUp/Edit/" + followUpId;
+        }
     }
 
 })();
