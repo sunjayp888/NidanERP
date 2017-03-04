@@ -116,6 +116,8 @@ namespace Nidan.Entity
 
         public string ClosingRemark { get; set; }
 
+        public int ConversionProspect { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }

@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using HR.Entity;
 using Nidan.Entity;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Nidan.Models
 {
@@ -22,6 +27,27 @@ namespace Nidan.Models
         public SelectList EnquiryTypes { get; set; }
         public int CreateEnquiryFromMobilizationFollowUpId { get; set; }
         public int MobilizationId { get; set; }
+        public double ConversionProspect { get; set; }
+        public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
         //  public Counselling Counselling { get; set; }
+
+        public List<ConversionProspectType> ConversionProspectTypes
+        {
+            get
+            {
+                return new List<ConversionProspectType>()
+                {
+                    new ConversionProspectType() {Id=90,Name="90 - 100" }
+                };
+            }
+
+        }
+
+    }
+
+    public class ConversionProspectType
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }
