@@ -34,7 +34,7 @@ namespace Nidan.Business
 
         public void Set(string key, object data, int cacheTime)
         {
-            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheTime) };
+            var policy = new CacheItemPolicy { AbsoluteExpiration = DateTime.UtcNow.Date + TimeSpan.FromMinutes(cacheTime) };
             Cache.Add(new CacheItem(key, data), policy);
         }
 

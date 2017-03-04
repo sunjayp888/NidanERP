@@ -61,7 +61,7 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = UserOrganisationId;
                 admissionViewModel.Admission.CentreId = 1;
-                admissionViewModel.Admission.AdmissionDate = DateTime.Now;
+                admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow;
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(UserOrganisationId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
@@ -121,7 +121,7 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = UserOrganisationId;
                 admissionViewModel.Admission.CentreId = 1;
-                admissionViewModel.Admission.AdmissionDate = DateTime.Now;
+                admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow;
                 admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(UserOrganisationId, admissionViewModel.Admission);
             }
             var viewModel = new AdmissionViewModel

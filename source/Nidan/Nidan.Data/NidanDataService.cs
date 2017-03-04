@@ -532,19 +532,6 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-                var data = context
-                    .FollowUps
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Course)
-                    .AsNoTracking()
-                    .Where(e => e.FollowUpDateTime.Year == DateTime.Now.Year
-                    && e.FollowUpDateTime.Month == DateTime.Now.Month
-                    && e.FollowUpDateTime.Day == DateTime.Now.Day &&
-                    (
-                     e.ReadDateTime != DateTime.Now
-                    )
-                    ).ToList();
-
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)

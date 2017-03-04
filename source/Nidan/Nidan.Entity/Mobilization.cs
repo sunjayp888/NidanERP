@@ -34,7 +34,7 @@ namespace Nidan.Entity
         public int QualificationId { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.Date;
 
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }

@@ -54,7 +54,7 @@ namespace Nidan.Controllers
         public ActionResult Create(BatchViewModel batchViewModel)
         {
             var organisationId = UserOrganisationId;
-            batchViewModel.Batch.CreatedDate = DateTime.Now;
+            batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
             if (ModelState.IsValid)
             {
                 batchViewModel.Batch.OrganisationId = UserOrganisationId;

@@ -14,15 +14,17 @@ namespace Nidan.Controllers
         {
         }
 
-        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public ActionResult Index()
         {
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
+
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.CentreId==UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower()=="enquiry").Items.Count();
+
             var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
 

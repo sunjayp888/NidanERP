@@ -122,7 +122,7 @@ namespace Nidan.Business.Dto
 
         public static object ReturnDateTimeMinIfNull(object value)
         {
-            return value == null ? DateTime.Now : value;
+            return value == null ? DateTime.UtcNow.Date : value;
         }
 
         public static object ReturnEmptyIfNull(object value)

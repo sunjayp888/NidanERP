@@ -17,7 +17,7 @@ namespace Nidan.Controllers
     {
         private static string EnquiryName { get; set; }
         private ApplicationRoleManager _roleManager;
-        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
 
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
@@ -95,8 +95,8 @@ namespace Nidan.Controllers
                 }
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
-                enquiryViewModel.Enquiry.EnquiryDate = DateTime.Now;
-                enquiryViewModel.Enquiry.FollowUpDate = DateTime.Now.AddDays(2);
+                enquiryViewModel.Enquiry.EnquiryDate = DateTime.UtcNow;
+                enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry);
                 return RedirectToAction("Index");
             }

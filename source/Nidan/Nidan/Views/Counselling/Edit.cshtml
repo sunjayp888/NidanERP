@@ -31,7 +31,11 @@
                                 </div>
 
                             }
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.Mobile)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.Address)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.Gender)
                             @Html.HiddenFor(model => Model.Counselling.CentreId)
+                            
                             @Html.Partial("_Counselling", Model)
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>

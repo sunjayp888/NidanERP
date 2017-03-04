@@ -44,7 +44,7 @@ namespace Nidan.Document
                 CentreId = centreId,
                 DocumentTypeId = categoryId,
                 StudentCode = studentCode,
-                CreatedDateTime = DateTime.Now,
+                CreatedDateTime = DateTime.UtcNow.Date,
                 Description = description,
                 FileName = fileName,
                 Location = filePath,

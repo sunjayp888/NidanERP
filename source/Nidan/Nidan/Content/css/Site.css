@@ -29,6 +29,10 @@
   color: grey !important;
   opacity: 0.5;
 }
+.btn-default.active.focus {
+    color: black !important;
+}
+
 .disabled-button {
   pointer-events: none;
   cursor: default;

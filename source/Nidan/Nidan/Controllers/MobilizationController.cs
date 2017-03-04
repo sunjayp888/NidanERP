@@ -18,7 +18,8 @@ namespace Nidan.Controllers
     [Authorize]
     public class MobilizationController : BaseController
     {
-        private readonly DateTime _today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
+        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public MobilizationController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
         {
         }
@@ -55,12 +56,12 @@ namespace Nidan.Controllers
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
             var organisationId = UserOrganisationId;
-            mobilizationViewModel.GeneratedDate = DateTime.Now;
+            mobilizationViewModel.GeneratedDate = _todayUTC;
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.FollowUpDate = DateTime.Now.AddDays(2);
+                mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
