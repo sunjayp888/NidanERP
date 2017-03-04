@@ -201,6 +201,16 @@ namespace Nidan.Business
             return _nidanDataService.Create<Admission>(organisationId, admission);
         }
 
+        public CommercialAdmission CreateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission)
+        {
+            return _nidanDataService.Create<CommercialAdmission>(organisationId, commercialAdmission);
+        }
+
+        public GovernmentAdmission CreateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission)
+        {
+            return _nidanDataService.Create<GovernmentAdmission>(organisationId, governmentAdmission);
+        }
+
         #endregion
 
         #region // Retrieve
@@ -598,6 +608,45 @@ namespace Nidan.Business
         {
             return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
         }
+
+        public PagedResult<CommercialAdmission> RetrieveCommercialAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCommercialAdmissions(organisationId, p => true, orderBy, paging);
+        }
+
+        public CommercialAdmission RetrieveCommercialAdmission(int organisationId, int commercialAdmissionId, Expression<Func<CommercialAdmission, bool>> predicate)
+        {
+            var commercialAdmission = _nidanDataService.RetrieveCommercialAdmission(organisationId, commercialAdmissionId, p => true);
+            return commercialAdmission;
+        }
+
+        public CommercialAdmission RetrieveCommercialAdmission(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCommercialAdmission(organisationId, id, p => true);
+        }
+
+        public PagedResult<GovernmentAdmission> RetrieveGovernmentAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveGovernmentAdmissions(organisationId, p => true, orderBy, paging);
+        }
+
+        public GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int governmentAdmissionId, Expression<Func<GovernmentAdmission, bool>> predicate)
+        {
+            var governmentAdmission = _nidanDataService.RetrieveGovernmentAdmission(organisationId, governmentAdmissionId, p => true);
+            return governmentAdmission;
+        }
+
+        public GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveGovernmentAdmission(organisationId, id, p => true);
+        }
+
+        public PagedResult<CommercialAdmission> RetrieveCommercialAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCommercialAdmissionBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -759,6 +808,16 @@ namespace Nidan.Business
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
+        }
+
+        public CommercialAdmission UpdateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, commercialAdmission);
+        }
+
+        public GovernmentAdmission UpdateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, governmentAdmission);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

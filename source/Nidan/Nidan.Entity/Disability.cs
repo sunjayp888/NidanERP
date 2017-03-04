@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public Disability()
         {
             Admissions = new HashSet<Admission>();
+            GovernmentAdmissions=new HashSet<GovernmentAdmission>();
         }
         public int DisabilityId { get; set; }
 
@@ -26,5 +27,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admission> Admissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GovernmentAdmission> GovernmentAdmissions { get; set; }
     }
 }

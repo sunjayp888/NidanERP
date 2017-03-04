@@ -1,3 +1,5 @@
+using System.Web.UI.WebControls.WebParts;
+
 namespace Nidan.Entity
 {
     using System;
@@ -14,6 +16,8 @@ namespace Nidan.Entity
         {
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
+            CommercialAdmissions=new HashSet<CommercialAdmission>();
+            GovernmentAdmissions=new HashSet<GovernmentAdmission>();
         }
 
         public int QualificationId { get; set; }
@@ -34,5 +38,11 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admission> Admissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CommercialAdmission> CommercialAdmissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GovernmentAdmission> GovernmentAdmissions { get; set; }
     }
 }

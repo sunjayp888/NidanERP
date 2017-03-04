@@ -68,8 +68,30 @@ namespace Nidan.Data
                 return admission;
             }
         }
-        
-                public Batch CreateBatch(int organisationId, Batch batch)
+
+        public CommercialAdmission CreateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                commercialAdmission = context.CommercialAdmissions.Add(commercialAdmission);
+                context.SaveChanges();
+
+                return commercialAdmission;
+            }
+        }
+
+        public GovernmentAdmission CreateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                governmentAdmission = context.GovernmentAdmissions.Add(governmentAdmission);
+                context.SaveChanges();
+
+                return governmentAdmission;
+            }
+        }
+
+        public Batch CreateBatch(int organisationId, Batch batch)
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
@@ -737,6 +759,70 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CommercialAdmission> RetrieveCommercialAdmissions(int organisationId, Expression<Func<CommercialAdmission, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CommercialAdmissions
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CommercialAdmission RetrieveCommercialAdmission(int organisationId, int commercialAdmissionId, Expression<Func<CommercialAdmission, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CommercialAdmissions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CommercialAdmissionId == commercialAdmissionId);
+
+            }
+        }
+
+        public PagedResult<GovernmentAdmission> RetrieveGovernmentAdmissions(int organisationId, Expression<Func<GovernmentAdmission, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .GovernmentAdmissions
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -797,9 +883,51 @@ namespace Nidan.Data
             }
         }
 
+        public GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int governmentAdmissionId, Expression<Func<GovernmentAdmission, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .GovernmentAdmissions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.GovernmentAdmissionId == governmentAdmissionId);
+
+            }
+        }
+
+        public PagedResult<CommercialAdmission> RetrieveCommercialAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CommercialAdmissionSearchField>("SearchCommercialAdmission @SearchKeyword", category).ToList();
+
+                var commercialAdmissions = context.CommercialAdmissions.Include(e => e.Course).Include(e => e.Qualification);
+
+                var data = searchData.Join(commercialAdmissions, e => e.CommercialAdmissionId, m => m.CommercialAdmissionId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
         #endregion
 
         #region // Update
+
 
 
         public T UpdateEntityEntry<T>(T t) where T : class

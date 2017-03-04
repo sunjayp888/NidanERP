@@ -22,6 +22,8 @@ namespace Nidan.Business.Interfaces
         Batch CreateBatch(int organisationId, Batch batch);
         void UploadMobilization(int organisationId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         Admission CreateAdmission(int organisationId, Admission admission);
+        CommercialAdmission CreateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission);
+        GovernmentAdmission CreateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -86,6 +88,13 @@ namespace Nidan.Business.Interfaces
         PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
         List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate);
+        PagedResult<CommercialAdmission> RetrieveCommercialAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        CommercialAdmission RetrieveCommercialAdmission(int organisationId, int commercialAdmissionId, Expression<Func<CommercialAdmission, bool>> predicate);
+        CommercialAdmission RetrieveCommercialAdmission(int organisationId, int id);
+        PagedResult<GovernmentAdmission> RetrieveGovernmentAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int governmentAdmissionId, Expression<Func<GovernmentAdmission, bool>> predicate);
+        GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int id);
+        PagedResult<CommercialAdmission> RetrieveCommercialAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -98,6 +107,8 @@ namespace Nidan.Business.Interfaces
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
         Batch UpdateBatch(int organisationId, Batch batch);
         Admission UpdateAdmission(int organisationId, Admission admission);
+        CommercialAdmission UpdateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission);
+        GovernmentAdmission UpdateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

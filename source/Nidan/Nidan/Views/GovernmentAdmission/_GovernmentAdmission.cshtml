@@ -1,0 +1,501 @@
+﻿@model Nidan.Models.GovernmentAdmissionViewModel
+<div class="form-control-required-example"> = Required</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Candidate Course Details <small>Fill Course Details</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.SchemeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.SchemeId, Model.Schemes, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.SchemeId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.TrainingType, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div id="trainingtype" class="btn-group" data-toggle="buttons">
+                        <label class='@(Model.GovernmentAdmission.TrainingType == "Short Term" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.TrainingType, "Short Term")
+                            <input type="radio" name="trainingtype" value="Short Term" data-parsley-multiple="gender"> &nbsp; Short Term &nbsp;
+                        </label>
+                        <label class='@(Model.GovernmentAdmission.TrainingType == "Long Term" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.TrainingType, "Long Term")
+                            <input type="radio" name="trainingtype" value="Long Term" data-parsley-multiple="gender"> Long Term
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.SectorId, Model.Sectors, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.SectorId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.SubSectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.SubSectorId, Model.SubSectors, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.SubSectorId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.CourseId, Model.Courses, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.CourseId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.HowDidYouKnowAboutId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.HowDidYouKnowAboutId, Model.HowDidYouKnowAbouts, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.HowDidYouKnowAboutId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.ConveyanceAndBoardingPreference, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div id="conveyanceAndBoardingPreference" class="btn-group" data-toggle="buttons">
+                        <label class='@(Model.GovernmentAdmission.ConveyanceAndBoardingPreference == "Conveyance" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.ConveyanceAndBoardingPreference, "Short Term")
+                            <input type="radio" name="conveyanceAndBoardingPreference" value="Conveyance" data-parsley-multiple="gender"> &nbsp; Conveyance &nbsp;
+                        </label>
+                        <label class='@(Model.GovernmentAdmission.ConveyanceAndBoardingPreference == "Lodging & Boarding" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.ConveyanceAndBoardingPreference, "Lodging & Boarding")
+                            <input type="radio" name="conveyanceAndBoardingPreference" value="Lodging & Boarding" data-parsley-multiple="gender"> Lodging & Boarding
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Candidate Identity Details <small>Fill Identity Details</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.Salutation, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.Salutation,
+                        new SelectList(
+                            new List<Object>{
+                                new { value ="Mr" , text = "Mr"  },
+                                new { value = "Ms" , text = "Ms" },
+                                new { value = "Mrs" , text = "Mrs"}
+                            },
+                            "value",
+                            "text",
+                            Model.GovernmentAdmission.Salutation
+                            ), null, new { @class = "form-control col-md-7 col-xs-12" }
+                        )
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.FirstName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.FirstName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.FirstName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.MiddleName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.MiddleName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.MiddleName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.LastName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.LastName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.LastName, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.FatherName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.FatherName, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div id="gender" class="btn-group" data-toggle="buttons">
+                        <label class='@(Model.GovernmentAdmission.Gender == "Male" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.Gender, "Male")
+                            <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
+                        </label>
+                        <label class='@(Model.GovernmentAdmission.Gender == "Female" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            @Html.RadioButtonFor(model => model.GovernmentAdmission.Gender, "Female")
+                            <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.DateOfBirth, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.DateOfBirth, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.DateOfBirth, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.YearOfBirth, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.YearOfBirth, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.YearOfBirth, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.AadhaarNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.AadhaarNo, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.AadhaarNo, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.AadhaarVerificationStatus, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.AadhaarVerificationStatus, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.AadhaarVerificationStatus, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.DisabilityId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.DisabilityId, Model.Disabilities, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.DisabilityId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.QualificationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.QualificationId, Model.EducationalQualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.QualificationId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.CasteCategoryId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.CasteCategoryId, Model.CasteCategories, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.CasteCategoryId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.ReligionId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.ReligionId, Model.Religions, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.ReligionId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.AlternateIdTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.GovernmentAdmission.AlternateIdTypeId, Model.AlternateIdTypes, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.AlternateIdTypeId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.AlternateIdNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.AlternateIdNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.AlternateIdNumber, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Candidate Contact Details <small>Fill Contact Details</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.Address, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.Address, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.EmailId, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.Mobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.Mobile, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.Mobile, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.LandlineNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.LandlineNo, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.LandlineNo, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Candidate Account Details <small>Fill Account Details</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.NameAsInBank, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.NameAsInBank, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.NameAsInBank, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.BankAccountNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.BankAccountNo, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.BankAccountNo, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.IfscCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.IfscCode, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.IfscCode, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.BankName, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Candidate TC Details <small>Fill TC Details</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.TcName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.TcName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.TcName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.TcId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.TcId, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.TcId, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.PartnerName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.PartnerName, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.PartnerName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.TcAddress, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.TcAddress, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.TcAddress, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> For Training Centre Use <small>For Training Centre Use</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-group">
+                @Html.LabelFor(model => model.GovernmentAdmission.SdmsCandidateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.GovernmentAdmission.SdmsCandidateId, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(model => model.GovernmentAdmission.SdmsCandidateId, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

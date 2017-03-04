@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public HowDidYouKnowAbout()
         {
             Enquiries = new HashSet<Enquiry>();
+            GovernmentAdmissions=new HashSet<GovernmentAdmission>();
         }
 
         public int HowDidYouKnowAboutId { get; set; }
@@ -27,5 +28,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GovernmentAdmission> GovernmentAdmissions { get; set; }
     }
 }

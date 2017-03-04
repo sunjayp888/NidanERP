@@ -24,6 +24,8 @@ namespace Nidan.Data.Interfaces
         AreaOfInterest CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
+        CommercialAdmission CreateCommercialAdmission(int organisationId, CommercialAdmission commercialAdmission);
+        GovernmentAdmission CreateGovernmentAdmission(int organisationId, GovernmentAdmission governmentAdmission);
         Batch CreateBatch(int organisationId, Batch batch);
 
         // Retrieve
@@ -62,6 +64,11 @@ namespace Nidan.Data.Interfaces
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CommercialAdmission> RetrieveCommercialAdmissions(int organisationId, Expression<Func<CommercialAdmission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CommercialAdmission RetrieveCommercialAdmission(int organisationId, int commercialAdmissionId, Expression<Func<CommercialAdmission, bool>> predicate);
+        PagedResult<GovernmentAdmission> RetrieveGovernmentAdmissions(int organisationId, Expression<Func<GovernmentAdmission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        GovernmentAdmission RetrieveGovernmentAdmission(int organisationId, int governmentAdmissionId, Expression<Func<GovernmentAdmission, bool>> predicate);
+        PagedResult<CommercialAdmission> RetrieveCommercialAdmissionBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
 
