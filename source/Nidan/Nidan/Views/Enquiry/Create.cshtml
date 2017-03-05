@@ -15,7 +15,7 @@
                 {
 
                     @Html.AntiForgeryToken()
-                    <div class="form-horizontal">
+                    <div class="form-horizontal form-label-left">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
                         {
                             <div class="row">
