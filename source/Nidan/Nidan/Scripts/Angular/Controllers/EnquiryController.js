@@ -26,6 +26,8 @@
         vm.fromDate = "";
         vm.toDate = "";
         vm.searchMessage = "";
+        vm.courses = [];
+        vm.retrieveCourses = retrieveCourses;
         initialise();
 
         function initialise() {
@@ -100,6 +102,11 @@
         //    return EnquiryService.deleteEnquiry(id).then(function () { initialise(); });
         //};
 
+        function retrieveCourses(sectorId) {
+            return EnquiryService.retrieveCourses(sectorId).then(function() {
+                vm.courses = response.data;
+            });
+        };
     }
 
 })();

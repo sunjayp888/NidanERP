@@ -17,6 +17,7 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCounselling = editCounselling;
+        vm.viewCounselling = viewCounselling;
         vm.searchCounselling = searchCounselling;
         vm.searchCounsellingByDate = searchCounsellingByDate;
         vm.searchKeyword = "";
@@ -79,6 +80,10 @@
 
         function editCounselling(id) {
             $window.location.href = "/Counselling/Edit/" + id;
+        }
+
+        function viewCounselling(counsellingId) {
+            $window.location.href = "/Counselling/Edit/" + counsellingId;
         }
     }
 

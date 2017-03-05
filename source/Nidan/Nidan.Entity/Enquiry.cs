@@ -27,6 +27,7 @@ namespace Nidan.Entity
         public int Age { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
         [StringLength(500)]
@@ -109,11 +110,13 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         [StringLength(5)]
         public string Close { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
         public int ConversionProspect { get; set; }

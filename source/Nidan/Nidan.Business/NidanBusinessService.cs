@@ -554,7 +554,7 @@ namespace Nidan.Business
 
         public List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Course>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Course>(organisationId, predicate);
         }
 
         public List<Qualification> RetrieveQualifications(int organisationId,

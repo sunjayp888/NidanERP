@@ -38,21 +38,21 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Close</label>
                             <div class="col-md-7 col-sm-7 col-xs-12">
                                 <div id="gender" class="btn-group" data-toggle="buttons">
-                                    <label class='@(Model.Mobilization.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    <label id="closeYes" class='@(Model.Mobilization.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                         @Html.RadioButtonFor(model => model.Mobilization.Close, "Yes")
                                         <input type="radio" name="close" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
                                     </label>
-                                    <label class='@(Model.Mobilization.Close == "No"|| Model.Mobilization.Close==null ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    <label id="closeNo" class='@(Model.Mobilization.Close == "No"|| Model.Mobilization.Close==null ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                         @Html.RadioButtonFor(model => model.Mobilization.Close, "No")
                                         <input type="radio" name="close" value="No" data-parsley-multiple="gender"> No
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group close-textbox">
                             @Html.LabelFor(model => model.Mobilization.ClosingRemark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Mobilization.ClosingRemark, new { @class = "form-control" })
+                                @Html.EditorFor(model => model.Mobilization.ClosingRemark, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Mobilization.ClosingRemark, "", new { @class = "help-block" })
                             </div>
                         </div>
@@ -146,5 +146,33 @@
                 $('.eventId').hide();
             }
         });
+
+        if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
+            $('.interestedCourseId').show();
+        } else {
+            $('.interestedCourseId').hide();
+        }
+
+        $("#Mobilization_InterestedCourseId").change(function () {
+            if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
+                $('.interestedCourseId').show();
+            } else {
+                $('.interestedCourseId').hide();
+            }
+        });
+
+        $('#closeYes').click(function () {
+            $('.close-textbox').show();
+        });
+
+        $('#closeNo').click(function () {
+            $('.close-textbox').hide();
+        });
+
+        if (!$('#Mobilization_Close').is(':checked')) {
+            $('.close-textbox').hide();
+        } else {
+            $('.close-textbox').show();
+        }
     </script>
 }

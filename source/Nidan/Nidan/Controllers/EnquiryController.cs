@@ -76,7 +76,7 @@ namespace Nidan.Controllers
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
 
-            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectTypes, "Id", "Name");
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -128,7 +128,6 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
@@ -163,6 +162,7 @@ namespace Nidan.Controllers
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -203,6 +203,13 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCourse(int sectorId)
+        {
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId,e=>e.Sector.SectorId == sectorId).ToList();
             return this.JsonNet(data);
         }
 

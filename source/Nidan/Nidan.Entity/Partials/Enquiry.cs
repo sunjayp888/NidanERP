@@ -42,7 +42,7 @@ namespace Nidan.Entity
             [Display(Name = "Highest Qualification Completed")]
             public int EducationalQualificationId { get; set; }
 
-            [Display(Name = "Year OF Pass Out")]
+            [Display(Name = "Year Of Pass Out")]
             [StringLength(100)]
             public string YearOfPassOut { get; set; }
 
@@ -114,6 +114,8 @@ namespace Nidan.Entity
 
             [Display(Name = "Conversion Prospect")]
             public int ConversionProspect { get; set; }
+            [Display(Name = "Closing Remarks")]
+            public string ClosingRemark { get; set; }
         }
     }
 }

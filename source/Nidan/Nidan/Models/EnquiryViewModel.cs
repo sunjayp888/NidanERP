@@ -31,18 +31,10 @@ namespace Nidan.Models
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
         //  public Counselling Counselling { get; set; }
 
-        public List<ConversionProspectType> ConversionProspectTypes
+        public List<ConversionProspectType> ConversionProspectType => new List<ConversionProspectType>()
         {
-            get
-            {
-                return new List<ConversionProspectType>()
-                {
-                    new ConversionProspectType() {Id=90,Name="90 - 100" }
-                };
-            }
-
-        }
-
+            new ConversionProspectType() {Id=90,Name="90 - 100" }
+        };
     }
 
     public class ConversionProspectType

@@ -85,6 +85,12 @@ namespace Nidan.Data.Models
                .HasForeignKey(e => e.CourseOfferedId)
                .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Sector>()
+             .HasMany(e => e.Courses)
+             .WithRequired(e => e.Sector)
+             .HasForeignKey(e => e.SectorId)
+             .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<FollowUp>()
                 .Property(e => e.Name)
                 .IsUnicode(false);

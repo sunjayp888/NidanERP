@@ -24,6 +24,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Follow-Up Date")]
             public DateTime? FollowUpDate { get; set; }
+
+            [Display(Name = "Closing Remarks")]
+            public string ClosingRemark { get; set; }
         }
     }
 }

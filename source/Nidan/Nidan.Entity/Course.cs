@@ -16,6 +16,7 @@ namespace Nidan.Entity
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
             Counsellings = new HashSet<Counselling>();
+            
         }
 
         public int CourseId { get; set; }
@@ -23,6 +24,8 @@ namespace Nidan.Entity
         [Required]
         [StringLength(1000)]
         public string Name { get; set; }
+
+        public int SectorId { get; set; }
 
         public int OrganisationId { get; set; }
 
@@ -40,5 +43,9 @@ namespace Nidan.Entity
         
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Batch> Batchs { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
+
+        public virtual Sector Sector { get; set; }
     }
 }

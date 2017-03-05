@@ -41,11 +41,11 @@
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                     <div id="close" class="btn-group" data-toggle="buttons">
-                                        <label id="yesRadioButton" class='@(Model.Counselling.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                        <label id="closeYes" class='@(Model.Counselling.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                             @Html.RadioButtonFor(model => model.Counselling.Close, "Yes")
                                             <input type="radio" name="close" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
                                         </label>
-                                        <label id="noRadioButton" class='@(Model.Counselling.Close == "No" || Model.Counselling.Close==null? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                        <label id="closeNo" class='@(Model.Counselling.Close == "No" || Model.Counselling.Close==null? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                             @Html.RadioButtonFor(model => model.Counselling.Close, "No")
                                             <input type="radio" name="close" value="No" data-parsley-multiple="gender"> No
                                         </label>
@@ -55,7 +55,7 @@
                             <div class="form-group closing-remarks-textbox">
                                 @Html.LabelFor(model => model.Counselling.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                                 <div class="col-md-4 col-sm-4 col-xs-12">
-                                    @Html.TextBoxFor(model => model.Counselling.ClosingRemark, new { @class = "form-control" })
+                                    @Html.EditorFor(model => model.Counselling.ClosingRemark, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.Counselling.ClosingRemark, "", new { @class = "help-block" })
                                 </div>
                             </div>
@@ -168,5 +168,19 @@
                 window.location.href="/Counselling/Upload/"+@Model.Counselling.EnquiryId;
             });
         });
+
+        $('#closeYes').click(function () {
+            $('.close-textbox').show();
+        });
+
+        $('#closeNo').click(function () {
+            $('.close-textbox').hide();
+        });
+
+        if (!$('#Counselling_Close').is(':checked')) {
+            $('.close-textbox').hide();
+        } else {
+            $('.close-textbox').show();
+        }
     </script>
 }

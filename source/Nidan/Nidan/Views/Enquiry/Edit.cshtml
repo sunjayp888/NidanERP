@@ -52,13 +52,13 @@
                                 </div>
                             </div>
                         </div>
-                        
-                      
-                        
+
+
+
                         <div class="form-group closing-remarks-textbox">
                             @Html.LabelFor(model => model.Enquiry.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.ClosingRemark, new { @class = "form-control" })
+                                @Html.EditorFor(model => model.Enquiry.ClosingRemark, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.Enquiry.ClosingRemark, "", new { @class = "help-block" })
                             </div>
                         </div>
@@ -85,8 +85,11 @@
     <script>
         jQuery(function () {
 
-            if ($('#Enquiry_Close').is(':checked')) { $('.closing-remarks-textbox').hide(); }
-            else { $('.closing-remarks-textbox').show(); }
+            if ($('#Enquiry_Close').val() == "No") {
+                $('.closing-remarks-textbox').hide();
+            } else {
+                $('.closing-remarks-textbox').show();
+            }
 
             $('#yesRadioButton').click(function () {
                 $('.closing-remarks-textbox').show();
@@ -96,8 +99,11 @@
                 $('.closing-remarks-textbox').hide();
             });
 
-            if ($('#Enquiry_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
-            else { $('.experience-year-textbox').show(); }
+            if ($('#Enquiry_PreTrainingStatus').is(':checked')) {
+                $('.experience-year-textbox').hide();
+            } else {
+                $('.experience-year-textbox').show();
+            }
 
             $('#experienceRadioButton').click(function () {
                 $('.experience-year-textbox').show();
@@ -107,8 +113,11 @@
                 $('.experience-year-textbox').hide();
             });
 
-            if (!$('#Enquiry_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
-            else { $('.employment-status-textbox').show(); }
+            if (!$('#Enquiry_EmploymentStatus').is(':checked')) {
+                $('.employment-status-textbox').hide();
+            } else {
+                $('.employment-status-textbox').show();
+            }
 
             $('#employedRadioButton').click(function () {
                 $('.employment-status-textbox').show();
@@ -143,5 +152,41 @@
             });
         });
 
+        $('#closeYes').click(function () {
+            $('.close-textbox').show();
+        });
+
+        $('#closeNo').click(function () {
+            $('.close-textbox').hide();
+        });
+
+        if (!$('#Enquiry_Close').is(':checked')) {
+            $('.close-textbox').hide();
+        } else {
+            $('.close-textbox').show();
+        }
+
+        $('#Enquiry_SectorId').change(function () {
+            var sectorId = $('#Enquiry_SectorId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetCourse',
+                type: 'POST',
+                data: JSON.stringify({ sectorId: sectorId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_IntrestedCourseId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_IntrestedCourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
     </script>
 }
