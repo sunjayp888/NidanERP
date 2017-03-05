@@ -27,6 +27,8 @@ namespace Nidan.Controllers
 
         public ActionResult Index()
         {
+            EnquiryViewModel model = new EnquiryViewModel();
+
             return View(new BaseViewModel());
         }
 
@@ -54,6 +56,7 @@ namespace Nidan.Controllers
                 ? NidanBusinessService.CreateEnquiryFromMobilization(UserOrganisationId, UserCentreId, id.Value)
                 : new Enquiry();
 
+
             var viewModel = new EnquiryViewModel
             {
                 CreateEnquiryFromMobilizationFollowUpId = followUp?.FollowUpId ?? 0,
@@ -72,6 +75,8 @@ namespace Nidan.Controllers
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
+
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectTypes, "Id", "Name");
             return View(viewModel);
         }
 
@@ -200,5 +205,6 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
+
     }
 }
