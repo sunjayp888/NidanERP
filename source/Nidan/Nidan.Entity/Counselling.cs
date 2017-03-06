@@ -38,11 +38,10 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PsychomatricTest { get; set; } = "No";
 
-        [StringLength(100)]
-        public string ConversionProspect { get; set; }
+        public int ConversionProspect { get; set; }
 
         [StringLength(5)]
-        public string Close { get; set; }
+        public string Close { get; set; } = "No";
 
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }

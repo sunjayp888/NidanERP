@@ -22,7 +22,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long ContactNo { get; set; }
+        public long Mobile { get; set; }
 
         [StringLength(500)]
         public string EmailId { get; set; }

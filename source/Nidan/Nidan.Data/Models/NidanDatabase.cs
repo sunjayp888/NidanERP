@@ -773,8 +773,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
-                .Property(e => e.ConversionProspect)
-                .IsUnicode(false);
+                .Property(e => e.ConversionProspect);
 
             modelBuilder.Entity<CounsellingSearchField>()
                 .Property(e => e.SearchField)
@@ -836,6 +835,9 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.EmployerContactNo)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Mobile);
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.EmployerAddress)

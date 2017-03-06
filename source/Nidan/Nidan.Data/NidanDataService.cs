@@ -645,7 +645,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "FollowUpDate",
+                            Property = "ConversionProspect",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })

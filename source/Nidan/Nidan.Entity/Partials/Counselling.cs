@@ -20,7 +20,7 @@ namespace Nidan.Entity
             public string PreferTiming { get; set; }
 
             [Display(Name = "Conversion Prospect")]
-            public string ConversionProspect { get; set; }
+            public int ConversionProspect { get; set; }
 
             [Display(Name = "Follow-Up Date")]
             public DateTime? FollowUpDate { get; set; }

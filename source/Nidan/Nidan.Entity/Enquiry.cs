@@ -114,12 +114,15 @@ namespace Nidan.Entity
         public string Remarks { get; set; }
 
         [StringLength(5)]
-        public string Close { get; set; }
+        public string Close { get; set; } = "No";
 
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
         public int ConversionProspect { get; set; }
+
+        [StringLength(500)]
+        public string OtherInterestedCourse { get; set; }
 
         public virtual CasteCategory CasteCategory { get; set; }
 

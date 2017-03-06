@@ -24,10 +24,12 @@
         vm.fromDate = "";
         vm.toDate = "";
         vm.searchMessage = "";
+        vm.courses = [];
+        vm.retrieveCourses = retrieveCourses;
         initialise();
 
         function initialise() {
-            order("FollowUpDate");
+            order("ConversionProspect");
         }
 
         function retrieveCounsellings() {
@@ -85,6 +87,12 @@
         function viewCounselling(counsellingId) {
             $window.location.href = "/Counselling/Edit/" + counsellingId;
         }
+
+        function retrieveCourses(sectorId) {
+            return CounsellingService.retrieveCourses(sectorId).then(function () {
+                vm.courses = response.data;
+            });
+        };
     }
 
 })();

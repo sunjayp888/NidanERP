@@ -144,7 +144,9 @@ namespace Nidan.Business
                 EnquiryId = data.EnquiryId,
                 FollowUpDate = _today.AddDays(2),
                 OrganisationId = organisationId,
-                PersonnelId = personnelId
+                PersonnelId = personnelId,
+                ConversionProspect = enquiry.ConversionProspect,
+                SectorId = enquiry.SectorId
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
             var followUp = new FollowUp
@@ -823,7 +825,7 @@ namespace Nidan.Business
         {
             //update follow Up
             var enquiryFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
-            var counsellingFromEnquiry = enquiry.Counsellings.FirstOrDefault(e => e.EnquiryId == enquiry.EnquiryId);
+            var counsellingFromEnquiry = enquiry.Counsellings?.FirstOrDefault(e => e.EnquiryId == enquiry.EnquiryId);
             var counselling = _nidanDataService.RetrieveCounselling(organisationId, counsellingFromEnquiry?.CounsellingId ?? -1, e => true);
             if (enquiryFollowUp != null)
             {

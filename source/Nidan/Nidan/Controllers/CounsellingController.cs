@@ -86,6 +86,7 @@ namespace Nidan.Controllers
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
             };
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -99,6 +100,8 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling.Close = "No";
+                counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
@@ -172,6 +175,13 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCourse(int sectorId)
+        {
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
             return this.JsonNet(data);
         }
     }

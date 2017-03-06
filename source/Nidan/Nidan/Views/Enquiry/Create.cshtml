@@ -89,6 +89,11 @@
        
         $('#Enquiry_Age').val("");
 
+        if ($('#Enquiry_EmploymentStatus').is(':checked')) {
+            $('.employment-status-textbox').hide();
+        } else {
+            $('.employment-status-textbox').show();
+        }
 
         jQuery(function () {
             if ($('#Enquiry_PreTrainingStatus').is(':checked')) {
@@ -161,5 +166,28 @@
                     e.preventDefault();
             });
         }
+
+        $('#Enquiry_SectorId').change(function () {
+            var sectorId = $('#Enquiry_SectorId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetCourse',
+                type: 'POST',
+                data: JSON.stringify({ sectorId: sectorId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_IntrestedCourseId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_IntrestedCourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
     </script>
 }
