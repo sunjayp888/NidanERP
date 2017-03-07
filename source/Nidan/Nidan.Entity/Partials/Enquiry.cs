@@ -122,7 +122,10 @@ namespace Nidan.Entity
             public long? AlternateMobile { get; set; }
 
             [Display(Name = "Other Interested Course")]
-            public string OtherInterestedCourse { get; set; }
+            public int OtherInterestedCourse { get; set; }
+
+            [Display(Name = "Remarks By Branch Manager")]
+            public string RemarkByBm { get; set; }
         }
     }
 }

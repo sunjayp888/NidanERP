@@ -119,6 +119,9 @@ namespace Nidan.Entity
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        public string RemarkByBm { get; set; }
+
         public int ConversionProspect { get; set; }
 
         [StringLength(500)]
@@ -154,8 +157,7 @@ namespace Nidan.Entity
 
         public virtual StudentType StudentType { get; set; }
 
-        [StringLength(500)]
-        public string PreferredMonthForJoining { get; set; }
+        public int PreferredMonthForJoining { get; set; }
   
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }

@@ -50,6 +50,7 @@ namespace Nidan.Entity
         [StringLength(5)]
         public string Close { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
         public virtual Course Course { get; set; }

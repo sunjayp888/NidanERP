@@ -77,6 +77,7 @@ namespace Nidan.Controllers
             };
 
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -164,6 +165,7 @@ namespace Nidan.Controllers
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType,"Id", "Name");
             return View(viewModel);
         }
 

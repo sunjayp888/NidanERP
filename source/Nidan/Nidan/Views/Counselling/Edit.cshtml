@@ -40,6 +40,13 @@
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.IntrestedCourseId)
                             
                             @Html.Partial("_Counselling", Model)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Counselling.RemarkByBm, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.EditorFor(model => model.Counselling.RemarkByBm, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Counselling.RemarkByBm, "", new { @class = "help-block" })
+                                </div>
+                            </div>
                             @*<div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
                                 <div class="col-md-8 col-sm-8 col-xs-12">

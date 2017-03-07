@@ -356,6 +356,10 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Enquiry>()
                 .Property(e => e.GuardianName)
                 .IsUnicode(false);
 
@@ -627,12 +631,16 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                .Property(e => e.Remarks)
+                .Property(e => e.RemarkByBm)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                .Property(e => e.RemarkByBranchManager)
+                .Property(e => e.Remarks)
                 .IsUnicode(false);
+
+            //modelBuilder.Entity<Counselling>()
+            //    .Property(e => e.RemarkByBranchManager)
+            //    .IsUnicode(false);
 
             
             modelBuilder.Entity<Admission>()

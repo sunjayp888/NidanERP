@@ -46,6 +46,9 @@ namespace Nidan.Entity
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        public string RemarkByBm { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }

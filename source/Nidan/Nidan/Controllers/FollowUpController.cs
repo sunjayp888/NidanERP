@@ -130,5 +130,12 @@ namespace Nidan.Controllers
         {
             NidanBusinessService.MarkAsReadFollowUp(UserOrganisationId, id);
         }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetrieveFollowUps(UserOrganisationId, e => e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

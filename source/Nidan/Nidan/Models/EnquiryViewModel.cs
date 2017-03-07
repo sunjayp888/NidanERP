@@ -29,6 +29,10 @@ namespace Nidan.Models
         public int MobilizationId { get; set; }
         public double ConversionProspect { get; set; }
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
+        public string PreferredMonthForJoining { get; set; }
+        public IEnumerable<SelectListItem> PreferredMonthForJoiningList { get; set; }
+        //public Month Month { get; set; }
+
         //  public Counselling Counselling { get; set; }
 
         public List<ConversionProspectType> ConversionProspectType => new List<ConversionProspectType>()
@@ -41,6 +45,22 @@ namespace Nidan.Models
             new ConversionProspectType() {Id=40,Name="40 - 50" },
             new ConversionProspectType() {Id=30,Name="Below 40" }
         };
+
+        public List<PreferredMonthForJoiningType> PreferredMonthForJoiningType => new List<PreferredMonthForJoiningType>()
+        {
+            new PreferredMonthForJoiningType() {Id = 01,Name = "January"},
+            new PreferredMonthForJoiningType() {Id = 02,Name = "February"},
+            new PreferredMonthForJoiningType() {Id = 03,Name = "March"},
+            new PreferredMonthForJoiningType() {Id = 04,Name = "April"},
+            new PreferredMonthForJoiningType() {Id = 05,Name = "May"},
+            new PreferredMonthForJoiningType() {Id = 06,Name = "June"},
+            new PreferredMonthForJoiningType() {Id = 07,Name = "July"},
+            new PreferredMonthForJoiningType() {Id = 08,Name = "August"},
+            new PreferredMonthForJoiningType() {Id = 09,Name = "September"},
+            new PreferredMonthForJoiningType() {Id = 10,Name = "October"},
+            new PreferredMonthForJoiningType() {Id = 11,Name = "November"},
+            new PreferredMonthForJoiningType() {Id = 12,Name = "December"}
+        };
     }
 
     public class ConversionProspectType
@@ -48,4 +68,26 @@ namespace Nidan.Models
         public string Name { get; set; }
         public int Id { get; set; }
     }
+
+    public class PreferredMonthForJoiningType
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+
+    //public enum Month
+    //{
+    //    January,
+    //    February,
+    //    March,
+    //    April,
+    //    May,
+    //    June,
+    //    July,
+    //    August,
+    //    September,
+    //    October,
+    //    November,
+    //    December
+    //}
 }

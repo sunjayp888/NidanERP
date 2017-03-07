@@ -27,6 +27,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
+
+            [Display(Name = "Remarks By Branch Manager")]
+            public string RemarkByBm { get; set; }
         }
     }
 }

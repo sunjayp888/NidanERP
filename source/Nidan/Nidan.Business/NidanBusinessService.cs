@@ -846,7 +846,8 @@ namespace Nidan.Business
             //update follow Up
             var mobilizationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.MobilizationId == mobilization.MobilizationId).Items.FirstOrDefault();
             mobilizationFollowUp.FollowUpDateTime = mobilization.FollowUpDate ?? mobilizationFollowUp.FollowUpDateTime;
-            mobilizationFollowUp.Closed = mobilization.Close == "Yes";
+            //mobilizationFollowUp.Closed = mobilization.Close == "Yes";
+            mobilizationFollowUp.Name = mobilization.Name ?? mobilizationFollowUp.Name;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilizationFollowUp);
 
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
@@ -859,6 +860,8 @@ namespace Nidan.Business
             {
                 var mobilization = _nidanDataService.RetrieveMobilization(organisationId, followUp.MobilizationId.Value, e => true);
                 mobilization.FollowUpDate = followUp.FollowUpDateTime;
+                mobilization.Close = followUp.Close;
+                mobilization.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             }
 
@@ -867,6 +870,13 @@ namespace Nidan.Business
             {
                 var enquiry = _nidanDataService.RetrieveEnquiry(organisationId, followUp.EnquiryId.Value, e => true);
                 enquiry.FollowUpDate = followUp.FollowUpDateTime;
+                enquiry.Close = followUp.Close;
+                enquiry.ClosingRemark = followUp.ClosingRemark;
+
+                var counselling = _nidanDataService.RetrieveEnquiry(organisationId, followUp.EnquiryId.Value, e => true);
+                counselling.Close = followUp.Close;
+                counselling.ClosingRemark = followUp.ClosingRemark;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             }
 
@@ -875,6 +885,8 @@ namespace Nidan.Business
             {
                 var counselling = _nidanDataService.RetrieveEnquiry(organisationId, followUp.CounsellingId.Value, e => true);
                 counselling.FollowUpDate = followUp.FollowUpDateTime;
+                counselling.Close = followUp.Close;
+                counselling.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
 

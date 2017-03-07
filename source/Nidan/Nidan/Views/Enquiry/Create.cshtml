@@ -83,17 +83,29 @@
         if (mobile.val() == "0") {
             $('#Enquiry_Mobile').val("");
         }
+
+        $("#Enquiry_Age").val("");  
         //if ($('#Enquiry_Mobile').value == "0") {
         //    $('#Enquiry_Mobile').val("");
         //}
        
-        $('#Enquiry_Age').val("");
+        $('.other-interested-course-textbox').hide();
+        $("#Enquiry_SectorId").change(function () {
+            if ($('#Enquiry_SectorId :selected').text() == "Others") {
+                $('.other-interested-course-textbox').show();
+            } else {
+                $('.other-interested-course-textbox').hide();
+            }
+        });
 
-        if ($('#Enquiry_EmploymentStatus').is(':checked')) {
-            $('.employment-status-textbox').hide();
-        } else {
-            $('.employment-status-textbox').show();
-        }
+        $('.other-interested-course-textbox').hide();
+        $("#Enquiry_IntrestedCourseId").change(function () {
+            if ($('#Enquiry_IntrestedCourseId :selected').text() == "Others") {
+                $('.other-interested-course-textbox').show();
+            } else {
+                $('.other-interested-course-textbox').hide();
+            }
+        });
 
         jQuery(function () {
             if ($('#Enquiry_PreTrainingStatus').is(':checked')) {
@@ -189,5 +201,8 @@
                 processData: false
             });
         });
+
+        var month=@DateTime.UtcNow.Month;
+        
     </script>
 }
