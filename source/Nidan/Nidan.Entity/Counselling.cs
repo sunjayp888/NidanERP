@@ -41,7 +41,7 @@ namespace Nidan.Entity
         public int ConversionProspect { get; set; }
 
         [StringLength(5)]
-        public string Close { get; set; } = "No";
+        public string Close { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }

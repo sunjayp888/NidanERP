@@ -123,6 +123,7 @@ namespace Nidan.Business
                 AlternateMobile = mobilization.AlternateMobile,
                 CreatedDateTime = DateTime.UtcNow.Date,
                 FollowUpType = "Mobilization",
+                Close = "No",
                 FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
                 ReadDateTime = _today.AddYears(-100)
             };
@@ -146,7 +147,8 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
                 ConversionProspect = enquiry.ConversionProspect,
-                SectorId = enquiry.SectorId
+                SectorId = enquiry.SectorId,
+                Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
             var followUp = new FollowUp
@@ -162,6 +164,7 @@ namespace Nidan.Business
                 FollowUpType = "Enquiry",
                 FollowUpURL = string.Format("/Enquiry/Edit/{0}", data.EnquiryId),
                 AlternateMobile = enquiry.AlternateMobile,
+                Close = "No",
                 ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
@@ -206,6 +209,7 @@ namespace Nidan.Business
                     StudentLocation = item.StudentLocation,
                     MobilizationTypeId = mobilizationType.MobilizationTypeId,
                     PersonnelId = personnelId,
+                    Close = "No",
                     FollowUpDate = DateTime.UtcNow.Date.AddDays(2),
                     OtherInterestedCourse = item.OtherInterestedCourse
                 };
@@ -222,6 +226,7 @@ namespace Nidan.Business
                     Mobile = item.Mobile,
                     CreatedDateTime = DateTime.UtcNow.Date,
                     ReadDateTime = _today.AddYears(-100),
+                    Close = "No",
                     FollowUpType = "Mobilization",
                     FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId)
                 });
@@ -274,6 +279,7 @@ namespace Nidan.Business
                 Address = mobilization?.StudentLocation ?? string.Empty,
                 IntrestedCourseId = mobilization.InterestedCourseId,
                 FollowUpDate = DateTime.Today.AddDays(2),
+                Close = "No",
                 CentreId = centreId,
             };
         }
@@ -883,7 +889,7 @@ namespace Nidan.Business
             //Update Counselling Date
             if (followUp.CounsellingId.HasValue && followUp.CounsellingId.Value != 0)
             {
-                var counselling = _nidanDataService.RetrieveEnquiry(organisationId, followUp.CounsellingId.Value, e => true);
+                var counselling = _nidanDataService.RetrieveCounselling(organisationId, followUp.CounsellingId.Value, e => true);
                 counselling.FollowUpDate = followUp.FollowUpDateTime;
                 counselling.Close = followUp.Close;
                 counselling.ClosingRemark = followUp.ClosingRemark;
@@ -909,6 +915,7 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
             }
             enquiry.FollowUpDate = counselling.FollowUpDate.Value;
+            counselling.Close = enquiry.Close;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
         }

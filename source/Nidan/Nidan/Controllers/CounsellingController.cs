@@ -100,7 +100,7 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
-                counsellingViewModel.Counselling.Close = "No";
+                //counsellingViewModel.Counselling.Close =;
                 counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");

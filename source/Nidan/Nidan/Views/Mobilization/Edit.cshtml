@@ -26,13 +26,13 @@
                         @Html.HiddenFor(model => Model.Mobilization.MobilizationId)
                         @Html.Partial("_Mobilization", Model)
                         
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.LabelFor(model => model.Mobilization.FollowUpDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                             <div class="col-md-6 col-sm-6 col-xs-12 dob">
                                 @Html.TextBoxFor(model => model.Mobilization.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 followUpDate" })
                                 @Html.ValidationMessageFor(model => model.Mobilization.FollowUpDate, "", new { @class = "help-block" })
                             </div>
-                        </div>
+                        </div>*@
 
                         @*<div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Close</label>
