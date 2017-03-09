@@ -75,6 +75,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            TempData["CounsellingId"] = id;
             var counselling = NidanBusinessService.RetrieveCounselling(UserOrganisationId, id.Value);
             if (counselling == null)
             {
@@ -97,11 +98,12 @@ namespace Nidan.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
                 //counsellingViewModel.Counselling.Close =;
-                counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
+                counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
@@ -116,8 +118,10 @@ namespace Nidan.Controllers
 
         public ActionResult Upload(int id)
         {
+
             var viewModel = new CounsellingViewModel
             {
+                CounsellingId = Convert.ToInt32(TempData["CounsellingId"]),
                 EnquiryId = id,
                 Files = new List<HttpPostedFileBase>(),
                 DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")

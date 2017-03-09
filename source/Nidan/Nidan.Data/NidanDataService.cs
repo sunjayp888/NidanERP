@@ -559,6 +559,7 @@ namespace Nidan.Data
                     .FollowUps
                     .Include(f => f.Mobilization)
                     .Include(f => f.Enquiry)
+                    .Include(f => f.Enquiry.Counsellings)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.FollowUpId == followUpId);
@@ -646,7 +647,7 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "ConversionProspect",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);

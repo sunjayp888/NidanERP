@@ -179,7 +179,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.Close = "No";
-                enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
+                //enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
 
             }
