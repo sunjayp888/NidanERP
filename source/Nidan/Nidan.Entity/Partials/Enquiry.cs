@@ -27,7 +27,7 @@ namespace Nidan.Entity
             [StringLength(500)]
             public string GuardianName { get; set; }
 
-            [Display(Name = "Father Contact No")]
+            [Display(Name = "Parent's Contact No")]
             public long? GuardianContactNo { get; set; }
 
             [Display(Name = "Occupation")]
@@ -83,7 +83,7 @@ namespace Nidan.Entity
             [Display(Name = "Enquiry Type")]
             public int EnquiryTypeId { get; set; }
 
-            [Display(Name = "Student Type")]
+            [Display(Name = "Candidate Type")]
             public int StudentTypeId { get; set; }
 
             [Display(Name = "Sector")]
@@ -114,8 +114,18 @@ namespace Nidan.Entity
 
             [Display(Name = "Conversion Prospect")]
             public int ConversionProspect { get; set; }
+
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
+
+            [Display(Name = "Alternate Mobile")]
+            public long? AlternateMobile { get; set; }
+
+            [Display(Name = "Other Interested Course")]
+            public int OtherInterestedCourse { get; set; }
+
+            [Display(Name = "Remarks By Branch Manager")]
+            public string RemarkByBm { get; set; }
         }
     }
 }

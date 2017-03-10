@@ -75,6 +75,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            TempData["CounsellingId"] = id;
             var counselling = NidanBusinessService.RetrieveCounselling(UserOrganisationId, id.Value);
             if (counselling == null)
             {
@@ -86,6 +87,7 @@ namespace Nidan.Controllers
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
             };
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -96,9 +98,12 @@ namespace Nidan.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
+                //counsellingViewModel.Counselling.Close =;
+                counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
@@ -113,8 +118,10 @@ namespace Nidan.Controllers
 
         public ActionResult Upload(int id)
         {
+
             var viewModel = new CounsellingViewModel
             {
+                CounsellingId = Convert.ToInt32(TempData["CounsellingId"]),
                 EnquiryId = id,
                 Files = new List<HttpPostedFileBase>(),
                 DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")
@@ -172,6 +179,13 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCourse(int sectorId)
+        {
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
             return this.JsonNet(data);
         }
     }

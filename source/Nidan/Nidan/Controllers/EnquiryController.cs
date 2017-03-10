@@ -77,6 +77,7 @@ namespace Nidan.Controllers
             };
 
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -102,6 +103,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.UtcNow;
                 enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
+                enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry);
                 return RedirectToAction("Index");
             }
@@ -163,6 +165,7 @@ namespace Nidan.Controllers
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType,"Id", "Name");
             return View(viewModel);
         }
 
@@ -175,6 +178,8 @@ namespace Nidan.Controllers
             {
                 enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.Close = "No";
+                //enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
 
             }

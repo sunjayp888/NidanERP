@@ -18,6 +18,7 @@
         vm.orderClass = orderClass;
         vm.editFollowUp = editFollowUp;
         vm.canDeleteFollowUp = canDeleteFollowUp;
+        vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.deleteFollowUp = deleteFollowUp;
         vm.viewFollowUp = viewFollowUp;
         vm.markAsReadFollowUp = markAsReadFollowUp;
@@ -52,6 +53,19 @@
 
         function editFollowUp(id) {
             $window.location.href = "/FollowUp/Edit/" + id;
+        }
+
+        function searchFollowUpByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return FollowUpService.searchFollowUpByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.followUps = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.enquiries.length === 0 ? "No Records Found" : "";
+                  return vm.followUps;
+              });
         }
 
         function canDeleteFollowUp(id) {

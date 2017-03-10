@@ -64,10 +64,12 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
+                mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
             mobilizationViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            mobilizationViewModel.MobilizationTypes = new SelectList(NidanBusinessService.RetrieveMobilizationTypes(organisationId, e => true).ToList());
             mobilizationViewModel.Events = new SelectList(NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList());
             mobilizationViewModel.Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             return View(mobilizationViewModel);
@@ -108,6 +110,8 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
+                mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
+                mobilizationViewModel.Mobilization.Close ="No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }

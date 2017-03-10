@@ -12,7 +12,8 @@
             retrieveFollowUps: retrieveFollowUps,
             canDeleteFollowUp: canDeleteFollowUp,
             deleteFollowUp: deleteFollowUp,
-            markAsReadFollowUp:markAsReadFollowUp
+            markAsReadFollowUp: markAsReadFollowUp,
+            searchFollowUpByDate: searchFollowUpByDate
         };
 
         return service;
@@ -24,6 +25,18 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+
+            return $http.post(url, data);
+        }
+
+        function searchFollowUpByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/FollowUp/SearchByDate",
+            data = {
+                fromDate: FromDate,
+                toDate: ToDate,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
             return $http.post(url, data);
         }

@@ -47,6 +47,12 @@ namespace Nidan.Entity
         [StringLength(2000)]
         public string FollowUpURL { get; set; }
 
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string ClosingRemark { get; set; }
+
         public virtual Course Course { get; set; }
 
         public virtual Mobilization Mobilization { get; set; }

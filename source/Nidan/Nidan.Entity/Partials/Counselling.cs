@@ -20,13 +20,16 @@ namespace Nidan.Entity
             public string PreferTiming { get; set; }
 
             [Display(Name = "Conversion Prospect")]
-            public string ConversionProspect { get; set; }
+            public int ConversionProspect { get; set; }
 
             [Display(Name = "Follow-Up Date")]
             public DateTime? FollowUpDate { get; set; }
 
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
+
+            [Display(Name = "Remarks By Branch Manager")]
+            public string RemarkByBm { get; set; }
         }
     }
 }
