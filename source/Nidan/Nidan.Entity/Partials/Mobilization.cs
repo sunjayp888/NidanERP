@@ -52,6 +52,9 @@ namespace Nidan.Entity
 
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
+
+            [Display(Name = "Alternate Mobile")]
+            public long? AlternateMobile { get; set; }
         }
     }
 }

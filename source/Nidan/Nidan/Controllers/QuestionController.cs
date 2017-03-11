@@ -26,48 +26,75 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Question/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            var organisationId = UserOrganisationId;
+            var eventFunctionTypes = NidanBusinessService.RetrieveEventFunctionTypes(organisationId, e => true);
             var viewModel = new QuestionViewModel
             {
                 Question = new Question(),
-                EventActivityTypes = NidanBusinessService.RetrieveActivityTypes(UserOrganisationId)
+                EventFunctionTypes = new SelectList(eventFunctionTypes, "EventFunctionTypeId", "Name")
+                // EventActivityTypes = NidanBusinessService.RetrieveActivityTypes(UserOrganisationId)
             };
             return View(viewModel);
         }
 
+        // POST: Question/Create
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QuestionId")] QuestionViewModel question)
+        public ActionResult Create(QuestionViewModel questionViewModel)
         {
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-                var result = NidanBusinessService.CreateQuestion(UserOrganisationId, question.Question);
-                return View();
+                questionViewModel.Question.OrganisationId = UserOrganisationId;
+                questionViewModel.Question = NidanBusinessService.CreateQuestion(UserOrganisationId, questionViewModel.Question);
+                return RedirectToAction("Index");
             }
-            return View(new QuestionViewModel
-            {
-                Question = question.Question,
-            });
+            questionViewModel.EventFunctionTypes = new SelectList(NidanBusinessService.RetrieveEventFunctionTypes(organisationId, e => true).ToList());
+            return View(questionViewModel);
         }
 
-        // GET: AbsenceType/Edit/5
+        // GET: Question/Edit/{id}
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
+            var organisationId = UserOrganisationId;
+            var eventFunctionTypes = NidanBusinessService.RetrieveEventFunctionTypes(organisationId, e => true);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var question = NidanBusinessService.RetrieveQuestion(UserOrganisationId, id.Value, q => true);
 
-            var viewmodel = new QuestionViewModel()
+            var viewModel = new QuestionViewModel
             {
-                Question = question
+                Question = question,
+                EventFunctionTypes = new SelectList(eventFunctionTypes, "EventFunctionTypeId", "Name")
             };
 
-            return View(viewmodel);
+            return View(viewModel);
+        }
+
+        // POST: Question/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(QuestionViewModel questionViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                questionViewModel.Question.OrganisationId = UserOrganisationId;
+                questionViewModel.Question = NidanBusinessService.UpdateQuestion(UserOrganisationId, questionViewModel.Question);
+                return RedirectToAction("Index");
+            }
+            var viewModel = new QuestionViewModel
+            {
+                Question = questionViewModel.Question
+            };
+            return View(viewModel);
         }
 
         [HttpPost]

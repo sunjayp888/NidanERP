@@ -80,6 +80,17 @@ namespace Nidan.Data
             }
         }
 
+        public Question CreateQuestion(int organisationId, Question question)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                question = context.Questions.Add(question);
+                context.SaveChanges();
+
+                return question;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -355,6 +366,7 @@ namespace Nidan.Data
                 return context
                     .Questions
                     .Include(p => p.Organisation)
+                    .Include(p => p.EventFunctionType)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

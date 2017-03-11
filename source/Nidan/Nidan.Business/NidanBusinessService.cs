@@ -105,7 +105,7 @@ namespace Nidan.Business
 
         public Question CreateQuestion(int organisationId, Question question)
         {
-            return _nidanDataService.Create<Question>(organisationId, question);
+            return _nidanDataService.CreateQuestion(organisationId, question);
         }
 
         public Mobilization CreateMobilization(int organisationId, Mobilization mobilization)
@@ -581,14 +581,9 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Scheme>(organisationId, e => true);
         }
 
-        public List<SchemeType> RetrieveSchemeTypes(int organisationId, Expression<Func<SchemeType, bool>> predicate)
-        {
-            return _nidanDataService.Retrieve<SchemeType>(organisationId, e => true);
-        }
-
         public List<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Sector>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Sector>(organisationId, predicate);
         }
 
         public List<BatchTimePrefer> RetrieveBatchTimePrefers(int organisationId,
@@ -625,6 +620,11 @@ namespace Nidan.Business
         public List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Taluka>(organisationId, e => true);
+        }
+
+        public List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<EventFunctionType>(organisationId, e => true);
         }
 
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
@@ -939,6 +939,11 @@ namespace Nidan.Business
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
+        }
+
+        public Question UpdateQuestion(int organisationId, Question question)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, question);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

@@ -54,7 +54,6 @@ namespace Nidan.Business.Interfaces
         List<HowDidYouKnowAbout> RetrieveHowDidYouKnowAbouts(int organisationId, Expression<Func<HowDidYouKnowAbout, bool>> predicate);
         List<Occupation> RetrieveOccupations(int organisationId, Expression<Func<Occupation, bool>> predicate);
         List<Scheme> RetrieveSchemes(int organisationId, Expression<Func<Scheme, bool>> predicate);
-        List<SchemeType> RetrieveSchemeTypes(int organisationId, Expression<Func<SchemeType, bool>> predicate);
         List<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate);
         List<BatchTimePrefer> RetrieveBatchTimePrefers(int organisationId, Expression<Func<BatchTimePrefer, bool>> predicate);
         List<StudentType> RetrieveStudentTypes(int organisationId, Expression<Func<StudentType, bool>> predicate);
@@ -63,6 +62,7 @@ namespace Nidan.Business.Interfaces
         List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate);
         List<District> RetrieveDistricts(int organisationId, Expression<Func<District, bool>> predicate);
         List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate);
+        List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -93,6 +93,7 @@ namespace Nidan.Business.Interfaces
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
         Batch UpdateBatch(int organisationId, Batch batch);
         Admission UpdateAdmission(int organisationId, Admission admission);
+        Question UpdateQuestion(int organisationId, Question question);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

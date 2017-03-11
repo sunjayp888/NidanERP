@@ -25,6 +25,7 @@ namespace Nidan.Data.Interfaces
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
         Batch CreateBatch(int organisationId, Batch batch);
+        Question CreateQuestion(int organisationId, Question question);
 
 
         // Retrieve

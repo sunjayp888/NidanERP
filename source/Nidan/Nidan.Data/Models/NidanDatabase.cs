@@ -40,7 +40,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<EnquirySearchField> EnquirySearchFields { get; set; }
         public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
         public virtual DbSet<Scheme> Schemes { get; set; }
-        public virtual DbSet<SchemeType> SchemeTypes { get; set; }
         public virtual DbSet<BatchTimePrefer> BatchTimePrefers { get; set; }
         public virtual DbSet<Sector> Sectors { get; set; }
         public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
@@ -54,6 +53,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<CounsellingSearchField> CounsellingSearchFields { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+        public virtual DbSet<EventFunctionType> EventFunctionTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -597,15 +597,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<SchemeType>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<SchemeType>()
-                .HasMany(e => e.Schemes)
-                .WithRequired(e => e.SchemeType)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<BatchTimePrefer>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -869,6 +860,19 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventFunctionType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<EventFunctionType>()
+                .HasMany(e => e.Questions)
+                .WithRequired(e => e.EventFunctionType)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Question>()
+                .Property(e => e.Description)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

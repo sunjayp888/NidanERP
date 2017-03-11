@@ -27,6 +27,8 @@ namespace Nidan.Entity
 
         public int SectorId { get; set; }
 
+        public int SchemeId { get; set; }
+
         public int OrganisationId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -47,5 +49,7 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Sector Sector { get; set; }
+
+        public virtual Scheme Scheme { get; set; }
     }
 }
