@@ -37,44 +37,13 @@
                                 </div>
                             @*</div>
                         </div>*@
-                            @*<div class="form-group">
-                @Html.LabelFor(model => model.Enquiry.FollowUpDate, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12 dob">
-                    @Html.TextBoxFor(model => model.Enquiry.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control followUpDate" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.FollowUpDate, "", new { @class = "help-block" })
-                </div>
-            </div>*@
-
-
-                            @*<div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
-                <div class="col-md-8 col-sm-8 col-xs-12">
-                    <div id="close" class="btn-group" data-toggle="buttons">
-                        <label id="yesRadioButton" class='@(Model.Enquiry.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            @Html.RadioButtonFor(model => model.Enquiry.Close, "Yes")
-                            <input type="radio" name="close" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
-                        </label>
-                        <label id="noRadioButton" class='@(Model.Enquiry.Close == "No"|| Model.Enquiry.Close==null ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            @Html.RadioButtonFor(model => model.Enquiry.Close, "No")
-                            <input type="radio" name="close" value="No" data-parsley-multiple="gender"> No
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="form-group closing-remarks-textbox">
-                @Html.LabelFor(model => model.Enquiry.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    @Html.EditorFor(model => model.Enquiry.ClosingRemark, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Enquiry.ClosingRemark, "", new { @class = "help-block" })
-                </div>
-            </div>*@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-success">Submit</button>
+                                        @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
+                                            <span class="fa fa-chevron-left"></span>&nbsp;Register
+                                        </a>*@
                                     </div>
                                 </div>
                             </div>

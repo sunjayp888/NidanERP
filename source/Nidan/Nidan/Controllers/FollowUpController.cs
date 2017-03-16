@@ -86,7 +86,7 @@ namespace Nidan.Controllers
 
             return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
              p => (isSuperAdmin || p.CentreId == UserCentreId)
-             && p.FollowUpDateTime == _today && !p.Closed.Value, orderBy, paging));
+             && p.FollowUpDateTime == _today && !p.Closed.Value && p.FollowUpType!="", orderBy, paging));
         }
 
         [HttpPost]

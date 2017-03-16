@@ -1,0 +1,102 @@
+﻿@model Nidan.Models.RegistrationPaymentReceiptViewModel
+
+@{
+    ViewBag.Title = "View Registration";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div id="DivIdToPrint" class="x_panel">
+            <div class="x_title">
+                @*<h2>Create new Mobilizer <small></small></h2>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId)
+                    @Html.HiddenFor(model => model.EnquiryId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.Address)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.StudentCode)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.EnquiryTypeId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.HowDidYouKnowAboutId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.OccupationId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.EducationalQualificationId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.ReligionId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.StudentTypeId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.CourseId)
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.RegistrationDate)
+                    @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.ChequeNo)
+                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.BankName)*@
+                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Particulars)
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        @Html.Partial("_ViewDetailsRegistrationPaymentReceipt", Model)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+    <button type="submit" class="btn btn-success" onclick="printDiv();">Print</button>
+    @*<div class="form-group">
+            <div class="pull-left">
+                <button type="submit" class="btn btn-success" onclick="printDiv();">Print</button>
+            </div>
+        </div>*@
+</div>
+@*<div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+        <div class="form-group">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-success">Print</button>
+            </div>
+        </div>
+    </div>*@
+@section scripts
+{
+    <script>
+        $('.bank-details-textbox').hide();
+        $("#RegistrationPaymentReceipt_PaymentModeId").change(function () {
+            if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
+                $('.bank-details-textbox').show();
+                $("#RegistrationPaymentReceipt_BankName").val("");
+                $("#RegistrationPaymentReceipt_ChequeNo").val("");
+            } else {
+                $('.bank-details-textbox').hide();
+            }
+        });
+
+        function printDiv() {
+
+            var divToPrint = document.getElementById('DivIdToPrint');
+
+            var newWin = window.open('', 'Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function () { newWin.close(); }, 10);
+
+        }
+    </script>
+}
+

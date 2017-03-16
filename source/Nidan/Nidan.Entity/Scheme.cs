@@ -17,10 +17,6 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        public int SchemeTypeId { get; set; }
-
-        public virtual SchemeType SchemeType { get; set; }
-
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
