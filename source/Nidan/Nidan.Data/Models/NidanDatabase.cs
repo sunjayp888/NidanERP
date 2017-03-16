@@ -54,6 +54,11 @@ namespace Nidan.Data.Models
         public virtual DbSet<CounsellingSearchField> CounsellingSearchFields { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
         public virtual DbSet<EventFunctionType> EventFunctionTypes { get; set; }
+        public virtual DbSet<Brainstorming> Brainstormings { get; set; }
+        public virtual DbSet<Eventday> Eventdays { get; set; }
+        public virtual DbSet<Planning> Plannings { get; set; }
+        public virtual DbSet<Postevent> Postevents { get; set; }
+        public virtual DbSet<Budget> Budgets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -873,6 +878,46 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Question>()
                 .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Brainstorming>()
+               .Property(e => e.Completed)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Brainstorming>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Eventday>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Eventday>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Postevent>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Postevent>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Budget>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Budget>()
+                .Property(e => e.Comment)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

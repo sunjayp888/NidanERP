@@ -100,7 +100,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveQuestions(UserOrganisationId, q => true, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveQuestions(UserOrganisationId,q=>true, orderBy, paging));
         }
 
     }

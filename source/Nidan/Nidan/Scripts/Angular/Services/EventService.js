@@ -10,8 +10,10 @@
     function EventService($http) {
         var service = {
             retrieveEvents: retrieveEvents,
-            //canDeleteAbsenceType: canDeleteAbsenceType,
-            //deleteAbsenceType: deleteAbsenceType
+            canDeleteEvent: canDeleteEvent,
+            deleteEvent: deleteEvent,
+            searchEvent: searchEvent,
+            retrieveQuestions: retrieveQuestions
         };
 
         return service;
@@ -27,18 +29,40 @@
             return $http.post(url, data);
         }
 
-        //function canDeleteAbsenceType(id) {
-        //    var url = "/AbsenceType/CanDeleteAbsenceType",
-        //        data = { id: id };
+        function searchEvent(SearchKeyword, Paging, OrderBy) {
+            var url = "/Event/Search",
+            data = {
+                searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
-        //function deleteAbsenceType(id) {
-        //    var url = "/AbsenceType/Delete",
-        //        data = { id: id };
+        function canDeleteEvent(id) {
+            var url = "/Event/CanDeleteEvent",
+                data = { id: id };
 
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
+
+        function deleteEvent(id) {
+            var url = "/Event/Delete",
+                data = { id: id };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveQuestions(eventFunctionId, Paging, OrderBy) {
+            var url = "/Event/QuestionList",
+            data = {
+                eventFunctionId: eventFunctionId,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
+
+            return $http.post(url, data);
+        }
     }
 })();
