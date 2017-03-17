@@ -642,6 +642,20 @@ namespace Nidan.Data
             }
         }
 
+        public Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Courses
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CourseId == courseId);
+
+            }
+        }
+
         public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)

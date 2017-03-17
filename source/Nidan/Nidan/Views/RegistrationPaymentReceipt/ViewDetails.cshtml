@@ -6,9 +6,9 @@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div id="DivIdToPrint" class="x_panel">
+        <div id="printableArea"  class="x_panel">
             <div class="x_title">
-                @*<h2>Create new Mobilizer <small></small></h2>*@
+                <h2 text-align="center">Registration Receipt For<small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -32,7 +32,7 @@
                     @Html.HiddenFor(model => model.RegistrationPaymentReceipt.RegistrationDate)
                     @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.ChequeNo)
                         @Html.HiddenFor(model => model.RegistrationPaymentReceipt.BankName)*@
-                    @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Particulars)
+                    @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.Particulars)*@
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -54,20 +54,9 @@
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
-    <button type="submit" class="btn btn-success" onclick="printDiv();">Print</button>
-    @*<div class="form-group">
-            <div class="pull-left">
-                <button type="submit" class="btn btn-success" onclick="printDiv();">Print</button>
-            </div>
-        </div>*@
+    <button type="submit" class="btn btn-success" onclick="printDiv('printableArea')">Print</button>
 </div>
-@*<div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-        <div class="form-group">
-            <div class="pull-right">
-                <button type="submit" class="btn btn-success">Print</button>
-            </div>
-        </div>
-    </div>*@
+
 @section scripts
 {
     <script>
@@ -82,21 +71,156 @@
             }
         });
 
-        function printDiv() {
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
 
-            var divToPrint = document.getElementById('DivIdToPrint');
+            document.body.innerHTML = printContents;
 
-            var newWin = window.open('', 'Print-Window');
+            window.print();
 
-            newWin.document.open();
-
-            newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
-
-            newWin.document.close();
-
-            setTimeout(function () { newWin.close(); }, 10);
-
+            document.body.innerHTML = originalContents;
         }
+
+        //-----------------------------------------------------------------
+        var fees = $("#RegistrationPaymentReceipt_Fees").val();
+        function onlyNumbers(evt) {
+            var e = event || evt; // For trans-browser compatibility
+            var charCode = e.which || e.keyCode;
+
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function NumToWord(inputNumber, outputControl) {
+            var str = new String(inputNumber)
+            var splt = str.split("");
+            var rev = splt.reverse();
+            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+            var twos = ['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+            var tens = ['', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'];
+
+            numLength = rev.length;
+            var word = new Array();
+            var j = 0;
+
+            for (i = 0; i < numLength; i++) {
+                switch (i) {
+
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+
+                        //            This is optional.
+
+                        //            case 9:
+                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        //                    word[j] = '';
+                        //                }
+                        //                else {
+                        //                    word[j] = once[rev[i]];
+                        //                }
+                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        //                    word[j] = word[j] + " Arab";
+                        //                }
+                        //                break;
+
+                        //            case 10:
+                        //                aboveTens();
+                        //                break;
+
+                    default: break;
+                }
+                j++;
+            }
+
+            function aboveTens() {
+                if (rev[i] == 0) { word[j] = ''; }
+                else if (rev[i] == 1) { word[j] = twos[rev[i - 1]]; }
+                else { word[j] = tens[rev[i]]; }
+            }
+
+            word.reverse();
+            var finalOutput = '';
+            for (i = 0; i < numLength; i++) {
+                finalOutput = finalOutput + word[i];
+            }
+            document.getElementById(outputControl).innerHTML = finalOutput + " Only";
+        }
+       
     </script>
 }
 

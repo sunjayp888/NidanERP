@@ -1,5 +1,4 @@
 ﻿@model Nidan.Models.RegistrationPaymentReceiptViewModel
-<div class="form-control-required-example"> = Required</div>
 
 @Html.HiddenFor(m => m.RegistrationPaymentReceipt.RegistrationPaymentReceiptId)
 @Html.HiddenFor(m => m.RegistrationPaymentReceipt.EnquiryId)
@@ -75,8 +74,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.RegistrationPaymentReceipt.Fees, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Fees, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')", @readonly = true })
-        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Fees, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeyup = "NumToWord(divDisplayWords)", @readonly=true})
         @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Fees, "", new { @class = "help-block" })
     </div>
 </div>
@@ -86,6 +84,11 @@
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div id="divDisplayWords" style="font-size: 15px; font-family: Arial;" class="form-control col-md-7 col-xs-12"></div>
     </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <label class="control-label col-md-6 col-xs-12">@Model.RegistrationPaymentReceipt.Particulars</label>
 </div>
 
 <div class="form-group bank-details-textbox">

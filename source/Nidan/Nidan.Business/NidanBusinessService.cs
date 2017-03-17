@@ -266,10 +266,18 @@ namespace Nidan.Business
         public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
             RegistrationPaymentReceipt registrationPaymentReceipt)
         {
+            
+            //registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + "Against" + registrationPaymentReceipt.Course.Name);
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
+            
             var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
             enquirydata.Registered=true;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+
+            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
+            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Against " + course.Name);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+
             var registration = new Registration
             {
                 RegistrationPaymentReceiptId = data.RegistrationPaymentReceiptId,

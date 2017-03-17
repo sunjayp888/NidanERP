@@ -94,13 +94,13 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
-            
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.EnquiryId = registrationPaymentReceiptViewModel.EnquiryId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationDate = _todayUTC;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate == null ? _todayUTC : registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate;
-            var course = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CourseId;
             var fees = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate = _todayUTC.AddDays(2);
+            //FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
+           // registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees + "Against" + course);
             if (ModelState.IsValid)
             {
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
