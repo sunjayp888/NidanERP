@@ -7,13 +7,17 @@ using Nidan.Business.Interfaces;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using System.IO;
+using Nidan.Document.Interfaces;
+using Nidan.Models;
 
 namespace Nidan.Controllers
 {
     public class DocumentController : BaseController
     {
-        public DocumentController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        private readonly IDocumentService _documentService;
+        public DocumentController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
+            _documentService = documentService;
         }
         // GET: Document
         public ActionResult Index()
@@ -22,9 +26,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult StudentDocument(string studentCode, string category, Paging paging, List<OrderBy> orderBy)
+        public ActionResult StudentDocument(string studentCode, Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveDocuments(UserOrganisationId, e => e.CentreId == UserCentreId && e.StudentCode == studentCode && e.DocumentType.Name.ToLower() == category.ToLower(), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveDocuments(UserOrganisationId, e => e.CentreId == UserCentreId && e.StudentCode == studentCode, orderBy, paging));
         }
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
@@ -36,6 +40,24 @@ namespace Nidan.Controllers
         {
             var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
             return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
+        }
+
+        [HttpPost]
+        public ActionResult DocumentTypes()
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId));
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var studentData =
+                NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
+                    e => e.CentreId == UserCentreId && e.StudentCode == documentViewModel.StudentCode).FirstOrDefault();
+            _documentService.Create(UserOrganisationId, UserCentreId,
+                            documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                            studentData?.CandidateName, "Counselling Document", documentViewModel.Attachment.FileName,
+                            documentViewModel.Attachment.InputStream.ToBytes());
         }
     }
 }
