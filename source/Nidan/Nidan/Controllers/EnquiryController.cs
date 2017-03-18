@@ -190,11 +190,12 @@ namespace Nidan.Controllers
             return RedirectToAction("Index");
         }
 
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today && p.Close != "Yes" && p.Registered==false, orderBy, paging));
         }
 
         [HttpPost]
@@ -207,7 +208,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.Registered == false, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -218,5 +219,11 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [HttpPost]
+        public ActionResult GetSector(int schemeId)
+        {
+            var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
+            return this.JsonNet(data);
+        }
     }
 }

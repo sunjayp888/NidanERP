@@ -17,8 +17,12 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editQuestion = editQuestion;
-        vm.canDeleteAbsenceType = canDeleteAbsenceType;
+        vm.canDeleteQuestion = canDeleteQuestion;
         vm.deleteQuestion = deleteQuestion;
+        vm.searchQuestion = searchQuestion;
+        vm.viewQuestion = viewQuestion;
+        vm.searchKeyword = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
@@ -28,41 +32,57 @@
         function retrieveQuestions() {
             return QuestionService.retrieveQuestions(vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.absenceTypes = response.data.Items;
+                    vm.questions = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    return vm.absenceTypes;
+                    return vm.questions;
                 });
         }
 
+        function searchQuestion(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return QuestionService.searchQuestion(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.questions = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.questions.length === 0 ? "No Records Found" : "";
+                  return vm.questions;
+              });
+        }
+
         function pageChanged() {
-            return retrieveAbsenceTypes();
+            return retrieveQuestions();
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            return retrieveAbsenceTypes();
+            return retrieveQuestions();
         }
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
         }
 
-        function editAbsenceType(id) {
-            $window.location.href = "/AbsenceType/Edit/" + id;
+        function editQuestion(id) {
+            $window.location.href = "/Question/Edit/" + id;
         }
 
-        function canDeleteAbsenceType(id) {
+        function canDeleteQuestion(id) {
             vm.loadingActions = true;
-            vm.CanDeleteAbsenceType = false;
+            vm.CanDeleteQuestion = false;
             $('.dropdown-menu').slideUp('fast');
             $('.' + id).toggle();
-            QuestionService.canDeleteAbsenceType(id).then(function (response) { vm.CanDeleteAbsenceType = response.data, vm.loadingActions = false });
+            QuestionService.canDeleteQuestion(id).then(function (response) { vm.CanDeleteQuestion = response.data, vm.loadingActions = false });
         }
-       
-        function deleteAbsenceType(id) {
-            return QuestionService.deleteAbsenceType(id).then(function () { initialise(); });
+
+        function deleteQuestion(id) {
+            return QuestionService.deleteQuestion(id).then(function () { initialise(); });
         };
+
+        function viewQuestion(questionId) {
+            $window.location.href = "/Question/Edit/" + questionId;
+        }
 
     }
 

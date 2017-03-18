@@ -46,6 +46,16 @@
                                 @if (User.IsInAnyRoles("Admin"))
                                 {
                                     <li>
+                                        <a><i class="fa fa-cogs"></i> Event <span class="fa fa-chevron-up"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Event")'>Event</a></li>
+                                            <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if (User.IsInAnyRoles("Admin"))
+                                {
+                                    <li>
                                         <a><i class="fa fa-cogs"></i> Mobilization <span class="fa fa-chevron-up"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
@@ -53,8 +63,9 @@
                                              <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
                                             @*<li><a href=''>Admission</a></li>*@
                                             <li><a href='@Url.Action("Index", "Enquiry")'>Enquiry</a></li>
+                                            <li><a href='@Url.Action("Index", "RegistrationPaymentReceipt")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
-                                            
+                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                         </ul>
                                     </li>
                                 }

@@ -17,6 +17,7 @@
                 @using (Html.BeginForm("Upload", "Counselling", FormMethod.Post, new { encType = "multipart/form-data" }))
                 {
                     @Html.HiddenFor(model => model.EnquiryId)
+                    @Html.HiddenFor(model => model.CounsellingId)
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -50,6 +51,11 @@
                         </div>
                     </div>
                 }
+            </div>
+            <div>
+                <a href="@Url.Action("Edit", "Counselling", new { id = Model.CounsellingId })" class="btn btn-primary" role="button">
+                <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+                </a>
             </div>
         </div>
     </div>

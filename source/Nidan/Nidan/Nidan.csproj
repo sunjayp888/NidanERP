@@ -1446,6 +1446,7 @@
     <Content Include="Views\Mobilization\Upload.cshtml" />
     <Content Include="Views\Counselling\Upload.cshtml" />
     <Content Include="Views\Shared\_Document.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

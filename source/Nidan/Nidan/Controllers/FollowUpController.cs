@@ -86,7 +86,7 @@ namespace Nidan.Controllers
 
             return this.JsonNet(NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
              p => (isSuperAdmin || p.CentreId == UserCentreId)
-             && p.FollowUpDateTime == _today && !p.Closed.Value, orderBy, paging));
+             && p.FollowUpDateTime == _today && !p.Closed.Value && p.FollowUpType!="", orderBy, paging));
         }
 
         [HttpPost]
@@ -134,7 +134,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveFollowUps(UserOrganisationId, e => e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveFollowUps(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
     }

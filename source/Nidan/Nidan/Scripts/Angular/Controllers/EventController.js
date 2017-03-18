@@ -17,9 +17,13 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editEvent = editEvent;
-        //vm.canDeleteAbsenceType = canDeleteAbsenceType;
-        //vm.deleteAbsenceType = deleteAbsenceType;
-        vm.retrieveEvents = retrieveEvents,
+        vm.canDeleteEvent = canDeleteEvent;
+        vm.deleteEvent = deleteEvent;
+        vm.searchEvent = searchEvent;
+        vm.viewEvent = viewEvent;
+        vm.retrieveQuestions = retrieveQuestions;
+        vm.searchKeyword = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
@@ -34,6 +38,18 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.events;
                 });
+        }
+
+        function searchEvent(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return EventService.searchEvent(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.events = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.events.length === 0 ? "No Records Found" : "";
+                  return vm.events;
+              });
         }
 
         function pageChanged() {
@@ -53,17 +69,38 @@
             $window.location.href = "/Event/Edit/" + id;
         }
 
-        function canDeleteAbsenceType(id) {
+        function canDeleteEvent(id) {
             vm.loadingActions = true;
-            vm.CanDeleteAbsenceType = false;
+            vm.CanDeleteEvent = false;
             $('.dropdown-menu').slideUp('fast');
             $('.' + id).toggle();
-            EventService.canDeleteAbsenceType(id).then(function (response) { vm.CanDeleteAbsenceType = response.data, vm.loadingActions = false });
+            EventService.canDeleteEvent(id).then(function (response) { vm.CanDeleteEvent = response.data, vm.loadingActions = false });
         }
 
-        function deleteAbsenceType(id) {
-            return EventService.deleteAbsenceType(id).then(function () { initialise(); });
+        function deleteEvent(id) {
+            return EventService.deleteEvent(id).then(function () { initialise(); });
         };
+
+        function viewEvent(eventId) {
+            $window.location.href = "/Event/Edit/" + eventId;
+        }
+
+        //function retrieveQuestions(eventFunctionId) {
+        //    return EventService.retrieveQuestions(eventFunctionId).then(function () {
+        //        vm.questions = response.data;
+        //    });
+        //};
+
+        function retrieveQuestions(eventFunctionId) {
+            vm.eventFunctionId = eventFunctionId;
+            return EventService.retrieveQuestions(vm.eventFunctionId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.questions = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.questions;
+                });
+        }
 
     }
 

@@ -10,8 +10,9 @@
     function QuestionService($http) {
         var service = {
             retrieveQuestions: retrieveQuestions,
-            canDeleteAbsenceType: canDeleteAbsenceType,
-            deleteQuestions: deleteQuestions
+            canDeleteQuestion: canDeleteQuestion,
+            deleteQuestion: deleteQuestion,
+            searchQuestion: searchQuestion
         };
 
         return service;
@@ -27,16 +28,28 @@
             return $http.post(url, data);
         }
 
-        function canDeleteAbsenceType(id) {
-            var url = "/AbsenceType/CanDeleteAbsenceType",
-                data = {id: id};
+        function searchQuestion(SearchKeyword, Paging, OrderBy) {
+            var url = "/Question/Search",
+            data = {
+                searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
             return $http.post(url, data);
         }
 
-        function deleteQuestions(id) {
+        function canDeleteQuestion(id) {
+            var url = "/Question/CanDeleteQuestion",
+                data = { id: id };
+
+            return $http.post(url, data);
+        }
+
+        function deleteQuestion(id) {
             var url = "/Question/Delete",
-                data = {id: id};
+                data = { id: id };
+
             return $http.post(url, data);
         }
     }
