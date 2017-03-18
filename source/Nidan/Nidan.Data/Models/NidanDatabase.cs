@@ -59,6 +59,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Planning> Plannings { get; set; }
         public virtual DbSet<Postevent> Postevents { get; set; }
         public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<Template> Templates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

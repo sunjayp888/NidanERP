@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -10,6 +11,7 @@ using Nidan.Entity;
 using Nidan.Data.Extensions;
 using Nidan.Data.Interfaces;
 using Nidan.Entity.Dto;
+using System.Configuration;
 
 namespace Nidan.Data
 {
@@ -1054,6 +1056,31 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public Template RetrieveTemplateDetails(int organisationId, string name)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var template = context
+                    .Templates
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.Name.ToLower() == name.ToLower());
+
+                if (template != null)
+                {
+                    return new Template
+                    {
+                        Name = template.Name,
+                        FileName = template.FileName,
+                        Type = template.Type,
+                        FilePath = Path.Combine(ConfigurationManager.AppSettings["TemplateRootFilePath"], template.FileName)
+                    };
+                }
+                return null;
+
             }
         }
 
