@@ -80,6 +80,19 @@ namespace Nidan.Data
             }
         }
 
+        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
+            RegistrationPaymentReceipt registrationPaymentReceipt)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                registrationPaymentReceipt.Enquiry = null;
+                registrationPaymentReceipt = context.RegistrationPaymentReceipts.Add(registrationPaymentReceipt);
+                context.SaveChanges();
+
+                return registrationPaymentReceipt;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -629,6 +642,20 @@ namespace Nidan.Data
             }
         }
 
+        public Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Courses
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CourseId == courseId);
+
+            }
+        }
+
         public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -731,6 +758,48 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .RegistrationPaymentReceipts
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry)
+                    .Include(p => p.PaymentMode)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
+            Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .RegistrationPaymentReceipts
+                    .Include(e => e.Enquiry)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.RegistrationPaymentReceiptId == registrationPaymentReceiptId);
+
             }
         }
 
