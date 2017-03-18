@@ -977,9 +977,9 @@ namespace Nidan.Data
             {
 
                 return context
-                    .Eventdays
+                  .RegistrationPaymentReceipts
                     .Include(p => p.Organisation)
-                    .RegistrationPaymentReceipts
+                    
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
                     .Include(p => p.PaymentMode)
@@ -989,8 +989,6 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "EventdayId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
                             Property = "RegistrationDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
@@ -1233,6 +1231,11 @@ namespace Nidan.Data
                     .FirstOrDefault(e => e.Guid == documentGuid);
 
             }
+        }
+
+        public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

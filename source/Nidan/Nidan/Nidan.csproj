@@ -1064,6 +1064,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\less\Site.less" />
+    <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
     <Content Include="Scripts\Angular\Controllers\AreaOfInterestController.js" />
@@ -1077,8 +1078,10 @@
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
+    <Content Include="Scripts\Angular\Controllers\RegistrationPaymentReceiptController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
     <Content Include="Scripts\Angular\Services\AdmissionService.js" />
     <Content Include="Scripts\Angular\Services\AreaOfInterestService.js" />
@@ -1093,6 +1096,7 @@
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
+    <Content Include="Scripts\Angular\Services\RegistrationPaymentReceiptService.js" />
     <Content Include="Scripts\App\EmploymentWorkingPattern.js" />
     <Content Include="Scripts\App\AbsenceType.js" />
     <Content Include="Scripts\App\Absence.js" />

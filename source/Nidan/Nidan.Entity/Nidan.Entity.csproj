@@ -137,6 +137,7 @@
     <Compile Include="Partials\Host.cs" />
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Template.cs" />
+    <Compile Include="PaymentMode.cs" />
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="Planning.cs" />
@@ -148,6 +149,8 @@
     <Compile Include="Dto\ScheduleItemType.cs" />
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Registration.cs" />
+    <Compile Include="RegistrationPaymentReceipt.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Scheme.cs" />
     <Compile Include="Sector.cs" />
