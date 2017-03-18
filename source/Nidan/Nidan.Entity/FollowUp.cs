@@ -17,6 +17,8 @@ namespace Nidan.Entity
 
         public int? EnquiryId { get; set; }
 
+        public int? RegistrationPaymentReceiptId { get; set; }
+
         public int? CounsellingId { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -60,6 +62,8 @@ namespace Nidan.Entity
         public virtual Enquiry Enquiry { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual RegistrationPaymentReceipt RegistrationPaymentReceipt { get; set; }
 
         //public virtual FollowUp FollowUp1 { get; set; }
 

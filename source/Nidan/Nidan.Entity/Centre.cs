@@ -19,6 +19,8 @@ namespace Nidan.Entity
             Budgets = new HashSet<Budget>();
             Eventdays = new HashSet<Eventday>();
             Postevents = new HashSet<Postevent>();
+            RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
+
         }
 
         public int CentreId { get; set; }
@@ -59,5 +61,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Postevent> Postevents { get; set; }
+
+        public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
+
     }
 }
