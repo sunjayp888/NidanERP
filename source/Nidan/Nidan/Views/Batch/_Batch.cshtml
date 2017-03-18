@@ -10,7 +10,31 @@
 </div>
 
 <div class="form-group">
-     @Html.LabelFor(model => model.Batch.TrainingType, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Batch.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Batch.SectorId, Model.Sectors, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Batch.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+@*<div class="form-group">
+    @Html.LabelFor(model => model.Batch.SubSector, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Batch.SubSector, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Batch.SubSector, "", new { @class = "help-block" })
+    </div>
+</div>*@
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Batch.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Batch.CourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Batch.CourseId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Batch.TrainingType, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div id="trainingtype" class="btn-group" data-toggle="buttons">
             <label class='@(Model.Batch.TrainingType == "Short Term" ? "btn btn-primary active" : "btn btn-primary")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
@@ -22,30 +46,6 @@
                 <input type="radio" name="trainingtype" value="Long Term" data-parsley-multiple="gender"> Long Term
             </label>
         </div>
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Batch.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Batch.SectorId, Model.Sectors, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Batch.SectorId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Batch.SubSector, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Batch.SubSector, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Batch.SubSector, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Batch.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Batch.CourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Batch.CourseId, "", new { @class = "help-block" })
     </div>
 </div>
 

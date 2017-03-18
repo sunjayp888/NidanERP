@@ -112,7 +112,7 @@ namespace Nidan.Entity
             [Display(Name = "Preferred Month For Joining")]
             public int PreferredMonthForJoining { get; set; }
 
-            [Display(Name = "Conversion Prospect")]
+            [Display(Name = "Conversion Prospect (%)")]
             public int ConversionProspect { get; set; }
 
             [Display(Name = "Closing Remarks")]

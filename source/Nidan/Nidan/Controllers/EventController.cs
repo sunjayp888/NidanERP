@@ -29,24 +29,7 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        [HttpPost]
-        public ActionResult List(Paging paging, List<OrderBy> orderBy)
-        {
-            //return this.JsonNet(_businessService.RetrieveAbsenceTypes(UserOrganisationId, orderBy, paging));
-            return this.JsonNet(_nidanBusinessService.RetrieveEvents(UserOrganisationId,e => true, orderBy, paging));
-        }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(EventViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _businessService.UpdateEvent(model.Event);
-
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+        // GET: Event/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
@@ -60,41 +43,70 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // POST: Event/Create
         [HttpPost]
-        public ActionResult Create(EventViewModel events)
+        public ActionResult Create(EventViewModel eventViewModel)
         {
             if (ModelState.IsValid)
             {
-               // var data = _nidanBusinessService.CreateEvent(events.Event);
+                eventViewModel.Event.OrganisationId = UserOrganisationId;
+                eventViewModel.Event.CentreId = UserCentreId;
+                eventViewModel.Event= NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
-            var model = new EventViewModel();
-            return View(model);
+            return View(eventViewModel);
         }
 
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    var eventData = _businessService.RetrieveEvent(id.Value);
-        //    if (eventData == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    var viewModel = new EventViewModel()
-        //    {
-        //        Event = eventData
-        //    };
-        //    return View(viewModel);
-        //}
+        // GET: Event/Edit
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var eventData = NidanBusinessService.RetrieveEvent(UserOrganisationId, id.Value, e => true);
+            var viewModel = new EventViewModel()
+            {
+                Event = eventData
+            };
+            return View(viewModel);
+        }
 
-        //[HttpPost]
-        //public ActionResult Delete(int id)
-        //{
-        //    _businessService.DeleteEvent(id);
-        //    return RedirectToAction("Index");
-        //}
+        // POST: Event/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EventViewModel eventViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                eventViewModel.Event.OrganisationId = UserOrganisationId;
+                eventViewModel.Event.CentreId = UserCentreId;
+                eventViewModel.Event = NidanBusinessService.UpdateEvent(UserOrganisationId, eventViewModel.Event);
+                return RedirectToAction("Index");
+            }
+            var viewModel = new EventViewModel
+            {
+                Event = eventViewModel.Event
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult List(Paging paging, List<OrderBy> orderBy)
+        {
+            return this.JsonNet(_nidanBusinessService.RetrieveEvents(UserOrganisationId, e => true, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult QuestionList(int eventFunctionId,Paging paging, List<OrderBy> orderBy )
+        {
+            return this.JsonNet(_nidanBusinessService.RetrieveQuestions(UserOrganisationId, e => true, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult BrainStorm()
+        {
+            return null;
+        }
     }
 }

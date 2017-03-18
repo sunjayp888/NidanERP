@@ -203,7 +203,28 @@
             });
         });
 
-        var month=@DateTime.UtcNow.Month;
+        $('#Enquiry_SchemeId').change(function () {
+            var schemeId = $('#Enquiry_SchemeId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetSector',
+                type: 'POST',
+                data: JSON.stringify({ schemeId: schemeId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_SectorId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
         
     </script>
 }

@@ -1,34 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Nidan.Business.Interfaces;
-using Nidan.Business.TemplateServiceReference;
+using Nidan.Data.Interfaces;
+
 
 namespace Nidan.Business
 {
     public class TemplateService : ITemplateService
     {
-        private TemplateServiceV1100Client _service;
+        private readonly IPdfService _pdfService;
+        private readonly IRazorService _razorService;
+        private readonly INidanDataService _nidanDataService;
 
-        public TemplateService()
+        public TemplateService(IRazorService razorService, IPdfService pdfService, INidanDataService nidanDataService)
         {
-            _service = new TemplateServiceV1100Client();
+            _pdfService = pdfService;
+            _razorService = razorService;
+            _nidanDataService = nidanDataService;
         }
 
-        public byte[] CreatePDF(string jsonString, string templateName)
+        public byte[] CreatePDF(int organisationId, string jsonString, string templateName)
         {
-            if (templateName == null)
-                throw new System.ArgumentNullException(nameof(templateName));
-
-            return _service.CreatePDF(jsonString, templateName);
+            try
+            {
+                string htmlData = CreateText(organisationId, jsonString, templateName);
+                return _pdfService.CreatePDFfromHtml(htmlData);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
         }
 
-        public byte[] CreatePDFfromPDFTemplate(Dictionary<string, string> formValues, string templateName)
+        public byte[] CreatePDFfromPDFTemplate(int organisationId, Dictionary<string, string> formValues, string templateName)
         {
-            return _service.CreatePDFfromPDFTemplate(formValues, templateName);
+            var templateDetails = _nidanDataService.RetrieveTemplateDetails(organisationId, templateName);
+            return _pdfService.CreatePDFfromPDFTemplate(formValues, templateDetails.FilePath);
         }
 
-        public string CreateText(string jsonString, string templateName)
+        public string CreateText(int organisationId, string jsonString, string templateName)
         {
-            return _service.CreateText(jsonString, templateName);
+            if (!_razorService.IsTemplateCached(templateName))
+            {
+                var template = GetTemplateHtml(organisationId, templateName);
+                _razorService.CacheTemplate(templateName, template);
+            }
+            return _razorService.CreateText(jsonString, templateName);
+        }
+
+        public string GetTemplateHtml(int organisationId, string templateName)
+        {
+            var templateDetails = _nidanDataService.RetrieveTemplateDetails(organisationId, templateName);
+            return File.ReadAllText(templateDetails.FilePath);
         }
     }
 }
