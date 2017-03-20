@@ -113,3 +113,19 @@
         @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.ChequeDate, "", new { @class = "help-block" })
     </div>
 </div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.FollowUpDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.FollowUpDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Remarks, "", new { @class = "help-block" })
+    </div>
+</div>

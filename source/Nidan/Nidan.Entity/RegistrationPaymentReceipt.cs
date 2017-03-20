@@ -44,7 +44,7 @@ namespace Nidan.Entity
         public DateTime RegistrationDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime FollowUpDate { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         public virtual PaymentMode PaymentMode { get; set; }
 

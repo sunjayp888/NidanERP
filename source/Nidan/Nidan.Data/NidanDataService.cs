@@ -883,9 +883,10 @@ namespace Nidan.Data
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
+                //context.Set<T>().Attach(t);
                 context.Entry(t).State = EntityState.Modified;
                 context.SaveChanges();
-
+                
                 return t;
             }
         }

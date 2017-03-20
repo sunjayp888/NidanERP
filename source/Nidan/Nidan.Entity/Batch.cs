@@ -11,6 +11,9 @@ namespace Nidan.Entity
     {
         public int BatchId { get; set; }
 
+        [StringLength(500)]
+        public string Name { get; set; }
+
         public int SchemeId { get; set; }
 
         public int? CentreId { get; set; }

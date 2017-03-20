@@ -1,0 +1,1 @@
+alter table Batch add [Name] [varchar](500) NULL

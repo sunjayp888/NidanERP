@@ -16,7 +16,7 @@ namespace Nidan.Controllers
     {
         private readonly INidanBusinessService _nidanBusinessService;
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
+        private readonly DateTime _todayUtc = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public RegistrationPaymentReceiptController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
@@ -27,30 +27,6 @@ namespace Nidan.Controllers
         public ActionResult Index()
         {
             return View(new BaseViewModel());
-        }
-
-        [Authorize(Roles = "Admin")]
-        public ActionResult ViewDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var registrationPaymentReceipt = NidanBusinessService.RetrieveRegistrationPaymentReceipt(UserOrganisationId, id.Value);
-            if (registrationPaymentReceipt == null)
-            {
-                return HttpNotFound();
-            }
-            var viewModel = new RegistrationPaymentReceiptViewModel
-            {
-                RegistrationPaymentReceipt = registrationPaymentReceipt,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(), "PaymentModeId", "Name"),
-                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
-                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(UserOrganisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
-            };
-            return View(viewModel);
         }
 
         // GET: RegistrationPaymentReceipt/Create
@@ -94,19 +70,13 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
+            registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CentreId = UserCentreId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.EnquiryId = registrationPaymentReceiptViewModel.EnquiryId;
-            registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationDate = _todayUTC;
-            registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate == null ? _todayUTC : registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate;
-            var fees = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees;
-            registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate = _todayUTC.AddDays(2);
-            //FollowUpURL = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
-           // registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees + "Against" + course);
+            registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationDate = _todayUtc;
             if (ModelState.IsValid)
             {
-                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
-                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CentreId = UserCentreId;
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt = NidanBusinessService.CreateRegistrationPaymentReceipt(UserOrganisationId, registrationPaymentReceiptViewModel.RegistrationPaymentReceipt);
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationPaymentReceiptId });
             }
             registrationPaymentReceiptViewModel.PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList());
             registrationPaymentReceiptViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
@@ -114,6 +84,57 @@ namespace Nidan.Controllers
             registrationPaymentReceiptViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             registrationPaymentReceiptViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
             return View(registrationPaymentReceiptViewModel);
+        }
+
+        // GET: RegistrationPaymentReceipt/Edit/{id}
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value, e => true);
+            var registrationPaymentReceipt = NidanBusinessService.RetrieveRegistrationPaymentReceipt(UserOrganisationId, id.Value);
+            if (registrationPaymentReceipt == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new RegistrationPaymentReceiptViewModel
+            {
+                EnquiryId = id.Value,
+                RegistrationPaymentReceipt = registrationPaymentReceipt,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(), "PaymentModeId", "Name"),
+                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(UserOrganisationId, e => true).ToList(), "BatchTimePreferId", "Name")
+            };
+            return View(viewModel);
+        }
+
+        // POST: RegistrationPaymentReceipt/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(RegistrationPaymentReceiptViewModel registrationPaymentReceiptViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CentreId = UserCentreId;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate == null ? _todayUtc : registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate;
+                var fees = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks =registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt = NidanBusinessService.UpdateRegistrationPaymentReceipt(UserOrganisationId, registrationPaymentReceiptViewModel.RegistrationPaymentReceipt);
+                return RedirectToAction("Edit", new { id = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationPaymentReceiptId });
+                //return RedirectToAction("Index");
+            }
+            var viewModel = new RegistrationPaymentReceiptViewModel
+            {
+                RegistrationPaymentReceipt = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt
+            };
+            return View(viewModel);
         }
 
         [HttpPost]

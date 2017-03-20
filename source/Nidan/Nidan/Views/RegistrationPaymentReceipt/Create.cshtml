@@ -67,7 +67,7 @@
 {
     <script>
         $("#RegistrationPaymentReceipt_Fees").val("");
-
+        
         $('.bank-details-textbox').hide();
         $("#RegistrationPaymentReceipt_PaymentModeId").change(function () {
             if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
@@ -80,8 +80,7 @@
         });
 
         $(function () {
-
-            $('#publicHolidayErrorSummary').hide();
+            $("#RegistrationPaymentReceipt_FollowUpDate").val("");
             var daterangepickerOptions = {
                 autoApply: true,
                 singleDatePicker: true,
