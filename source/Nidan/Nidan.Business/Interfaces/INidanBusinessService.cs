@@ -27,6 +27,7 @@ namespace Nidan.Business.Interfaces
         Budget CreateBudget(int organisationId, Budget budget);
         Eventday CreateEventday(int organisationId, Eventday eventday);
         Postevent CreatePostevent(int organisationId, Postevent postevent);
+        Trainer CreatetTrainer(int organisationId, Trainer trainer);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -102,6 +103,10 @@ namespace Nidan.Business.Interfaces
         Postevent RetrievePostevent(int organisationId, int id);
         Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate);
         PagedResult<Postevent> RetrievePostevents(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Trainer RetrieveTrainer(int organisationId, int id);
+        PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
+        PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -116,6 +121,7 @@ namespace Nidan.Business.Interfaces
         Admission UpdateAdmission(int organisationId, Admission admission);
         Question UpdateQuestion(int organisationId, Question question);
         Event UpdateEvent(int organisationId, Event eventplan);
+        Trainer UpdateTrainer(int organisationId, Trainer trainer);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

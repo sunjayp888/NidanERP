@@ -1,0 +1,74 @@
+﻿@model Nidan.Models.TrainerViewModel
+<div class="form-control-required-example"> = Required</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Trainer.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Trainer.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Trainer.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+    <div class="col-md-8 col-sm-4 col-xs-12">
+        <div id="gender" class="btn-group" data-toggle="buttons">
+            <label class="btn btn-primary" data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Trainer.Gender, "Male")
+                <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
+            </label>
+            <label class="btn btn-default" data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Trainer.Gender, "Female")
+                <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Trainer.AadharNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Trainer.AadharNo, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "16" })
+        @Html.ValidationMessageFor(model => model.Trainer.AadharNo, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Trainer.Mobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Trainer.Mobile, new { @class = "form-control col-md-7 col-xs-12", @onkeypress = "phoneno()", @maxlength = "10" })
+        @Html.ValidationMessageFor(model => model.Trainer.Mobile, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Trainer.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Trainer.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Trainer.EmailId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Trainer.CertificationNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Trainer.CertificationNo, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Trainer.CertificationNo, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.Trainer.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Trainer.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Trainer.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.Trainer.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Trainer.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Trainer.CourseId, "", new { @class = "help-block" })
+    </div>
+</div>

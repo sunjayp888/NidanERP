@@ -21,6 +21,8 @@ namespace Nidan.Data.Interfaces
 
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
 
+        Trainer CreateTrainer(int organisationId, Trainer trainer);
+
         AreaOfInterest CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
@@ -80,6 +82,9 @@ namespace Nidan.Data.Interfaces
         Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate);
         PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Template RetrieveTemplateDetails(int organisationId,string name);
+        PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
+        PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
 

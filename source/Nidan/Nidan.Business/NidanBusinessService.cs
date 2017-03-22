@@ -314,6 +314,33 @@ namespace Nidan.Business
             return _nidanDataService.CreatePostevent(organisationId, postevent);
         }
 
+        public Trainer CreatetTrainer(int organisationId, Trainer trainer)
+        {
+            var data = _nidanDataService.Create<Trainer>(organisationId, trainer);
+            //var personnel = new Personnel()
+            //{
+            //    OrganisationId = organisationId,
+            //    DOB = DateTime.Today,
+            //    Title = "Mr",
+            //    Forenames = data.Name,
+            //    Surname = "Surname",
+            //    Email = data.EmailId,
+            //    Address1 = "Address1",
+            //    Postcode = "POST CODE",
+            //    Telephone = "12345678",
+            //    NINumber = "NZ1234567",
+            //    CentreId = data.CentreId
+            //};
+            //_nidanDataService.CreatePersonnel(organisationId, personnel);
+
+            //trainer.PersonnelId = personnel.PersonnelId;
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, trainer);
+
+            return data;
+        }
+
+
+
         #endregion
 
         #region // Retrieve
@@ -799,6 +826,28 @@ namespace Nidan.Business
             return _nidanDataService.RetrievePostevents(organisationId, p => true, orderBy, paging);
         }
 
+        public Trainer RetrieveTrainer(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveTrainer(organisationId, id, p => true);
+        }
+
+        public PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveTrainers(organisationId, p => true, orderBy, paging);
+        }
+
+        public Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate)
+        {
+            var trainer = _nidanDataService.RetrieveTrainer(organisationId, trainerId, p => true);
+            return trainer;
+        }
+
+        public PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveTrainerBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -1059,6 +1108,11 @@ namespace Nidan.Business
         public Event UpdateEvent(int organisationId, Event eventplan)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, eventplan);
+        }
+
+        public Trainer UpdateTrainer(int organisationId, Trainer trainer)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, trainer);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

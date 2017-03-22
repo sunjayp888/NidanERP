@@ -60,6 +60,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<Postevent> Postevents { get; set; }
         public virtual DbSet<Budget> Budgets { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
+        public virtual DbSet<Trainer> Trainers { get; set; }
+        public virtual DbSet<TrainerSearchField> TrainerSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -920,6 +922,42 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Budget>()
                 .Property(e => e.Comment)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.CertificationNo)
+                .IsUnicode(false);
+            modelBuilder.Entity<TrainerSearchField>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.CertificationNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
 
             base.OnModelCreating(modelBuilder);
         }
