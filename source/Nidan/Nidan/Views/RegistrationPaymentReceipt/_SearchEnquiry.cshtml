@@ -1,0 +1,82 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.RegistrationPaymentReceiptViewModel
+
+<div ng-controller="RegistrationPaymentReceiptController as model">
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+                <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="x_content">
+        <p class="text-muted font-13 m-b-30">
+        </p>
+        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    @Html.Partial("Pagination/_pageSize")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                        <thead>
+                            <tr role="row">
+                                <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                <th ng-click="model.order('ContactNo')" ng-class="model.orderClass('ContactNo')">Contact No</th>
+                                <th ng-click="model.order('Scheme')" ng-class="model.orderClass('Scheme')">Scheme</th>
+                                <th ng-click="model.order('Sector')" ng-class="model.orderClass('Sector')">Sector</th>
+                                <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
+                                <th ng-click="model.order('BatchTimePrefer')" ng-class="model.orderClass('BatchTimePrefer')">BatchTimePrefer</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="enquiry in model.enquiries" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.createRegistrationPaymentReceipt(enquiry.EnquiryId)">
+                                <td><span ng-bind="enquiry.CandidateName"></span></td>
+                                <td><span ng-bind="enquiry.Mobile"></span></td>
+                                <td><span ng-bind="enquiry.Scheme.Name"></span></td>
+                                <td><span ng-bind="enquiry.Sector.Name"></span></td>
+                                <td><span ng-bind="enquiry.InterestedCourse.Name"></span></td>
+                                <td><span ng-bind="enquiry.BatchTimePrefer.Name"></span></td>
+                                <td>
+                                    <div class="btn-group pull-right">
+                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                        <ul class="dropdown-menu slidedown">
+                                            @if (User.IsInAnyRoles("Admin"))
+                                            {
+                                                @*<li>
+                                                        <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
+                                                            Edit
+                                                        </a>
+                                                    </li>*@
+                                                <li>
+                                                    <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{enquiry.EnquiryId}}">
+                                                        Create Registration
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @Html.Partial("Pagination/_pagination")
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <label ng-bind="model.searchMessage"></label>
+            </div>
+        </div>
+    </div>
+</div>

@@ -104,6 +104,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.UtcNow;
                 enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry.Close = "No";
+                enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry);
                 return RedirectToAction("Index");
             }

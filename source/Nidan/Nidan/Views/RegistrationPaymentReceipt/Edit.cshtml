@@ -31,8 +31,10 @@
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.CourseId)
                         @*@Html.HiddenFor(model => Model.RegistrationPaymentReceipt.PaymentModeId)*@
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.EnquiryId)
+                        @*@Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Counselling.CounsellingId)*@
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.SchemeId)
                         @Html.HiddenFor(model => model.EnquiryId)
+                        @Html.HiddenFor(model => model.CounsellingId)
                         @Html.Partial("_RegistrationPaymentReceipt", Model)
 
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">

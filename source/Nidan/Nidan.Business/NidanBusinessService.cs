@@ -266,13 +266,18 @@ namespace Nidan.Business
 
         public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt)
         {
+            var counsellingdata=_nidanDataService.RetrieveCounsellings(organisationId,e=>e.EnquiryId==registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
             var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
             registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
             registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
+            if (counsellingdata != null) registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
             var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
             enquirydata.Registered = data != null;
+            enquirydata.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+            if (counsellingdata != null) counsellingdata.Registered = data != null;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counsellingdata);
 
             var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
             if (registrationFollowUp != null)
@@ -985,6 +990,7 @@ namespace Nidan.Business
             }
 
             enquiry.FollowUpDate = counselling.FollowUpDate.Value;
+            enquiry.EnquiryStatus = "Counselling";
             counselling.Close = enquiry.Close;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
@@ -996,6 +1002,7 @@ namespace Nidan.Business
             var data = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt.RegistrationPaymentReceiptId,e=>true);
             var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
             registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+            
             var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
             if (registrationFollowUp != null)
             {

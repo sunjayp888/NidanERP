@@ -49,6 +49,8 @@ namespace Nidan.Entity
         [DataType(DataType.MultilineText)]
         public string RemarkByBm { get; set; }
 
+        public bool Registered { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }
@@ -60,5 +62,8 @@ namespace Nidan.Entity
         public virtual Sector Sector { get; set; }
 
         public virtual Personnel Personnel { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
     }
 }

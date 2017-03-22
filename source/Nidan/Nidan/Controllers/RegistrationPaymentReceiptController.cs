@@ -34,6 +34,7 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            id = id ?? 0;
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId,id.Value,e=>true);
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
@@ -52,7 +53,7 @@ namespace Nidan.Controllers
 
                 RegistrationPaymentReceipt = new RegistrationPaymentReceipt()
                 {
-                    CourseId = enquiry.IntrestedCourseId,
+                    CourseId = enquiry?.IntrestedCourseId ?? 0,
                     //ChequeNo = "000000",
                     //BankName = "Nidan",
                     Particulars = "Fees Against Registration",
@@ -142,6 +143,27 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveRegistrationPaymentReceipts(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult EnquiryList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Registered == false, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult EnquirySearch(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            //var enquiry= NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
+            //    p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration" && p.CandidateName==searchKeyword
+            //    , orderBy,paging);
+            var data =NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration", orderBy, paging);
+            return this.JsonNet(data);
+            //this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
+            //    p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration" && p.CandidateName==searchKeyword
+            //    , orderBy,paging));
         }
     }
 }
