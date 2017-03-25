@@ -6,24 +6,24 @@
 
 <div class="row">
     <div class="col-lg-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                    <div class="col-md-8 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, new { @class = "form-control", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, "", new { @class = "help-block" })
-                    </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, new { @class = "form-control", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.CandidateName, "", new { @class = "help-block" })
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                    <div class="col-md-8 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "form-control",@readonly=true })
-                        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, "", new { @class = "help-block" })
-                    </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "form-control", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, "", new { @class = "help-block" })
                 </div>
             </div>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
@@ -37,7 +37,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId, Model.Sectors, null, new { @class = "form-control", @disabled = "true" })
+                    @Html.DropDownListFor(model => model.SectorId, Model.Sectors, null, new { @class = "form-control"})
                     @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId, "", new { @class = "help-block" })
                 </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId, Model.Courses, null, new { @class = "form-control", @disabled = "true" })
+                    @Html.DropDownListFor(model => model.IntrestedCourseId, Model.Courses, null, new { @class = "form-control"})
                     @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId, "", new { @class = "help-block" })
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId, Model.BatchTimePrefers, null, new { @class = "form-control", @disabled = "true" })
+                    @Html.DropDownListFor(model => model.BatchTimePreferId, Model.BatchTimePrefers, null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId, "", new { @class = "help-block" })
                 </div>
             </div>

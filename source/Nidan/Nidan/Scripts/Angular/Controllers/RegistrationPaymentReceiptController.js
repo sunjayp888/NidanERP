@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.registrationPaymentReceipts = [];
+        vm.enquiries = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -21,15 +22,28 @@
         vm.deleteRegistrationPaymentReceipt = deleteRegistrationPaymentReceipt;
         vm.searchRegistrationPaymentReceipt = searchRegistrationPaymentReceipt;
         vm.viewRegistrationPaymentReceipt = viewRegistrationPaymentReceipt;
+        vm.createRegistrationPaymentReceipt = createRegistrationPaymentReceipt;
+        vm.retrieveEnquiries = retrieveEnquiries;
+        vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
 
         function initialise() {
-            order("RegistrationDate");
+            order("EnquiryId");
         }
 
         function retrieveRegistrationPaymentReceipts() {
+            return RegistrationPaymentReceiptService.retrieveRegistrationPaymentReceipts(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.registrationPaymentReceipts = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.registrationPaymentReceipts;
+                });
+        }
+
+        function retrieveEnquiries() {
             return RegistrationPaymentReceiptService.retrieveRegistrationPaymentReceipts(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.registrationPaymentReceipts = response.data.Items;
@@ -48,6 +62,18 @@
                   vm.paging.totalResults = response.data.TotalResults;
                   vm.searchMessage = vm.registrationPaymentReceipts.length === 0 ? "No Records Found" : "";
                   return vm.registrationPaymentReceipts;
+              });
+        }
+
+        function searchEnquiry(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return RegistrationPaymentReceiptService.searchEnquiry(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.enquiries = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.enquiries.length === 0 ? "No Records Found" : "";
+                  return vm.enquiries;
               });
         }
 
@@ -82,6 +108,10 @@
 
         function viewRegistrationPaymentReceipt(registrationPaymentReceiptId) {
             $window.location.href = "/RegistrationPaymentReceipt/Edit/" + registrationPaymentReceiptId;
+        }
+
+        function createRegistrationPaymentReceipt(enquiryId) {
+            $window.location.href = "/RegistrationPaymentReceipt/Create/" + enquiryId;
         }
 
     }

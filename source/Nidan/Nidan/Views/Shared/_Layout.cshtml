@@ -60,7 +60,7 @@
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
                                             <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
-                                            @* <li><a href='@Url.Action("Index", "Question")'>Question</a></li>*@
+                                             <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
                                             @*<li><a href=''>Admission</a></li>*@
                                             <li><a href='@Url.Action("Index", "Enquiry")'>Enquiry</a></li>
                                             <li><a href='@Url.Action("Index", "RegistrationPaymentReceipt")'>Registration</a></li>
@@ -71,7 +71,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                @if (User.IsInAnyRoles("Admin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>

@@ -96,7 +96,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
       <Private>True</Private>
@@ -107,6 +110,10 @@
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -247,6 +254,7 @@
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
+    <Compile Include="Controllers\RegistrationPaymentReceiptController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
     <Compile Include="Extensions\PrincipalExtensions.cs" />
@@ -264,6 +272,7 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
+    <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
@@ -275,6 +284,7 @@
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\TrainerViewModel.cs" />
+    <Compile Include="Models\RegistrationPaymentReceiptViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1065,6 +1075,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\less\Site.less" />
+    <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
     <Content Include="Scripts\Angular\Controllers\AreaOfInterestController.js" />
@@ -1074,11 +1085,15 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
+    <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Controllers\TrainerController.js" />
+    <Content Include="Scripts\Angular\Controllers\RegistrationPaymentReceiptController.js" />
+    <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
     <Content Include="Scripts\Angular\Services\AdmissionService.js" />
     <Content Include="Scripts\Angular\Services\AreaOfInterestService.js" />
@@ -1088,11 +1103,13 @@
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
+    <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
     <Content Include="Scripts\Angular\Services\TrainerService.js" />
+    <Content Include="Scripts\Angular\Services\RegistrationPaymentReceiptService.js" />
     <Content Include="Scripts\App\EmploymentWorkingPattern.js" />
     <Content Include="Scripts\App\AbsenceType.js" />
     <Content Include="Scripts\App\Absence.js" />
@@ -1509,7 +1526,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58515/</IISUrl>
+          <IISUrl>http://localhost:58517/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

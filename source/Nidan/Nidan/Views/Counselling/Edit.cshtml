@@ -1,9 +1,10 @@
-﻿@model Nidan.Models.CounsellingViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.CounsellingViewModel
 
 @{
     ViewBag.Title = "Edit Counselling";
 }
-<div ng-controller="DocumentController as model">
+<div>
     <div class="row">
         <div class="col-md-9 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -19,7 +20,7 @@
                 <div class="x_content">
                     @using (Html.BeginForm())
                     {
-                    @Html.HiddenFor(model => model.Counselling.CentreId)
+                        @Html.HiddenFor(model => model.Counselling.CentreId)
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
                             @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -38,8 +39,9 @@
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.Gender)
                             @Html.HiddenFor(model => Model.Counselling.CentreId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.IntrestedCourseId)
-                            
-                            @Html.Partial("_Counselling", Model)
+                            <div class="horizontal">
+                                @Html.Partial("_Counselling", Model)
+                            </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Counselling.RemarkByBm, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                                 <div class="col-md-8 col-sm-4 col-xs-12">
@@ -47,28 +49,6 @@
                                     @Html.ValidationMessageFor(model => model.Counselling.RemarkByBm, "", new { @class = "help-block" })
                                 </div>
                             </div>
-                            @*<div class="form-group">
-                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
-                                <div class="col-md-8 col-sm-8 col-xs-12">
-                                    <div id="close" class="btn-group" data-toggle="buttons">
-                                        <label id="yesRadioButton" class='@(Model.Counselling.Close == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            @Html.RadioButtonFor(model => model.Counselling.Close, "Yes")
-                                            <input type="radio" name="close" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
-                                        </label>
-                                        <label id="noRadioButton" class='@(Model.Counselling.Close == "No" || Model.Counselling.Close==null? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                            @Html.RadioButtonFor(model => model.Counselling.Close, "No")
-                                            <input type="radio" name="close" value="No" data-parsley-multiple="gender"> No
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group closing-remarks-textbox">
-                                @Html.LabelFor(model => model.Counselling.ClosingRemark, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    @Html.EditorFor(model => model.Counselling.ClosingRemark, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Counselling.ClosingRemark, "", new { @class = "help-block" })
-                                </div>
-                            </div>*@
                             <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
@@ -81,6 +61,7 @@
                 </div>
             </div>
         </div>
+
         <div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
@@ -101,15 +82,14 @@
                             </div>
                         </div>
                     }
-                    <a id="uploadDocument" class="btn btn-lg btn-success col-md-10 col-sm-12">Upload Document</a>
-                    <a  id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')"  class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>
+                    <button type="button" class="btn btn-lg btn-success col-md-10 col-sm-12" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                    @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
                 </div>
             </div>
         </div>
     </div>
-
-    <div id="documentDiv">
-        @Html.Partial("_Document");
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+        @Html.Partial("_Document")
     </div>
 </div>
 
@@ -123,7 +103,7 @@
     <script>
         $(function () {
 
-            if (!$('#Caounselling_Close').is(':checked')) {
+            if (!$('#Counselling_Close').is(':checked')) {
                 $('.closing-remarks-textbox').hide();
             } else {
                 $('.closing-remarks-textbox').show();

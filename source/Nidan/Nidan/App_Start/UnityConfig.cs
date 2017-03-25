@@ -65,12 +65,12 @@ namespace Nidan
                     new InjectionParameter<string>(ConfigHelper.OverrideEmailAddresses)
                 )
             );
+
             container.RegisterType<IDocumentService, DocumentService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITenantsService, TenantsService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IPdfService, PdfService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IRazorService, RazorService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
-
         }
     }
 }
