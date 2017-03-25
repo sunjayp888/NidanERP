@@ -220,5 +220,11 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [HttpPost]
+        public ActionResult GetSector(int schemeId)
+        {
+            var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
+            return this.JsonNet(data);
+        }
     }
 }

@@ -53,11 +53,18 @@ namespace Nidan.Data.Models
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<CounsellingSearchField> CounsellingSearchFields { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+        public virtual DbSet<EventFunctionType> EventFunctionTypes { get; set; }
+        public virtual DbSet<Brainstorming> Brainstormings { get; set; }
+        public virtual DbSet<Eventday> Eventdays { get; set; }
+        public virtual DbSet<Planning> Plannings { get; set; }
+        public virtual DbSet<Postevent> Postevents { get; set; }
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
-
+       
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
@@ -864,6 +871,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.Close)
                 .IsUnicode(false);
@@ -886,6 +894,59 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<EnquirySearchField>()
             .Property(e => e.Registered);
 
+            modelBuilder.Entity<EventFunctionType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<EventFunctionType>()
+                .HasMany(e => e.Questions)
+                .WithRequired(e => e.EventFunctionType)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Question>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Brainstorming>()
+               .Property(e => e.Completed)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Brainstorming>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Eventday>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Eventday>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Postevent>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Postevent>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Budget>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Budget>()
+                .Property(e => e.Comment)
+                .IsUnicode(false);
+
             modelBuilder.Entity<PaymentMode>()
                  .Property(e => e.Name)
                  .IsUnicode(false);
@@ -906,8 +967,6 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<RegistrationPaymentReceipt>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
-
-
 
             base.OnModelCreating(modelBuilder);
         }
