@@ -124,6 +124,8 @@ namespace Nidan.Entity
 
         public int ConversionProspect { get; set; }
 
+        public bool Registered { get; set; }
+
         [StringLength(500)]
         public string OtherInterestedCourse { get; set; }
 
@@ -164,5 +166,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admission> Admissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
     }
 }

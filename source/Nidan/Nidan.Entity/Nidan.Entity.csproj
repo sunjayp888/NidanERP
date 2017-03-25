@@ -114,6 +114,7 @@
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
+    <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HowDidYouKnowAbout.cs" />
     <Compile Include="Interfaces\INotAbsenceDay.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Partials\Host.cs" />
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Template.cs" />
+    <Compile Include="Partials\Trainer.cs" />
+    <Compile Include="PaymentMode.cs" />
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="Planning.cs" />
@@ -148,6 +151,8 @@
     <Compile Include="Dto\ScheduleItemType.cs" />
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Registration.cs" />
+    <Compile Include="RegistrationPaymentReceipt.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Scheme.cs" />
     <Compile Include="Sector.cs" />
@@ -155,6 +160,8 @@
     <Compile Include="StudentType.cs" />
     <Compile Include="Taluka.cs" />
     <Compile Include="Template.cs" />
+    <Compile Include="Trainer.cs" />
+    <Compile Include="TrainerSearchField.cs" />
     <Compile Include="UserAuthorisationFilter.cs" />
     <Compile Include="Validation\DateGreaterThanAttribute.cs" />
   </ItemGroup>

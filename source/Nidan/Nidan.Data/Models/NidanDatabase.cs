@@ -63,7 +63,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<Trainer> Trainers { get; set; }
         public virtual DbSet<TrainerSearchField> TrainerSearchFields { get; set; }
         public virtual DbSet<Holiday> Holidays { get; set; }
-
+        public virtual DbSet<PaymentMode> PaymentModes { get; set; }
+        public virtual DbSet<Registration> Registrations { get; set; }
+        public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
            
@@ -871,6 +873,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+
             modelBuilder.Entity<EventFunctionType>()
                .Property(e => e.Name)
                .IsUnicode(false);
@@ -922,6 +925,27 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Budget>()
                 .Property(e => e.Comment)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PaymentMode>()
+                 .Property(e => e.Name)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<PaymentMode>()
+                .HasMany(e => e.RegistrationPaymentReceipts)
+                .WithRequired(e => e.PaymentMode)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RegistrationPaymentReceipt>()
+                .Property(e => e.ChequeNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationPaymentReceipt>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationPaymentReceipt>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Trainer>()

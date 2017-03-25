@@ -93,6 +93,7 @@ namespace Nidan.Data
             }
         }
 
+
         public Question CreateQuestion(int organisationId, Question question)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -167,6 +168,18 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return postevent;
+                }
+      }
+        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
+            RegistrationPaymentReceipt registrationPaymentReceipt)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                registrationPaymentReceipt.Enquiry = null;
+                registrationPaymentReceipt = context.RegistrationPaymentReceipts.Add(registrationPaymentReceipt);
+                context.SaveChanges();
+
+                return registrationPaymentReceipt;
             }
         }
 
@@ -720,6 +733,20 @@ namespace Nidan.Data
             }
         }
 
+        public Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Courses
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CourseId == courseId);
+
+            }
+        }
+
         public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -824,6 +851,7 @@ namespace Nidan.Data
                 return data;
             }
         }
+
 
         public Brainstorming RetrieveBrainstorming(int organisationId, int brainstormingId, Expression<Func<Brainstorming, bool>> predicate)
         {
@@ -950,39 +978,52 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+       // public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+
+        public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .Eventdays
+                    .RegistrationPaymentReceipts
                     .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry)
+                    .Include(p => p.PaymentMode)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
                         {
-                            Property = "EventdayId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                            Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
                     .Paginate(paging);
             }
         }
 
+
         public Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate)
+        {
+          return null;
+        }
+
+        public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
+            Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .Postevents
+                    .RegistrationPaymentReceipts
+                    .Include(e => e.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(p => p.PosteventId == posteventId);
+                    .SingleOrDefault(p => p.RegistrationPaymentReceiptId == registrationPaymentReceiptId);
 
             }
         }

@@ -264,6 +264,40 @@ namespace Nidan.Business
             return data;
         }
 
+        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
+            RegistrationPaymentReceipt registrationPaymentReceipt)
+        {
+            
+            //registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + "Against" + registrationPaymentReceipt.Course.Name);
+            var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
+            
+            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
+            enquirydata.Registered=true;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+
+            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
+            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Against " + course.Name);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+
+            var registration = new Registration
+            {
+                RegistrationPaymentReceiptId = data.RegistrationPaymentReceiptId,
+                OrganisationId = data.OrganisationId
+            };
+            _nidanDataService.Create<Registration>(organisationId, registration);
+            var registrationFollowUp =
+                _nidanDataService.RetrieveFollowUps(organisationId,
+                        e => e.EnquiryId == registrationPaymentReceipt.EnquiryId)
+                    .Items.FirstOrDefault();
+            registrationFollowUp.RegistrationPaymentReceiptId = data.RegistrationPaymentReceiptId;
+            registrationFollowUp.FollowUpDateTime = data.FollowUpDate;
+            registrationFollowUp.Remark = data.Remarks;
+            registrationFollowUp.FollowUpType = "Registered";
+            registrationFollowUp.FollowUpURL = string.Format("/RegistrationPaymentReceipt/Edit/{0}", data.EnquiryId);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
+            return data;
+        }
+
         public Enquiry CreateEnquiryFromMobilization(int organisationId, int centreId, int mobilizationId)
         {
             //var followUp = RetrieveFollowUps(organisationId, e => e.MobilizationId == mobilizationId).Items.FirstOrDefault();
@@ -685,9 +719,15 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Taluka>(organisationId, e => true);
         }
 
+
         public List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate)
         {
             return _nidanDataService.Retrieve<EventFunctionType>(organisationId, e => true);
+        }
+        
+        public List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<PaymentMode>(organisationId, e => true);
         }
 
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
@@ -813,7 +853,8 @@ namespace Nidan.Business
 
         public PagedResult<Eventday> RetrieveEventdays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveEventdays(organisationId, p => true, orderBy, paging);
+          //  return _nidanDataService.RetrieveEventdays(organisationId, p => true, orderBy, paging);
+            return null;
         }
 
         public Postevent RetrievePostevent(int organisationId, int id)
@@ -830,6 +871,25 @@ namespace Nidan.Business
         public PagedResult<Postevent> RetrievePostevents(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrievePostevents(organisationId, p => true, orderBy, paging);
+        }
+        
+        public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveRegistrationPaymentReceipts(organisationId, predicate, orderBy, paging);
+        }
+
+        public RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
+            Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
+        {
+            var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceiptId, p => true);
+            return registrationPaymentReceipt;
+        }
+
+        public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, id, p => true);
+
         }
 
         public Trainer RetrieveTrainer(int organisationId, int id)
@@ -1091,6 +1151,16 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
 
+            //Update RegistrationPaymentReceipt Date
+            if (followUp.RegistrationPaymentReceiptId.HasValue && followUp.RegistrationPaymentReceiptId.Value != 0)
+            {
+                var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, followUp.RegistrationPaymentReceiptId.Value, e => true);
+                registrationPaymentReceipt.FollowUpDate = followUp.FollowUpDateTime;
+                //registrationPaymentReceipt.Close = followUp.Close;
+                //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+            }
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
         }
 
@@ -1116,6 +1186,13 @@ namespace Nidan.Business
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
         }
+
+        public RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId,
+            RegistrationPaymentReceipt registrationPaymentReceipt)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+        }
+
 
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
