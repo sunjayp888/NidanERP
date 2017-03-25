@@ -266,13 +266,17 @@ namespace Nidan.Business
 
         public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt)
         {
+            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
+            enquirydata.SectorId = registrationPaymentReceipt.Enquiry.SectorId;
+            enquirydata.IntrestedCourseId = registrationPaymentReceipt.Enquiry.IntrestedCourseId;
+            enquirydata.BatchTimePreferId = registrationPaymentReceipt.Enquiry.BatchTimePreferId;
             var counsellingdata=_nidanDataService.RetrieveCounsellings(organisationId,e=>e.EnquiryId==registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
             var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
             registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
             registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
             if (counsellingdata != null) registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
-            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
+            
             enquirydata.Registered = data != null;
             enquirydata.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
@@ -313,6 +317,16 @@ namespace Nidan.Business
                 Close = "No",
                 CentreId = centreId,
             };
+        }
+
+        public Course CreateCourse(int organisationId, Course course)
+        {
+            return _nidanDataService.CreateCourse(organisationId, course);
+        }
+
+        public CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment)
+        {
+            return _nidanDataService.CreateCourseInstallment(organisationId, courseInstallment);
         }
 
         #endregion
@@ -738,6 +752,39 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, id, p => true);
         }
 
+        public Course RetrieveCourse(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCourse(organisationId, id, p => true);
+        }
+
+        public PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourses(organisationId, predicate, orderBy, paging);
+        }
+
+        public Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate)
+        {
+            var course = _nidanDataService.RetrieveCourse(organisationId, courseId, p => true);
+            return course;
+        }
+
+        public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourseInstallments(organisationId, predicate, orderBy, paging);
+        }
+
+        public CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate)
+        {
+            var courseInstallment = _nidanDataService.RetrieveCourseInstallment(organisationId, courseInstallmentId, p => true);
+            return courseInstallment;
+        }
+
+        public CourseInstallment RetrieveCourseInstallment(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCourseInstallment(organisationId, id, p => true);
+        }
+
         #endregion
 
         #region // Update
@@ -1018,6 +1065,16 @@ namespace Nidan.Business
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
+        }
+
+        public Course UpdateCourse(int organisationId, Course course)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, course);
+        }
+
+        public CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, courseInstallment);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

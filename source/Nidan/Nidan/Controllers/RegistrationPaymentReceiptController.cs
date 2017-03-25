@@ -35,7 +35,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             id = id ?? 0;
-            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId,id.Value,e=>true);
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value, e => true);
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
@@ -43,7 +43,7 @@ namespace Nidan.Controllers
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var viewModel = new RegistrationPaymentReceiptViewModel
             {
-               
+
                 EnquiryId = id.Value,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
@@ -70,10 +70,21 @@ namespace Nidan.Controllers
         public ActionResult Create(RegistrationPaymentReceiptViewModel registrationPaymentReceiptViewModel)
         {
             var organisationId = UserOrganisationId;
+            var a = registrationPaymentReceiptViewModel;
+            if (a.SectorId != 0 || a.IntrestedCourseId != 0 || a.BatchTimePreferId != 0)
+            {
+                var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId,
+               registrationPaymentReceiptViewModel.EnquiryId);
+                enquiry.SectorId = registrationPaymentReceiptViewModel.SectorId;
+                enquiry.IntrestedCourseId = registrationPaymentReceiptViewModel.IntrestedCourseId;
+                enquiry.BatchTimePreferId = registrationPaymentReceiptViewModel.BatchTimePreferId;
+                NidanBusinessService.UpdateEnquiry(organisationId, enquiry);
+            }
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CentreId = UserCentreId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.EnquiryId = registrationPaymentReceiptViewModel.EnquiryId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationDate = _todayUtc;
+
             if (ModelState.IsValid)
             {
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt = NidanBusinessService.CreateRegistrationPaymentReceipt(UserOrganisationId, registrationPaymentReceiptViewModel.RegistrationPaymentReceipt);
@@ -126,7 +137,7 @@ namespace Nidan.Controllers
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate == null ? _todayUtc : registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.ChequeDate;
                 var fees = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Fees;
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.FollowUpDate;
-                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks =registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks;
+                registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.Remarks;
                 registrationPaymentReceiptViewModel.RegistrationPaymentReceipt = NidanBusinessService.UpdateRegistrationPaymentReceipt(UserOrganisationId, registrationPaymentReceiptViewModel.RegistrationPaymentReceipt);
                 return RedirectToAction("Edit", new { id = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.RegistrationPaymentReceiptId });
                 //return RedirectToAction("Index");
@@ -156,14 +167,12 @@ namespace Nidan.Controllers
         public ActionResult EnquirySearch(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            //var enquiry= NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-            //    p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration" && p.CandidateName==searchKeyword
-            //    , orderBy,paging);
-            var data =NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration", orderBy, paging);
+            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+                       
             return this.JsonNet(data);
-            //this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-            //    p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration" && p.CandidateName==searchKeyword
-            //    , orderBy,paging));
+            //return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
+            //    p => (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryStatus != "Registration" && p.CandidateName == searchKeyword
+            //    , orderBy, paging));
         }
     }
 }

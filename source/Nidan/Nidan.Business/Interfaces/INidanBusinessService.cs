@@ -22,6 +22,8 @@ namespace Nidan.Business.Interfaces
         Counselling CreateCounselling(int organisationId, Counselling admission);
         RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Enquiry CreateEnquiryFromMobilization(int organisationId,int centreId, int mobilizationId);
+        Course CreateCourse(int organisationId, Course course);
+        CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -85,6 +87,12 @@ namespace Nidan.Business.Interfaces
         PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
         RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id);
+        Course RetrieveCourse(int organisationId, int id);
+        PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
+        PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
+        CourseInstallment RetrieveCourseInstallment(int organisationId, int id);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -98,6 +106,8 @@ namespace Nidan.Business.Interfaces
         RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Batch UpdateBatch(int organisationId, Batch batch);
         Admission UpdateAdmission(int organisationId, Admission admission);
+        Course UpdateCourse(int organisationId, Course course);
+        CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

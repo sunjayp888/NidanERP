@@ -56,6 +56,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
+        public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
