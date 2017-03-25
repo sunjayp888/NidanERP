@@ -60,6 +60,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<Postevent> Postevents { get; set; }
         public virtual DbSet<Budget> Budgets { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
+        public virtual DbSet<Trainer> Trainers { get; set; }
+        public virtual DbSet<TrainerSearchField> TrainerSearchFields { get; set; }
+        public virtual DbSet<Holiday> Holidays { get; set; }
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
@@ -750,11 +753,11 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
-                .Property(e => e.TrainingType)
-                .IsUnicode(false);
+                 .Property(e => e.BatchType)
+                 .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
-                .Property(e => e.SubSector)
+                .Property(e => e.BatchTime)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
@@ -967,6 +970,55 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<RegistrationPaymentReceipt>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.Certified)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Trainer>()
+                .Property(e => e.CertificationNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.CertificationNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Holiday>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Holiday>()
+                .Property(e => e.WeekDay)
+                .IsUnicode(false);
+
 
             base.OnModelCreating(modelBuilder);
         }

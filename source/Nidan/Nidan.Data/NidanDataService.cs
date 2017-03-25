@@ -38,6 +38,17 @@ namespace Nidan.Data
             }
         }
 
+        public Trainer CreateTrainer(int organisationId, Trainer trainer)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                trainer = context.Trainers.Add(trainer);
+                context.SaveChanges();
+
+                return trainer;
+            }
+        }
+
         public AreaOfInterest CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -1023,8 +1034,6 @@ namespace Nidan.Data
                 return context
                   .RegistrationPaymentReceipts
                     .Include(p => p.Organisation)
-                    
-                    .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
                     .Include(p => p.PaymentMode)
                     .Include(p => p.Course)
@@ -1153,6 +1162,8 @@ namespace Nidan.Data
                 return context
                     .Batches
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .Include(p => p.Trainer)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1188,6 +1199,110 @@ namespace Nidan.Data
                     };
                 }
                 return null;
+
+            }
+        }
+
+        public PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Trainers
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Sector)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Trainers
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.TrainerId == trainerId);
+
+            }
+        }
+
+        public PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<TrainerSearchField>("SearchTrainer @SearchKeyword", category).ToList();
+
+                var trainers = context.Trainers.Include(e => e.Course).Include(e => e.Sector);
+
+                var data = searchData.Join(trainers, e => e.TrainerId, m => m.TrainerId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Holidays
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "HolidayId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Holidays
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.HolidayId == holidayId);
 
             }
         }

@@ -107,6 +107,7 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Interfaces\IPdfService.cs" />
     <Compile Include="Interfaces\IRazorService.cs" />
+    <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\MvcTemplateBase.cs" />
     <Compile Include="Interfaces\PdfService.cs" />
     <Compile Include="Interfaces\RazorService.cs" />
@@ -115,7 +116,6 @@
     <Compile Include="Interfaces\ICacheProvider.cs" />
     <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Interfaces\INidanBusinessService.cs" />
-    <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\ITenantOrganisationService.cs" />
     <Compile Include="MemoryCacheProvider.cs" />
     <Compile Include="Models\PersonnelDetailFilter.cs" />

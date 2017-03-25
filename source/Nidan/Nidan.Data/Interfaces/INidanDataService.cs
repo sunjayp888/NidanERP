@@ -21,6 +21,8 @@ namespace Nidan.Data.Interfaces
 
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
 
+        Trainer CreateTrainer(int organisationId, Trainer trainer);
+
         AreaOfInterest CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Admission CreateAdmission(int organisationId, Admission admission);
@@ -83,15 +85,20 @@ namespace Nidan.Data.Interfaces
         Budget RetrieveBudget(int organisationId, int budgetId, Expression<Func<Budget, bool>> predicate);
         PagedResult<Budget> RetrieveBudgets(int organisationId, Expression<Func<Budget, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Eventday RetrieveEventday(int organisationId, int eventdayId, Expression<Func<Eventday, bool>> predicate);
-        PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+      //  PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate);
         PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Template RetrieveTemplateDetails(int organisationId,string name);
+        PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
+        PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
         PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
         
+        PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate);
 
         // Update
 

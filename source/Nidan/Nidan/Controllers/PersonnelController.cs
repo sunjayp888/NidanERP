@@ -118,6 +118,10 @@ namespace Nidan.Controllers
                 //Create Personnel
                 personnelViewModel.Personnel.CentreId = personnelViewModel.Personnel.CentreId == 0? UserCentreId:personnelViewModel.Personnel.CentreId;
                 personnelViewModel.Personnel = NidanBusinessService.CreatePersonnel(UserOrganisationId, personnelViewModel.Personnel);
+                //var trainer =  NidanBusinessService.CreateTrainer
+                //create personnel
+                //var personnel = new Personnel(){set all mandatory field like forename }
+                //CreateTrainerUserAndRole(personnel)
 
                 var result = CreateUserAndRole(personnelViewModel.Personnel);
                 if (result.Succeeded)
@@ -151,6 +155,24 @@ namespace Nidan.Controllers
             var result = UserManager.Create(createUser, "Password1!");
             return result;
         }
+
+        //private IdentityResult CreateTrainerUserAndRole(Personnel personnel)
+        //{
+        //    var createUser = new ApplicationUser
+        //    {
+        //        UserName = personnel.Email,
+        //        Email = personnel.Email,
+        //        OrganisationId = UserOrganisationId,
+        //        PersonnelId = personnel.PersonnelId,
+        //        CentreId = personnel.CentreId
+        //    };
+
+        //    var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+        //    createUser.Roles.Add(new IdentityUserRole { UserId = createUser.Id, RoleId = roleId });
+
+        //    var result = UserManager.Create(createUser, "Password1!");
+        //    return result;
+        //}
 
         // GET: Personnel/Edit/{id}
         [AuthorizePersonnel(Roles = "Admin,User")]

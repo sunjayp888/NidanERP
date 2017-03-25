@@ -16,21 +16,19 @@ namespace Nidan.Entity
 
         public int SchemeId { get; set; }
 
-        public int? CentreId { get; set; }
-
-        public int OrganisationId { get; set; }
-
-        [StringLength(500)]
-        public string TrainingType { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string BatchType { get; set; } = "Non-CSR";
 
         public int SectorId { get; set; }
 
-        [StringLength(500)]
-        public string SubSector { get; set; }
-
         public int CourseId { get; set; }
 
-        public int TrainingHrsPerDay { get; set; }
+        public int? NoOfDays { get; set; }
+
+        public int NoOfHrs { get; set; }
+
+        public int? NoOfHolidays { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime BatchStartDate { get; set; }
@@ -39,15 +37,22 @@ namespace Nidan.Entity
         public DateTime BatchEndDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime PrefferdAssesmentDate { get; set; }
+        public DateTime PreferredAssesmentDate { get; set; }
 
-        public int? PersonnelId { get; set; }
+        [StringLength(100)]
+        public string BatchTime { get; set; }
 
-        [StringLength(1000)]
-        public string Remarks { get; set; }
+        public int TrainerId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
+
+        public int CentreId { get; set; }
+
+        public int OrganisationId { get; set; }
+
+        [StringLength(1000)]
+        public string Remarks { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
@@ -55,10 +60,10 @@ namespace Nidan.Entity
 
         public virtual Course Course { get; set; }
 
-        public virtual Personnel Personnel { get; set; }
+        public virtual Sector Sector { get; set; }
 
         public virtual Scheme Scheme { get; set; }
 
-        public virtual Sector Sector { get; set; }
+        public virtual Trainer Trainer { get; set; }
     }
 }

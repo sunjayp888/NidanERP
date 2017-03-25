@@ -59,7 +59,7 @@ namespace Nidan
             container.RegisterType<INidanDataService, NidanDataService>(new ContainerControlledLifetimeManager());
             container.RegisterType<INidanBusinessService, NidanBusinessService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITenantOrganisationService, NidanBusinessService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
+           // container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEmailService, EmailService>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
                     new InjectionParameter<string>(ConfigHelper.OverrideEmailAddresses)
@@ -70,6 +70,7 @@ namespace Nidan
             container.RegisterType<ITenantsService, TenantsService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IPdfService, PdfService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IRazorService, RazorService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
         }
     }
 }

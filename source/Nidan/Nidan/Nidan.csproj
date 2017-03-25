@@ -253,6 +253,7 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\RegistrationPaymentReceiptController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="Models\MobilizationViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
+    <Compile Include="Models\TrainerViewModel.cs" />
     <Compile Include="Models\RegistrationPaymentReceiptViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -1087,6 +1089,7 @@
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
+    <Content Include="Scripts\Angular\Controllers\TrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\RegistrationPaymentReceiptController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
@@ -1105,6 +1108,7 @@
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
+    <Content Include="Scripts\Angular\Services\TrainerService.js" />
     <Content Include="Scripts\Angular\Services\RegistrationPaymentReceiptService.js" />
     <Content Include="Scripts\App\EmploymentWorkingPattern.js" />
     <Content Include="Scripts\App\AbsenceType.js" />
@@ -1460,6 +1464,10 @@
     <Content Include="Views\Counselling\Upload.cshtml" />
     <Content Include="Views\Shared\_Document.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
+    <Content Include="Views\Trainer\Index.cshtml" />
+    <Content Include="Views\Trainer\Create.cshtml" />
+    <Content Include="Views\Trainer\_Trainer.cshtml" />
+    <Content Include="Views\Trainer\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

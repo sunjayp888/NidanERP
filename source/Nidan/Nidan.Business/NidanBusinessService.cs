@@ -101,7 +101,8 @@ namespace Nidan.Business
 
         public Batch CreateBatch(int organisationId, Batch batch)
         {
-            return _nidanDataService.CreateBatch(organisationId, batch);
+            var data = _nidanDataService.CreateBatch(organisationId, batch);
+            return data;
         }
 
         public Question CreateQuestion(int organisationId, Question question)
@@ -359,6 +360,33 @@ namespace Nidan.Business
         {
             return _nidanDataService.CreatePostevent(organisationId, postevent);
         }
+
+        public Trainer CreatetTrainer(int organisationId, Trainer trainer)
+        {
+            var data = _nidanDataService.Create<Trainer>(organisationId, trainer);
+            //var personnel = new Personnel()
+            //{
+            //    OrganisationId = organisationId,
+            //    DOB = DateTime.Today,
+            //    Title = "Mr",
+            //    Forenames = data.Name,
+            //    Surname = "Surname",
+            //    Email = data.EmailId,
+            //    Address1 = "Address1",
+            //    Postcode = "POST CODE",
+            //    Telephone = "12345678",
+            //    NINumber = "NZ1234567",
+            //    CentreId = data.CentreId
+            //};
+            //_nidanDataService.CreatePersonnel(organisationId, personnel);
+
+            //trainer.PersonnelId = personnel.PersonnelId;
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, trainer);
+
+            return data;
+        }
+
+
 
         #endregion
 
@@ -641,6 +669,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Course>(organisationId, predicate);
         }
 
+        public List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);
+        }
+
         public List<Qualification> RetrieveQualifications(int organisationId,
             Expression<Func<Qualification, bool>> predicate)
         {
@@ -744,9 +777,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentres(organisationId, p => true, orderBy, paging);
         }
 
-        public PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveBatches(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveBatches(organisationId, predicate, orderBy, paging);
         }
 
         public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate,
@@ -832,7 +865,8 @@ namespace Nidan.Business
 
         public PagedResult<Eventday> RetrieveEventdays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveEventdays(organisationId, p => true, orderBy, paging);
+          //  return _nidanDataService.RetrieveEventdays(organisationId, p => true, orderBy, paging);
+            return null;
         }
 
         public Postevent RetrievePostevent(int organisationId, int id)
@@ -870,6 +904,45 @@ namespace Nidan.Business
 
         }
 
+
+        public Trainer RetrieveTrainer(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveTrainer(organisationId, id, p => true);
+        }
+
+        public PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveTrainers(organisationId, predicate, orderBy, paging);
+        }
+
+        public Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate)
+        {
+            var trainer = _nidanDataService.RetrieveTrainer(organisationId, trainerId, p => true);
+            return trainer;
+        }
+
+        public PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveTrainerBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveHolidays(organisationId, p => true, orderBy, paging);
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)
+        {
+            var holiday = _nidanDataService.RetrieveHoliday(organisationId, holidayId, p => true);
+            return holiday;
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveHoliday(organisationId, id, p => true);
+        }
+        
         public Course RetrieveCourse(int organisationId, int id)
         {
             return _nidanDataService.RetrieveCourse(organisationId, id, p => true);
@@ -1203,6 +1276,11 @@ namespace Nidan.Business
         public Event UpdateEvent(int organisationId, Event eventplan)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, eventplan);
+        }
+
+        public Trainer UpdateTrainer(int organisationId, Trainer trainer)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, trainer);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

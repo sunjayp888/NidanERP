@@ -12,7 +12,6 @@ namespace Nidan.Entity
         public Personnel()
         {
             Counsellings=new List<Counselling>();
-            Batches = new List<Batch>();
             Mobilizations = new HashSet<Mobilization>();
         }
 
@@ -108,10 +107,10 @@ namespace Nidan.Entity
         public virtual ICollection<Mobilization> Mobilizations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Batch> Batches { get; set; }
+        public virtual ICollection<Counselling> Counsellings { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Counselling> Counsellings { get; set; }
+        public virtual ICollection<Trainer> Trainers { get; set; }
 
     }
 }

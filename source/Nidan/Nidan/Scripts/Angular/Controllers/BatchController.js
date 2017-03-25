@@ -17,8 +17,8 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editBatch = editBatch;
-        //vm.canDeleteMobilization = canDeleteMobilization;
-        //vm.deleteMobilization = deleteMobilization;
+        vm.courses = [];
+        vm.retrieveCourses = retrieveCourses;
         //vm.searchMobilization = searchMobilization;
         vm.viewBatch = viewBatch;
         //vm.searchKeyword = "";
@@ -71,17 +71,12 @@
             $window.location.href = "/Batch/Edit/" + id;
         }
 
-        //function canDeleteMobilization(id) {
-        //    vm.loadingActions = true;
-        //    vm.CanDeleteMobilization = false;
-        //    $('.dropdown-menu').slideUp('fast');
-        //    $('.' + id).toggle();
-        //    MobilizationService.canDeleteMobilization(id).then(function (response) { vm.CanDeleteMobilization = response.data, vm.loadingActions = false });
-        //}
 
-        //function deleteMobilization(id) {
-        //    return MobilizationService.deleteMobilization(id).then(function () { initialise(); });
-        //};
+        function retrieveCourses(sectorId) {
+            return EnquiryService.retrieveCourses(sectorId).then(function () {
+                vm.courses = response.data;
+            });
+        };
 
         function viewBatch(batchId) {
             $window.location.href = "/Batch/Edit/" + batchId;

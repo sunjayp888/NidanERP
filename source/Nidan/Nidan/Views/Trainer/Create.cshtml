@@ -1,0 +1,94 @@
+﻿@model Nidan.Models.TrainerViewModel
+@{
+    ViewBag.Title = "Create Trainer";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Create new Trainer <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(model => model.Trainer.TrainerId)
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        @Html.Partial("_Trainer", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        $('#Trainer_AadharNo').val("");
+        $('#Trainer_Mobile').val("");
+
+        jQuery(function () {
+            if (!$('#Trainer_Certified').is(':checked')) {
+                $('.trainer-certification-textbox').hide();
+            } else {
+                $('.trainer-certification-textbox').show();
+            }
+
+
+            $('#yesRadioButton').click(function () {
+                $('.trainer-certification-textbox').show();
+            });
+
+            $('#noRadioButton').click(function () {
+                $('.trainer-certification-textbox').hide();
+            });
+
+        });
+
+        $('#Trainer_SectorId').change(function() {
+            var sectorId = $('#Trainer_SectorId :selected').val();
+            $.ajax({
+                url: '/Trainer/GetCourse',
+                type: 'POST',
+                data: JSON.stringify({ sectorId: sectorId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function(xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function(result) {
+                    $("#Trainer_CourseId").empty();
+                    $.each(result,
+                        function(key, value) {
+                            $("#Trainer_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+
+                        });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+    </script>
+}
