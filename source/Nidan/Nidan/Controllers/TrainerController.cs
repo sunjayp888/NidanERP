@@ -67,7 +67,7 @@ namespace Nidan.Controllers
         public ActionResult Create(TrainerViewModel trainerViewModel)
         {
             var organisationId = UserOrganisationId;
-            trainerViewModel.CreatedDate = DateTime.UtcNow.Date;
+            trainerViewModel.Trainer.CreatedDate = DateTime.UtcNow;
             if (ModelState.IsValid)
             {
                 trainerViewModel.Trainer.OrganisationId = UserOrganisationId;

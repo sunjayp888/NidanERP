@@ -1056,6 +1056,8 @@ namespace Nidan.Data
                 return context
                     .Batches
                     .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .Include(p => p.Trainer)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1159,6 +1161,43 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Holidays
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "HolidayId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Holidays
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.HolidayId == holidayId);
+
             }
         }
 

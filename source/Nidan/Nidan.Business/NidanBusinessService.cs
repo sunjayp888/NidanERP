@@ -100,7 +100,8 @@ namespace Nidan.Business
 
         public Batch CreateBatch(int organisationId, Batch batch)
         {
-            return _nidanDataService.CreateBatch(organisationId, batch);
+            var data = _nidanDataService.CreateBatch(organisationId, batch);
+            return data;
         }
 
         public Question CreateQuestion(int organisationId, Question question)
@@ -622,6 +623,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Course>(organisationId, predicate);
         }
 
+        public List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);
+        }
+
         public List<Qualification> RetrieveQualifications(int organisationId,
             Expression<Func<Qualification, bool>> predicate)
         {
@@ -719,9 +725,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentres(organisationId, p => true, orderBy, paging);
         }
 
-        public PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveBatches(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveBatches(organisationId, predicate, orderBy, paging);
         }
 
         public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate,
@@ -833,7 +839,7 @@ namespace Nidan.Business
 
         public PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveTrainers(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveTrainers(organisationId, predicate, orderBy, paging);
         }
 
         public Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate)
@@ -846,6 +852,22 @@ namespace Nidan.Business
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveTrainerBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveHolidays(organisationId, p => true, orderBy, paging);
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)
+        {
+            var holiday = _nidanDataService.RetrieveHoliday(organisationId, holidayId, p => true);
+            return holiday;
+        }
+
+        public Holiday RetrieveHoliday(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveHoliday(organisationId, id, p => true);
         }
 
         #endregion

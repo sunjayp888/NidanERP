@@ -48,7 +48,25 @@
         $('#Trainer_AadharNo').val("");
         $('#Trainer_Mobile').val("");
 
-        $('#Trainer_SectorId').change(function () {
+        jQuery(function () {
+            if (!$('#Trainer_Certified').is(':checked')) {
+                $('.trainer-certification-textbox').hide();
+            } else {
+                $('.trainer-certification-textbox').show();
+            }
+
+
+            $('#yesRadioButton').click(function () {
+                $('.trainer-certification-textbox').show();
+            });
+
+            $('#noRadioButton').click(function () {
+                $('.trainer-certification-textbox').hide();
+            });
+
+        });
+
+        $('#Trainer_SectorId').change(function() {
             var sectorId = $('#Trainer_SectorId :selected').val();
             $.ajax({
                 url: '/Trainer/GetCourse',
@@ -56,19 +74,21 @@
                 data: JSON.stringify({ sectorId: sectorId }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
+                error: function(xhr) {
                     alert('Error: ' + xhr.statusText);
                 },
-                success: function (result) {
+                success: function(result) {
                     $("#Trainer_CourseId").empty();
-                    $.each(result, function (key, value) {
-                        $("#Trainer_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+                    $.each(result,
+                        function(key, value) {
+                            $("#Trainer_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
 
-                    });
+                        });
                 },
                 async: true,
                 processData: false
             });
         });
+
     </script>
 }

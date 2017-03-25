@@ -22,8 +22,12 @@ namespace Nidan.Entity
 
         public long Mobile { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string EmailId { get; set; }
+
+        [StringLength(100)]
+        public string Certified { get; set; } = "No";
 
         [StringLength(500)]
         public string CertificationNo { get; set; }
@@ -50,5 +54,8 @@ namespace Nidan.Entity
         public virtual Personnel Personnel { get; set; }
 
         public virtual Centre Centre { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Batch> Batches { get; set; }
     }
 }

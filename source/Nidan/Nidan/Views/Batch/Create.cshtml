@@ -45,6 +45,21 @@
 </div>
 @section scripts {
     <script>
+        $("#Batch_NoOfHrs").val("");
+
+        if ($('#Batch_SchemeId :selected').text() == "Commercial") {
+            $('.batchtype-radiobutton').show();
+        } else {
+            $('.batchtype-radiobutton').hide();
+        }
+        $("#Batch_SchemeId").change(function () {
+            if ($('#Batch_SchemeId :selected').text() == "Commercial") {
+                $('.batchtype-radiobutton').show();
+            } else {
+                $('.batchtype-radiobutton').hide();
+            }
+        });
+
         var daterangepickerOptions = {
             autoApply: true,
             singleDatePicker: true,
@@ -60,6 +75,29 @@
                 "format": "DD MMMM YYYY"
             }
         };
+
+        $('#Batch_SectorId').change(function () {
+            var sectorId = $('#Batch_SectorId :selected').val();
+            $.ajax({
+                url: '/Batch/GetCourse',
+                type: 'POST',
+                data: JSON.stringify({ sectorId: sectorId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Batch_CourseId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Batch_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
 
         jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
@@ -79,7 +117,7 @@
 
         jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
-            $('#PrefferdAssesmentDate').val(moment().format('DD MMMM YYYY'));
+            $('#PreferredAssesmentDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
                 $(this).val(picker.startDate.format('DD MMMM YYYY'));
             });

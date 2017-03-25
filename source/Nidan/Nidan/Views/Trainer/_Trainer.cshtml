@@ -50,6 +50,22 @@
 </div>
 
 <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Certified</label>
+    <div class="col-md-8 col-sm-8 col-xs-12">
+        <div id="certified" class="btn-group" data-toggle="buttons">
+            <label id="yesRadioButton" class='@(Model.Trainer.Certified == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Trainer.Certified, "Yes")
+                <input type="radio" name="certified" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+            </label>
+            <label id="noRadioButton" class='@(Model.Trainer.Certified == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                @Html.RadioButtonFor(model => model.Trainer.Certified, "No")
+                <input type="radio" name="certified" value="No" data-parsley-multiple="gender"> No
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group trainer-certification-textbox">
     @Html.LabelFor(model => model.Trainer.CertificationNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Trainer.CertificationNo, new { @class = "form-control col-md-7 col-xs-12" })

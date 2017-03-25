@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Nidan.Entity.Interfaces;
 
 namespace Nidan.Entity
@@ -13,20 +16,20 @@ namespace Nidan.Entity
             [Display(Name = "Scheme")]
             public int SchemeId { get; set; }
 
-            [Display(Name = "Training Type")]
-            public string TrainingType { get; set; }
-
             [Display(Name = "Sector")]
             public int SectorId { get; set; }
-
-            [Display(Name = "Sub-Sector")]
-            public string SubSector { get; set; }
 
             [Display(Name = "Course")]
             public int CourseId { get; set; }
 
-            [Display(Name = "Training Hrs Per Day")]
-            public int TrainingHrsPerDay { get; set; }
+            [Display(Name = "No Of Days")]
+            public int? NoOfDays { get; set; }
+
+            [Display(Name = "No Of Hrs")]
+            public int NoOfHrs { get; set; }
+
+            [Display(Name = "No Of Holidays")]
+            public int? NoOfHolidays { get; set; }
 
             [Display(Name = "Batch Start Date")]
             public DateTime BatchStartDate { get; set; }
@@ -34,8 +37,11 @@ namespace Nidan.Entity
             [Display(Name = "Batch End Date")]
             public DateTime BatchEndDate { get; set; }
 
-            [Display(Name = "Prefferd Assesment Date")]
-            public DateTime PrefferdAssesmentDate { get; set; }
+            [Display(Name = "Preferred Assesment Date")]
+            public DateTime PreferredAssesmentDate { get; set; }
+
+            [Display(Name = "Trainer")]
+            public int TrainerId { get; set; }
         }
     }
 }

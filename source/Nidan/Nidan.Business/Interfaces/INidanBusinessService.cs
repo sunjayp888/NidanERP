@@ -55,6 +55,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUp RetrieveFollowUp(int organisationId, int followUpId);
         List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate);
+        List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate);
         List<Qualification> RetrieveQualifications(int organisationId, Expression<Func<Qualification, bool>> predicate);
         List<Religion> RetrieveReligions(int organisationId, Expression<Func<Religion, bool>> predicate);
         List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate);
@@ -80,7 +81,7 @@ namespace Nidan.Business.Interfaces
         Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
         Counselling RetrieveCounselling(int organisationId, int id);
         Batch RetrieveBatch(int organisationId, int id);
-        PagedResult<Batch> RetrieveBatches(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
@@ -107,6 +108,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
         PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Holiday> RetrieveHolidays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate);
+        Holiday RetrieveHoliday(int organisationId, int id);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

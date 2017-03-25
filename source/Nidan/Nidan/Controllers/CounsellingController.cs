@@ -33,41 +33,6 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        //// GET: Counselling/Create
-        //[Authorize(Roles = "Admin")]
-        //public ActionResult Create()
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-        //    var enquiries = NidanBusinessService.RetrieveEnquiries(organisationId, e => true);
-        //    var viewModel = new CounsellingViewModel
-        //    {
-        //        Counselling = new Counselling(),
-        //        Courses = new SelectList(courses, "CourseId", "Name"),
-        //        Enquiries = new SelectList(enquiries,"EnquiryId", "CandidateName")
-        //    };
-        //    return View(viewModel);
-        //}
-
-        //// POST: Counselling/Create
-        //[Authorize(Roles = "Admin")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(CounsellingViewModel counsellingViewModel)
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    if (ModelState.IsValid)
-        //    {
-        //        counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
-        //        counsellingViewModel.Counselling.CentreId = 1;
-        //        counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
-        //        return RedirectToAction("Index");
-        //    }
-        //    counsellingViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-        //    counsellingViewModel.Enquiries = new SelectList(NidanBusinessService.RetrieveEnquiries(organisationId, e => true).ToList());
-        //    return View(counsellingViewModel);
-        //}
-
         // GET: Counselling/Edit/{id}
         public ActionResult Edit(int? id)
         {
@@ -102,7 +67,6 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
-                //counsellingViewModel.Counselling.Close =;
                 counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");

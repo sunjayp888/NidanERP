@@ -13,5 +13,6 @@ namespace Nidan.Models
         public SelectList Courses { get; set; }
         public SelectList Schemes { get; set; }
         public SelectList Sectors { get; set; }
+        public SelectList Trainers { get; set; }
     }
 }
