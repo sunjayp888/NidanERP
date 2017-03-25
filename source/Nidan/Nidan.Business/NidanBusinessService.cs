@@ -882,7 +882,8 @@ namespace Nidan.Business
 
         public PagedResult<Postevent> RetrievePostevents(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrievePostevents(organisationId, p => true, orderBy, paging);
+            // return _nidanDataService.RetrievePostevents(organisationId, p => true, orderBy, paging);
+            return null;
         }
         
         public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
