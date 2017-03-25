@@ -15,6 +15,8 @@ namespace Nidan.Entity
 
         public int EnquiryId { get; set; }
 
+        public int CounsellingId { get; set; }
+
         public int CourseId { get; set; }
 
         public int Fees { get; set; }
@@ -44,7 +46,7 @@ namespace Nidan.Entity
         public DateTime RegistrationDate { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime FollowUpDate { get; set; }
+        public DateTime? FollowUpDate { get; set; }
 
         public virtual PaymentMode PaymentMode { get; set; }
 
@@ -53,6 +55,8 @@ namespace Nidan.Entity
         public virtual Course Course { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }
+
+        public virtual Counselling Counselling { get; set; }
 
         public virtual Centre Centre { get; set; }
 

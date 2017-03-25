@@ -63,11 +63,13 @@ namespace Nidan.Data.Models
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
+        public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
+       
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
 
-          
+
+
             modelBuilder.Entity<Alert>()
                 .HasMany(e => e.AspNetUsersAlertSchedules)
                 .WithRequired(e => e.Alert)
@@ -194,7 +196,7 @@ namespace Nidan.Data.Models
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
 
-        
+
             //modelBuilder.Entity<Organisation>()
             //    .HasMany(e => e.CountryAbsenceTypes)
             //    .WithRequired(e => e.Organisation)
@@ -241,7 +243,7 @@ namespace Nidan.Data.Models
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
 
-          
+
 
             modelBuilder.Entity<Personnel>()
                 .Property(e => e.Telephone)
@@ -551,7 +553,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.MobilizerStatus)
                 .IsUnicode(false);
 
-           
+
 
             modelBuilder.Entity<Mobilization>()
                 .Property(e => e.StudentLocation)
@@ -623,7 +625,7 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Counselling>()
                 .Property(e => e.PersonnelId);
-                 
+
 
             modelBuilder.Entity<Counselling>()
                 .Property(e => e.PreferTiming)
@@ -641,7 +643,7 @@ namespace Nidan.Data.Models
             //    .Property(e => e.RemarkByBranchManager)
             //    .IsUnicode(false);
 
-            
+
             modelBuilder.Entity<Admission>()
                 .Property(e => e.Salutation)
                 .IsUnicode(false);
@@ -863,13 +865,34 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.PreferredMonthForJoining)
-                .IsUnicode(false);
+                .Property(e => e.PreferredMonthForJoining);
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+               .Property(e => e.ClosingRemark)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+             .Property(e => e.ConversionProspect);
+
+            modelBuilder.Entity<EnquirySearchField>()
+              .Property(e => e.OtherInterestedCourse)
+              .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+           .Property(e => e.RemarkByBm)
+           .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+            .Property(e => e.Registered);
 
             modelBuilder.Entity<EventFunctionType>()
                .Property(e => e.Name)

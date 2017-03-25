@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
@@ -263,37 +264,37 @@ namespace Nidan.Business
             return data;
         }
 
-        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
-            RegistrationPaymentReceipt registrationPaymentReceipt)
+        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt)
         {
-            
-            //registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + "Against" + registrationPaymentReceipt.Course.Name);
+            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
+            enquirydata.SectorId = registrationPaymentReceipt.Enquiry.SectorId;
+            enquirydata.IntrestedCourseId = registrationPaymentReceipt.Enquiry.IntrestedCourseId;
+            enquirydata.BatchTimePreferId = registrationPaymentReceipt.Enquiry.BatchTimePreferId;
+            var counsellingdata=_nidanDataService.RetrieveCounsellings(organisationId,e=>e.EnquiryId==registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
+            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+            registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
+            if (counsellingdata != null) registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
             
-            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
-            enquirydata.Registered=true;
+            enquirydata.Registered = data != null;
+            enquirydata.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+            if (counsellingdata != null) counsellingdata.Registered = data != null;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counsellingdata);
 
-            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
-            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Against " + course.Name);
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
-
-            var registration = new Registration
+            var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+            if (registrationFollowUp != null)
             {
-                RegistrationPaymentReceiptId = data.RegistrationPaymentReceiptId,
-                OrganisationId = data.OrganisationId
-            };
-            _nidanDataService.Create<Registration>(organisationId, registration);
-            var registrationFollowUp =
-                _nidanDataService.RetrieveFollowUps(organisationId,
-                        e => e.EnquiryId == registrationPaymentReceipt.EnquiryId)
-                    .Items.FirstOrDefault();
-            registrationFollowUp.RegistrationPaymentReceiptId = data.RegistrationPaymentReceiptId;
-            registrationFollowUp.FollowUpDateTime = data.FollowUpDate;
-            registrationFollowUp.Remark = data.Remarks;
-            registrationFollowUp.FollowUpType = "Registered";
-            registrationFollowUp.FollowUpURL = string.Format("/RegistrationPaymentReceipt/Edit/{0}", data.EnquiryId);
+                registrationFollowUp.RegistrationPaymentReceiptId = data?.RegistrationPaymentReceiptId;
+                registrationFollowUp.Remark = data?.Remarks;
+                registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
+                registrationFollowUp.FollowUpURL = string.Format("/RegistrationPaymentReceipt/Edit/{0}", data?.EnquiryId);
+                registrationFollowUp.FollowUpType = "Registered";
+            }
+
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
             return data;
         }
 
@@ -318,6 +319,17 @@ namespace Nidan.Business
             };
         }
 
+
+        public Course CreateCourse(int organisationId, Course course)
+        {
+            return _nidanDataService.CreateCourse(organisationId, course);
+        }
+
+        public CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment)
+        {
+            return _nidanDataService.CreateCourseInstallment(organisationId, courseInstallment);
+        }
+        
         public Event CreateEvent(int organisationId, Event eventplan)
         {
             return _nidanDataService.CreateEvent(organisationId, eventplan);
@@ -858,6 +870,39 @@ namespace Nidan.Business
 
         }
 
+        public Course RetrieveCourse(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCourse(organisationId, id, p => true);
+        }
+
+        public PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourses(organisationId, predicate, orderBy, paging);
+        }
+
+        public Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate)
+        {
+            var course = _nidanDataService.RetrieveCourse(organisationId, courseId, p => true);
+            return course;
+        }
+
+        public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourseInstallments(organisationId, predicate, orderBy, paging);
+        }
+
+        public CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate)
+        {
+            var courseInstallment = _nidanDataService.RetrieveCourseInstallment(organisationId, courseInstallmentId, p => true);
+            return courseInstallment;
+        }
+
+        public CourseInstallment RetrieveCourseInstallment(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCourseInstallment(organisationId, id, p => true);
+        }
+
         #endregion
 
         #region // Update
@@ -1110,6 +1155,7 @@ namespace Nidan.Business
             }
 
             enquiry.FollowUpDate = counselling.FollowUpDate.Value;
+            enquiry.EnquiryStatus = "Counselling";
             counselling.Close = enquiry.Close;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
@@ -1118,6 +1164,18 @@ namespace Nidan.Business
         public RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId,
             RegistrationPaymentReceipt registrationPaymentReceipt)
         {
+            var data = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt.RegistrationPaymentReceiptId,e=>true);
+            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
+            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+            
+            var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+            if (registrationFollowUp != null)
+            {
+                registrationFollowUp.Remark = data?.Remarks;
+                registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ??
+                                                        DateTime.Now.AddDays(2);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
+            }
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
         }
 
@@ -1127,6 +1185,16 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 
+        public Course UpdateCourse(int organisationId, Course course)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, course);
+        }
+
+        public CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, courseInstallment);
+        }
+        
         public Question UpdateQuestion(int organisationId, Question question)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, question);

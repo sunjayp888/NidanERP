@@ -114,6 +114,7 @@
                                         <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
                                         <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                         <th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Counselling Status Closed</th>
+                                        <th ng-click="model.order('Enquiry.EnquiryStatus')" ng-class="model.orderClass('Enquiry.EnquiryStatus')">Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -126,6 +127,7 @@
                                         <td><span ng-bind="counselling.Remarks"></span></td>
                                         <td><span ng-bind="counselling.FollowUpDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="counselling.Close"></span></td>
+                                        <td><span ng-bind="counselling.Enquiry.EnquiryStatus"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -137,6 +139,11 @@
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Edit/{{counselling.CounsellingId}}">
                                                                 Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{counselling.Enquiry.EnquiryId}}">
+                                                                Create Registration
                                                             </a>
                                                         </li>
                                                     }

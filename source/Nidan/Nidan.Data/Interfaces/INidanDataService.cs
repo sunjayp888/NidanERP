@@ -34,6 +34,8 @@ namespace Nidan.Data.Interfaces
         Eventday CreateEventday(int organisationId, Eventday eventday);
         Postevent CreatePostevent(int organisationId, Postevent postevent);
         RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
+        Course CreateCourse(int organisationId, Course course);
+        CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
 
 
         // Retrieve
@@ -66,6 +68,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
+        PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
         PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -86,6 +89,8 @@ namespace Nidan.Data.Interfaces
         Template RetrieveTemplateDetails(int organisationId,string name);
         PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
+        PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
         
 
         // Update

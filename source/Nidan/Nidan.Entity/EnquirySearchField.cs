@@ -156,8 +156,21 @@ namespace Nidan.Entity
 
         public DateTime? FollowUpDate { get; set; }
 
+        public int PreferredMonthForJoining { get; set; }
+  
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
+
+        public int ConversionProspect { get; set; }
+
         [StringLength(500)]
-        public string PreferredMonthForJoining { get; set; }
+        public string OtherInterestedCourse { get; set; }
+
+        public string RemarkByBm { get; set; }
+
+        public  bool Registered { get; set; }
 
         [StringLength(6270)]
         public string SearchField { get; set; }
