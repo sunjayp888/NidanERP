@@ -38,6 +38,10 @@ namespace Nidan.Data.Interfaces
         RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
+        FollowUp CreateFollowUp(int organisationId, FollowUp followUp);
+        Subject CreateSubject(int organisationId, Subject subject);
+        Session CreateSession(int organisationId, Session session);
+        Room CreateRoom(int organisationId, Room room);
 
 
         // Retrieve
@@ -66,7 +70,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
@@ -96,9 +100,14 @@ namespace Nidan.Data.Interfaces
         RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
         PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
-        
+        PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
         PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate);
+        PagedResult<Session> RetrieveSessions(int organisationId, Expression<Func<Session, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate);
+        PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
 
         // Update
 

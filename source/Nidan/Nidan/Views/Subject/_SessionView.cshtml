@@ -1,0 +1,57 @@
+﻿@model Nidan.Models.SubjectViewModel
+
+<div ng-controller="SessionController as model">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                    <h2>
+                        S<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('SessionName')" ng-class="model.orderClass('SessionName')">Session Name</th>
+                                            <th ng-click="model.order('Duration')" ng-class="model.orderClass('Duration')">Duration</th>
+                                            <th ng-click="model.order('CourseType')" ng-class="model.orderClass('Type')">Type</th>
+                                            <th ng-click="model.order('Description')" ng-class="model.orderClass('Description')">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*<tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">*@
+                                        <tr ng-repeat="session in model.sessions | orderBy:'SessionId' " class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="session.Name"></span></td>
+                                            <td><span ng-bind="session.Duration"></span></td>
+                                            <td><span ng-bind="session.CourseType.Name"></span></td>
+                                            <td><span ng-bind="session.Description"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

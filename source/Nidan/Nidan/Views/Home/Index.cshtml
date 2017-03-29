@@ -6,26 +6,26 @@
 <div class="">
     <div class="row top_tiles">
         @*<a href='@Url.Action("Index","FollowUp")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-calendar-check-o"></i>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-calendar-check-o"></i>
+                        </div>
+                        <div class="count">@Model.FollowUpCount</div>
+                        <h3>Follow Ups</h3>
+                        <p>follow up for Enquiry and Mobilization</p>
                     </div>
-                    <div class="count">@Model.FollowUpCount</div>
-                    <h3>Follow Ups</h3>
-                    <p>follow up for Enquiry and Mobilization</p>
                 </div>
-            </div>
-        </a>*@
+            </a>*@
         @*<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="tile-stats">
-                <div class="icon"><i class="fa fa-tachometer"></i>
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-tachometer"></i>
+                    </div>
+                    <div class="count">3</div>
+                    <h3>Bradford Factor</h3>
+                    <p>Warnings.</p>
                 </div>
-                <div class="count">3</div>
-                <h3>Bradford Factor</h3>
-                <p>Warnings.</p>
-            </div>
-        </div>*@
+            </div>*@
         <a href='@Url.Action("Index","FollowUp",new {followUpType="Enquiry"})'>
             <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
@@ -50,29 +50,34 @@
                 </div>
             </div>
         </a>
-        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="tile-stats">
-                <div class="icon"><i class="fa fa-square-o"></i>
+        <a href='@Url.Action("Index","Enquiry")'>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="count">@Model.TotalEnquiryCount</div>
+                    <h3>Total Enquiries</h3>
+                    <p>Total Number Of Enquiries</p>
                 </div>
-                <div class="count">1</div>
-                <h3>Required</h3>
-                <p>Return to work form required.</p>
             </div>
-        </div>
-        <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="tile-stats">
-                <div class="icon"><i class="fa fa-check-square-o"></i>
+        </a>
+        <a href='@Url.Action("Index","Mobilization")'>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon">
+                        <i class="fa fa-paper-plane"></i>
+                    </div>
+                    <div class="count">@Model.TotalMobilizationCount</div>
+                    <h3>Total Mobilizations</h3>
+                    <p>Total Number Of Mobilized Candidates</p>
                 </div>
-                <div class="count">2</div>
-                <h3>Completed</h3>
-                <p>Return to work completed.</p>
             </div>
-        </div>
+        </a>
     </div>
-
     <div class="row">
         <div class="col-md-12">
-            <div class="x_panel">
+            @*<div class="x_panel">
                 <div class="x_title">
                     <h2>Absence Planner <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
@@ -83,7 +88,7 @@
                     <div class="clearfix"></div>
                 </div>
         
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

@@ -1,0 +1,59 @@
+﻿@model Nidan.Models.SubjectViewModel
+
+<div class="form-control-required-example"> = Required</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Subject.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Subject.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.CourseId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.TrainerId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Subject.TrainerId, Model.Trainers, "Select Trainer", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.TrainerId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.CourseTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Subject.CourseTypeId, Model.CourseTypes, "Select Course Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.CourseTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.TotalMarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Subject.TotalMarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.TotalMarks, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.PassingMarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Subject.PassingMarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.PassingMarks, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Subject.NoOfAttemptsAllowed, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Subject.NoOfAttemptsAllowed, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Subject.NoOfAttemptsAllowed, "", new { @class = "help-block" })
+    </div>
+</div>
