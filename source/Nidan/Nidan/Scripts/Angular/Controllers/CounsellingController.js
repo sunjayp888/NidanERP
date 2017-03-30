@@ -29,6 +29,9 @@
         initialise();
 
         function initialise() {
+            vm.orderBy.property = "ConversionProspect";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
             order("ConversionProspect");
         }
 

@@ -196,20 +196,21 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today && p.Close != "Yes" && p.Registered==false, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Registered==false && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.Registered == false, orderBy, paging);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

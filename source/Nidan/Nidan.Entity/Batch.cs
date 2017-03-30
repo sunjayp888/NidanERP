@@ -65,5 +65,8 @@ namespace Nidan.Entity
         public virtual Scheme Scheme { get; set; }
 
         public virtual Trainer Trainer { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }
