@@ -205,6 +205,17 @@ namespace Nidan.Data
             }
         }
 
+        public CourseFeeBreakUp CreateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                courseFeeBreakUp = context.CourseFeeBreakUps.Add(courseFeeBreakUp);
+                context.SaveChanges();
+
+                return courseFeeBreakUp;
+            }
+        }
+
         public FollowUp CreateFollowUp(int organisationId, FollowUp followUp)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -828,6 +839,8 @@ namespace Nidan.Data
                 return context
                     .Courses
                     .Include(p => p.Organisation)
+                    .Include(p => p.Scheme)
+                    .Include(p => p.Sector)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1125,9 +1138,6 @@ namespace Nidan.Data
             }
         }
 
-  //public PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-  //{
-  //}
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1138,6 +1148,7 @@ namespace Nidan.Data
                 return context
                     .CourseInstallments
                     .Include(p => p.Organisation)
+                    .Include(p => p.CourseFeeBreakUp)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1167,7 +1178,45 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CourseFeeBreakUps
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CourseFeeBreakUpId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+		
+		    public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CourseFeeBreakUps
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CourseFeeBreakUpId == courseFeeBreakUpId);
+
+            }
+        }
+		
+		    public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1191,8 +1240,8 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-
-        public Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate)
+		
+		    public Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))

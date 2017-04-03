@@ -12,7 +12,8 @@
             retrieveCourses: retrieveCourses,
             canDeleteCourse: canDeleteCourse,
             deleteCourse: deleteCourse,
-            searchCourse: searchCourse
+            searchCourse: searchCourse,
+            retrieveCourseInstallments: retrieveCourseInstallments
         };
 
         return service;
@@ -20,6 +21,17 @@
         function retrieveCourses(Paging, OrderBy) {
 
             var url = "/Course/List",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCourseInstallments(Paging, OrderBy) {
+
+            var url = "/Course/CourseInstallmentList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)

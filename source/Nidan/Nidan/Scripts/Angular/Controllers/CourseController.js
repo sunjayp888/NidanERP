@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.courses = [];
+        vm.courseInstallments=[];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -23,6 +24,8 @@
         vm.viewCourse = viewCourse;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.retrieveSectors = retrieveSectors;
+        vm.retrieveCourseInstallments = retrieveCourseInstallments;
         initialise();
 
         function initialise() {
@@ -39,6 +42,16 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.courses;
+                });
+        }
+
+        function retrieveCourseInstallments() {
+            return CourseService.retrieveCourseInstallments(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.courseInstallments = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.courseInstallments;
                 });
         }
 
@@ -87,6 +100,11 @@
             $window.location.href = "/Course/Edit/" + courseId;
         }
 
+        function retrieveSectors(schemeId) {
+            return CourseService.retrieveSectors(schemeId).then(function () {
+                vm.sectors = response.data;
+            });
+        };
     }
 
 })();

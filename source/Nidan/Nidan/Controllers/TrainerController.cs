@@ -102,7 +102,7 @@ namespace Nidan.Controllers
                 return RedirectToAction("Edit", new { id = trainerViewModel.Trainer.TrainerId });
             }
             trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-            trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            trainerViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
             return View(trainerViewModel);
         }
 
