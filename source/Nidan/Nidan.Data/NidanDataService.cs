@@ -216,6 +216,50 @@ namespace Nidan.Data
             }
         }
 
+        public FollowUp CreateFollowUp(int organisationId, FollowUp followUp)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                followUp = context.FollowUps.Add(followUp);
+                context.SaveChanges();
+
+                return followUp;
+            }
+        }
+
+        public Subject CreateSubject(int organisationId, Subject subject)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                subject = context.Subjects.Add(subject);
+                context.SaveChanges();
+
+                return subject;
+            }
+        }
+
+        public Session CreateSession(int organisationId, Session session)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                session = context.Sessions.Add(session);
+                context.SaveChanges();
+
+                return session;
+            }
+        }
+
+        public Room CreateRoom(int organisationId, Room room)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                room = context.Rooms.Add(room);
+                context.SaveChanges();
+
+                return room;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -730,16 +774,21 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
-                return context.Database
-                    .SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList()
-                    .AsQueryable()
-                    .OrderBy(orderBy ?? new List<OrderBy>
+
+                var searchData =
+                    context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
+
+                var enquiries = context.Enquiries.Include(e => e.Course).Include(e=>e.Sector).Include(e=>e.Scheme).Include(e=>e.BatchTimePrefer);
+
+                var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
+
+                    OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
                         {
@@ -748,8 +797,10 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+                return data;
             }
         }
+
 
         public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
         {
@@ -1150,8 +1201,8 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-
-        public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
+		
+		    public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1161,6 +1212,45 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CourseFeeBreakUpId == courseFeeBreakUpId);
+
+            }
+        }
+		
+		    public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Subjects
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .Include(p => p.CourseType)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+		
+		    public Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Subjects
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.SubjectId == subjectId);
 
             }
         }
@@ -1352,6 +1442,82 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.HolidayId == holidayId);
+
+            }
+        }
+
+        public PagedResult<Session> RetrieveSessions(int organisationId, Expression<Func<Session, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Sessions
+                    .Include(p => p.Organisation)
+                    .Include(p=>p.CourseType)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "SessionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Sessions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.SessionId == sessionId);
+
+            }
+        }
+
+        public PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Rooms
+                    .Include(p => p.Organisation)
+                    .Include(p => p.CourseType)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "RoomId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Rooms
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.RoomId == roomId);
 
             }
         }

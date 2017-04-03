@@ -1,0 +1,71 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.SubjectViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Subject ({0})", Model.Subject.Name);
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Model.Subject.Name<small>Edit Subject</small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.Subject.SubjectId)
+                        @Html.Partial("_Subject", Model)
+                        <div class="x_content">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == "EntitlementError"))
+                            {
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
+                                </div>
+                            }
+                            <button type="button" class="btn btn-lg btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-3" ng-click="model.removeError()" data-toggle="modal" data-target="#sessionDocumentModal">Upload Session</button>
+                            @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
+                        </div>
+
+
+                        @Html.Partial("_SessionView", Model)
+
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.SubjectId.ToString())">
+        @using (Html.BeginForm("Upload", "Subject", FormMethod.Post, new { encType = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("_SessionDocument")
+        }
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

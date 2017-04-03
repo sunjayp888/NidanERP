@@ -32,7 +32,10 @@
         initialise();
 
         function initialise() {
-            order("CandidateName");
+            vm.orderBy.property = "ConversionProspect";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            order("ConversionProspect");
         }
 
         function retrieveEnquiries() {

@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Dto;
 
@@ -126,6 +127,7 @@ namespace Nidan.Controllers
         {
             var viewModel = new MobilizationViewModel
             {
+                Files = new List<HttpPostedFileBase>(),
                 Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name")
             };
             return View(viewModel);
@@ -189,5 +191,12 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate || e.GeneratedDate >= fromDate && e.GeneratedDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

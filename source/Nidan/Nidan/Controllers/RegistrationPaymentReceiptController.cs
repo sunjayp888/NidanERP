@@ -168,7 +168,6 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
-                       
             return this.JsonNet(data);
         }
     }

@@ -129,7 +129,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate == _today && p.Close != "yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Enquiry.EnquiryStatus == "Enquiry" && p.Close != "yes", orderBy, paging));
         }
 
         [HttpPost]
@@ -142,7 +142,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e =>(isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

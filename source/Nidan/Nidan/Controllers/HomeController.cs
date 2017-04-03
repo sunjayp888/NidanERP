@@ -26,8 +26,15 @@ namespace Nidan.Controllers
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.CentreId==UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower()=="enquiry").Items.Count();
 
+            var totalEnquiryCount =
+                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes" && e.EnquiryStatus=="Enquiry").Count();
+
             var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
+
+            var totalMobilizationCount =
+                NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes")
+                    .Items.Count();
 
             if (User.IsInRole("User") && !permissions.IsManager)
                 return RedirectToAction("Profile", "Personnel", new { id = personnelId });
@@ -37,6 +44,8 @@ namespace Nidan.Controllers
                 Permissions = permissions,
                 EnquiryCount = enquiryCount,
                 CounsellingCount = counsellingCount,
+                TotalEnquiryCount = totalEnquiryCount,
+                TotalMobilizationCount = totalMobilizationCount
                 //Divisions = initialDivisions,
                 //SelectedDivisionIds = permissions.IsAdmin ? null : initialDivisions.Select(c => c.DivisionId).ToList()
             };
