@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +19,7 @@ namespace Nidan.Models
         public SelectList Courses { get; set; }
         public SelectList Trainers { get; set; }
         public SelectList CourseTypes { get; set; }
+        [Required]
         public List<HttpPostedFileBase> Files { get; set; }
     }
 }

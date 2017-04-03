@@ -31,15 +31,19 @@ namespace Nidan.Entity
 
         public int? BatchId { get; set; }
 
-        public int RommTypeId { get; set; }
+        public int CourseTypeId { get; set; }
 
         public int Capacity { get; set; }
+
+        public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
 
         public virtual Batch Batch { get; set; }
 
         public virtual CourseType CourseType { get; set; }
+
+        public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 

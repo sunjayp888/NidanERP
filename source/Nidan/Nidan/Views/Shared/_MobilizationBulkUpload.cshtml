@@ -1,0 +1,93 @@
+﻿
+@model Nidan.Models.MobilizationViewModel
+<div class="modal fade" id="mobilizationDocumentModal" ng-hide="model.ShowModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create Documents</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" ng-show="model.Errors.length > 0">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="validation-summary-errors row alert alert-error" data-valmsg-summary="false">
+                                <ul class="errors">
+                                    <li ng-repeat="error in model.Errors"><span ng-bind="error"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Document Type</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select ng-model="model.documentTypeId" class="form-control col-md-7 col-xs-12">
+                                    <option data-ng-repeat="t in model.documentsType" ng-model="model.documentTypeId" value="{{t.DocumentTypeId}}">{{t.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                @*<div class="form-group">
+                        <div class="row">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">File</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="file" file-model="model.documentFile" class="form-control required" accept=".txt,.pdf,.doc,.docx,.xls,.xlsx,.jpg,.png,.gif" />
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EventId, "Event", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.EventId, Model.Events, null, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GeneratedDate, "Mobilized Date", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                        @Html.TextBoxFor(model => model.GeneratedDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 generated date" })
+                        @Html.ValidationMessageFor(model => model.GeneratedDate, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Files, "Upload Excel File", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                        @Html.TextBoxFor(model => model.Files, "{0:dd MMMM yyyy}", new { @name = "Files", @type = "file", @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Files, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                    <div class="form-group">
+                        <div class="control-label col-md-9 col-sm-3 col-xs-12">
+                            <div class="pull-right col-md-7">
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success">Upload</button>
+                                </div>
+                                <div class="pull-right col-md-6">
+                                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="pull-right col-md-7">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-success" ng-click="model.createDocument(@Model.Counselling.Enquiry.StudentCode)">Save</button>
+                                </div>
+                                <div class="pull-right col-md-6">
+                                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
