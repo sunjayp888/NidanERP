@@ -32,6 +32,11 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int? CourseTypeId { get; set; }
+
+        [StringLength(1000)]
+        public string Description { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
 
@@ -61,5 +66,7 @@ namespace Nidan.Entity
         public virtual Sector Sector { get; set; }
 
         public virtual Scheme Scheme { get; set; }
+
+        public virtual CourseType CourseType { get; set; }
     }
 }

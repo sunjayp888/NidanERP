@@ -1,0 +1,42 @@
+﻿@model Nidan.Models.CourseViewModel
+<div class="form-control-required-example"> = Required</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.Course.SchemeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Course.SchemeId, Model.Schemes, "Select Scheme", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.SchemeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.Course.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Course.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.Course.CourseTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Course.CourseTypeId, Model.CourseTypes, "Select Course Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.CourseTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Course.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Course.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Course.Description, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Course.Description, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.Description, "", new { @class = "help-block" })
+    </div>
+</div>

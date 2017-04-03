@@ -66,8 +66,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
+        public virtual DbSet<CourseType> CourseTypes { get; set; }
+        public virtual DbSet<CourseFeeBreakUp> CourseFeeBreakUps { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
-       
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
@@ -84,6 +86,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Course>()
                .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+               .Property(e => e.Description)
                .IsUnicode(false);
 
             modelBuilder.Entity<Course>()
@@ -1018,6 +1024,19 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Holiday>()
                 .Property(e => e.WeekDay)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<CourseType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseFeeBreakUp>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CourseFeeBreakUp>()
+                .HasMany(e => e.CourseInstallments)
+                .WithRequired(e => e.CourseFeeBreakUp)
+                .WillCascadeOnDelete(false);
 
 
             base.OnModelCreating(modelBuilder);

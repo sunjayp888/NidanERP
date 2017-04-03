@@ -95,7 +95,7 @@ namespace Nidan.Controllers
                 return RedirectToAction("Index");
             }
             trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-            trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            trainerViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
             return View(trainerViewModel);
         }
 
