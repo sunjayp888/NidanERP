@@ -27,16 +27,19 @@
                         }
                         @Html.HiddenFor(model => Model.Subject.SubjectId)
                         @Html.Partial("_Subject", Model)
-                        @if (User.IsInAnyRoles("Admin"))
-                        {
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <a class="btn btn-app" href="@Url.Action("Upload", "Subject")">
-                                        <i class="fa fa-upload"></i> Upload
-                                    </a>
+                        <div class="x_content">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == "EntitlementError"))
+                            {
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                            <button type="button" class="btn btn-lg btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-3" ng-click="model.removeError()" data-toggle="modal" data-target="#sessionDocumentModal">Upload Session</button>
+                            @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
+                        </div>
+
 
                         @Html.Partial("_SessionView", Model)
 
@@ -51,6 +54,13 @@
                 }
             </div>
         </div>
+    </div>
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.SubjectId.ToString())">
+        @using (Html.BeginForm("Upload", "Subject", FormMethod.Post, new { encType = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Partial("_SessionDocument")
+        }
     </div>
 </div>
 

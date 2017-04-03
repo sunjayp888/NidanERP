@@ -74,6 +74,7 @@
                 return DocumentService.createDocument(vm.studentCode, vm.documentTypeId, vm.documentFile).then(function (response) {
                     if (response.data.length === 0) {
                         $("#counsellingDocumentModal").modal('hide');
+                        $("#trainerDocumentModal").modal('hide');
                         vm.documentFile = null;
                         retrieveStudentDocuments(vm.studentCode);
                     }
