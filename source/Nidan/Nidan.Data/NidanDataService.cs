@@ -168,8 +168,8 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return postevent;
-                }
-      }
+            }
+        }
         public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
             RegistrationPaymentReceipt registrationPaymentReceipt)
         {
@@ -650,7 +650,7 @@ namespace Nidan.Data
                 return context
                     .Enquiries
                     .Include(p => p.Organisation)
-                    .Include(p => p.Course)
+                    .Include(p => p.EnquiryCourses)
                     .Include(p => p.Qualification)
                     .Include(p => p.Religion)
                     .Include(p => p.CasteCategory)
@@ -676,6 +676,8 @@ namespace Nidan.Data
                 return context
                     .Enquiries
                     .Include(e => e.Counsellings)
+                    .Include(e => e.EnquiryCourses)
+                    .Include(e => e.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EnquiryId == enquiryId);
@@ -773,7 +775,7 @@ namespace Nidan.Data
                 var searchData =
                     context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
 
-                var enquiries = context.Enquiries.Include(e => e.Course).Include(e=>e.Sector).Include(e=>e.Scheme).Include(e=>e.BatchTimePrefer);
+                var enquiries = context.Enquiries.Include(e => e.Course).Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.BatchTimePrefer);
 
                 var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
 
@@ -1073,7 +1075,7 @@ namespace Nidan.Data
             }
         }
 
-       // public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        // public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
 
         public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
@@ -1106,7 +1108,7 @@ namespace Nidan.Data
 
         public Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate)
         {
-          return null;
+            return null;
         }
 
         public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
@@ -1125,9 +1127,9 @@ namespace Nidan.Data
             }
         }
 
-  //public PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-  //{
-  //}
+        //public PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        //{
+        //}
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1406,7 +1408,7 @@ namespace Nidan.Data
                 return context
                     .Sessions
                     .Include(p => p.Organisation)
-                    .Include(p=>p.CourseType)
+                    .Include(p => p.CourseType)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1472,6 +1474,22 @@ namespace Nidan.Data
 
             }
         }
+
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .EnquiryCourses
+                    .Where(a => a.EnquiryId == enquiryId)
+                    .Include(e => e.Enquiry)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
 
         #endregion
 

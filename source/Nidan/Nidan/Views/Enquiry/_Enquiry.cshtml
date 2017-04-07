@@ -380,14 +380,20 @@
                 </div>
             </div>
 
+           
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.IntrestedCourseId, Model.Courses, "Select Intrested Course", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.IntrestedCourseId, "", new { @class = "help-block" })
+                            @Html.Label("Interested Course", new {@class = "control-label col-md-4 col-sm-4 col-xs-12"})
+                            <div class="col-md-8 col-sm-4 col-xs-12" ng-controller="CourseController as model">
+                                <input type="hidden" id="@Html.IdFor(model => model.SelectedCourseIdsJson)" name="@Html.NameFor(model => model.SelectedCourseIdsJson)" ng-init="model.selectedCourses = @Model.SelectedCourseIdsJson" value="{{model.selectedCourses}}"/>
+                                <ui-select multiple tagging ng-model="model.selectedCourses" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.courses.length <=0">
+                                    <ui-select-match placeholder="Select courses"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                                    <ui-select-choices repeat="course.CourseId as course in model.courses | filter:$select.search">
+                                        <span ng-bind-html="course.Name"></span>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                     </div>
@@ -412,211 +418,212 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        @*<div class="form-group">
-                                        @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                                        <div class="col-md-8 col-sm-4 col-xs-12">
-                                            @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining,
-                            new SelectList(
-                                new List<Object>
-                                {
-                                    new {value = "January", text = "January"},
-                                    new {value = "February", text = "February"},
-                                    new {value = "March", text = "March"},
-                                    new {value = "April", text = "April"},
-                                    new {value = "May", text = "May"},
-                                    new {value = "June", text = "June"},
-                                    new {value = "July", text = "July"},
-                                    new {value = "August", text = "August"},
-                                    new {value = "September", text = "September"},
-                                    new {value = "October", text = "October"},
-                                    new {value = "November", text = "November"},
-                                    new {value = "December", text = "December"}
-                                },
-                                "value",
-                                "text",
-                                Model.Enquiry.PreferredMonthForJoining
-                                ), "Select Preferred Month For Joining", new { @class = "form-control col-md-7 col-xs-12" }
-                            )
-                                        </div>
-                                    </div>*@
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining, Model.PreferredMonthForJoiningList, "Select Preferred Month For Joining", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.PreferredMonthForJoining, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAboutId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.HowDidYouKnowAboutId, Model.HowDidYouKnowAbouts, "Select How Did You Know Abouts", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.HowDidYouKnowAboutId, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Placement Needed</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <div id="placementneeded" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.PlacementNeeded, "Yes")
-                                        <input type="radio" name="placementneeded" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
-                                    </label>
-                                    <label class="btn btn-default" data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.PlacementNeeded, "No")
-                                        <input type="radio" name="placementneeded" value="No" data-parsley-multiple="gender"> No
-                                    </label>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            @*<div class="form-group">
+                                            @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                            <div class="col-md-8 col-sm-4 col-xs-12">
+                                                @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining,
+                                new SelectList(
+                                    new List<Object>
+                                    {
+                                        new {value = "January", text = "January"},
+                                        new {value = "February", text = "February"},
+                                        new {value = "March", text = "March"},
+                                        new {value = "April", text = "April"},
+                                        new {value = "May", text = "May"},
+                                        new {value = "June", text = "June"},
+                                        new {value = "July", text = "July"},
+                                        new {value = "August", text = "August"},
+                                        new {value = "September", text = "September"},
+                                        new {value = "October", text = "October"},
+                                        new {value = "November", text = "November"},
+                                        new {value = "December", text = "December"}
+                                    },
+                                    "value",
+                                    "text",
+                                    Model.Enquiry.PreferredMonthForJoining
+                                    ), "Select Preferred Month For Joining", new { @class = "form-control col-md-7 col-xs-12" }
+                                )
+                                            </div>
+                                        </div>*@
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining, Model.PreferredMonthForJoiningList, "Select Preferred Month For Joining", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.PreferredMonthForJoining, "", new { @class = "help-block" })
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Pre-Training Status</label>
-                            <div class="col-md-8 col-sm-8 col-xs-12">
-                                <div id="pretrainingstatus" class="btn-group" data-toggle="buttons">
-                                    <label id="fresherRadioButton" class='@(Model.Enquiry.PreTrainingStatus == "Fresher" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.PreTrainingStatus, "Fresher")
-                                        <input type="radio" name="pretrainingstatus" value="Fresher" data-parsley-multiple="gender"> &nbsp; Fresher &nbsp;
-                                    </label>
-                                    <label id="experienceRadioButton" class='@(Model.Enquiry.PreTrainingStatus == "Experience" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.PreTrainingStatus, "Experience")
-                                        <input type="radio" name="pretrainingstatus" value="Experience" data-parsley-multiple="gender"> Experience
-                                    </label>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAboutId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Enquiry.HowDidYouKnowAboutId, Model.HowDidYouKnowAbouts, "Select How Did You Know Abouts", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.HowDidYouKnowAboutId, "", new { @class = "help-block" })
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group experience-year-textbox">
-                            @Html.LabelFor(model => model.Enquiry.YearOfExperience, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.YearOfExperience, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.YearOfExperience, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-12">E-mails / Newsletter / SMS</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <div id="promotional" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-primary" data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.Promotional, "Yes")
-                                        <input type="radio" name="promotional" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
-                                    </label>
-                                    <label class="btn btn-default" data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.Promotional, "No")
-                                        <input type="radio" name="promotional" value="No" data-parsley-multiple="gender"> No
-                                    </label>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Placement Needed</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <div id="placementneeded" class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.PlacementNeeded, "Yes")
+                                            <input type="radio" name="placementneeded" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                        </label>
+                                        <label class="btn btn-default" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.PlacementNeeded, "No")
+                                            <input type="radio" name="placementneeded" value="No" data-parsley-multiple="gender"> No
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-12">Employment Status</label>
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                <div id="employmentstatus" class="btn-group" data-toggle="buttons">
-                                    <label id="employedRadioButton" class='@(Model.Enquiry.EmploymentStatus == "Employed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.EmploymentStatus, "Employed")
-                                        <input type="radio" name="employmentstatus" value="Employed" data-parsley-multiple="gender"> &nbsp; Employed &nbsp;
-                                    </label>
-                                    <label id="unemployedRadioButton" class='@(Model.Enquiry.EmploymentStatus == "UnEmployed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                                        @Html.RadioButtonFor(model => model.Enquiry.EmploymentStatus, "UnEmployed")
-                                        <input type="radio" name="employmentstatus" value="UnEmployed" data-parsley-multiple="gender"> UnEmployed
-                                    </label>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Pre-Training Status</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <div id="pretrainingstatus" class="btn-group" data-toggle="buttons">
+                                        <label id="fresherRadioButton" class='@(Model.Enquiry.PreTrainingStatus == "Fresher" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.PreTrainingStatus, "Fresher")
+                                            <input type="radio" name="pretrainingstatus" value="Fresher" data-parsley-multiple="gender"> &nbsp; Fresher &nbsp;
+                                        </label>
+                                        <label id="experienceRadioButton" class='@(Model.Enquiry.PreTrainingStatus == "Experience" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.PreTrainingStatus, "Experience")
+                                            <input type="radio" name="pretrainingstatus" value="Experience" data-parsley-multiple="gender"> Experience
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group employment-status-textbox">
-                            @Html.LabelFor(model => model.Enquiry.EmployerContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.EmployerContactNo, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.EmployerContactNo, "", new { @class = "help-block" })
-                            </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-
-                        <div class="form-group employment-status-textbox">
-                            @Html.LabelFor(model => model.Enquiry.EmployerAddress, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.EmployerAddress, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.EmployerAddress, "", new { @class = "help-block" })
+                        <div class="col-lg-6">
+                            <div class="form-group experience-year-textbox">
+                                @Html.LabelFor(model => model.Enquiry.YearOfExperience, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Enquiry.YearOfExperience, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.YearOfExperience, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group employment-status-textbox">
-                            @Html.LabelFor(model => model.Enquiry.AnnualIncome, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.AnnualIncome, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.AnnualIncome, "", new { @class = "helpclos-block" })
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">E-mails / Newsletter / SMS</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <div id="promotional" class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.Promotional, "Yes")
+                                            <input type="radio" name="promotional" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                        </label>
+                                        <label class="btn btn-default" data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.Promotional, "No")
+                                            <input type="radio" name="promotional" value="No" data-parsley-multiple="gender"> No
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-12">Employment Status</label>
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    <div id="employmentstatus" class="btn-group" data-toggle="buttons">
+                                        <label id="employedRadioButton" class='@(Model.Enquiry.EmploymentStatus == "Employed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.EmploymentStatus, "Employed")
+                                            <input type="radio" name="employmentstatus" value="Employed" data-parsley-multiple="gender"> &nbsp; Employed &nbsp;
+                                        </label>
+                                        <label id="unemployedRadioButton" class='@(Model.Enquiry.EmploymentStatus == "UnEmployed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                            @Html.RadioButtonFor(model => model.Enquiry.EmploymentStatus, "UnEmployed")
+                                            <input type="radio" name="employmentstatus" value="UnEmployed" data-parsley-multiple="gender"> UnEmployed
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.ConversionProspect, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.ConversionProspect, Model.ConversionProspectList, "Select Conversion Prospect", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.ConversionProspect, "", new { @class = "help-block" })
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group employment-status-textbox">
+                                @Html.LabelFor(model => model.Enquiry.EmployerContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Enquiry.EmployerContactNo, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.EmployerContactNo, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.Remarks, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.EditorFor(model => model.Enquiry.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.Remarks, "", new { @class = "help-block" })
+                            <div class="form-group employment-status-textbox">
+                                @Html.LabelFor(model => model.Enquiry.EmployerAddress, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Enquiry.EmployerAddress, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.EmployerAddress, "", new { @class = "help-block" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group employment-status-textbox">
+                                @Html.LabelFor(model => model.Enquiry.AnnualIncome, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Enquiry.AnnualIncome, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.AnnualIncome, "", new { @class = "helpclos-block" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.ConversionProspect, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Enquiry.ConversionProspect, Model.ConversionProspectList, "Select Conversion Prospect", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.ConversionProspect, "", new { @class = "help-block" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.Remarks, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.EditorFor(model => model.Enquiry.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.Remarks, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -624,4 +631,3 @@
             </div>
         </div>
     </div>
-</div>

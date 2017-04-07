@@ -12,17 +12,17 @@ namespace Nidan.Business.Interfaces
         //Create
         Personnel CreatePersonnel(int organisationId, Personnel personnel);
         Question CreateQuestion(int organisationId, Question personnel);
-        Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry);
+        Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry, List<int> courseIds);
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Batch CreateBatch(int organisationId, Batch batch);
-        void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
+        void UploadMobilization(int organisationId, int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
         Admission CreateAdmission(int organisationId, Admission admission);
         Counselling CreateCounselling(int organisationId, Counselling admission);
         RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
-        Enquiry CreateEnquiryFromMobilization(int organisationId,int centreId, int mobilizationId);
+        Enquiry CreateEnquiryFromMobilization(int organisationId, int centreId, int mobilizationId);
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
         Event CreateEvent(int organisationId, Event eventplan);
@@ -36,6 +36,8 @@ namespace Nidan.Business.Interfaces
         Subject CreateSubject(int organisationId, Subject subject);
         Session CreateSession(int organisationId, Session session);
         Room CreateRoom(int organisationId, Room room);
+        EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse employmentDepartment);
+
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -46,12 +48,12 @@ namespace Nidan.Business.Interfaces
         Organisation RetrieveOrganisation(int organisationId);
         IAuthorisation RetrieveUserAuthorisation(string aspNetUserId);
         Permissions RetrievePersonnelPermissions(bool isAdmin, int organisationId, int userPersonnelId, int? personnelId = null);
-        PagedResult<Personnel> RetrievePersonnel(int organisationId,int centreId, List<OrderBy> orderBy, Paging paging);
+        PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
         Personnel RetrievePersonnel(int organisationId, int id);
         PagedResult<PersonnelSearchField> RetrievePersonnelBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Question> RetrieveQuestions(int organisationId, Expression<Func<Question, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Question RetrieveQuestion(int organisationId, int questionId, Expression<Func<Question, bool>> predicate);
-        List<EventActivityType> RetrieveActivityTypes(int organisationId); 
+        List<EventActivityType> RetrieveActivityTypes(int organisationId);
         PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Enquiry RetrieveEnquiry(int organisationId, int enquiryId, Expression<Func<Enquiry, bool>> predicate);
         Mobilization RetrieveMobilization(int organisationId, int id);
@@ -140,7 +142,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         Room RetrieveRoom(int organisationId, int id);
-
+        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
 
 
         // Update
@@ -169,6 +171,8 @@ namespace Nidan.Business.Interfaces
         void DeleteFollowUp(int organisationId, int followUpId);
 
         void MarkAsReadFollowUp(int organisationId, int id);
+        void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId);
+
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.courses = [];
+        vm.selectedCourses = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;

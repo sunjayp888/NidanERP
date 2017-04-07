@@ -105,7 +105,8 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => true);
+            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, p => true, orderBy, paging));
         }
     }
 }

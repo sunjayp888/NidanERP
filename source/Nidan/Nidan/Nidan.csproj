@@ -244,8 +244,10 @@
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
+    <Compile Include="Controllers\EnquiryCourseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -253,6 +255,7 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\RegistrationPaymentReceiptController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -272,6 +275,7 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
+    <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
@@ -283,6 +287,7 @@
     <Compile Include="Models\MobilizationViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
+    <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\TrainerViewModel.cs" />
     <Compile Include="Models\RegistrationPaymentReceiptViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1076,6 +1081,7 @@
     </None>
     <None Include="Content\less\Site.less" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
+    <Content Include="Scripts\Angular\Controllers\CourseController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
     <Content Include="Scripts\Angular\Controllers\AreaOfInterestController.js" />
@@ -1083,23 +1089,28 @@
     <Content Include="Scripts\Angular\Controllers\CentreController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingController.js" />
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
+    <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
+    <Content Include="Scripts\Angular\Controllers\SessionController.js" />
+    <Content Include="Scripts\Angular\Controllers\SubjectController.js" />
     <Content Include="Scripts\Angular\Controllers\TrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\RegistrationPaymentReceiptController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
+    <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
     <Content Include="Scripts\Angular\Services\AdmissionService.js" />
     <Content Include="Scripts\Angular\Services\AreaOfInterestService.js" />
     <Content Include="Scripts\Angular\Services\BatchService.js" />
     <Content Include="Scripts\Angular\Services\CentreService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingService.js" />
+    <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
@@ -1468,6 +1479,22 @@
     <Content Include="Views\Trainer\Create.cshtml" />
     <Content Include="Views\Trainer\_Trainer.cshtml" />
     <Content Include="Views\Trainer\Edit.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\Create.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\Edit.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\Index.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\ViewDetails.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\_RegistrationFromEnquiry.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\_RegistrationPaymentReceipt.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\_SearchEnquiry.cshtml" />
+    <Content Include="Views\RegistrationPaymentReceipt\_ViewDetailsRegistrationPaymentReceipt.cshtml" />
+    <Content Include="Views\Subject\Create.cshtml" />
+    <Content Include="Views\Subject\Edit.cshtml" />
+    <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Subject\Upload.cshtml" />
+    <Content Include="Views\Subject\_SessionView.cshtml" />
+    <Content Include="Views\Subject\_Subject.cshtml" />
+    <Content Include="Views\EnquiryCourse\_EnquiryCourse.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

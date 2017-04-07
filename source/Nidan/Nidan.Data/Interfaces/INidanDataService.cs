@@ -108,6 +108,7 @@ namespace Nidan.Data.Interfaces
         Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate);
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
+        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
 
         // Update
 

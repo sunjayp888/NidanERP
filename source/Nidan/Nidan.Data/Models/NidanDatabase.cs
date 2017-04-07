@@ -73,6 +73,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

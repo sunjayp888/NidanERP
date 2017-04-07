@@ -133,18 +133,44 @@ namespace Nidan.Business
             return data;
         }
 
-        public Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry)
+        public Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry, List<int> courseIds)
         {
             var data = _nidanDataService.Create<Enquiry>(organisationId, enquiry);
             //Update student code
             data.StudentCode = GenerateStudentCode(organisationId, data.EnquiryId, enquiry.CentreId);
             _nidanDataService.UpdateEntityEntry(data);
             //Create Counselling
+            CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
+            //Create FollowUp
+            CreateFollowUp(organisationId, data);
+            //Create EnquiryCourse
+            CreateEnquiryCourse(organisationId, enquiry.CentreId, data.EnquiryId, courseIds);
+            return data;
+        }
+
+        private void CreateEnquiryCourse(int organisationId, int centreId, int enquiryId, List<int> couserIds)
+        {
+
+            //Create Department Employment
+            var enquiryCourse = couserIds.Select(item => new EnquiryCourse()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                EnquiryId = enquiryId,
+                CourseId = item,
+            }).ToList();
+            _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
+
+        }
+
+
+        private void CreateCounselling(int organisationId, int personnelId, Enquiry enquiry, int courseId)
+        {
             var conselling = new Counselling()
             {
                 CentreId = enquiry.CentreId,
-                CourseOfferedId = enquiry.IntrestedCourseId,
-                EnquiryId = data.EnquiryId,
+                CourseOfferedId = courseId,
+                EnquiryId = enquiry.EnquiryId,
                 FollowUpDate = _today.AddDays(2),
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
@@ -153,24 +179,27 @@ namespace Nidan.Business
                 Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
+        }
+
+        private void CreateFollowUp(int organisationId, Enquiry enquiry)
+        {
             var followUp = new FollowUp
             {
-                CentreId = data.CentreId,
-                FollowUpDateTime = data.FollowUpDate.Value,
-                EnquiryId = data.EnquiryId,
-                Remark = data.Remarks,
-                Name = data.CandidateName,
-                IntrestedCourseId = data.IntrestedCourseId,
-                Mobile = data.Mobile,
+                CentreId = enquiry.CentreId,
+                FollowUpDateTime = enquiry.FollowUpDate.Value,
+                EnquiryId = enquiry.EnquiryId,
+                Remark = enquiry.Remarks,
+                Name = enquiry.CandidateName,
+                IntrestedCourseId = enquiry.IntrestedCourseId,
+                Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.UtcNow.Date,
                 FollowUpType = "Enquiry",
-                FollowUpURL = string.Format("/Enquiry/Edit/{0}", data.EnquiryId),
+                FollowUpURL = string.Format("/Enquiry/Edit/{0}", enquiry.EnquiryId),
                 AlternateMobile = enquiry.AlternateMobile,
                 Close = "No",
                 ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
-            return data;
         }
 
         private string GenerateStudentCode(int organisationId, int enquiryId, int centreId)
@@ -431,6 +460,11 @@ namespace Nidan.Business
         public Room CreateRoom(int organisationId, Room room)
         {
             return _nidanDataService.CreateRoom(organisationId, room);
+        }
+
+        public EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse enquiryCourse)
+        {
+            return _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
         }
 
         #endregion
@@ -1080,6 +1114,11 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRoom(organisationId, id, p => true);
         }
 
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        {
+            return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
+        }
+
         #endregion
 
         #region // Update
@@ -1422,14 +1461,18 @@ namespace Nidan.Business
             _nidanDataService.Delete<FollowUp>(organisationId, e => e.FollowUpId == followUpId);
         }
 
+        public void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId)
+        {
+            _nidanDataService.Delete<EnquiryCourse>(organisationId, p => p.EnquiryId == enquiryId && p.CourseId == courseId);
+        }
+
+
         public void MarkAsReadFollowUp(int organisationId, int id)
         {
             var data = RetrieveFollowUp(organisationId, id);
             data.ReadDateTime = _today;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
-
-
 
         #endregion
 
