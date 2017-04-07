@@ -14,12 +14,17 @@ using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using Nidan.Models;
 using Nidan.Models.Authorization;
+using Nidan.Business;
+using Nidan.Document;
+using Nidan.Document.Interfaces;
 
 namespace Nidan.Controllers
 {
     [Authorize]
     public class TrainerController : BaseController
     {
+        private readonly INidanBusinessService _nidanBusinessService;
+        private readonly IDocumentService _documentService;
         private ApplicationRoleManager _roleManager;
         public ApplicationRoleManager RoleManager
         {
@@ -34,8 +39,10 @@ namespace Nidan.Controllers
         }
 
         private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        public TrainerController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
+        public TrainerController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
+            _nidanBusinessService = nidanBusinessService;
+            _documentService = documentService;
         }
 
         // GET: Trainer
@@ -92,10 +99,10 @@ namespace Nidan.Controllers
                 trainerViewModel.Trainer.PersonnelId = personnel.PersonnelId;
                 NidanBusinessService.UpdateTrainer(organisationId, trainerViewModel.Trainer);
                 CreateTrainerUserAndRole(personnel);
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = trainerViewModel.Trainer.TrainerId });
             }
             trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-            trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            trainerViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
             return View(trainerViewModel);
         }
 
@@ -123,6 +130,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            TempData["TrainerId"] = id;
             var trainer = NidanBusinessService.RetrieveTrainer(UserOrganisationId, id.Value);
             if (trainer == null)
             {
@@ -154,6 +162,50 @@ namespace Nidan.Controllers
                 Trainer = trainerViewModel.Trainer
             };
             return View(viewModel);
+        }
+
+        public ActionResult Upload(int id)
+        {
+
+            var viewModel = new TrainerViewModel
+            {
+                TrainerId = Convert.ToInt32(TempData["TrainerId"]),
+                Files = new List<HttpPostedFileBase>(),
+                DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Upload(TrainerViewModel trainerViewModel)
+        {
+            trainerViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId),
+                "DocumentTypeId", "Name");
+
+            if (trainerViewModel.Files != null)
+            {
+                if (trainerViewModel.Files != null && trainerViewModel.Files[0].ContentLength > 0)
+                {
+                    var trainerData = _nidanBusinessService.RetrieveTrainer(UserOrganisationId, trainerViewModel.TrainerId);
+
+                    if (trainerViewModel.Files[0].FileName.EndsWith(".pdf"))
+                    {
+                        _documentService.Create(UserOrganisationId, UserCentreId,
+                            trainerViewModel.Document.DocumentTypeId, trainerData.TrainerId.ToString(),
+                            trainerData.Name, "Trainer Document", trainerViewModel.Files[0].FileName,
+                            trainerViewModel.Files[0].InputStream.ToBytes());
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("FileFormat", "This file format is not supported");
+                        return View(trainerViewModel);
+                    }
+                    return RedirectToAction("Edit", new { id = trainerData.TrainerId });
+                }
+                ModelState.AddModelError("", "Please Upload Your file");
+            }
+            return View(trainerViewModel);
         }
 
         [HttpPost]

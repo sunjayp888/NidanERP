@@ -25,6 +25,7 @@ namespace Nidan.Business.Interfaces
         Enquiry CreateEnquiryFromMobilization(int organisationId, int centreId, int mobilizationId);
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
+        CourseFeeBreakUp CreateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp);
         Event CreateEvent(int organisationId, Event eventplan);
         Brainstorming CreateBrainstorming(int organisationId, Brainstorming brainstorming);
         Planning CreatePlanning(int organisationId, Planning planning);
@@ -65,6 +66,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUp RetrieveFollowUp(int organisationId, int followUpId);
         List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate);
+        List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate);
         List<Qualification> RetrieveQualifications(int organisationId, Expression<Func<Qualification, bool>> predicate);
         List<Religion> RetrieveReligions(int organisationId, Expression<Func<Religion, bool>> predicate);
@@ -131,6 +133,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int id);
+        PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate);
+        CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id);
         List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
@@ -143,7 +148,6 @@ namespace Nidan.Business.Interfaces
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         Room RetrieveRoom(int organisationId, int id);
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
-
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -159,6 +163,7 @@ namespace Nidan.Business.Interfaces
         Admission UpdateAdmission(int organisationId, Admission admission);
         Course UpdateCourse(int organisationId, Course course);
         CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
+        CourseFeeBreakUp UpdateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp);
         Question UpdateQuestion(int organisationId, Question question);
         Event UpdateEvent(int organisationId, Event eventplan);
         Trainer UpdateTrainer(int organisationId, Trainer trainer);

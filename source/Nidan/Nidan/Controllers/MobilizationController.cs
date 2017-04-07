@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Dto;
 
@@ -126,6 +127,7 @@ namespace Nidan.Controllers
         {
             var viewModel = new MobilizationViewModel
             {
+                Files = new List<HttpPostedFileBase>(),
                 Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name")
             };
             return View(viewModel);

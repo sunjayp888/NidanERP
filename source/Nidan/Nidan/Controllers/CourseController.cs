@@ -33,11 +33,13 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
             var viewModel = new CourseViewModel
             {
                 Course = new Course(),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
-                Sectors = new SelectList(sectors, "SectorId", "Name")
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name")
             };
             return View(viewModel);
         }
@@ -57,6 +59,7 @@ namespace Nidan.Controllers
             }
             courseViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
             courseViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            courseViewModel.CourseTypes = new SelectList(NidanBusinessService.RetrieveCourseTypes(organisationId, e => true).ToList());
             return View(courseViewModel);
         }
 
@@ -70,16 +73,21 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
             var course = NidanBusinessService.RetrieveCourse(organisationId, id.Value);
             if (course == null)
             {
                 return HttpNotFound();
             }
+
+            TempData["CourseId"] = id;
+
             var viewModel = new CourseViewModel
             {
-                Course = new Course(),
+                Course = course,
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
-                Sectors = new SelectList(sectors, "SectorId", "Name")
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name")
             };
             return View(viewModel);
         }
@@ -104,9 +112,22 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => true);
-            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, p => true, orderBy, paging));
+            bool isAdmin = User.IsInAnyRoles("Admin");
+            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, p => (isAdmin), orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult GetSector(int schemeId)
+        {
+            var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult CourseInstallmentList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isAdmin = User.IsInAnyRoles("Admin");
+            return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isAdmin), orderBy, paging));
         }
     }
 }

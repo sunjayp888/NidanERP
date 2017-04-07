@@ -119,6 +119,7 @@ namespace Nidan.Controllers
             var viewModel = new SubjectViewModel
             {
                 SubjectId = subjectId,
+                Files = new List<HttpPostedFileBase>(),
                 Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => true).ToList(), "TrainerId", "Name")
             };
             return View(viewModel);
