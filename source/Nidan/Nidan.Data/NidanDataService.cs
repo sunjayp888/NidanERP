@@ -88,7 +88,6 @@ namespace Nidan.Data
             {
                 batch = context.Batches.Add(batch);
                 context.SaveChanges();
-
                 return batch;
             }
         }
@@ -257,6 +256,17 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return room;
+            }
+        }
+
+        public BatchDay CreateBatchDay(int organisationId, BatchDay batchDay)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                batchDay = context.BatchDays.Add(batchDay);
+                context.SaveChanges();
+
+                return batchDay;
             }
         }
 
@@ -827,6 +837,34 @@ namespace Nidan.Data
                     .Where(predicate)
                     .SingleOrDefault(p => p.CourseId == courseId);
 
+            }
+        }
+
+        public PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CourseSearchField>("SearchCourse @SearchKeyword", category).ToList();
+
+                var courses = context.Courses.Include(e => e.Scheme).Include(e => e.Sector);
+
+                var data = searchData.Join(courses, e => e.CourseId, m => m.CourseId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CourseId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
             }
         }
 
@@ -1519,6 +1557,43 @@ namespace Nidan.Data
                     .Where(predicate)
                     .SingleOrDefault(p => p.RoomId == roomId);
 
+            }
+        }
+
+        public BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchDays
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.BatchDayId == batchDayId);
+
+            }
+        }
+
+        public PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .BatchDays
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchDayId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 

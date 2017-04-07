@@ -11,24 +11,19 @@ namespace Nidan.Entity
     {
         public int BatchId { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string Name { get; set; }
 
-        public int SchemeId { get; set; }
+        public int Intake { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string BatchType { get; set; } = "Non-CSR";
-
-        public int SectorId { get; set; }
+        public int CourseFeeBreakUpId { get; set; }
 
         public int CourseId { get; set; }
 
-        public int? NoOfDays { get; set; }
+        public int TrainerId { get; set; }
 
-        public int NoOfHrs { get; set; }
-
-        public int? NoOfHolidays { get; set; }
+        public int? BatchDayId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime BatchStartDate { get; set; }
@@ -36,37 +31,49 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime BatchEndDate { get; set; }
 
+        public int NoOfHolidays { get; set; }
+
+        public int NoOfHoursDaily { get; set; }
+
+        public int BatchStartTimeHours { get; set; }
+
+        public int BatchStartTimeMinutes { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string BatchStartTimeSpan { get; set; }
+
+        public int BatchEndTimeHours { get; set; }
+
+        public int BatchEndTimeMinutes { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string BatchEndTimeSpan { get; set; }
+
         [Column(TypeName = "date")]
-        public DateTime PreferredAssesmentDate { get; set; }
-
-        [StringLength(100)]
-        public string BatchTime { get; set; }
-
-        public int TrainerId { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime AssesmentDate { get; set; }
 
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
         [StringLength(1000)]
         public string Remarks { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
+        public virtual BatchDay BatchDay { get; set; }
+
         public virtual Centre Centre { get; set; }
 
         public virtual Course Course { get; set; }
 
-        public virtual Sector Sector { get; set; }
-
-        public virtual Scheme Scheme { get; set; }
+        public virtual CourseFeeBreakUp CourseFeeBreakUp { get; set; }
 
         public virtual Trainer Trainer { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

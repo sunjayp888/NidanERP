@@ -58,5 +58,7 @@ namespace Nidan.Entity
         public virtual Course Course { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+      
     }
 }

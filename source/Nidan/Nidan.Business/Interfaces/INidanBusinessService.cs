@@ -17,6 +17,7 @@ namespace Nidan.Business.Interfaces
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
         Batch CreateBatch(int organisationId, Batch batch);
+        BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
         void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
         Admission CreateAdmission(int organisationId, Admission admission);
@@ -82,6 +83,7 @@ namespace Nidan.Business.Interfaces
         List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate);
         List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate);
         List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate);
+        List<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -128,13 +130,13 @@ namespace Nidan.Business.Interfaces
         Course RetrieveCourse(int organisationId, int id);
         PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
+        PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int id);
         PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id);
-        List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
         Subject RetrieveSubject(int organisationId, int id);
@@ -145,6 +147,10 @@ namespace Nidan.Business.Interfaces
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         Room RetrieveRoom(int organisationId, int id);
+        BatchDay RetrieveBatchDay(int organisationId, int id);
+        PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
+
 
 
         // Update
@@ -168,6 +174,7 @@ namespace Nidan.Business.Interfaces
         Subject UpdateSubject(int organisationId, Subject subject);
         Session UpdateSession(int organisationId, Session session);
         Room UpdateRoom(int organisationId, Room room);
+        BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

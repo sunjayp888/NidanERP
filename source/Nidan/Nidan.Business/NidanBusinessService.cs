@@ -105,6 +105,12 @@ namespace Nidan.Business
             return data;
         }
 
+        public BatchDay CreateBatchDay(int organisationId, BatchDay batchDay)
+        {
+            var data = _nidanDataService.CreateBatchDay(organisationId, batchDay);
+            return data;
+        }
+
         public Question CreateQuestion(int organisationId, Question question)
         {
             return _nidanDataService.CreateQuestion(organisationId, question);
@@ -769,7 +775,7 @@ namespace Nidan.Business
 
         public List<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Enquiry>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Enquiry>(organisationId, predicate);
         }
 
         public List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate)
@@ -796,6 +802,11 @@ namespace Nidan.Business
         public List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate)
         {
             return _nidanDataService.Retrieve<PaymentMode>(organisationId, e => true);
+        }
+
+        public List<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<CourseFeeBreakUp>(organisationId, predicate);
         }
 
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
@@ -1015,6 +1026,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCourse(organisationId, courseId, p => true);
         }
 
+        public PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourseBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1048,10 +1065,6 @@ namespace Nidan.Business
         public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id)
         {
             return _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, id, p => true);
-        }
-        public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
-        {
-            return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
         }
 
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -1105,6 +1118,22 @@ namespace Nidan.Business
         public Room RetrieveRoom(int organisationId, int id)
         {
             return _nidanDataService.RetrieveRoom(organisationId, id, p => true);
+        }
+
+        public BatchDay RetrieveBatchDay(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveBatchDay(organisationId, id, p => true);
+        }
+
+        public PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchDays(organisationId, predicate, orderBy, paging);
+        }
+
+        public BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate)
+        {
+            var batchDay = _nidanDataService.RetrieveBatchDay(organisationId, batchDayId, p => true);
+            return batchDay;
         }
 
         #endregion
@@ -1433,6 +1462,11 @@ namespace Nidan.Business
         public Room UpdateRoom(int organisationId, Room room)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, room);
+        }
+
+        public BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)

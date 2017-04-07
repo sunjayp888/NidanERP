@@ -58,9 +58,8 @@
                                             <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
                                             <th ng-click="model.order('BatchStartDate')" ng-class="model.orderClass('BatchStartDate')">Batch Start Date</th>
                                             <th ng-click="model.order('BatchEndDate')" ng-class="model.orderClass('BatchEndDate')">Batch End Date</th>
-                                            <th ng-click="model.order('BatchTime')" ng-class="model.orderClass('BatchTime')">Batch Time</th>
                                             <th ng-click="model.order('Trainer.Name')" ng-class="model.orderClass('Trainer.Name')">Trainer</th>
-                                            <th ng-click="model.order('PreferredAssesmentDate')" ng-class="model.orderClass('PreferredAssesmentDate')">Preferred Assesment Date</th>
+                                            <th ng-click="model.order('AssesmentDate')" ng-class="model.orderClass('AssesmentDate')">Assesment Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -69,9 +68,8 @@
                                             <td><span ng-bind="batch.Course.Name"></span></td>
                                             <td><span ng-bind="batch.BatchStartDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="batch.BatchEndDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="batch.BatchTime"></span></td>
                                             <td><span ng-bind="batch.Trainer.Name"></span></td>
-                                            <td><span ng-bind="batch.PreferredAssesmentDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="batch.AssesmentDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

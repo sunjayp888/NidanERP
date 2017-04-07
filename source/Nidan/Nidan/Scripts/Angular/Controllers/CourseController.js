@@ -25,7 +25,6 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveSectors = retrieveSectors;
-        vm.retrieveCourseInstallments = retrieveCourseInstallments;
         initialise();
 
         function initialise() {
@@ -42,16 +41,6 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.courses;
-                });
-        }
-
-        function retrieveCourseInstallments() {
-            return CourseService.retrieveCourseInstallments(vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.courseInstallments = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    return vm.courseInstallments;
                 });
         }
 

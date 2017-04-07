@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Nidan.Entity.Interfaces;
+using System;
+
 
 namespace Nidan.Entity
 {
@@ -13,23 +11,17 @@ namespace Nidan.Entity
     {
         private class BatchMetadata
         {
-            [Display(Name = "Scheme")]
-            public int SchemeId { get; set; }
-
-            [Display(Name = "Sector")]
-            public int SectorId { get; set; }
+            [Display(Name = "Course Fee Break-Up")]
+            public int CourseFeeBreakUpId { get; set; }
 
             [Display(Name = "Course")]
             public int CourseId { get; set; }
 
-            [Display(Name = "No Of Days")]
-            public int? NoOfDays { get; set; }
+            [Display(Name = "Trainer")]
+            public int TrainerId { get; set; }
 
-            [Display(Name = "No Of Hrs")]
-            public int NoOfHrs { get; set; }
-
-            [Display(Name = "No Of Holidays")]
-            public int? NoOfHolidays { get; set; }
+            [Display(Name = "BatchDay")]
+            public int? BatchDayId { get; set; }
 
             [Display(Name = "Batch Start Date")]
             public DateTime BatchStartDate { get; set; }
@@ -37,11 +29,32 @@ namespace Nidan.Entity
             [Display(Name = "Batch End Date")]
             public DateTime BatchEndDate { get; set; }
 
-            [Display(Name = "Preferred Assesment Date")]
-            public DateTime PreferredAssesmentDate { get; set; }
+            [Display(Name = "No Of Holidays")]
+            public int NoOfHolidays { get; set; }
 
-            [Display(Name = "Trainer")]
-            public int TrainerId { get; set; }
+            [Display(Name = "Candidate Name")]
+            public int NoOfHoursDaily { get; set; }
+
+            [Display(Name = "Batch Start Time Hours")]
+            public int BatchStartTimeHours { get; set; }
+
+            [Display(Name = "Batch Start Time Minutes")]
+            public int BatchStartTimeMinutes { get; set; }
+
+            [Display(Name = "Batch Start Time Span")]
+            public string BatchStartTimeSpan { get; set; }
+
+            [Display(Name = "Batch End Time Hours")]
+            public int BatchEndTimeHours { get; set; }
+
+            [Display(Name = "Batch End Time Minutes")]
+            public int BatchEndTimeMinutes { get; set; }
+
+            [Display(Name = "Batch End Time Span")]
+            public string BatchEndTimeSpan { get; set; }
+
+            [Display(Name = "Assesment Date")]
+            public DateTime AssesmentDate { get; set; }
         }
     }
 }
