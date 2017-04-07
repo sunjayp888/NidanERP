@@ -65,6 +65,7 @@ namespace Nidan.Business.Interfaces
         FollowUp RetrieveFollowUp(int organisationId, int followUpId);
         List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate);
         List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
+        List<RoomType> RetrieveRoomTypes(int organisationId, Expression<Func<RoomType, bool>> predicate);
         List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate);
         List<Qualification> RetrieveQualifications(int organisationId, Expression<Func<Qualification, bool>> predicate);
         List<Religion> RetrieveReligions(int organisationId, Expression<Func<Religion, bool>> predicate);
@@ -134,7 +135,6 @@ namespace Nidan.Business.Interfaces
         PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id);
-        List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
         Subject RetrieveSubject(int organisationId, int id);

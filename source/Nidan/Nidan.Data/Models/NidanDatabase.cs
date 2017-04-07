@@ -70,11 +70,11 @@ namespace Nidan.Data.Models
         public virtual DbSet<CourseFeeBreakUp> CourseFeeBreakUps { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
         public virtual DbSet<CourseSubject> CourseSubjects { get; set; }
-        public virtual DbSet<CourseType> CourseTypes { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1079,6 +1079,10 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Room>()
                 .Property(e => e.OccupiedEndTime)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<RoomType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

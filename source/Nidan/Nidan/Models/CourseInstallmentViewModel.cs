@@ -11,7 +11,9 @@ namespace Nidan.Models
     {
         public CourseInstallment CourseInstallment { get; set; }
         public int CourseFeeBreakUpId { get; set; }
+        public string CourseFeeBreakUpName { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Centres { get; set; }
         public int NoOfInstallment { get; set; }
         public IEnumerable<SelectListItem> NoOfInstallmentList { get; set; }
         public List<NoOfInstallmentType> NoOfInstallmentType => new List<NoOfInstallmentType>()

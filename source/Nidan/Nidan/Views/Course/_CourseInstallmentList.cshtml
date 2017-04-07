@@ -4,13 +4,21 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            S<small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
-                <div class="x_content">
+                <div class="x_title">
+                    <h2>
+                        Fee Break-Ups<small></small>
+                    </h2>
+                    <div ng-if="model.courseInstallments.length==0">
+                        @*<script>
+                            $('#courseInstallmentGrid').hide();
+                        </script>*@
+                        <a id="createCourseFeeBreakUpButton" href="@Url.Action("Create", "CourseFeeBreakUp")" class="btn btn-info" role="button">
+                            Create
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="courseInstallmentGrid" class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -24,18 +32,18 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                        <tr role="row">
-                                            <th ng-click="model.order('Fee')" ng-class="model.orderClass('Fee')">Fee</th>
-                                            <th ng-click="model.order('DownPayment')" ng-class="model.orderClass('DownPayment')">Down Payment</th>
-                                            <th ng-click="model.order('LumpsumAmt')" ng-class="model.orderClass('LumpsumAmt')">Lumpsum</th>
-                                        </tr>
+                                    <tr role="row">
+                                        <th ng-click="model.order('Fee')" ng-class="model.orderClass('Fee')">Fee</th>
+                                        <th ng-click="model.order('DownPayment')" ng-class="model.orderClass('DownPayment')">Down Payment</th>
+                                        <th ng-click="model.order('LumpsumAmt')" ng-class="model.orderClass('LumpsumAmt')">Lumpsum</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="courseInstallment in model.courseInstallments | orderBy:'CourseInstallmentId' " class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                            <td><span ng-bind="courseInstallment.Fee"></span></td>
-                                            <td><span ng-bind="courseInstallment.DownPayment"></span></td>
-                                            <td><span ng-bind="courseInstallment.LumpsumAmt"></span></td>
-                                        </tr>
+                                    <tr ng-repeat="courseInstallment in model.courseInstallments | orderBy:'CourseInstallmentId' " class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <td><span ng-bind="courseInstallment.Fee"></span></td>
+                                        <td><span ng-bind="courseInstallment.DownPayment"></span></td>
+                                        <td><span ng-bind="courseInstallment.LumpsumAmt"></span></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -52,3 +60,13 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        //if ($("#createCourseFeeBreakUpButton:hidden")) {
+        //    $('#courseInstallmentGrid').show();
+        //}
+        //if ($("#createCourseFeeBreakUpButton:visible")) {
+        //    $('#courseInstallmentGrid').hide();
+        //}
+    </script>
+}

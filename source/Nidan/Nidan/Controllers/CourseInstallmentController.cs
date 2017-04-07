@@ -34,11 +34,13 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             id = id ?? 0;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             var courseFeeBreakUp = NidanBusinessService.RetrieveCourseFeeBreakUp(organisationId, id.Value, e => true);
             var viewModel = new CourseInstallmentViewModel
             {
                 CourseFeeBreakUpId = id.Value,
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 CourseInstallment = new CourseInstallment
                 {
                     CourseFeeBreakUp = courseFeeBreakUp
@@ -63,6 +65,7 @@ namespace Nidan.Controllers
                 return RedirectToAction("Index", "CourseFeeBreakUp");
             }
             courseInstallmentViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList());
+            courseInstallmentViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true).ToList());
             courseInstallmentViewModel.NoOfInstallmentList = new SelectList(courseInstallmentViewModel.NoOfInstallmentType, "Id", "Name");
             return View(courseInstallmentViewModel);
         }
@@ -76,16 +79,20 @@ namespace Nidan.Controllers
             }
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             var courseInstallment = NidanBusinessService.RetrieveCourseInstallment(UserOrganisationId, id.Value);
             if (courseInstallment == null)
             {
                 return HttpNotFound();
             }
+            var courseFeeBreakUpName = NidanBusinessService.RetrieveCourseFeeBreakUp(organisationId, courseInstallment.CourseFeeBreakUpId, e => true);
             var viewModel = new CourseInstallmentViewModel
             {
                 CourseInstallment = courseInstallment,
                 CourseFeeBreakUpId = courseInstallment.CourseFeeBreakUpId,
-                Courses = new SelectList(courses, "CourseId", "Name")
+                CourseFeeBreakUpName = courseFeeBreakUpName.Name,
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                Centres = new SelectList(centres, "CentreId", "Name")
             };
             viewModel.NoOfInstallmentList = new SelectList(viewModel.NoOfInstallmentType, "Id", "Name");
             return View(viewModel);
@@ -115,6 +122,7 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("Admin");
             var courseId = Convert.ToInt32(TempData["CourseId"]);
+            TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
                 return

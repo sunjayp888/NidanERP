@@ -129,7 +129,7 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(SubjectViewModel subjectViewModel)
         {
-            var subjectId = subjectViewModel.SubjectId;
+            var subjectId = Convert.ToInt32(TempData["SubjectId"]);
             if (ModelState.IsValid)
             {
                 if (subjectViewModel.Files != null && subjectViewModel.Files[0].ContentLength > 0)
@@ -171,8 +171,16 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
+            var courseId = Convert.ToInt32(TempData["CourseId"]);
             bool isAdmin = User.IsInAnyRoles("Admin");
-            return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin), orderBy, paging));
+            if (courseId != 0)
+            {
+                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin) && p.CourseId == courseId, orderBy, paging));
+            }
+            else
+            {
+                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin), orderBy, paging));
+            }
         }
 
         [HttpPost]

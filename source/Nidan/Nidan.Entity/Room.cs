@@ -31,9 +31,11 @@ namespace Nidan.Entity
 
         public int? BatchId { get; set; }
 
-        public int CourseTypeId { get; set; }
+        public int RoomTypeId { get; set; }
 
         public int Capacity { get; set; }
+
+        public int SquareFeet { get; set; }
 
         public int CentreId { get; set; }
 
@@ -41,7 +43,7 @@ namespace Nidan.Entity
 
         public virtual Batch Batch { get; set; }
 
-        public virtual CourseType CourseType { get; set; }
+        public virtual RoomType RoomType { get; set; }
 
         public virtual Centre Centre { get; set; }
 

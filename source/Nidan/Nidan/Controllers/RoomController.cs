@@ -30,12 +30,13 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
-            var coursetypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
-
+            var roomTypes = NidanBusinessService.RetrieveRoomTypes(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             var viewModel = new RoomViewModel
             {
                 Room = new Room(),
-                CourseTypes = new SelectList(coursetypes, "CourseTypeId", "Name")
+                RoomTypes = new SelectList(roomTypes, "RoomTypeId", "Name"),
+                Centres = new SelectList(centres, "CentreId", "Name")
             };
 
             return View(viewModel);
@@ -51,11 +52,12 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 roomViewModel.Room.OrganisationId = UserOrganisationId;
-                roomViewModel.Room.CentreId = UserCentreId;
+                //roomViewModel.Room.CentreId = UserCentreId;
                 roomViewModel.Room = NidanBusinessService.CreateRoom(UserOrganisationId, roomViewModel.Room);
                 return RedirectToAction("Index");
             }
-            roomViewModel.CourseTypes = new SelectList(NidanBusinessService.RetrieveCourseTypes(organisationId, e => true).ToList());
+            roomViewModel.RoomTypes = new SelectList(NidanBusinessService.RetrieveRoomTypes(organisationId, e => true).ToList());
+            roomViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => true).ToList());
             return View(roomViewModel);
         }
 
@@ -67,7 +69,8 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
+            var roomTypes = NidanBusinessService.RetrieveRoomTypes(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             var room = NidanBusinessService.RetrieveRoom(UserOrganisationId, id.Value);
 
             if (room == null)
@@ -77,7 +80,8 @@ namespace Nidan.Controllers
             var viewModel = new RoomViewModel
             {
                 Room = room,
-                CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name")
+                RoomTypes = new SelectList(roomTypes, "RoomTypeId", "Name"),
+                Centres = new SelectList(centres, "CentreId", "Name")
             };
             return View(viewModel);
         }
@@ -90,7 +94,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 roomViewModel.Room.OrganisationId = UserOrganisationId;
-                roomViewModel.Room.CentreId = UserCentreId;
+                //roomViewModel.Room.CentreId = UserCentreId;
                 roomViewModel.Room = NidanBusinessService.UpdateRoom(UserOrganisationId, roomViewModel.Room);
                 return RedirectToAction("Index");
             }
@@ -104,8 +108,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, p => (isSuperAdmin || p.CentreId==UserCentreId), orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("Admin");
+            return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
         }
     }
 }

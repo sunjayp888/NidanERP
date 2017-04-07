@@ -1493,7 +1493,8 @@ namespace Nidan.Data
                 return context
                     .Rooms
                     .Include(p => p.Organisation)
-                    .Include(p => p.CourseType)
+                    .Include(p => p.RoomType)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

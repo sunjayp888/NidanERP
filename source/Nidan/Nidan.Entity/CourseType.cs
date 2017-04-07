@@ -14,7 +14,6 @@ namespace Nidan.Entity
         {
             Subjects = new HashSet<Subject>();
             Sessions=new HashSet<Session>();
-            Rooms=new HashSet<Room>();
         }
 
         public int CourseTypeId { get; set; }
@@ -35,8 +34,5 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Sessions { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

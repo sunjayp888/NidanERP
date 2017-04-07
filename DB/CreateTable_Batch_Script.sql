@@ -1,7 +1,7 @@
 USE [NidanProd]
 GO
 
-/****** Object:  Table [dbo].[Batch]    Script Date: 23/03/2017 05:58:19 PM ******/
+/****** Object:  Table [dbo].[Batch]    Script Date: 07/04/2017 05:20:41 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,21 +13,26 @@ GO
 
 CREATE TABLE [dbo].[Batch](
 	[BatchId] [int] IDENTITY(1,1) NOT NULL,
-	[SchemeId] [int] NOT NULL,
-	[BatchType] [varchar](100) NOT NULL,
-	[SectorId] [int] NOT NULL,
+	[Name] [varchar](500) NOT NULL,
+	[Intake] [int] NOT NULL,
+	[CourseFeeBreakUpId] [int] NOT NULL,
 	[CourseId] [int] NOT NULL,
-	[NoOfDays] [int] NULL,
-	[NoOfHrs] [int] NOT NULL,
-	[NoOfHolidays] [int] NULL,
+	[TrainerId] [int] NOT NULL,
+	[BatchDayId] [int] NULL,
 	[BatchStartDate] [date] NOT NULL,
 	[BatchEndDate] [date] NOT NULL,
-	[PreferredAssesmentDate] [date] NOT NULL,
-	[BatchTime] [varchar](100) NULL,
-	[TrainerId] [int] NOT NULL,
-	[CreatedDate] [date] NOT NULL,
+	[NoOfHolidays] [int] NOT NULL,
+	[NoOfHoursDaily] [int] NOT NULL,
+	[BatchStartTimeHours] [int] NOT NULL,
+	[BatchStartTimeMinutes] [int] NOT NULL,
+	[BatchStartTimeSpan] [varchar](10) NOT NULL,
+	[BatchEndTimeHours] [int] NOT NULL,
+	[BatchEndTimeMinutes] [int] NOT NULL,
+	[BatchEndTimeSpan] [varchar](10) NOT NULL,
+	[AssesmentDate] [date] NOT NULL,
 	[CentreId] [int] NOT NULL,
 	[OrganisationId] [int] NOT NULL,
+	[CreatedDate] [date] NOT NULL,
 	[Remarks] [varchar](1000) NULL,
  CONSTRAINT [PK_Batch] PRIMARY KEY CLUSTERED 
 (
@@ -38,6 +43,13 @@ CREATE TABLE [dbo].[Batch](
 GO
 
 SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_BatchDay] FOREIGN KEY([BatchDayId])
+REFERENCES [dbo].[BatchDay] ([BatchDayId])
+GO
+
+ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_BatchDay]
 GO
 
 ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Centre] FOREIGN KEY([CentreId])
@@ -54,25 +66,18 @@ GO
 ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Course]
 GO
 
+ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_CourseFeeBreakUp] FOREIGN KEY([CourseFeeBreakUpId])
+REFERENCES [dbo].[CourseFeeBreakUp] ([CourseFeeBreakUpId])
+GO
+
+ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_CourseFeeBreakUp]
+GO
+
 ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Organisation] FOREIGN KEY([OrganisationId])
 REFERENCES [dbo].[Organisation] ([OrganisationId])
 GO
 
 ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Organisation]
-GO
-
-ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Scheme] FOREIGN KEY([SchemeId])
-REFERENCES [dbo].[Scheme] ([SchemeId])
-GO
-
-ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Scheme]
-GO
-
-ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Sector] FOREIGN KEY([SectorId])
-REFERENCES [dbo].[Sector] ([SectorId])
-GO
-
-ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Sector]
 GO
 
 ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Trainer] FOREIGN KEY([TrainerId])

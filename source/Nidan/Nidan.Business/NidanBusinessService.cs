@@ -725,6 +725,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseType>(organisationId, predicate);
         }
 
+        public List<RoomType> RetrieveRoomTypes(int organisationId, Expression<Func<RoomType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<RoomType>(organisationId, predicate);
+        }
+
         public List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);
@@ -769,7 +774,7 @@ namespace Nidan.Business
 
         public List<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Enquiry>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Enquiry>(organisationId, predicate);
         }
 
         public List<State> RetrieveStates(int organisationId, Expression<Func<State, bool>> predicate)
@@ -1048,10 +1053,6 @@ namespace Nidan.Business
         public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id)
         {
             return _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, id, p => true);
-        }
-        public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
-        {
-            return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
         }
 
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
