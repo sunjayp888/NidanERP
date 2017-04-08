@@ -99,9 +99,10 @@ namespace Nidan.Business
             return _nidanDataService.CreateCentre(organisationId, centre);
         }
 
-        public Batch CreateBatch(int organisationId, Batch batch)
+        public Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays)
         {
             var data = _nidanDataService.CreateBatch(organisationId, batch);
+            CreateBatchDay(organisationId, data.BatchId, data.CentreId, batchDays);
             return data;
         }
 
@@ -109,6 +110,25 @@ namespace Nidan.Business
         {
             var data = _nidanDataService.CreateBatchDay(organisationId, batchDay);
             return data;
+        }
+
+        private BatchDay CreateBatchDay(int organisationId, int batchId, int centreId, BatchDay batchDay)
+        {
+            var batchDayData = new BatchDay()
+            {
+                BatchId = batchId,
+                IsMonday = batchDay.IsMonday,
+                IsTuesday = batchDay.IsTuesday,
+                IsWednesday = batchDay.IsWednesday,
+                IsThursday = batchDay.IsThursday,
+                IsFriday = batchDay.IsFriday,
+                IsSaturday = batchDay.IsSaturday,
+                IsSunday = batchDay.IsSunday,
+                OrganisationId = organisationId,
+                CentreId = centreId
+            };
+            _nidanDataService.Create(organisationId, batchDayData);
+            return batchDay;
         }
 
         public Question CreateQuestion(int organisationId, Question question)

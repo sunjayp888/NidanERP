@@ -2,7 +2,7 @@
 <div class="form-control-required-example"> = Required</div>
 
 @Html.HiddenFor(model => model.Batch.BatchId)
-@Html.HiddenFor(model => model.Batch.BatchDayId)
+@*@Html.HiddenFor(model => model.Batch.BatchDayId)*@
 
 <div class="row">
     <div class="col-lg-12">
@@ -76,53 +76,54 @@
     </div>
 </div>
 
-<div class="row">
+@*<div class="row">
     <div class="col-lg-12">
         <div class="col-md-6">
             <div class="form-group ">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Batch Days</label>
                 <label class="control-label col-md-2 col-sm-3 col-xs-12">Monday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsMonday, new { @class = "icheckbox_flat-green", style = "position: relative; " })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsMonday, new { @class = "icheckbox_flat-green", style = "position: relative; " })
                 </div>
+
 
                 <label class="control-label col-md-2 col-sm-3 col-xs-12">Tuesday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsTuesday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsTuesday, new { @class = "checkbox" })
                 </div>
 
-                <label class="control-label col-md-2 col-sm-3 col-xs-12">Wednusday</label>
+                <label class="control-label col-md-2 col-sm-3 col-xs-12">Wednesday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsWednusday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsWednesday, new { @class = "checkbox" })
                 </div>
 
                 <label class="control-label col-md-5 col-sm-3 col-xs-12">Saturday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsSaturday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsSaturday, new { @class = "checkbox" })
                 </div>
 
                 <label class="control-label col-md-2 col-sm-3 col-xs-12">Sunday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsSunday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsSunday, new { @class = "checkbox" })
                 </div>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group ">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Thusday</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Thursday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsThusday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsThursday, new { @class = "checkbox" })
                 </div>
 
                 <label class="control-label col-md-2 col-sm-3 col-xs-12">Friday</label>
                 <div class="col-md-1 col-sm-6 col-xs-12">
-                    @Html.CheckBoxFor(model => model.IsFriday, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.BatchDay.IsFriday, new { @class = "checkbox" })
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 <div class="row">
@@ -164,12 +165,15 @@
                     @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeMinutes, "", new { @class = "help-block" })
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "AM", new { id = "rbBatchStartTimeSpan" })
-                    @Html.Label("rbBatchStartTimeSpan", "AM")
-
-                    @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "PM", new { id = "rbBatchStartTimeSpan" })
-                    @Html.Label("rbBatchStartTimeSpan", "PM")
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <label class="btn btn-info">
+                        @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "AM", new { id = "rbBatchStartTimeSpan" })
+                        AM
+                    </label>
+                    <label class="btn btn-info">
+                        @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "AM", new { id = "rbBatchStartTimeSpan" })
+                        PM
+                    </label>
                 </div>
             </div>
         </div>
@@ -187,16 +191,113 @@
                     @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeMinutes, "", new { @class = "help-block" })
                 </div>
 
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "AM", new { id = "rbBatchEndTimeSpan" })
-                    @Html.Label("rbBatchEndTimeSpan", "AM")
-
-                    @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "PM", new { id = "rbBatchEndTimeSpan" })
-                    @Html.Label("rbBatchEndTimeSpan", "PM")
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <label class="btn btn-info">
+                        @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "AM", new { id = "rbBatchEndTimeSpan" })
+                        AM
+                    </label>
+                    <label class="btn btn-info">
+                        @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "PM", new { id = "rbBatchEndTimeSpan" })
+                        PM
+                    </label>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<div class="row">
+    <div class="col-lg-12">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6 col-sm-6 col-xs-12">
+                <table>
+                    @*<thead>
+                        <tr>
+                            <th>
+                                <label>
+                                    Monday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Tuesday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Wednesday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Thursday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Friday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Saturday
+                                </label>
+                            </th>
+                            <th>
+                                <label>
+                                    Sunday
+                                </label>
+                            </th>
+                        </tr>
+                    </thead>*@
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off" })
+                                    Monday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off" })
+                                    Tuesday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off" })
+                                    Wednesday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off" })
+                                    Thursday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off" })
+                                    Friday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off" })
+                                    Saturday
+                                </label>
+                            </td>
+                            <td>
+                                <label class="btn btn-info">
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off" })
+                                    Sunday
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

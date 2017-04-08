@@ -22,6 +22,8 @@ namespace Nidan.Entity
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             CourseFeeBreakUps = new HashSet<CourseFeeBreakUp>();
             Rooms=new HashSet<Room>();
+            Batches = new HashSet<Batch>();
+            BatchDays = new HashSet<BatchDay>();
         }
 
         public int CentreId { get; set; }
@@ -75,6 +77,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Room> Rooms { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchDay> BatchDays { get; set; }
 
     }
 }

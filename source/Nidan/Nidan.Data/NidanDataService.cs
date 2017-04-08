@@ -698,7 +698,7 @@ namespace Nidan.Data
                     .Enquiries
                     .Include(e => e.Counsellings)
                     .Include(e => e.EnquiryCourses)
-                  //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
+                    //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EnquiryId == enquiryId);
@@ -1304,6 +1304,7 @@ namespace Nidan.Data
             {
                 return context
                     .Batches
+                    .Include(e => e.BatchDays)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchId == batchId);
@@ -1565,7 +1566,7 @@ namespace Nidan.Data
             }
         }
 
-        public BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate)
+        public BatchDay RetrieveBatchDay(int organisationId, int batchId, Expression<Func<BatchDay, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1574,7 +1575,7 @@ namespace Nidan.Data
                     .BatchDays
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(p => p.BatchDayId == batchDayId);
+                    .SingleOrDefault(p => p.BatchId == batchId);
 
             }
         }
@@ -1602,7 +1603,7 @@ namespace Nidan.Data
             }
         }
 
-      public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1616,7 +1617,7 @@ namespace Nidan.Data
                     .ToList();
             }
         }
-        
+
         #endregion
 
         #region // Update

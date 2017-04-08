@@ -9,6 +9,12 @@ namespace Nidan.Entity
     [Table("Batch")]
     public partial class Batch
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Batch()
+        {
+            BatchDays = new HashSet<BatchDay>();
+        }
+
         public int BatchId { get; set; }
 
         [Required]
@@ -22,8 +28,6 @@ namespace Nidan.Entity
         public int CourseId { get; set; }
 
         public int TrainerId { get; set; }
-
-        public int? BatchDayId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime BatchStartDate { get; set; }
@@ -66,14 +70,15 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
-        public virtual BatchDay BatchDay { get; set; }
-
         public virtual Centre Centre { get; set; }
 
         public virtual Course Course { get; set; }
 
-        public virtual CourseFeeBreakUp CourseFeeBreakUp { get; set; }
-
         public virtual Trainer Trainer { get; set; }
+
+        //public virtual BatchDay BatchDay { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchDay> BatchDays { get; set; }
     }
 }

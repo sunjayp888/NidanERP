@@ -1501,6 +1501,15 @@
     <Content Include="Views\Subject\_SessionView.cshtml" />
     <Content Include="Views\Subject\_Subject.cshtml" />
     <Content Include="Views\EnquiryCourse\_EnquiryCourse.cshtml" />
+    <Content Include="Views\CourseFeeBreakUp\Create.cshtml" />
+    <Content Include="Views\CourseFeeBreakUp\Index.cshtml" />
+    <Content Include="Views\CourseInstallment\Create.cshtml" />
+    <Content Include="Views\CourseInstallment\Edit.cshtml" />
+    <Content Include="Views\CourseInstallment\_CourseInstallment.cshtml" />
+    <Content Include="Views\Room\Create.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Room\_Room.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

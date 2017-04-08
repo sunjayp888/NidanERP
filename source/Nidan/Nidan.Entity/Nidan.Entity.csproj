@@ -87,6 +87,7 @@
     <Compile Include="Admission.cs" />
     <Compile Include="AreaOfInterest.cs" />
     <Compile Include="Batch.cs" />
+    <Compile Include="BatchDay.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="Brainstorming.cs" />
     <Compile Include="Budget.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Course.cs" />
     <Compile Include="CourseFeeBreakUp.cs" />
     <Compile Include="CourseInstallment.cs" />
+    <Compile Include="CourseSearchField.cs" />
     <Compile Include="CourseSubject.cs" />
     <Compile Include="CourseType.cs" />
     <Compile Include="District.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
+    <Compile Include="Model1.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Batch.cs" />
     <Compile Include="Partials\Counselling.cs" />
+    <Compile Include="Partials\Course.cs" />
     <Compile Include="Partials\Event.cs" />
     <Compile Include="Partials\Enquiry.cs" />
     <Compile Include="Partials\FollowUp.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Partials\Host.cs" />
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\RegistrationPaymentReceipt.cs" />
+    <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />
     <Compile Include="Partials\Subject.cs" />
     <Compile Include="Partials\Template.cs" />
@@ -163,6 +168,7 @@
     <Compile Include="RegistrationPaymentReceipt.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="RoomType.cs" />
     <Compile Include="Scheme.cs" />
     <Compile Include="Sector.cs" />
     <Compile Include="Session.cs" />

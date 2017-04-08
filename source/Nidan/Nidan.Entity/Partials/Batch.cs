@@ -20,8 +20,8 @@ namespace Nidan.Entity
             [Display(Name = "Trainer")]
             public int TrainerId { get; set; }
 
-            [Display(Name = "BatchDay")]
-            public int? BatchDayId { get; set; }
+            //[Display(Name = "BatchDay")]
+            //public int? BatchDayId { get; set; }
 
             [Display(Name = "Batch Start Date")]
             public DateTime BatchStartDate { get; set; }
