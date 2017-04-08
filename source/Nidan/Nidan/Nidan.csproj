@@ -1148,6 +1148,9 @@
     <Content Include="Scripts\getorgchart.js" />
     <Content Include="Scripts\graphics.png" />
     <Content Include="Scripts\jquery-validate-bootstrap.js" />
+    <Content Include="Scripts\moris\example.js" />
+    <Content Include="Scripts\moris\morris.min.js" />
+    <Content Include="Scripts\moris\raphael-min.js" />
     <Content Include="Scripts\readme.txt" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">

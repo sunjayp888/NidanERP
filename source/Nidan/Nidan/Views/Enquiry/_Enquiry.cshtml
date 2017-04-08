@@ -355,7 +355,7 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="x_content">
+        <div class="x_content" ng-controller="CourseController as model">
 
             <div class="row">
                 <div class="col-lg-12">
@@ -380,14 +380,14 @@
                 </div>
             </div>
 
-           
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.Label("Interested Course", new {@class = "control-label col-md-4 col-sm-4 col-xs-12"})
-                            <div class="col-md-8 col-sm-4 col-xs-12" ng-controller="CourseController as model">
-                                <input type="hidden" id="@Html.IdFor(model => model.SelectedCourseIdsJson)" name="@Html.NameFor(model => model.SelectedCourseIdsJson)" ng-init="model.selectedCourses = @Model.SelectedCourseIdsJson" value="{{model.selectedCourses}}"/>
+                            @Html.Label("Interested Course", new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                            <div class="col-md-8 col-sm-4 col-xs-12">
+                                <input type="hidden" id="@Html.IdFor(model => model.SelectedCourseIdsJson)" name="@Html.NameFor(model => model.SelectedCourseIdsJson)" ng-init="model.selectedCourses = @Model.SelectedCourseIdsJson" value="{{model.selectedCourses}}" />
                                 <ui-select multiple tagging ng-model="model.selectedCourses" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.courses.length <=0">
                                     <ui-select-match placeholder="Select courses"> <span ng-bind-html="$item.Name"></span></ui-select-match>
                                     <ui-select-choices repeat="course.CourseId as course in model.courses | filter:$select.search">
@@ -418,57 +418,58 @@
                 </div>
             </div>
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="col-lg-6">
-                            @*<div class="form-group">
-                                            @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                                @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining,
-                                new SelectList(
-                                    new List<Object>
-                                    {
-                                        new {value = "January", text = "January"},
-                                        new {value = "February", text = "February"},
-                                        new {value = "March", text = "March"},
-                                        new {value = "April", text = "April"},
-                                        new {value = "May", text = "May"},
-                                        new {value = "June", text = "June"},
-                                        new {value = "July", text = "July"},
-                                        new {value = "August", text = "August"},
-                                        new {value = "September", text = "September"},
-                                        new {value = "October", text = "October"},
-                                        new {value = "November", text = "November"},
-                                        new {value = "December", text = "December"}
-                                    },
-                                    "value",
-                                    "text",
-                                    Model.Enquiry.PreferredMonthForJoining
-                                    ), "Select Preferred Month For Joining", new { @class = "form-control col-md-7 col-xs-12" }
-                                )
-                                            </div>
-                                        </div>*@
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                                <div class="col-md-8 col-sm-4 col-xs-12">
-                                    @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining, Model.PreferredMonthForJoiningList, "Select Preferred Month For Joining", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Enquiry.PreferredMonthForJoining, "", new { @class = "help-block" })
-                                </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                        <div class="col-md-8 col-sm-4 col-xs-12">
+                                            @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining,
+                            new SelectList(
+                                new List<Object>
+                                {
+                                    new {value = "January", text = "January"},
+                                    new {value = "February", text = "February"},
+                                    new {value = "March", text = "March"},
+                                    new {value = "April", text = "April"},
+                                    new {value = "May", text = "May"},
+                                    new {value = "June", text = "June"},
+                                    new {value = "July", text = "July"},
+                                    new {value = "August", text = "August"},
+                                    new {value = "September", text = "September"},
+                                    new {value = "October", text = "October"},
+                                    new {value = "November", text = "November"},
+                                    new {value = "December", text = "December"}
+                                },
+                                "value",
+                                "text",
+                                Model.Enquiry.PreferredMonthForJoining
+                                ), "Select Preferred Month For Joining", new { @class = "form-control col-md-7 col-xs-12" }
+                            )
+                                        </div>
+                                    </div>*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                            <div class="col-md-8 col-sm-4 col-xs-12">
+                                @Html.DropDownListFor(model => model.Enquiry.PreferredMonthForJoining, Model.PreferredMonthForJoiningList, "Select Preferred Month For Joining", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.PreferredMonthForJoining, "", new { @class = "help-block" })
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6">
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAboutId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                                <div class="col-md-8 col-sm-4 col-xs-12">
-                                    @Html.DropDownListFor(model => model.Enquiry.HowDidYouKnowAboutId, Model.HowDidYouKnowAbouts, "Select How Did You Know Abouts", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Enquiry.HowDidYouKnowAboutId, "", new { @class = "help-block" })
-                                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.HowDidYouKnowAboutId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                            <div class="col-md-8 col-sm-4 col-xs-12">
+                                @Html.DropDownListFor(model => model.Enquiry.HowDidYouKnowAboutId, Model.HowDidYouKnowAbouts, "Select How Did You Know Abouts", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.HowDidYouKnowAboutId, "", new { @class = "help-block" })
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-6">
@@ -631,3 +632,4 @@
             </div>
         </div>
     </div>
+</div>

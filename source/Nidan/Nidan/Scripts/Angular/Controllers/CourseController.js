@@ -26,6 +26,8 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveSectors = retrieveSectors;
+        vm.Test = Test;
+
         initialise();
 
         function initialise() {
@@ -43,6 +45,10 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.courses;
                 });
+        }
+
+        function Test(test) {
+            alert(test);
         }
 
         function searchCourse(searchKeyword) {
