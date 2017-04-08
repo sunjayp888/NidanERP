@@ -765,6 +765,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseType>(organisationId, predicate);
         }
 
+        public List<RoomType> RetrieveRoomTypes(int organisationId, Expression<Func<RoomType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<RoomType>(organisationId, predicate);
+        }
+
         public List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);

@@ -10,6 +10,7 @@ namespace Nidan.Models
     public class RoomViewModel : BaseViewModel
     {
         public Room Room { get; set; }
-        public SelectList CourseTypes { get; set; }
+        public SelectList RoomTypes { get; set; }
+        public SelectList Centres { get; set; }
     }
 }

@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
+                <div class="x_title">
                     <h2>
-                        S<small></small>
+                        Sessions<small></small>
                     </h2>
                     <div class="clearfix"></div>
-                </div>*@
+                </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -20,15 +20,16 @@
                                 @Html.Partial("Pagination/_pageSize")
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                        @*<div class="row">*@
+                            <div class="table-responsive">
+                                @*<table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">*@
+                                <table class="table table-striped jambo_table bulk_action">
                                     <thead>
-                                        <tr role="row">
-                                            <th ng-click="model.order('SessionName')" ng-class="model.orderClass('SessionName')">Session Name</th>
-                                            <th ng-click="model.order('Duration')" ng-class="model.orderClass('Duration')">Duration</th>
-                                            <th ng-click="model.order('CourseType')" ng-class="model.orderClass('Type')">Type</th>
-                                            <th ng-click="model.order('Description')" ng-class="model.orderClass('Description')">Description</th>
+                                        <tr class="headings">
+                                            <th class="column-title" ng-click="model.order('SessionName')" ng-class="model.orderClass('SessionName')">Session Name</th>
+                                            <th class="column-title" ng-click="model.order('Duration')" ng-class="model.orderClass('Duration')">Duration</th>
+                                            <th class="column-title" ng-click="model.order('CourseType')" ng-class="model.orderClass('Type')">Type</th>
+                                            <th class="column-title" ng-click="model.order('Description')" ng-class="model.orderClass('Description')">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -42,7 +43,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        @*</div>*@
                         @Html.Partial("Pagination/_pagination")
                     </div>
                     <div class="row">

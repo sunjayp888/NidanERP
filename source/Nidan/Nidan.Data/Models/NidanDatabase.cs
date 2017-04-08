@@ -74,6 +74,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<BatchDay> BatchDays { get; set; }
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
         public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
@@ -1070,6 +1072,12 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Room>()
                 .Property(e => e.OccupiedEndTime)
                 .IsUnicode(false);
+
+
+            modelBuilder.Entity<RoomType>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
 
             modelBuilder.Entity<CourseSearchField>()
                 .Property(e => e.Name)

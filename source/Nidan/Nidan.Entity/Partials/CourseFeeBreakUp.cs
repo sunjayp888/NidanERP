@@ -8,16 +8,13 @@ using Nidan.Entity.Interfaces;
 
 namespace Nidan.Entity
 {
-    [MetadataType(typeof(RoomMetadata))]
-    public partial class Room : IOrganisationFilterable
+    [MetadataType(typeof(CourseFeeBreakUpMetadata))]
+    public partial class CourseFeeBreakUp : IOrganisationFilterable
     {
-        private class RoomMetadata
+        private class CourseFeeBreakUpMetadata
         {
-            [Display(Name = "Class Room Type")]
-            public int RoomTypeId { get; set; }
-
-            [Display(Name = "Square Feet")]
-            public int SquareFeet { get; set; }
+            [Display(Name = "Name")]
+            public string Name { get; set; }
 
             [Display(Name = "Centre")]
             public int CentreId { get; set; }

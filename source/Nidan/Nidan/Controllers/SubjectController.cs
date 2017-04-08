@@ -129,7 +129,7 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(SubjectViewModel subjectViewModel)
         {
-            var subjectId = subjectViewModel.SubjectId;
+            var subjectId = Convert.ToInt32(TempData["SubjectId"]);
             if (ModelState.IsValid)
             {
                 if (subjectViewModel.Files != null && subjectViewModel.Files[0].ContentLength > 0)
@@ -181,7 +181,6 @@ namespace Nidan.Controllers
             {
                 return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin), orderBy, paging));
             }
-            
         }
 
         [HttpPost]

@@ -24,10 +24,10 @@ namespace Nidan.Controllers
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => e.CentreId==UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower()=="enquiry").Items.Count();
+               e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "enquiry").Items.Count();
 
             var totalEnquiryCount =
-                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes" && e.EnquiryStatus=="Enquiry").Count();
+                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes" && e.Registered == false).Count();
 
             var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
