@@ -105,6 +105,12 @@ namespace Nidan.Business
             return data;
         }
 
+        public BatchDay CreateBatchDay(int organisationId, BatchDay batchDay)
+        {
+            var data = _nidanDataService.CreateBatchDay(organisationId, batchDay);
+            return data;
+        }
+
         public Question CreateQuestion(int organisationId, Question question)
         {
             return _nidanDataService.CreateQuestion(organisationId, question);
@@ -133,18 +139,44 @@ namespace Nidan.Business
             return data;
         }
 
-        public Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry)
+        public Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry, List<int> courseIds)
         {
             var data = _nidanDataService.Create<Enquiry>(organisationId, enquiry);
             //Update student code
             data.StudentCode = GenerateStudentCode(organisationId, data.EnquiryId, enquiry.CentreId);
             _nidanDataService.UpdateEntityEntry(data);
             //Create Counselling
+            CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
+            //Create FollowUp
+            CreateFollowUp(organisationId, data);
+            //Create EnquiryCourse
+            CreateEnquiryCourse(organisationId, enquiry.CentreId, data.EnquiryId, courseIds);
+            return data;
+        }
+
+        private void CreateEnquiryCourse(int organisationId, int centreId, int enquiryId, List<int> couserIds)
+        {
+
+            //Create Department Employment
+            var enquiryCourse = couserIds.Select(item => new EnquiryCourse()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                EnquiryId = enquiryId,
+                CourseId = item,
+            }).ToList();
+            _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
+
+        }
+
+
+        private void CreateCounselling(int organisationId, int personnelId, Enquiry enquiry, int courseId)
+        {
             var conselling = new Counselling()
             {
                 CentreId = enquiry.CentreId,
-                CourseOfferedId = enquiry.IntrestedCourseId,
-                EnquiryId = data.EnquiryId,
+                CourseOfferedId = courseId,
+                EnquiryId = enquiry.EnquiryId,
                 FollowUpDate = _today.AddDays(2),
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
@@ -153,24 +185,27 @@ namespace Nidan.Business
                 Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
+        }
+
+        private void CreateFollowUp(int organisationId, Enquiry enquiry)
+        {
             var followUp = new FollowUp
             {
-                CentreId = data.CentreId,
-                FollowUpDateTime = data.FollowUpDate.Value,
-                EnquiryId = data.EnquiryId,
-                Remark = data.Remarks,
-                Name = data.CandidateName,
-                IntrestedCourseId = data.IntrestedCourseId,
-                Mobile = data.Mobile,
+                CentreId = enquiry.CentreId,
+                FollowUpDateTime = enquiry.FollowUpDate.Value,
+                EnquiryId = enquiry.EnquiryId,
+                Remark = enquiry.Remarks,
+                Name = enquiry.CandidateName,
+                IntrestedCourseId = enquiry.IntrestedCourseId,
+                Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.UtcNow.Date,
                 FollowUpType = "Enquiry",
-                FollowUpURL = string.Format("/Enquiry/Edit/{0}", data.EnquiryId),
+                FollowUpURL = string.Format("/Enquiry/Edit/{0}", enquiry.EnquiryId),
                 AlternateMobile = enquiry.AlternateMobile,
                 Close = "No",
                 ReadDateTime = _today.AddYears(-100)
             };
             _nidanDataService.Create<FollowUp>(organisationId, followUp);
-            return data;
         }
 
         private string GenerateStudentCode(int organisationId, int enquiryId, int centreId)
@@ -437,6 +472,11 @@ namespace Nidan.Business
         public Room CreateRoom(int organisationId, Room room)
         {
             return _nidanDataService.CreateRoom(organisationId, room);
+        }
+
+        public EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse enquiryCourse)
+        {
+            return _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
         }
 
         #endregion
@@ -803,6 +843,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<PaymentMode>(organisationId, e => true);
         }
 
+        public List<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<CourseFeeBreakUp>(organisationId, predicate);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
             Expression<Func<CasteCategory, bool>> predicate)
         {
@@ -1020,6 +1065,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCourse(organisationId, courseId, p => true);
         }
 
+        public PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourseBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1054,6 +1105,11 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, id, p => true);
         }
+
+        //public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
+        //{
+        //    return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
+        //}
 
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -1106,6 +1162,27 @@ namespace Nidan.Business
         public Room RetrieveRoom(int organisationId, int id)
         {
             return _nidanDataService.RetrieveRoom(organisationId, id, p => true);
+        }
+
+
+        public BatchDay RetrieveBatchDay(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveBatchDay(organisationId, id, p => true);
+        }
+
+        public PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchDays(organisationId, predicate, orderBy, paging);
+        }
+
+        public BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate)
+        {
+            var batchDay = _nidanDataService.RetrieveBatchDay(organisationId, batchDayId, p => true);
+            return batchDay;
+        }
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        {
+            return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
         }
 
         #endregion
@@ -1436,6 +1513,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, room);
         }
 
+        public BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
+        }
+
         public Batch UpdateBatch(int organisationId, Batch batch)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
@@ -1456,14 +1538,18 @@ namespace Nidan.Business
             _nidanDataService.Delete<FollowUp>(organisationId, e => e.FollowUpId == followUpId);
         }
 
+        public void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId)
+        {
+            _nidanDataService.Delete<EnquiryCourse>(organisationId, p => p.EnquiryId == enquiryId && p.CourseId == courseId);
+        }
+
+
         public void MarkAsReadFollowUp(int organisationId, int id)
         {
             var data = RetrieveFollowUp(organisationId, id);
             data.ReadDateTime = _today;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
-
-
 
         #endregion
 

@@ -1,10 +1,13 @@
-﻿@using Nidan.Extensions
+
+@using Nidan.Extensions
 @model Nidan.Models.CourseViewModel
+
 
 <div ng-controller="SubjectController as model">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
+
                 <div class="x_title">
                     <h2>
                         Subjects<small></small>
@@ -20,6 +23,15 @@
                     <div class="clearfix"></div>
                 </div>
                 <div id="subjectGrid" class="x_content">
+
+                @*<div class="x_title">
+                        <h2>
+                            S<small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
@@ -51,6 +63,7 @@
                                             <td><span ng-bind="subject.TotalMarks"></span></td>
                                             <td><span ng-bind="subject.PassingMarks"></span></td>
                                             <td><span ng-bind="subject.NoOfAttemptsAllowed"></span></td>
+
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

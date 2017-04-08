@@ -9,6 +9,13 @@ namespace Nidan.Entity
     [Table("Enquiry")]
     public partial class Enquiry
     {
+        public Enquiry()
+        {
+            Counsellings = new HashSet<Counselling>();
+            Admissions = new HashSet<Admission>();
+            RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
+            EnquiryCourses = new HashSet<EnquiryCourse>();
+        }
         public int EnquiryId { get; set; }
 
         [Required]
@@ -169,5 +176,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EnquiryCourse> EnquiryCourses { get; set; }
     }
 }

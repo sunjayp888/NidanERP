@@ -129,5 +129,12 @@ namespace Nidan.Controllers
             bool isAdmin = User.IsInAnyRoles("Admin");
             return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isAdmin), orderBy, paging));
         }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveCourseBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin , orderBy, paging));
+        }
     }
 }

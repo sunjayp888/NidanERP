@@ -73,7 +73,8 @@ namespace Nidan.Controllers
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
-                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
+                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                SelectedCourseIds = new List<int> { },
             };
 
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
@@ -105,7 +106,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
-                enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry);
+                enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
                 return RedirectToAction("Index");
             }
             enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
@@ -163,10 +164,11 @@ namespace Nidan.Controllers
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
-                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name")
+                HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                SelectedCourseIds = enquiry?.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
-            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType,"Id", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -196,7 +198,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Registered==false && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Registered == false && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
@@ -217,7 +219,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId,e=>e.Sector.SectorId == sectorId).ToList();
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
             return this.JsonNet(data);
         }
 

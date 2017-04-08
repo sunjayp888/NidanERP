@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 using HR.Entity;
+using Newtonsoft.Json;
 using Nidan.Entity;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -61,6 +62,20 @@ namespace Nidan.Models
             new PreferredMonthForJoiningType() {Id = 11,Name = "November"},
             new PreferredMonthForJoiningType() {Id = 12,Name = "December"}
         };
+
+        public List<int> SelectedCourseIds
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<int>>(SelectedCourseIdsJson);
+            }
+            set
+            {
+                SelectedCourseIdsJson = JsonConvert.SerializeObject(value);
+            }
+        }
+
+        public string SelectedCourseIdsJson { get; set; }
     }
 
     public class ConversionProspectType

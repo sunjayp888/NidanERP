@@ -43,6 +43,7 @@ namespace Nidan.Data.Interfaces
         Subject CreateSubject(int organisationId, Subject subject);
         Session CreateSession(int organisationId, Session session);
         Room CreateRoom(int organisationId, Room room);
+        BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
 
 
         // Retrieve
@@ -75,6 +76,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
+        PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
@@ -111,6 +113,9 @@ namespace Nidan.Data.Interfaces
         Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate);
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
+        BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
+        PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
 
         // Update
 
