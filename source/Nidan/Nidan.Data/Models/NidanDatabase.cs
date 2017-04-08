@@ -76,6 +76,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<BatchDay> BatchDays { get; set; }
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
+        public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

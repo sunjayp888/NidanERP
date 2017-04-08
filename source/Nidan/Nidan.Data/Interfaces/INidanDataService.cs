@@ -115,6 +115,7 @@ namespace Nidan.Data.Interfaces
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
         PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
 
         // Update
 

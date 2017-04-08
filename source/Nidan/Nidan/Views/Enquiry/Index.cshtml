@@ -111,7 +111,7 @@
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('ContactNo')" ng-class="model.orderClass('ContactNo')">Contact No</th>
                                             @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
-                                            <th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>
+                                            @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
                                             <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
                                             <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                             @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
@@ -123,7 +123,7 @@
                                             <td><span ng-bind="enquiry.CandidateName"></span></td>
                                             <td><span ng-bind="enquiry.Mobile"></span></td>
                                             @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                            <td><span ng-bind="enquiry.Course.Name"></span></td>
+                                            @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
                                             <td><span ng-bind="enquiry.Remarks"></span></td>
                                             <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
                                             @*<td><span ng-bind="enquiry.Close"></span></td>*@
