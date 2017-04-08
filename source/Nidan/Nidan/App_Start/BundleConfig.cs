@@ -36,16 +36,17 @@ namespace Nidan
                 "~/Scripts/Angular/app.js",
                 "~/Scripts/Angular/Prototypes/*.js",
                 "~/Scripts/Angular/Controllers/*.js",
-                "~/Scripts/Angular/Services/*.js",                                
+                "~/Scripts/moris/*.js",
+                "~/Scripts/Angular/Services/*.js",
                 "~/Scripts/Angular/Filters/*.js",
-                "~/Scripts/Angular/Directives/*.js",                                
+                "~/Scripts/Angular/Directives/*.js",
                 "~/Scripts/jquery-validate-bootstrap.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/Scripts/getOrgChart").Include(
                 "~/Scripts/getorgchart.js"
                 ));
-            
+
             bundles.Add(new StyleBundle("~/Content/bower").Include(
                  "~/bower_components/bootstrap/dist/css/bootstrap.min.css",
                  "~/bower_components/angular-responsive-tables/release/angular-responsive-tables.min.css",
