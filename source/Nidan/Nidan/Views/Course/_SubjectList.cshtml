@@ -1,0 +1,60 @@
+﻿@model Nidan.Models.CourseViewModel
+
+<div ng-controller="SubjectController as model">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            S<small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                            <th ng-click="model.order('Type')" ng-class="model.orderClass('Type')">Type</th>
+                                            <th ng-click="model.order('Trainer')" ng-class="model.orderClass('Trainer')">Trainer</th>
+                                            <th ng-click="model.order('Marks')" ng-class="model.orderClass('Marks')">Marks</th>
+                                            <th ng-click="model.order('PassingMarks')" ng-class="model.orderClass('PassingMarks')">Passing Marks</th>
+                                            <th ng-click="model.order('NoOfAttempts')" ng-class="model.orderClass('NoOfAttempts')">No Of Attempts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subject in model.subjects | orderBy:'SubjectId' " class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="subject.Name"></span></td>
+                                            <td><span ng-bind="subject.CourseType.Name"></span></td>
+                                            <td><span ng-bind="subject.Trainer.Name"></span></td>
+                                            <td><span ng-bind="subject.TotalMarks"></span></td>
+                                            <td><span ng-bind="subject.PassingMarks"></span></td>
+                                            <td><span ng-bind="subject.NoOfAttemptsAllowed"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

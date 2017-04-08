@@ -74,7 +74,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<BatchDay> BatchDays { get; set; }
+        public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
         public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -764,18 +767,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Batch>()
-                 .Property(e => e.BatchType)
-                 .IsUnicode(false);
-
-            modelBuilder.Entity<Batch>()
-                .Property(e => e.BatchTime)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Batch>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
             modelBuilder.Entity<CounsellingSearchField>()
                 .Property(e => e.PreferTiming)
                 .IsUnicode(false);
@@ -1078,6 +1069,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Room>()
                 .Property(e => e.OccupiedEndTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.BatchStartTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.BatchEndTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Batch>()
+                .Property(e => e.Remarks)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

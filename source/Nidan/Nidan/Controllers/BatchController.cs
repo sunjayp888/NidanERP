@@ -31,16 +31,14 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
-            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
+            var courseFeeBreakUp = NidanBusinessService.RetrieveCourseFeeBreakUps(organisationId,e=>e.CentreId==UserCentreId);
             var viewModel = new BatchViewModel
             {
                 Batch = new Batch(),
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                Sectors = new SelectList(sectors, "SectorId", "Name"),
-                Schemes = new SelectList(schemes, "SchemeId", "Name"),
-                Trainers = new SelectList(trainers, "TrainerId", "Name")
+                Trainers = new SelectList(trainers, "TrainerId", "Name"),
+                CourseFeeBreakUps = new SelectList(courseFeeBreakUp, "CourseFeeBreakUpId", "Name")
             };
             return View(viewModel);
         }
@@ -57,13 +55,29 @@ namespace Nidan.Controllers
             {
                 batchViewModel.Batch.OrganisationId = UserOrganisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
+                //batchViewModel.Batch.BatchDayId = 1;
                 batchViewModel.Batch = NidanBusinessService.CreateBatch(UserOrganisationId, batchViewModel.Batch);
+                var batchDay = new BatchDay()
+                {
+                    BatchId=batchViewModel.Batch.BatchId,
+                    IsMonday = batchViewModel.IsMonday,
+                    IsTuesday = batchViewModel.IsTuesday,
+                    IsWednusday = batchViewModel.IsWednusday,
+                    IsThusday = batchViewModel.IsThusday,
+                    IsFriday = batchViewModel.IsFriday,
+                    IsSaturday = batchViewModel.IsSaturday,
+                    IsSunday = batchViewModel.IsSunday,
+                    OrganisationId = UserOrganisationId
+                };
+                NidanBusinessService.CreateBatchDay(organisationId, batchDay);
+                batchViewModel.Batch.BatchDayId = batchDay.BatchDayId;
+                NidanBusinessService.UpdateBatch(organisationId, batchViewModel.Batch);
+                
                 return RedirectToAction("Index");
             }
             batchViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
-            batchViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
-            batchViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
             batchViewModel.Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(organisationId, e => true).ToList());
+            batchViewModel.CourseFeeBreakUps = new SelectList(NidanBusinessService.RetrieveCourseFeeBreakUps(organisationId, e => e.CentreId == UserCentreId).ToList());
             return View(batchViewModel);
         }
 
@@ -75,17 +89,25 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var batch = NidanBusinessService.RetrieveBatch(UserOrganisationId, id.Value);
+            
             if (batch == null)
             {
                 return HttpNotFound();
             }
+            var batchday = NidanBusinessService.RetrieveBatchDay(UserOrganisationId, batch.BatchDayId.Value);
             var viewModel = new BatchViewModel
             {
                 Batch = batch,
+                IsMonday = batchday.IsMonday.Value,
+                IsTuesday = batchday.IsTuesday.Value,
+                IsWednusday = batchday.IsWednusday.Value,
+                IsThusday = batchday.IsThusday.Value,
+                IsFriday = batchday.IsFriday.Value,
+                IsSaturday = batchday.IsSaturday.Value,
+                IsSunday = batchday.IsSunday.Value,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
-                Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => true).ToList(), "TrainerId", "Name")
+                Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => true).ToList(), "TrainerId", "Name"),
+                CourseFeeBreakUps = new SelectList(NidanBusinessService.RetrieveCourseFeeBreakUps(UserOrganisationId, e => e.CentreId == UserCentreId).ToList(), "CourseFeeBreakUpId", "Name")
             };
             return View(viewModel);
         }
@@ -100,6 +122,7 @@ namespace Nidan.Controllers
                 batchViewModel.Batch.OrganisationId = UserOrganisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
                 batchViewModel.Batch = NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch);
+                batchViewModel.Batch=NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch);
                 return RedirectToAction("Index");
             }
             var viewModel = new BatchViewModel

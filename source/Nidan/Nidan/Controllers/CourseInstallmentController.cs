@@ -115,6 +115,7 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("Admin");
             var courseId = Convert.ToInt32(TempData["CourseId"]);
+            TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
                 return
