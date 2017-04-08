@@ -25,5 +25,6 @@ namespace Nidan.Entity
 
         public virtual Enquiry Enquiry { get; set; }
 
+        public virtual Course Course { get; set; }
     }
 }

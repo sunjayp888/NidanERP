@@ -136,7 +136,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate);
         CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id);
-        List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
+        //List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Subject RetrieveSubject(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
         Subject RetrieveSubject(int organisationId, int id);

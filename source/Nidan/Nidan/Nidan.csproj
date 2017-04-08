@@ -245,6 +245,8 @@
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseFeeBreakUpController.cs" />
+    <Compile Include="Controllers\CourseInstallmentController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EnquiryCourseController.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\RegistrationPaymentReceiptController.cs" />
@@ -275,6 +278,8 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
+    <Compile Include="Models\CourseFeeBreakUpViewModel.cs" />
+    <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
@@ -287,6 +292,7 @@
     <Compile Include="Models\MobilizationViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
+    <Compile Include="Models\RoomViewModel.cs" />
     <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\TrainerViewModel.cs" />
     <Compile Include="Models\RegistrationPaymentReceiptViewModel.cs" />

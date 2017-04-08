@@ -1083,10 +1083,10 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, id, p => true);
         }
-        public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
-        {
-            return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
-        }
+        //public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
+        //{
+        //    return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
+        //}
 
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {

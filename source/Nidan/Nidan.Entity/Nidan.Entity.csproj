@@ -98,6 +98,7 @@
     <Compile Include="Counselling.cs" />
     <Compile Include="CounsellingSearchField.cs" />
     <Compile Include="Course.cs" />
+    <Compile Include="CourseFeeBreakUp.cs" />
     <Compile Include="CourseInstallment.cs" />
     <Compile Include="CourseSubject.cs" />
     <Compile Include="CourseType.cs" />

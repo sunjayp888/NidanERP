@@ -70,7 +70,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<CourseFeeBreakUp> CourseFeeBreakUps { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
         public virtual DbSet<CourseSubject> CourseSubjects { get; set; }
-        public virtual DbSet<CourseType> CourseTypes { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }

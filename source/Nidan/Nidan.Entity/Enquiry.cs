@@ -9,6 +9,13 @@ namespace Nidan.Entity
     [Table("Enquiry")]
     public partial class Enquiry
     {
+        public Enquiry()
+        {
+            Counsellings = new HashSet<Counselling>();
+            Admissions = new HashSet<Admission>();
+            RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
+            EnquiryCourses = new HashSet<EnquiryCourse>();
+        }
         public int EnquiryId { get; set; }
 
         [Required]
