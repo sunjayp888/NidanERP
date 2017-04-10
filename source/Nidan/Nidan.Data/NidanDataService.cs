@@ -1618,6 +1618,29 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreCourses
+                    .Include(p => p.Centre)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreCourseId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
         #endregion
 
         #region // Update

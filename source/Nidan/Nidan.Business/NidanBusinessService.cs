@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Newtonsoft.Json;
 using Nidan.Business.Extensions;
@@ -498,6 +499,18 @@ namespace Nidan.Business
         {
             return _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
         }
+
+        public CentreCourse CreateCentreCourse(int organisationId, int centreId, int courseId)
+        {
+            var centreCourse = new CentreCourse()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                CourseId = courseId
+            };
+            return _nidanDataService.Create<CentreCourse>(organisationId, centreCourse);
+        }
+
 
         #endregion
 
@@ -1203,6 +1216,16 @@ namespace Nidan.Business
         public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
         {
             return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
+        }
+
+        public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int courseId)
+        {
+            return _nidanDataService.RetrieveCourses(organisationId, a => !a.CentreCourses.Any(d => d.CourseId == courseId), null, null).Items.ToList();
+        }
+
+        public PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreCourses(organisationId, centreId, orderBy, paging);
         }
 
         #endregion

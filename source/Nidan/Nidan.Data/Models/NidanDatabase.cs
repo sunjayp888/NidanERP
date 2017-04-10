@@ -79,6 +79,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BatchDay> BatchDays { get; set; }
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
         public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
+        public virtual DbSet<CentreCourse> CentreCourses { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

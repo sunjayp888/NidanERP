@@ -1086,8 +1086,11 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\less\Site.less" />
+    <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
+    <Content Include="Scripts\Angular\Controllers\CourseFeeBreakUpController.js" />
+    <Content Include="Scripts\Angular\Controllers\CourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
     <Content Include="Scripts\Angular\Controllers\AreaOfInterestController.js" />
@@ -1109,6 +1112,8 @@
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
+    <Content Include="Scripts\Angular\Services\CourseFeeBreakUpService.js" />
+    <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
     <Content Include="Scripts\Angular\Services\AdmissionService.js" />

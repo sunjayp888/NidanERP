@@ -39,6 +39,7 @@ namespace Nidan.Business.Interfaces
         Session CreateSession(int organisationId, Session session);
         Room CreateRoom(int organisationId, Room room);
         EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse employmentDepartment);
+        CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
 
 
         // Retrieve
@@ -155,7 +156,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
-
+        IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
+        PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

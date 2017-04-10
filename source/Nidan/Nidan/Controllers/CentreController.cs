@@ -73,7 +73,7 @@ namespace Nidan.Controllers
             var viewModel = new CentreViewModel
             {
                 Centre = centre
-                
+
             };
             return View(viewModel);
         }
@@ -100,6 +100,21 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             return this.JsonNet(NidanBusinessService.RetrieveCentres(UserOrganisationId, orderBy, paging));
+        }
+
+        public ActionResult AssignCentreCourse(int centreId, int courseId)
+        {
+            return this.JsonNet(NidanBusinessService.CreateCentreCourse(UserOrganisationId, centreId, courseId));
+        }
+
+        public ActionResult UnassignedCentreCourses(int centreId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveUnassignedCentreCourses(UserOrganisationId, centreId));
+        }
+
+        public ActionResult CentreCourses(int centreId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, centreId));
         }
     }
 }
