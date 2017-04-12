@@ -1,6 +1,9 @@
 ﻿@model Nidan.Models.SubjectViewModel
-
-<div class="form-control-required-example"> = Required</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="form-control-required-example"> = Required</div>
+</div>
+<br />
+<br />
 
 <div class="form-group">
     @Html.LabelFor(model => model.Subject.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -10,21 +13,51 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Subject.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Subject.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Subject.CourseId, "", new { @class = "help-block" })
+<div ng-controller="CourseController as model">
+    <div class="form-group">
+        @Html.Label("Course", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" id="@Html.IdFor(model => model.SelectedCourseIdsJson)" name="@Html.NameFor(model => model.SelectedCourseIdsJson)" ng-init="model.selectedCourses = @Model.SelectedCourseIdsJson" value="{{model.selectedCourses}}" />
+            <ui-select multiple tagging ng-model="model.selectedCourses" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.courses.length <=0">
+                <ui-select-match placeholder="Select Courses"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                <ui-select-choices repeat="course.CourseId as course in model.courses | filter:$select.search">
+                    <span ng-bind-html="course.Name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Subject.TrainerId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Subject.TrainerId, Model.Trainers, "Select Trainer", new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Subject.TrainerId, "", new { @class = "help-block" })
+@*<div class="form-group">
+        @Html.LabelFor(model => model.Subject.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Subject.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Subject.CourseId, "", new { @class = "help-block" })
+        </div>
+    </div>*@
+
+<div ng-controller="TrainerController as model">
+    <div class="form-group">
+        @Html.Label("Trainer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
+            <ui-select multiple tagging ng-model="model.selectedTrainers" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
+                <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
+                    <span ng-bind-html="trainer.Name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
     </div>
 </div>
+
+@*<div class="form-group">
+        @Html.LabelFor(model => model.Subject.TrainerId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Subject.TrainerId, Model.Trainers, "Select Trainer", new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Subject.TrainerId, "", new { @class = "help-block" })
+        </div>
+    </div>*@
 
 <div class="form-group">
     @Html.LabelFor(model => model.Subject.CourseTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -57,3 +90,4 @@
         @Html.ValidationMessageFor(model => model.Subject.NoOfAttemptsAllowed, "", new { @class = "help-block" })
     </div>
 </div>
+
