@@ -20,6 +20,7 @@ namespace Nidan.Entity
             CourseInstallments = new HashSet<CourseInstallment>();
             Subjects=new HashSet<Subject>();
             CentreCourses = new HashSet<CentreCourse>();
+            Batches = new HashSet<Batch>();
         }
 
         public int CourseId { get; set; }
@@ -38,6 +39,8 @@ namespace Nidan.Entity
 
         [StringLength(1000)]
         public string Description { get; set; }
+
+        public int? Duration { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }

@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 
 namespace Nidan.Models
@@ -13,19 +15,7 @@ namespace Nidan.Models
         public BatchDay BatchDay { get; set; }
         public SelectList Courses { get; set; }
         public SelectList Trainers { get; set; }
-        public SelectList CourseFeeBreakUps { get; set; }
-        //public bool IsMonday { get; set; }
+        public SelectList CourseInstallments { get; set; }
 
-        //public bool IsTuesday { get; set; }
-
-        //public bool IsWednusday { get; set; }
-
-        //public bool IsThusday { get; set; }
-
-        //public bool IsFriday { get; set; }
-
-        //public bool IsSaturday { get; set; }
-
-        //public bool IsSunday { get; set; }
     }
 }

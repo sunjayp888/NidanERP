@@ -414,12 +414,6 @@ namespace Nidan.Business
             return _nidanDataService.CreateCourseInstallment(organisationId, courseInstallment);
         }
 
-
-        public CourseFeeBreakUp CreateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp)
-        {
-            return _nidanDataService.CreateCourseFeeBreakUp(organisationId, courseFeeBreakUp);
-        }
-
         public Event CreateEvent(int organisationId, Event eventplan)
         {
             return _nidanDataService.CreateEvent(organisationId, eventplan);
@@ -876,9 +870,9 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<PaymentMode>(organisationId, e => true);
         }
 
-        public List<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
+        public List<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<CourseFeeBreakUp>(organisationId, predicate);
+            return _nidanDataService.Retrieve<CourseInstallment>(organisationId, predicate);
         }
 
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
@@ -1120,29 +1114,6 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCourseInstallment(organisationId, id, p => true);
         }
-
-
-        public PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveCourseFeeBreakUps(organisationId, predicate, orderBy, paging);
-        }
-
-        public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
-        {
-            var courseFeeBreakUp = _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, courseFeeBreakUpId, p => true);
-            return courseFeeBreakUp;
-        }
-
-        public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveCourseFeeBreakUp(organisationId, id, p => true);
-        }
-
-        //public List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate)
-        //{
-        //    return _nidanDataService.Retrieve<CourseType>(organisationId, e => true);
-        //}
 
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -1518,12 +1489,6 @@ namespace Nidan.Business
         public CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, courseInstallment);
-        }
-
-
-        public CourseFeeBreakUp UpdateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp)
-        {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, courseFeeBreakUp);
         }
 
         public Question UpdateQuestion(int organisationId, Question question)
