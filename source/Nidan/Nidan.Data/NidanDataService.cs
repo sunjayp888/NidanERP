@@ -204,17 +204,6 @@ namespace Nidan.Data
             }
         }
 
-        public CourseFeeBreakUp CreateCourseFeeBreakUp(int organisationId, CourseFeeBreakUp courseFeeBreakUp)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                courseFeeBreakUp = context.CourseFeeBreakUps.Add(courseFeeBreakUp);
-                context.SaveChanges();
-
-                return courseFeeBreakUp;
-            }
-        }
-
         public FollowUp CreateFollowUp(int organisationId, FollowUp followUp)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -1190,7 +1179,7 @@ namespace Nidan.Data
                 return context
                     .CourseInstallments
                     .Include(p => p.Organisation)
-                    .Include(p => p.CourseFeeBreakUp)
+                    .Include(p => p.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1216,44 +1205,6 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CourseInstallmentId == courseInstallmentId);
-
-            }
-        }
-
-        public PagedResult<CourseFeeBreakUp> RetrieveCourseFeeBreakUps(int organisationId, Expression<Func<CourseFeeBreakUp, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .CourseFeeBreakUps
-                    .Include(p => p.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CourseFeeBreakUpId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public CourseFeeBreakUp RetrieveCourseFeeBreakUp(int organisationId, int courseFeeBreakUpId, Expression<Func<CourseFeeBreakUp, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CourseFeeBreakUps
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.CourseFeeBreakUpId == courseFeeBreakUpId);
 
             }
         }
@@ -1304,7 +1255,6 @@ namespace Nidan.Data
             {
                 return context
                     .Batches
-                    .Include(e => e.BatchDays)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchId == batchId);

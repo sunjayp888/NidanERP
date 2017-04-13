@@ -9,12 +9,6 @@ namespace Nidan.Entity
     [Table("Batch")]
     public partial class Batch
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Batch()
-        {
-            BatchDays = new HashSet<BatchDay>();
-        }
-
         public int BatchId { get; set; }
 
         [Required]
@@ -23,7 +17,7 @@ namespace Nidan.Entity
 
         public int Intake { get; set; }
 
-        public int CourseFeeBreakUpId { get; set; }
+        public int CourseInstallmentId { get; set; }
 
         public int CourseId { get; set; }
 
@@ -68,17 +62,46 @@ namespace Nidan.Entity
         [StringLength(1000)]
         public string Remarks { get; set; }
 
-        public virtual Organisation Organisation { get; set; }
+        public int Month { get; set; }
 
-        public virtual Centre Centre { get; set; }
+        public int NoOfInstallment { get; set; }
+
+        public int? FirstInstallment { get; set; }
+
+        public int? SecondInstallment { get; set; }
+
+        public int? ThirdInstallment { get; set; }
+
+        public int? ForthInstallment { get; set; }
+
+        public int? FifthInstallment { get; set; }
+
+        public int? SixthInstallment { get; set; }
+
+        public int? SeventhInstallment { get; set; }
+
+        public int? EighthInstallment { get; set; }
+
+        public int? NinethInstallment { get; set; }
+
+        public int? TenthInstallment { get; set; }
+
+        public int? EleventhInstallment { get; set; }
+
+        public int? TwelvethInstallment { get; set; }
+
+        public virtual CourseInstallment CourseInstallment { get; set; }
 
         public virtual Course Course { get; set; }
 
         public virtual Trainer Trainer { get; set; }
 
-        //public virtual BatchDay BatchDay { get; set; }
+        public virtual Centre Centre { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchDay> BatchDays { get; set; }
+
     }
 }

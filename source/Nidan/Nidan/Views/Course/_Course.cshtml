@@ -34,6 +34,15 @@
 </div>
 
 <div class="form-group">
+    @Html.LabelFor(model => model.Course.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Course.Duration, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.Duration, "", new { @class = "help-block" })
+    </div>
+</div>
+
+
+<div class="form-group">
     @Html.LabelFor(model => model.Course.Description, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Course.Description, new { @class = "form-control col-md-7 col-xs-12" })

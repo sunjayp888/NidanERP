@@ -67,7 +67,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Registration> Registrations { get; set; }
         public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
         public virtual DbSet<CourseType> CourseTypes { get; set; }
-        public virtual DbSet<CourseFeeBreakUp> CourseFeeBreakUps { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
         public virtual DbSet<CourseSubject> CourseSubjects { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
@@ -1030,15 +1029,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CourseFeeBreakUp>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
-
-            modelBuilder.Entity<CourseFeeBreakUp>()
-                .HasMany(e => e.CourseInstallments)
-                .WithRequired(e => e.CourseFeeBreakUp)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<CourseType>()
                 .HasMany(e => e.Subjects)
                 .WithRequired(e => e.CourseType)
@@ -1094,8 +1084,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
                 .Property(e => e.BatchStartTimeSpan)
@@ -1108,6 +1098,10 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Batch>()
                 .Property(e => e.Remarks)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<CourseInstallment>()
+               .Property(e => e.Name)
+               .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

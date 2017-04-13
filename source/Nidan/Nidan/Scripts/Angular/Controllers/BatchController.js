@@ -72,8 +72,8 @@
         }
 
 
-        function retrieveCourses(sectorId) {
-            return EnquiryService.retrieveCourses(sectorId).then(function () {
+        function retrieveCourses(CourseInstallmentId) {
+            return BatchServiceService.retrieveCourses(CourseInstallmentId).then(function () {
                 vm.courses = response.data;
             });
         };

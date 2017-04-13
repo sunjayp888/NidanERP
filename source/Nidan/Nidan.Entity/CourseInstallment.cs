@@ -11,11 +11,11 @@ namespace Nidan.Entity
     {
         public int CourseInstallmentId { get; set; }
 
+        [Required]
+        [StringLength(500)]
+        public string Name { get; set; }
+
         public int CourseId { get; set; }
-
-        public int Duration { get; set; }
-
-        public int? Month { get; set; }
 
         public int Fee { get; set; }
 
@@ -23,42 +23,20 @@ namespace Nidan.Entity
 
         public int LumpsumAmt { get; set; }
 
-        public int NoOfInstallment { get; set; }
-
-        public int? FirstInstallment { get; set; }
-
-        public int? SecondInstallment { get; set; }
-
-        public int? ThirdInstallment { get; set; }
-
-        public int? ForthInstallment { get; set; }
-
-        public int? FifthInstallment { get; set; }
-
-        public int? SixthInstallment { get; set; }
-
-        public int? SeventhInstallment { get; set; }
-
-        public int? EighthInstallment { get; set; }
-
-        public int? NinethInstallment { get; set; }
-
-        public int? TenthInstallment { get; set; }
-
-        public int? EleventhInstallment { get; set; }
-
-        public int? TwelvethInstallment { get; set; }
-
-        public int CourseFeeBreakUpId { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
         public int OrganisationId { get; set; }
 
-        public virtual CourseFeeBreakUp CourseFeeBreakUp { get; set; }
-
-        public virtual Course Course { get; set; }
+        public int CentreId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
-      
+        public virtual Centre Centre { get; set; }
+
+        public virtual Course Course { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Batch> Batches { get; set; }
     }
 }

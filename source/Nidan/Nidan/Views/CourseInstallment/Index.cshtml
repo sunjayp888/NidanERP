@@ -1,31 +1,32 @@
 ﻿@using Nidan.Extensions
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "CourseInstallment";
 }
 
 <div ng-controller="CourseInstallmentController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                CourseFeeBreakUps <small></small>
+                Course Installments <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCourseFeeBreakUp(searchField)" class="form-control" placeholder="Search for Course Fee BreakUp...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchCourseFeeBreakUp(searchField)" type="button">Go!</button>
-                        </span>
-                    </div>
+        *<div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCourseInstallment(searchField)" class="form-control" placeholder="Search for Course Installment...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchTrainer(searchField)" type="button">Go!</button>
+                    </span>
                 </div>
-            </div>*@
+            </div>
+        </div>
     </div>
     @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "CourseFeeBreakUp")">
+                <a class="btn btn-app" href="@Url.Action("Create", "CourseInstallment")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
@@ -36,7 +37,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Course Fee BreakUps <small></small>
+                        Course Installments <small></small>
                     </h2>
                     <div class="clearfix"></div>
                 </div>
@@ -54,19 +55,21 @@
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('CourseFeeBreakUp.Name')" ng-class="model.orderClass('CourseFeeBreakUp.Name')">Name</th>
-                                            <th ng-click="model.order('CourseInstallment.Fee')" ng-class="model.orderClass('CourseInstallment.Fee')">Fee</th>
-                                            <th ng-click="model.order('CourseInstallment.DownPayment')" ng-class="model.orderClass('CourseInstallment.DownPayment')">DownPayment</th>
-                                            <th ng-click="model.order('CourseInstallment.NoOfInstallment')" ng-class="model.orderClass('CourseInstallment.NoOfInstallment')">No Of Installment</th>
+                                            <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                            <th ng-click="model.order('CourseId')" ng-class="model.orderClass('CourseId')">Course</th>
+                                            <th ng-click="model.order('Fee')" ng-class="model.orderClass('Fee')">Fee</th>
+                                            <th ng-click="model.order('DownPayment')" ng-class="model.orderClass('DownPayment')">Down Payment</th>
+                                            <th ng-click="model.order('LumpsumAmt')" ng-class="model.orderClass('LumpsumAmt')">Lumpsum Amount</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="courseInstallment in model.courseInstallments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editCourseInstallment(courseInstallment.CourseInstallmentId)">
-                                            <td><span ng-bind="courseInstallment.CourseFeeBreakUp.Name"></span></td>
+                                        <tr ng-repeat="courseInstallment in model.courseInstallments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCourseInstallment(courseInstallment.CourseInstallmentId)">
+                                            <td><span ng-bind="courseInstallment.Name"></span></td>
+                                            <td><span ng-bind="courseInstallment.Course.Name"></span></td>
                                             <td><span ng-bind="courseInstallment.Fee"></span></td>
                                             <td><span ng-bind="courseInstallment.DownPayment"></span></td>
-                                            <td><span ng-bind="courseInstallment.NoOfInstallment"></span></td>
+                                            <td><span ng-bind="courseInstallment.LumpsumAmt"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

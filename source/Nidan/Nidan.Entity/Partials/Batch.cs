@@ -12,7 +12,7 @@ namespace Nidan.Entity
         private class BatchMetadata
         {
             [Display(Name = "Course Fee Break-Up")]
-            public int CourseFeeBreakUpId { get; set; }
+            public int CourseInstallmentId { get; set; }
 
             [Display(Name = "Course")]
             public int CourseId { get; set; }
@@ -32,7 +32,7 @@ namespace Nidan.Entity
             [Display(Name = "No Of Holidays")]
             public int NoOfHolidays { get; set; }
 
-            [Display(Name = "Candidate Name")]
+            [Display(Name = "No Of Hours Daily")]
             public int NoOfHoursDaily { get; set; }
 
             [Display(Name = "Batch Start Time Hours")]
