@@ -35,10 +35,12 @@ namespace Nidan.Business.Interfaces
         Postevent CreatePostevent(int organisationId, Postevent postevent);
         Trainer CreatetTrainer(int organisationId, Trainer trainer);
         FollowUp CreateFollowUp(int organisationId, FollowUp followUp);
-        Subject CreateSubject(int organisationId, Subject subject);
+        Subject CreateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds);
         Session CreateSession(int organisationId, Session session);
         Room CreateRoom(int organisationId, Room room);
         EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse employmentDepartment);
+        SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse);
+        SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
         CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
 
 
@@ -158,6 +160,9 @@ namespace Nidan.Business.Interfaces
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
         IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
+        IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
+
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -188,6 +193,8 @@ namespace Nidan.Business.Interfaces
 
         void MarkAsReadFollowUp(int organisationId, int id);
         void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId);
+        void DeleteSubjectCourse(int organisationId, int subjectId, int courseId);
+        void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId);
 
 
         //Document

@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
+using Nidan.Extensions;
 using Nidan.Models;
+
 
 namespace Nidan.Controllers
 {
@@ -21,20 +23,23 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "enquiry").Items.Count();
+               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "enquiry").Items.Count();
 
             var totalEnquiryCount =
-                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes" && e.Registered == false).Count();
+                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes" && e.Registered == false).Count();
 
             var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => e.CentreId == UserCentreId && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
+               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
 
             var totalMobilizationCount =
-                NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => e.CentreId == UserCentreId && e.Close != "Yes")
+                NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes")
                     .Items.Count();
+
 
             if (User.IsInRole("User") && !permissions.IsManager)
                 return RedirectToAction("Profile", "Personnel", new { id = personnelId });

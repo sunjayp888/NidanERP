@@ -113,12 +113,12 @@ namespace Nidan.Models.Authorization
                 var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context), null);
                 var roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context));
 
-                if (!userManager.Users.Any(u => u.UserName == "superadmin@itsupportlimited.com"))
+                if (!userManager.Users.Any(u => u.UserName == "superadmin@nidantech.com"))
                 {
                     var user = new ApplicationUser
                     {
-                        UserName = "superadmin@itsupportlimited.com",
-                        Email = "superadmin@itsupportlimited.com",
+                        UserName = "superadmin@nidantech.com",
+                        Email = "superadmin@nidantech.com",
                         EmailConfirmed = true,
                     };
 

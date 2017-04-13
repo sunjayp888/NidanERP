@@ -480,9 +480,41 @@ namespace Nidan.Business
             return _nidanDataService.CreateFollowUp(organisationId, followUp);
         }
 
-        public Subject CreateSubject(int organisationId, Subject subject)
+        public Subject CreateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds)
         {
-            return _nidanDataService.CreateSubject(organisationId, subject);
+
+            var data = _nidanDataService.Create<Subject>(organisationId, subject);
+            CreateSubjectCourse(organisationId, data.SubjectId, courseIds);
+            CreateSubjectTrainer(organisationId, data.SubjectId, trainerIds);
+            return data;
+        }
+
+        private void CreateSubjectCourse(int organisationId, int subjectId, List<int> couserIds)
+        {
+
+            //Create Department Employment
+            var subjectCourse = couserIds.Select(item => new SubjectCourse()
+            {
+                OrganisationId = organisationId,
+                SubjectId = subjectId,
+                CourseId = item,
+            }).ToList();
+            _nidanDataService.Create<SubjectCourse>(organisationId, subjectCourse);
+
+        }
+
+        private void CreateSubjectTrainer(int organisationId, int subjectId, List<int> trainerIds)
+        {
+
+            //Create Department Employment
+            var subjectTrainer = trainerIds.Select(item => new SubjectTrainer()
+            {
+                OrganisationId = organisationId,
+                SubjectId = subjectId,
+                TrainerId = item,
+            }).ToList();
+            _nidanDataService.Create<SubjectTrainer>(organisationId, subjectTrainer);
+
         }
 
         public Session CreateSession(int organisationId, Session session)
@@ -498,6 +530,16 @@ namespace Nidan.Business
         public EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse enquiryCourse)
         {
             return _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
+        }
+
+        public SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse)
+        {
+            return _nidanDataService.Create<SubjectCourse>(organisationId, subjectCourse);
+        }
+
+        public SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer)
+        {
+            return _nidanDataService.Create<SubjectTrainer>(organisationId, subjectTrainer);
         }
 
         public CentreCourse CreateCentreCourse(int organisationId, int centreId, int courseId)
@@ -1228,6 +1270,16 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreCourses(organisationId, centreId, orderBy, paging);
         }
 
+        public IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId)
+        {
+            return _nidanDataService.RetrieveSubjectCourses(organisationId, subjectId);
+        }
+
+        public IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId)
+        {
+            return _nidanDataService.RetrieveSubjectTrainers(organisationId, subjectId);
+        }
+
         #endregion
 
         #region // Update
@@ -1584,6 +1636,16 @@ namespace Nidan.Business
         public void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId)
         {
             _nidanDataService.Delete<EnquiryCourse>(organisationId, p => p.EnquiryId == enquiryId && p.CourseId == courseId);
+        }
+
+        public void DeleteSubjectCourse(int organisationId, int subjectId, int courseId)
+        {
+            _nidanDataService.Delete<SubjectCourse>(organisationId, p => p.SubjectId == subjectId && p.CourseId == courseId);
+        }
+
+        public void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId)
+        {
+            _nidanDataService.Delete<SubjectTrainer>(organisationId, p => p.SubjectId == subjectId && p.TrainerId == trainerId);
         }
 
 
