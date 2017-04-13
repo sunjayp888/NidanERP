@@ -42,7 +42,9 @@ namespace Nidan.Controllers
                 Subject = new Subject(),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
-                CourseTypes = new SelectList(coursetypes, "CourseTypeId", "Name")
+                CourseTypes = new SelectList(coursetypes, "CourseTypeId", "Name"),
+                SelectedCourseIds = new List<int> { },
+                SelectedTrainerIds = new List<int> { }
             };
 
             return View(viewModel);
@@ -58,12 +60,13 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 subjectViewModel.Subject.OrganisationId = UserOrganisationId;
-                subjectViewModel.Subject = NidanBusinessService.CreateSubject(UserOrganisationId, subjectViewModel.Subject);
+                subjectViewModel.Subject = NidanBusinessService.CreateSubject(UserOrganisationId, subjectViewModel.Subject, subjectViewModel.SelectedCourseIds,subjectViewModel.SelectedTrainerIds);
                 return RedirectToAction("Edit", new { id = subjectViewModel.Subject.SubjectId });
             }
             subjectViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             subjectViewModel.Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(organisationId, e => true).ToList());
             subjectViewModel.CourseTypes = new SelectList(NidanBusinessService.RetrieveCourseTypes(organisationId, e => true).ToList());
+            
             return View(subjectViewModel);
         }
 
@@ -90,7 +93,9 @@ namespace Nidan.Controllers
                 Subject = subject,
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
-                CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name")
+                CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name"),
+                SelectedCourseIds = subject?.SubjectCourses.Select(e => e.CourseId).ToList(),
+                SelectedTrainerIds = subject?.SubjectTrainers.Select(e=>e.TrainerId).ToList()
             };
             return View(viewModel);
         }

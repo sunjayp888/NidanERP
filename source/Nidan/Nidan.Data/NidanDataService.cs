@@ -1568,6 +1568,36 @@ namespace Nidan.Data
             }
         }
 
+        public IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .SubjectCourses
+                    .Where(a => a.SubjectId == subjectId)
+                    .Include(e => e.Subject)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
+        public IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .SubjectTrainers
+                    .Where(a => a.SubjectId == subjectId)
+                    .Include(e => e.Subject)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
         public PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
