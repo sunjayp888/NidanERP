@@ -547,6 +547,16 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreCourse>(organisationId, centreCourse);
         }
 
+        public CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
+        {
+            var centreCourseInstallment = new CentreCourseInstallment()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                CourseInstallmentId = courseInstallmentId
+            };
+            return _nidanDataService.Create<CentreCourseInstallment>(organisationId, centreCourseInstallment);
+        }
 
         #endregion
 
@@ -1249,6 +1259,19 @@ namespace Nidan.Business
         public IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId)
         {
             return _nidanDataService.RetrieveSubjectTrainers(organisationId, subjectId);
+        }
+
+        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int courseInstallmentId)
+        {
+            return
+                _nidanDataService.RetrieveCourseInstallments(organisationId,
+                        a => !a.CentreCourseInstallments.Any(d => d.CourseInstallmentId == courseInstallmentId), null, null)
+                    .Items.ToList();
+        }
+
+        public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging);
         }
 
         #endregion

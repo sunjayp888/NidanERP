@@ -1241,6 +1241,8 @@ namespace Nidan.Data
             {
                 return context
                     .Subjects
+                    .Include(p=>p.SubjectCourses)
+                    .Include(p=>p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.SubjectId == subjectId);
@@ -1621,6 +1623,31 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
+
+        public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreCourseInstallments
+                    .Include(p => p.Centre)
+                    .Include(p => p.CourseInstallment)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreCourseInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         #endregion
 
         #region // Update

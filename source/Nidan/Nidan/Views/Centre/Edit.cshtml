@@ -79,10 +79,10 @@
                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="fa fa-list fa-fw"></span>
                                     @*  <span class="square" ng-style="{'background-color' : '#' + model.ddAbsenceType.Colour.Hex }"></span>*@
-                                         <span ng-bind="model.ddCourse.Name"></span>
+                                    <span ng-bind="model.ddCourse.Name"></span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <ul id="courseDropdown" class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li ng-repeat="course in model.ddCourses">
                                         @*<span class="square" ng-style="{'background-color' : '#' + absenceType.Colour.Hex }"></span>*@
                                         <span><a ng-click="model.changeCourse(course)" ng-bind="course.Name"></a></span>
@@ -105,57 +105,57 @@
                         <div class="col-xs-12">
                             <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                 <thead>
-                                    <tr role="row">
-                                        <th ng-click="model.order('CourseId')" ng-class="model.orderClass('Name')">Course Id</th>
-                                        @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+                                <tr role="row">
+                                    <th ng-click="model.order('CourseId')" ng-class="model.orderClass('Name')">Course Id</th>
+                                    @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
                                         <th ng-click="model.order('HasEntitlement')" ng-class="model.orderClass('HasEntitlement')">Has Entitlement</th>
                                         <th ng-click="model.order('Entitlement')" ng-class="model.orderClass('Entitlement')">Entitlement</th>
                                         <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                         <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                         <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin"))
-                                        {
-                                            <th>Actions</th>
-                                        }
-                                    </tr>
+                                    @if (User.IsInAnyRoles("Admin"))
+                                    {
+                                        <th>Actions</th>
+                                    }
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="centreCourse in model.centreCourses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
-                                      @*  <td><span class="square" ng-style="{'background-color' : '#' + absenceTypeEntitlement.AbsenceType.Colour.Hex }"></span><span ng-bind="absenceTypeEntitlement.AbsenceType.Name"></span></td>*@
-                                        <td><span ng-bind="centreCourse.Course.Name"></span></td>
-                                        @*<td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.HasEntitlement"></i></span></td>
+                                <tr ng-repeat="centreCourse in model.centreCourses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
+                                    @*  <td><span class="square" ng-style="{'background-color' : '#' + absenceTypeEntitlement.AbsenceType.Colour.Hex }"></span><span ng-bind="absenceTypeEntitlement.AbsenceType.Name"></span></td>*@
+                                    <td><span ng-bind="centreCourse.Course.Name"></span></td>
+                                    @*<td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.HasEntitlement"></i></span></td>
                                         <td><span ng-bind="absenceTypeEntitlement.Entitlement"></span></td>
                                         <td><span ng-bind="absenceTypeEntitlement.MaximumCarryForward"></span></td>
                                         <td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.IsPaid"></i></span></td>
                                         <td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.IsUnplanned"></i></span></td>*@
-                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
-                                        {
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isAbsencesAssignedToAbsencePolicyAbsenceType(absenceTypeEntitlement.AbsenceTypeId);">
-                                                        <i class="fa fa-chevron-down"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu slidedown">
-                                                        <li>
-                                                            <a ng-click="$event.originalEvent.ngClickHandled = true; model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                        <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
-                                                        <li ng-hide="model.loadingActions">
-                                                            <a ng-class="model.unassignCentreCourseClass(centreCourse)"
-                                                               ng-bootbox-confirm="Are you sure, you want to unassign - {{centreCourse.Course.Name}}"
-                                                               ng-bootbox-confirm-action="model.unassignCentreCourse(centreCourse);"
-                                                               ng-bootbox-confirm-action-cancel=""
-                                                               ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                Unassign
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        }
-                                    </tr>
+                                    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                    {
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isAbsencesAssignedToAbsencePolicyAbsenceType(absenceTypeEntitlement.AbsenceTypeId);">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    <li>
+                                                        <a ng-click="$event.originalEvent.ngClickHandled = true; model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
+                                                    <li ng-hide="model.loadingActions">
+                                                        <a ng-class="model.unassignCentreCourseClass(centreCourse)"
+                                                           ng-bootbox-confirm="Are you sure, you want to unassign - {{centreCourse.Course.Name}}"
+                                                           ng-bootbox-confirm-action="model.unassignCentreCourse(centreCourse);"
+                                                           ng-bootbox-confirm-action-cancel=""
+                                                           ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                            Unassign
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -206,9 +206,186 @@
     </div>
 </div>
 
+@*CentreCourseInstallment*@
+<div class="row" ng-controller="CentreCourseInstallmentController as model" ng-init="model.initialise(@Model.Centre.CentreId)">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Course Installments</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-horizontal">
+                    <div class="row ng-hide" ng-cloak ng-show="model.centreCourseInstallmentError">
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="validation-summary-errors row alert alert-error" id="absenceTypeError1">
+                                <ul>
+                                    <li>Assign Atleast One Course Installment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Course Installment", new { @class = "control-label col-md-5 col-sm-5 col-xs-12" })
+                        <input type="hidden" id="centreCourseInstallmentCount" ng-value="model.centreCourseInstallmentCount" />
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="fa fa-list fa-fw"></span>
+                                    @*  <span class="square" ng-style="{'background-color' : '#' + model.ddAbsenceType.Colour.Hex }"></span>*@
+                                    <span ng-bind="model.ddCourseInstallment.Name"></span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul id="courseInstallmentDropdown" class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                    <li ng-repeat="courseInstallment in model.ddCourseInstallments">
+                                        @*<span class="square" ng-style="{'background-color' : '#' + absenceType.Colour.Hex }"></span>*@
+                                        <span><a ng-click="model.changeCourseInstallment(courseInstallment)" ng-bind="courseInstallment.Name"></a></span>
+                                    </li>
+                                </ul>
+                                <button type="button" class="btn btn-success" ng-click="model.assignCentreCourseInstallment()" ng-disabled="model.assigning">Assign</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-muted font-13 m-b-30">
+                </p>
+                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.Partial("Pagination/_pageSize")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th ng-click="model.order('CourseInstallmentId')" ng-class="model.orderClass('Name')">Course Installment Id</th>
+                                        @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+                                            <th ng-click="model.order('HasEntitlement')" ng-class="model.orderClass('HasEntitlement')">Has Entitlement</th>
+                                            <th ng-click="model.order('Entitlement')" ng-class="model.orderClass('Entitlement')">Entitlement</th>
+                                            <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
+                                            <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
+                                            <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
+                                        @if (User.IsInAnyRoles("Admin"))
+                                        {
+                                            <th>Actions</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="centreCourseInstallment in model.centreCourseInstallments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
+                                        @*  <td><span class="square" ng-style="{'background-color' : '#' + absenceTypeEntitlement.AbsenceType.Colour.Hex }"></span><span ng-bind="absenceTypeEntitlement.AbsenceType.Name"></span></td>*@
+                                        <td><span ng-bind="centreCourseInstallment.CourseInstallment.Name"></span></td>
+                                        @*<td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.HasEntitlement"></i></span></td>
+                                            <td><span ng-bind="absenceTypeEntitlement.Entitlement"></span></td>
+                                            <td><span ng-bind="absenceTypeEntitlement.MaximumCarryForward"></span></td>
+                                            <td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.IsPaid"></i></span></td>
+                                            <td><span><i class="fa fa-check fa-fw" ng-show="absenceTypeEntitlement.IsUnplanned"></i></span></td>*@
+                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                        {
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isAbsencesAssignedToAbsencePolicyAbsenceType(absenceTypeEntitlement.AbsenceTypeId);">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        <li>
+                                                            <a ng-click="$event.originalEvent.ngClickHandled = true; model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
+                                                        <li ng-hide="model.loadingActions">
+                                                            <a ng-class="model.unassignCentreCourseInstallmentClass(centreCourseInstallment)"
+                                                               ng-bootbox-confirm="Are you sure, you want to unassign - {{centreCourseInstallment.CourseInstallment.Name}}"
+                                                               ng-bootbox-confirm-action="model.unassignCentreCourseInstallment(centreCourseInstallment);"
+                                                               ng-bootbox-confirm-action-cancel=""
+                                                               ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                Unassign
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @Html.Partial("Pagination/_pagination")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="absencePolicyEntitlementModal1" ng-hide="model.ShowModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit <span ng-bind="model.absenceType"></span></h2>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group" id="absencePolicyEntitlementErrorSummary1" hidden>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="validation-summary-errors row alert alert-error" data-valmsg-summary="false">
+                                    <ul class="errors">
+                                        <li ng-repeat="error in model.Errors"><span ng-bind="error"></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="absencePolicyEntitlementModalBody1">
+                        @*@Html.Partial("_AbsencePolicyEntitlement", Model)*@
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                        <div class="form-group">
+                            <div class="pull-right col-md-6">
+                                <div class="col-md-3">
+                                    <button type="button" ng-click="model.updateAbsencePolicyEntitlement()" id="buttonAbsencePolicyEntitlement1" class="btn btn-success">Submit</button>
+                                </div>
+                                <div class="pull-right col-md-3">
+                                    <button type="button" id="btnCancel1" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
-
+@section scripts {
+    <script>
+        $('#courseDropdown').change(function () {
+            var courseId = $('#courseDropdown :selected').val();
+            $.ajax({
+                url: '/Centre/GetCourseInstallment',
+                type: 'POST',
+                data: JSON.stringify({ courseId: courseId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#courseInstallmentDropdown").empty();
+                    $.each(result, function (key, value) {
+                        $("#courseInstallmentDropdown").append($("<option></option>").val(value.CourseInstallmentId).html(value.Name));
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+    </script>
+}
