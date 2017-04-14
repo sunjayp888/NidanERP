@@ -168,5 +168,12 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => e.CourseId==courseId).ToList();
             return this.JsonNet(data);
         }
+        
+        [HttpPost]
+        public ActionResult UnassignCentreCourse(int centreId, int courseId)
+        {
+            NidanBusinessService.DeleteCentreCourse(UserOrganisationId, centreId, courseId);
+            return this.JsonNet("");
+        }
     }
 }

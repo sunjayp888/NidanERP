@@ -78,7 +78,7 @@ namespace Nidan.Controllers
                 enquiry.SectorId = registrationPaymentReceiptViewModel.SectorId;
                 enquiry.IntrestedCourseId = registrationPaymentReceiptViewModel.IntrestedCourseId;
                 enquiry.BatchTimePreferId = registrationPaymentReceiptViewModel.BatchTimePreferId;
-                NidanBusinessService.UpdateEnquiry(organisationId, enquiry);
+                NidanBusinessService.UpdateEnquiry(organisationId, enquiry, null);
             }
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.OrganisationId = UserOrganisationId;
             registrationPaymentReceiptViewModel.RegistrationPaymentReceipt.CentreId = UserCentreId;
@@ -167,7 +167,7 @@ namespace Nidan.Controllers
         public ActionResult EnquirySearch(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             return this.JsonNet(data);
         }
     }

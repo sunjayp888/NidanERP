@@ -245,7 +245,6 @@
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\CourseFeeBreakUpController.cs" />
     <Compile Include="Controllers\CourseInstallmentController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
@@ -278,7 +277,6 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
-    <Compile Include="Models\CourseFeeBreakUpViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />

@@ -171,7 +171,7 @@ namespace Nidan.Business.Interfaces
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
         Personnel UpdatePersonnel(int organisationId, Personnel personnel);
-        Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry);
+        Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> cousreIds);
         Mobilization UpdateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> UpdateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
@@ -198,7 +198,7 @@ namespace Nidan.Business.Interfaces
         void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId);
         void DeleteSubjectCourse(int organisationId, int subjectId, int courseId);
         void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId);
-
+        void DeleteCentreCourse(int organisationId, int centreId, int courseId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

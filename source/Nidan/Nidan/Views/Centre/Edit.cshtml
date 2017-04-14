@@ -391,7 +391,7 @@
                                     <span ng-bind="model.ddCourse.Name"></span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul id="courseDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuCourse">
+                                <ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu2">
                                     <li ng-repeat="course in model.ddCourses">
                                         @*<span class="square" ng-style="{'background-color' : '#' + absenceType.Colour.Hex }"></span>*@
                                         <span><a ng-click="model.changeCourse(course)" ng-bind="course.Name"></a></span>
@@ -595,15 +595,15 @@
                                         {
                                             <td>
                                                 <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isAbsencesAssignedToAbsencePolicyAbsenceType(absenceTypeEntitlement.AbsenceTypeId);">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isCentreCourseAssignToCentre(centreCourse.CourseId);">
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        <li>
+                                                        @*<li>
                                                             <a ng-click="$event.originalEvent.ngClickHandled = true; model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
                                                                 Edit
                                                             </a>
-                                                        </li>
+                                                        </li>*@
                                                         <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
                                                         <li ng-hide="model.loadingActions">
                                                             <a ng-class="model.unassignCentreCourseInstallmentClass(centreCourseInstallment)"
