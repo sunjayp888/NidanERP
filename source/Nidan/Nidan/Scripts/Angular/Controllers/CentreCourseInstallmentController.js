@@ -52,8 +52,6 @@
                    } else {
                        vm.centreCourseInstallmentError = true;
                        vm.centreCourseInstallmentCount = 0;
-
-
                    }
                    vm.paging.totalPages = response.data.TotalPages;
                    vm.paging.totalResults = response.data.TotalResults;

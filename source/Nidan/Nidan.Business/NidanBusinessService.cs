@@ -1261,11 +1261,13 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveSubjectTrainers(organisationId, subjectId);
         }
 
-        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int courseInstallmentId)
+        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId)
         {
+
             return
                 _nidanDataService.RetrieveCourseInstallments(organisationId,
-                        a => !a.CentreCourseInstallments.Any(d => d.CourseInstallmentId == courseInstallmentId), null, null)
+                a => !a.CentreCourseInstallments.Any(d => d.CentreId == centreId) && a.Course.CentreCourses.Any(e => e.CentreId == centreId)
+                )
                     .Items.ToList();
         }
 

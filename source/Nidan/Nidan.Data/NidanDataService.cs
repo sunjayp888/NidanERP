@@ -1181,6 +1181,7 @@ namespace Nidan.Data
                     .CourseInstallments
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.Course.CentreCourses)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1242,8 +1243,8 @@ namespace Nidan.Data
             {
                 return context
                     .Subjects
-                    .Include(p=>p.SubjectCourses)
-                    .Include(p=>p.SubjectTrainers)
+                    .Include(p => p.SubjectCourses)
+                    .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.SubjectId == subjectId);
