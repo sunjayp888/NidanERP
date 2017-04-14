@@ -42,6 +42,8 @@ namespace Nidan.Business.Interfaces
         SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
         CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
+        CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
+        CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
 
 
         // Retrieve
@@ -154,12 +156,16 @@ namespace Nidan.Business.Interfaces
         PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
-        IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
+        IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int courseId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int courseInstallmentId);
         PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int schemeId);
+        PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int sectorId);
+        PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
 
 
         // Update
