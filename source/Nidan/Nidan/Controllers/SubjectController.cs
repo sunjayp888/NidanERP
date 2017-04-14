@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Excel;
 using Nidan.Business.Dto;
+using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -83,6 +84,7 @@ namespace Nidan.Controllers
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
             var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
             var subject = NidanBusinessService.RetrieveSubject(UserOrganisationId, id.Value);
+            var selectedCourseIds = NidanBusinessService.RetrieveSubjectCourses(organisationId, id.Value);
 
             if (subject == null)
             {
@@ -94,7 +96,8 @@ namespace Nidan.Controllers
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
                 CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name"),
-                SelectedCourseIds = subject?.SubjectCourses.Select(e => e.CourseId).ToList(),
+                SelectedCourseIds = subject?.SubjectCourses.Select(e=>e.CourseId).ToList(),
+                //SelectedCourseIds = subject?.SubjectCourses..ToList(),
                 SelectedTrainerIds = subject?.SubjectTrainers.Select(e=>e.TrainerId).ToList()
             };
             return View(viewModel);

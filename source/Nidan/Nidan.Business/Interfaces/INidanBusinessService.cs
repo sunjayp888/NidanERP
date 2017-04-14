@@ -41,6 +41,7 @@ namespace Nidan.Business.Interfaces
         SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse);
         SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
         CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
+        CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
 
 
         // Retrieve
@@ -157,6 +158,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
+        IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int courseInstallmentId);
+        PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
 
 
         // Update

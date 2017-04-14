@@ -80,6 +80,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EnquiryCourse> EnquiryCourses { get; set; }
         public virtual DbSet<CentreCourse> CentreCourses { get; set; }
         public virtual DbSet<SubjectCourse> SubjectCourses { get; set; }
+        public virtual DbSet<CentreCourseInstallment> CentreCourseInstallments { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

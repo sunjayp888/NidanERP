@@ -117,6 +117,28 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, centreId));
         }
 
+        public ActionResult AssignCentreCourseInstallment(int centreId, int courseInstallmentId)
+        {
+            return this.JsonNet(NidanBusinessService.CreateCentreCourseInstallment(UserOrganisationId, centreId, courseInstallmentId));
+        }
+
+        public ActionResult UnassignedCentreCourseInstallments(int centreId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveUnassignedCentreCourseInstallments(UserOrganisationId, centreId));
+        }
+
+        public ActionResult CentreCourseInstallments(int centreId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCentreCourseInstallments(UserOrganisationId, centreId));
+        }
+
+        [HttpPost]
+        public ActionResult GetCourseInstallment(int courseId)
+        {
+            var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => e.CourseId==courseId).ToList();
+            return this.JsonNet(data);
+        }
+        
         [HttpPost]
         public ActionResult UnassignCentreCourse(int centreId, int courseId)
         {

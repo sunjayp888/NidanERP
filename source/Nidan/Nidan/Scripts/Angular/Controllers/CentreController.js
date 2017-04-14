@@ -17,6 +17,8 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCentre = editCentre;
+        vm.courseInstallments = [];
+        vm.retrieveCourseInstallments = retrieveCourseInstallments;
         initialise();
 
         function initialise() {
@@ -49,6 +51,12 @@
         function editCentre(id) {
             $window.location.href = "/Centre/Edit/" + id;
         }
+
+        function retrieveCourseInstallments(courseId) {
+            return CentreService.retrieveCourseInstallments(courseId).then(function () {
+                vm.courseInstallments = response.data;
+            });
+        };
     }
 
 })();
