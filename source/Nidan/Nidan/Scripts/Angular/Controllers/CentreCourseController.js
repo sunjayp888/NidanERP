@@ -98,12 +98,14 @@
         }
 
         function isCentreCourseAssignToCentre(courseId) {
-            vm.loadingActions = true;
-            vm.absenceTypeId = absenceTypeId;
-            CentreService.isAbsencesAssignedToAbsencePolicyAbsenceType(vm.centreId, absenceTypeId).then(function (response) {
-                $filter('filter')(vm.centreCourses, { AbsenceTypeId: vm.absenceTypeId })[0]["CanUnassign"] = !response.data;
-                vm.loadingActions = false;
-            });
+            //vm.loadingActions = true;
+            
+            vm.courseId = courseId;
+            //CentreService.isAbsencesAssignedToAbsencePolicyAbsenceType(vm.centreId, absenceTypeId).then(function (response) {
+            //    $filter('filter')(vm.centreCourses, { AbsenceTypeId: vm.absenceTypeId })[0]["CanUnassign"] = !response.data;
+            //    vm.loadingActions = false;
+            //});
+            $filter('filter')(vm.centreCourses, { CourseId: vm.courseId })[0]["CanUnassign"] = true;
         }
 
         function assignCentreCourse() {

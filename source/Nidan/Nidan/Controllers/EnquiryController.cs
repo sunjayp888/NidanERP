@@ -183,7 +183,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.Close = "No";
                 //enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
-                enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry);
+                enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
 
             }
             var viewModel = new EnquiryViewModel
@@ -211,7 +211,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            bool isSuperAdmin = User.IsSuperAdmin();
             var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }

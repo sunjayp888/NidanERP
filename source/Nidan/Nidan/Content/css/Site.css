@@ -17,6 +17,11 @@
 .user-profile-icon {
   width: 20px;
 }
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #2A3F54 !important;
+  border-color: #245580;
+}
 .table tr td:hover {
   cursor: pointer;
 }
@@ -29,10 +34,6 @@
   color: grey !important;
   opacity: 0.5;
 }
-.btn-default.active.focus {
-    color: black !important;
-}
-
 .disabled-button {
   pointer-events: none;
   cursor: default;
@@ -327,11 +328,16 @@
   border-radius: 5px 0 0 5px !important;
   border-right: 1px dashed;
 }
+.scrollable-menu {
+  height: auto;
+  max-height: 200px !important;
+  overflow-x: hidden !important;
+}
 .divisionbuilding {
   height: 240px !important;
   overflow-y: auto !important;
-  border: none!important;
-  background-color: transparent!important;
+  border: none !important;
+  background-color: transparent !important;
 }
 .divisionbuilding table td {
   text-align: left !important;
@@ -339,7 +345,7 @@
 }
 .divisionbuilding table th {
   text-align: left !important;
-  background-color: #fff!important;
+  background-color: #fff !important;
 }
 @media (max-width: 767px) {
   .absences-row .absence .ng-binding {

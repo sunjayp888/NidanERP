@@ -1241,9 +1241,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
         }
 
-        public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int courseId)
+        public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId)
         {
-            return _nidanDataService.RetrieveCourses(organisationId, a => !a.CentreCourses.Any(d => d.CourseId == courseId), null, null).Items.ToList();
+            return _nidanDataService.RetrieveCourses(organisationId, a => !a.CentreCourses.Any(d => d.CentreId == centreId), null, null).Items.ToList();
         }
 
         public PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
@@ -1412,7 +1412,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);
         }
 
-        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry)
+        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> cousreIds)
         {
             //update follow Up
             var enquiryFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
@@ -1433,6 +1433,10 @@ namespace Nidan.Business
                 counselling.FollowUpDate = enquiry.FollowUpDate ?? enquiryFollowUp.FollowUpDateTime.AddDays(2);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
+
+            // Create EnquiryCourse If not added on create
+            if (!enquiry.EnquiryCourses.Any() && cousreIds.Any())
+                CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, cousreIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
 
@@ -1643,6 +1647,12 @@ namespace Nidan.Business
             data.ReadDateTime = _today;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
+
+        public void DeleteCentreCourse(int organisationId, int centreId, int courseId)
+        {
+            _nidanDataService.Delete<CentreCourse>(organisationId, p => p.CentreId == centreId && p.CourseId == courseId);
+        }
+
 
         #endregion
 

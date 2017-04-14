@@ -872,6 +872,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Scheme)
                     .Include(p => p.Sector)
+                    .Include(p => p.CentreCourses)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1684,7 +1685,7 @@ namespace Nidan.Data
             using (var context = _databaseFactory.Create(organisationId))
             {
                 var items = context.Set<T>().Where(predicate).FirstOrDefault();
-                context.Set<T>().Remove(items);
+                if (items != null) context.Set<T>().Remove(items);
                 context.SaveChanges();
             }
         }
