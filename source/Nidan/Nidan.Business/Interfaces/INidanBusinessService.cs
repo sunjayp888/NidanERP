@@ -40,6 +40,7 @@ namespace Nidan.Business.Interfaces
         EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse employmentDepartment);
         SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse);
         SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
+        BatchTrainer CreateBatchTrainer(int organisationId, BatchTrainer batchTrainer);
         CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
 
 
@@ -157,6 +158,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
+        IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
 
 
         // Update
@@ -189,6 +191,7 @@ namespace Nidan.Business.Interfaces
         void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId);
         void DeleteSubjectCourse(int organisationId, int subjectId, int courseId);
         void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId);
+        void DeleteBatchTrainer(int organisationId, int batchId, int trainerId);
 
 
         //Document

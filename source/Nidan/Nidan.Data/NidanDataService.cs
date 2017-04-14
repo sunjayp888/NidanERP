@@ -1202,6 +1202,7 @@ namespace Nidan.Data
             {
                 return context
                     .CourseInstallments
+                    .Include(c=>c.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CourseInstallmentId == courseInstallmentId);
@@ -1621,6 +1622,22 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
+
+        public IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .BatchTrainers
+                    .Where(a => a.BatchId == batchId)
+                    .Include(e => e.Batch)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
         #endregion
 
         #region // Update

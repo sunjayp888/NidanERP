@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.DynamicData;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace Nidan.Models
 {
@@ -16,6 +17,18 @@ namespace Nidan.Models
         public SelectList Courses { get; set; }
         public SelectList Trainers { get; set; }
         public SelectList CourseInstallments { get; set; }
+        public List<int> SelectedTrainerIds
+        {
+            get
+            {
+                return JsonConvert.DeserializeObject<List<int>>(SelectedTrainerIdsJson);
+            }
+            set
+            {
+                SelectedTrainerIdsJson = JsonConvert.SerializeObject(value);
+            }
+        }
 
+        public string SelectedTrainerIdsJson { get; set; }
     }
 }
