@@ -25,6 +25,7 @@ namespace Nidan.Entity
             Batches = new HashSet<Batch>();
             BatchDays = new HashSet<BatchDay>();
             EnquiryCourses=new HashSet<EnquiryCourse>();
+            BatchTrainers = new HashSet<BatchTrainer>();
             CentreCourseInstallments=new HashSet<CentreCourseInstallment>();
             CentreSchemes=new HashSet<CentreScheme>();
             CentreSectors= new HashSet<CentreSector>();
@@ -88,6 +89,9 @@ namespace Nidan.Entity
         public virtual ICollection<EnquiryCourse> EnquiryCourses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchTrainer> BatchTrainers { get; set; }
+      
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreCourseInstallment> CentreCourseInstallments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -95,5 +99,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreSector> CentreSectors { get; set; }
+
     }
 }

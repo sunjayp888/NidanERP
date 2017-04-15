@@ -39,7 +39,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(10)]
-        public string BatchStartTimeSpan { get; set; }
+        public string BatchStartTimeSpan { get; set; } = "AM";
 
         public int BatchEndTimeHours { get; set; }
 
@@ -47,7 +47,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(10)]
-        public string BatchEndTimeSpan { get; set; }
+        public string BatchEndTimeSpan { get; set; } = "AM";
 
         [Column(TypeName = "date")]
         public DateTime AssesmentDate { get; set; }
@@ -102,6 +102,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchDay> BatchDays { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchTrainer> BatchTrainers { get; set; }
 
     }
 }

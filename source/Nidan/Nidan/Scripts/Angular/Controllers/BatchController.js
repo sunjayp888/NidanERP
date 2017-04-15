@@ -19,6 +19,12 @@
         vm.editBatch = editBatch;
         vm.courses = [];
         vm.retrieveCourses = retrieveCourses;
+        vm.fees = [];
+        vm.retrieveFees = retrieveFees;
+        vm.downPayments = [];
+        vm.retrieveFees = retrieveDownPayments;
+        vm.durations = [];
+        vm.retrieveDurations = retrieveDurations;
         //vm.searchMobilization = searchMobilization;
         vm.viewBatch = viewBatch;
         //vm.searchKeyword = "";
@@ -72,9 +78,27 @@
         }
 
 
-        function retrieveCourses(CourseInstallmentId) {
-            return BatchServiceService.retrieveCourses(CourseInstallmentId).then(function () {
+        function retrieveCourses(courseInstallmentId) {
+            return BatchService.retrieveCourses(courseInstallmentId).then(function () {
                 vm.courses = response.data;
+            });
+        };
+
+        function retrieveFees(courseInstallmentId) {
+            return BatchService.retrieveFees(courseInstallmentId).then(function () {
+                vm.fees = response.data;
+            });
+        };
+
+        function retrieveDownPayments(courseInstallmentId) {
+            return BatchService.retrieveDownPayments(courseInstallmentId).then(function () {
+                vm.downPayments = response.data;
+            });
+        };
+
+        function retrieveDurations(courseInstallmentId) {
+            return BatchService.retrieveDurations(courseInstallmentId).then(function () {
+                vm.durations = response.data;
             });
         };
 

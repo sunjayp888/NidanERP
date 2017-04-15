@@ -536,6 +536,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<SubjectTrainer>(organisationId, subjectTrainer);
         }
 
+        public BatchTrainer CreateBatchTrainer(int organisationId, BatchTrainer batchTrainer)
+        {
+            return _nidanDataService.Create<BatchTrainer>(organisationId, batchTrainer);
+        }
+
         public CentreCourse CreateCentreCourse(int organisationId, int centreId, int courseId)
         {
             var centreCourse = new CentreCourse()
@@ -1283,6 +1288,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveSubjectTrainers(organisationId, subjectId);
         }
 
+
+        public IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId)
+        {
+            return _nidanDataService.RetrieveBatchTrainers(organisationId, batchId);
+        }
+        
         public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId)
         {
 
@@ -1682,6 +1693,11 @@ namespace Nidan.Business
         public void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId)
         {
             _nidanDataService.Delete<SubjectTrainer>(organisationId, p => p.SubjectId == subjectId && p.TrainerId == trainerId);
+        }
+
+        public void DeleteBatchTrainer(int organisationId, int batchId, int trainerId)
+        {
+            _nidanDataService.Delete<BatchTrainer>(organisationId, p => p.BatchId == batchId && p.TrainerId == trainerId);
         }
 
 

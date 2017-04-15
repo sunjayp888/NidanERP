@@ -32,16 +32,17 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var viewModel = new BatchViewModel()
             {
                 Batch = new Batch(),
                 BatchDay = new BatchDay(),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
-                CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name")
+                CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
+                SelectedTrainerIds = new List<int> { }
             };
             return View(viewModel);
         }
@@ -54,6 +55,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
+            batchViewModel.Batch.CourseInstallment.Name = "Test";
+            batchViewModel.Batch.Course.Name = "Test";
             if (ModelState.IsValid)
             {
                 batchViewModel.Batch.OrganisationId = organisationId;
@@ -118,6 +121,12 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveBatches(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
         }
-        
+
+        [HttpPost]
+        public ActionResult GetCourse(int courseInstallmentId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCourseInstallment(UserOrganisationId, courseInstallmentId));
+        }
+
     }
 }
