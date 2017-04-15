@@ -1454,7 +1454,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);
         }
 
-        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> cousreIds)
+        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> courseIds)
         {
             //update follow Up
             var enquiryFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
@@ -1475,10 +1475,10 @@ namespace Nidan.Business
                 counselling.FollowUpDate = enquiry.FollowUpDate ?? enquiryFollowUp.FollowUpDateTime.AddDays(2);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
-
+            var enquiryCourses = RetrieveEnquiryCourses(organisationId, enquiry.EnquiryId);
             // Create EnquiryCourse If not added on create
-            if (!enquiry.EnquiryCourses.Any() && cousreIds.Any())
-                CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, cousreIds);
+            if (!enquiry.EnquiryCourses.Any() && courseIds.Any())
+                CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
 
@@ -1627,8 +1627,21 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, trainer);
         }
 
-        public Subject UpdateSubject(int organisationId, Subject subject)
+        public Subject UpdateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds)
         {
+            var subjectCourseId = RetrieveSubjectCourses(organisationId, subject.SubjectId);
+            if (subjectCourseId.Any() != courseIds.Any())
+            {
+                
+            }
+
+            // Create SubjectCourse If not added on create
+            if (!subject.SubjectCourses.Any() && courseIds.Any())
+                CreateSubjectCourse(organisationId, subject.SubjectId, courseIds);
+
+            // Create SubjectTrainer If not added on create
+            if (!subject.SubjectTrainers.Any() && trainerIds.Any())
+                CreateSubjectTrainer(organisationId, subject.SubjectId, trainerIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, subject);
         }
 

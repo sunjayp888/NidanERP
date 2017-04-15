@@ -1221,6 +1221,8 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
                     .Include(p => p.CourseType)
+                    .Include(p=>p.SubjectCourses)
+                    .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

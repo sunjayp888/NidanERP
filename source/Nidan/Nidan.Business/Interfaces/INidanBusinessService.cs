@@ -171,7 +171,7 @@ namespace Nidan.Business.Interfaces
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
         Personnel UpdatePersonnel(int organisationId, Personnel personnel);
-        Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> cousreIds);
+        Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> courseIds);
         Mobilization UpdateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> UpdateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         FollowUp UpdateFollowUp(int organisationId, FollowUp followUp);
@@ -185,7 +185,7 @@ namespace Nidan.Business.Interfaces
         Question UpdateQuestion(int organisationId, Question question);
         Event UpdateEvent(int organisationId, Event eventplan);
         Trainer UpdateTrainer(int organisationId, Trainer trainer);
-        Subject UpdateSubject(int organisationId, Subject subject);
+        Subject UpdateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds);
         Session UpdateSession(int organisationId, Session session);
         Room UpdateRoom(int organisationId, Room room);
         BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay);

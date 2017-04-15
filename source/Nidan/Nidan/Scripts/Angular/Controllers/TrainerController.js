@@ -23,6 +23,7 @@
         vm.searchMessage = "";
         vm.courses = [];
         vm.retrieveCourses = retrieveCourses;
+        vm.deleteSubjectTrainer = deleteSubjectTrainer;
         initialise();
 
         function initialise() {
@@ -80,6 +81,12 @@
                 vm.courses = response.data;
             });
         };
+
+        function deleteSubjectTrainer(subjectId, $item) {
+            return TrainerService.deleteSubjectTrainer(subjectId, $item.TrainerId)
+              .then(function () {
+              });
+        }
 
     }
 
