@@ -94,13 +94,13 @@
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
+    <Compile Include="CentreCourseInstallment.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
     <Compile Include="Counselling.cs" />
     <Compile Include="CounsellingSearchField.cs" />
     <Compile Include="Course.cs" />
-    <Compile Include="CourseFeeBreakUp.cs" />
     <Compile Include="CourseInstallment.cs" />
     <Compile Include="CourseSearchField.cs" />
     <Compile Include="CourseSubject.cs" />
@@ -131,7 +131,6 @@
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
-    <Compile Include="Model1.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
@@ -177,6 +176,7 @@
     <Compile Include="State.cs" />
     <Compile Include="StudentType.cs" />
     <Compile Include="Subject.cs" />
+    <Compile Include="SubjectCourse.cs" />
     <Compile Include="SubjectTrainer.cs" />
     <Compile Include="Taluka.cs" />
     <Compile Include="Template.cs" />

@@ -872,6 +872,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Scheme)
                     .Include(p => p.Sector)
+                    .Include(p => p.CentreCourses)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1180,6 +1181,7 @@ namespace Nidan.Data
                     .CourseInstallments
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.Course.CentreCourses)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1242,6 +1244,8 @@ namespace Nidan.Data
             {
                 return context
                     .Subjects
+                    .Include(p => p.SubjectCourses)
+                    .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.SubjectId == subjectId);
@@ -1628,13 +1632,130 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-
-                return context
+                     return context
                     .BatchTrainers
                     .Where(a => a.BatchId == batchId)
                     .Include(e => e.Batch)
                     .AsNoTracking()
                     .ToList();
+             }
+        }
+        public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreCourseInstallments
+                    .Include(p => p.Centre)
+                    .Include(p => p.CourseInstallment)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreCourseInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreSchemes
+                    .Include(p => p.Centre)
+                    .Include(p => p.Scheme)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreSchemeId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreSectors
+                    .Include(p => p.Centre)
+                    .Include(p => p.Sector)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreSectorId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<Scheme> RetrieveSchemes(int organisationId, Expression<Func<Scheme, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Schemes
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Sectors
+                    .Include(p => p.Organisation)
+                     .Include(p => p.Scheme)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 
@@ -1674,7 +1795,7 @@ namespace Nidan.Data
             using (var context = _databaseFactory.Create(organisationId))
             {
                 var items = context.Set<T>().Where(predicate).FirstOrDefault();
-                context.Set<T>().Remove(items);
+                if (items != null) context.Set<T>().Remove(items);
                 context.SaveChanges();
             }
         }

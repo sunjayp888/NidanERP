@@ -12,7 +12,7 @@
         var vm = this;
         vm.courses = [];
         vm.selectedCourses = [];
-        vm.courseInstallments=[];
+        vm.courseInstallments = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -26,7 +26,9 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveSectors = retrieveSectors;
+        vm.deleteEnquiryCourse = deleteEnquiryCourse;
         vm.Test = Test;
+        vm.type = "";
 
         initialise();
 
@@ -48,7 +50,7 @@
         }
 
         function Test(test) {
-            alert(test);
+            alert(vm.type);
         }
 
         function searchCourse(searchKeyword) {
@@ -101,6 +103,12 @@
                 vm.sectors = response.data;
             });
         };
+
+        function deleteEnquiryCourse(enquiryId, $item) {
+            return CourseService.deleteEnquiryCourse(enquiryId, $item.CourseId)
+              .then(function () {
+              });
+        }
     }
 
 })();

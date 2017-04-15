@@ -1,0 +1,11 @@
+﻿<div class="col-xs-12">
+    <ui-select multiple tagging ng-model="model.employmentTeams" class="form-control" on-remove="model.deleteEmploymentTeam($item)" on-select="model.createEmploymentTeam($item)"
+               @*ng-change="model.filterSelected()"*@
+               style="width:100%"
+               @*ng-disabled="model.organisationalChartViewmodel.PersonnelDetailFilter.Department.length <= 1"*@>
+        <ui-select-match placeholder="Select Team"><span class="square" ng-style="{'background-color' : '#' + $item.Hex }"></span> <span ng-bind-html="$item.Name"></span></ui-select-match>
+        <ui-select-choices repeat="Team in model.teams | filter:$select.search">
+            <span class="square" ng-style="{'background-color' : '#' + Team.Hex }"></span> <span ng-bind-html="Team.Name"></span>
+        </ui-select-choices>
+    </ui-select>
+</div>

@@ -81,6 +81,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreCourse> CentreCourses { get; set; }
         public virtual DbSet<SubjectCourse> SubjectCourses { get; set; }
         public virtual DbSet<BatchTrainer> BatchTrainers { get; set; }
+        public virtual DbSet<CentreCourseInstallment> CentreCourseInstallments { get; set; }
+        public virtual DbSet<CentreScheme> CentreSchemes { get; set; }
+        public virtual DbSet<CentreSector> CentreSectors { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

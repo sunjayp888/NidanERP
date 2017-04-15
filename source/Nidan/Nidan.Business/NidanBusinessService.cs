@@ -552,6 +552,38 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreCourse>(organisationId, centreCourse);
         }
 
+        public CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
+        {
+            var centreCourseInstallment = new CentreCourseInstallment()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                CourseInstallmentId = courseInstallmentId
+            };
+            return _nidanDataService.Create<CentreCourseInstallment>(organisationId, centreCourseInstallment);
+        }
+
+        public CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId)
+        {
+            var centreScheme = new CentreScheme()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                SchemeId = schemeId
+            };
+            return _nidanDataService.Create<CentreScheme>(organisationId, centreScheme);
+        }
+
+        public CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId)
+        {
+            var centreSector = new CentreSector()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                SectorId = sectorId
+            };
+            return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
+        }
 
         #endregion
 
@@ -1236,9 +1268,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
         }
 
-        public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int courseId)
+        public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId)
         {
-            return _nidanDataService.RetrieveCourses(organisationId, a => !a.CentreCourses.Any(d => d.CourseId == courseId), null, null).Items.ToList();
+            return _nidanDataService.RetrieveCourses(organisationId, a => !a.CentreCourses.Any(d => d.CentreId == centreId), null, null).Items.ToList();
         }
 
         public PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
@@ -1256,9 +1288,45 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveSubjectTrainers(organisationId, subjectId);
         }
 
+
         public IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId)
         {
             return _nidanDataService.RetrieveBatchTrainers(organisationId, batchId);
+        }
+        
+        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId)
+        {
+
+            return
+                _nidanDataService.RetrieveCourseInstallments(organisationId,
+                a => !a.CentreCourseInstallments.Any(d => d.CentreId == centreId) && a.Course.CentreCourses.Any(e => e.CentreId == centreId)
+                )
+                    .Items.ToList();
+        }
+
+        public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging);
+        }
+
+        public IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int schemeId)
+        {
+            return _nidanDataService.RetrieveSchemes(organisationId, a => !a.CentreSchemes.Any(d => d.SchemeId == schemeId), null, null).Items.ToList();
+        }
+
+        public PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreSchemes(organisationId, centreId, orderBy, paging);
+        }
+
+        public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int sectorId)
+        {
+            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.SectorId == sectorId), null, null).Items.ToList();
+        }
+
+        public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreSectors(organisationId, centreId, orderBy, paging);
         }
 
         #endregion
@@ -1399,7 +1467,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);
         }
 
-        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry)
+        public Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> cousreIds)
         {
             //update follow Up
             var enquiryFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
@@ -1420,6 +1488,10 @@ namespace Nidan.Business
                 counselling.FollowUpDate = enquiry.FollowUpDate ?? enquiryFollowUp.FollowUpDateTime.AddDays(2);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
+
+            // Create EnquiryCourse If not added on create
+            if (!enquiry.EnquiryCourses.Any() && cousreIds.Any())
+                CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, cousreIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
 
@@ -1635,6 +1707,12 @@ namespace Nidan.Business
             data.ReadDateTime = _today;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, data);
         }
+
+        public void DeleteCentreCourse(int organisationId, int centreId, int courseId)
+        {
+            _nidanDataService.Delete<CentreCourse>(organisationId, p => p.CentreId == centreId && p.CourseId == courseId);
+        }
+
 
         #endregion
 
