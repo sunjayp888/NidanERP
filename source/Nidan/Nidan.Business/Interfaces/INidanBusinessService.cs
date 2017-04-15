@@ -16,7 +16,7 @@ namespace Nidan.Business.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
-        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays);
+        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
         BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
         void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
@@ -180,7 +180,7 @@ namespace Nidan.Business.Interfaces
         Centre UpdateCentre(int organisationId, Centre centre);
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
         RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
-        Batch UpdateBatch(int organisationId, Batch batch);
+        Batch UpdateBatch(int organisationId, Batch batch, List<int> trainerIds);
         Admission UpdateAdmission(int organisationId, Admission admission);
         Course UpdateCourse(int organisationId, Course course);
         CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);

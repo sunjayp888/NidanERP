@@ -55,14 +55,14 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
-            batchViewModel.Batch.CourseInstallment.Name = "Test";
-            batchViewModel.Batch.Course.Name = "Test";
+            batchViewModel.CourseInstallment.Name = "Test";
+            batchViewModel.Course.Name = "Test";
             if (ModelState.IsValid)
             {
                 batchViewModel.Batch.OrganisationId = organisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
 
-                batchViewModel.Batch = NidanBusinessService.CreateBatch(organisationId, batchViewModel.Batch, batchViewModel.BatchDay);
+                batchViewModel.Batch = NidanBusinessService.CreateBatch(organisationId, batchViewModel.Batch, batchViewModel.BatchDay,batchViewModel.SelectedTrainerIds);
                 return RedirectToAction("Index");
             }
             batchViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
@@ -91,6 +91,7 @@ namespace Nidan.Controllers
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => true).ToList(), "TrainerId", "Name"),
                 CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => true).ToList(), "CourseInstallmentId", "Name"),
+                SelectedTrainerIds = batch?.BatchTrainers.Select(e => e.TrainerId).ToList()
             };
             return View(viewModel);
         }
@@ -104,7 +105,7 @@ namespace Nidan.Controllers
             {
                 batchViewModel.Batch.OrganisationId = UserOrganisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
-                batchViewModel.Batch = NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch);
+                batchViewModel.Batch = NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch,batchViewModel.SelectedTrainerIds);
                 batchViewModel.BatchDay = NidanBusinessService.UpdateBatchDay(UserOrganisationId, batchViewModel.BatchDay);
                 return RedirectToAction("Index");
             }

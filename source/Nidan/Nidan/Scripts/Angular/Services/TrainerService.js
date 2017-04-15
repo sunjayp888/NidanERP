@@ -10,7 +10,8 @@
     function TrainerService($http) {
         var service = {
             retrieveTrainers: retrieveTrainers,
-            searchTrainer: searchTrainer
+            searchTrainer: searchTrainer,
+            deleteBatchTrainer: deleteBatchTrainer
         };
 
         return service;
@@ -34,6 +35,15 @@
                 orderBy: new Array(OrderBy)
             };
 
+            return $http.post(url, data);
+        }
+
+        function deleteBatchTrainer(batchId, trainerId) {
+            var url = "/BatchTrainer/Delete",
+              data = {
+                  batchId: batchId,
+                  trainerId: trainerId
+              };
             return $http.post(url, data);
         }
     }

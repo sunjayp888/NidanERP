@@ -13,8 +13,8 @@
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
-                    @Html.HiddenFor(model => model.Batch.CourseInstallment.Name)
-                    @Html.HiddenFor(model => model.Batch.Course.Name)
+                    @Html.HiddenFor(model => model.CourseInstallment.Name)
+                    @Html.HiddenFor(model => model.Course.Name)
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -96,9 +96,9 @@
                 success: function (result) {
                     $("#Batch_CourseId").empty();
                     $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                    $("#Batch_Course_Duration").val(result.Course.Duration);
-                    $("#Batch_CourseInstallment_Fee").val(result.Fee);
-                    $("#Batch_CourseInstallment_DownPayment").val(result.DownPayment);
+                    $("#Course_Duration").val(result.Course.Duration);
+                    $("#CourseInstallment_Fee").val(result.Fee);
+                    $("#CourseInstallment_DownPayment").val(result.DownPayment);
                 },
                 async: true,
                 processData: false
@@ -150,14 +150,14 @@
         });
 
         function check() {
-            if ($('ul input[type=checkbox]:checked').length <= 0) {
+            if ($('ul input[type=checkbox]:not("checked")').length == 0) {
                 alert("Please Select Atleast Any One Day");
-            } 
+            }
         }
 
         $("#countbutton")
             .click(function () {
-                var courseDuration = $("#Batch_Course_Duration").val();
+                var courseDuration = $("#Course_Duration").val();
                 var hours = $("#Batch_NoOfHoursDaily").val();
                 var checkboxcount = $("[type='checkbox']:checked").length - 1;
                 var perweek = checkboxcount * hours;
@@ -183,8 +183,8 @@
         $('.twelveth-installment-textbox').hide();
         $("#addbutton")
             .click(function () {
-                var fee = $("#Batch_CourseInstallment_Fee").val();
-                var dp = $("#Batch_CourseInstallment_DownPayment").val();
+                var fee = $("#CourseInstallment_Fee").val();
+                var dp = $("#CourseInstallment_DownPayment").val();
                 var noofinstallment = $("#Batch_NoOfInstallment").val();
                 if (!fee || !dp)
                     return false; // Wait till both values are set
