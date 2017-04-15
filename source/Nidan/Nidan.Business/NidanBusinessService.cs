@@ -558,6 +558,28 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreCourseInstallment>(organisationId, centreCourseInstallment);
         }
 
+        public CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId)
+        {
+            var centreScheme = new CentreScheme()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                SchemeId = schemeId
+            };
+            return _nidanDataService.Create<CentreScheme>(organisationId, centreScheme);
+        }
+
+        public CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId)
+        {
+            var centreSector = new CentreSector()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                SectorId = sectorId
+            };
+            return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
+        }
+
         #endregion
 
         #region // Retrieve
@@ -1274,6 +1296,26 @@ namespace Nidan.Business
         public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging);
+        }
+
+        public IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int schemeId)
+        {
+            return _nidanDataService.RetrieveSchemes(organisationId, a => !a.CentreSchemes.Any(d => d.SchemeId == schemeId), null, null).Items.ToList();
+        }
+
+        public PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreSchemes(organisationId, centreId, orderBy, paging);
+        }
+
+        public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int sectorId)
+        {
+            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.SectorId == sectorId), null, null).Items.ToList();
+        }
+
+        public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreSectors(organisationId, centreId, orderBy, paging);
         }
 
         #endregion
