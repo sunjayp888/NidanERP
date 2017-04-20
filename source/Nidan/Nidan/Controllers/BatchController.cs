@@ -39,6 +39,14 @@ namespace Nidan.Controllers
             {
                 Batch = new Batch(),
                 BatchDay = new BatchDay(),
+                Course = new Course()
+                {
+                   Name = "Test"
+                },
+                CourseInstallment = new CourseInstallment()
+                {
+                    Name = "Test"
+                },
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
@@ -55,8 +63,6 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
-            batchViewModel.CourseInstallment.Name = "Test";
-            batchViewModel.Course.Name = "Test";
             if (ModelState.IsValid)
             {
                 batchViewModel.Batch.OrganisationId = organisationId;

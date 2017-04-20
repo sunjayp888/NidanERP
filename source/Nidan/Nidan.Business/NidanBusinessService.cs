@@ -104,11 +104,11 @@ namespace Nidan.Business
         {
             var data = _nidanDataService.CreateBatch(organisationId, batch);
             CreateBatchDay(organisationId, data.BatchId, data.CentreId, batchDays);
-            CreateBatchTrainer(organisationId, data.BatchId, trainerIds);
+            CreateBatchTrainer(organisationId, data.CentreId,data.BatchId, trainerIds);
             return data;
         }
 
-        private void CreateBatchTrainer(int organisationId, int batchId, List<int> trainerIds)
+        private void CreateBatchTrainer(int organisationId,int centreId, int batchId, List<int> trainerIds)
         {
 
             //Create Department Employment
@@ -117,6 +117,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 BatchId = batchId,
                 TrainerId = item,
+                CentreId = centreId
             }).ToList();
             _nidanDataService.Create<BatchTrainer>(organisationId, batchTrainer);
 
@@ -1678,7 +1679,7 @@ namespace Nidan.Business
         public Batch UpdateBatch(int organisationId, Batch batch, List<int> trainerIds)
         {
             if (!batch.BatchTrainers.Any() && trainerIds.Any())
-                CreateBatchTrainer(organisationId, batch.BatchId, trainerIds);
+                CreateBatchTrainer(organisationId, batch.CentreId,batch.BatchId, trainerIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
         }
 

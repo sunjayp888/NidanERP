@@ -1261,6 +1261,7 @@ namespace Nidan.Data
                 return context
                     .Batches
                     .AsNoTracking()
+                    .Include(p=>p.BatchTrainers)
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchId == batchId);
 
@@ -1300,7 +1301,6 @@ namespace Nidan.Data
                     .Batches
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
-                    .Include(p => p.Trainer)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

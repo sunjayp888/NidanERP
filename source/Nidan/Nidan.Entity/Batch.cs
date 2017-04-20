@@ -94,8 +94,6 @@ namespace Nidan.Entity
 
         public virtual Course Course { get; set; }
 
-        public virtual Trainer Trainer { get; set; }
-
         public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
