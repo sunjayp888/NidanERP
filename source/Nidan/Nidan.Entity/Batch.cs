@@ -9,6 +9,12 @@ namespace Nidan.Entity
     [Table("Batch")]
     public partial class Batch
     {
+        public Batch()
+        {
+            BatchDays=new HashSet<BatchDay>();
+            Admissions=new HashSet<Admission>();
+        }
+
         public int BatchId { get; set; }
 
         [Required]
@@ -103,5 +109,7 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchDay> BatchDays { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

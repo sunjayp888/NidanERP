@@ -321,11 +321,6 @@ namespace Nidan.Business
             }
         }
 
-        public Admission CreateAdmission(int organisationId, Admission admission)
-        {
-            return _nidanDataService.CreateAdmission(organisationId, admission);
-        }
-
         public Counselling CreateCounselling(int organisationId, Counselling counselling)
         {
             var data = _nidanDataService.Create<Counselling>(organisationId, counselling);
@@ -579,6 +574,16 @@ namespace Nidan.Business
             };
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
+
+        public Admission CreateAdmission(int organisationId, Admission admission)
+        {
+            return _nidanDataService.CreateAdmission(organisationId, admission);
+        }
+
+        //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
+        //{
+        //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
+        //}
 
         #endregion
 
@@ -1316,6 +1321,11 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreSectors(organisationId, centreId, orderBy, paging);
         }
 
+        public PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAdmissions(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -1431,17 +1441,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCounselling(organisationId, id, p => true);
         }
 
-        public PagedResult<Admission> RetrieveAdmissions(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate)
         {
-            return _nidanDataService.RetrieveAdmissions(organisationId, p => true, orderBy, paging);
-        }
-
-        public Admission RetrieveAdmission(int organisationId, int admissionId,
-            Expression<Func<Admission, bool>> predicate)
-        {
-            var admission = _nidanDataService.RetrieveAdmission(organisationId, admissionId, p => true);
-            return admission;
+            return _nidanDataService.RetrieveAdmission(organisationId, admissionId, p => true);
         }
 
         public Admission RetrieveAdmission(int organisationId, int id)
@@ -1596,12 +1598,6 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
         }
 
-
-        public Admission UpdateAdmission(int organisationId, Admission admission)
-        {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
-        }
-
         public Course UpdateCourse(int organisationId, Course course)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, course);
@@ -1658,6 +1654,11 @@ namespace Nidan.Business
         public BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
+        }
+
+        public Admission UpdateAdmission(int organisationId, Admission admission)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 
         public Batch UpdateBatch(int organisationId, Batch batch)
