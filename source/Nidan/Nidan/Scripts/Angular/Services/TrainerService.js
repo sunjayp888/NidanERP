@@ -11,6 +11,7 @@
         var service = {
             retrieveTrainers: retrieveTrainers,
             searchTrainer: searchTrainer,
+            deleteSubjectTrainer: deleteSubjectTrainer,
             deleteBatchTrainer: deleteBatchTrainer
         };
 
@@ -35,6 +36,16 @@
                 orderBy: new Array(OrderBy)
             };
 
+            return $http.post(url, data);
+        }
+
+
+        function deleteSubjectTrainer(subjectId, trainerId) {
+            var url = "/SubjectTrainer/Delete",
+              data = {
+                  subjectId: subjectId,
+                  trainerId: trainerId
+              };
             return $http.post(url, data);
         }
 

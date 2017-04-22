@@ -46,7 +46,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<StudentType> StudentTypes { get; set; }
         public virtual DbSet<Counselling> Counsellings { get; set; }
         public virtual DbSet<Batch> Batches { get; set; }
-        public virtual DbSet<Admission> Admissions { get; set; }
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<Taluka> Talukas { get; set; }
@@ -84,6 +83,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreCourseInstallment> CentreCourseInstallments { get; set; }
         public virtual DbSet<CentreScheme> CentreSchemes { get; set; }
         public virtual DbSet<CentreSector> CentreSectors { get; set; }
+        public virtual DbSet<Admission> Admissions { get; set; }
+        public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -668,85 +669,6 @@ namespace Nidan.Data.Models
             //    .Property(e => e.RemarkByBranchManager)
             //    .IsUnicode(false);
 
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.Salutation)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.FirstName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.MiddleName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.LastName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmailId)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.Gender)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.FatherName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PermanentAddress)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PTalukaId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PDistrictId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PStateId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CommunicationAddress)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CTalukaId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CDistrictId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.CStateId);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.ProfessionalQualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.TechnicalQualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PreTrainingStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmploymentStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmployerName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.EmployerAddress)
-                .IsUnicode(false);
-
             modelBuilder.Entity<District>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -1106,6 +1028,26 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CourseInstallment>()
                .Property(e => e.Name)
                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                 .Property(e => e.Particulars)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.PaymentType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.ChequeNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Admission>()
+                .Property(e => e.FinancialYear)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

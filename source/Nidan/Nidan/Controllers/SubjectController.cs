@@ -111,7 +111,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 subjectViewModel.Subject.OrganisationId = UserOrganisationId;
-                subjectViewModel.Subject = NidanBusinessService.UpdateSubject(UserOrganisationId, subjectViewModel.Subject);
+                subjectViewModel.Subject = NidanBusinessService.UpdateSubject(UserOrganisationId, subjectViewModel.Subject,subjectViewModel.SelectedCourseIds,subjectViewModel.SelectedTrainerIds);
                 return RedirectToAction("Edit", new { id = subjectViewModel.Subject.SubjectId });
             }
             var viewModel = new SubjectViewModel

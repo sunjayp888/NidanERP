@@ -27,6 +27,7 @@
         vm.searchMessage = "";
         vm.retrieveSectors = retrieveSectors;
         vm.deleteEnquiryCourse = deleteEnquiryCourse;
+        vm.deleteSubjectCourse = deleteSubjectCourse;
         vm.Test = Test;
         vm.type = "";
 
@@ -106,6 +107,12 @@
 
         function deleteEnquiryCourse(enquiryId, $item) {
             return CourseService.deleteEnquiryCourse(enquiryId, $item.CourseId)
+              .then(function () {
+              });
+        }
+
+        function deleteSubjectCourse(subjectId, $item) {
+            return CourseService.deleteSubjectCourse(subjectId, $item.CourseId)
               .then(function () {
               });
         }

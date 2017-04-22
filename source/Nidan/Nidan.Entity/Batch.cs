@@ -11,6 +11,8 @@ namespace Nidan.Entity
     {
         public Batch()
         {
+            BatchDays=new HashSet<BatchDay>();
+            Admissions=new HashSet<Admission>();
             BatchTrainers=new HashSet<BatchTrainer>();
         }
 
@@ -111,7 +113,11 @@ namespace Nidan.Entity
         public virtual ICollection<BatchDay> BatchDays { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchTrainer> BatchTrainers { get; set; }
+
 
     }
 }

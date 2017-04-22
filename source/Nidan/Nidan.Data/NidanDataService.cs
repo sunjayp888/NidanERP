@@ -71,17 +71,6 @@ namespace Nidan.Data
             }
         }
 
-        public Admission CreateAdmission(int organisationId, Admission admission)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                admission = context.Admissions.Add(admission);
-                context.SaveChanges();
-
-                return admission;
-            }
-        }
-
         public Batch CreateBatch(int organisationId, Batch batch)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -256,6 +245,17 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return batchDay;
+            }
+        }
+
+        public Admission CreateAdmission(int organisationId, Admission admission)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                admission = context.Admissions.Add(admission);
+                context.SaveChanges();
+
+                return admission;
             }
         }
 
@@ -927,43 +927,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Admissions
-                    .Include(p => p.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "AdmissionDate",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .Admissions
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.AdmissionId == admissionId);
-
-            }
-        }
-
         public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1223,6 +1186,8 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
                     .Include(p => p.CourseType)
+                    .Include(p=>p.SubjectCourses)
+                    .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1758,6 +1723,43 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Admissions
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Admissions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.AdmissionId == admissionId);
+
             }
         }
 

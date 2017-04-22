@@ -1,7 +1,7 @@
 USE [NidanProd]
 GO
 
-/****** Object:  Table [dbo].[Batch]    Script Date: 14/04/2017 02:27:07 PM ******/
+/****** Object:  Table [dbo].[Batch]    Script Date: 22/04/2017 04:07:02 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -47,6 +47,7 @@ CREATE TABLE [dbo].[Batch](
 	[TenthInstallment] [int] NULL,
 	[EleventhInstallment] [int] NULL,
 	[TwelvethInstallment] [int] NULL,
+	[RoomId] [int] NULL,
  CONSTRAINT [PK_Batch] PRIMARY KEY CLUSTERED 
 (
 	[BatchId] ASC
@@ -86,11 +87,11 @@ GO
 ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Organisation]
 GO
 
-ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Trainer] FOREIGN KEY([TrainerId])
-REFERENCES [dbo].[Trainer] ([TrainerId])
+ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Room] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Room] ([RoomId])
 GO
 
-ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Trainer]
+ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Room]
 GO
 
 

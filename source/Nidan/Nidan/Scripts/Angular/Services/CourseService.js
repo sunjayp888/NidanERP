@@ -13,7 +13,8 @@
             canDeleteCourse: canDeleteCourse,
             deleteCourse: deleteCourse,
             searchCourse: searchCourse,
-            deleteEnquiryCourse: deleteEnquiryCourse
+            deleteEnquiryCourse: deleteEnquiryCourse,
+            deleteSubjectCourse: deleteSubjectCourse
         };
 
         return service;
@@ -58,6 +59,15 @@
             var url = "/EnquiryCourse/Delete",
               data = {
                   enquiryId: enquiryId,
+                  courseId: courseId
+              };
+            return $http.post(url, data);
+        }
+
+        function deleteSubjectCourse(subjectId, courseId) {
+            var url = "/SubjectCourse/Delete",
+              data = {
+                  subjectId: subjectId,
                   courseId: courseId
               };
             return $http.post(url, data);
