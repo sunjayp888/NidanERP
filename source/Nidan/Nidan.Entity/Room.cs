@@ -29,8 +29,6 @@ namespace Nidan.Entity
         [StringLength(50)]
         public string OccupiedEndTime { get; set; }
 
-        public int? BatchId { get; set; }
-
         public int RoomTypeId { get; set; }
 
         public int Capacity { get; set; }
@@ -41,13 +39,14 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        public virtual Batch Batch { get; set; }
-
         public virtual RoomType RoomType { get; set; }
 
         public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Batch> Batches { get; set; }
 
     }
 }

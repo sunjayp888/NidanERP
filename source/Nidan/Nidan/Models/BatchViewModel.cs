@@ -13,8 +13,11 @@ namespace Nidan.Models
     public class BatchViewModel : BaseViewModel
     {
         public Batch Batch { get; set; }
+        public CourseInstallment CourseInstallment { get; set; }
+        public Course Course { get; set; }
         public BatchDay BatchDay { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Rooms { get; set; }
         public SelectList Trainers { get; set; }
         public SelectList CourseInstallments { get; set; }
         public List<int> SelectedTrainerIds

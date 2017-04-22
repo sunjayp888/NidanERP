@@ -100,11 +100,27 @@ namespace Nidan.Business
             return _nidanDataService.CreateCentre(organisationId, centre);
         }
 
-        public Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays)
+        public Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds)
         {
             var data = _nidanDataService.CreateBatch(organisationId, batch);
             CreateBatchDay(organisationId, data.BatchId, data.CentreId, batchDays);
+            CreateBatchTrainer(organisationId, data.CentreId,data.BatchId, trainerIds);
             return data;
+        }
+
+        private void CreateBatchTrainer(int organisationId,int centreId, int batchId, List<int> trainerIds)
+        {
+
+            //Create Department Employment
+            var batchTrainer = trainerIds.Select(item => new BatchTrainer()
+            {
+                OrganisationId = organisationId,
+                BatchId = batchId,
+                TrainerId = item,
+                CentreId = centreId
+            }).ToList();
+            _nidanDataService.Create<BatchTrainer>(organisationId, batchTrainer);
+
         }
 
         public BatchDay CreateBatchDay(int organisationId, BatchDay batchDay)
@@ -954,6 +970,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, predicate);
         }
 
+        public List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Room>(organisationId,predicate);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
             Expression<Func<CasteCategory, bool>> predicate)
         {
@@ -1660,9 +1681,13 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
         }
 
-        public Batch UpdateBatch(int organisationId, Batch batch)
+        public Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
+           var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
+            if (!batch.BatchTrainers.Any() && trainerIds.Any())
+                CreateBatchTrainer(organisationId, batch.CentreId,batch.BatchId, trainerIds);
+            UpdateBatchDay(organisationId ,batchDays);
+            return data;
         }
 
         #endregion

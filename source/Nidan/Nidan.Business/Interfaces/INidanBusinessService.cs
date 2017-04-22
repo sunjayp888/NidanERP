@@ -16,7 +16,7 @@ namespace Nidan.Business.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
-        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays);
+        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
         BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
         void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
@@ -93,6 +93,7 @@ namespace Nidan.Business.Interfaces
         List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate);
         List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate);
+        List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -180,7 +181,7 @@ namespace Nidan.Business.Interfaces
         Centre UpdateCentre(int organisationId, Centre centre);
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
         RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
-        Batch UpdateBatch(int organisationId, Batch batch);
+        Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
         Admission UpdateAdmission(int organisationId, Admission admission);
         Course UpdateCourse(int organisationId, Course course);
         CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);

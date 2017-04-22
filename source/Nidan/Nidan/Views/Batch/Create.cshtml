@@ -13,8 +13,8 @@
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
-                    @Html.HiddenFor(model => model.Batch.CourseInstallment.Name)
-                    @Html.HiddenFor(model => model.Batch.Course.Name)
+                    @Html.HiddenFor(model => model.CourseInstallment.Name)
+                    @Html.HiddenFor(model => model.Course.Name)
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -29,7 +29,7 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button id="btnsubmit"type="submit" class="btn btn-success" disabled="disabled">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -55,6 +55,8 @@
         $("#Batch_BatchEndTimeMinutes").val("");
         $("#Batch_Month").val("");
         $("#Batch_NoOfInstallment").val("");
+        $("#CourseInstallment_Fee").val("");
+        $("#CourseInstallment_DownPayment").val("");
         var daterangepickerOptions = {
             autoApply: true,
             singleDatePicker: true,
@@ -63,72 +65,145 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function () {
+            onSelect: function() {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
-        jQuery(function () {
+        jQuery(function() {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function (ev, picker) {
+                    function(ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
 
         //=========================================================================populate course
 
-        $('#Batch_CourseInstallmentId').change(function () {
-            var courseInstallmentId = $('#Batch_CourseInstallmentId :selected').val();
-            $.ajax({
-                url: '/Batch/GetCourse',
-                type: 'POST',
-                data: JSON.stringify({ courseInstallmentId: courseInstallmentId }),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    $("#Batch_CourseId").empty();
-                    $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                    $("#Batch_Course_Duration").val(result.Course.Duration);
-                    $("#Batch_CourseInstallment_Fee").val(result.Fee);
-                    $("#Batch_CourseInstallment_DownPayment").val(result.DownPayment);
-                },
-                async: true,
-                processData: false
+        $('#Batch_CourseInstallmentId')
+            .change(function() {
+                var courseInstallmentId = $('#Batch_CourseInstallmentId :selected').val();
+                $.ajax({
+                    url: '/Batch/GetCourse',
+                    type: 'POST',
+                    data: JSON.stringify({ courseInstallmentId: courseInstallmentId }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.statusText);
+                    },
+                    success: function(result) {
+                        $("#Batch_CourseId").empty();
+                        $("#Batch_CourseId")
+                            .append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
+                        $("#Course_Duration").val(result.Course.Duration);
+                        $("#CourseInstallment_Fee").val(result.Fee);
+                        $("#CourseInstallment_DownPayment").val(result.DownPayment);
+                    },
+                    async: true,
+                    processData: false
+                });
             });
-        });
         //=======================================================================Do not allow decimal
-        $(document).ready(function () {
-            /* Allow digits only */
-            $(".batchStartTime").keypress(function (e) {
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
-                    return false;
-                }
+        $(document)
+            .ready(function() {
+                /* Allow digits only */
+                $(".batchStartTime")
+                    .keypress(function(e) {
+                        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                            $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
+                            return false;
+                        }
+                    });
+                /* Do not allow paste */
+                $('.batchStartTime')
+                    .bind("paste",
+                        function(e) {
+                            e.preventDefault();
+                        });
             });
-            /* Do not allow paste */
-            $('.batchStartTime').bind("paste", function (e) {
-                e.preventDefault();
-            });
-        });
+        //========================================================================= do not allow 0 in number of hours
+
+        $("#Batch_NoOfHoursDaily")
+            .on("keypress keyup",
+                function() {
+                    if ($(this).val() == '0') {
+                        $(this).val('');
+                    }
+                });
 
         //==================================================================== Calculate end Time
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
             var startMinutr = $("#Batch_BatchStartTimeMinutes").val();
+            var dailyhours = $("#Batch_NoOfHoursDaily").val();
 
             if (startHours == 12) {
-                var dailyHoursA = $("#Batch_NoOfHoursDaily").val();
-                var startHoursA = 0;
-                var endTimeA = parseInt(startHoursA) + parseInt(dailyHoursA);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTimeA;
+                var dailyHours12 = $("#Batch_NoOfHoursDaily").val();
+                var startHours12 = 0;
+                var endTime12 = parseInt(startHours12) + parseInt(dailyHours12);
+                document.getElementById('Batch_BatchEndTimeHours').value = endTime12;
+
+            } else if (startHours == 11) {
+
+                if (dailyhours == 1) {
+                    var startHours1 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime1 = parseInt(startHours1) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime1;
+                } else {
+                    var dailyHours11 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours11 = -1;
+                    var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
+                }
+
+            } else if (startHours == 10) {
+
+                if (dailyhours == 2 || dailyhours == 1) {
+                    var startHours2 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime2 = parseInt(startHours2) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime2;
+
+                } else {
+                    var dailyHours10 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours10 = -2;
+                    var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
+                }
+
+
+            } else if (startHours == 09 || startHours == 9) {
+
+                if (dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours4 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime4 = parseInt(startHours4) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime4;
+
+                } else {
+                    var dailyHours09 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours09 = -3;
+                    var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
+                }
+
+
+            } else if (startHours == 08 || startHours == 8) {
+
+                if (dailyhours == 4 || dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours5 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime5 = parseInt(startHours5) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime5;
+
+                } else {
+                    var dailyHours08 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours08 = -4;
+                    var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
+                }
 
             } else {
                 var dailyHoursB = $("#Batch_NoOfHoursDaily").val();
@@ -143,28 +218,51 @@
 
         //==================================================================== Calculation Of Month add holiday count
 
-        $(document).ready(function () {
-            $("#countbutton").click(function () {
-                check();
+        $(document)
+            .ready(function() {
+                $("#countbutton")
+                    .click(function() {
+                        check();
+                    });
             });
-        });
 
         function check() {
-            if ($('ul input[type=checkbox]:checked').length <= 0) {
+            if ($('ul input[type=checkbox]:checked').checked == 0) {
                 alert("Please Select Atleast Any One Day");
-            } 
+            }
         }
 
+        // ($(this).find('input[name="lineup[]"]:checked').length
+
         $("#countbutton")
-            .click(function () {
-                var courseDuration = $("#Batch_Course_Duration").val();
-                var hours = $("#Batch_NoOfHoursDaily").val();
-                var checkboxcount = $("[type='checkbox']:checked").length - 1;
-                var perweek = checkboxcount * hours;
-                var perMonth = perweek * 4;
-                var roundresult = courseDuration / perMonth;
-                var result = Math.round((roundresult * 100) / 100);
-                $("#Batch_Month").val(result);
+            .click(function() {
+                var checkboxlength = $("[type='checkbox']:checked").length - 1;
+
+                if (checkboxlength == 0) {
+                    alert("Please Select Atleast Any One Day");
+                } else if (checkboxlength > 0) {
+                    var courseDuration = $("#Course_Duration").val();
+                    var hours = $("#Batch_NoOfHoursDaily").val();
+                    var checkboxcount = $("[type='checkbox']:checked").length - 1;
+                    var perweek = checkboxcount * hours;
+                    var perMonth = perweek * 4;
+                    var roundresult = courseDuration / perMonth;
+                    var result = Math.round((roundresult * 100) / 100);
+                    $("#Batch_Month").val(result);
+                    var noofinstallment = result - 2;
+                    $("#Batch_NoOfInstallment").val(noofinstallment);
+                }
+
+                //===================================================No Of Installment Do not allow grater than Month
+                $("#Batch_NoOfInstallment")
+                    .keyup(function() {
+                        var noofinstallmentvalue = noofinstallment;
+                        var noofinstallmentext = $("#Batch_NoOfInstallment").val();
+                        if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+                            alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+                            $(this).val("");
+                        }
+                    });
             });
 
         //================================================================== Calculation Of Installment
@@ -182,9 +280,9 @@
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
         $("#addbutton")
-            .click(function () {
-                var fee = $("#Batch_CourseInstallment_Fee").val();
-                var dp = $("#Batch_CourseInstallment_DownPayment").val();
+            .click(function() {
+                var fee = $("#CourseInstallment_Fee").val();
+                var dp = $("#CourseInstallment_DownPayment").val();
                 var noofinstallment = $("#Batch_NoOfInstallment").val();
                 if (!fee || !dp)
                     return false; // Wait till both values are set
@@ -438,6 +536,12 @@
                     $("#Batch_TwelvethInstallment").val(value);
                 }
             });
+
+        $('#addbutton')
+            .click(function() { // on a click on the button with id 'one'
+                $("#btnsubmit").attr('disabled', false);
+            });
+
     </script>}
 
 
