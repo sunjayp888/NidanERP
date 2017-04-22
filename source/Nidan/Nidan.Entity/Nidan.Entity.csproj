@@ -94,6 +94,7 @@
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
+    <Compile Include="CentreCourseInstallment.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />

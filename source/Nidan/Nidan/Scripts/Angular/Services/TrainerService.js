@@ -11,7 +11,8 @@
         var service = {
             retrieveTrainers: retrieveTrainers,
             searchTrainer: searchTrainer,
-            deleteSubjectTrainer: deleteSubjectTrainer
+            deleteSubjectTrainer: deleteSubjectTrainer,
+            deleteBatchTrainer: deleteBatchTrainer
         };
 
         return service;
@@ -38,10 +39,20 @@
             return $http.post(url, data);
         }
 
+
         function deleteSubjectTrainer(subjectId, trainerId) {
             var url = "/SubjectTrainer/Delete",
               data = {
                   subjectId: subjectId,
+                  trainerId: trainerId
+              };
+            return $http.post(url, data);
+        }
+
+        function deleteBatchTrainer(batchId, trainerId) {
+            var url = "/BatchTrainer/Delete",
+              data = {
+                  batchId: batchId,
                   trainerId: trainerId
               };
             return $http.post(url, data);

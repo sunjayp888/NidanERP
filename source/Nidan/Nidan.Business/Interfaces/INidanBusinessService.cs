@@ -16,7 +16,7 @@ namespace Nidan.Business.Interfaces
         Mobilization CreateMobilization(int organisationId, Mobilization mobilization);
         ValidationResult<AreaOfInterest> CreateAreaOfInterest(int organisationId, AreaOfInterest areaOfInterest);
         Centre CreateCentre(int organisationId, Centre centre);
-        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays);
+        Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
         BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
         void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
@@ -39,6 +39,7 @@ namespace Nidan.Business.Interfaces
         EnquiryCourse CreateEnquiryCourse(int organisationId, EnquiryCourse employmentDepartment);
         SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse);
         SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
+        BatchTrainer CreateBatchTrainer(int organisationId, BatchTrainer batchTrainer);
         CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
@@ -93,6 +94,7 @@ namespace Nidan.Business.Interfaces
         List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId, Expression<Func<EventFunctionType, bool>> predicate);
         List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate);
+        List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -158,7 +160,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
-        IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int courseInstallmentId);
+        IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
+        IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId);
         PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int schemeId);
         PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
@@ -180,6 +183,8 @@ namespace Nidan.Business.Interfaces
         Counselling UpdateCounselling(int organisationId, Counselling counselling);
         RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Batch UpdateBatch(int organisationId, Batch batch);
+        Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
+        Admission UpdateAdmission(int organisationId, Admission admission);
         Course UpdateCourse(int organisationId, Course course);
         CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
         Question UpdateQuestion(int organisationId, Question question);
@@ -199,6 +204,7 @@ namespace Nidan.Business.Interfaces
         void DeleteEnquiryCourse(int organisationId, int enquiryId, int courseId);
         void DeleteSubjectCourse(int organisationId, int subjectId, int courseId);
         void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId);
+        void DeleteBatchTrainer(int organisationId, int batchId, int trainerId);
         void DeleteCentreCourse(int organisationId, int centreId, int courseId);
 
         //Document

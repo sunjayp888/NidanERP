@@ -115,6 +115,7 @@ namespace Nidan.Data.Interfaces
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null,Paging paging = null);
+        IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
         PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
@@ -122,7 +123,6 @@ namespace Nidan.Data.Interfaces
         PagedResult<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
-
 
         // Update
 

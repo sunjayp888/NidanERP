@@ -441,15 +441,15 @@
                                     {
                                         <td>
                                             <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isAbsencesAssignedToAbsencePolicyAbsenceType(absenceTypeEntitlement.AbsenceTypeId);">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true; model.isCentreCourseAssignToCentre(centreCourse.CourseId);">
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    <li>
+                                                    @*<li>
                                                         <a ng-click="$event.originalEvent.ngClickHandled = true; model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
                                                             Edit
                                                         </a>
-                                                    </li>
+                                                    </li>*@
                                                     <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
                                                     <li ng-hide="model.loadingActions">
                                                         <a ng-class="model.unassignCentreCourseClass(centreCourse)"
