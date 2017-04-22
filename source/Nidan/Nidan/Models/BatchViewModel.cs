@@ -17,6 +17,7 @@ namespace Nidan.Models
         public Course Course { get; set; }
         public BatchDay BatchDay { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Rooms { get; set; }
         public SelectList Trainers { get; set; }
         public SelectList CourseInstallments { get; set; }
         public List<int> SelectedTrainerIds

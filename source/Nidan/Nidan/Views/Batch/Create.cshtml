@@ -126,11 +126,21 @@
                             e.preventDefault();
                         });
             });
+        //========================================================================= do not allow 0 in number of hours
+
+        $("#Batch_NoOfHoursDaily")
+            .on("keypress keyup",
+                function() {
+                    if ($(this).val() == '0') {
+                        $(this).val('');
+                    }
+                });
 
         //==================================================================== Calculate end Time
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
             var startMinutr = $("#Batch_BatchStartTimeMinutes").val();
+            var dailyhours = $("#Batch_NoOfHoursDaily").val();
 
             if (startHours == 12) {
                 var dailyHours12 = $("#Batch_NoOfHoursDaily").val();
@@ -139,28 +149,61 @@
                 document.getElementById('Batch_BatchEndTimeHours').value = endTime12;
 
             } else if (startHours == 11) {
-                var dailyHours11 = $("#Batch_NoOfHoursDaily").val();
-                var startHours11 = -1;
-                var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
+
+                if (dailyhours == 1) {
+                    var startHours1 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime1 = parseInt(startHours1) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime1;
+                } else {
+                    var dailyHours11 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours11 = -1;
+                    var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
+                }
 
             } else if (startHours == 10) {
-                var dailyHours10 = $("#Batch_NoOfHoursDaily").val();
-                var startHours10 = -2;
-                var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
+
+                if (dailyhours == 2 || dailyhours == 1) {
+                    var startHours2 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime2 = parseInt(startHours2) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime2;
+
+                } else {
+                    var dailyHours10 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours10 = -2;
+                    var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
+                }
+
 
             } else if (startHours == 09 || startHours == 9) {
-                var dailyHours09 = $("#Batch_NoOfHoursDaily").val();
-                var startHours09 = -2;
-                var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
+
+                if (dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours4 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime4 = parseInt(startHours4) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime4;
+
+                } else {
+                    var dailyHours09 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours09 = -3;
+                    var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
+                }
+
 
             } else if (startHours == 08 || startHours == 8) {
-                var dailyHours08 = $("#Batch_NoOfHoursDaily").val();
-                var startHours08 = -2;
-                var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
+
+                if (dailyhours == 4 || dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours5 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime5 = parseInt(startHours5) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime5;
+
+                } else {
+                    var dailyHours08 = $("#Batch_NoOfHoursDaily").val();
+                    var startHours08 = -4;
+                    var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
+                }
 
             } else {
                 var dailyHoursB = $("#Batch_NoOfHoursDaily").val();
@@ -192,8 +235,8 @@
         // ($(this).find('input[name="lineup[]"]:checked').length
 
         $("#countbutton")
-            .click(function () {
-                var checkboxlength = $("[type='checkbox']:checked").length-1;
+            .click(function() {
+                var checkboxlength = $("[type='checkbox']:checked").length - 1;
 
                 if (checkboxlength == 0) {
                     alert("Please Select Atleast Any One Day");
@@ -209,16 +252,17 @@
                     var noofinstallment = result - 2;
                     $("#Batch_NoOfInstallment").val(noofinstallment);
                 }
-               
+
                 //===================================================No Of Installment Do not allow grater than Month
-                $("#Batch_NoOfInstallment").keyup(function () {
-                    var noofinstallmentvalue = noofinstallment;
-                    var noofinstallmentext = $("#Batch_NoOfInstallment").val();
-                    if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
-                        alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
-                        $(this).val("");
-                    } 
-                });
+                $("#Batch_NoOfInstallment")
+                    .keyup(function() {
+                        var noofinstallmentvalue = noofinstallment;
+                        var noofinstallmentext = $("#Batch_NoOfInstallment").val();
+                        if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+                            alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+                            $(this).val("");
+                        }
+                    });
             });
 
         //================================================================== Calculation Of Installment

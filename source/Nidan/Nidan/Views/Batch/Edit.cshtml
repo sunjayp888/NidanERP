@@ -27,6 +27,12 @@
                         }
                         @Html.HiddenFor(model => Model.Batch.BatchId)
                         @Html.HiddenFor(model => Model.Batch.CreatedDate)
+                        @Html.HiddenFor(model => model.CourseInstallment.Name)
+                        @Html.HiddenFor(model => model.Course.Name)
+                        @Html.HiddenFor(model => model.BatchDay.BatchDayId)
+                        @Html.HiddenFor(model => model.BatchDay.CentreId)
+                        @Html.HiddenFor(model => model.BatchDay.BatchId)
+                        @Html.HiddenFor(model => model.BatchDay.OrganisationId)
                         @Html.Partial("_Batch", Model)
                         <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -72,7 +78,6 @@
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
-
         //=========================================================================populate course
 
         $('#Batch_CourseInstallmentId')

@@ -1301,6 +1301,8 @@ namespace Nidan.Data
                     .Batches
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.BatchTrainers)
+                    .Include(p => p.Room)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

@@ -970,6 +970,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, predicate);
         }
 
+        public List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Room>(organisationId,predicate);
+        }
+
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
             Expression<Func<CasteCategory, bool>> predicate)
         {
@@ -1676,11 +1681,13 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
         }
 
-        public Batch UpdateBatch(int organisationId, Batch batch, List<int> trainerIds)
+        public Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds)
         {
+           var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
             if (!batch.BatchTrainers.Any() && trainerIds.Any())
                 CreateBatchTrainer(organisationId, batch.CentreId,batch.BatchId, trainerIds);
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
+            UpdateBatchDay(organisationId ,batchDays);
+            return data;
         }
 
         #endregion
