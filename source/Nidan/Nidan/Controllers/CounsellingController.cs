@@ -53,6 +53,7 @@ namespace Nidan.Controllers
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -110,7 +111,7 @@ namespace Nidan.Controllers
                     {
                         _documentService.Create(UserOrganisationId, UserCentreId,
                             counsellingViewModel.Document.DocumentTypeId, enquiryData.StudentCode,
-                            enquiryData.CandidateName, "Counselling Document", counsellingViewModel.Files[0].FileName,
+                            enquiryData.FirstName, "Counselling Document", counsellingViewModel.Files[0].FileName,
                             counsellingViewModel.Files[0].InputStream.ToBytes());
                     }
                     else

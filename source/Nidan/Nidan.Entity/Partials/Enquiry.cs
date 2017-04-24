@@ -12,9 +12,9 @@ namespace Nidan.Entity
     {
         private class EnquiryMetadata
         {
-            [Display(Name = "Candidate Name")]
-            [StringLength(500)]
-            public string CandidateName { get; set; }
+            //[Display(Name = "Candidate Name")]
+            //[StringLength(500)]
+            //public string CandidateName { get; set; }
 
             [Display(Name = "Contact No")]
             public long Mobile { get; set; }

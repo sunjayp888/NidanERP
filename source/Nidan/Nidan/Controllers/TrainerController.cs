@@ -83,14 +83,17 @@ namespace Nidan.Controllers
                 var personnel = new Personnel()
                 {
                     OrganisationId = organisationId,
-                    DOB = DateTime.Today,
-                    Title = "Mr",
-                    Forenames = trainerViewModel.Trainer.Name,
-                    Surname = "Surname",
+                    DOB = trainerViewModel.Trainer.DateOfBirth,
+                    Title = trainerViewModel.Trainer.Title,
+                    Forenames = trainerViewModel.Trainer.FirstName,
+                    Surname = trainerViewModel.Trainer.LastName,
                     Email = trainerViewModel.Trainer.EmailId,
-                    Address1 = "Address1",
-                    Postcode = "POST CODE",
-                    Telephone = "12345678",
+                    Address1 = trainerViewModel.Trainer.Address1,
+                    Address2 = trainerViewModel.Trainer.Address2,
+                    Address3 = trainerViewModel.Trainer.Address3,
+                    Address4 = trainerViewModel.Trainer.Address4,
+                    Postcode = trainerViewModel.Trainer.PinCode,
+                    Mobile = trainerViewModel.Trainer.Mobile.ToString(),
                     NINumber = "NZ1234567",
                     CentreId = trainerViewModel.Trainer.CentreId
                    
@@ -193,7 +196,7 @@ namespace Nidan.Controllers
                     {
                         _documentService.Create(UserOrganisationId, UserCentreId,
                             trainerViewModel.Document.DocumentTypeId, trainerData.TrainerId.ToString(),
-                            trainerData.Name, "Trainer Document", trainerViewModel.Files[0].FileName,
+                            trainerData.FirstName, "Trainer Document", trainerViewModel.Files[0].FileName,
                             trainerViewModel.Files[0].InputStream.ToBytes());
                     }
                     else

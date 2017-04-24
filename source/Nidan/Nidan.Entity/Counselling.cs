@@ -13,6 +13,18 @@ namespace Nidan.Entity
 
         public int EnquiryId { get; set; }
 
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [StringLength(100)]
+        public string LastName { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }

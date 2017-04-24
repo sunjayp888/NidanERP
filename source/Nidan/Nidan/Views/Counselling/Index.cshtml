@@ -107,7 +107,8 @@
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                     <tr role="row">
-                                        <th ng-click="model.order('Enquiry.CandidateName')" ng-class="model.orderClass('Enquiry.CandidateName')">Candidate Name</th>
+                                        <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">First Name</th>
+                                        <th ng-click="model.order('Enquiry.LastName')" ng-class="model.orderClass('Enquiry.LastName')">LastName</th>
                                         @*<th ng-click="model.order('Personnel')" ng-class="model.orderClass('CounselledBy')">Counseller</th>*@
                                         <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
                                         <th ng-click="model.order('PreferTiming')" ng-class="model.orderClass('PreferTiming')">Prefer Timing</th>
@@ -120,7 +121,8 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="counselling in model.counsellings | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCounselling(counselling.CounsellingId)">
-                                        <td><span ng-bind="counselling.Enquiry.CandidateName"></span></td>
+                                        <td><span ng-bind="counselling.Enquiry.FirstName"></span></td>
+                                        <td><span ng-bind="counselling.Enquiry.LastName"></span></td>
                                         @*<td><span ng-bind="counselling.CounselledBy"></span></td>*@
                                         <td><span ng-bind="counselling.Course.Name"></span></td>
                                         <td><span ng-bind="counselling.PreferTiming"></span></td>

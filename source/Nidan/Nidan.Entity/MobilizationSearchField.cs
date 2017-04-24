@@ -1,4 +1,4 @@
-﻿namespace Nidan.Entity
+namespace Nidan.Entity
 {
     using System;
     using System.Collections.Generic;
@@ -31,23 +31,41 @@
 
         [Key]
         [Column(Order = 4)]
-        [StringLength(500)]
-        public string Name { get; set; }
+        [StringLength(50)]
+        public string Title { get; set; }
 
         [Key]
         [Column(Order = 5)]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [Key]
+        [Column(Order = 7)]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Key]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int InterestedCourseId { get; set; }
 
+        [Key]
+        [Column(Order = 10)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int QualificationId { get; set; }
 
         [Key]
-        [Column(Order = 7, TypeName = "date")]
+        [Column(Order = 11, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "date")]
@@ -58,12 +76,10 @@
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        //[Key]
-        //[Column(Order = 8)]
-        //[StringLength(500)]
-        //public string MobilizedBy { get; set; }
-
-        public int PersonnelId { get; set; }
+        [Key]
+        [Column("Mobilized By", Order = 12)]
+        [StringLength(100)]
+        public string Mobilized_By { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
@@ -72,21 +88,10 @@
         public string OtherInterestedCourse { get; set; }
 
         [Key]
-        [Column(Order = 9, TypeName = "date")]
+        [Column(Order = 13, TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
-        [StringLength(3605)]
+        [StringLength(3800)]
         public string SearchField { get; set; }
-
-        public virtual Course Course { get; set; }
-
-        public virtual Qualification Qualification { get; set; }
-
-        public virtual Mobilization Mobilization1 { get; set; }
-
-        public virtual Mobilization Mobilization2 { get; set; }
-
-        public virtual Organisation Organisation { get; set; }
     }
-
 }
