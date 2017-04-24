@@ -47,6 +47,7 @@ namespace Nidan.Controllers
                 Events = new SelectList(events, "EventId", "Name"),
                 Qualifications = new SelectList(qualifications, "QualificationId", "Name")
             };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -97,6 +98,7 @@ namespace Nidan.Controllers
                 EventId = mobilization.EventId,
                 Qualifications = new SelectList(NidanBusinessService.RetrieveQualifications(UserOrganisationId, e => true).ToList(), "QualificationId", "Name")
             };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 

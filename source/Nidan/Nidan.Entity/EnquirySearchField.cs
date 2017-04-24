@@ -16,11 +16,26 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 1)]
-        [StringLength(500)]
-        public string CandidateName { get; set; }
+        [StringLength(50)]
+        public string Title { get; set; }
 
         [Key]
         [Column(Order = 2)]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [Key]
+        [Column(Order = 4)]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
@@ -28,13 +43,46 @@ namespace Nidan.Entity
         public string EmailId { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Age { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? DateOfBirth { get; set; }
+
         [Key]
-        [Column(Order = 4)]
-        public string Address { get; set; }
+        [Column(Order = 7)]
+        [StringLength(500)]
+        public string Address1 { get; set; }
+
+        [StringLength(500)]
+        public string Address2 { get; set; }
+
+        [StringLength(500)]
+        public string Address3 { get; set; }
+
+        [StringLength(500)]
+        public string Address4 { get; set; }
+
+        [Key]
+        [Column(Order = 8)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int PinCode { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int TalukaId { get; set; }
+
+        [Key]
+        [Column(Order = 10)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int DistrictId { get; set; }
+
+        [Key]
+        [Column(Order = 11)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StateId { get; set; }
 
         [StringLength(500)]
         public string GuardianName { get; set; }
@@ -42,27 +90,27 @@ namespace Nidan.Entity
         public long? GuardianContactNo { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 12)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OccupationId { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 13)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ReligionId { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 14)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CasteCategoryId { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 15)]
         [StringLength(100)]
         public string Gender { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 16)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EducationalQualificationId { get; set; }
 
@@ -73,12 +121,12 @@ namespace Nidan.Entity
         public string Marks { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 17)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IntrestedCourseId { get; set; }
 
         [Key]
-        [Column(Order = 11)]
+        [Column(Order = 18)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int HowDidYouKnowAboutId { get; set; }
 
@@ -95,17 +143,17 @@ namespace Nidan.Entity
         public DateTime? EnquiryDate { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 19)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 13)]
+        [Column(Order = 20)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 21)]
         [StringLength(100)]
         public string StudentCode { get; set; }
 
@@ -125,22 +173,22 @@ namespace Nidan.Entity
         public int? SchemeId { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 22)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EnquiryTypeId { get; set; }
 
         [Key]
-        [Column(Order = 16)]
+        [Column(Order = 23)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StudentTypeId { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 24)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 
         [Key]
-        [Column(Order = 18)]
+        [Column(Order = 25)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BatchTimePreferId { get; set; }
 
@@ -156,23 +204,23 @@ namespace Nidan.Entity
 
         public DateTime? FollowUpDate { get; set; }
 
-        public int PreferredMonthForJoining { get; set; }
-  
+        public int? PreferredMonthForJoining { get; set; }
+
         [StringLength(5)]
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
 
-        public int ConversionProspect { get; set; }
+        public int? ConversionProspect { get; set; }
 
         [StringLength(500)]
         public string OtherInterestedCourse { get; set; }
 
         public string RemarkByBm { get; set; }
 
-        public  bool Registered { get; set; }
+        public bool? Registered { get; set; }
 
-        [StringLength(6270)]
+        [StringLength(7740)]
         public string SearchField { get; set; }
     }
 }

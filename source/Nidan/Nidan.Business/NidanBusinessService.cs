@@ -162,7 +162,10 @@ namespace Nidan.Business
                 FollowUpDateTime = mobilization.FollowUpDate.Value,
                 MobilizationId = data.MobilizationId,
                 Remark = mobilization.Remark,
-                Name = mobilization.Name,
+                Title = mobilization.Title,
+                FirstName = mobilization.FirstName,
+                MiddelName = mobilization.MiddelName,
+                LastName = mobilization.LastName,
                 IntrestedCourseId = mobilization.InterestedCourseId,
                 Mobile = mobilization.Mobile,
                 AlternateMobile = mobilization.AlternateMobile,
@@ -232,7 +235,10 @@ namespace Nidan.Business
                 FollowUpDateTime = enquiry.FollowUpDate.Value,
                 EnquiryId = enquiry.EnquiryId,
                 Remark = enquiry.Remarks,
-                Name = enquiry.CandidateName,
+                Title = enquiry.Title,
+                FirstName = enquiry.FirstName,
+                MiddelName = enquiry.MiddelName,
+                LastName = enquiry.LastName,
                 IntrestedCourseId = enquiry.IntrestedCourseId,
                 Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.UtcNow.Date,
@@ -277,7 +283,10 @@ namespace Nidan.Business
                     EventId = eventId,
                     QualificationId = qualificationId,
                     Mobile = item.Mobile,
-                    Name = item.Name,
+                    Title = item.Title,
+                    FirstName = item.FirstName,
+                    MiddelName = item.MiddelName,
+                    LastName = item.LastName,
                     OrganisationId = organisationId,
                     Remark = item.Remark,
                     StudentLocation = item.StudentLocation,
@@ -295,7 +304,10 @@ namespace Nidan.Business
                     FollowUpDateTime = DateTime.UtcNow.Date.AddDays(2),
                     MobilizationId = data.MobilizationId,
                     Remark = item.Remark,
-                    Name = item.Name,
+                    Title = item.Title,
+                    FirstName = item.FirstName,
+                    MiddelName = item.MiddelName,
+                    LastName = item.LastName,
                     IntrestedCourseId = interestedCourseId,
                     Mobile = item.Mobile,
                     CreatedDateTime = DateTime.UtcNow.Date,
@@ -347,7 +359,10 @@ namespace Nidan.Business
                 FollowUpDateTime = data.FollowUpDate.Value,
                 EnquiryId = data.EnquiryId,
                 Remark = data.Remarks,
-                Name = enquiry.CandidateName,
+                Title = enquiry.Title,
+                FirstName = enquiry.FirstName,
+                MiddelName = enquiry.MiddelName,
+                LastName = enquiry.LastName,
                 IntrestedCourseId = data.CourseOfferedId,
                 Mobile = enquiry.Mobile,
                 CreatedDateTime = DateTime.UtcNow.Date,
@@ -402,11 +417,14 @@ namespace Nidan.Business
             return new Enquiry
             {
                 OrganisationId = organisationId,
-                CandidateName = mobilization == null ? string.Empty : mobilization.Name,
+                Title = mobilization == null ? string.Empty : mobilization.Title,
+                FirstName = mobilization == null ? string.Empty : mobilization.FirstName,
+                MiddelName = mobilization == null ? string.Empty : mobilization.MiddelName,
+                LastName = mobilization == null ? string.Empty : mobilization.LastName,
                 Mobile = mobilization.Mobile,
                 AlternateMobile = mobilization.AlternateMobile,
                 EducationalQualificationId = mobilization.QualificationId,
-                Address = mobilization?.StudentLocation ?? string.Empty,
+                Address1 = mobilization?.StudentLocation ?? string.Empty,
                 IntrestedCourseId = mobilization.InterestedCourseId,
                 FollowUpDate = DateTime.Today.AddDays(2),
                 Close = "No",
@@ -702,7 +720,7 @@ namespace Nidan.Business
         {
             var alreadyExists =
                 _nidanDataService.RetrieveEnquiries(organisationId,
-                        at => at.CandidateName.ToLower() == name.Trim().ToLower() && at.EnquiryId != (enquiryId ?? -1))
+                        at => at.FirstName.ToLower() == name.Trim().ToLower() && at.LastName.ToLower() == name.Trim().ToLower() && at.EnquiryId != (enquiryId ?? -1))
                     .Items.Any();
             return new ValidationResult<Enquiry>
             {
@@ -1501,7 +1519,10 @@ namespace Nidan.Business
                 enquiryFollowUp.FollowUpDateTime = enquiry.FollowUpDate ?? enquiryFollowUp.FollowUpDateTime;
                 enquiry.FollowUpDate = enquiryFollowUp.FollowUpDateTime;
                 enquiryFollowUp.Close = enquiry.Close;
-                enquiryFollowUp.Name = enquiry.CandidateName;
+                enquiryFollowUp.Title = enquiry.Title;
+                enquiryFollowUp.FirstName = enquiry.FirstName;
+                enquiryFollowUp.MiddelName = enquiry.MiddelName;
+                enquiryFollowUp.LastName = enquiry.LastName;
                 enquiryFollowUp.Mobile = enquiry.Mobile;
                 enquiryFollowUp.AlternateMobile = enquiry.AlternateMobile;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
@@ -1524,7 +1545,10 @@ namespace Nidan.Business
             var mobilizationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.MobilizationId == mobilization.MobilizationId).Items.FirstOrDefault();
             mobilizationFollowUp.FollowUpDateTime = mobilization.FollowUpDate ?? mobilizationFollowUp.FollowUpDateTime;
             //mobilizationFollowUp.Closed = mobilization.Close == "Yes";
-            mobilizationFollowUp.Name = mobilization.Name ?? mobilizationFollowUp.Name;
+            mobilizationFollowUp.Title = mobilization.Title ?? mobilizationFollowUp.Title;
+            mobilizationFollowUp.FirstName = mobilization.FirstName ?? mobilizationFollowUp.FirstName;
+            mobilizationFollowUp.MiddelName = mobilization.MiddelName ?? mobilizationFollowUp.MiddelName;
+            mobilizationFollowUp.LastName = mobilization.LastName ?? mobilizationFollowUp.LastName;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilizationFollowUp);
 
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);

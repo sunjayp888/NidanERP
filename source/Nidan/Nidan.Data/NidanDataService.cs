@@ -795,7 +795,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CandidateName",
+                            Property = "FirstName",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })

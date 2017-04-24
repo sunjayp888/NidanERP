@@ -18,9 +18,11 @@ namespace Nidan.Entity
             [Display(Name = "Follow-Up Date")]
             public DateTime FollowUpDateTime { get; set; }
 
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Remarks")]
             public string Remark { get; set; }
 
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
         }

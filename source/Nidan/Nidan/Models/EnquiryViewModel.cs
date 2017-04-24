@@ -32,9 +32,6 @@ namespace Nidan.Models
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
         public string PreferredMonthForJoining { get; set; }
         public IEnumerable<SelectListItem> PreferredMonthForJoiningList { get; set; }
-        //public Month Month { get; set; }
-
-        //  public Counselling Counselling { get; set; }
 
         public List<ConversionProspectType> ConversionProspectType => new List<ConversionProspectType>()
         {
@@ -76,6 +73,12 @@ namespace Nidan.Models
         }
 
         public string SelectedCourseIdsJson { get; set; }
+    }
+
+    public class TitleType
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 
     public class ConversionProspectType
