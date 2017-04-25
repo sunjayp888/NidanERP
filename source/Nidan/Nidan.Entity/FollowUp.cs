@@ -51,7 +51,9 @@ namespace Nidan.Entity
         public long? AlternateMobile { get; set; }
 
         [StringLength(2000)]
-        public string FollowUpURL { get; set; }
+        public string FollowUpUrl { get; set; }
+
+        public int? CounsellingId { get; set; }
 
         public int? CounsellingId { get; set; }
 

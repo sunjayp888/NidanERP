@@ -100,6 +100,7 @@ namespace Nidan.Controllers
                     Address3 = trainerViewModel.Trainer.Address3,
                     Address4 = trainerViewModel.Trainer.Address4,
                     Postcode = trainerViewModel.Trainer.PinCode,
+                    Mobile = trainerViewModel.Trainer.Mobile.ToString(),
                     Telephone = "12345678",
                     NINumber = "NZ1234567",
                     CentreId = trainerViewModel.Trainer.CentreId

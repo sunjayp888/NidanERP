@@ -19,6 +19,7 @@ namespace Nidan.Models
         public int CounsellingId { get; set; }
         public double ConversionProspect { get; set; }
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
+        public IEnumerable<SelectListItem> TitleList { get; set; }
 
         public List<ConversionProspectType> ConversionProspectType => new List<ConversionProspectType>()
         {
@@ -29,6 +30,13 @@ namespace Nidan.Models
             new ConversionProspectType() {Id=50,Name="50 - 60" },
             new ConversionProspectType() {Id=40,Name="40 - 50" },
             new ConversionProspectType() {Id=30,Name="Below 40" }
+        };
+
+        public List<TitleType> TitleType => new List<TitleType>()
+        {
+            new TitleType() {Name = "Mr.",Value = "Mr."},
+            new TitleType() {Name = "Ms.",Value = "Ms."},
+            new TitleType() {Name = "Mrs.",Value = "Mrs."}
         };
     }
 }

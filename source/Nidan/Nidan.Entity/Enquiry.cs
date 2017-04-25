@@ -15,6 +15,7 @@ namespace Nidan.Entity
             Admissions = new HashSet<Admission>();
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
+            Admissions = new HashSet<Admission>();
         }
 
         public int EnquiryId { get; set; }
@@ -38,6 +39,7 @@ namespace Nidan.Entity
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
+
 
         public long? AlternateMobile { get; set; }
 
@@ -202,6 +204,7 @@ namespace Nidan.Entity
         public virtual District District { get; set; }
 
         public virtual State State { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }
