@@ -1561,11 +1561,10 @@ namespace Nidan.Business
             mobilizationFollowUp.FollowUpDateTime = mobilization.FollowUpDate ?? mobilizationFollowUp.FollowUpDateTime;
             //mobilizationFollowUp.Closed = mobilization.Close == "Yes";
             mobilizationFollowUp.Title = mobilization.Title ?? mobilizationFollowUp.Title;
-            mobilizationFollowUp.FirstName = mobilization.Title ?? mobilizationFollowUp.FirstName;
-            mobilizationFollowUp.MiddelName = mobilization.Title ?? mobilizationFollowUp.MiddelName;
-            mobilizationFollowUp.LastName = mobilization.Title ?? mobilizationFollowUp.LastName;
+            mobilizationFollowUp.FirstName = mobilization.FirstName ?? mobilizationFollowUp.FirstName;
+            mobilizationFollowUp.MiddelName = mobilization.MiddelName ?? mobilizationFollowUp.MiddelName;
+            mobilizationFollowUp.LastName = mobilization.LastName ?? mobilizationFollowUp.LastName;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilizationFollowUp);
-
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
         }
 

@@ -42,7 +42,6 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string RemarkByBranchManager { get; set; }
 
         public int SectorId { get; set; }

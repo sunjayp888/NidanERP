@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public Enquiry()
         {
             Counsellings = new HashSet<Counselling>();
+            Admissions = new HashSet<Admission>();
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
             Admissions = new HashSet<Admission>();
@@ -197,6 +198,13 @@ namespace Nidan.Entity
         public virtual EnquiryType EnquiryType { get; set; }
 
         public virtual StudentType StudentType { get; set; }
+
+        public virtual Taluka Taluka { get; set; }
+
+        public virtual District District { get; set; }
+
+        public virtual State State { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }

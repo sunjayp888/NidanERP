@@ -89,6 +89,12 @@ namespace Nidan.Models
         public string SelectedCourseIdsJson { get; set; }
     }
 
+    public class TitleType
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
     public class ConversionProspectType
     {
         public string Name { get; set; }

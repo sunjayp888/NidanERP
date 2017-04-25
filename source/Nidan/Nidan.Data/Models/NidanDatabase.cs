@@ -869,7 +869,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
-                .Property(e => e.FollowUpUrl)
+                .Property(e => e.FollowUpURL)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
@@ -971,6 +971,25 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<EnquirySearchField>()
                .Property(e => e.Title)
                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.MiddelName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.FirstName)

@@ -1,7 +1,7 @@
 ﻿@model Nidan.Models.TrainerViewModel
 
 @{
-    ViewBag.Title = string.Format("Edit Trainer ({0})", Model.Trainer.Name);
+    ViewBag.Title = string.Format("Edit Trainer ({0})", Model.Trainer.FirstName);
 }
 
 <div>
@@ -9,7 +9,7 @@
         <div class="col-md-9 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>@Model.Trainer.Name<small>Edit trainer</small></h2>
+                    <h2>@Model.Trainer.FirstName<small>Edit trainer</small></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
