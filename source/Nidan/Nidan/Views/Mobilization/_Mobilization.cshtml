@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group eventId">
-    @Html.LabelFor(model => model.EventId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.EventId, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.EventId, Model.Events,null, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "help-block" })
@@ -18,10 +18,34 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Mobilization.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Mobilization.Title, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-4 col-xs-12">
+        @Html.DropDownListFor(model => model.Mobilization.Title, Model.TitleList, "Select Title", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Mobilization.Title, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.FirstName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Mobilization.Name, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Mobilization.Name, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Mobilization.FirstName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.FirstName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.MiddelName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.MiddelName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.MiddelName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Mobilization.LastName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Mobilization.LastName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Mobilization.LastName, "", new { @class = "help-block" })
     </div>
 </div>
 

@@ -11,17 +11,27 @@ namespace Nidan.Entity
     {
         public int MobilizationId { get; set; }
 
-        public int MobilizationTypeId { get; set; }
-
         public int EventId { get; set; }
 
         public int OrganisationId { get; set; }
 
-        public int CentreId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Title { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public string Name { get; set; }
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        public int CentreId { get; set; }
 
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
@@ -39,13 +49,10 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
-
-        public int PersonnelId { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
@@ -56,15 +63,14 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
+        public int MobilizationTypeId { get; set; }
+
+        public int PersonnelId { get; set; }
+
         [StringLength(5)]
         public string Close { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
-
-        //public virtual Mobilization Mobilization1 { get; set; }
-
-        //public virtual Mobilization Mobilization2 { get; set; }
 
         public virtual Course Course { get; set; }
 

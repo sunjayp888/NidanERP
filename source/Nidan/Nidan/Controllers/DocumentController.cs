@@ -56,7 +56,7 @@ namespace Nidan.Controllers
                     e => e.CentreId == UserCentreId && e.StudentCode == documentViewModel.StudentCode).FirstOrDefault();
             _documentService.Create(UserOrganisationId, UserCentreId,
                             documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
-                            studentData?.CandidateName, "Counselling Document", documentViewModel.Attachment.FileName,
+                            studentData?.FirstName, "Counselling Document", documentViewModel.Attachment.FileName,
                             documentViewModel.Attachment.InputStream.ToBytes());
         }
     }

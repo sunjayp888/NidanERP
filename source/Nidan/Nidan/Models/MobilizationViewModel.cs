@@ -22,5 +22,15 @@ namespace Nidan.Models
         public int EventId { get; set; }
         public DateTime GeneratedDate { get; set; }
 
+        public IEnumerable<SelectListItem> TitleList { get; set; }
+
+        public List<TitleType> TitleType => new List<TitleType>()
+        {
+           new TitleType() { Name = "Mr.",Value ="Mr." },
+           new TitleType() { Name = "Ms.",Value ="Ms." },
+           new TitleType() { Name = "Mrs.",Value = "Mrs."}
+        };
+
     }
+
 }

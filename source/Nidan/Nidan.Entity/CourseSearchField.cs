@@ -36,6 +36,8 @@ namespace Nidan.Entity
         [StringLength(1000)]
         public string Description { get; set; }
 
+        public int? Duration { get; set; }
+
         [Key]
         [Column(Order = 4)]
         [StringLength(2000)]

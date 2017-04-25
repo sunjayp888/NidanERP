@@ -21,6 +21,6 @@ namespace Nidan.Models
         public SelectList Sectors { get; set; }
         public SelectList Courses { get; set; }
         public SelectList BatchTimePrefers { get; set; }
-        public string CandidateName { get; set; }
+        //public string CandidateName { get; set; }
     }
 }

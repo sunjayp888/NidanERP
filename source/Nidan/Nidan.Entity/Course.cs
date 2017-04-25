@@ -18,7 +18,7 @@ namespace Nidan.Entity
             Counsellings = new HashSet<Counselling>();
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             CourseInstallments = new HashSet<CourseInstallment>();
-            //Subjects=new HashSet<Subject>();
+            Trainers = new HashSet<Trainer>();
             CentreCourses = new HashSet<CentreCourse>();
             Batches = new HashSet<Batch>();
             EnquiryCourses=new HashSet<EnquiryCourse>();

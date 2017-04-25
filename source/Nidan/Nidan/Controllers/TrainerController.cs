@@ -58,12 +58,19 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
+            var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
+            var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var viewModel = new TrainerViewModel
             {
                 Trainer = new Trainer(),
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                Sectors = new SelectList(sectors, "SectorId", "Name")
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                Talukas = new SelectList(talukas, "TalukaId", "Name"),
+                Districts = new SelectList(districts, "DistrictId", "Name"),
+                States = new SelectList(states, "StateId", "Name")
             };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -83,13 +90,16 @@ namespace Nidan.Controllers
                 var personnel = new Personnel()
                 {
                     OrganisationId = organisationId,
-                    DOB = DateTime.Today,
-                    Title = "Mr",
-                    Forenames = trainerViewModel.Trainer.Name,
-                    Surname = "Surname",
+                    DOB = trainerViewModel.Trainer.DateOfBirth,
+                    Title = trainerViewModel.Trainer.Title,
+                    Forenames = trainerViewModel.Trainer.FirstName,
+                    Surname = trainerViewModel.Trainer.LastName,
                     Email = trainerViewModel.Trainer.EmailId,
-                    Address1 = "Address1",
-                    Postcode = "POST CODE",
+                    Address1 = trainerViewModel.Trainer.Address1,
+                    Address2 = trainerViewModel.Trainer.Address2,
+                    Address3 = trainerViewModel.Trainer.Address3,
+                    Address4 = trainerViewModel.Trainer.Address4,
+                    Postcode = trainerViewModel.Trainer.PinCode,
                     Telephone = "12345678",
                     NINumber = "NZ1234567",
                     CentreId = trainerViewModel.Trainer.CentreId
@@ -103,6 +113,9 @@ namespace Nidan.Controllers
             }
             trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             trainerViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
+            trainerViewModel.Talukas =new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
+            trainerViewModel.Districts =new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
+            trainerViewModel.States =new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             return View(trainerViewModel);
         }
 
@@ -140,8 +153,12 @@ namespace Nidan.Controllers
             {
                 Trainer = trainer,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
+                Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => true).ToList(), "TalukaId", "Name"),
+                Districts = new SelectList(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => true).ToList(), "DistrictId", "Name"),
+                States = new SelectList(NidanBusinessService.RetrieveStates(UserOrganisationId, e => true).ToList(), "StateId", "Name")
             };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -193,7 +210,7 @@ namespace Nidan.Controllers
                     {
                         _documentService.Create(UserOrganisationId, UserCentreId,
                             trainerViewModel.Document.DocumentTypeId, trainerData.TrainerId.ToString(),
-                            trainerData.Name, "Trainer Document", trainerViewModel.Files[0].FileName,
+                            trainerData.FirstName, "Trainer Document", trainerViewModel.Files[0].FileName,
                             trainerViewModel.Files[0].InputStream.ToBytes());
                     }
                     else

@@ -110,7 +110,7 @@ namespace Nidan.Controllers
                     {
                         _documentService.Create(UserOrganisationId, UserCentreId,
                             counsellingViewModel.Document.DocumentTypeId, enquiryData.StudentCode,
-                            enquiryData.CandidateName, "Counselling Document", counsellingViewModel.Files[0].FileName,
+                            enquiryData.FirstName, "Counselling Document", counsellingViewModel.Files[0].FileName,
                             counsellingViewModel.Files[0].InputStream.ToBytes());
                     }
                     else

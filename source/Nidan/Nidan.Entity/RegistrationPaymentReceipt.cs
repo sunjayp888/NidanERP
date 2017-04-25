@@ -27,6 +27,9 @@ namespace Nidan.Entity
 
         public int Fees { get; set; }
 
+        [StringLength(50)]
+        public string FinancialYear { get; set; }
+
         [Required]
         [StringLength(100)]
         public string ChequeNo { get; set; } = "Paid By Cash";

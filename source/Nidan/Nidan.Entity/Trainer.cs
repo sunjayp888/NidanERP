@@ -12,8 +12,43 @@ namespace Nidan.Entity
         public int TrainerId { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public string Name { get; set; }
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Address1 { get; set; }
+
+        [StringLength(100)]
+        public string Address2 { get; set; }
+
+        [StringLength(100)]
+        public string Address3 { get; set; }
+
+        [StringLength(100)]
+        public string Address4 { get; set; }
+
+        public int TalukaId { get; set; }
+
+        public int StateId { get; set; }
+
+        public int DistrictId { get; set; }
+
+        [Required]
+        [StringLength(12)]
+        public string PinCode { get; set; }
 
         [StringLength(100)]
         public string Gender { get; set; }
@@ -21,6 +56,9 @@ namespace Nidan.Entity
         public long AadharNo { get; set; }
 
         public long Mobile { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime DateOfBirth { get; set; }
 
         [Required]
         [StringLength(500)]
@@ -36,11 +74,11 @@ namespace Nidan.Entity
 
         public int CourseId { get; set; }
 
+        public int CentreId { get; set; }
+
         public int OrganisationId { get; set; }
 
         public int? PersonnelId { get; set; }
-
-        public int CentreId { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
@@ -55,11 +93,16 @@ namespace Nidan.Entity
 
         public virtual Centre Centre { get; set; }
 
+        public virtual Taluka Taluka { get; set; }
+
+        public virtual District District { get; set; }
+
+        public virtual State State { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubjectTrainer> SubjectTrainers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchTrainer> BatchTrainers { get; set; }
-
     }
 }

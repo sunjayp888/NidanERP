@@ -1,12 +1,12 @@
 ﻿@model Nidan.Models.FollowUpViewModel
 @{
-    ViewBag.Title = string.Format("Edit Follow-Up ({0})", Model.FollowUp.Name);
+    ViewBag.Title = string.Format("Edit Follow-Up ({0})", Model.FollowUp.FirstName);
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.FollowUp.Name<small>Edit Follow-Up</small></h2>
+                <h2>@Model.FollowUp.FirstName<small>Edit Follow-Up</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -24,6 +24,7 @@
 
                         }
                         @Html.HiddenFor(model => Model.FollowUp.FollowUpId)
+                        @Html.HiddenFor(model => Model.FollowUp.Title)
                         @Html.HiddenFor(model => Model.FollowUp.MobilizationId)
                         @Html.HiddenFor(model => Model.FollowUp.EnquiryId)
                         @Html.HiddenFor(model => Model.FollowUp.CounsellingId)

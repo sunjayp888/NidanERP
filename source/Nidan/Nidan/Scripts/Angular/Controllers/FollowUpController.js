@@ -25,7 +25,7 @@
         initialise();
 
         function initialise() {
-            order("Name");
+            order("FirstName");
         }
 
         function retrieveFollowUps() {
