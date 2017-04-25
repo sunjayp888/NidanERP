@@ -170,6 +170,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         Admission RetrieveAdmission(int organisationId, int id);
+        List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
 
 
         // Update

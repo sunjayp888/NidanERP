@@ -55,7 +55,8 @@
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('Enquiry.CandidateName')" ng-class="model.orderClass('Enquiry.CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">First Name</th>
+                                            <th ng-click="model.order('Enquiry.LastName')" ng-class="model.orderClass('Enquiry.LastName')">Last Name</th>
                                             <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
                                             <th ng-click="model.order('PaymentMode.Name')" ng-class="model.orderClass('PaymentMode.Name')">Payment Mode</th>
                                             <th ng-click="model.order('Fees')" ng-class="model.orderClass('Fees')">Fees</th>
@@ -66,7 +67,8 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="registrationPaymentReceipt in model.registrationPaymentReceipts" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistrationPaymentReceipt(registrationPaymentReceipt.RegistrationPaymentReceiptId)">
-                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.CandidateName"></span></td>
+                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.FirstName"></span></td>
+                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.LastName"></span></td>
                                             <td><span ng-bind="registrationPaymentReceipt.Enquiry.Mobile"></span></td>
                                             <td><span ng-bind="registrationPaymentReceipt.PaymentMode.Name"></span></td>
                                             <td><span ng-bind="registrationPaymentReceipt.Fees"></span></td>
@@ -83,6 +85,11 @@
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/ViewDetails/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
                                                                     View Details
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Admission/Create/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
+                                                                    Create Admission
                                                                 </a>
                                                             </li>
                                                         }

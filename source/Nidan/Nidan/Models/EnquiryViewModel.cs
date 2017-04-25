@@ -101,12 +101,6 @@ namespace Nidan.Models
         public int Id { get; set; }
     }
 
-    public class TitleType
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
-
     public class PreferredMonthForJoiningType
     {
         public string Name { get; set; }

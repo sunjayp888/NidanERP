@@ -385,10 +385,16 @@ namespace Nidan.Business
             enquirydata.IntrestedCourseId = registrationPaymentReceipt.Enquiry.IntrestedCourseId;
             enquirydata.BatchTimePreferId = registrationPaymentReceipt.Enquiry.BatchTimePreferId;
             var counsellingdata = _nidanDataService.RetrieveCounsellings(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
-            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
-            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+            if (counsellingdata != null)
+            {
+                var course = _nidanDataService.RetrieveCourse(organisationId, counsellingdata.CourseOfferedId, e => true);
+                registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+                registrationPaymentReceipt.CourseId = counsellingdata.CourseOfferedId;
+                registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
+            }
             registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
-            if (counsellingdata != null) registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
+            registrationPaymentReceipt.FinancialYear = "2016-2017";
+            
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
 
             enquirydata.Registered = data != null;
@@ -1505,6 +1511,11 @@ namespace Nidan.Business
         public Admission RetrieveAdmission(int organisationId, int id)
         {
             return _nidanDataService.RetrieveAdmission(organisationId, id, p => true);
+        }
+
+        public List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Batch>(organisationId, predicate);
         }
 
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)

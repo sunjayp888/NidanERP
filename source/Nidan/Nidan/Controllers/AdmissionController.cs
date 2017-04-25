@@ -30,11 +30,42 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             id = id ?? 0;
+            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
+            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
+            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
+            var registrationPaymentReceipt =
+                NidanBusinessService.RetrieveRegistrationPaymentReceipt(organisationId, id.Value);
             var viewModel = new AdmissionViewModel
             {
+                Course = new Course()
+                {
+                    Name = "Test"
+                },
+                CourseInstallment = new CourseInstallment()
+                {
+                    Name = "Test"
+                },
+                RegistrationPaymentReceipt = registrationPaymentReceipt,
+                RegistrationPaymentReceiptId = id.Value,
+                PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                Batches = new SelectList(batches, "BatchId", "Name"),
+                Rooms = new SelectList(rooms, "RoomId", "Description"),
+                CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 Admission = new Admission()
+                {
+                    RegistrationPaymentReceipt = registrationPaymentReceipt
+                }
             };
-
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -49,9 +80,28 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = UserCentreId;
+                admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow.Date;
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
+            admissionViewModel.Courses = new SelectList(
+                NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name");
+            admissionViewModel.PaymentModes =
+                new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(),
+                    "PaymentModeId", "Name");
+            admissionViewModel.Schemes = new SelectList(
+                NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name");
+            admissionViewModel.Sectors = new SelectList(
+                NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name");
+            admissionViewModel.BatchTimePrefers =
+                new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(UserOrganisationId, e => true).ToList(),
+                    "BatchTimePreferId", "Name");
+            admissionViewModel.Batches = new SelectList(
+                NidanBusinessService.RetrieveBatches(UserOrganisationId, e => true).ToList(), "BatchId", "Name");
+            admissionViewModel.Rooms = new SelectList(
+                NidanBusinessService.RetrieveRooms(UserOrganisationId, e => e.CentreId == UserCentreId).ToList(),
+                "RoomId", "Description");
+            admissionViewModel.CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList());
             return View(admissionViewModel);
         }
 
@@ -71,8 +121,26 @@ namespace Nidan.Controllers
             }
             var viewModel = new AdmissionViewModel
             {
+                Course = new Course()
+                {
+                    Name = "Test"
+                },
+                CourseInstallment = new CourseInstallment()
+                {
+                    Name = "Test"
+                },
+                RegistrationPaymentReceiptId = id.Value,
                 Admission = admission,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(), "PaymentModeId", "Name"),
+                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(UserOrganisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
+                Batches = new SelectList(NidanBusinessService.RetrieveBatches(UserOrganisationId, e => true).ToList(), "BatchId", "Name"),
+                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(UserOrganisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
+                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => true).ToList(), "CourseInstallmentId", "Name")
             };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 

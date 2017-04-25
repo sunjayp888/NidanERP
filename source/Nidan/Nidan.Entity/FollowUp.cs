@@ -55,8 +55,6 @@ namespace Nidan.Entity
 
         public int? CounsellingId { get; set; }
 
-        public int? CounsellingId { get; set; }
-
         [StringLength(5)]
         public string Close { get; set; }
 
