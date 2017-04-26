@@ -1,7 +1,7 @@
 ﻿@model Nidan.Models.AdmissionViewModel
 <div class="form-control-required-example"> = Required</div>
 
-@*Candidate Details*@
+@*-----------------------------------------Candidate Details-----------------------------------------*@
 
 <div class="row">
     <div class="col-lg-12">
@@ -67,19 +67,19 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.CourseId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.IntrestedCourseId, Model.Courses, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId, "", new { @class = "help-block" })
+                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.CourseId, Model.Courses, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.CourseId, "", new { @class = "help-block" })
                 </div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.BatchTimePreferId, Model.BatchTimePrefers, null, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId, "", new { @class = "help-block" })
+                    @Html.TextBoxFor(model => model.Counselling.PreferTiming, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
 </div>
 
 
-@*Registration Details*@
+@*-----------------------------------------Registration Details-----------------------------------------*@
 <div class="form-group">
     @Html.LabelFor(model => model.RegistrationPaymentReceipt.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -154,7 +154,7 @@
     </div>
 </div>
 
-@*Batch*@
+@*-----------------------------------------Batch-----------------------------------------*@
 
 <div class="form-group">
     @Html.LabelFor(model => model.Admission.BatchId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -164,7 +164,7 @@
     </div>
 </div>
 
-@*Batch Details*@
+@*-----------------------------------------Batch Details-----------------------------------------*@
 <div id="BatchDetails">
     @*<div class="form-group">
         @Html.LabelFor(model => model.Batch.Name, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
@@ -626,3 +626,74 @@
         </div>
     </div>
 </div>
+
+@*-----------------------------------------Payment Details-----------------------------------------*@
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <label class="btn btn-info">
+        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Installment", new { id = "rbPaymentType" })
+        Installment
+    </label>
+    <label class="btn btn-info">
+        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Lumpsum", new { id = "rbPaymentType" })
+        Lumpsum
+    </label>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.PaymentModeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.Fee, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.ValidationMessageFor(model => model.Admission.Fee, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.Lumpsum, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.Lumpsum, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.ValidationMessageFor(model => model.Admission.Lumpsum, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.BankName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.ChequeNo, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.ChequeNo, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.Admission.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.Admission.ChequeDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+@*<div class="form-group">
+    @Html.LabelFor(model => model.Admission.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Admission.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.Remarks, "", new { @class = "help-block" })
+    </div>
+</div>*@

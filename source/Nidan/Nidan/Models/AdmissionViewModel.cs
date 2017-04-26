@@ -14,6 +14,7 @@ namespace Nidan.Models
         public RegistrationPaymentReceipt RegistrationPaymentReceipt { get; set; }
         public Batch Batch { get; set; }
         public CourseInstallment CourseInstallment { get; set; }
+        public Counselling Counselling { get; set; }
         public Course Course { get; set; }
         public BatchDay BatchDay { get; set; }
         public SelectList PaymentModes { get; set; }

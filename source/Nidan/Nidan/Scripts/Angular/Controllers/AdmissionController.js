@@ -21,6 +21,8 @@
         vm.deleteAdmission = deleteAdmission;
         vm.searchAdmission = searchAdmission;
         vm.viewAdmission = viewAdmission;
+        vm.batches = [];
+        vm.retrieveBatches = retrieveBatches;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
@@ -86,6 +88,12 @@
         function viewAdmission(admissionId) {
             $window.location.href = "/Admission/Edit/" + admissionId;
         }
+
+        function retrieveBatches(batchId) {
+            return AdmissionService.retrieveBatches(batchId).then(function () {
+                vm.courses = response.data;
+            });
+        };
 
     }
 

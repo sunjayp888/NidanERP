@@ -1227,6 +1227,10 @@ namespace Nidan.Data
                     .Batches
                     .AsNoTracking()
                     .Include(p=>p.BatchTrainers)
+                    .Include(p => p.Room)
+                    .Include(p => p.CourseInstallment)
+                    .Include(p => p.Course)
+                    .Include(p => p.BatchDays)
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchId == batchId);
 

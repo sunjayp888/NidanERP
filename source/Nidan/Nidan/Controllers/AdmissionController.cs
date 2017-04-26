@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security.Provider;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -40,6 +41,8 @@ namespace Nidan.Controllers
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var registrationPaymentReceipt =
                 NidanBusinessService.RetrieveRegistrationPaymentReceipt(organisationId, id.Value);
+            var counselling =
+                NidanBusinessService.RetrieveCounselling(organisationId, registrationPaymentReceipt.CounsellingId);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -50,6 +53,7 @@ namespace Nidan.Controllers
                 {
                     Name = "Test"
                 },
+                Counselling = counselling,
                 RegistrationPaymentReceipt = registrationPaymentReceipt,
                 RegistrationPaymentReceiptId = id.Value,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
@@ -80,6 +84,8 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = UserCentreId;
+                admissionViewModel.Admission.EnquiryId = admissionViewModel.Admission.RegistrationPaymentReceipt
+                    .EnquiryId;
                 admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow.Date;
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
@@ -169,6 +175,13 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult GetBatchDetails(int batchId)
+        {
+            var data = NidanBusinessService.RetrieveBatch(UserOrganisationId,batchId);
+            return this.JsonNet(data);
         }
     }
 }
