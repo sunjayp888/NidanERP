@@ -21,6 +21,12 @@ namespace Nidan.Models
         public SelectList Sectors { get; set; }
         public SelectList Courses { get; set; }
         public SelectList BatchTimePrefers { get; set; }
-        //public string CandidateName { get; set; }
+        public IEnumerable<SelectListItem> TitleList { get; set; }
+        public List<TitleType> TitleType => new List<TitleType>()
+        {
+            new TitleType() {Name = "Mr.",Value = "Mr."},
+            new TitleType() {Name = "Ms.",Value = "Ms."},
+            new TitleType() {Name = "Mrs.",Value = "Mrs."}
+        };
     }
 }

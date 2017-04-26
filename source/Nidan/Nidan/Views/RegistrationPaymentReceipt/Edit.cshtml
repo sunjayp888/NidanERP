@@ -1,14 +1,14 @@
 ﻿@model Nidan.Models.RegistrationPaymentReceiptViewModel
 
 @{
-    ViewBag.Title = string.Format("Edit Registration ({0})", Model.RegistrationPaymentReceipt.Enquiry.CandidateName);
+    ViewBag.Title = string.Format("Edit Registration ({0})", Model.RegistrationPaymentReceipt.Enquiry.FirstName);
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.RegistrationPaymentReceipt.Enquiry.CandidateName<small>Edit Registration</small></h2>
+                <h2>@Model.RegistrationPaymentReceipt.Enquiry.FirstName<small>Edit Registration</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -26,7 +26,7 @@
 
                         }
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId)
-                        @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.Address)
+                        @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.Address1)
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Particulars)
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.CourseId)
                         @*@Html.HiddenFor(model => Model.RegistrationPaymentReceipt.PaymentModeId)*@

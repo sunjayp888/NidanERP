@@ -969,8 +969,24 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
-                 .Property(e => e.Title)
-                 .IsUnicode(false);
+               .Property(e => e.Title)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.MiddelName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.FirstName)
