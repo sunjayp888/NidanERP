@@ -1,266 +1,699 @@
 ﻿@model Nidan.Models.AdmissionViewModel
 <div class="form-control-required-example"> = Required</div>
 
+@*-----------------------------------------Candidate Details-----------------------------------------*@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.Title, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                <div class="col-md-8 col-sm-4 col-xs-12">
+                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.Enquiry.Title, Model.TitleList, "Select Title", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.Title, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.FirstName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.FirstName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.MiddelName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.MiddelName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.MiddelName, "", new { @class = "help-block" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.LastName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.LastName, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, new { @class = "form-control", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.Mobile, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId, Model.Schemes, null, new { @class = "form-control", @disabled = "true" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.SectorId, Model.Sectors, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationPaymentReceipt.CourseId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.CourseId, Model.Courses, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.CourseId, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.Counselling.PreferTiming, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*-----------------------------------------Registration Details-----------------------------------------*@
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.Salutation, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.Salutation, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.Salutation, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.RegistrationPaymentReceipt.PaymentModeId, Model.PaymentModes, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.PaymentModeId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.FirstName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Fees, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.FirstName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.FirstName, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Fees, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Fees, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.MiddleName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sum Of Rupees</label>
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.MiddleName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.MiddleName, "", new { @class = "help-block" })
+        <div id="divDisplayWords" style="font-size: 15px; font-family: Arial;" class="form-control col-md-7 col-xs-12"></div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.LastName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+
+
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.LastName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.LastName, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.BankName, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.Mobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.Mobile, new { @class = "form-control col-md-7 col-xs-12", @onkeypress = "phoneno()", @maxlength = "10" })
-        @Html.ValidationMessageFor(model => model.Admission.Mobile, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.ChequeNo, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.ChequeNo, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EmailId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.DateOfBirth, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.Admission.DateOfBirth, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-        @Html.ValidationMessageFor(model => model.Admission.DateOfBirth, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.ChequeDate, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.FollowUpDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.FollowUpDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.FollowUpDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.RegistrationPaymentReceipt.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        <div id="gender" class="btn-group" data-toggle="buttons">
-            <label class='@(Model.Admission.Gender == "Male" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.Gender, "Male")
-                <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
-            </label>
-            <label class='@(Model.Admission.Gender == "Female" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.Gender, "Female")
-                <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
-            </label>
+        @Html.TextBoxFor(model => model.RegistrationPaymentReceipt.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.RegistrationPaymentReceipt.Remarks, "", new { @class = "help-block" })
+    </div>
+</div>
+
+@*-----------------------------------------Batch-----------------------------------------*@
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Admission.BatchId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+@*-----------------------------------------Batch Details-----------------------------------------*@
+<div id="BatchDetails">
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.Batch.Name, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.Name, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Batch.Name, "", new { @class = "help-block" })
+        </div>
+    </div>*@
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Batch.RoomId, "Classroom", new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Batch.RoomId, Model.Rooms, "Select Class-Room", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Batch.RoomId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.Intake, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.Intake, new { @class = "form-control col-md-7 col-xs-12", @max = 30 })
+                        @Html.ValidationMessageFor(model => model.Batch.Intake, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Batch.CourseInstallmentId, "Course Installment", new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Batch.CourseInstallmentId, Model.CourseInstallments, "Select Course Installment", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Batch.CourseInstallmentId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Batch.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Batch.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Batch.CourseId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseInstallment.Fee, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.CourseInstallment.Fee, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.CourseInstallment.Fee, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseInstallment.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.CourseInstallment.DownPayment, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Course.Duration, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Course.Duration, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.Course.Duration, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.NoOfHoursDaily, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.NoOfHoursDaily, new { @class = "form-control col-md-7 col-xs-12", @max = 8, @onkeyup = "getendtime()" })
+                        @Html.ValidationMessageFor(model => model.Batch.NoOfHoursDaily, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
+                    <table>
+                        @*<thead>
+                                <tr>
+                                    <th>
+                                        <label>
+                                            Monday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Tuesday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Wednesday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Thursday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Friday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Saturday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label>
+                                            Sunday
+                                        </label>
+                                    </th>
+                                </tr>
+                            </thead>*@
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off" })
+                                        Monday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off" })
+                                        Tuesday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off" })
+                                        Wednesday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off" })
+                                        Thursday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off" })
+                                        Friday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off" })
+                                        Saturday
+                                    </label>
+                                </td>
+                                <td>
+                                    <label class="btn btn-info">
+                                        @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off" })
+                                        Sunday
+                                    </label>
+
+                                </td>
+                                <td>
+                                    <button id="countbutton" type="button" class="btn btn-warning">Get Month(s)</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.Month, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.Month, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.Batch.Month, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.BatchStartDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.BatchStartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchStartDate, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.NoOfHolidays, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.NoOfHolidays, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Batch.NoOfHolidays, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Batch.BatchEndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.BatchEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchEndDate, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.AssesmentDate, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.AssesmentDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                        @Html.ValidationMessageFor(model => model.Batch.AssesmentDate, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-6">
+                <div ng-controller="TrainerController as model">
+                    <div class="form-group">
+                        @Html.Label("Trainer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
+                            <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
+                                <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                                <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
+                                    <span ng-bind-html="trainer.Name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-4 col-sm-3 col-xs-12">Batch Start Timing</label>
+                    <div class="col-md-2 col-sm-6 col-xs-12 add batchStartTime">
+                        @Html.TextBoxFor(model => model.Batch.BatchStartTimeHours, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "HH", @max = 12, @maxlenghth = "2", @onkeyup = "getendtime()" })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeHours, "", new { @class = "help-block" })
+                    </div>
+
+                    <div class="col-md-2 col-sm-6 col-xs-12 batchStartTime">
+                        @Html.TextBoxFor(model => model.Batch.BatchStartTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @max = 60, @maxlenghth = "2", @onkeyup = "getendtime()" })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeMinutes, "", new { @class = "help-block" })
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <label class="btn btn-info">
+                            @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "AM", new { id = "rbBatchStartTimeSpan" })
+                            AM
+                        </label>
+                        <label class="btn btn-info">
+                            @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "PM", new { id = "rbBatchStartTimeSpan" })
+                            PM
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Batch End Timing</label>
+                    <div class="col-md-2 col-sm-6 col-xs-12 add">
+                        @Html.TextBoxFor(model => model.Batch.BatchEndTimeHours, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "HH", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeHours, "", new { @class = "help-block" })
+                    </div>
+
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.BatchEndTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeMinutes, "", new { @class = "help-block" })
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <label class="btn btn-info">
+                            @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "AM", new { id = "rbBatchEndTimeSpan" })
+                            AM
+                        </label>
+                        <label class="btn btn-info">
+                            @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "PM", new { id = "rbBatchEndTimeSpan" })
+                            PM
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.Remarks, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Batch.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Batch.Remarks, "", new { @class = "help-block" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Batch.NoOfInstallment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-6 col-xs-12 calculate">
+                        @Html.TextBoxFor(model => model.Batch.NoOfInstallment, new { @class = "form-control col-md-7 col-xs-12", @max = 12 })
+                        @Html.ValidationMessageFor(model => model.Batch.NoOfInstallment, "", new { @class = "help-block" })
+                    </div>
+                    <button id="addbutton" type="button" class="btn btn-warning">Get Installment(s)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group fisrt-installment-textbox">
+        @Html.LabelFor(model => model.Batch.FirstInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.FirstInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.FirstInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group second-installment-textbox">
+        @Html.LabelFor(model => model.Batch.SecondInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.SecondInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.SecondInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group third-installment-textbox">
+        @Html.LabelFor(model => model.Batch.ThirdInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.ThirdInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.ThirdInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group forth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.ForthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.ForthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.ForthInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group fifth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.FifthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.FifthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.FifthInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group sixth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.SixthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.SixthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.SixthInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group seventh-installment-textbox">
+        @Html.LabelFor(model => model.Batch.SeventhInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.SeventhInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.SeventhInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group eighth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.EighthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.EighthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.EighthInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group nineth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.NinethInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.NinethInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.NinethInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group tenth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.TenthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.TenthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.TenthInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group eleventh-installment-textbox">
+        @Html.LabelFor(model => model.Batch.EleventhInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.EleventhInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.EleventhInstallment, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group twelveth-installment-textbox">
+        @Html.LabelFor(model => model.Batch.TwelvethInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Batch.TwelvethInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.TwelvethInstallment, "", new { @class = "help-block" })
         </div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.CasteCategoryId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CasteCategoryId, Model.CasteCategories, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CasteCategoryId, "", new { @class = "help-block" })
-    </div>
+@*-----------------------------------------Payment Details-----------------------------------------*@
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+    <label class="btn btn-info">
+        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Installment", new { id = "rbPaymentType" })
+        Installment
+    </label>
+    <label class="btn btn-info">
+        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Lumpsum", new { id = "rbPaymentType" })
+        Lumpsum
+    </label>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.ReligionId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.ReligionId, Model.Religions, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.ReligionId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.FatherName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.FatherName, "", new { @class = "help-block" })
+        @Html.DropDownListFor(model => model.Admission.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.PaymentModeId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.FatherMobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.FatherMobile, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.FatherMobile, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.Fee, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.ValidationMessageFor(model => model.Admission.Fee, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Admission.PermanentAddress, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Admission.Lumpsum, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.PermanentAddress, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PermanentAddress, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.Lumpsum, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+        @Html.ValidationMessageFor(model => model.Admission.Lumpsum, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.PTalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PTalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PTalukaId, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.BankName, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.PDistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PDistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PDistrictId, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.ChequeNo, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.ChequeNo, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.PStateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PStateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PStateId, "", new { @class = "help-block" })
+<div class="form-group bank-details-textbox-admission">
+    @Html.LabelFor(model => model.Admission.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.Admission.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.Admission.ChequeDate, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.CommunicationAddress, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+@*<div class="form-group">
+    @Html.LabelFor(model => model.Admission.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.CommunicationAddress, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CommunicationAddress, "", new { @class = "help-block" })
+        @Html.TextBoxFor(model => model.Admission.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Admission.Remarks, "", new { @class = "help-block" })
     </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.CTalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CTalukaId, Model.Talukas, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CTalukaId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.CDistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CDistrictId, Model.Districts, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CDistrictId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.CStateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.CStateId, Model.States, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.CStateId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.EducaticationalQualificationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.EducaticationalQualificationId, Model.EducationalQualifications, null, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EducaticationalQualificationId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.ProfessionalQualification, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.ProfessionalQualification, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.ProfessionalQualification, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.TechnicalQualification, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.TechnicalQualification, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.TechnicalQualification, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Pre-Training Status</label>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div id="pretrainingstatus" class="btn-group" data-toggle="buttons">
-            <label id="fresherRadioButton" class='@(Model.Admission.PreTrainingStatus == "Fresher" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.PreTrainingStatus, "Fresher")
-                <input type="radio" name="pretrainingstatus" value="Fresher" data-parsley-multiple="gender"> &nbsp; Fresher &nbsp;
-            </label>
-            <label id="experienceRadioButton" class='@(Model.Admission.PreTrainingStatus == "Experience" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.PreTrainingStatus, "Experience")
-                <input type="radio" name="pretrainingstatus" value="Experience" data-parsley-multiple="gender"> Experience
-            </label>
-        </div>
-    </div>
-</div>
-
-<div class="form-group experience-year-textbox">
-    @Html.LabelFor(model => model.Admission.YearOfExperience, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.YearOfExperience, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.YearOfExperience, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Employment Status</label>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div id="employmentstatus" class="btn-group" data-toggle="buttons">
-            <label id="employedRadioButton" class='@(Model.Admission.EmploymentStatus == "Employed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.EmploymentStatus, "Employed")
-                <input type="radio" name="employmentstatus" value="Employed" data-parsley-multiple="gender"> &nbsp; Employed &nbsp;
-            </label>
-            <label id="unemployedRadioButton" class='@(Model.Admission.EmploymentStatus == "UnEmployed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Admission.EmploymentStatus, "UnEmployed")
-                <input type="radio" name="employmentstatus" value="UnEmployed" data-parsley-multiple="gender"> UnEmployed
-            </label>
-        </div>
-    </div>
-</div>
-
-<div class="form-group employment-status-textbox">
-    @Html.LabelFor(model => model.Admission.EmployerName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.EmployerName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EmployerName, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group employment-status-textbox">
-    @Html.LabelFor(model => model.Admission.EmployerContactNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.EmployerContactNo, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EmployerContactNo, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group employment-status-textbox">
-    @Html.LabelFor(model => model.Admission.EmployerAddress, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.EmployerAddress, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.EmployerAddress, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group employment-status-textbox">
-    @Html.LabelFor(model => model.Admission.AnnualIncome, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.AnnualIncome, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.AnnualIncome, "", new { @class = "help-block" })
-    </div>
-</div>
+</div>*@

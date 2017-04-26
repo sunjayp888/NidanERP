@@ -12,6 +12,11 @@ namespace Nidan.Entity
         public Sector()
         {
             Courses = new HashSet<Course>();
+            Enquiries=new HashSet<Enquiry>();
+            Counsellings=new HashSet<Counselling>();
+            Courses=new HashSet<Course>();
+            Trainers=new HashSet<Trainer>();
+            CentreSectors=new HashSet<CentreSector>();
         }
 
         public int SectorId { get; set; }
@@ -39,5 +44,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentreSector> CentreSectors { get; set; }
     }
 }

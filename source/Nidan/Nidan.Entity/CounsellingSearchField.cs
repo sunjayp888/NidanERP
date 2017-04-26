@@ -49,19 +49,26 @@ namespace Nidan.Entity
 
         public string RemarkByBranchManager { get; set; }
 
-        [StringLength(500)]
-        public string Name { get; set; }
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [StringLength(100)]
+        public string LastName { get; set; }
 
         public int? SectorId { get; set; }
 
         [StringLength(100)]
         public string PsychomatricTest { get; set; }
 
-        public int ConversionProspect { get; set; }
+        public int? ConversionProspect { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
-        [StringLength(2320)]
+        [StringLength(2100)]
         public string SearchField { get; set; }
     }
 }

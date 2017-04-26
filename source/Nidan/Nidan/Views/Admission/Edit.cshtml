@@ -1,13 +1,14 @@
 ﻿@model Nidan.Models.AdmissionViewModel
 
 @{
-    ViewBag.Title = string.Format("Edit Admission ({0})", Model.Admission.FirstName);
+    ViewBag.Title = string.Format("Edit Admission ({0})", Model.Admission.AdmissionId);
 }
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.Admission.FirstName<small>Edit Admmission</small></h2>
+                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -24,9 +25,8 @@
                             </div>
 
                         }
-                        @Html.HiddenFor(model => Model.Admission.AdmissionId)
                         @Html.Partial("_Admission", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Submit</button>
@@ -44,47 +44,3 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
-@section scripts {
-    <script>
-        jQuery(function () {
-
-            if ($('#Enquiry_PreTrainingStatus').is(':checked')) { $('.experience-year-textbox').hide(); }
-            else { $('.experience-year-textbox').show(); }
-
-            $('#experienceRadioButton').click(function () {
-                $('.experience-year-textbox').show();
-            });
-
-            $('#fresherRadioButton').click(function () {
-                $('.experience-year-textbox').hide();
-            });
-
-            if (!$('#Enquiry_EmploymentStatus').is(':checked')) { $('.employment-status-textbox').hide(); }
-            else { $('.employment-status-textbox').show(); }
-
-            $('#employedRadioButton').click(function () {
-                $('.employment-status-textbox').show();
-            });
-
-            $('#unemployedRadioButton').click(function () {
-                $('.employment-status-textbox').hide();
-            });
-
-            jQuery(".end-date, .termination-date").remove();
-
-            jQuery(".date").daterangepicker({
-                autoApply: true,
-                singleDatePicker: true,
-                showDropdowns: true,
-                showCustomRangeLabel: false,
-                opens: 'left',
-                startDate: '@Model.Admission.DateOfBirth.ToString("dd/MMMM/yyyy")',
-                locale: {
-                    format: 'DD MMMM YYYY'
-                }
-            });
-        });
-
-    </script>
-}
-

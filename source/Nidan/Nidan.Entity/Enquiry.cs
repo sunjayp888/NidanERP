@@ -15,27 +15,62 @@ namespace Nidan.Entity
             Admissions = new HashSet<Admission>();
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
+            Admissions = new HashSet<Admission>();
         }
+
         public int EnquiryId { get; set; }
 
         [Required]
-        [StringLength(500)]
-        public string CandidateName { get; set; }
+        [StringLength(50)]
+        public string Title { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string MiddelName { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
 
         [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
+
 
         public long? AlternateMobile { get; set; }
 
         [StringLength(500)]
         public string EmailId { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? DateOfBirth { get; set; }
+
         public int Age { get; set; }
 
         [Required]
-        [DataType(DataType.MultilineText)]
-        public string Address { get; set; }
+        [StringLength(500)]
+        public string Address1 { get; set; }
+
+        [StringLength(500)]
+        public string Address2 { get; set; }
+
+        [StringLength(500)]
+        public string Address3 { get; set; }
+
+        [StringLength(500)]
+        public string Address4 { get; set; }
+
+        public int TalukaId { get; set; }
+
+        public int StateId { get; set; }
+
+        public int DistrictId { get; set; }
+
+        public int PinCode { get; set; }
 
         [StringLength(500)]
         public string GuardianName { get; set; }
@@ -47,8 +82,6 @@ namespace Nidan.Entity
         public int ReligionId { get; set; }
 
         public int CasteCategoryId { get; set; }
-        
-        public int SchemeId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -98,6 +131,8 @@ namespace Nidan.Entity
 
         public int AnnualIncome { get; set; }
 
+        public int SchemeId { get; set; }
+
         public int EnquiryTypeId { get; set; }
 
         public int StudentTypeId { get; set; }
@@ -111,30 +146,28 @@ namespace Nidan.Entity
 
         public int YearOfExperience { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? FollowUpDate { get; set; }
-
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
+        public DateTime? FollowUpDate { get; set; }
+
+        public int PreferredMonthForJoining { get; set; }
+
         [StringLength(5)]
-        public string Close { get; set; } = "No";
+        public string Close { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
-
-        [DataType(DataType.MultilineText)]
-        public string RemarkByBm { get; set; }
 
         public int ConversionProspect { get; set; }
 
-        public bool Registered { get; set; }
-
         [StringLength(500)]
         public string OtherInterestedCourse { get; set; }
+
+        public string RemarkByBm { get; set; }
+
+        public bool Registered { get; set; }
 
         public virtual CasteCategory CasteCategory { get; set; }
 
@@ -166,8 +199,13 @@ namespace Nidan.Entity
 
         public virtual StudentType StudentType { get; set; }
 
-        public int PreferredMonthForJoining { get; set; }
-  
+        public virtual Taluka Taluka { get; set; }
+
+        public virtual District District { get; set; }
+
+        public virtual State State { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }
 
@@ -179,5 +217,7 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EnquiryCourse> EnquiryCourses { get; set; }
+
+
     }
 }

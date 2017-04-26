@@ -79,6 +79,18 @@
             }
         };
 
+        $(function () {
+            $('.name').keypress(function (e) {
+                var txt = String.fromCharCode(e.which);
+                console.log(txt + ' : ' + e.which);
+                if (!txt.match(/[A-Za-z+#.]/))//+#-.
+                {
+                    return false;
+                }
+            });
+        });
+        
+
         jQuery(function () {
             //Generated date.
             jQuery(".generated").daterangepicker(daterangepickerOptions);

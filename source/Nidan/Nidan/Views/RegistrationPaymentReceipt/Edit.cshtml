@@ -1,14 +1,14 @@
 ﻿@model Nidan.Models.RegistrationPaymentReceiptViewModel
 
 @{
-    ViewBag.Title = string.Format("Edit Registration ({0})", Model.RegistrationPaymentReceipt.Enquiry.CandidateName);
+    ViewBag.Title = string.Format("Edit Registration ({0})", Model.RegistrationPaymentReceipt.Enquiry.FirstName);
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.RegistrationPaymentReceipt.Enquiry.CandidateName<small>Edit Registration</small></h2>
+                <h2>@Model.RegistrationPaymentReceipt.Enquiry.FirstName<small>Edit Registration</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -26,7 +26,7 @@
 
                         }
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId)
-                        @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.Address)
+                        @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Enquiry.Address1)
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.Particulars)
                         @Html.HiddenFor(model => Model.RegistrationPaymentReceipt.CourseId)
                         @*@Html.HiddenFor(model => Model.RegistrationPaymentReceipt.PaymentModeId)*@
@@ -59,7 +59,7 @@
 @section scripts
 {
     <script>
-       
+
         if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
             $('.bank-details-textbox').show();
             $("#RegistrationPaymentReceipt_BankName").val("");
@@ -127,133 +127,142 @@
             return true;
         }
 
-        function NumToWord(inputNumber, outputControl) {
-            var str = new String(inputNumber)
-            var splt = str.split("");
-            var rev = splt.reverse();
-            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
-            var twos = ['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
-            var tens = ['', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'];
+        //onkeyup = "NumToWord(this.value,'divDisplayWords')"
 
-            numLength = rev.length;
-            var word = new Array();
-            var j = 0;
+        $("#RegistrationPaymentReceipt_Fees")
+            .ready(function() {
+                var str = $("#RegistrationPaymentReceipt_Fees").val();
+                var splt = str.split("");
+                var rev = splt.reverse();
+                var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+                var twos = [
+                    'Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen',
+                    ' Eighteen', ' Nineteen'
+                ];
+                var tens = [
+                    '', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty',
+                    ' Ninety'
+                ];
 
-            for (i = 0; i < numLength; i++) {
-                switch (i) {
+                var numLength = rev.length;
+                var word = new Array();
+                var j = 0;
 
-                case 0:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
+                for (i = 0; i < numLength; i++) {
+                    switch (i) {
+
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        } else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+
+                    //            This is optional.
+
+                    //            case 9:
+                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                    //                    word[j] = '';
+                    //                }
+                    //                else {
+                    //                    word[j] = once[rev[i]];
+                    //                }
+                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                    //                    word[j] = word[j] + " Arab";
+                    //                }
+                    //                break;
+
+                    //            case 10:
+                    //                aboveTens();
+                    //                break;
+
+                    default:
+                        break;
                     }
-                    else {
-                        word[j] = '' + once[rev[i]];
-                    }
-                    word[j] = word[j];
-                    break;
+                    j++;
+                }
 
-                case 1:
-                    aboveTens();
-                    break;
-
-                case 2:
+                function aboveTens() {
                     if (rev[i] == 0) {
                         word[j] = '';
+                    } else if (rev[i] == 1) {
+                        word[j] = twos[rev[i - 1]];
+                    } else {
+                        word[j] = tens[rev[i]];
                     }
-                    else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                        word[j] = once[rev[i]] + " Hundred ";
-                    }
-                    else {
-                        word[j] = once[rev[i]] + " Hundred and";
-                    }
-                    break;
-
-                case 3:
-                    if (rev[i] == 0 || rev[i + 1] == 1) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                        word[j] = word[j] + " Thousand";
-                    }
-                    break;
-
-
-                case 4:
-                    aboveTens();
-                    break;
-
-                case 5:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Lakh";
-                    }
-
-                    break;
-
-                case 6:
-                    aboveTens();
-                    break;
-
-                case 7:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Crore";
-                    }
-                    break;
-
-                case 8:
-                    aboveTens();
-                    break;
-
-                //            This is optional.
-
-                //            case 9:
-                //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                //                    word[j] = '';
-                //                }
-                //                else {
-                //                    word[j] = once[rev[i]];
-                //                }
-                //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                //                    word[j] = word[j] + " Arab";
-                //                }
-                //                break;
-
-                //            case 10:
-                //                aboveTens();
-                //                break;
-
-                default: break;
                 }
-                j++;
-            }
 
-            function aboveTens() {
-                if (rev[i] == 0) { word[j] = ''; }
-                else if (rev[i] == 1) { word[j] = twos[rev[i - 1]]; }
-                else { word[j] = tens[rev[i]]; }
-            }
+                word.reverse();
+                var finalOutput = '';
+                for (i = 0; i < numLength; i++) {
+                    finalOutput = finalOutput + word[i];
+                }
+                $('.divDisplayWords').value(finalOutput + " Only");
+            });
 
-            word.reverse();
-            var finalOutput = '';
-            for (i = 0; i < numLength; i++) {
-                finalOutput = finalOutput + word[i];
-            }
-            document.getElementById(outputControl).innerHTML = finalOutput + " Only";
-        }
 
     </script>
 }

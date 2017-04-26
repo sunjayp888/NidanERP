@@ -1,7 +1,7 @@
-USE [NidanDev]
+USE [NidanProd]
 GO
 
-/****** Object:  Table [dbo].[Batch]    Script Date: 08-04-2017 17:03:19 ******/
+/****** Object:  Table [dbo].[Batch]    Script Date: 22/04/2017 04:07:02 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[Batch](
 	[BatchId] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](500) NOT NULL,
 	[Intake] [int] NOT NULL,
-	[CourseFeeBreakUpId] [int] NOT NULL,
+	[CourseInstallmentId] [int] NOT NULL,
 	[CourseId] [int] NOT NULL,
 	[TrainerId] [int] NOT NULL,
 	[BatchStartDate] [date] NOT NULL,
@@ -33,6 +33,21 @@ CREATE TABLE [dbo].[Batch](
 	[OrganisationId] [int] NOT NULL,
 	[CreatedDate] [date] NOT NULL,
 	[Remarks] [varchar](1000) NULL,
+	[Month] [int] NOT NULL,
+	[NoOfInstallment] [int] NOT NULL,
+	[FirstInstallment] [int] NULL,
+	[SecondInstallment] [int] NULL,
+	[ThirdInstallment] [int] NULL,
+	[ForthInstallment] [int] NULL,
+	[FifthInstallment] [int] NULL,
+	[SixthInstallment] [int] NULL,
+	[SeventhInstallment] [int] NULL,
+	[EighthInstallment] [int] NULL,
+	[NinethInstallment] [int] NULL,
+	[TenthInstallment] [int] NULL,
+	[EleventhInstallment] [int] NULL,
+	[TwelvethInstallment] [int] NULL,
+	[RoomId] [int] NULL,
  CONSTRAINT [PK_Batch] PRIMARY KEY CLUSTERED 
 (
 	[BatchId] ASC
@@ -58,11 +73,11 @@ GO
 ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Course]
 GO
 
-ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_CourseFeeBreakUp] FOREIGN KEY([CourseFeeBreakUpId])
-REFERENCES [dbo].[CourseFeeBreakUp] ([CourseFeeBreakUpId])
+ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_CourseInstallment] FOREIGN KEY([CourseInstallmentId])
+REFERENCES [dbo].[CourseInstallment] ([CourseInstallmentId])
 GO
 
-ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_CourseFeeBreakUp]
+ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_CourseInstallment]
 GO
 
 ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Organisation] FOREIGN KEY([OrganisationId])
@@ -72,11 +87,11 @@ GO
 ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Organisation]
 GO
 
-ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Trainer] FOREIGN KEY([TrainerId])
-REFERENCES [dbo].[Trainer] ([TrainerId])
+ALTER TABLE [dbo].[Batch]  WITH CHECK ADD  CONSTRAINT [FK_Batch_Room] FOREIGN KEY([RoomId])
+REFERENCES [dbo].[Room] ([RoomId])
 GO
 
-ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Trainer]
+ALTER TABLE [dbo].[Batch] CHECK CONSTRAINT [FK_Batch_Room]
 GO
 
 

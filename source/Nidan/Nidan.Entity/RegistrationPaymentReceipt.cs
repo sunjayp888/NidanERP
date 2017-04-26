@@ -9,6 +9,12 @@ namespace Nidan.Entity
     [Table("RegistrationPaymentReceipt")]
     public partial class RegistrationPaymentReceipt
     {
+        public RegistrationPaymentReceipt()
+        {
+            FollowUps= new HashSet<FollowUp>();
+            Admissions=new HashSet<Admission>();
+        }
+
         public int RegistrationPaymentReceiptId { get; set; }
 
         public int CentreId { get; set; }
@@ -20,6 +26,9 @@ namespace Nidan.Entity
         public int CourseId { get; set; }
 
         public int Fees { get; set; }
+
+        [StringLength(50)]
+        public string FinancialYear { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -62,5 +71,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

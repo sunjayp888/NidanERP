@@ -26,12 +26,16 @@ namespace Nidan.Models
         public SelectList BatchTimePrefers { get; set; }
         public SelectList StudentTypes { get; set; }
         public SelectList EnquiryTypes { get; set; }
+        public SelectList Talukas { get; set; }
+        public SelectList Districts { get; set; }
+        public SelectList States { get; set; }
         public int CreateEnquiryFromMobilizationFollowUpId { get; set; }
         public int MobilizationId { get; set; }
         public double ConversionProspect { get; set; }
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
         public string PreferredMonthForJoining { get; set; }
         public IEnumerable<SelectListItem> PreferredMonthForJoiningList { get; set; }
+        public IEnumerable<SelectListItem> TitleList { get; set; }
         //public Month Month { get; set; }
 
         //  public Counselling Counselling { get; set; }
@@ -63,6 +67,13 @@ namespace Nidan.Models
             new PreferredMonthForJoiningType() {Id = 12,Name = "December"}
         };
 
+        public List<TitleType> TitleType => new List<TitleType>()
+        {
+            new TitleType() {Name = "Mr.",Value = "Mr."},
+            new TitleType() {Name = "Ms.",Value = "Ms."},
+            new TitleType() {Name = "Mrs.",Value = "Mrs."}
+        };
+
         public List<int> SelectedCourseIds
         {
             get
@@ -76,6 +87,12 @@ namespace Nidan.Models
         }
 
         public string SelectedCourseIdsJson { get; set; }
+    }
+
+    public class TitleType
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 
     public class ConversionProspectType

@@ -28,6 +28,12 @@
         vm.searchMessage = "";
         vm.courses = [];
         vm.retrieveCourses = retrieveCourses;
+        vm.talukas = [];
+        vm.retrieveTalukas = retrieveTalukas;
+        vm.districts = [];
+        vm.retrieveDistricts = retrieveDistricts;
+        vm.states = [];
+        vm.retrieveStates = retrieveStates;
         vm.retrieveSectors = retrieveSectors;
         initialise();
 
@@ -115,6 +121,18 @@
         function retrieveSectors(schemeId) {
             return EnquiryService.retrieveSectors(schemeId).then(function () {
                 vm.sectors = response.data;
+            });
+        };
+
+        function retrieveTalukas(districtId) {
+            return EnquiryService.retrieveTalukas(districtId).then(function () {
+                vm.talukas = response.data;
+            });
+        };
+
+        function retrieveDistricts(stateId) {
+            return EnquiryService.retrieveDistricts(stateId).then(function () {
+                vm.districts = response.data;
             });
         };
     }

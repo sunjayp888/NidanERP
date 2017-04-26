@@ -18,14 +18,20 @@
         vm.orderClass = orderClass;
         vm.editAdmission = editAdmission;
         vm.canDeleteAdmission = canDeleteAdmission;
-        //vm.deleteAdmission = deleteAdmission;
+        vm.deleteAdmission = deleteAdmission;
         vm.searchAdmission = searchAdmission;
+        vm.viewAdmission = viewAdmission;
+        vm.batches = [];
+        vm.retrieveBatches = retrieveBatches;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
 
         function initialise() {
-            order("FirstName");
+            vm.orderBy.property = "AdmissionId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            order("AdmissionId");
         }
 
         function retrieveAdmissions() {
@@ -75,9 +81,19 @@
             AdmissionService.canDeleteAdmission(id).then(function (response) { vm.CanDeleteAdmission = response.data, vm.loadingActions = false });
         }
 
-        //function deleteAAdmission(id) {
-        //    return AdmissionService.deleteAdmission(id).then(function () { initialise(); });
-        //};
+        function deleteAdmission(id) {
+            return AdmissionService.deleteAdmission(id).then(function () { initialise(); });
+        };
+
+        function viewAdmission(admissionId) {
+            $window.location.href = "/Admission/Edit/" + admissionId;
+        }
+
+        function retrieveBatches(batchId) {
+            return AdmissionService.retrieveBatches(batchId).then(function () {
+                vm.courses = response.data;
+            });
+        };
 
     }
 

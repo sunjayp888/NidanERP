@@ -50,6 +50,9 @@ namespace Nidan.Controllers
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
+            var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
+            var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
             var enquiryFromMobilization = id.Value != 0
@@ -70,6 +73,9 @@ namespace Nidan.Controllers
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
+                Talukas = new SelectList(talukas, "TalukaId", "Name"),
+                Districts = new SelectList(districts, "DistrictId", "Name"),
+                States = new SelectList(states, "StateId", "Name"),
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
@@ -78,6 +84,7 @@ namespace Nidan.Controllers
             };
 
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
@@ -121,6 +128,12 @@ namespace Nidan.Controllers
             enquiryViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
             enquiryViewModel.StudentTypes = new SelectList(NidanBusinessService.RetrieveStudentTypes(organisationId, e => true).ToList());
             enquiryViewModel.EnquiryTypes = new SelectList(NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true).ToList());
+            enquiryViewModel.Talukas =
+                new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
+            enquiryViewModel.Districts =
+                new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
+            enquiryViewModel.States =
+                new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -142,6 +155,9 @@ namespace Nidan.Controllers
             var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
+            var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
+            var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
@@ -161,6 +177,9 @@ namespace Nidan.Controllers
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
+                Talukas = new SelectList(talukas, "TalukaId", "Name"),
+                Districts = new SelectList(districts, "DistrictId", "Name"),
+                States = new SelectList(states, "StateId", "Name"),
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
@@ -168,6 +187,7 @@ namespace Nidan.Controllers
                 SelectedCourseIds = enquiry?.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
@@ -205,7 +225,9 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword,
+                p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
@@ -227,6 +249,20 @@ namespace Nidan.Controllers
         public ActionResult GetSector(int schemeId)
         {
             var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetTaluka(int districtId)
+        {
+            var data = NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList();
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetDistrict(int stateId)
+        {
+            var data = NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList();
             return this.JsonNet(data);
         }
     }

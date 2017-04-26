@@ -11,7 +11,7 @@
         var service = {
             retrieveAdmissions: retrieveAdmissions,
             canDeleteAdmission: canDeleteAdmission,
-            // deleteAdmission: deleteAdmission
+            deleteAdmission: deleteAdmission,
             searchAdmission: searchAdmission
         };
 
@@ -30,11 +30,11 @@
 
         function searchAdmission(SearchKeyword, Paging, OrderBy) {
             var url = "/Admission/Search",
-            data = {
-                searchKeyword: SearchKeyword,
-                paging: Paging,
-                orderBy: new Array(OrderBy)
-            };
+                data = {
+                    searchKeyword: SearchKeyword,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
             return $http.post(url, data);
         }
@@ -46,11 +46,11 @@
             return $http.post(url, data);
         }
 
-        //function deleteAdmission(id) {
-        //    var url = "/Admission/Delete",
-        //        data = { id: id };
+        function deleteAdmission(id) {
+            var url = "/Admission/Delete",
+                data = { id: id };
 
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
     }
 })();
