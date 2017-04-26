@@ -54,6 +54,9 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
+            batchViewModel.Batch.CourseInstallment.Name = "Test";
+            batchViewModel.Batch.Course.Name = "Test";
+            ModelStateErrors(ModelState);
             if (ModelState.IsValid)
             {
                 batchViewModel.Batch.OrganisationId = organisationId;
@@ -66,6 +69,19 @@ namespace Nidan.Controllers
             batchViewModel.Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(organisationId, e => true).ToList());
             batchViewModel.CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList());
             return View(batchViewModel);
+        }
+
+        public static void ModelStateErrors(ModelStateDictionary modelState)
+        {
+            var errors = modelState.Where(a => a.Value.Errors.Count > 0)
+                .Select(b => new { b.Key, b.Value.Errors })
+                .ToArray();
+
+            foreach (var modelStateErrors in errors)
+            {
+                System.Diagnostics.Debug.WriteLine("...Errored When Binding.", modelStateErrors.Key.ToString());
+            }
+
         }
 
         // GET: Batch/Edit/{id}

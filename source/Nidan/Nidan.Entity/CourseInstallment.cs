@@ -17,6 +17,7 @@ namespace Nidan.Entity
 
         public int CourseId { get; set; }
 
+
         public int Fee { get; set; }
 
         public int DownPayment { get; set; }

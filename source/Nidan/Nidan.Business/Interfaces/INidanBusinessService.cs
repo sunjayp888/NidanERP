@@ -153,7 +153,7 @@ namespace Nidan.Business.Interfaces
         BatchDay RetrieveBatchDay(int organisationId, int id);
         PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
-        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId);
+        IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int centreId, int enquiryId);
         IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);

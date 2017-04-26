@@ -177,19 +177,24 @@ namespace Nidan.Business
 
         private void CreateEnquiryCourse(int organisationId, int centreId, int enquiryId, List<int> couserIds)
         {
-
-            //Create Department Employment
-            var enquiryCourse = couserIds.Select(item => new EnquiryCourse()
+            var enquiryCourses = RetrieveEnquiryCourses(organisationId, centreId, enquiryId).ToList();
+            var enquiryCourseList = new List<EnquiryCourse>();
+            foreach (var item in couserIds)
             {
-                OrganisationId = organisationId,
-                CentreId = centreId,
-                EnquiryId = enquiryId,
-                CourseId = item,
-            }).ToList();
-            _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourse);
-
+                if (!enquiryCourses.Any(e => e.CourseId == item && e.EnquiryId == enquiryId))
+                {
+                    enquiryCourseList.Add(new EnquiryCourse()
+                    {
+                        OrganisationId = organisationId,
+                        CentreId = centreId,
+                        EnquiryId = enquiryId,
+                        CourseId = item,
+                    });
+                }
+            }
+            if (enquiryCourseList.Any())
+            _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourseList);
         }
-
 
         private void CreateCounselling(int organisationId, int personnelId, Enquiry enquiry, int courseId)
         {
@@ -1236,9 +1241,9 @@ namespace Nidan.Business
             var batchDay = _nidanDataService.RetrieveBatchDay(organisationId, batchDayId, p => true);
             return batchDay;
         }
-        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int centreId, int enquiryId)
         {
-            return _nidanDataService.RetrieveEnquiryCourses(organisationId, enquiryId);
+            return _nidanDataService.RetrieveEnquiryCourses(organisationId, centreId, enquiryId);
         }
 
         public IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId)
@@ -1437,10 +1442,12 @@ namespace Nidan.Business
             }
 
             // Create EnquiryCourse If not added on create
-            if (!enquiry.EnquiryCourses.Any() && cousreIds.Any())
-                CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, cousreIds);
+
+            CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, cousreIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
+
+
 
         public Mobilization UpdateMobilization(int organisationId, Mobilization mobilization)
         {

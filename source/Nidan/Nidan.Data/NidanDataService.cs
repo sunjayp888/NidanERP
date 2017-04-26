@@ -1557,7 +1557,7 @@ namespace Nidan.Data
             }
         }
 
-        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int enquiryId)
+        public IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int centreId, int enquiryId)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1565,7 +1565,7 @@ namespace Nidan.Data
 
                 return context
                     .EnquiryCourses
-                    .Where(a => a.EnquiryId == enquiryId)
+                    .Where(a => a.EnquiryId == enquiryId && a.CentreId == centreId)
                     .Include(e => e.Enquiry)
                     .AsNoTracking()
                     .ToList();

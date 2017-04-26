@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Batch")]
     public partial class Batch
     {
+        public Batch()
+        {
+            BatchDays = new HashSet<BatchDay>();
+        }
+
         public int BatchId { get; set; }
 
         [Required]

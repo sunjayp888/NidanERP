@@ -15,12 +15,12 @@
                 {
                     @*@Html.HiddenFor(model => model.Batch.BatchId)*@
                     @*@Html.HiddenFor(model => model.BatchDay.BatchDayId)*@
-                    @Html.HiddenFor(model => model.Batch.CourseInstallment.Name)
+                    
                     @*@Html.HiddenFor(model => model.Batch.CourseInstallment.CourseInstallmentId)*@
-                    @Html.HiddenFor(model => model.Batch.Course.Name)
+                    
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
-                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        @if (ViewData.ModelState.Values.Any(x => x.Errors.Count >= 1))
                         {
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
@@ -66,19 +66,19 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function() {
+            onSelect: function () {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
-        jQuery(function() {
+        jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function(ev, picker) {
+                    function (ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
@@ -90,7 +90,7 @@
 
             if (startHours == 12) {
                 var dailyHoursA = $("#Batch_NoOfHoursDaily").val();
-                var startHoursA=0;
+                var startHoursA = 0;
                 var endTimeA = parseInt(startHoursA) + parseInt(dailyHoursA);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTimeA;
 
@@ -99,12 +99,12 @@
                 var startHoursB = $("#Batch_BatchStartTimeHours").val();
                 var endTimeB = parseInt(startHoursB) + parseInt(dailyHoursB);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTimeB;
-                
+
             }
             document.getElementById('Batch_BatchEndTimeMinutes').value = startMinutr;
         }
 
-        
+
         //==================================================================== Calculation Of Month
 
         $(document).ready(function () {
@@ -122,7 +122,7 @@
         }
 
         $("#countbutton")
-            .click(function() {
+            .click(function () {
                 var courseDuration = $("#Batch_Course_Duration").val();
                 var hours = $("#Batch_NoOfHoursDaily").val();
                 var checkboxcount = $("[type='checkbox']:checked").length - 1;
@@ -148,7 +148,7 @@
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
         $("#addbutton")
-            .click(function() {
+            .click(function () {
                 var fee = $("#Batch_CourseInstallment_Fee").val();
                 var dp = $("#Batch_CourseInstallment_DownPayment").val();
                 var noofinstallment = $("#Batch_NoOfInstallment").val();
@@ -405,6 +405,6 @@
                 }
             });
     </script>}
-   
+
 
 

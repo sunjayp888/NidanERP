@@ -1084,6 +1084,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\less\Site.less" />
+    <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
@@ -1522,6 +1523,8 @@
     <Content Include="Views\Course\_Course.cshtml" />
     <Content Include="Views\Course\_CourseInstallmentList.cshtml" />
     <Content Include="Views\Course\_SubjectList.cshtml" />
+    <Content Include="Views\SubjectCourse\_SubjectCourse.cshtml" />
+    <Content Include="Views\SubjectTrainer\_SubjectTrainer.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
