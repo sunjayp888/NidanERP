@@ -115,6 +115,7 @@ namespace Nidan.Entity
             [Display(Name = "Conversion Prospect (%)")]
             public int ConversionProspect { get; set; }
 
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Closing Remarks")]
             public string ClosingRemark { get; set; }
 
@@ -124,6 +125,7 @@ namespace Nidan.Entity
             [Display(Name = "Other Interested Course")]
             public int OtherInterestedCourse { get; set; }
 
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Remarks By Branch Manager")]
             public string RemarkByBm { get; set; }
         }
