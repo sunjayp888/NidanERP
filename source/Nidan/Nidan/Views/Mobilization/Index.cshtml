@@ -115,7 +115,6 @@
                                             <th ng-click="model.order('GeneratedDate')" ng-class="model.orderClass('GeneratedDate')">Mobilized Date</th>
                                             <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                             <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
-                                            <th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Mobilizer Status Closed</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -130,7 +129,6 @@
                                             <td><span ng-bind="mobilizer.GeneratedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="mobilizer.FollowUpDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="mobilizer.StudentLocation"></span></td>
-                                            <td><span ng-bind="mobilizer.Close"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

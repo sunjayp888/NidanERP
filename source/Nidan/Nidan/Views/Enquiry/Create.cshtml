@@ -86,9 +86,18 @@
 
         $("#Enquiry_Age").val("");
         $("#Enquiry_PinCode").val("");
-        //if ($('#Enquiry_Mobile').value == "0") {
-        //    $('#Enquiry_Mobile').val("");
-        //}
+
+        //=========================================Do not accept special char and numbers
+        $(function () {
+            $('.name').keypress(function (e) {
+                var txt = String.fromCharCode(e.which);
+                console.log(txt + ' : ' + e.which);
+                if (!txt.match(/[A-Za-z+#.]/))//+#-.
+                {
+                    return false;
+                }
+            });
+        });
        
         $('.other-interested-course-textbox').hide();
         $("#Enquiry_SectorId").change(function () {
@@ -179,6 +188,53 @@
                     e.preventDefault();
             });
         }
+
+        $('#Enquiry_StateId').change(function () {
+            var stateId = $('#Enquiry_StateId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetDistrict',
+                type: 'POST',
+                data: JSON.stringify({ stateId: stateId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_DistrictId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Enquiry_DistrictId').change(function () {
+            var districtId = $('#Enquiry_DistrictId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetTaluka',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_TalukaId").empty();
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
 
         $('#Enquiry_SectorId').change(function () {
             var sectorId = $('#Enquiry_SectorId :selected').val();

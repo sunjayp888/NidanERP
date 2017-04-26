@@ -372,9 +372,10 @@ namespace Nidan.Business
                 CreatedDateTime = DateTime.UtcNow.Date,
                 FollowUpType = "Counselling",
                 FollowUpUrl = string.Format("/Counselling/Edit/{0}", data.CounsellingId),
+                CounsellingId = data.CounsellingId,
                 ReadDateTime = _today.AddYears(-100)
             };
-            _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             return data;
         }
 
@@ -973,12 +974,12 @@ namespace Nidan.Business
 
         public List<District> RetrieveDistricts(int organisationId, Expression<Func<District, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<District>(organisationId, e => true);
+            return _nidanDataService.Retrieve<District>(organisationId, predicate);
         }
 
         public List<Taluka> RetrieveTalukas(int organisationId, Expression<Func<Taluka, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Taluka>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Taluka>(organisationId, predicate);
         }
 
 
@@ -1578,6 +1579,7 @@ namespace Nidan.Business
                 mobilization.Close = followUp.Close;
                 mobilization.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
             }
 
             //Update Enquiry Date
@@ -1600,7 +1602,7 @@ namespace Nidan.Business
                     counselling.Close = followUp.Close;
                     counselling.ClosingRemark = followUp.ClosingRemark;
                     _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
-
+                    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
                 }
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             }
@@ -1612,6 +1614,7 @@ namespace Nidan.Business
                 counselling.FollowUpDate = followUp.FollowUpDateTime;
                 counselling.Close = followUp.Close;
                 counselling.ClosingRemark = followUp.ClosingRemark;
+                
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
 
@@ -1624,7 +1627,7 @@ namespace Nidan.Business
                 //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
             }
-
+            
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
         }
 
@@ -1642,6 +1645,8 @@ namespace Nidan.Business
             {
                 enquiryFollowUp.FollowUpDateTime = counselling.FollowUpDate.Value;
                 enquiryFollowUp.FollowUpType = "Counselling";
+                enquiryFollowUp.CounsellingId = counselling.CounsellingId;
+                enquiryFollowUp.IntrestedCourseId = counselling.CourseOfferedId;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
             }
 

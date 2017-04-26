@@ -251,5 +251,19 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult GetTaluka(int districtId)
+        {
+            var data = NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList();
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetDistrict(int stateId)
+        {
+            var data = NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList();
+            return this.JsonNet(data);
+        }
     }
 }
