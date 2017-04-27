@@ -252,6 +252,7 @@ namespace Nidan.Data
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
+                //admission.RegistrationPaymentReceipt = null;
                 admission = context.Admissions.Add(admission);
                 context.SaveChanges();
 
@@ -1739,6 +1740,8 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Organisation)
+                    .Include(p => p.RegistrationPaymentReceipt)
+                    .Include(p => p.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1760,6 +1763,9 @@ namespace Nidan.Data
             {
                 return context
                     .Admissions
+                    .Include(p => p.RegistrationPaymentReceipt)
+                    .Include(p => p.RegistrationPaymentReceipt.Enquiry)
+                    .Include(p => p.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);

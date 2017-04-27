@@ -53,6 +53,10 @@ namespace Nidan.Controllers
                 {
                     Name = "Test"
                 },
+                Batch = new Batch()
+                {
+                    Name = "Test"
+                },
                 Counselling = counselling,
                 RegistrationPaymentReceipt = registrationPaymentReceipt,
                 RegistrationPaymentReceiptId = id.Value,
@@ -66,10 +70,13 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 Admission = new Admission()
                 {
-                    RegistrationPaymentReceipt = registrationPaymentReceipt
+                    //RegistrationPaymentReceipt = registrationPaymentReceipt,
+                    EnquiryId = registrationPaymentReceipt.EnquiryId,
+                    RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId
                 }
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -84,8 +91,8 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = UserCentreId;
-                admissionViewModel.Admission.EnquiryId = admissionViewModel.Admission.RegistrationPaymentReceipt
-                    .EnquiryId;
+                //admissionViewModel.Admission.EnquiryId = admissionViewModel.Admission.RegistrationPaymentReceipt
+                //    .EnquiryId;
                 admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow.Date;
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
@@ -119,12 +126,15 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var admission = NidanBusinessService.RetrieveAdmission(UserOrganisationId, id.Value);
-
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+           
             if (admission == null)
             {
                 return HttpNotFound();
             }
+            var counselling =
+                NidanBusinessService.RetrieveCounselling(organisationId,
+                    admission.RegistrationPaymentReceipt.CounsellingId);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -135,18 +145,25 @@ namespace Nidan.Controllers
                 {
                     Name = "Test"
                 },
+                Batch = new Batch()
+                {
+                    Name = "Test"
+                },
+                RegistrationPaymentReceipt = admission.RegistrationPaymentReceipt,
                 RegistrationPaymentReceiptId = id.Value,
                 Admission = admission,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(), "PaymentModeId", "Name"),
-                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(UserOrganisationId, e => true).ToList(), "SchemeId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
-                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(UserOrganisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
-                Batches = new SelectList(NidanBusinessService.RetrieveBatches(UserOrganisationId, e => true).ToList(), "BatchId", "Name"),
-                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(UserOrganisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
-                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => true).ToList(), "CourseInstallmentId", "Name")
+                Counselling = counselling,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
+                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
+                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
+                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
+                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name")
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");
             return View(viewModel);
         }
 

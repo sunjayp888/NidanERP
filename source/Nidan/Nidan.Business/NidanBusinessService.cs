@@ -1564,7 +1564,7 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryCounselling);
             }
 
-                var enquiryCourses = RetrieveEnquiryCourses(organisationId, enquiry.EnquiryId);
+                var enquiryCourses = RetrieveEnquiryCourses(organisationId, enquiry.CentreId,enquiry.EnquiryId);
             // Create EnquiryCourse If not added on create
             if (!enquiry.EnquiryCourses.Any() && courseIds.Any())
                 CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
