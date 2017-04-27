@@ -30,11 +30,18 @@ namespace Nidan.Models
         public int IntrestedCourseId { get; set; }
         public int BatchTimePreferId { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
+        public IEnumerable<SelectListItem> DiscountList { get; set; }
         public List<TitleType> TitleType => new List<TitleType>()
         {
             new TitleType() {Name = "Mr.",Value = "Mr."},
             new TitleType() {Name = "Ms.",Value = "Ms."},
             new TitleType() {Name = "Mrs.",Value = "Mrs."}
+        };
+
+        public List<DiscountType> DiscountType => new List<DiscountType>()
+        {
+            new DiscountType() {Id=5,Name = "5%"},
+            new DiscountType() {Id=10,Name = "10%"}
         };
         public List<int> SelectedTrainerIds
         {
@@ -49,5 +56,10 @@ namespace Nidan.Models
         }
 
         public string SelectedTrainerIdsJson { get; set; }
+    }
+    public class DiscountType
+    {
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

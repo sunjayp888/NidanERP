@@ -34,6 +34,8 @@ namespace Nidan.Entity
 
         public int? DiscountFee { get; set; }
 
+        public int? FeeByStudent { get; set; }
+
         [StringLength(500)]
         public string Particulars { get; set; }
 

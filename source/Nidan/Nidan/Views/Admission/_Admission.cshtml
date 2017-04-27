@@ -167,12 +167,12 @@
 @*-----------------------------------------Batch Details-----------------------------------------*@
 <div id="BatchDetails">
     @*<div class="form-group">
-        @Html.LabelFor(model => model.Batch.Name, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            @Html.TextBoxFor(model => model.Batch.Name, new { @class = "form-control col-md-7 col-xs-12" })
-            @Html.ValidationMessageFor(model => model.Batch.Name, "", new { @class = "help-block" })
-        </div>
-    </div>*@
+            @Html.LabelFor(model => model.Batch.Name, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Batch.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                @Html.ValidationMessageFor(model => model.Batch.Name, "", new { @class = "help-block" })
+            </div>
+        </div>*@
 
     <div class="row">
         <div class="col-lg-12">
@@ -222,29 +222,29 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CourseInstallment.Fee, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.CourseInstallment.Fee, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.CourseInstallment.Fee, "", new { @class = "help-block" })
+    @*<div class="row">
+            <div class="col-lg-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CourseInstallment.Fee, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.CourseInstallment.Fee, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.CourseInstallment.Fee, "", new { @class = "help-block" })
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CourseInstallment.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.CourseInstallment.DownPayment, "", new { @class = "help-block" })
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CourseInstallment.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.CourseInstallment.DownPayment, "", new { @class = "help-block" })
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 
     <div class="row">
         <div class="col-lg-12">
@@ -431,21 +431,21 @@
             </div>
 
             @*<div class="col-md-6">
-                <div ng-controller="TrainerController as model">
-                    <div class="form-group">
-                        @Html.Label("Trainer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
-                            <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
-                                <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
-                                <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
-                                    <span ng-bind-html="trainer.Name"></span>
-                                </ui-select-choices>
-                            </ui-select>
+                    <div ng-controller="TrainerController as model">
+                        <div class="form-group">
+                            @Html.Label("Trainer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
+                                <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
+                                    <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                                    <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
+                                        <span ng-bind-html="trainer.Name"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
         </div>
     </div>
 
@@ -629,71 +629,111 @@
 
 @*-----------------------------------------Payment Details-----------------------------------------*@
 
-<div class="col-md-4 col-sm-6 col-xs-12">
-    <label class="btn btn-info">
-        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Installment", new { id = "rbPaymentType" })
-        Installment
-    </label>
-    <label class="btn btn-info">
-        @Html.RadioButtonFor(model => model.Admission.PaymentType, "Lumpsum", new { id = "rbPaymentType" })
-        Lumpsum
-    </label>
-</div>
+<div id="PaymentType">
+    <div id="divPaymentType" class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Payment Type</label>
+        <label id="installmentRadioButton" class="btn btn-info">
+            @Html.RadioButtonFor(model => model.Admission.PaymentType, "Installment")
+            Installment
+        </label>
+        <label id="lumpsumRadioButton" class="btn btn-info">
+            @Html.RadioButtonFor(model => model.Admission.PaymentType, "Lumpsum")
+            Lumpsum
+        </label>
+    </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Admission.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.PaymentModeId, "", new { @class = "help-block" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Admission.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Admission.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Admission.PaymentModeId, "", new { @class = "help-block" })
+        </div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.Fee, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
-        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
-        @Html.ValidationMessageFor(model => model.Admission.Fee, "", new { @class = "help-block" })
+<div id="PaymentDetails">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Admission.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.Fee, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+            @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+            @Html.ValidationMessageFor(model => model.Admission.Fee, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Admission.Lumpsum, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.Lumpsum, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
-        @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
-        @Html.ValidationMessageFor(model => model.Admission.Lumpsum, "", new { @class = "help-block" })
+    <div id="divAdmissionDownpayment" class="form-group">
+        @Html.LabelFor(model => model.Admission.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+            @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+            @Html.ValidationMessageFor(model => model.Admission.DownPayment, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-<div class="form-group bank-details-textbox-admission">
-    @Html.LabelFor(model => model.Admission.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.BankName, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.BankName, "", new { @class = "help-block" })
+    <div id="divAdmissionLumpsum" class="form-group">
+        @Html.LabelFor(model => model.Admission.Lumpsum, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.Lumpsum, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+            @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+            @Html.ValidationMessageFor(model => model.Admission.Lumpsum, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-<div class="form-group bank-details-textbox-admission">
-    @Html.LabelFor(model => model.Admission.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.ChequeNo, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.ChequeNo, "", new { @class = "help-block" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Admission.Discount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-4 col-xs-12">
+            @Html.DropDownListFor(model => model.Admission.Discount, Model.DiscountList, "Select Discount", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Admission.Discount, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-<div class="form-group bank-details-textbox-admission">
-    @Html.LabelFor(model => model.Admission.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.Admission.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-        @Html.ValidationMessageFor(model => model.Admission.ChequeDate, "", new { @class = "help-block" })
+    <div id="divDiscountFee" class="form-group">
+        @Html.LabelFor(model => model.Admission.DiscountFee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.DiscountFee, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+            @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+            @Html.ValidationMessageFor(model => model.Admission.DiscountFee, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-@*<div class="form-group">
-    @Html.LabelFor(model => model.Admission.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Admission.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Admission.Remarks, "", new { @class = "help-block" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Admission.FeeByStudent, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.FeeByStudent, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+            @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
+            @Html.ValidationMessageFor(model => model.Admission.FeeByStudent, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>*@
+
+    <div class="form-group bank-details-textbox-admission">
+        @Html.LabelFor(model => model.Admission.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Admission.BankName, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group bank-details-textbox-admission">
+        @Html.LabelFor(model => model.Admission.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.Admission.ChequeNo, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.Admission.ChequeNo, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group bank-details-textbox-admission">
+        @Html.LabelFor(model => model.Admission.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12 dob">
+            @Html.TextBoxFor(model => model.Admission.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+            @Html.ValidationMessageFor(model => model.Admission.ChequeDate, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Admission.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Admission.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+                @Html.ValidationMessageFor(model => model.Admission.Remarks, "", new { @class = "help-block" })
+            </div>
+        </div>*@
+</div>
