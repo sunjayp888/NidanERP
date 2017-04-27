@@ -2,66 +2,79 @@
 <div class="form-control-required-example"> = Required</div>
 
 @Html.HiddenFor(m => m.FollowUp.IntrestedCourseId)
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.Title, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-    <div class="col-md-4 col-sm-4 col-xs-12">
-        @Html.DropDownListFor(model => model.FollowUp.Title, Model.TitleList, "Select Title", new { @class = "form-control", @disabled = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.Title, "", new { @class = "help-block" })
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FollowUp.Title, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                <div class="col-md-8 col-sm-4 col-xs-12">
+                    @Html.DropDownListFor(model => model.FollowUp.Title, Model.TitleList, "Select Title", new { @class = "form-control", @disabled = "true" })
+                    @Html.ValidationMessageFor(model => model.FollowUp.Title, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FollowUp.FirstName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.FollowUp.FirstName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.FollowUp.FirstName, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FollowUp.MiddelName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.FollowUp.MiddelName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.FollowUp.MiddelName, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FollowUp.LastName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.FollowUp.LastName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                    @Html.ValidationMessageFor(model => model.FollowUp.LastName, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.FirstName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.FollowUp.FirstName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.FirstName, "", new { @class = "help-block" })
-    </div>
-</div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FollowUp.Mobile, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.FollowUp.Mobile, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.FollowUp.Mobile, "", new { @class = "help-block" })
+                            </div>
+                        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.MiddelName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.FollowUp.MiddelName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.MiddelName, "", new { @class = "help-block" })
-    </div>
-</div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FollowUp.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                @Html.DropDownListFor(model => model.FollowUp.IntrestedCourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12", @disabled = "true" })
+                                @Html.ValidationMessageFor(model => model.FollowUp.IntrestedCourseId, "", new { @class = "help-block" })
+                            </div>
+                        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.LastName, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.FollowUp.LastName, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.LastName, "", new { @class = "help-block" })
-    </div>
-</div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FollowUp.FollowUpDateTime, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                            <div class="col-md-4 col-sm-6 col-xs-12 dob">
+                                @Html.TextBoxFor(model => model.FollowUp.FollowUpDateTime, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                                @Html.ValidationMessageFor(model => model.FollowUp.FollowUpDateTime, "", new { @class = "help-block" })
+                            </div>
+                        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.Mobile, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.FollowUp.Mobile, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.Mobile, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.IntrestedCourseId, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.FollowUp.IntrestedCourseId, Model.Courses, null, new { @class = "form-control col-md-7 col-xs-12", @disabled = "true" })
-        @Html.ValidationMessageFor(model => model.FollowUp.IntrestedCourseId, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.FollowUpDateTime, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.FollowUp.FollowUpDateTime, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-        @Html.ValidationMessageFor(model => model.FollowUp.FollowUpDateTime, "", new { @class = "help-block" })
-    </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.FollowUp.Remark, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        @Html.EditorFor(model => model.FollowUp.Remark, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.FollowUp.Remark, "", new { @class = "help-block" })
-    </div>
-</div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FollowUp.Remark, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                @Html.EditorFor(model => model.FollowUp.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.FollowUp.Remark, "", new { @class = "help-block" })
+                            </div>
+                        </div>
