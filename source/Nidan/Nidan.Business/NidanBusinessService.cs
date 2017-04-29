@@ -164,7 +164,7 @@ namespace Nidan.Business
                 Remark = mobilization.Remark,
                 Title = mobilization.Title,
                 FirstName = mobilization.FirstName,
-                MiddelName = mobilization.MiddelName,
+                MiddleName = mobilization.MiddleName,
                 LastName = mobilization.LastName,
                 IntrestedCourseId = mobilization.InterestedCourseId,
                 Mobile = mobilization.Mobile,
@@ -186,7 +186,7 @@ namespace Nidan.Business
             data.StudentCode = GenerateStudentCode(organisationId, data.EnquiryId, enquiry.CentreId);
             _nidanDataService.UpdateEntityEntry(data);
             //Create Counselling
-            CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
+           // CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
             //Create FollowUp
             CreateFollowUp(organisationId, data);
             //Create EnquiryCourse
@@ -212,7 +212,7 @@ namespace Nidan.Business
                 }
             }
             if (enquiryCourseList.Any())
-            _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourseList);
+                _nidanDataService.Create<EnquiryCourse>(organisationId, enquiryCourseList);
         }
 
         private void CreateCounselling(int organisationId, int personnelId, Enquiry enquiry, int courseId)
@@ -221,7 +221,7 @@ namespace Nidan.Business
             {
                 Title = enquiry.Title,
                 FirstName = enquiry.FirstName,
-                MiddelName = enquiry.MiddelName,
+                MiddleName = enquiry.MiddleName,
                 LastName = enquiry.LastName,
                 CentreId = enquiry.CentreId,
                 CourseOfferedId = courseId,
@@ -246,7 +246,7 @@ namespace Nidan.Business
                 Remark = enquiry.Remarks,
                 Title = enquiry.Title,
                 FirstName = enquiry.FirstName,
-                MiddelName = enquiry.MiddelName,
+                MiddleName = enquiry.MiddleName,
                 LastName = enquiry.LastName,
                 IntrestedCourseId = enquiry.IntrestedCourseId,
                 Mobile = enquiry.Mobile,
@@ -294,7 +294,7 @@ namespace Nidan.Business
                     Mobile = item.Mobile,
                     Title = item.Title,
                     FirstName = item.FirstName,
-                    MiddelName = item.MiddelName,
+                    MiddleName = item.MiddleName,
                     LastName = item.LastName,
                     OrganisationId = organisationId,
                     Remark = item.Remark,
@@ -315,7 +315,7 @@ namespace Nidan.Business
                     Remark = item.Remark,
                     Title = item.Title,
                     FirstName = item.FirstName,
-                    MiddelName = item.MiddelName,
+                    MiddleName = item.MiddleName,
                     LastName = item.LastName,
                     IntrestedCourseId = interestedCourseId,
                     Mobile = item.Mobile,
@@ -370,7 +370,7 @@ namespace Nidan.Business
                 Remark = data.Remarks,
                 Title = enquiry.Title,
                 FirstName = enquiry.FirstName,
-                MiddelName = enquiry.MiddelName,
+                MiddleName = enquiry.MiddleName,
                 LastName = enquiry.LastName,
                 IntrestedCourseId = data.CourseOfferedId,
                 Mobile = enquiry.Mobile,
@@ -400,7 +400,7 @@ namespace Nidan.Business
             }
             registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
             registrationPaymentReceipt.FinancialYear = "2016-2017";
-            
+
             var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
 
             enquirydata.Registered = data != null;
@@ -435,7 +435,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 Title = mobilization == null ? string.Empty : mobilization.Title,
                 FirstName = mobilization == null ? string.Empty : mobilization.FirstName,
-                MiddelName = mobilization == null ? string.Empty : mobilization.MiddelName,
+                MiddleName = mobilization == null ? string.Empty : mobilization.MiddleName,
                 LastName = mobilization == null ? string.Empty : mobilization.LastName,
                 Mobile = mobilization.Mobile,
                 AlternateMobile = mobilization.AlternateMobile,
@@ -632,7 +632,101 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, Admission admission)
         {
-            return _nidanDataService.CreateAdmission(organisationId, admission);
+            var data = _nidanDataService.CreateAdmission(organisationId, admission);
+            data.FinancialYear = "2017-18";
+            // EnquiryStatus Update
+            var enquiry = RetrieveEnquiry(organisationId, admission.EnquiryId);
+           
+            enquiry.EnquiryStatus = "Admission";
+            enquiry.Close = "Yes";
+            enquiry.ClosingRemark = "Admission Done";
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+            // Counselling Update
+            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+                .Items.FirstOrDefault();
+            if (counselling != null)
+            {
+                var course = RetrieveCourse(organisationId, counselling.CourseOfferedId);
+                counselling.Close = "Yes";
+                counselling.ClosingRemark = "Admission Done";
+                data.Particulars = data.FeeByStudent + " Against " + course.Name;
+               _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+            }
+            //FollowUp Update
+            var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+                .Items.FirstOrDefault();
+            if (followup != null)
+            {
+                followup.FollowUpType = "Admission";
+                followup.Close = "Yes";
+                followup.ClosingRemark = "Admission Done";
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
+            }
+            var batchData = RetrieveBatch(organisationId, admission.BatchId);
+            var discount = admission.Discount;
+            var paymentType = admission.PaymentType;
+
+            //if (paymentType == "Installment")
+            //{
+            //    if (discount == null)
+            //    {
+            //        var candidateInstallment = new CandidateInstallment()
+            //        {
+            //            AdmissionId = data.AdmissionId,
+            //            Fee = batchData.CourseInstallment.Fee,
+            //            DownPayment = batchData.CourseInstallment.DownPayment,
+            //            Month = batchData.Month,
+            //            NoOfInstallment = batchData.NoOfInstallment,
+            //            FirstInstallment = batchData.FirstInstallment,
+            //            SecondInstallment = batchData.SecondInstallment,
+            //            ThirdInstallment = batchData.ThirdInstallment,
+            //            FourthInstallment = batchData.FourthInstallment,
+            //            FifthInstallment = batchData.FifthInstallment,
+            //            SixthInstallment = batchData.SixthInstallment,
+            //            SeventhInstallment = batchData.SeventhInstallment,
+            //            EighthInstallment = batchData.EighthInstallment,
+            //            NinethInstallment = batchData.NinethInstallment,
+            //            TenthInstallment = batchData.TenthInstallment,
+            //            EleventhInstallment = batchData.EleventhInstallment,
+            //            TwelvethInstallment = batchData.TwelvethInstallment,
+            //            CentreId = data.CentreId,
+            //            BatchId = data.BatchId,
+            //            OrganisationId = data.OrganisationId
+            //        };
+            //        _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
+            //    }
+            //    else
+            //    {
+            //        var candidateInstallment = new CandidateInstallment()
+            //        {
+            //            AdmissionId = data.AdmissionId,
+            //            Fee = data.DiscountFee?? 0,
+            //            DownPayment = batchData.CourseInstallment.DownPayment,
+            //            Month = batchData.Month,
+            //            //NoOfInstallment = batchData.NoOfInstallment,
+            //            //FirstInstallment = batchData.FirstInstallment,
+            //            //SecondInstallment = batchData.SecondInstallment,
+            //            //ThirdInstallment = batchData.ThirdInstallment,
+            //            //FourthInstallment = batchData.FourthInstallment,
+            //            //FifthInstallment = batchData.FifthInstallment,
+            //            //SixthInstallment = batchData.SixthInstallment,
+            //            //SeventhInstallment = batchData.SeventhInstallment,
+            //            //EighthInstallment = batchData.EighthInstallment,
+            //            //NinethInstallment = batchData.NinethInstallment,
+            //            //TenthInstallment = batchData.TenthInstallment,
+            //            //EleventhInstallment = batchData.EleventhInstallment,
+            //            //TwelvethInstallment = batchData.TwelvethInstallment,
+            //            CentreId = data.CentreId,
+            //            BatchId = data.BatchId,
+            //            OrganisationId = data.OrganisationId
+            //        };
+            //        _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
+            //    }
+                
+               
+            //}
+            return data;
+
         }
 
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
@@ -1543,7 +1637,7 @@ namespace Nidan.Business
                 enquiryFollowUp.Close = enquiry.Close;
                 enquiryFollowUp.Title = enquiry.Title;
                 enquiryFollowUp.FirstName = enquiry.FirstName;
-                enquiryFollowUp.MiddelName = enquiry.MiddelName;
+                enquiryFollowUp.MiddleName = enquiry.MiddleName;
                 enquiryFollowUp.LastName = enquiry.LastName;
                 enquiryFollowUp.Mobile = enquiry.Mobile;
                 enquiryFollowUp.AlternateMobile = enquiry.AlternateMobile;
@@ -1559,12 +1653,12 @@ namespace Nidan.Business
             {
                 enquiryCounselling.Title = enquiry.Title;
                 enquiryCounselling.FirstName = enquiry.FirstName;
-                enquiryCounselling.MiddelName = enquiry.MiddelName;
+                enquiryCounselling.MiddleName = enquiry.MiddleName;
                 enquiryCounselling.LastName = enquiry.LastName;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryCounselling);
             }
 
-                var enquiryCourses = RetrieveEnquiryCourses(organisationId, enquiry.CentreId,enquiry.EnquiryId);
+            var enquiryCourses = RetrieveEnquiryCourses(organisationId, enquiry.CentreId, enquiry.EnquiryId);
             // Create EnquiryCourse If not added on create
             if (!enquiry.EnquiryCourses.Any() && courseIds.Any())
                 CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
@@ -1581,7 +1675,7 @@ namespace Nidan.Business
             //mobilizationFollowUp.Closed = mobilization.Close == "Yes";
             mobilizationFollowUp.Title = mobilization.Title ?? mobilizationFollowUp.Title;
             mobilizationFollowUp.FirstName = mobilization.FirstName ?? mobilizationFollowUp.FirstName;
-            mobilizationFollowUp.MiddelName = mobilization.MiddelName ?? mobilizationFollowUp.MiddelName;
+            mobilizationFollowUp.MiddleName = mobilization.MiddleName ?? mobilizationFollowUp.MiddleName;
             mobilizationFollowUp.LastName = mobilization.LastName ?? mobilizationFollowUp.LastName;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilizationFollowUp);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
@@ -1632,7 +1726,7 @@ namespace Nidan.Business
                 counselling.FollowUpDate = followUp.FollowUpDateTime;
                 counselling.Close = followUp.Close;
                 counselling.ClosingRemark = followUp.ClosingRemark;
-                
+
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
 
@@ -1645,7 +1739,7 @@ namespace Nidan.Business
                 //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
             }
-            
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
         }
 

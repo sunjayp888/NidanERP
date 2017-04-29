@@ -242,6 +242,7 @@
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
+    <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -258,6 +259,8 @@
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\SubjectCourseController.cs" />
+    <Compile Include="Controllers\SubjectTrainerController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\RegistrationPaymentReceiptController.cs" />
     <Compile Include="Extensions\ControllerExtensions.cs" />
@@ -1085,11 +1088,13 @@
     </None>
     <None Include="Content\less\Site.less" />
     <Content Include="Registration.html" />
+    <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
+    <Content Include="Scripts\Angular\Controllers\CentreSchemeController.js" />
+    <Content Include="Scripts\Angular\Controllers\CentreSectorController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
-    <Content Include="Scripts\Angular\Controllers\CourseFeeBreakUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\AdmissionController.js" />
@@ -1105,14 +1110,17 @@
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
+    <Content Include="Scripts\Angular\Controllers\RoomController.js" />
     <Content Include="Scripts\Angular\Controllers\SessionController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectController.js" />
+    <Content Include="Scripts\Angular\Controllers\SubjectCourseController.js" />
+    <Content Include="Scripts\Angular\Controllers\SubjectTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\TrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\RegistrationPaymentReceiptController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
-    <Content Include="Scripts\Angular\Services\CourseFeeBreakUpService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
@@ -1130,6 +1138,11 @@
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
+    <Content Include="Scripts\Angular\Services\RoomService.js" />
+    <Content Include="Scripts\Angular\Services\SessionService.js" />
+    <Content Include="Scripts\Angular\Services\SubjectCourseService.js" />
+    <Content Include="Scripts\Angular\Services\SubjectService.js" />
+    <Content Include="Scripts\Angular\Services\SubjectTrainerService.js" />
     <Content Include="Scripts\Angular\Services\TrainerService.js" />
     <Content Include="Scripts\Angular\Services\RegistrationPaymentReceiptService.js" />
     <Content Include="Scripts\App\EmploymentWorkingPattern.js" />

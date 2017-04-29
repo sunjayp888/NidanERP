@@ -22,6 +22,12 @@ namespace Nidan.Entity
 
             [Display(Name = "Bank Name")]
             public string BankName { get; set; }
+
+            [Display(Name = "Course")]
+            public int CourseId { get; set; }
+
+            [Display(Name = "Follow Up Date")]
+            public DateTime? FollowUpDate { get; set; }
         }
     }
 }

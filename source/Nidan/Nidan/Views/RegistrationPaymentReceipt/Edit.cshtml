@@ -41,6 +41,10 @@
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Submit</button>
+                                    @*<button type="button" class="btn btn-success" href="@Url.Action("Create", "Admission", new { id = Model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId })">Create Registration</button>*@
+                                    <a href="@Url.Action("Create", "Admission", new { id = Model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId })" class="btn btn-primary" role="button">
+                                        Create Admission&nbsp;<span class="fa fa-chevron-right"></span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
