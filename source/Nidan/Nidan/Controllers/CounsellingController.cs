@@ -33,6 +33,19 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        //// GET: Counselling/Create
+        //[Authorize(Roles = "Admin")]
+        //public ActionResult Create(int? id)
+        //{
+        //    var organisationId = UserOrganisationId;
+        //    id = id ?? 0;
+        //    var viewModel = new CounsellingViewModel
+        //    {
+
+        //    };
+        //    return View(viewModel);
+        //}
+
         // GET: Counselling/Edit/{id}
         public ActionResult Edit(int? id)
         {

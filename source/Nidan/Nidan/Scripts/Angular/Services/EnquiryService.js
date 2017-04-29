@@ -14,6 +14,7 @@
             // deleteEnquiry: deleteEnquiry
             searchEnquiry: searchEnquiry,
             searchEnquiryByDate: searchEnquiryByDate
+            
         };
 
         return service;

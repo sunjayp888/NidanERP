@@ -14,7 +14,8 @@
             deleteCourse: deleteCourse,
             searchCourse: searchCourse,
             deleteEnquiryCourse: deleteEnquiryCourse,
-            deleteSubjectCourse: deleteSubjectCourse
+            deleteSubjectCourse: deleteSubjectCourse,
+            retrieveCourseBySectorId: retrieveCourseBySectorId
         };
 
         return service;
@@ -27,6 +28,14 @@
                     orderBy: new Array(OrderBy)
                 };
 
+            return $http.post(url, data);
+        }
+
+        function retrieveCourseBySectorId(sectorId) {
+            var url = "/Enquiry/GetCourse",
+                data = {
+                    sectorId: sectorId
+                };
             return $http.post(url, data);
         }
 

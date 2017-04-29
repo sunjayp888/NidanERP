@@ -114,7 +114,8 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = enquiryViewModel.Enquiry.EnquiryId });
             }
             enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             enquiryViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());
@@ -241,7 +242,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.SectorId == sectorId).ToList();
             return this.JsonNet(data);
         }
 
