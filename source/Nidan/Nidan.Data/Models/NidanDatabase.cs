@@ -84,9 +84,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreScheme> CentreSchemes { get; set; }
         public virtual DbSet<CentreSector> CentreSectors { get; set; }
         public virtual DbSet<Admission> Admissions { get; set; }
-        public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
-
+        public virtual DbSet<CandidateFee> CandidateFees { get; set; }
+        public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -128,7 +128,40 @@ namespace Nidan.Data.Models
              .HasForeignKey(e => e.SectorId)
              .WillCascadeOnDelete(false);
 
-           //modelBuilder.Entity<Colour>()
+            modelBuilder.Entity<CandidateFee>()
+               .Property(e => e.ChequeNumber)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.FiscalYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .HasMany(e => e.Registrations)
+                .WithRequired(e => e.CandidateFee)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Registration>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Registration>()
+                .HasOptional(e => e.Registration1)
+                .WithRequired(e => e.Registration2);
+
+            //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)
             //    .WillCascadeOnDelete(false);
