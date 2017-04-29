@@ -15,6 +15,10 @@ namespace Nidan.Entity
 
         public int EnquiryId { get; set; }
 
+        public int CourseId { get; set; }
+
+        public int CourseInstallmentId { get; set; }
+
         public int CandidateFeeId { get; set; }
 
         public string Remarks { get; set; }
@@ -30,5 +34,15 @@ namespace Nidan.Entity
         public virtual Registration Registration1 { get; set; }
 
         public virtual Registration Registration2 { get; set; }
+
+        public virtual Enquiry Enquiry { get; set; }
+
+        public virtual Course Course { get; set; }
+
+        public virtual CourseInstallment CourseInstallment { get; set; }
+
+        public virtual Centre Centre { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
     }
 }

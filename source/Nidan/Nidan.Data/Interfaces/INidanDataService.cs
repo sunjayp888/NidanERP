@@ -123,6 +123,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<Sector> RetrieveSectors(int organisationId, Expression<Func<Sector, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
+        IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId);
 
         // Update
 

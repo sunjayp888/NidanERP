@@ -12,12 +12,12 @@ using Nidan.Models;
 
 namespace Nidan.Controllers
 {
-    public class RegistrationPaymentReceiptController : BaseController
+    public class RegistrationController : BaseController
     {
         private readonly INidanBusinessService _nidanBusinessService;
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         private readonly DateTime _todayUtc = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        public RegistrationPaymentReceiptController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        public RegistrationController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
         }
@@ -37,30 +37,17 @@ namespace Nidan.Controllers
             id = id ?? 0;
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value, e => true);
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
-            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId).Where(e => interestedCourseIds.Contains(e.CourseId));
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var viewModel = new RegistrationPaymentReceiptViewModel
+            var viewModel = new RegistrationViewModel
             {
-
                 EnquiryId = id.Value,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
-                Schemes = new SelectList(schemes, "SchemeId", "Name"),
-                Sectors = new SelectList(sectors, "SectorId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
-
-                RegistrationPaymentReceipt = new RegistrationPaymentReceipt()
-                {
-                    CourseId = enquiry?.IntrestedCourseId ?? 0,
-                    //ChequeNo = "000000",
-                    //BankName = "Nidan",
-                    Particulars = "Fees Against Registration",
-                    Enquiry = enquiry
-                }
+                Enquiry = enquiry
             };
-            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 

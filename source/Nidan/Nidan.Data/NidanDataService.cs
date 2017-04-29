@@ -688,6 +688,8 @@ namespace Nidan.Data
                     .Enquiries
                     .Include(e => e.Counsellings)
                     .Include(e => e.EnquiryCourses)
+                    .Include(e => e.Sector)
+                    .Include(e => e.Scheme)
                     //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
                     .AsNoTracking()
                     .Where(predicate)
@@ -1540,6 +1542,7 @@ namespace Nidan.Data
                     .EnquiryCourses
                     .Where(a => a.EnquiryId == enquiryId && a.CentreId == centreId)
                     .Include(e => e.Enquiry)
+                    .Include(e => e.Course)
                     .AsNoTracking()
                     .ToList();
             }
@@ -1770,6 +1773,21 @@ namespace Nidan.Data
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
 
+            }
+        }
+
+        public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId,int centreId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CentreCourses
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Course)
+                    .AsNoTracking().ToList();
             }
         }
 

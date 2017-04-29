@@ -186,7 +186,7 @@ namespace Nidan.Business
             data.StudentCode = GenerateStudentCode(organisationId, data.EnquiryId, enquiry.CentreId);
             _nidanDataService.UpdateEntityEntry(data);
             //Create Counselling
-           // CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
+            // CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
             //Create FollowUp
             CreateFollowUp(organisationId, data);
             //Create EnquiryCourse
@@ -636,7 +636,7 @@ namespace Nidan.Business
             data.FinancialYear = "2017-18";
             // EnquiryStatus Update
             var enquiry = RetrieveEnquiry(organisationId, admission.EnquiryId);
-           
+
             enquiry.EnquiryStatus = "Admission";
             enquiry.Close = "Yes";
             enquiry.ClosingRemark = "Admission Done";
@@ -650,7 +650,7 @@ namespace Nidan.Business
                 counselling.Close = "Yes";
                 counselling.ClosingRemark = "Admission Done";
                 data.Particulars = data.FeeByStudent + " Against " + course.Name;
-               _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
             //FollowUp Update
             var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
@@ -722,8 +722,8 @@ namespace Nidan.Business
             //        };
             //        _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
             //    }
-                
-               
+
+
             //}
             return data;
 
@@ -1617,6 +1617,15 @@ namespace Nidan.Business
         {
             return _nidanDataService.Retrieve<Batch>(organisationId, predicate);
         }
+
+        public List<Course> RetrieveCentreCourses(int organisationId, int centreId)
+        {
+           // var t = _nidanDataService.RetrieveCentreCourses(organisationId, centreId);
+            var courses = _nidanDataService.RetrieveCentreCourses(organisationId, centreId).Select(e => e.Course);
+            return courses.ToList();
+        }
+
+        //Update
 
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
         {

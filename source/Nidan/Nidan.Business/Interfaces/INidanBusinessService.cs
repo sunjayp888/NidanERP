@@ -171,7 +171,7 @@ namespace Nidan.Business.Interfaces
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         Admission RetrieveAdmission(int organisationId, int id);
         List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
-
+        List<Course> RetrieveCentreCourses(int organisationId, int centreId);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
