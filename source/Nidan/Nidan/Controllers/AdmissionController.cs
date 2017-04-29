@@ -72,7 +72,9 @@ namespace Nidan.Controllers
                 {
                     //RegistrationPaymentReceipt = registrationPaymentReceipt,
                     EnquiryId = registrationPaymentReceipt.EnquiryId,
-                    RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId
+                    RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId,
+                    BankName = "Test",
+                    ChequeNo = "Test"
                 }
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");

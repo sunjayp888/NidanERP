@@ -42,7 +42,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 6)]
         [StringLength(100)]
-        public string MiddelName { get; set; }
+        public string MiddleName { get; set; }
 
         [Key]
         [Column(Order = 7)]

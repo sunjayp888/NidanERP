@@ -20,7 +20,7 @@ namespace Nidan.Entity
         public string FirstName { get; set; }
 
         [StringLength(100)]
-        public string MiddelName { get; set; }
+        public string MiddleName { get; set; }
 
         [StringLength(100)]
         public string LastName { get; set; }

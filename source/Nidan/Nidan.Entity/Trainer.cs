@@ -21,7 +21,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(100)]
-        public string MiddelName { get; set; }
+        public string MiddleName { get; set; }
 
         [Required]
         [StringLength(100)]

@@ -697,7 +697,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
@@ -809,7 +809,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
@@ -853,7 +853,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
@@ -889,7 +889,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Mobilization>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Mobilization>()
@@ -929,7 +929,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Trainer>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Trainer>()
@@ -977,7 +977,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
@@ -993,7 +993,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
@@ -1109,7 +1109,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
@@ -1153,7 +1153,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
@@ -1189,7 +1189,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<TrainerSearchField>()
-                .Property(e => e.MiddelName)
+                .Property(e => e.MiddleName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<TrainerSearchField>()

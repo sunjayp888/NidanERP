@@ -33,7 +33,7 @@
         vm.districts = [];
         vm.retrieveDistricts = retrieveDistricts;
         vm.states = [];
-        vm.retrieveStates = retrieveStates;
+        //vm.retrieveStates = retrieveStates;
         vm.retrieveSectors = retrieveSectors;
         initialise();
 

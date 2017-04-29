@@ -76,13 +76,13 @@
                         $("#Batch_Intake").val(result.Intake);
                         $("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
                         $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                        //$("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
-                        //$("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
+                        $("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
+                        $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
                         $("#Course_Duration").val(result.Course.Duration);
                         $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
                         $("#BatchDay_IsMonday").val(result.BatchDays["0"].IsMonday);
                         $("#BatchDay_IsTuesday").val(result.BatchDays["0"].IsTuesday);
-                        $("#BatchDay_IsWednesday").val(result.BatchDays["0"].IsWednesday);
+                        $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
                         $("#BatchDay_IsThursday").val(result.BatchDays["0"].IsThursday);
                         $("#BatchDay_IsFriday").val(result.BatchDays["0"].IsFriday);
                         $("#BatchDay_IsSaturday").val(result.BatchDays["0"].IsSaturday);

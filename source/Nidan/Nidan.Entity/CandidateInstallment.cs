@@ -31,7 +31,7 @@ namespace Nidan.Entity
 
         public int? ThirdInstallment { get; set; }
 
-        public int? ForthInstallment { get; set; }
+        public int? FourthInstallment { get; set; }
 
         public int? FifthInstallment { get; set; }
 
@@ -49,13 +49,17 @@ namespace Nidan.Entity
 
         public int? TwelvethInstallment { get; set; }
 
-        public int? CentreId { get; set; }
+        public int CentreId { get; set; }
 
-        public int? OrganisationId { get; set; }
+        public int OrganisationId { get; set; }
+
+        public int BatchId { get; set; }
 
         public virtual Admission Admission { get; set; }
 
         public virtual Centre Centre { get; set; }
+
+        public virtual Batch Batch { get; set; }
 
         public virtual Organisation Organisation { get; set; }
     }
