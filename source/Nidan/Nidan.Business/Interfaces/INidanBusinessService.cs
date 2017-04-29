@@ -171,6 +171,9 @@ namespace Nidan.Business.Interfaces
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         Admission RetrieveAdmission(int organisationId, int id);
         List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
+        PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate);
+        CandidateFee RetrieveCandidateFee(int organisationId, int id);
 
 
         // Update

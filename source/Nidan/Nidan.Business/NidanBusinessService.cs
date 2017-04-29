@@ -1618,6 +1618,21 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Batch>(organisationId, predicate);
         }
 
+        public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
+        }
+
+        public CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCandidateFee(organisationId, candidateFeeId, p => true);
+        }
+
+        public CandidateFee RetrieveCandidateFee(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCandidateFee(organisationId, id, p => true);
+        }
+
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, personnel);

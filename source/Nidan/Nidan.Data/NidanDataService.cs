@@ -1773,6 +1773,48 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateFees
+                    .Include(p => p.Organisation)
+                    .Include(p => p.CandidateInstallment)
+                    .Include(p => p.CandidateInstallment.Admission)
+                     .Include(p => p.CandidateInstallment.Admission.Enquiry)
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFeeId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateFees
+                    .Include(p => p.CandidateInstallment)
+                    .Include(p => p.CandidateInstallment.Admission)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);
+            }
+        }
+
         #endregion
 
         #region // Update

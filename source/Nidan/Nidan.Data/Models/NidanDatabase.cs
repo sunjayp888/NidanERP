@@ -85,6 +85,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreSector> CentreSectors { get; set; }
         public virtual DbSet<Admission> Admissions { get; set; }
         public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
+        public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
 
 
@@ -1227,6 +1228,14 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Registration>()
+               .Property(e => e.Remarks)
+               .IsUnicode(false);
+
+            //modelBuilder.Entity<Registration>()
+            //    .HasOptional(e => e.Registration1)
+            //    .WithRequired(e => e.Registration2);
 
             base.OnModelCreating(modelBuilder);
         }
