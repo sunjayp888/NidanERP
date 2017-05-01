@@ -56,7 +56,7 @@ namespace Nidan.Controllers
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
             var enquiryFromMobilization = id.Value != 0
-                ? NidanBusinessService.CreateEnquiryFromMobilization(UserOrganisationId, UserCentreId, id.Value)
+                ? NidanBusinessService.CreateEnquiryFromMobilization(organisationId, UserCentreId, id.Value)
                 : new Enquiry();
 
 
@@ -102,18 +102,18 @@ namespace Nidan.Controllers
                 if (enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId != 0)
                 {
                     //Close Mobilization 
-                    var mobilization = NidanBusinessService.RetrieveMobilization(UserOrganisationId, enquiryViewModel.MobilizationId);
+                    var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, enquiryViewModel.MobilizationId);
                     mobilization.Close = "Yes";
-                    NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilization);
-                    NidanBusinessService.DeleteFollowUp(UserOrganisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                    NidanBusinessService.UpdateMobilization(organisationId, mobilization);
+                    NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 }
-                enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
+                enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.EnquiryDate = DateTime.UtcNow;
                 enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
-                enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(UserOrganisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
+                enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(organisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
                 //return RedirectToAction("Index");
                 return RedirectToAction("Edit", new { id = enquiryViewModel.Enquiry.EnquiryId });
             }
@@ -153,7 +153,7 @@ namespace Nidan.Controllers
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var enquiry = NidanBusinessService.RetrieveEnquiry(UserOrganisationId, id.Value);
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
@@ -198,13 +198,14 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EnquiryViewModel enquiryViewModel)
         {
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-                enquiryViewModel.Enquiry.OrganisationId = UserOrganisationId;
+                enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.Close = "No";
                 //enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
-                enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(UserOrganisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
+                enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(organisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
 
             }
             var viewModel = new EnquiryViewModel

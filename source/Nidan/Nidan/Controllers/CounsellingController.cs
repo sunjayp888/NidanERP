@@ -33,18 +33,56 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        //// GET: Counselling/Create
-        //[Authorize(Roles = "Admin")]
-        //public ActionResult Create(int? id)
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    id = id ?? 0;
-        //    var viewModel = new CounsellingViewModel
-        //    {
+        // GET: Counselling/Create
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create(int? id)
+        {
+            var organisationId = UserOrganisationId;
+            id = id ?? 0;
+            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
+            var viewModel = new CounsellingViewModel
+            {
+                Enquiry = enquiry,
+                EnquiryId = id.Value,
+                Sectors = new SelectList(sectors, "SectorId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                Counselling = new Counselling()
+                {
+                    Title = enquiry.Title,
+                    FirstName = enquiry.FirstName,
+                    MiddleName = enquiry.MiddleName,
+                    LastName = enquiry.LastName,
+                    EnquiryId = enquiry.EnquiryId
+                }
+            };
+            viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            return View(viewModel);
+        }
 
-        //    };
-        //    return View(viewModel);
-        //}
+        // POST: Counselling/Create
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CounsellingViewModel counsellingViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            if (ModelState.IsValid)
+            {
+                counsellingViewModel.Counselling.OrganisationId = organisationId;
+                counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
+                counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId,counsellingViewModel.Counselling);
+                //return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = counsellingViewModel.Counselling.CounsellingId });
+            }
+            counsellingViewModel.Courses = new SelectList(
+               NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
+            counsellingViewModel.Sectors = new SelectList(
+               NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
+            return View(counsellingViewModel);
+        }
 
         // GET: Counselling/Edit/{id}
         public ActionResult Edit(int? id)
@@ -54,7 +92,8 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             TempData["CounsellingId"] = id;
-            var counselling = NidanBusinessService.RetrieveCounselling(UserOrganisationId, id.Value);
+            var organisationId = UserOrganisationId;
+            var counselling = NidanBusinessService.RetrieveCounselling(organisationId, id.Value);
             if (counselling == null)
             {
                 return HttpNotFound();
@@ -62,8 +101,8 @@ namespace Nidan.Controllers
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name")
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
@@ -75,20 +114,20 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CounsellingViewModel counsellingViewModel)
         {
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-               
-                counsellingViewModel.Counselling.OrganisationId = UserOrganisationId;
+                counsellingViewModel.Counselling.OrganisationId = organisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
                 counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
-                counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(UserOrganisationId, counsellingViewModel.Counselling);
+                counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
             var viewModel = new CounsellingViewModel
             {
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
                 Counselling = counsellingViewModel.Counselling
             };
             return View(viewModel);
@@ -111,18 +150,19 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(CounsellingViewModel counsellingViewModel)
         {
-            counsellingViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId),
+            var organisationId = UserOrganisationId;
+            counsellingViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(organisationId),
                 "DocumentTypeId", "Name");
 
             if (counsellingViewModel.Files != null)
             {
                 if (counsellingViewModel.Files != null && counsellingViewModel.Files[0].ContentLength > 0)
                 {
-                    var enquiryData = _nidanBusinessService.RetrieveEnquiry(UserOrganisationId, counsellingViewModel.EnquiryId);
+                    var enquiryData = _nidanBusinessService.RetrieveEnquiry(organisationId, counsellingViewModel.EnquiryId);
 
                     if (counsellingViewModel.Files[0].FileName.EndsWith(".pdf"))
                     {
-                        _documentService.Create(UserOrganisationId, UserCentreId,
+                        _documentService.Create(organisationId, UserCentreId,
                             counsellingViewModel.Document.DocumentTypeId, enquiryData.StudentCode,
                             enquiryData.FirstName, "Counselling Document", counsellingViewModel.Files[0].FileName,
                             counsellingViewModel.Files[0].InputStream.ToBytes());
