@@ -688,6 +688,8 @@ namespace Nidan.Data
                     .Enquiries
                     .Include(e => e.Counsellings)
                     .Include(e => e.EnquiryCourses)
+                    .Include(e => e.Sector)
+                    .Include(e => e.Scheme)
                     //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
                     .AsNoTracking()
                     .Where(predicate)
@@ -1084,20 +1086,19 @@ namespace Nidan.Data
 
         // public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
 
-        public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<Registration> RetrieveRegistrations(int organisationId, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                  .RegistrationPaymentReceipts
+                  .Registrations
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
-                    .Include(p => p.PaymentMode)
-                    .Include(p => p.Course)
-                    .Include(p => p.Enquiry.Scheme)
+                    .Include(p => p.CandidateFee)
+                    .Include(p => p.CourseInstallment)
+                    .Include(p => p.CandidateInstallment)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1168,7 +1169,7 @@ namespace Nidan.Data
             {
                 return context
                     .CourseInstallments
-                    .Include(c=>c.Course)
+                    .Include(c => c.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CourseInstallmentId == courseInstallmentId);
@@ -1187,7 +1188,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
                     .Include(p => p.CourseType)
-                    .Include(p=>p.SubjectCourses)
+                    .Include(p => p.SubjectCourses)
                     .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1227,7 +1228,7 @@ namespace Nidan.Data
                 return context
                     .Batches
                     .AsNoTracking()
-                    .Include(p=>p.BatchTrainers)
+                    .Include(p => p.BatchTrainers)
                     .Include(p => p.Room)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.Course)
@@ -1540,6 +1541,7 @@ namespace Nidan.Data
                     .EnquiryCourses
                     .Where(a => a.EnquiryId == enquiryId && a.CentreId == centreId)
                     .Include(e => e.Enquiry)
+                    .Include(e => e.Course)
                     .AsNoTracking()
                     .ToList();
             }
@@ -1604,13 +1606,13 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-                     return context
-                    .BatchTrainers
-                    .Where(a => a.BatchId == batchId)
-                    .Include(e => e.Batch)
-                    .AsNoTracking()
-                    .ToList();
-             }
+                return context
+               .BatchTrainers
+               .Where(a => a.BatchId == batchId)
+               .Include(e => e.Batch)
+               .AsNoTracking()
+               .ToList();
+            }
         }
         public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -1773,13 +1775,13 @@ namespace Nidan.Data
             }
         }
 
+
         public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-
-                return context
+              return context
                     .CandidateFees
                     .Include(p => p.Organisation)
                     .Include(p => p.CandidateInstallment)
@@ -1797,6 +1799,21 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+             }
+        }
+       
+        
+        public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+              return context
+                    .CentreCourses
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Course)
+                    .AsNoTracking().ToList();
             }
         }
 
@@ -1805,13 +1822,32 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-                return context
                     .CandidateFees
                     .Include(p => p.CandidateInstallment)
                     .Include(p => p.CandidateInstallment.Admission)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);
+            }
+        }
+
+        public Registration RetrieveRegistration(int organisationId, int registrationId, Expression<Func<Registration, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+
+                    .Registrations
+                    .Include(p => p.Enquiry)
+                    .Include(p => p.Course)
+                    .Include(p => p.Enquiry.EnquiryCourses)
+                    .Include(p => p.CourseInstallment)
+                    .Include(p => p.CandidateFee)
+                    .Include(p => p.CandidateInstallment)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.RegistrationId == registrationId);
             }
         }
 
@@ -1926,5 +1962,6 @@ namespace Nidan.Data
         {
             throw new NotImplementedException();
         }
+
     }
 }

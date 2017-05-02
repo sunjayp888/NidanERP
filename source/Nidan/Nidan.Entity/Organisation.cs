@@ -24,6 +24,7 @@ namespace Nidan.Entity
             Hosts = new HashSet<Host>();
             Personnels = new HashSet<Personnel>();
             Events = new HashSet<Event>();
+            Registrations = new HashSet<Registration>();
 
         }
 

@@ -17,19 +17,19 @@ namespace Nidan.Entity
 
         public int CandidateInstallmentId { get; set; }
 
-        public int AdmissionId { get; set; }
+        public int CourseInstallmentId { get; set; }
 
-        public int BatchCourseFee { get; set; }
+        public int? CourseFee { get; set; }
 
-        public int CandidateCourseFee { get; set; }
+        public int? DownPayment { get; set; }
 
-        public int DownPayment { get; set; }
+        public int? DiscountAmount { get; set; }
 
-        public int DiscountPercentage { get; set; }
+        public int? NumberOfInstallment { get; set; }
 
-        public int DiscountAmount { get; set; }
+        public int? LumpsumAmount { get; set; }
 
-        public int NumberOfInstallment { get; set; }
+        public string StudentCode { get; set; }
 
         public int CentreId { get; set; }
 
@@ -40,6 +40,12 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Admission Admission { get; set; }
+
+        public bool IsPercentageDiscount { get; set; }
+
+        public bool IsTotalAmountDiscount { get; set; }
+
+        public CourseInstallment CourseInstallment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateFee> CandidateFees { get; set; }

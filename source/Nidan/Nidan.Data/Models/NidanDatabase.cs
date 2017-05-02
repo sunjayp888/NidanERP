@@ -72,7 +72,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
-
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<BatchDay> BatchDays { get; set; }
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
@@ -87,7 +86,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
         public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
-
+        public virtual DbSet<CandidateFee> CandidateFees { get; set; }
+        public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -129,7 +129,37 @@ namespace Nidan.Data.Models
              .HasForeignKey(e => e.SectorId)
              .WillCascadeOnDelete(false);
 
-           //modelBuilder.Entity<Colour>()
+            modelBuilder.Entity<CandidateFee>()
+               .Property(e => e.ChequeNumber)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.FiscalYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFee>()
+                .HasMany(e => e.Registrations)
+                .WithRequired(e => e.CandidateFee)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Registration>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            
+            //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)
             //    .WillCascadeOnDelete(false);

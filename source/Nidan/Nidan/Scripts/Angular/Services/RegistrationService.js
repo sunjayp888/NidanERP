@@ -3,25 +3,25 @@
 
     angular
         .module('Nidan')
-        .factory('RegistrationPaymentReceiptService', RegistrationPaymentReceiptService);
+        .factory('RegistrationService', RegistrationService);
 
-    RegistrationPaymentReceiptService.$inject = ['$http'];
+    RegistrationService.$inject = ['$http'];
 
-    function RegistrationPaymentReceiptService($http) {
+    function RegistrationService($http) {
         var service = {
-            retrieveRegistrationPaymentReceipts: retrieveRegistrationPaymentReceipts,
+            retrieveRegistrations: retrieveRegistrations,
             retrieveEnquiries: retrieveEnquiries,
-            canDeleteRegistrationPaymentReceipt: canDeleteRegistrationPaymentReceipt,
-            deleteRegistrationPaymentReceipt: deleteRegistrationPaymentReceipt,
+            canDeleteRegistration: canDeleteRegistration,
+            deleteRegistration: deleteRegistration,
             searchEnquiry: searchEnquiry,
-            searchRegistrationPaymentReceipt: searchRegistrationPaymentReceipt
+            searchRegistration: searchRegistration
         };
 
         return service;
 
-        function retrieveRegistrationPaymentReceipts(Paging, OrderBy) {
+        function retrieveRegistrations(Paging, OrderBy) {
 
-            var url = "/RegistrationPaymentReceipt/List",
+            var url = "/Registration/List",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
@@ -32,7 +32,7 @@
 
         function retrieveEnquiries(Paging, OrderBy) {
 
-            var url = "/RegistrationPaymentReceipt/EnquiryList",
+            var url = "/Registration/EnquiryList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
@@ -41,8 +41,8 @@
             return $http.post(url, data);
         }
 
-        function searchRegistrationPaymentReceipt(SearchKeyword, Paging, OrderBy) {
-            var url = "/RegistrationPaymentReceipt/Search",
+        function searchRegistration(SearchKeyword, Paging, OrderBy) {
+            var url = "/Registration/Search",
             data = {
                 searchKeyword: SearchKeyword,
                 paging: Paging,
@@ -53,7 +53,7 @@
         }
 
         function searchEnquiry(SearchKeyword, Paging, OrderBy) {
-            var url = "/RegistrationPaymentReceipt/EnquirySearch",
+            var url = "/Registration/EnquirySearch",
             data = {
                 searchKeyword: SearchKeyword,
                 paging: Paging,
@@ -63,15 +63,15 @@
             return $http.post(url, data);
         }
 
-        function canDeleteRegistrationPaymentReceipt(id) {
-            var url = "/RegistrationPaymentReceipt/CanDeleteRegistrationPaymentReceipt",
+        function canDeleteRegistration(id) {
+            var url = "/Registration/CanDeleteRegistration",
                 data = { id: id };
 
             return $http.post(url, data);
         }
 
-        function deleteRegistrationPaymentReceipt(id) {
-            var url = "/RegistrationPaymentReceipt/Delete",
+        function deleteRegistration(id) {
+            var url = "/Registration/Delete",
                 data = { id: id };
 
             return $http.post(url, data);
