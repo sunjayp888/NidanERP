@@ -4,41 +4,103 @@
     ViewBag.Title = "Create Counselling";
 }
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Create Counselling <small></small></h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-horizontal form-label-left">
-                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
-                        {
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+<div>
+    <div class="row">
+        <div class="col-md-9 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>@*@Model.Counselling.CandidateName*@<small>Create Counselling</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @*@Html.HiddenFor(model => model.Counselling.CentreId)
+                        @Html.HiddenFor(model => model.Counselling.Enquiry.Title)*@
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
                                 </div>
+
+                            }
+                            @Html.HiddenFor(model => model.Counselling.Enquiry.Title)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.Address1)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.HowDidYouKnowAboutId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.BatchTimePreferId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.CasteCategoryId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.CentreId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.ConversionProspect)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.DistrictId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.EducationalQualificationId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.EnquiryId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.EnquiryTypeId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.OccupationId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.OrganisationId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.ReligionId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.SchemeId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.SectorId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.StudentTypeId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.StateId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.TalukaId)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.PreferredMonthForJoining)
+                           
+                            <div class="horizontal">
+                                @Html.Partial("_Counselling", Model)
                             </div>
-                        }
-                        @*@Html.HiddenFor(m => m.CreateEnquiryFromMobilizationFollowUpId)
-                        @Html.HiddenFor(m => m.MobilizationId)*@
-                        @Html.Partial("_Counselling", Model)
-                       
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
+                                                Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
+                                            </a>*@
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
+
+        <div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Quick Actions<small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @if (ViewContext.ViewData.ModelState.Any(x => x.Key == "EntitlementError"))
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                            </div>
+                        </div>
+                    }
+                    <button type="button" class="btn btn-lg btn-success col-md-10 col-sm-12" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                    @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+        @Html.Partial("_Document")
     </div>
 </div>
 <div>

@@ -260,6 +260,18 @@ namespace Nidan.Data
             }
         }
 
+        public Counselling CreateCounselling(int organisationId, Counselling counselling)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                counselling.Enquiry = null;
+                counselling = context.Counsellings.Add(counselling);
+                context.SaveChanges();
+
+                return counselling;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
