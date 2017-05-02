@@ -45,9 +45,26 @@
                                             Create Counselling&nbsp;<span class="fa fa-chevron-right"></span>
                                         </a>
                                     </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Enquiry.RemarkByBm, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                            <div class="col-md-8 col-sm-4 col-xs-12">
+                                @Html.EditorFor(model => model.Enquiry.RemarkByBm, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.Enquiry.RemarkByBm, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                        @*</div>
+                            </div>*@
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
+                                        <span class="fa fa-chevron-left"></span>&nbsp;Create Registration
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 }
             </div>
         </div>
