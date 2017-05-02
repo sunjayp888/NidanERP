@@ -47,9 +47,6 @@ namespace Nidan.Entity
                 .Property(e => e.Remarks)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Registration>()
-                .HasOptional(e => e.Registration1)
-                .WithRequired(e => e.Registration2);
         }
     }
 }

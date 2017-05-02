@@ -12,16 +12,13 @@ namespace Nidan.Models
         public CandidateFee CandidateFee { get; set; }
         public Registration Registration { get; set; }
         public Enquiry Enquiry { get; set; }
+        public CandidateInstallment CandidateInstallment { get; set; }
+        public CourseInstallment CourseInstallment { get; set; }
         public SelectList PaymentModes { get; set; }
         public int EnquiryId { get; set; }
-        public int CounsellingId { get; set; }
-        public int SectorId { get; set; }
-        public int IntrestedCourseId { get; set; }
-        public int BatchTimePreferId { get; set; }
-        public SelectList Schemes { get; set; }
-        public SelectList Sectors { get; set; }
+        public string StudentCode { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList CourseInstallments { get; set; }
         public SelectList BatchTimePrefers { get; set; }
-        public IEnumerable<SelectListItem> TitleList { get; set; }
     }
 }

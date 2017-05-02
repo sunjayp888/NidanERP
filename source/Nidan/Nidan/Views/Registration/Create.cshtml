@@ -27,7 +27,7 @@
 
                         <div class="row">
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-9">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary">Mobile</button>
@@ -35,7 +35,7 @@
                                     <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-9">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary">Email</button>
@@ -43,7 +43,7 @@
                                     <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-9">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary">Interested Scheme</button>
@@ -51,7 +51,7 @@
                                     <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-9">
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-primary">Interested Sector</button>
@@ -59,16 +59,22 @@
                                     <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-9">
                                 <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                    </span>
-                                    <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                    <div class="col-lg-3">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                        </span>
+                                    </div>
+                                    @foreach (var course in Model.Courses)
+                                    {
+                                        <div class="col-lg-9">
+                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 }
             </div>
@@ -128,27 +134,34 @@
                         }
                         @*@if (Model.EnquiryId != 0)
                             {
-                                if (Model.Registration.Enquiry.EnquiryStatus == "Enquiry")
-                                {
-                                    @Html.Partial("_RegistrationFromEnquiry", Model)
-                                }
-                                if (Model.RegistrationPaymentReceipt.Enquiry.EnquiryStatus != "Enquiry")
-                                {
-                                    @Html.Partial("_RegistrationPaymentReceipt", Model)
-                                }
-                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                                    <div class="form-group">
-                                        <div class="pull-right">
-                                            <button type="submit" class="btn btn-success">Register</button>
-                                        </div>
+                            if (Model.Registration.Enquiry.EnquiryStatus == "Enquiry")
+                            {
+                            @Html.Partial("_RegistrationFromEnquiry", Model)
+                            }
+                            if (Model.RegistrationPaymentReceipt.Enquiry.EnquiryStatus != "Enquiry")
+                            {
+                            @Html.Partial("_RegistrationPaymentReceipt", Model)
+                            }
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success">Register</button>
                                     </div>
                                 </div>
+                            </div>
                             }
                             @if (Model.EnquiryId == 0)
                             {
-                                @Html.Partial("_SearchEnquiry", Model)
+                            @Html.Partial("_SearchEnquiry", Model)
                             }*@
                         @Html.Partial("_Registration", Model)
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                        <div class="form-group">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success">Pay and Register</button>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
@@ -157,7 +170,7 @@
 </div>
 
 <div>
-    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+    <a href="@Url.Action(" Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
@@ -176,6 +189,7 @@
                 $('.bank-details-textbox').hide();
             }
         });
+
 
         $(function () {
             $("#RegistrationPaymentReceipt_FollowUpDate").val("");
@@ -306,23 +320,23 @@
                         aboveTens();
                         break;
 
-                    //            This is optional.
+                        //            This is optional.
 
-                    //            case 9:
-                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                    //                    word[j] = '';
-                    //                }
-                    //                else {
-                    //                    word[j] = once[rev[i]];
-                    //                }
-                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                    //                    word[j] = word[j] + " Arab";
-                    //                }
-                    //                break;
+                        //            case 9:
+                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        //                    word[j] = '';
+                        //                }
+                        //                else {
+                        //                    word[j] = once[rev[i]];
+                        //                }
+                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        //                    word[j] = word[j] + " Arab";
+                        //                }
+                        //                break;
 
-                    //            case 10:
-                    //                aboveTens();
-                    //                break;
+                        //            case 10:
+                        //                aboveTens();
+                        //                break;
 
                     default: break;
                 }
@@ -343,5 +357,77 @@
             document.getElementById(outputControl).innerHTML = finalOutput + " Only";
         }
 
+        //
+        //GetCourseInstallmentsByCourseId($('#Registration_CourseId :selected').val());
+        //GetCourseInstallment($('#Registration_CourseInstallmentId :selected').val());
+        $('#Registration_CourseId').change(function () {
+            var courseId = $('#Registration_CourseId :selected').val();
+            GetCourseInstallmentsByCourseId(courseId);
+            $("#IsTotalAmountDiscountDiv").hide();
+        });
+        $('#Registration_CourseInstallmentId').change(function () {
+            var courseInstallmentId = $('#Registration_CourseInstallmentId :selected').val();
+            GetCourseInstallment(courseInstallmentId);
+        });
+        $('#Registration_CandidateInstallment_IsTotalAmountDiscount').change(function () {
+            if ($(this).is(":checked")) {
+                $("#overrideFeeDiv").show();
+            } else {
+                $("#overrideFeeDiv").hide();
+            }
+
+        });
+        $("#overrideFeeDiv").hide();
+        $("#courseInstallmentDiv").hide();
+        $("#IsTotalAmountDiscountDiv").hide();
+        function GetCourseInstallmentsByCourseId(courseId) {
+            $.ajax({
+                url: '/Registration/GetCourseInstallmentByCourseId',
+                type: 'POST',
+                data: JSON.stringify({ courseId: courseId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Registration_CourseInstallmentId").empty();
+                    $("#Registration_CourseInstallmentId").append($("<option></option>").val(0).html("Select Course Installment"));
+                    $.each(result, function (key, value) {
+                        $("#Registration_CourseInstallmentId").append($("<option></option>").val(value.CourseInstallmentId).html(value.Name));
+                    });
+                    if (result.length == 0) {
+                        $("#courseInstallmentDiv").hide();
+                    }
+                },
+                async: true,
+                processData: false
+            });
+        }
+        function GetCourseInstallment(courseInstallmentId) {
+            $.ajax({
+                url: '/Registration/GetCourseInstallment',
+                type: 'POST',
+                data: JSON.stringify({ courseInstallmentId: courseInstallmentId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    // $("#Registration_CourseInstallmentId").empty();
+                    $("#IsTotalAmountDiscountDiv").show();
+                    $("#courseInstallmentDiv").show();
+                    $("#Registration_CourseInstallment_Name").val(result.Name);
+                    $("#Registration_CourseInstallment_Fee").val(result.Fee);
+                    $("#Registration_CourseInstallment_DownPayment").val(result.DownPayment);
+                    $("#Registration_CourseInstallment_LumpsumAmount").val(result.LumpsumAmount);
+                    $("#Registration_CourseInstallment_NumberOfInstallment").val(result.NumberOfInstallment);
+                    
+                },
+                async: true,
+                processData: false
+            });
+        }
     </script>
 }

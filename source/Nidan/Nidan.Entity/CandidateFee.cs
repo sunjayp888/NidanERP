@@ -17,7 +17,7 @@ namespace Nidan.Entity
 
         public int CandidateFeeId { get; set; }
 
-        public DateTime PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
         public int? CandidateInstallmentId { get; set; }
 
@@ -37,7 +37,9 @@ namespace Nidan.Entity
 
         public decimal? Penalty { get; set; }
 
-        public DateTime InstallmentDate { get; set; }
+        public DateTime? InstallmentDate { get; set; }
+
+        public DateTime? FollowUpDate { get; set; }
 
         [StringLength(50)]
         public string StudentCode { get; set; }
@@ -46,8 +48,6 @@ namespace Nidan.Entity
 
         public decimal? BalanceInstallmentAmount { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string FiscalYear { get; set; }
 
         public int CentreId { get; set; }

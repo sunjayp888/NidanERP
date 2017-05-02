@@ -18,7 +18,7 @@ namespace Nidan.Business.Interfaces
         Centre CreateCentre(int organisationId, Centre centre);
         Batch CreateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
         BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
-        void UploadMobilization(int organisationId,int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
+        void UploadMobilization(int organisationId, int centreId, int eventId, int personnelId, DateTime generateDateTime, List<Mobilization> mobilizations);
         void UploadSession(int organisationId, List<Session> sessions);
         Counselling CreateCounselling(int organisationId, Counselling counselling);
         RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
@@ -40,13 +40,13 @@ namespace Nidan.Business.Interfaces
         SubjectCourse CreateSubjectCourse(int organisationId, SubjectCourse subjectCourse);
         SubjectTrainer CreateSubjectTrainer(int organisationId, SubjectTrainer subjectTrainer);
         BatchTrainer CreateBatchTrainer(int organisationId, BatchTrainer batchTrainer);
-        CentreCourse CreateCentreCourse(int organisationId, int centreId,int courseId);
+        CentreCourse CreateCentreCourse(int organisationId, int centreId, int courseId);
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
         CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
         Admission CreateAdmission(int organisationId, Admission admission);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
-
+        Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -128,7 +128,7 @@ namespace Nidan.Business.Interfaces
         Trainer RetrieveTrainer(int organisationId, int id);
         PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
-        PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Registration> RetrieveRegistrations(int organisationId, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
         RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id);
         PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -172,8 +172,10 @@ namespace Nidan.Business.Interfaces
         Admission RetrieveAdmission(int organisationId, int id);
         List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
         List<Course> RetrieveCentreCourses(int organisationId, int centreId);
+        Registration RetrieveRegistration(int organisationId, int id);
+        List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
 
-        // Update
+            // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
         Personnel UpdatePersonnel(int organisationId, Personnel personnel);
         Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> courseIds);

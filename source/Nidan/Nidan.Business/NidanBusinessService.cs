@@ -8,6 +8,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Newtonsoft.Json;
+using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Business.Models;
@@ -662,71 +663,94 @@ namespace Nidan.Business
                 followup.ClosingRemark = "Admission Done";
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
             }
-            var batchData = RetrieveBatch(organisationId, admission.BatchId);
-            var discount = admission.Discount;
-            var paymentType = admission.PaymentType;
-
-            //if (paymentType == "Installment")
-            //{
-            //    if (discount == null)
-            //    {
-            //        var candidateInstallment = new CandidateInstallment()
-            //        {
-            //            AdmissionId = data.AdmissionId,
-            //            Fee = batchData.CourseInstallment.Fee,
-            //            DownPayment = batchData.CourseInstallment.DownPayment,
-            //            Month = batchData.Month,
-            //            NoOfInstallment = batchData.NoOfInstallment,
-            //            FirstInstallment = batchData.FirstInstallment,
-            //            SecondInstallment = batchData.SecondInstallment,
-            //            ThirdInstallment = batchData.ThirdInstallment,
-            //            FourthInstallment = batchData.FourthInstallment,
-            //            FifthInstallment = batchData.FifthInstallment,
-            //            SixthInstallment = batchData.SixthInstallment,
-            //            SeventhInstallment = batchData.SeventhInstallment,
-            //            EighthInstallment = batchData.EighthInstallment,
-            //            NinethInstallment = batchData.NinethInstallment,
-            //            TenthInstallment = batchData.TenthInstallment,
-            //            EleventhInstallment = batchData.EleventhInstallment,
-            //            TwelvethInstallment = batchData.TwelvethInstallment,
-            //            CentreId = data.CentreId,
-            //            BatchId = data.BatchId,
-            //            OrganisationId = data.OrganisationId
-            //        };
-            //        _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
-            //    }
-            //    else
-            //    {
-            //        var candidateInstallment = new CandidateInstallment()
-            //        {
-            //            AdmissionId = data.AdmissionId,
-            //            Fee = data.DiscountFee?? 0,
-            //            DownPayment = batchData.CourseInstallment.DownPayment,
-            //            Month = batchData.Month,
-            //            //NoOfInstallment = batchData.NoOfInstallment,
-            //            //FirstInstallment = batchData.FirstInstallment,
-            //            //SecondInstallment = batchData.SecondInstallment,
-            //            //ThirdInstallment = batchData.ThirdInstallment,
-            //            //FourthInstallment = batchData.FourthInstallment,
-            //            //FifthInstallment = batchData.FifthInstallment,
-            //            //SixthInstallment = batchData.SixthInstallment,
-            //            //SeventhInstallment = batchData.SeventhInstallment,
-            //            //EighthInstallment = batchData.EighthInstallment,
-            //            //NinethInstallment = batchData.NinethInstallment,
-            //            //TenthInstallment = batchData.TenthInstallment,
-            //            //EleventhInstallment = batchData.EleventhInstallment,
-            //            //TwelvethInstallment = batchData.TwelvethInstallment,
-            //            CentreId = data.CentreId,
-            //            BatchId = data.BatchId,
-            //            OrganisationId = data.OrganisationId
-            //        };
-            //        _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
-            //    }
-
-
-            //}
             return data;
 
+        }
+
+        public Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration)
+        {
+            registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
+            var candidateInstallmentData = CandidateInstallment(organisationId, centreId, registration?.StudentCode, registration?.CandidateInstallment, registration?.CourseInstallment);
+            registration.CandidateFee.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
+            registration.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
+            var candidateFeeData = CandidateFee(organisationId, centreId, studentCode, candidateInstallmentData.CandidateInstallmentId, registration?.CandidateFee);
+            return CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId);
+        }
+
+        private CandidateInstallment CandidateInstallment(int organisationId, int centreId, string studentCode, CandidateInstallment candidateInstallment, CourseInstallment courseInstallment)
+        {
+            if (candidateInstallment.IsTotalAmountDiscount)
+            {
+                var candidateInstallmentData = new CandidateInstallment
+                {
+                    StudentCode = studentCode,
+                    CentreId = centreId,
+                    CourseFee = courseInstallment.Fee - candidateInstallment.DiscountAmount,
+                    OrganisationId = organisationId,
+                    DiscountAmount = candidateInstallment.DiscountAmount,
+                    LumpsumAmount = candidateInstallment.LumpsumAmount,
+                    IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
+                    DownPayment = candidateInstallment.DownPayment,
+                    NumberOfInstallment = candidateInstallment.NumberOfInstallment,
+                    CourseInstallmentId = courseInstallment.CourseInstallmentId
+                };
+                return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallmentData);
+            }
+            else
+            {
+                var candidateInstallmentData = new CandidateInstallment()
+                {
+                    StudentCode = studentCode,
+                    CentreId = centreId,
+                    CourseFee = courseInstallment.Fee,
+                    OrganisationId = organisationId,
+                    DiscountAmount = candidateInstallment.DiscountAmount,
+                    LumpsumAmount = courseInstallment.LumpsumAmount,
+                    IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
+                    DownPayment = courseInstallment.DownPayment,
+                    NumberOfInstallment = courseInstallment.NumberOfInstallment
+                };
+                return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallmentData);
+            }
+        }
+
+        private Registration CandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration, int candidateFeeId)
+        {
+            var registrationData = new Registration()
+            {
+                CandidateFeeId = candidateFeeId,
+                CentreId = centreId,
+                CourseId = registration.CourseId,
+                CourseInstallmentId = registration.CourseInstallmentId,
+                CandidateInstallmentId = registration.CandidateInstallmentId,
+                EnquiryId = registration.EnquiryId,
+                FollowupDate = registration.FollowupDate,
+                StudentCode = studentCode,
+                Remarks = registration.Remarks,
+                OrganisationId = organisationId,
+
+            };
+            return _nidanDataService.Create<Registration>(organisationId, registrationData);
+        }
+
+        private CandidateFee CandidateFee(int organisationId, int centreId, string studentCode, int? candidateInstallmentId, CandidateFee candidateFee)
+        {
+            var candidateFeeData = new CandidateFee()
+            {
+                CentreId = centreId,
+                OrganisationId = organisationId,
+                BankName = candidateFee.BankName,
+                BalanceInstallmentAmount = candidateFee.BalanceInstallmentAmount,
+                CandidateInstallmentId = candidateInstallmentId,
+                ChequeDate = candidateFee.ChequeDate,
+                ChequeNumber = candidateFee.ChequeNumber,
+                FeeTypeId = (int)FeeType.Registration,
+                PaidAmount = candidateFee.PaidAmount,
+                PaymentDate = DateTime.Now,
+                StudentCode = studentCode,
+                PaymentModeId = candidateFee.PaymentModeId,
+            };
+            return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }
 
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
@@ -1252,10 +1276,10 @@ namespace Nidan.Business
             return null;
         }
 
-        public PagedResult<RegistrationPaymentReceipt> RetrieveRegistrationPaymentReceipts(int organisationId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate, List<OrderBy> orderBy = null,
+        public PagedResult<Registration> RetrieveRegistrations(int organisationId, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveRegistrationPaymentReceipts(organisationId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveRegistrations(organisationId, predicate, orderBy, paging);
         }
 
         public RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
@@ -1488,6 +1512,11 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveAdmissions(organisationId, predicate, orderBy, paging);
         }
 
+        public List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId)
+        {
+            return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
+        }
+
         #endregion
 
         #region // Update
@@ -1620,9 +1649,14 @@ namespace Nidan.Business
 
         public List<Course> RetrieveCentreCourses(int organisationId, int centreId)
         {
-           // var t = _nidanDataService.RetrieveCentreCourses(organisationId, centreId);
+            // var t = _nidanDataService.RetrieveCentreCourses(organisationId, centreId);
             var courses = _nidanDataService.RetrieveCentreCourses(organisationId, centreId).Select(e => e.Course);
             return courses.ToList();
+        }
+
+        public Registration RetrieveRegistration(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveRegistration(organisationId, id, r => true);
         }
 
         //Update
