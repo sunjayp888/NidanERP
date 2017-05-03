@@ -108,6 +108,7 @@ namespace Nidan.Entity
             [StringLength(100)]
             public string PlacementNeeded { get; set; }
 
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Remarks")]
             public string Remarks { get; set; }
 

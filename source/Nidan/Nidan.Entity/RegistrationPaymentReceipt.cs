@@ -12,7 +12,6 @@ namespace Nidan.Entity
         public RegistrationPaymentReceipt()
         {
             FollowUps= new HashSet<FollowUp>();
-            Admissions=new HashSet<Admission>();
         }
 
         public int RegistrationPaymentReceiptId { get; set; }
@@ -71,8 +70,5 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

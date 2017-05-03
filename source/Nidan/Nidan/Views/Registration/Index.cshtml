@@ -66,14 +66,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="registrationPaymentReceipt in model.registrationPaymentReceipts" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistrationPaymentReceipt(registrationPaymentReceipt.RegistrationPaymentReceiptId)">
-                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.FirstName"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.LastName"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.Enquiry.Mobile"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.PaymentMode.Name"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.Fees"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.Particulars"></span></td>
-                                            <td><span ng-bind="registrationPaymentReceipt.RegistrationDate|date : format : shortDate"></span></td>
+                                        <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
+                                            <td><span ng-bind="registration.Enquiry.FirstName"></span></td>
+                                            <td><span ng-bind="registration.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
+                                            <td><span ng-bind="registration.PaymentMode.Name"></span></td>
+                                            <td><span ng-bind="registration.Fees"></span></td>
+                                            <td><span ng-bind="registration.Particulars"></span></td>
+                                            <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -83,12 +83,12 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/ViewDetails/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Registration/ViewDetails/{{registration.RegistrationId}}">
                                                                     View Details
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Admission/Create/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Admission/Create/{{registration.RegistrationId}}">
                                                                     Create Admission
                                                                 </a>
                                                             </li>

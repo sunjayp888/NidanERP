@@ -23,15 +23,33 @@
                                 </div>
                             </div>
                         }
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
+                            @Model.Registration.CandidateInstallment.CourseFee
+                        </div>
+                        @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
+                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Address1)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Title)
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
-                        @Html.HiddenFor(m => m.Admission.EnquiryId)
+                        @Html.HiddenFor(m => m.Batch.BatchId)
+                        @Html.HiddenFor(m => m.BatchDay.BatchDayId)
+                        @Html.HiddenFor(m => m.Course.CourseId)
+                        @Html.HiddenFor(m => m.CourseInstallment.CourseInstallmentId)
+                        @Html.HiddenFor(m => m.Registration.RegistrationId)
+                        @*@Html.HiddenFor(m => m.Admission.EnquiryId)
                         @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
                         @Html.HiddenFor(m => m.Admission.ChequeNo)
                         @Html.HiddenFor(m => m.Admission.BankName)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)
+                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)*@
                         @Html.HiddenFor(m => m.CourseInstallment.Name)
                         @Html.Partial("_Admission", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
@@ -54,7 +72,7 @@
 </div>
 @section scripts{
     <script>
-        
+
         //---------------- Registration Cash/Cheque ----------------
         if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
             $('.bank-details-textbox').show();
@@ -88,8 +106,8 @@
             $('#PaymentDetails').show();
         }
 
-        $("#Admission_PaymentModeId").change(function () {
-            if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
+        $("#Admission_CandidateFee_PaymentModeId").change(function () {
+            if ($('#Admission_CandidateFee_PaymentModeId :selected').text() == "Cheque") {
                 $('#PaymentDetails').show();
                 $('.bank-details-textbox-admission').show();
                 $("#Admission_BankName").val("");
@@ -160,13 +178,13 @@
                         $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
                         $("#Course_Duration").val(result.Course.Duration);
                         $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
-                        $("#BatchDay_IsMonday").val(result.BatchDays[0].IsMonday);
-                        $("#BatchDay_IsTuesday").val(result.BatchDays["0"].IsTuesday);
-                        $("#BatchDay_IsWednesday").val(result.BatchDays[0].IsWednesday);
-                        $("#BatchDay_IsThursday").val(result.BatchDays["0"].IsThursday);
-                        $("#BatchDay_IsFriday").val(result.BatchDays["0"].IsFriday);
-                        $("#BatchDay_IsSaturday").val(result.BatchDays["0"].IsSaturday);
-                        $("#BatchDay_IsSunday").val(result.BatchDays["0"].IsSunday);
+                        $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
+                        $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
+                        $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
+                        $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
+                        $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
+                        $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
+                        $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
                         $("#Batch_Month").val(result.Month);
                         $("#Batch_BatchStartDate").val(result.BatchStartDate);
                         $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
@@ -655,101 +673,101 @@
             for (i = 0; i < numLength; i++) {
                 switch (i) {
 
-                case 0:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = '' + once[rev[i]];
-                    }
-                    word[j] = word[j];
-                    break;
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
 
-                case 1:
-                    aboveTens();
-                    break;
+                    case 1:
+                        aboveTens();
+                        break;
 
-                case 2:
-                    if (rev[i] == 0) {
-                        word[j] = '';
-                    }
-                    else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                        word[j] = once[rev[i]] + " Hundred ";
-                    }
-                    else {
-                        word[j] = once[rev[i]] + " Hundred and";
-                    }
-                    break;
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
 
-                case 3:
-                    if (rev[i] == 0 || rev[i + 1] == 1) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                        word[j] = word[j] + " Thousand";
-                    }
-                    break;
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
 
 
-                case 4:
-                    aboveTens();
-                    break;
+                    case 4:
+                        aboveTens();
+                        break;
 
-                case 5:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Lakh";
-                    }
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
 
-                    break;
+                        break;
 
-                case 6:
-                    aboveTens();
-                    break;
+                    case 6:
+                        aboveTens();
+                        break;
 
-                case 7:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Crore";
-                    }
-                    break;
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
 
-                case 8:
-                    aboveTens();
-                    break;
+                    case 8:
+                        aboveTens();
+                        break;
 
-                //            This is optional.
+                        //            This is optional.
 
-                //            case 9:
-                //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                //                    word[j] = '';
-                //                }
-                //                else {
-                //                    word[j] = once[rev[i]];
-                //                }
-                //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                //                    word[j] = word[j] + " Arab";
-                //                }
-                //                break;
+                        //            case 9:
+                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        //                    word[j] = '';
+                        //                }
+                        //                else {
+                        //                    word[j] = once[rev[i]];
+                        //                }
+                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        //                    word[j] = word[j] + " Arab";
+                        //                }
+                        //                break;
 
-                //            case 10:
-                //                aboveTens();
-                //                break;
+                        //            case 10:
+                        //                aboveTens();
+                        //                break;
 
-                default: break;
+                    default: break;
                 }
                 j++;
             }
