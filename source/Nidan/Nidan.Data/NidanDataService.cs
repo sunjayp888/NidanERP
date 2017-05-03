@@ -1781,39 +1781,39 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-              return context
-                    .CandidateFees
-                    .Include(p => p.Organisation)
-                    .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
-                     .Include(p => p.CandidateInstallment.Admission.Enquiry)
-                    .Include(p => p.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
+                return context
+                      .CandidateFees
+                      .Include(p => p.Organisation)
+                      .Include(p => p.CandidateInstallment)
+                      .Include(p => p.CandidateInstallment.Admission)
+                       .Include(p => p.CandidateInstallment.Admission.Enquiry)
+                      .Include(p => p.Centre)
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
                         new OrderBy
                         {
                             Property = "CandidateFeeId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
-                    })
-                    .Paginate(paging);
-             }
+                      })
+                      .Paginate(paging);
+            }
         }
-       
-        
+
+
         public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-              return context
-                    .CentreCourses
-                    .Include(c => c.Organisation)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Course)
-                    .AsNoTracking().ToList();
+                return context
+                      .CentreCourses
+                      .Include(c => c.Organisation)
+                      .Include(c => c.Centre)
+                      .Include(c => c.Course)
+                      .AsNoTracking().ToList();
             }
         }
 
@@ -1822,6 +1822,7 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+                return context
                     .CandidateFees
                     .Include(p => p.CandidateInstallment)
                     .Include(p => p.CandidateInstallment.Admission)
@@ -1837,7 +1838,6 @@ namespace Nidan.Data
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-
                     .Registrations
                     .Include(p => p.Enquiry)
                     .Include(p => p.Course)
