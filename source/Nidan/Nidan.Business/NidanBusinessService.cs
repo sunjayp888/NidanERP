@@ -361,27 +361,25 @@ namespace Nidan.Business
 
         public Counselling CreateCounselling(int organisationId, Counselling counselling)
         {
-            var data = _nidanDataService.Create<Counselling>(organisationId, counselling);
+            var data = _nidanDataService.CreateCounselling(organisationId, counselling);
             var enquiry = RetrieveEnquiry(organisationId, data.EnquiryId);
-            var followUp = new FollowUp
+            var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
+            if (followUp != null)
             {
-                CentreId = data.CentreId,
-                FollowUpDateTime = data.FollowUpDate.Value,
-                EnquiryId = data.EnquiryId,
-                Remark = data.Remarks,
-                Title = enquiry.Title,
-                FirstName = enquiry.FirstName,
-                MiddleName = enquiry.MiddleName,
-                LastName = enquiry.LastName,
-                IntrestedCourseId = data.CourseOfferedId,
-                Mobile = enquiry.Mobile,
-                CreatedDateTime = DateTime.UtcNow.Date,
-                FollowUpType = "Counselling",
-                FollowUpUrl = string.Format("/Counselling/Edit/{0}", data.CounsellingId),
-                CounsellingId = data.CounsellingId,
-                ReadDateTime = _today.AddYears(-100)
-            };
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                followUp.Remark = data.Remarks;
+                followUp.Title = enquiry.Title;
+                followUp.FirstName = enquiry.FirstName;
+                followUp.MiddleName = enquiry.MiddleName;
+                followUp.LastName = enquiry.LastName;
+                followUp.IntrestedCourseId = data.CourseOfferedId;
+                followUp.Mobile = enquiry.Mobile;
+                followUp.FollowUpType = "Counselling";
+                followUp.FollowUpUrl = string.Format("/Counselling/Edit/{0}", data.CounsellingId);
+                followUp.CounsellingId = data.CounsellingId;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            }
+            enquiry.EnquiryStatus = "Counselling";
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return data;
         }
 
@@ -634,35 +632,35 @@ namespace Nidan.Business
         public Admission CreateAdmission(int organisationId, Admission admission)
         {
             var data = _nidanDataService.CreateAdmission(organisationId, admission);
-            data.FinancialYear = "2017-18";
+            //data.FinancialYear = "2017-18";
             // EnquiryStatus Update
-            var enquiry = RetrieveEnquiry(organisationId, admission.EnquiryId);
+            //var enquiry = RetrieveEnquiry(organisationId, admission.EnquiryId);
 
-            enquiry.EnquiryStatus = "Admission";
-            enquiry.Close = "Yes";
-            enquiry.ClosingRemark = "Admission Done";
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+            //enquiry.EnquiryStatus = "Admission";
+            //enquiry.Close = "Yes";
+            //enquiry.ClosingRemark = "Admission Done";
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             // Counselling Update
-            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
-                .Items.FirstOrDefault();
-            if (counselling != null)
-            {
-                var course = RetrieveCourse(organisationId, counselling.CourseOfferedId);
-                counselling.Close = "Yes";
-                counselling.ClosingRemark = "Admission Done";
-                data.Particulars = data.FeeByStudent + " Against " + course.Name;
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
-            }
+            //var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+            //    .Items.FirstOrDefault();
+            //if (counselling != null)
+            //{
+            //    var course = RetrieveCourse(organisationId, counselling.CourseOfferedId);
+            //    counselling.Close = "Yes";
+            //    counselling.ClosingRemark = "Admission Done";
+            //    //data.Particulars = data.FeeByStudent + " Against " + course.Name;
+            //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+            //}
             //FollowUp Update
-            var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
-                .Items.FirstOrDefault();
-            if (followup != null)
-            {
-                followup.FollowUpType = "Admission";
-                followup.Close = "Yes";
-                followup.ClosingRemark = "Admission Done";
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
-            }
+            //var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+            //    .Items.FirstOrDefault();
+            //if (followup != null)
+            //{
+            //    followup.FollowUpType = "Admission";
+            //    followup.Close = "Yes";
+            //    followup.ClosingRemark = "Admission Done";
+            //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
+            //}
             return data;
 
         }
@@ -670,7 +668,7 @@ namespace Nidan.Business
         public Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration)
         {
             registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
-            var candidateInstallmentData = CandidateInstallment(organisationId, centreId, registration?.StudentCode, registration?.CandidateInstallment, registration?.CourseInstallment);
+            var candidateInstallmentData = CandidateInstallment(organisationId, centreId, studentCode, registration?.CandidateInstallment, registration?.CourseInstallment);
             registration.CandidateFee.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
             registration.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
             var candidateFeeData = CandidateFee(organisationId, centreId, studentCode, candidateInstallmentData.CandidateInstallmentId, registration?.CandidateFee);
@@ -709,7 +707,8 @@ namespace Nidan.Business
                     LumpsumAmount = courseInstallment.LumpsumAmount,
                     IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
                     DownPayment = courseInstallment.DownPayment,
-                    NumberOfInstallment = courseInstallment.NumberOfInstallment
+                    NumberOfInstallment = courseInstallment.NumberOfInstallment,
+                    CourseInstallmentId = courseInstallment.CourseInstallmentId
                 };
                 return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallmentData);
             }
@@ -731,6 +730,10 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
 
             };
+            var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);
+            enquiry.Registered = true;
+            enquiry.EnquiryStatus = "Registration";
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return _nidanDataService.Create<Registration>(organisationId, registrationData);
         }
 

@@ -39,8 +39,6 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
-        public virtual Admission Admission { get; set; }
-
         public bool IsPercentageDiscount { get; set; }
 
         public string PaymentMethod { get; set; }

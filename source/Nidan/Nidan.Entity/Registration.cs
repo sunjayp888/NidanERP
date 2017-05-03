@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Registration")]
     public partial class Registration
     {
+        public Registration()
+        {
+            Admissions=new HashSet<Admission>();
+        }
+
         public int RegistrationId { get; set; }
 
         public string StudentCode { get; set; }
@@ -49,9 +54,7 @@ namespace Nidan.Entity
 
         public virtual CandidateInstallment CandidateInstallment { get; set; }
 
-        public virtual Centre Centre { get; set; }
-
-        public virtual Organisation Organisation { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

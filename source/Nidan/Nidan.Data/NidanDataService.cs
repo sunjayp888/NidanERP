@@ -260,6 +260,18 @@ namespace Nidan.Data
             }
         }
 
+        public Counselling CreateCounselling(int organisationId, Counselling counselling)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                counselling.Enquiry = null;
+                counselling = context.Counsellings.Add(counselling);
+                context.SaveChanges();
+
+                return counselling;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -1742,8 +1754,7 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Organisation)
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1765,9 +1776,7 @@ namespace Nidan.Data
             {
                 return context
                     .Admissions
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.RegistrationPaymentReceipt.Enquiry)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
@@ -1785,8 +1794,6 @@ namespace Nidan.Data
                       .CandidateFees
                       .Include(p => p.Organisation)
                       .Include(p => p.CandidateInstallment)
-                      .Include(p => p.CandidateInstallment.Admission)
-                       .Include(p => p.CandidateInstallment.Admission.Enquiry)
                       .Include(p => p.Centre)
                       .AsNoTracking()
                       .Where(predicate)
@@ -1825,7 +1832,6 @@ namespace Nidan.Data
                 return context
                     .CandidateFees
                     .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);

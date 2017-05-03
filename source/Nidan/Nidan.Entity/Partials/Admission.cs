@@ -13,29 +13,29 @@ namespace Nidan.Entity
     {
         private class AdmissionMetadata
         {
-            [Display(Name = "Payment Mode")]
-            public int PaymentModeId { get; set; }
+            //[Display(Name = "Payment Mode")]
+            //public int PaymentModeId { get; set; }
 
-            [Display(Name = "Cheque No")]
-            public string ChequeNo { get; set; }
+            //[Display(Name = "Cheque No")]
+            //public string ChequeNo { get; set; }
 
-            [Display(Name = "Cheque Date")]
-            public DateTime ChequeDate { get; set; }
+            //[Display(Name = "Cheque Date")]
+            //public DateTime ChequeDate { get; set; }
 
-            [Display(Name = "Bank Name")]
-            public string BankName { get; set; }
+            //[Display(Name = "Bank Name")]
+            //public string BankName { get; set; }
 
-            [Display(Name = "Fee By Student")]
-            public int? FeeByStudent { get; set; }
+            //[Display(Name = "Fee By Student")]
+            //public int? FeeByStudent { get; set; }
 
-            [Display(Name = "Discount Fee")]
-            public int? DiscountFee { get; set; }
+            //[Display(Name = "Discount Fee")]
+            //public int? DiscountFee { get; set; }
 
-            [Display(Name = "Down Payment")]
-            public int? DownPayment { get; set; }
+            //[Display(Name = "Down Payment")]
+            //public int? DownPayment { get; set; }
 
-            [Display(Name = "Batch")]
-            public int BatchId { get; set; }
+            //[Display(Name = "Batch")]
+            //public int BatchId { get; set; }
         }
     }
 }
