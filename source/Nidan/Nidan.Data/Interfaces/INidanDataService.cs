@@ -44,6 +44,7 @@ namespace Nidan.Data.Interfaces
         Room CreateRoom(int organisationId, Room room);
         BatchDay CreateBatchDay(int organisationId, BatchDay batchDay);
         Admission CreateAdmission(int organisationId, Admission admission);
+        Counselling CreateCounselling(int organisationId, Counselling counselling);
 
 
         // Retrieve

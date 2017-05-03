@@ -40,8 +40,9 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             id = id ?? 0;
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            //var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId,UserCentreId,id.Value).Select(e=>e.CourseId).ToList();
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var viewModel = new CounsellingViewModel
             {
                 Enquiry = enquiry,
@@ -54,10 +55,12 @@ namespace Nidan.Controllers
                     FirstName = enquiry.FirstName,
                     MiddleName = enquiry.MiddleName,
                     LastName = enquiry.LastName,
-                    EnquiryId = enquiry.EnquiryId
+                    EnquiryId = enquiry.EnquiryId,
+                    Enquiry = enquiry
                 }
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
         }
 
@@ -73,6 +76,7 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.OrganisationId = organisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId,counsellingViewModel.Counselling);
                 //return RedirectToAction("Index");
                 return RedirectToAction("Edit", new { id = counsellingViewModel.Counselling.CounsellingId });
