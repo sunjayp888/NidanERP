@@ -7,7 +7,9 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create New Admission <small></small></h2>
+                <h2>
+                    <button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button>Create New Admission <small></small>
+                </h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -32,7 +34,7 @@
                             @Model.Registration.CandidateInstallment.CourseFee
                         </div>
                         @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
                         @Html.HiddenFor(m => m.Registration.Enquiry.Address1)
                         @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
                         @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
@@ -46,12 +48,248 @@
                         @Html.HiddenFor(m => m.CourseInstallment.CourseInstallmentId)
                         @Html.HiddenFor(m => m.Registration.RegistrationId)
                         @*@Html.HiddenFor(m => m.Admission.EnquiryId)
-                        @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
-                        @Html.HiddenFor(m => m.Admission.ChequeNo)
-                        @Html.HiddenFor(m => m.Admission.BankName)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)*@
+                            @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
+                            @Html.HiddenFor(m => m.Admission.ChequeNo)
+                            @Html.HiddenFor(m => m.Admission.BankName)
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)*@
                         @Html.HiddenFor(m => m.CourseInstallment.Name)
-                        @Html.Partial("_Admission", Model)
+
+                        @*-----------------------------------------Candidate Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Candidate Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+
+                                    @*<div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.Title, new { @class = "control-label col-md-3 col-sm-4 col-xs-12" })
+                                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                                    @Html.DropDownListFor(model => model.Registration.Enquiry.Title, Model.TitleList, "Select Title", new { @class = "form-control",@disabled=true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.Title, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                    @*<div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.FirstName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.FirstName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.FirstName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                    @*<div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.MiddleName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.MiddleName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.MiddleName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.LastName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.LastName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.LastName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Mobile</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.Mobile" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Email</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.EmailId" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-md-6">
+                                                @*<div class="form-group">
+                                                        @Html.LabelFor(model => model.Registration.Enquiry.SectorId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+                                                        <div class="col-md-8 col-sm-6 col-xs-12">
+                                                            @Html.DropDownListFor(model => model.SectorId, Model.Sectors, null, new { @class = "form-control", @disabled = true })
+                                                            @Html.ValidationMessageFor(model => model.Registration.Enquiry.SectorId, "", new { @class = "help-block" })
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                @*<div class="form-group">
+                                                        @Html.LabelFor(model => model.Registration.CourseId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+                                                        <div class="col-md-8 col-sm-6 col-xs-12">
+                                                            @Html.DropDownListFor(model => model.Registration.CourseId, Model.Courses, null, new { @class = "form-control", @disabled = true })
+                                                            @Html.ValidationMessageFor(model => model.Registration.CourseId, "", new { @class = "help-block" })
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        @*<div class="form-group">
+                                                @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Counselling.PreferTiming, null, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*-----------------------------------------Registration Details-----------------------------------------*@
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Registration Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course Fee</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateInstallment.CourseFee" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Fee Paid</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Registration.CandidateFee.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-7 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.CandidateFee.Particulars, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.CandidateFee.Particulars, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>*@
+
+
+
+                                @*<div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.BankName, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.BankName, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.ChequeNo, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.ChequeNo, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                                            @Html.TextBoxFor(model => model.Registration.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.ChequeDate, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>@Html.Partial("_Admission", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
