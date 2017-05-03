@@ -1754,8 +1754,7 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Organisation)
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1777,9 +1776,7 @@ namespace Nidan.Data
             {
                 return context
                     .Admissions
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.RegistrationPaymentReceipt.Enquiry)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
@@ -1797,8 +1794,6 @@ namespace Nidan.Data
                     .CandidateFees
                     .Include(p => p.Organisation)
                     .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
-                     .Include(p => p.CandidateInstallment.Admission.Enquiry)
                     .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1834,9 +1829,9 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+                return context
                     .CandidateFees
                     .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);

@@ -26,12 +26,12 @@
 
                         }
                         @Html.HiddenFor(m => m.Admission.AdmissionId)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)
+                        @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
+                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
-                        @Html.HiddenFor(m => m.Admission.EnquiryId)
-                        @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
+                        @*@Html.HiddenFor(m => m.Admission.EnquiryId)
+                        @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)*@
                         @Html.Partial("_Admission", Model)
                         <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -80,13 +80,13 @@
                         $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
                         $("#Course_Duration").val(result.Course.Duration);
                         $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
-                        $("#BatchDay_IsMonday").val(result.BatchDays["0"].IsMonday);
-                        $("#BatchDay_IsTuesday").val(result.BatchDays["0"].IsTuesday);
+                        $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
+                        $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
                         $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
-                        $("#BatchDay_IsThursday").val(result.BatchDays["0"].IsThursday);
-                        $("#BatchDay_IsFriday").val(result.BatchDays["0"].IsFriday);
-                        $("#BatchDay_IsSaturday").val(result.BatchDays["0"].IsSaturday);
-                        $("#BatchDay_IsSunday").val(result.BatchDays["0"].IsSunday);
+                        $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
+                        $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
+                        $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
+                        $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
                         $("#Batch_Month").val(result.Month);
                         $("#Batch_BatchStartDate").val(result.BatchStartDate);
                         $("#Batch_NoOfHolidays").val(result.NoOfHolidays);

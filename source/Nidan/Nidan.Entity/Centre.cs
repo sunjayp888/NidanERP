@@ -29,10 +29,10 @@ namespace Nidan.Entity
             CentreCourseInstallments=new HashSet<CentreCourseInstallment>();
             CentreSchemes=new HashSet<CentreScheme>();
             CentreSectors= new HashSet<CentreSector>();
-            Admissions=new HashSet<Admission>();
             CandidateInstallments=new HashSet<CandidateInstallment>();
             CandidateFees = new HashSet<CandidateFee>();
             Registrations = new HashSet<Registration>();
+            Admissions=new HashSet<Admission>();
         }
 
         public int CentreId { get; set; }
@@ -102,9 +102,6 @@ namespace Nidan.Entity
         public virtual ICollection<CentreSector> CentreSectors { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admission> Admissions { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateInstallment> CandidateInstallments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -114,7 +111,6 @@ namespace Nidan.Entity
         public virtual ICollection<Registration> Registrations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Registration> Registrations { get; set; }
-
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Nidan.Models
     public class AdmissionViewModel : BaseViewModel
     {
         public Admission Admission { get; set; }
-        public RegistrationPaymentReceipt RegistrationPaymentReceipt { get; set; }
+        public Registration Registration { get; set; }
         public Batch Batch { get; set; }
         public CourseInstallment CourseInstallment { get; set; }
         public Counselling Counselling { get; set; }
@@ -25,8 +25,7 @@ namespace Nidan.Models
         public SelectList Batches { get; set; }
         public SelectList Rooms { get; set; }
         public SelectList CourseInstallments { get; set; }
-        public int RegistrationPaymentReceiptId { get; set; }
-        public int SectorId { get; set; }
+        public int RegistrationId { get; set; }
         public int IntrestedCourseId { get; set; }
         public int BatchTimePreferId { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
