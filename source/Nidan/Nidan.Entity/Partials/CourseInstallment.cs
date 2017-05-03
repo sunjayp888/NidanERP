@@ -16,14 +16,14 @@ namespace Nidan.Entity
             [Display(Name = "Course")]
             public int CourseId { get; set; }
 
-            [Display(Name = "Fees")]
+            [Display(Name = "Course Fee")]
             public int Fee { get; set; }
 
-            [Display(Name = "Down Payment")]
+            [Display(Name = "Course Down Payment")]
             public int DownPayment { get; set; }
 
-            [Display(Name = "Lumpsum Amount")]
-            public int LumpsumAmt { get; set; }
+            [Display(Name = "Course Lumpsum Amount")]
+            public int LumpsumAmount { get; set; }
             
         }
     }

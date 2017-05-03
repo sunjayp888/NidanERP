@@ -17,12 +17,13 @@ namespace Nidan.Entity
 
         public int CourseId { get; set; }
 
-
         public int Fee { get; set; }
 
         public int DownPayment { get; set; }
 
-        public int LumpsumAmt { get; set; }
+        public int LumpsumAmount { get; set; }
+
+        public int? NumberOfInstallment { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }

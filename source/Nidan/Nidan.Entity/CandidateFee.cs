@@ -17,7 +17,7 @@ namespace Nidan.Entity
 
         public int CandidateFeeId { get; set; }
 
-        public DateTime PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
         public int? CandidateInstallmentId { get; set; }
 
@@ -37,7 +37,9 @@ namespace Nidan.Entity
 
         public decimal? Penalty { get; set; }
 
-        public DateTime InstallmentDate { get; set; }
+        public DateTime? InstallmentDate { get; set; }
+
+        public DateTime? FollowUpDate { get; set; }
 
         [StringLength(50)]
         public string StudentCode { get; set; }
@@ -46,8 +48,6 @@ namespace Nidan.Entity
 
         public decimal? BalanceInstallmentAmount { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string FiscalYear { get; set; }
 
         public int CentreId { get; set; }
@@ -57,6 +57,12 @@ namespace Nidan.Entity
         public string Particulars { get; set; }
 
         public virtual CandidateInstallment CandidateInstallment { get; set; }
+
+        public virtual Centre Centre { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
+
+        public virtual PaymentMode PaymentMode { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }

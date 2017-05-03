@@ -15,7 +15,7 @@ namespace Nidan.Entity
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
-            [Display(Name = "Middel Name")]
+            [Display(Name = "Middle Name")]
             public string MiddleName { get; set; }
 
             [Display(Name = "Last Name")]

@@ -72,7 +72,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Subject> Subjects { get; set; }
         public virtual DbSet<SubjectTrainer> SubjectTrainers { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
-
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<BatchDay> BatchDays { get; set; }
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
@@ -84,6 +83,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreScheme> CentreSchemes { get; set; }
         public virtual DbSet<CentreSector> CentreSectors { get; set; }
         public virtual DbSet<Admission> Admissions { get; set; }
+        public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
+        public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
         public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
@@ -157,10 +158,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.Remarks)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Registration>()
-                .HasOptional(e => e.Registration1)
-                .WithRequired(e => e.Registration2);
-
+            
             //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)
@@ -1260,6 +1258,14 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Registration>()
+               .Property(e => e.Remarks)
+               .IsUnicode(false);
+
+            //modelBuilder.Entity<Registration>()
+            //    .HasOptional(e => e.Registration1)
+            //    .WithRequired(e => e.Registration2);
 
             base.OnModelCreating(modelBuilder);
         }

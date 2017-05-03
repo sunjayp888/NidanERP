@@ -24,6 +24,7 @@ namespace Nidan.Entity
             Hosts = new HashSet<Host>();
             Personnels = new HashSet<Personnel>();
             Events = new HashSet<Event>();
+            Registrations = new HashSet<Registration>();
 
         }
 
@@ -217,6 +218,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateInstallment> CandidateInstallments { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateFee> CandidateFees { get; set; }
 
     }
 }
