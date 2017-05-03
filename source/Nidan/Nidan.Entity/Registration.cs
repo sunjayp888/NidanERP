@@ -47,17 +47,14 @@ namespace Nidan.Entity
 
         public virtual CandidateFee CandidateFee { get; set; }
 
-        public virtual Enquiry Enquiry { get; set; }
-
         public virtual Course Course { get; set; }
 
         public virtual CourseInstallment CourseInstallment { get; set; }
 
         public virtual CandidateInstallment CandidateInstallment { get; set; }
 
-        public virtual Centre Centre { get; set; }
-
-        public virtual Organisation Organisation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FollowUp> FollowUps { get; set; }
 
     }
 }

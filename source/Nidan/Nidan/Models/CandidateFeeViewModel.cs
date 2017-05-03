@@ -10,6 +10,6 @@ namespace Nidan.Models
     public class CandidateFeeViewModel : BaseViewModel
     {
         public CandidateFee CandidateFee { get; set; }
-        public SelectList PaymentMode { get; set; }
+        public SelectList PaymentModes { get; set; }
     }
 }

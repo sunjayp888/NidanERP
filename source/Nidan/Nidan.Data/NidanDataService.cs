@@ -158,18 +158,18 @@ namespace Nidan.Data
                 return postevent;
             }
         }
-        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
-            RegistrationPaymentReceipt registrationPaymentReceipt)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                registrationPaymentReceipt.Enquiry = null;
-                registrationPaymentReceipt = context.RegistrationPaymentReceipts.Add(registrationPaymentReceipt);
-                context.SaveChanges();
+        //public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
+        //    RegistrationPaymentReceipt registrationPaymentReceipt)
+        //{
+        //    using (var context = _databaseFactory.Create(organisationId))
+        //    {
+        //        registrationPaymentReceipt.Enquiry = null;
+        //        registrationPaymentReceipt = context.RegistrationPaymentReceipts.Add(registrationPaymentReceipt);
+        //        context.SaveChanges();
 
-                return registrationPaymentReceipt;
-            }
-        }
+        //        return registrationPaymentReceipt;
+        //    }
+        //}
 
         public Course CreateCourse(int organisationId, Course course)
         {
@@ -269,6 +269,18 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return counselling;
+            }
+        }
+
+        public CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                //admission.RegistrationPaymentReceipt = null;
+                candidateFee = context.CandidateFees.Add(candidateFee);
+                context.SaveChanges();
+
+                return candidateFee;
             }
         }
 
@@ -1131,21 +1143,21 @@ namespace Nidan.Data
             return null;
         }
 
-        public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
-            Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .RegistrationPaymentReceipts
-                    .Include(e => e.Enquiry)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.RegistrationPaymentReceiptId == registrationPaymentReceiptId);
+        //public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
+        //    Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.Create(organisationId))
+        //    {
+        //        return context
+        //            .RegistrationPaymentReceipts
+        //            .Include(e => e.Enquiry)
+        //            .AsNoTracking()
+        //            .Where(predicate)
+        //            .SingleOrDefault(p => p.RegistrationPaymentReceiptId == registrationPaymentReceiptId);
 
-            }
-        }
+        //    }
+        //}
 
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
@@ -1797,8 +1809,6 @@ namespace Nidan.Data
                     .CandidateFees
                     .Include(p => p.Organisation)
                     .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
-                     .Include(p => p.CandidateInstallment.Admission.Enquiry)
                     .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1813,8 +1823,36 @@ namespace Nidan.Data
                     .Paginate(paging);
              }
         }
-       
-        
+
+
+        public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidateFeeSearchField>("SearchCandidateFee @SearchKeyword", category).ToList();
+
+                var candidatefees = context.CandidateFees;
+                //.Include(e => e.CandidateInstallment.Admission.Enquiry.StudentCode);
+
+                var data = searchData.Join(candidatefees, e => e.CandidateFeeId, m => m.CandidateFeeId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFeeId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
         public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId)
         {
             using (ReadUncommitedTransactionScope)
@@ -1829,14 +1867,53 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .CandidateInstallments
+                      .Include(p => p.Organisation)
+                      .Include(p => p.CourseInstallment)
+                      
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "CandidateInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+
+        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateInstallments
+                    .Include(p => p.CourseInstallment)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CandidateInstallmentId == candidateInstallmentId);
+            }
+        }
+
         public CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+                return context
                     .CandidateFees
                     .Include(p => p.CandidateInstallment)
-                    .Include(p => p.CandidateInstallment.Admission)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
+using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using Nidan.Models;
@@ -22,11 +23,66 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            var organisationId = UserOrganisationId;
+            var paymentmodes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
+            
+            var viewModel = new CandidateFeeViewModel()
+            {
+                CandidateFee = new CandidateFee(),
+                PaymentModes = new SelectList(paymentmodes, "PaymentModeId", "Name"),
+            };
+            return View(viewModel);
+        }
+
+
+        //post : create/candidatefee
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CandidateFeeViewModel candidateFeeViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            candidateFeeViewModel.CandidateFee.PaymentDate = DateTime.UtcNow;
+            candidateFeeViewModel.CandidateFee.InstallmentDate = DateTime.UtcNow;
+            candidateFeeViewModel.CandidateFee.FeeTypeId=2;
+            candidateFeeViewModel.CandidateFee.FiscalYear = "2017-18";
+            if (ModelState.IsValid)
+            {
+                candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
+                candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
+
+                candidateFeeViewModel.CandidateFee = NidanBusinessService.CreateCandidateFee(organisationId, candidateFeeViewModel.CandidateFee);
+                return RedirectToAction("Index");
+            }
+           
+            candidateFeeViewModel.PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList());
+            return View(candidateFeeViewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        //[HttpPost]
+        //public ActionResult CandidateInstallmentList(Paging paging, List<OrderBy> orderBy)
+        //{
+        //    //var candidateInstallment=NidanBusinessService.retr(UserOrganisationId,p=>p.)
+        //    bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+        //    return this.JsonNet(NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+        //}
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
     }
 }

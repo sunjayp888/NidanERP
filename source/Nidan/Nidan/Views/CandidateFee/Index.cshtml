@@ -1,25 +1,25 @@
 ﻿@using Nidan.Extensions
 @{
-    ViewBag.Title = "CandidateInstallment";
+   // ViewBag.Title = "CandidateInstallment";
 }
 
-<div ng-controller="CandidateFeeController as model">
+<div ng-controller="RegistrationController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
                 Candidate Installment <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
-                        </span>
-                    </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCandidateInstallment(searchField)" class="form-control" placeholder="Search for Candidate...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchCandidateInstallment(searchField)" type="button">Go!</button>
+                    </span>
                 </div>
-            </div>*@
+            </div>
+        </div>
     </div>
 
     @if (User.IsInAnyRoles("Admin"))
@@ -37,7 +37,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Candidate Fees<small></small>
+                        Candidate Fees Details<small></small>
                     </h2>
                     <div class="clearfix"></div>
                 </div>
@@ -54,22 +54,22 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <table id="tblProducts" wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                     <tr role="row">
-                                        <th ng-click="model.order('CandidateInstallment.Admission.FirstName')" ng-class="model.orderClass('Admission.FirstName')">Candidate Name</th>
-                                        <th ng-click="model.order('CandidateInstallment.CandidateCourseFee')" ng-class="model.orderClass('CandidateInstallment.CandidateCourseFee')">Total Fees</th>
+                                        <th ng-click="model.order('Registration.Enquiry.FirstName')" ng-class="model.orderClass('Registration.Enquiry.FirstName')">Candidate Name</th>
+                                        <th ng-click="model.order('Registration.CandidateInstallment.CourseFee')" ng-class="model.orderClass('Registration.CandidateInstallment.CourseFee')">Total Fees</th>
                                         <th ng-click="model.order('PaidAmount')" ng-class="model.orderClass('PaidAmount')">Paid Amount</th>
                                         <th ng-click="model.order('Balance')" ng-class="model.orderClass('Balance')">Balance</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCandidateFee(candidateFee.CandidateFeeId)">
-                                        <td><span ng-bind="candidateFee.CandidateInstallment.Admission.Enquiry.FirstName"></span> <span ng-bind="candidateFee.CandidateInstallment.Admission.Enquiry.MiddleName"></span> <span ng-bind="candidateFee.CandidateInstallment.Admission.Enquiry.LastName"></span></td>
-                                        <td class="qty" name="qty"><span ng-bind="candidateFee.CandidateInstallment.CandidateCourseFee"></span></td>
-                                        <td class="price" name="price"><span ng-bind="candidateFee.PaidAmount"></span></td>
-                                        <td class="subtot" name="subtot"></td>
+                                    <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
+                                        <td><span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
+                                        <td class="totalfee" name="totalfee"><span ng-bind="registration.CandidateInstallment.CourseFee"></span></td>
+                                        <td class="paidamt" name="paidamt"><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
+                                        <td class="balance" name="subtot"></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -78,11 +78,11 @@
                                                 <ul class="dropdown-menu slidedown">
                                                     @if (User.IsInAnyRoles("Admin"))
                                                     {
-                                                        <li>
+                                                        @*<li>
                                                             <a style="cursor: pointer;" ng-href="/CandidateFee/Edit/{{candidateFee.CandidateFeeId}}">
                                                                 View Details
                                                             </a>
-                                                        </li>
+                                                        </li>*@
                                                     }
                                                 </ul>
                                             </div>
@@ -108,19 +108,20 @@
 {
     <script>
        
-        $(function () {
+        $(document)
+           .ready(function () {
           
-            var $tblrows = $("#tblProducts tbody tr");
+               var $tblrows = $("#tblProducts tbody tr td");
 
             $tblrows.each(function () {
                 var $tblrow = $(this);
 
-                $tblrow.find('.qty').ready(function () {
+                $tblrow.find('.totalfee').ready(function () {
 
-                    var qty = $tblrow.find("[name=qty]").val();
-                    var price = $tblrow.find("[name=price]").val();
-                    var subTotal = parseInt(qty) - parseInt(price);
-                    $('.subTotal').val(subTotal.toFixed(2));
+                    var totalfee = $tblrow.find("[name=totalfee]").val();
+                    var paidamt = $tblrow.find("[name=paidamt]").val();
+                    var subtot = parseInt(totalfee) - parseInt(paidamt);
+                    $('.subtot').val(subtot.toFixed(2));
                     
                 });
             });

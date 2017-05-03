@@ -60,7 +60,7 @@ namespace Nidan.Entity
 
         public string ClosingRemark { get; set; }
 
-        public int? RegistrationPaymentReceiptId { get; set; }
+        public int? RegistrationId { get; set; }
 
         public virtual Course Course { get; set; }
 
@@ -70,6 +70,6 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
-        public virtual RegistrationPaymentReceipt RegistrationPaymentReceipt { get; set; }
+        public virtual Registration Registration { get; set; }
     }
 }

@@ -233,7 +233,7 @@
                     <div class="form-group">
                         @*@Html.LabelFor(model => model.Enquiry.AlternateMobile, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })*@
                         <div class="col-md-12 col-sm-8 col-xs-12">
-                            @Html.TextBoxFor(model => model.Enquiry.GuardianContactNo, new { @class = "form-control", @placeholder = "Alternate No" })
+                            @Html.TextBoxFor(model => model.Enquiry.GuardianContactNo, new { @class = "form-control", @placeholder = "Parent's No" })
                             <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                             @Html.ValidationMessageFor(model => model.Enquiry.GuardianContactNo, "", new { @class = "help-block" })
                         </div>
