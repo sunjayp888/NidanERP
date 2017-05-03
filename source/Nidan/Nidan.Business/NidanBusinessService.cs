@@ -692,7 +692,8 @@ namespace Nidan.Business
                     IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
                     DownPayment = candidateInstallment.DownPayment,
                     NumberOfInstallment = candidateInstallment.NumberOfInstallment,
-                    CourseInstallmentId = courseInstallment.CourseInstallmentId
+                    CourseInstallmentId = courseInstallment.CourseInstallmentId,
+                    PaymentMethod = candidateInstallment.PaymentMethod
                 };
                 return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallmentData);
             }

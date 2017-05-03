@@ -37,6 +37,8 @@ namespace Nidan.Entity
 
         public bool IsPercentageDiscount { get; set; }
 
+        public string PaymentMethod { get; set; }
+
         public bool IsTotalAmountDiscount { get; set; }
 
         public CourseInstallment CourseInstallment { get; set; }

@@ -369,17 +369,33 @@
             var courseInstallmentId = $('#Registration_CourseInstallmentId :selected').val();
             GetCourseInstallment(courseInstallmentId);
         });
+
         $('#Registration_CandidateInstallment_IsTotalAmountDiscount').change(function () {
             if ($(this).is(":checked")) {
                 $("#overrideFeeDiv").show();
+                $("#paymentMethodDiv").show();
             } else {
                 $("#overrideFeeDiv").hide();
+                $("#paymentMethodDiv").show();
             }
 
         });
         $("#overrideFeeDiv").hide();
         $("#courseInstallmentDiv").hide();
+        $("#downPaymentDiv").hide();
         $("#IsTotalAmountDiscountDiv").hide();
+        $("#paymentMethodDiv").hide();
+        $("Registration.CandidateInstallment.PaymentMethodMonthly").change((function () {
+            alert($("Registration_CandidateInstallment_PaymentMethod").val());
+        }));
+        $('input:radio[name="Registration.CandidateInstallment.PaymentMethod"]').change(
+          function () {
+        if (this.checked && this.value == 'MonthlyInstallment') {
+            $("#downPaymentDiv").show();
+        } else {
+            $("#downPaymentDiv").hide();
+        }
+    });
         function GetCourseInstallmentsByCourseId(courseId) {
             $.ajax({
                 url: '/Registration/GetCourseInstallmentByCourseId',
@@ -423,7 +439,7 @@
                     $("#Registration_CourseInstallment_DownPayment").val(result.DownPayment);
                     $("#Registration_CourseInstallment_LumpsumAmount").val(result.LumpsumAmount);
                     $("#Registration_CourseInstallment_NumberOfInstallment").val(result.NumberOfInstallment);
-                    
+
                 },
                 async: true,
                 processData: false
