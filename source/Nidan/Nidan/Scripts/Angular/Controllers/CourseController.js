@@ -26,9 +26,9 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveSectors = retrieveSectors;
+        vm.retrieveCourseBySectorId = retrieveCourseBySectorId;
         vm.deleteEnquiryCourse = deleteEnquiryCourse;
         vm.deleteSubjectCourse = deleteSubjectCourse;
-        vm.Test = Test;
         vm.type = "";
 
         initialise();
@@ -50,8 +50,11 @@
                 });
         }
 
-        function Test(test) {
-            alert(vm.type);
+        function retrieveCourseBySectorId() {
+            return CourseService.retrieveCourseBySectorId(vm.type).then(function (response) {
+                vm.courses = response.data;
+                return vm.courses;
+            });
         }
 
         function searchCourse(searchKeyword) {

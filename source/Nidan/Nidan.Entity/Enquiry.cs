@@ -16,6 +16,7 @@ namespace Nidan.Entity
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
             Admissions = new HashSet<Admission>();
+            Registrations = new HashSet<Registration>();
         }
 
         public int EnquiryId { get; set; }
@@ -217,6 +218,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EnquiryCourse> EnquiryCourses { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Registration> Registrations { get; set; }
 
 
     }

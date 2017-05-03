@@ -86,6 +86,8 @@
 
         $("#Enquiry_Age").val("");
         $("#Enquiry_PinCode").val("");
+        $("#Enquiry_SectorId").empty().append("Select Sector");
+
 
         //=========================================Do not accept special char and numbers
         $(function () {
@@ -236,28 +238,28 @@
         });
 
 
-        $('#Enquiry_SectorId').change(function () {
-            var sectorId = $('#Enquiry_SectorId :selected').val();
-            $.ajax({
-                url: '/Enquiry/GetCourse',
-                type: 'POST',
-                data: JSON.stringify({ sectorId: sectorId }),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    $("#Enquiry_IntrestedCourseId").empty();
-                    $.each(result, function (key, value) {
-                        $("#Enquiry_IntrestedCourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+        //$('#Enquiry_SectorId').change(function () {
+        //    var sectorId = $('#Enquiry_SectorId :selected').val();
+        //    $.ajax({
+        //        url: '/Enquiry/GetCourse',
+        //        type: 'POST',
+        //        data: JSON.stringify({ sectorId: sectorId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#SelectedCourseIdsJson").empty();
+        //            $.each(result, function (key, value) {
+        //                $("#SelectedCourseIdsJson").append($("<option></option>").val(value.CourseId).html(value.Name));
 
-                    });
-                },
-                async: true,
-                processData: false
-            });
-        });
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //});
 
         $('#Enquiry_SchemeId').change(function () {
             var schemeId = $('#Enquiry_SchemeId :selected').val();

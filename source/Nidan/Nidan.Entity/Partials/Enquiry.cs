@@ -133,6 +133,30 @@ namespace Nidan.Entity
             [DataType(DataType.MultilineText)]
             [Display(Name = "Remarks By Branch Manager")]
             public string RemarkByBm { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address1 { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address2 { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address3 { get; set; }
+
+            [Display(Name = "Address")]
+            public string Address4 { get; set; }
+
+            [Display(Name = "Taluka")]
+            public int TalukaId { get; set; }
+
+            [Display(Name = "State")]
+            public int StateId { get; set; }
+
+            [Display(Name = "District")]
+            public int DistrictId { get; set; }
+
+            [Display(Name = "Pin Code")]
+            public int PinCode { get; set; }
         }
     }
 }
