@@ -9,6 +9,13 @@ namespace Nidan.Entity
     [Table("CourseInstallment")]
     public partial class CourseInstallment
     {
+        public CourseInstallment()
+        {
+            Batches=new HashSet<Batch>();
+            CentreCourseInstallments=new HashSet<CentreCourseInstallment>();
+            Registrations=new HashSet<Registration>();
+        }
+
         public int CourseInstallmentId { get; set; }
 
         [Required]
@@ -43,5 +50,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreCourseInstallment> CentreCourseInstallments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Registration> Registrations { get; set; }
     }
 }

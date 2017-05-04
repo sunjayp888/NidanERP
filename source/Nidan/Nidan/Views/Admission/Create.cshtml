@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.AdmissionViewModel
+﻿@using System.Drawing
+@model Nidan.Models.AdmissionViewModel
 
 @{
     ViewBag.Title = "Create Admission";
@@ -39,6 +40,7 @@
                         @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
                         @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
                         @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Mobile)
                         @Html.HiddenFor(m => m.Registration.Enquiry.Title)
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
@@ -47,6 +49,8 @@
                         @Html.HiddenFor(m => m.Course.CourseId)
                         @Html.HiddenFor(m => m.CourseInstallment.CourseInstallmentId)
                         @Html.HiddenFor(m => m.Registration.RegistrationId)
+                        @Html.HiddenFor(m => m.Admission.RegistrationId)
+                        @Html.HiddenFor(m => m.Admission.Registration.CandidateInstallmentId)
                         @*@Html.HiddenFor(m => m.Admission.EnquiryId)
                             @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
                             @Html.HiddenFor(m => m.Admission.ChequeNo)
@@ -289,7 +293,172 @@
                                         </div>
                                     </div>*@
                             </div>
-                        </div>@Html.Partial("_Admission", Model)
+                        </div>
+                        @*-----------------------------------------Batch Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Candidate Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Admission.BatchId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                <div id="divBatchDetails">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
+                                                                        Monday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
+                                                                        Tuesday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
+                                                                        Wednesday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
+                                                                        Thursday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
+                                                                        Friday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
+                                                                        Saturday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
+                                                                        Sunday
+                                                                    </label>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Start Time</button>
+                                                    </span>
+                                                    <input id="txtBatchStartTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch End Time</button>
+                                                    </span>
+                                                    <input id="txtBatchEndTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Start Date</button>
+                                                    </span>
+                                                    <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch End Date</button>
+                                                    </span>
+                                                    <input id="txtBatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Assessment Date</button>
+                                                    </span>
+                                                    <input id="txtBatchAssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Duration In Month</button>
+                                                    </span>
+                                                    <input id="txtBatchMonth" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @Html.Partial("_Admission", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
@@ -383,12 +552,13 @@
 
         $('#BatchDetails').hide();
         $("#Admission_BatchId").change(function () {
-            $('#BatchDetails').show();
+            $('#divBatchDetails').show();
             $('#PaymentType').show();
         });
         $('#PaymentType').hide();
         $('#PaymentDetails').hide();
         $('#divDiscountFee').hide();
+        $('#divBatchDetails').hide();
 
         //=========================================================================
 
@@ -408,14 +578,14 @@
                     $("#Batch_CourseInstallmentId").empty();
                     $("#Batch_CourseId").empty();
                     $.each(result, function (key, value) {
-                        $("#Batch_RoomId").append($("<option></option>").val(result.Room.RoomId).html(result.Room.Description));
-                        $("#Batch_Intake").val(result.Intake);
-                        $("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
-                        $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                        $("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
-                        $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Course_Duration").val(result.Course.Duration);
-                        $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
+                        //$("#Batch_RoomId").append($("<option></option>").val(result.Room.RoomId).html(result.Room.Description));
+                        //$("#Batch_Intake").val(result.Intake);
+                        //$("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
+                        //$("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
+                        //$("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
+                        //$("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
+                        //$("#Course_Duration").val(result.Course.Duration);
+                        //$("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
                         $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
                         $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
                         $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
@@ -423,22 +593,22 @@
                         $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
                         $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
                         $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
-                        $("#Batch_Month").val(result.Month);
-                        $("#Batch_BatchStartDate").val(result.BatchStartDate);
-                        $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
-                        $("#Batch_BatchEndDate").val(result.BatchEndDate);
-                        $("#Batch_AssesmentDate").val(result.AssesmentDate);
-                        $("#Batch_BatchStartTimeHours").val(result.BatchStartTimeHours);
-                        $("#Batch_BatchStartTimeMinutes").val(result.BatchStartTimeMinutes);
-                        $("#rbBatchStartTimeSpan").val(result.BatchStartTimeSpan);
-                        $("#Batch_BatchEndTimeHours").val(result.BatchEndTimeHours);
-                        $("#Batch_BatchEndTimeMinutes").val(result.BatchEndTimeMinutes);
-                        $("#rbBatchEndTimeSpan").val(result.BatchEndTimeSpan);
-                        $("#Batch_Remarks").val(result.Remarks);
-                        $("#Batch_NoOfInstallment").val(result.NoOfInstallment);
-                        $("#Admission_Fee").val(result.CourseInstallment.Fee);
-                        $("#Admission_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Admission_Lumpsum").val(result.CourseInstallment.LumpsumAmt);
+                        $("#txtBatchMonth").val(result.Month);
+                        $("#txtBatchStartDate").val(result.BatchStartDate);
+                        //  $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
+                        $("#txtBatchEndDate").val(result.BatchEndDate);
+                        $("#txtBatchAssessmentDate").val(result.AssesmentDate);
+                        $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
+                        // $("#Batch_BatchStartTimeMinutes").val(result.BatchStartTimeMinutes);
+                        // $("#rbBatchStartTimeSpan").val(result.BatchStartTimeSpan);
+                        $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
+                        //$("#Batch_BatchEndTimeMinutes").val(result.BatchEndTimeMinutes);
+                        //$("#rbBatchEndTimeSpan").val(result.BatchEndTimeSpan);
+                        //$("#Batch_Remarks").val(result.Remarks);
+                        //$("#Batch_NoOfInstallment").val(result.NoOfInstallment);
+                        //$("#Admission_Fee").val(result.CourseInstallment.Fee);
+                        //$("#Admission_DownPayment").val(result.CourseInstallment.DownPayment);
+                        //$("#Admission_Lumpsum").val(result.CourseInstallment.LumpsumAmt);
 
                     });
                 },

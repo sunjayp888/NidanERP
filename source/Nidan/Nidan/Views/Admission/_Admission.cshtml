@@ -24,459 +24,7 @@
         </div>
     </div>*@
 
-@*-----------------------------------------Batch Details-----------------------------------------*@
 
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>
-                <i class="fa fa-bars"></i> Batch Details
-            </h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Settings 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings 2</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Admission.BatchId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
-                @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
-            </div>
-        </div>
-
-        <div id="BatchDetails">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            @Html.LabelFor(model => model.Batch.RoomId, "Classroom", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownListFor(model => model.Batch.RoomId, Model.Rooms, "Select Class-Room", new { @class = "form-control col-md-7 col-xs-12", @disabled = true })
-                                @Html.ValidationMessageFor(model => model.Batch.RoomId, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.Intake, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.Intake, new { @class = "form-control col-md-7 col-xs-12", @max = 30, @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.Intake, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            @Html.LabelFor(model => model.Batch.CourseInstallmentId, "Course Installment", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownListFor(model => model.Batch.CourseInstallmentId, Model.CourseInstallments, "Select Course Installment", new { @class = "form-control col-md-7 col-xs-12", @disabled = true })
-                                @Html.ValidationMessageFor(model => model.Batch.CourseInstallmentId, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            @Html.LabelFor(model => model.Batch.CourseId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownListFor(model => model.Batch.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12", @disabled = true })
-                                @Html.ValidationMessageFor(model => model.Batch.CourseId, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CourseInstallment.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.CourseInstallment.Fee, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.CourseInstallment.Fee, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.CourseInstallment.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.CourseInstallment.DownPayment, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Course.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Course.Duration, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Course.Duration, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.NoOfHoursDaily, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.NoOfHoursDaily, new { @class = "form-control col-md-7 col-xs-12", @max = 8, @onkeyup = "getendtime()", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.NoOfHoursDaily, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
-                                                Monday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
-                                                Tuesday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
-                                                Wednesday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
-                                                Thursday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
-                                                Friday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
-                                                Saturday
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="btn btn-info">
-                                                @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
-                                                Sunday
-                                            </label>
-
-                                        </td>
-                                        @*<td>
-                                                <button id="countbutton" type="button" class="btn btn-warning">Get Month(s)</button>
-                                            </td>*@
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.Month, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.Month, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.Month, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.BatchStartDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.BatchStartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchStartDate, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.NoOfHolidays, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.NoOfHolidays, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.NoOfHolidays, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            @Html.LabelFor(model => model.Batch.BatchEndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.BatchEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchEndDate, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.AssesmentDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.AssesmentDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.AssesmentDate, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        @*<div ng-controller="TrainerController as model">
-                                <div class="form-group">
-                                    @Html.Label("Trainer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
-                                        <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
-                                            <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
-                                            <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
-                                                <span ng-bind-html="trainer.Name"></span>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-                                </div>
-                            </div>*@
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Batch Start Timing</label>
-                            <div class="col-md-2 col-sm-6 col-xs-12 add batchStartTime">
-                                @Html.TextBoxFor(model => model.Batch.BatchStartTimeHours, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "HH", @max = 12, @maxlenghth = "2", @onkeyup = "getendtime()", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeHours, "", new { @class = "help-block" })
-                            </div>
-
-                            <div class="col-md-2 col-sm-6 col-xs-12 batchStartTime">
-                                @Html.TextBoxFor(model => model.Batch.BatchStartTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @max = 60, @maxlenghth = "2", @onkeyup = "getendtime()", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeMinutes, "", new { @class = "help-block" })
-                            </div>
-
-                            <div class="col-md-5 col-sm-6 col-xs-12">
-                                <label class="btn btn-info">
-                                    @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "AM", new { id = "rbBatchStartTimeSpan", @disabled = true })
-                                    AM
-                                </label>
-                                <label class="btn btn-info">
-                                    @Html.RadioButtonFor(model => model.Batch.BatchStartTimeSpan, "PM", new { id = "rbBatchStartTimeSpan", @disabled = true })
-                                    PM
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Batch End Timing</label>
-                            <div class="col-md-2 col-sm-6 col-xs-12 add">
-                                @Html.TextBoxFor(model => model.Batch.BatchEndTimeHours, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "HH", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeHours, "", new { @class = "help-block" })
-                            </div>
-
-                            <div class="col-md-2 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.BatchEndTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeMinutes, "", new { @class = "help-block" })
-                            </div>
-
-                            <div class="col-md-5 col-sm-6 col-xs-12">
-                                <label class="btn btn-info">
-                                    @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "AM", new { id = "rbBatchEndTimeSpan", @disabled = true })
-                                    AM
-                                </label>
-                                <label class="btn btn-info">
-                                    @Html.RadioButtonFor(model => model.Batch.BatchEndTimeSpan, "PM", new { id = "rbBatchEndTimeSpan", @disabled = true })
-                                    PM
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(model => model.Batch.Remarks, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.Remarks, "", new { @class = "help-block" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Batch.NoOfInstallment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-3 col-sm-6 col-xs-12 calculate">
-                                @Html.TextBoxFor(model => model.Batch.NoOfInstallment, new { @class = "form-control col-md-7 col-xs-12", @max = 12, @readonly = true })
-                                @Html.ValidationMessageFor(model => model.Batch.NoOfInstallment, "", new { @class = "help-block" })
-                            </div>
-                            <button id="addbutton" type="button" class="btn btn-warning">Get Installment(s)</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group fisrt-installment-textbox">
-                @Html.LabelFor(model => model.Batch.FirstInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.FirstInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.FirstInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group second-installment-textbox">
-                @Html.LabelFor(model => model.Batch.SecondInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.SecondInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.SecondInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group third-installment-textbox">
-                @Html.LabelFor(model => model.Batch.ThirdInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.ThirdInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.ThirdInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group forth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.FourthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.FourthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.FourthInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group fifth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.FifthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.FifthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.FifthInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group sixth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.SixthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.SixthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.SixthInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group seventh-installment-textbox">
-                @Html.LabelFor(model => model.Batch.SeventhInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.SeventhInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.SeventhInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group eighth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.EighthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.EighthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.EighthInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group nineth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.NinethInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.NinethInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.NinethInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group tenth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.TenthInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.TenthInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.TenthInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group eleventh-installment-textbox">
-                @Html.LabelFor(model => model.Batch.EleventhInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.EleventhInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.EleventhInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-
-            <div class="form-group twelveth-installment-textbox">
-                @Html.LabelFor(model => model.Batch.TwelvethInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.TwelvethInstallment, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                    @Html.ValidationMessageFor(model => model.Batch.TwelvethInstallment, "", new { @class = "help-block" })
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 @*-----------------------------------------Payment Details-----------------------------------------*@
 
@@ -508,30 +56,43 @@
             <div class="clearfix"></div>
         </div>
         <div id="PaymentType">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Admission.CandidateFee.PaymentModeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    @Html.DropDownListFor(model => model.Admission.CandidateFee.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new { @class = "form-control col-md-7 col-xs-12" })
-                                    @Html.ValidationMessageFor(model => model.Admission.CandidateFee.PaymentModeId, "", new { @class = "help-block" })
-                                </div>
+            <div class="form-group" id="paymentMethodDiv">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-7 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-6">
+                        @Html.RadioButtonFor(model => model.Admission.Registration.CandidateInstallment.PaymentMethod, "MonthlyInstallment", new { @class = "col-md-2 col-xs-12", autocomplete = "off",id= "Admission.Registration.CandidateInstallment.PaymentMethodMonthly" })
+                        Pay Fee In Installments
+                    </label>
+                    <label class="btn btn-info pull-right col-md-6">
+                        @Html.RadioButtonFor(model => model.Admission.Registration.CandidateInstallment.PaymentMethod, "LumpsumAmount", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Admission.Registration.CandidateInstallment.PaymentMethodLumpsum" })
+                        Pay Fee In Lumpsum Amount
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Admission.CandidateFee.PaymentModeId, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.DropDownListFor(model => model.Admission.CandidateFee.PaymentModeId, Model.PaymentModes, "Select Payment Mode", new {@class = "form-control col-md-7 col-xs-12"})
+                                @Html.ValidationMessageFor(model => model.Admission.CandidateFee.PaymentModeId, "", new {@class = "help-block"})
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Admission.CandidateFee.PaidAmount, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    @Html.TextBoxFor(model => model.Admission.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12"})
-                                    @Html.ValidationMessageFor(model => model.Admission.CandidateFee.PaidAmount, "", new { @class = "help-block" })
-                                </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Admission.CandidateFee.PaidAmount, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Admission.CandidateFee.PaidAmount, new {@class = "form-control col-md-7 col-xs-12"})
+                                @Html.ValidationMessageFor(model => model.Admission.CandidateFee.PaidAmount, "", new {@class = "help-block"})
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
         <div id="PaymentDetails">
