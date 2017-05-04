@@ -280,6 +280,7 @@
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
+    <Compile Include="Models\CandidateFeeViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />

@@ -93,6 +93,7 @@
     <Compile Include="Brainstorming.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="CandidateFee.cs" />
+    <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />

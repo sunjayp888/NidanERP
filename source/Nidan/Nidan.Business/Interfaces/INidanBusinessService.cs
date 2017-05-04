@@ -182,9 +182,6 @@ namespace Nidan.Business.Interfaces
         List<Course> RetrieveCentreCourses(int organisationId, int centreId);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
-        PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate);
-        CandidateInstallment RetrieveCandidateInstallment(int organisationId, int id);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

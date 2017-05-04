@@ -1938,45 +1938,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CandidateInstallments
-                    .Include(p => p.Organisation)
-                    .Include(p => p.CourseInstallment)
-
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CandidateInstallmentId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CandidateInstallments
-                    .Include(p => p.CourseInstallment)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.CandidateInstallmentId == candidateInstallmentId);
-            }
-        }
-
         #endregion
 
         #region // Update

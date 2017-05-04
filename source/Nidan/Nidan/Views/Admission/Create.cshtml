@@ -87,49 +87,8 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="row">
-
-                                    @*<div class="col-md-2">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Registration.Enquiry.Title, new { @class = "control-label col-md-3 col-sm-4 col-xs-12" })
-                                                <div class="col-md-8 col-sm-4 col-xs-12">
-                                                    @Html.DropDownListFor(model => model.Registration.Enquiry.Title, Model.TitleList, "Select Title", new { @class = "form-control",@disabled=true })
-                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.Title, "", new { @class = "help-block" })
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="col-md-3">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Registration.Enquiry.FirstName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                                                <div class="col-md-8 col-sm-6 col-xs-12">
-                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.FirstName, new { @class = "form-control", @readonly = true })
-                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.FirstName, "", new { @class = "help-block" })
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="col-md-3">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Registration.Enquiry.MiddleName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                                                <div class="col-md-8 col-sm-6 col-xs-12">
-                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.MiddleName, new { @class = "form-control", @readonly = true })
-                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.MiddleName, "", new { @class = "help-block" })
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Registration.Enquiry.LastName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                                                <div class="col-md-8 col-sm-6 col-xs-12">
-                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.LastName, new { @class = "form-control", @readonly = true })
-                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.LastName, "", new { @class = "help-block" })
-                                                </div>
-                                            </div>
-                                        </div>*@
                                     <div class="row">
                                         <div class="col-lg-12">
-
                                             <div class="col-lg-6">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
@@ -154,35 +113,12 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="col-md-6">
-                                                @*<div class="form-group">
-                                                        @Html.LabelFor(model => model.Registration.Enquiry.SectorId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
-                                                        <div class="col-md-8 col-sm-6 col-xs-12">
-                                                            @Html.DropDownListFor(model => model.SectorId, Model.Sectors, null, new { @class = "form-control", @disabled = true })
-                                                            @Html.ValidationMessageFor(model => model.Registration.Enquiry.SectorId, "", new { @class = "help-block" })
-                                                        </div>
-                                                    </div>*@
                                             </div>
-
                                             <div class="col-md-6">
-                                                @*<div class="form-group">
-                                                        @Html.LabelFor(model => model.Registration.CourseId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
-                                                        <div class="col-md-8 col-sm-6 col-xs-12">
-                                                            @Html.DropDownListFor(model => model.Registration.CourseId, Model.Courses, null, new { @class = "form-control", @disabled = true })
-                                                            @Html.ValidationMessageFor(model => model.Registration.CourseId, "", new { @class = "help-block" })
-                                                        </div>
-                                                    </div>*@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-md-6">
-                                        @*<div class="form-group">
-                                                @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-                                                <div class="col-md-8 col-sm-6 col-xs-12">
-                                                    @Html.TextBoxFor(model => model.Counselling.PreferTiming, null, new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
-                                                </div>
-                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -198,23 +134,7 @@
                                         <i class="fa fa-bars"></i> Registration Details
                                     </h2>
                                     <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="#">Settings 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Settings 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="close-link"><i class="fa fa-close"></i></a>
-                                        </li>
+                                        
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
@@ -258,40 +178,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                @*<div class="form-group">
-                                        @Html.LabelFor(model => model.Registration.CandidateFee.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                        <div class="col-md-7 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(model => model.Registration.CandidateFee.Particulars, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                            @Html.ValidationMessageFor(model => model.Registration.CandidateFee.Particulars, "", new { @class = "help-block" })
-                                        </div>
-                                    </div>*@
-
-
-
-                                @*<div class="form-group bank-details-textbox">
-                                        @Html.LabelFor(model => model.Registration.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(model => model.Registration.BankName, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                            @Html.ValidationMessageFor(model => model.Registration.BankName, "", new { @class = "help-block" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group bank-details-textbox">
-                                        @Html.LabelFor(model => model.Registration.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @Html.TextBoxFor(model => model.Registration.ChequeNo, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-                                            @Html.ValidationMessageFor(model => model.Registration.ChequeNo, "", new { @class = "help-block" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group bank-details-textbox">
-                                        @Html.LabelFor(model => model.Registration.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                        <div class="col-md-6 col-sm-6 col-xs-12 dob">
-                                            @Html.TextBoxFor(model => model.Registration.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
-                                            @Html.ValidationMessageFor(model => model.Registration.ChequeDate, "", new { @class = "help-block" })
-                                        </div>
-                                    </div>*@
                             </div>
                         </div>
                         @*-----------------------------------------Batch Details-----------------------------------------*@
@@ -299,7 +185,7 @@
                             <div class="x_panel" style="height:auto">
                                 <div class="x_title">
                                     <h2>
-                                        <i class="fa fa-bars"></i> Candidate Information
+                                        <i class="fa fa-bars"></i>Select Batch
                                     </h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li>
@@ -330,125 +216,123 @@
                                     </div>
                                 </div>
                                 <div id="divBatchDetails">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
-                                                                        Monday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
-                                                                        Tuesday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
-                                                                        Wednesday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
-                                                                        Thursday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
-                                                                        Friday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
-                                                                        Saturday
-                                                                    </label>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="btn btn-info">
-                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
-                                                                        Sunday
-                                                                    </label>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
+                                                                    Monday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
+                                                                    Tuesday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
+                                                                    Wednesday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
+                                                                    Thursday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
+                                                                    Friday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
+                                                                    Saturday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
+                                                                    Sunday
+                                                                </label>
 
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Start Time</button>
+                                                        </span>
+                                                        <input id="txtBatchStartTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch End Time</button>
+                                                        </span>
+                                                        <input id="txtBatchEndTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Batch Start Time</button>
-                                                    </span>
-                                                    <input id="txtBatchStartTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Start Date</button>
+                                                        </span>
+                                                        <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Batch End Time</button>
-                                                    </span>
-                                                    <input id="txtBatchEndTime" type="text" disabled="disabled" class="form-control col-lg-4">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Batch Start Date</button>
-                                                    </span>
-                                                    <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Batch End Date</button>
-                                                    </span>
-                                                    <input id="txtBatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch End Date</button>
+                                                        </span>
+                                                        <input id="txtBatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Batch Assessment Date</button>
-                                                    </span>
-                                                    <input id="txtBatchAssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Assessment Date</button>
+                                                        </span>
+                                                        <input id="txtBatchAssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Duration In Month</button>
-                                                    </span>
-                                                    <input id="txtBatchMonth" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Duration In Month</button>
+                                                        </span>
+                                                        <input id="txtBatchMonth" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

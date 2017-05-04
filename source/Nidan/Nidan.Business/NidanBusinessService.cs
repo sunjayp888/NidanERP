@@ -762,6 +762,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
 
             };
+            var data = _nidanDataService.Create<Registration>(organisationId, registrationData);
             var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);
             enquiry.Registered = true;
             enquiry.EnquiryStatus = "Registration";
@@ -771,7 +772,7 @@ namespace Nidan.Business
             followUp.FollowUpType = "Registration";
             followUp.FollowUpUrl= string.Format("/Registration/Edit/{0}", data?.RegistrationId);
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
-            return _nidanDataService.Create<Registration>(organisationId, registrationData);
+            return data;
         }
 
         private CandidateFee CandidateFee(int organisationId, int centreId, string studentCode, int? candidateInstallmentId, CandidateFee candidateFee)
@@ -1736,22 +1737,6 @@ namespace Nidan.Business
         public Registration RetrieveRegistration(int organisationId, int id)
         {
             return _nidanDataService.RetrieveRegistration(organisationId, id, r => true);
-        }
-
-        public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveCandidateInstallments(organisationId, predicate, orderBy, paging);
-        }
-
-        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
-        {
-            return _nidanDataService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, p => true);
-        }
-
-        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveCandidateInstallment(organisationId, id, p => true);
         }
 
         //Update
