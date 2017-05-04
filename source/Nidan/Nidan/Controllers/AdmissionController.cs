@@ -57,6 +57,10 @@ namespace Nidan.Controllers
                 {
                     Name = "Test"
                 },
+                BatchDay = new BatchDay()
+                {
+                    BatchDayId = 0
+                },
                // Counselling = counselling,
                 Registration = registration,
                 RegistrationId = id.Value,
@@ -70,6 +74,8 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 Admission = new Admission()
                 {
+                    Registration = registration,
+                    RegistrationId = id.Value
                     //RegistrationPaymentReceipt = registrationPaymentReceipt,
                     //EnquiryId = registration.EnquiryId,
                     //RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId,
@@ -93,6 +99,7 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = UserCentreId;
+                
                 //admissionViewModel.Admission.EnquiryId = admissionViewModel.Admission.RegistrationPaymentReceipt
                 //    .EnquiryId;
                 admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow.Date;

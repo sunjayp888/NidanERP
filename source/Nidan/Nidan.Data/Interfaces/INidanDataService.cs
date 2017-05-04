@@ -128,6 +128,8 @@ namespace Nidan.Data.Interfaces
         CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate);
         IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId);
         Registration RetrieveRegistration(int organisationId, int registrationId, Expression<Func<Registration, bool>> predicate);
+        PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate);
 
         // Update
 
