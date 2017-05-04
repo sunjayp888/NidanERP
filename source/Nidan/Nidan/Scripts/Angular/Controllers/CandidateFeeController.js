@@ -18,8 +18,9 @@
         vm.orderClass = orderClass;
         vm.editCandidateFee = editCandidateFee;
         vm.viewCandidateFee = viewCandidateFee;
-        //vm.searchKeyword = "";
-        //vm.searchMessage = "";
+        vm.searchCandidateFee = searchCandidateFee;
+        vm.searchKeyword = "";
+        vm.searchMessage = "";
         initialise();
 
         function initialise() {
@@ -39,17 +40,17 @@
                 });
         }
 
-        //function searchMobilization(searchKeyword) {
-        //    vm.searchKeyword = searchKeyword;
-        //    return MobilizationService.searchMobilization(vm.searchKeyword, vm.paging, vm.orderBy)
-        //      .then(function (response) {
-        //          vm.mobilizations = response.data.Items;
-        //          vm.paging.totalPages = response.data.TotalPages;
-        //          vm.paging.totalResults = response.data.TotalResults;
-        //          vm.searchMessage = vm.mobilizations.length === 0 ? "No Records Found" : "";
-        //          return vm.mobilizations;
-        //      });
-        //}
+        function searchCandidateFee(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return CandidateFeeService.searchCandidateFee(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.candidateFees = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.candidateFees.length === 0 ? "No Records Found" : "";
+                  return vm.candidateFees;
+              });
+        }
 
         function pageChanged() {
             return retrieveCandidateFees();

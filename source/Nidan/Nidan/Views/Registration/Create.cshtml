@@ -368,15 +368,16 @@
         $('#Registration_CourseInstallmentId').change(function () {
             var courseInstallmentId = $('#Registration_CourseInstallmentId :selected').val();
             GetCourseInstallment(courseInstallmentId);
+            $("#paymentMethodDiv").show();
         });
 
         $('#Registration_CandidateInstallment_IsTotalAmountDiscount').change(function () {
             if ($(this).is(":checked")) {
                 $("#overrideFeeDiv").show();
-                $("#paymentMethodDiv").show();
+                //$("#paymentMethodDiv").show();
             } else {
                 $("#overrideFeeDiv").hide();
-                $("#paymentMethodDiv").show();
+                //$("#paymentMethodDiv").show();
             }
 
         });

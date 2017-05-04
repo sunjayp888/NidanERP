@@ -3,19 +3,19 @@
 
     angular
         .module('Nidan')
-        .factory('CandidateFeeService', CandidateFeeService);
+        .factory('CandidateInstallmentService', CandidateInstallmentService);
 
-    CandidateFeeService.$inject = ['$http'];
+    CandidateInstallmentService.$inject = ['$http'];
 
-    function CandidateFeeService($http) {
+    function CandidateInstallmentService($http) {
         var service = {
-            retrieveCandidateFees: retrieveCandidateFees,
-            searchCandidateFee: searchCandidateFee,
+            retrieveCandidateInstallments: retrieveCandidateInstallments,
+            searchCandidateInstallment: searchCandidateInstallment,
         };
 
         return service;
 
-        function retrieveCandidateFees(Paging, OrderBy) {
+        function retrieveCandidateInstallments(Paging, OrderBy) {
 
             var url = "/CandidateFee/List",
                 data = {
@@ -26,7 +26,7 @@
             return $http.post(url, data);
         }
 
-        function searchCandidateFee(SearchKeyword, Paging, OrderBy) {
+        function searchCandidateInstallment(SearchKeyword, Paging, OrderBy) {
             var url = "/CandidateFee/Search",
             data = {
                 searchKeyword: SearchKeyword,
@@ -36,6 +36,6 @@
 
             return $http.post(url, data);
         }
-        
+
     }
 })();

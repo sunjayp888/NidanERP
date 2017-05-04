@@ -40,13 +40,13 @@ namespace Nidan.Entity
 
         public virtual Organisation Organisation { get; set; }
 
+        public virtual CourseInstallment CourseInstallment { get; set; }
+
         public bool IsPercentageDiscount { get; set; }
 
         public string PaymentMethod { get; set; }
 
         public bool IsTotalAmountDiscount { get; set; }
-
-        public CourseInstallment CourseInstallment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateFee> CandidateFees { get; set; }

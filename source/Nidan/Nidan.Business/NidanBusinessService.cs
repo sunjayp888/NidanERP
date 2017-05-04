@@ -384,45 +384,45 @@ namespace Nidan.Business
             return data;
         }
 
-        public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt)
-        {
-            var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
-            enquirydata.SectorId = registrationPaymentReceipt.Enquiry.SectorId;
-            enquirydata.IntrestedCourseId = registrationPaymentReceipt.Enquiry.IntrestedCourseId;
-            enquirydata.BatchTimePreferId = registrationPaymentReceipt.Enquiry.BatchTimePreferId;
-            var counsellingdata = _nidanDataService.RetrieveCounsellings(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
-            if (counsellingdata != null)
-            {
-                var course = _nidanDataService.RetrieveCourse(organisationId, counsellingdata.CourseOfferedId, e => true);
-                registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
-                registrationPaymentReceipt.CourseId = counsellingdata.CourseOfferedId;
-                registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
-            }
-            registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
-            registrationPaymentReceipt.FinancialYear = "2016-2017";
+        //public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt)
+        //{
+        //    var enquirydata = RetrieveEnquiry(organisationId, registrationPaymentReceipt.EnquiryId);
+        //    enquirydata.SectorId = registrationPaymentReceipt.Enquiry.SectorId;
+        //    enquirydata.IntrestedCourseId = registrationPaymentReceipt.Enquiry.IntrestedCourseId;
+        //    enquirydata.BatchTimePreferId = registrationPaymentReceipt.Enquiry.BatchTimePreferId;
+        //    var counsellingdata = _nidanDataService.RetrieveCounsellings(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+        //    if (counsellingdata != null)
+        //    {
+        //        var course = _nidanDataService.RetrieveCourse(organisationId, counsellingdata.CourseOfferedId, e => true);
+        //        registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+        //        registrationPaymentReceipt.CourseId = counsellingdata.CourseOfferedId;
+        //        registrationPaymentReceipt.CounsellingId = counsellingdata.CounsellingId;
+        //    }
+        //    registrationPaymentReceipt.FollowUpDate = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
+        //    registrationPaymentReceipt.FinancialYear = "2016-2017";
 
-            var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
+        //    var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
 
-            enquirydata.Registered = data != null;
-            enquirydata.EnquiryStatus = "Registration";
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
-            if (counsellingdata != null) counsellingdata.Registered = data != null;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counsellingdata);
+        //    enquirydata.Registered = data != null;
+        //    enquirydata.EnquiryStatus = "Registration";
+        //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+        //    if (counsellingdata != null) counsellingdata.Registered = data != null;
+        //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counsellingdata);
 
-            var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
-            if (registrationFollowUp != null)
-            {
-                registrationFollowUp.RegistrationPaymentReceiptId = data?.RegistrationPaymentReceiptId;
-                registrationFollowUp.Remark = data?.Remarks;
-                registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
-                registrationFollowUp.FollowUpUrl = string.Format("/RegistrationPaymentReceipt/Edit/{0}", data?.EnquiryId);
-                registrationFollowUp.FollowUpType = "Registered";
-            }
+        //    var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+        //    if (registrationFollowUp != null)
+        //    {
+        //        registrationFollowUp.RegistrationtId = data?.RegistrationId;
+        //        registrationFollowUp.Remark = data?.Remarks;
+        //        registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ?? DateTime.Now.AddDays(2);
+        //        registrationFollowUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.EnquiryId);
+        //        registrationFollowUp.FollowUpType = "Registration";
+        //    }
 
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
-            return data;
-        }
+        //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
+        //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
+        //    return data;
+        //}
 
         public Enquiry CreateEnquiryFromMobilization(int organisationId, int centreId, int mobilizationId)
         {
@@ -691,6 +691,11 @@ namespace Nidan.Business
 
         }
 
+        public CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee)
+        {
+            return _nidanDataService.CreateCandidateFee(organisationId, candidateFee);
+        }
+
         public Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration)
         {
             registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
@@ -698,6 +703,7 @@ namespace Nidan.Business
             registration.CandidateFee.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
             registration.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
             var candidateFeeData = CandidateFee(organisationId, centreId, studentCode, candidateInstallmentData.CandidateInstallmentId, registration?.CandidateFee);
+
             return CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId);
         }
 
@@ -714,7 +720,7 @@ namespace Nidan.Business
                     DiscountAmount = candidateInstallment.DiscountAmount,
                     LumpsumAmount = candidateInstallment.LumpsumAmount,
                     IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
-                    DownPayment = candidateInstallment.DownPayment,
+                    DownPayment = courseInstallment.DownPayment,
                     NumberOfInstallment = candidateInstallment.NumberOfInstallment,
                     CourseInstallmentId = courseInstallment.CourseInstallmentId,
                     PaymentMethod = candidateInstallment.PaymentMethod
@@ -760,6 +766,11 @@ namespace Nidan.Business
             enquiry.Registered = true;
             enquiry.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+            var followUp = RetrieveFollowUp(organisationId, registration.EnquiryId);
+            followUp.RegistrationId = registration.RegistrationId;
+            followUp.FollowUpType = "Registration";
+            followUp.FollowUpUrl= string.Format("/Registration/Edit/{0}", data?.RegistrationId);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             return _nidanDataService.Create<Registration>(organisationId, registrationData);
         }
 
@@ -1312,18 +1323,18 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRegistrations(organisationId, predicate, orderBy, paging);
         }
 
-        public RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
-            Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
-        {
-            var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceiptId, p => true);
-            return registrationPaymentReceipt;
-        }
+        //public RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
+        //    Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
+        //{
+        //    var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceiptId, p => true);
+        //    return registrationPaymentReceipt;
+        //}
 
-        public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, id, p => true);
+        //public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id)
+        //{
+        //    return _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, id, p => true);
 
-        }
+        //}
 
 
         public Trainer RetrieveTrainer(int organisationId, int id)
@@ -1692,7 +1703,29 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCandidateFee(organisationId, id, p => true);
         }
-        
+
+        public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateInstallments(organisationId, predicate, orderBy, paging);
+        }
+
+        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, p => true);
+        }
+
+        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveCandidateInstallment(organisationId, id, p => true);
+        }
+
+        public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateFeeBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         public List<Course> RetrieveCentreCourses(int organisationId, int centreId)
         {
             // var t = _nidanDataService.RetrieveCentreCourses(organisationId, centreId);
@@ -1837,14 +1870,14 @@ namespace Nidan.Business
             }
 
             //Update RegistrationPaymentReceipt Date
-            if (followUp.RegistrationPaymentReceiptId.HasValue && followUp.RegistrationPaymentReceiptId.Value != 0)
-            {
-                var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, followUp.RegistrationPaymentReceiptId.Value, e => true);
-                registrationPaymentReceipt.FollowUpDate = followUp.FollowUpDateTime;
-                //registrationPaymentReceipt.Close = followUp.Close;
-                //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
-            }
+            //if (followUp.RegistrationId.HasValue && followUp.RegistrationId.Value != 0)
+            //{
+            //    var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, followUp.RegistrationId.Value, e => true);
+            //    registrationPaymentReceipt.FollowUpDate = followUp.FollowUpDateTime;
+            //    //registrationPaymentReceipt.Close = followUp.Close;
+            //    //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
+            //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+            //}
 
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
         }
@@ -1875,23 +1908,23 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
         }
 
-        public RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId,
-            RegistrationPaymentReceipt registrationPaymentReceipt)
-        {
-            var data = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt.RegistrationPaymentReceiptId, e => true);
-            var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
-            registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
-            registrationPaymentReceipt.CounsellingId = data.CounsellingId;
-            var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
-            if (registrationFollowUp != null)
-            {
-                registrationFollowUp.Remark = data?.Remarks;
-                registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ??
-                                                        DateTime.Now.AddDays(2);
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
-            }
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
-        }
+        //public RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId,
+        //    RegistrationPaymentReceipt registrationPaymentReceipt)
+        //{
+        //    var data = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt.RegistrationPaymentReceiptId, e => true);
+        //    var course = _nidanDataService.RetrieveCourse(organisationId, registrationPaymentReceipt.CourseId, e => true);
+        //    registrationPaymentReceipt.Particulars = string.Format(registrationPaymentReceipt.Fees + " Rupees Paid Against " + course.Name);
+        //    registrationPaymentReceipt.CounsellingId = data.CounsellingId;
+        //    var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
+        //    if (registrationFollowUp != null)
+        //    {
+        //        registrationFollowUp.Remark = data?.Remarks;
+        //        registrationFollowUp.FollowUpDateTime = registrationPaymentReceipt.FollowUpDate ??
+        //                                                DateTime.Now.AddDays(2);
+        //        _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationFollowUp);
+        //    }
+        //    return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
+        //}
 
         public Course UpdateCourse(int organisationId, Course course)
         {

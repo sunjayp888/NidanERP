@@ -1241,6 +1241,14 @@ namespace Nidan.Data.Models
                .Property(e => e.Remarks)
                .IsUnicode(false);
 
+            modelBuilder.Entity<CandidateInstallment>()
+               .Property(e => e.StudentCode)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateInstallment>()
+              .Property(e => e.PaymentMethod)
+              .IsUnicode(false);
+
             //modelBuilder.Entity<Registration>()
             //    .HasOptional(e => e.Registration1)
             //    .WithRequired(e => e.Registration2);
