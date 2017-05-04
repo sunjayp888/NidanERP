@@ -243,6 +243,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
+    <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />

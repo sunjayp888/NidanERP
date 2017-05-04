@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.AdmissionViewModel
+﻿@using System.Drawing
+@model Nidan.Models.AdmissionViewModel
 
 @{
     ViewBag.Title = "Create Admission";
@@ -7,7 +8,9 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create New Admission <small></small></h2>
+                <h2>
+                    <button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button>Create New Admission <small></small>
+                </h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -23,16 +26,438 @@
                                 </div>
                             </div>
                         }
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
+                            @Model.Registration.CandidateInstallment.CourseFee
+                        </div>
+                        @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Address1)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Mobile)
+                        @Html.HiddenFor(m => m.Registration.Enquiry.Title)
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
-                        @Html.HiddenFor(m => m.Admission.EnquiryId)
-                        @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
-                        @Html.HiddenFor(m => m.Admission.ChequeNo)
-                        @Html.HiddenFor(m => m.Admission.BankName)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)
+                        @Html.HiddenFor(m => m.Batch.BatchId)
+                        @Html.HiddenFor(m => m.BatchDay.BatchDayId)
+                        @Html.HiddenFor(m => m.Course.CourseId)
+                        @Html.HiddenFor(m => m.CourseInstallment.CourseInstallmentId)
+                        @Html.HiddenFor(m => m.Registration.RegistrationId)
+                        @Html.HiddenFor(m => m.Admission.RegistrationId)
+                        @Html.HiddenFor(m => m.Admission.Registration.CandidateInstallmentId)
+                        @*@Html.HiddenFor(m => m.Admission.EnquiryId)
+                            @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
+                            @Html.HiddenFor(m => m.Admission.ChequeNo)
+                            @Html.HiddenFor(m => m.Admission.BankName)
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)*@
                         @Html.HiddenFor(m => m.CourseInstallment.Name)
+
+                        @*-----------------------------------------Candidate Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Candidate Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+
+                                    @*<div class="col-md-2">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.Title, new { @class = "control-label col-md-3 col-sm-4 col-xs-12" })
+                                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                                    @Html.DropDownListFor(model => model.Registration.Enquiry.Title, Model.TitleList, "Select Title", new { @class = "form-control",@disabled=true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.Title, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                    @*<div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.FirstName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.FirstName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.FirstName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+                                    @*<div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.MiddleName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.MiddleName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.MiddleName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Registration.Enquiry.LastName, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Registration.Enquiry.LastName, new { @class = "form-control", @readonly = true })
+                                                    @Html.ValidationMessageFor(model => model.Registration.Enquiry.LastName, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="row">
+                                        <div class="col-lg-12">
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Mobile</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.Mobile" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Email</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.EmailId" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-md-6">
+                                                @*<div class="form-group">
+                                                        @Html.LabelFor(model => model.Registration.Enquiry.SectorId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+                                                        <div class="col-md-8 col-sm-6 col-xs-12">
+                                                            @Html.DropDownListFor(model => model.SectorId, Model.Sectors, null, new { @class = "form-control", @disabled = true })
+                                                            @Html.ValidationMessageFor(model => model.Registration.Enquiry.SectorId, "", new { @class = "help-block" })
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                @*<div class="form-group">
+                                                        @Html.LabelFor(model => model.Registration.CourseId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+                                                        <div class="col-md-8 col-sm-6 col-xs-12">
+                                                            @Html.DropDownListFor(model => model.Registration.CourseId, Model.Courses, null, new { @class = "form-control", @disabled = true })
+                                                            @Html.ValidationMessageFor(model => model.Registration.CourseId, "", new { @class = "help-block" })
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        @*<div class="form-group">
+                                                @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                                    @Html.TextBoxFor(model => model.Counselling.PreferTiming, null, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*-----------------------------------------Registration Details-----------------------------------------*@
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Registration Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course Fee</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateInstallment.CourseFee" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Fee Paid</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Registration.CandidateFee.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-7 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.CandidateFee.Particulars, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.CandidateFee.Particulars, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>*@
+
+
+
+                                @*<div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.BankName, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.BankName, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.ChequeNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(model => model.Registration.ChequeNo, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.ChequeNo, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group bank-details-textbox">
+                                        @Html.LabelFor(model => model.Registration.ChequeDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12 dob">
+                                            @Html.TextBoxFor(model => model.Registration.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @readonly = true })
+                                            @Html.ValidationMessageFor(model => model.Registration.ChequeDate, "", new { @class = "help-block" })
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                        @*-----------------------------------------Batch Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Candidate Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Admission.BatchId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                <div id="divBatchDetails">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
+                                                                        Monday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
+                                                                        Tuesday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
+                                                                        Wednesday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
+                                                                        Thursday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
+                                                                        Friday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
+                                                                        Saturday
+                                                                    </label>
+                                                                </td>
+                                                                <td>
+                                                                    <label class="btn btn-info">
+                                                                        @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
+                                                                        Sunday
+                                                                    </label>
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Start Time</button>
+                                                    </span>
+                                                    <input id="txtBatchStartTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch End Time</button>
+                                                    </span>
+                                                    <input id="txtBatchEndTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Start Date</button>
+                                                    </span>
+                                                    <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch End Date</button>
+                                                    </span>
+                                                    <input id="txtBatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Batch Assessment Date</button>
+                                                    </span>
+                                                    <input id="txtBatchAssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Duration In Month</button>
+                                                    </span>
+                                                    <input id="txtBatchMonth" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         @Html.Partial("_Admission", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -54,7 +479,7 @@
 </div>
 @section scripts{
     <script>
-        
+
         //---------------- Registration Cash/Cheque ----------------
         if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
             $('.bank-details-textbox').show();
@@ -88,8 +513,8 @@
             $('#PaymentDetails').show();
         }
 
-        $("#Admission_PaymentModeId").change(function () {
-            if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
+        $("#Admission_CandidateFee_PaymentModeId").change(function () {
+            if ($('#Admission_CandidateFee_PaymentModeId :selected').text() == "Cheque") {
                 $('#PaymentDetails').show();
                 $('.bank-details-textbox-admission').show();
                 $("#Admission_BankName").val("");
@@ -127,12 +552,13 @@
 
         $('#BatchDetails').hide();
         $("#Admission_BatchId").change(function () {
-            $('#BatchDetails').show();
+            $('#divBatchDetails').show();
             $('#PaymentType').show();
         });
         $('#PaymentType').hide();
         $('#PaymentDetails').hide();
         $('#divDiscountFee').hide();
+        $('#divBatchDetails').hide();
 
         //=========================================================================
 
@@ -152,37 +578,37 @@
                     $("#Batch_CourseInstallmentId").empty();
                     $("#Batch_CourseId").empty();
                     $.each(result, function (key, value) {
-                        $("#Batch_RoomId").append($("<option></option>").val(result.Room.RoomId).html(result.Room.Description));
-                        $("#Batch_Intake").val(result.Intake);
-                        $("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
-                        $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                        $("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
-                        $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Course_Duration").val(result.Course.Duration);
-                        $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
-                        $("#BatchDay_IsMonday").val(result.BatchDays[0].IsMonday);
-                        $("#BatchDay_IsTuesday").val(result.BatchDays["0"].IsTuesday);
-                        $("#BatchDay_IsWednesday").val(result.BatchDays[0].IsWednesday);
-                        $("#BatchDay_IsThursday").val(result.BatchDays["0"].IsThursday);
-                        $("#BatchDay_IsFriday").val(result.BatchDays["0"].IsFriday);
-                        $("#BatchDay_IsSaturday").val(result.BatchDays["0"].IsSaturday);
-                        $("#BatchDay_IsSunday").val(result.BatchDays["0"].IsSunday);
-                        $("#Batch_Month").val(result.Month);
-                        $("#Batch_BatchStartDate").val(result.BatchStartDate);
-                        $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
-                        $("#Batch_BatchEndDate").val(result.BatchEndDate);
-                        $("#Batch_AssesmentDate").val(result.AssesmentDate);
-                        $("#Batch_BatchStartTimeHours").val(result.BatchStartTimeHours);
-                        $("#Batch_BatchStartTimeMinutes").val(result.BatchStartTimeMinutes);
-                        $("#rbBatchStartTimeSpan").val(result.BatchStartTimeSpan);
-                        $("#Batch_BatchEndTimeHours").val(result.BatchEndTimeHours);
-                        $("#Batch_BatchEndTimeMinutes").val(result.BatchEndTimeMinutes);
-                        $("#rbBatchEndTimeSpan").val(result.BatchEndTimeSpan);
-                        $("#Batch_Remarks").val(result.Remarks);
-                        $("#Batch_NoOfInstallment").val(result.NoOfInstallment);
-                        $("#Admission_Fee").val(result.CourseInstallment.Fee);
-                        $("#Admission_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Admission_Lumpsum").val(result.CourseInstallment.LumpsumAmt);
+                        //$("#Batch_RoomId").append($("<option></option>").val(result.Room.RoomId).html(result.Room.Description));
+                        //$("#Batch_Intake").val(result.Intake);
+                        //$("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
+                        //$("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
+                        //$("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
+                        //$("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
+                        //$("#Course_Duration").val(result.Course.Duration);
+                        //$("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
+                        $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
+                        $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
+                        $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
+                        $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
+                        $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
+                        $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
+                        $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
+                        $("#txtBatchMonth").val(result.Month);
+                        $("#txtBatchStartDate").val(result.BatchStartDate);
+                        //  $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
+                        $("#txtBatchEndDate").val(result.BatchEndDate);
+                        $("#txtBatchAssessmentDate").val(result.AssesmentDate);
+                        $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
+                        // $("#Batch_BatchStartTimeMinutes").val(result.BatchStartTimeMinutes);
+                        // $("#rbBatchStartTimeSpan").val(result.BatchStartTimeSpan);
+                        $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
+                        //$("#Batch_BatchEndTimeMinutes").val(result.BatchEndTimeMinutes);
+                        //$("#rbBatchEndTimeSpan").val(result.BatchEndTimeSpan);
+                        //$("#Batch_Remarks").val(result.Remarks);
+                        //$("#Batch_NoOfInstallment").val(result.NoOfInstallment);
+                        //$("#Admission_Fee").val(result.CourseInstallment.Fee);
+                        //$("#Admission_DownPayment").val(result.CourseInstallment.DownPayment);
+                        //$("#Admission_Lumpsum").val(result.CourseInstallment.LumpsumAmt);
 
                     });
                 },
@@ -655,101 +1081,101 @@
             for (i = 0; i < numLength; i++) {
                 switch (i) {
 
-                case 0:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = '' + once[rev[i]];
-                    }
-                    word[j] = word[j];
-                    break;
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
 
-                case 1:
-                    aboveTens();
-                    break;
+                    case 1:
+                        aboveTens();
+                        break;
 
-                case 2:
-                    if (rev[i] == 0) {
-                        word[j] = '';
-                    }
-                    else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                        word[j] = once[rev[i]] + " Hundred ";
-                    }
-                    else {
-                        word[j] = once[rev[i]] + " Hundred and";
-                    }
-                    break;
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
 
-                case 3:
-                    if (rev[i] == 0 || rev[i + 1] == 1) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                        word[j] = word[j] + " Thousand";
-                    }
-                    break;
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
 
 
-                case 4:
-                    aboveTens();
-                    break;
+                    case 4:
+                        aboveTens();
+                        break;
 
-                case 5:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Lakh";
-                    }
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
 
-                    break;
+                        break;
 
-                case 6:
-                    aboveTens();
-                    break;
+                    case 6:
+                        aboveTens();
+                        break;
 
-                case 7:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Crore";
-                    }
-                    break;
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
 
-                case 8:
-                    aboveTens();
-                    break;
+                    case 8:
+                        aboveTens();
+                        break;
 
-                //            This is optional.
+                        //            This is optional.
 
-                //            case 9:
-                //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                //                    word[j] = '';
-                //                }
-                //                else {
-                //                    word[j] = once[rev[i]];
-                //                }
-                //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                //                    word[j] = word[j] + " Arab";
-                //                }
-                //                break;
+                        //            case 9:
+                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        //                    word[j] = '';
+                        //                }
+                        //                else {
+                        //                    word[j] = once[rev[i]];
+                        //                }
+                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        //                    word[j] = word[j] + " Arab";
+                        //                }
+                        //                break;
 
-                //            case 10:
-                //                aboveTens();
-                //                break;
+                        //            case 10:
+                        //                aboveTens();
+                        //                break;
 
-                default: break;
+                    default: break;
                 }
                 j++;
             }

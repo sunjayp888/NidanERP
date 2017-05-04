@@ -180,11 +180,11 @@
         $("#RegistrationPaymentReceipt_Fees").val("");
 
         $('.bank-details-textbox').hide();
-        $("#CandidateFee_PaymentModeId").change(function () {
-            if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+        $("#Registration_CandidateFee_PaymentModeId").change(function () {
+            if ($('#Registration_CandidateFee_PaymentModeId :selected').text() == "Cheque") {
                 $('.bank-details-textbox').show();
-                $("#RegistrationPaymentReceipt_BankName").val("");
-                $("#RegistrationPaymentReceipt_ChequeNo").val("");
+                $("#Registration_CandidateFee_BankName").val("");
+                $("#Registration_CandidateFee_ChequeNo").val("");
             } else {
                 $('.bank-details-textbox').hide();
             }

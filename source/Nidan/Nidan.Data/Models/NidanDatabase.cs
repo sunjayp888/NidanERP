@@ -697,26 +697,6 @@ namespace Nidan.Data.Models
                .Property(e => e.Name)
                .IsUnicode(false);
 
-            modelBuilder.Entity<Admission>()
-                 .Property(e => e.Particulars)
-                 .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.PaymentType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.ChequeNo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.BankName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Admission>()
-                .Property(e => e.FinancialYear)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Enquiry>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
