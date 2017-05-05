@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
@@ -26,6 +27,7 @@ namespace Nidan.Business
         private ICacheProvider _cacheProvider;
         private ITemplateService _templateService;
         private IEmailService _emailService;
+
         //   private IDocumentServiceRestClient _documentServiceAPI;
         private enum ShowColour
         {
@@ -634,11 +636,7 @@ namespace Nidan.Business
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var batchData = RetrieveBatch(organisationId, admission.BatchId);
-            // Update data in CandidateInstallment
-            var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId);
-            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-            candidateInstallment.NumberOfInstallment = batchData.NoOfInstallment;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
+            var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
 
             // Insert data in CandidateFee
             var candidateFeeData = new CandidateFee()
@@ -660,14 +658,23 @@ namespace Nidan.Business
             admission.CandidateFeeId = candidateFeeData.CandidateFeeId;
             var data = _nidanDataService.CreateAdmission(organisationId, admission);
 
+            // Update data in CandidateInstallment
+            var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId);
+            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
+            candidateInstallment.NumberOfInstallment = batchData.NoOfInstallment;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
+
+            // Update Registration IsAdmissionDone
+            registrationData.IsAdmissionDone = true;
+
             // EnquiryStatus Update
-            var enquiry = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
-            enquiry.EnquiryStatus = "Admission";
-            enquiry.Close = "Yes";
-            enquiry.ClosingRemark = "Admission Done";
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+
+            enquiryData.EnquiryStatus = "Admission";
+            enquiryData.Close = "Yes";
+            enquiryData.ClosingRemark = "Admission Done";
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
             // Counselling Update
-            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiryData.EnquiryId)
                 .Items.FirstOrDefault();
             if (counselling != null)
             {
@@ -678,7 +685,7 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
             //FollowUp Update
-            var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiry.EnquiryId)
+            var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiryData.EnquiryId)
                 .Items.FirstOrDefault();
             if (followup != null)
             {

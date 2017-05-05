@@ -24,6 +24,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int? PersonnelId { get; set; }
+
         public virtual Registration Registration { get; set; }
 
         public virtual Batch Batch { get; set; }
@@ -33,5 +35,7 @@ namespace Nidan.Entity
         public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Personnel Personnel { get; set; }
     }
 }
