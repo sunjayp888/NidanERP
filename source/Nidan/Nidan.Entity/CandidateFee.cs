@@ -14,7 +14,6 @@ namespace Nidan.Entity
         {
             Registrations = new HashSet<Registration>();
         }
-
         public int CandidateFeeId { get; set; }
 
         public DateTime? PaymentDate { get; set; }

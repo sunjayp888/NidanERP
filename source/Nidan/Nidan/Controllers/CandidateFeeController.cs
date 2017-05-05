@@ -28,7 +28,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var paymentmodes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-            
+
             var viewModel = new CandidateFeeViewModel()
             {
                 CandidateFee = new CandidateFee(),
@@ -47,7 +47,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             candidateFeeViewModel.CandidateFee.PaymentDate = DateTime.UtcNow;
             candidateFeeViewModel.CandidateFee.InstallmentDate = DateTime.UtcNow;
-            candidateFeeViewModel.CandidateFee.FeeTypeId=2;
+            candidateFeeViewModel.CandidateFee.FeeTypeId = 2;
             candidateFeeViewModel.CandidateFee.FiscalYear = "2017-18";
             if (ModelState.IsValid)
             {
@@ -57,31 +57,41 @@ namespace Nidan.Controllers
                 candidateFeeViewModel.CandidateFee = NidanBusinessService.CreateCandidateFee(organisationId, candidateFeeViewModel.CandidateFee);
                 return RedirectToAction("Index");
             }
-           
+
             candidateFeeViewModel.PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList());
             return View(candidateFeeViewModel);
         }
 
+        //[Authorize(Roles = "Admin")]
+        //public ActionResult GetCandidateFee(int? id)
+        //{
+        //    return View(viewModel);
+        //}
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             return this.JsonNet(data);
         }
 
-        //[HttpPost]
-        //public ActionResult CandidateInstallmentList(Paging paging, List<OrderBy> orderBy)
-        //{
-        //    //var candidateInstallment=NidanBusinessService.retr(UserOrganisationId,p=>p.)
-        //    bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-        //    return this.JsonNet(NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
-        //}
+        [Authorize(Roles = "Admin")]
+        public ActionResult Detail(int? candidateInstallmentId)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == candidateInstallmentId).Items;
+            var candidateFeeModel = new CandidateFeeViewModel
+            {
+                CandidateFeeList = data.ToList()
+            };
+            return View(candidateFeeModel);
+        }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            bool isSuperAdmin = User.IsSuperAdmin();
             return this.JsonNet(NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
     }

@@ -39,10 +39,9 @@ namespace Nidan.Controllers
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
-            var registrationPaymentReceipt =
-                NidanBusinessService.RetrieveRegistrationPaymentReceipt(organisationId, id.Value);
-            var counselling =
-                NidanBusinessService.RetrieveCounselling(organisationId, registrationPaymentReceipt.CounsellingId);
+            //var registrationPaymentReceipt =
+            //    NidanBusinessService.RetrieveRegistrationPaymentReceipt(organisationId, id.Value);
+           // var counselling =NidanBusinessService.RetrieveCounselling(organisationId, registrationPaymentReceipt.CounsellingId);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -57,8 +56,8 @@ namespace Nidan.Controllers
                 {
                     Name = "Test"
                 },
-                Counselling = counselling,
-                RegistrationPaymentReceipt = registrationPaymentReceipt,
+                //Counselling = counselling,
+                //RegistrationPaymentReceipt = registrationPaymentReceipt,
                 RegistrationPaymentReceiptId = id.Value,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
@@ -71,8 +70,8 @@ namespace Nidan.Controllers
                 Admission = new Admission()
                 {
                     //RegistrationPaymentReceipt = registrationPaymentReceipt,
-                    EnquiryId = registrationPaymentReceipt.EnquiryId,
-                    RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId,
+                    //EnquiryId = registrationPaymentReceipt.EnquiryId,
+                    //RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId,
                     BankName = "Test",
                     ChequeNo = "Test"
                 }

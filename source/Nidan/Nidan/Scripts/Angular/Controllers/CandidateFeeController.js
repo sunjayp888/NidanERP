@@ -30,8 +30,8 @@
             order("InstallmentDate");
         }
 
-        function retrieveCandidateFees() {
-            return CandidateFeeService.retrieveCandidateFees(vm.paging, vm.orderBy)
+        function retrieveCandidateFees(candidateInstallmentId) {
+            return CandidateFeeService.retrieveCandidateFees(candidateInstallmentId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.candidateFees = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -67,13 +67,6 @@
 
         function editCandidateFee(id) {
             $window.location.href = "/CandidateFee/Edit/" + id;
-        }
-
-
-        
-
-        function viewCandidateFee(candidateFeeId) {
-            $window.location.href = "/CandidateFee/Edit/" + candidateFeeId;
         }
 
     }

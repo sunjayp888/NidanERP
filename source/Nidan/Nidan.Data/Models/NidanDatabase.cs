@@ -147,10 +147,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateFee>()
-                .HasMany(e => e.Registrations)
-                .WithRequired(e => e.CandidateFee)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<CandidateFee>()
+            //    .HasMany(e => e.Registrations)
+            //    .WithRequired(e => e.CandidateFee)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Registration>()
                 .Property(e => e.Remarks)
