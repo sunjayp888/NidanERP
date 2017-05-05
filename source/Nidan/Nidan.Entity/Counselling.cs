@@ -60,7 +60,7 @@ namespace Nidan.Entity
         [DataType(DataType.MultilineText)]
         public string RemarkByBm { get; set; }
 
-        public bool Registered { get; set; }
+        public bool IsRegistrationDone { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 

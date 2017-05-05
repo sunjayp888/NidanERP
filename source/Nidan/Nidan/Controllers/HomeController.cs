@@ -31,7 +31,7 @@ namespace Nidan.Controllers
                e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "enquiry").Items.Count();
 
             var totalEnquiryCount =
-                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes" && e.Registered == false).Count();
+                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes" && e.IsRegistrationDone == false).Count();
 
             var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
                e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();

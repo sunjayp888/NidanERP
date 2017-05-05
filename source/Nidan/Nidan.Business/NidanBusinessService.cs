@@ -403,10 +403,10 @@ namespace Nidan.Business
 
         //    var data = _nidanDataService.CreateRegistrationPaymentReceipt(organisationId, registrationPaymentReceipt);
 
-        //    enquirydata.Registered = data != null;
+        //    enquirydata.IsRegistrationDone = data != null;
         //    enquirydata.EnquiryStatus = "Registration";
         //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquirydata);
-        //    if (counsellingdata != null) counsellingdata.Registered = data != null;
+        //    if (counsellingdata != null) counsellingdata.IsRegistrationDone = data != null;
         //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counsellingdata);
 
         //    var registrationFollowUp = _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == registrationPaymentReceipt.EnquiryId).Items.FirstOrDefault();
@@ -764,7 +764,7 @@ namespace Nidan.Business
             };
             var data = _nidanDataService.Create<Registration>(organisationId, registrationData);
             var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);
-            enquiry.Registered = true;
+            enquiry.IsRegistrationDone = true;
             enquiry.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             var followUp = RetrieveFollowUp(organisationId, registration.EnquiryId);
