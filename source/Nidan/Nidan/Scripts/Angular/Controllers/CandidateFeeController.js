@@ -30,8 +30,8 @@
             order("InstallmentDate");
         }
 
-        function retrieveCandidateFees(candidateInstallmentId) {
-            return CandidateFeeService.retrieveCandidateFees(candidateInstallmentId, vm.paging, vm.orderBy)
+        function retrieveCandidateFees(candidateInstallmentId,paging, orderBy) {
+            return CandidateFeeService.retrieveCandidateFees(candidateInstallmentId, paging, orderBy)
                 .then(function (response) {
                     vm.candidateFees = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

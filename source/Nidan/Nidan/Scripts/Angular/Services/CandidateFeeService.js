@@ -10,17 +10,17 @@
     function CandidateFeeService($http) {
         var service = {
             retrieveCandidateFees: retrieveCandidateFees,
-            searchCandidateFee: searchCandidateFee,
+            searchCandidateFee: searchCandidateFee
         };
 
         return service;
 
-        function retrieveCandidateFees(Paging, OrderBy) {
+        function retrieveCandidateFees(paging, orderBy) {
 
             var url = "/CandidateFee/List",
                 data = {
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
+                    paging: paging,
+                    orderBy: new Array(orderBy)
                 };
 
             return $http.post(url, data);

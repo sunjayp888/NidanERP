@@ -24,11 +24,12 @@ namespace Nidan.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            id = id ?? 0;
+            var candidateFee= NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value);
             var paymentmodes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-
             var viewModel = new CandidateFeeViewModel()
             {
                 CandidateFee = new CandidateFee(),
@@ -77,10 +78,10 @@ namespace Nidan.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Detail(int? candidateInstallmentId)
+        public ActionResult Detail(int? candidateInstallmentId, Paging paging, List<OrderBy> orderBy)
         {
             var isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == candidateInstallmentId).Items;
+            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == candidateInstallmentId, orderBy, paging).Items;
             var candidateFeeModel = new CandidateFeeViewModel
             {
                 CandidateFeeList = data.ToList()
