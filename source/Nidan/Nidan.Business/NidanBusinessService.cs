@@ -632,7 +632,7 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
 
-        public Admission CreateAdmission(int organisationId, Admission admission)
+        public Admission CreateAdmission(int organisationId,int centreId, Admission admission)
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var batchData = RetrieveBatch(organisationId, admission.BatchId);
@@ -663,6 +663,17 @@ namespace Nidan.Business
             candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
             candidateInstallment.NumberOfInstallment = batchData.NoOfInstallment;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
+
+            // Inserting Row in CandidateFee according to NumberOfInstallment
+            var numberOfInstallment = candidateInstallment.NumberOfInstallment;
+            //if (numberOfInstallment != null)
+            //{
+            //    for (int i = 1; i <= numberOfInstallment; i++)
+            //    {
+
+            //    }
+            //}
+            
 
             // Update Registration IsAdmissionDone
             registrationData.IsAdmissionDone = true;

@@ -56,10 +56,7 @@ namespace Nidan.Controllers
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
-            var registration =
-                NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
-            //var counsellings =
-            //    NidanBusinessService.RetrieveCounselling(organisationId, registration.CounsellingId);
+            var registration =NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -93,11 +90,6 @@ namespace Nidan.Controllers
                 {
                     Registration = registration,
                     RegistrationId = id.Value
-                    //RegistrationPaymentReceipt = registrationPaymentReceipt,
-                    //EnquiryId = registration.EnquiryId,
-                    //RegistrationPaymentReceiptId=registrationPaymentReceipt.RegistrationPaymentReceiptId,
-                    //BankName = "Test",
-                    //ChequeNo = "Test"
                 }
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
@@ -112,17 +104,12 @@ namespace Nidan.Controllers
         public ActionResult Create(AdmissionViewModel admissionViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var enquiryId = admissionViewModel.Admission.Registration.EnquiryId;
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
-                admissionViewModel.Admission.OrganisationId = organisationId;
-                admissionViewModel.Admission.CentreId = UserCentreId;
-
-                //admissionViewModel.Admission.EnquiryId = admissionViewModel.Admission.RegistrationPaymentReceipt
-                //    .EnquiryId;
-                admissionViewModel.Admission.AdmissionDate = DateTime.UtcNow.Date;
-                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, admissionViewModel.Admission);
+                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, admissionViewModel.Admission);
                 // Create Personnel
                 var personnel = new Personnel()
                 {
@@ -146,23 +133,13 @@ namespace Nidan.Controllers
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
             }
-            admissionViewModel.Courses = new SelectList(
-                NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
-            admissionViewModel.PaymentModes =
-                new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(),
-                    "PaymentModeId", "Name");
-            admissionViewModel.Schemes = new SelectList(
-                NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name");
-            admissionViewModel.Sectors = new SelectList(
-                NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
-            admissionViewModel.BatchTimePrefers =
-                new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(),
-                    "BatchTimePreferId", "Name");
-            admissionViewModel.Batches = new SelectList(
-                NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name");
-            admissionViewModel.Rooms = new SelectList(
-                NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(),
-                "RoomId", "Description");
+            admissionViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
+            admissionViewModel.PaymentModes =new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(),"PaymentModeId", "Name");
+            admissionViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name");
+            admissionViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
+            admissionViewModel.BatchTimePrefers =new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(),"BatchTimePreferId", "Name");
+            admissionViewModel.Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name");
+            admissionViewModel.Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(),"RoomId", "Description");
             admissionViewModel.CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList());
             return View(admissionViewModel);
         }
@@ -199,9 +176,6 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            //var counselling =
-            //    NidanBusinessService.RetrieveCounselling(organisationId,
-            //        admission.RegistrationPaymentReceipt.CounsellingId);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -219,7 +193,6 @@ namespace Nidan.Controllers
                 Registration = admission.Registration,
                 RegistrationId = id.Value,
                 Admission = admission,
-                //Counselling = counselling,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
                 PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
                 Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),

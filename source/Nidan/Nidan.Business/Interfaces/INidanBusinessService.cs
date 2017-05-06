@@ -44,7 +44,7 @@ namespace Nidan.Business.Interfaces
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
         CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
-        Admission CreateAdmission(int organisationId, Admission admission);
+        Admission CreateAdmission(int organisationId,int centreId, Admission admission);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
         Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
