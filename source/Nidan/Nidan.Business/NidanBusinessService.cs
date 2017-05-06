@@ -8,7 +8,6 @@ using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
-using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
