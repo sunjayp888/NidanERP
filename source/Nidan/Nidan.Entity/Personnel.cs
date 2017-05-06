@@ -13,6 +13,8 @@ namespace Nidan.Entity
         {
             Counsellings=new List<Counselling>();
             Mobilizations = new HashSet<Mobilization>();
+            Trainers=new HashSet<Trainer>();
+            Admissions=new HashSet<Admission>();
         }
 
         public int PersonnelId { get; set; }
@@ -112,5 +114,7 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }
