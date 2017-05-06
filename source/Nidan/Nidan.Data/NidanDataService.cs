@@ -252,7 +252,8 @@ namespace Nidan.Data
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
-                //admission.RegistrationPaymentReceipt = null;
+                admission.CandidateFee = null;
+                admission.Registration = null;
                 admission = context.Admissions.Add(admission);
                 context.SaveChanges();
 
@@ -1766,8 +1767,8 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Organisation)
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
+                    .Include(p => p.Registration.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1789,9 +1790,7 @@ namespace Nidan.Data
             {
                 return context
                     .Admissions
-                    .Include(p => p.RegistrationPaymentReceipt)
-                    .Include(p => p.RegistrationPaymentReceipt.Enquiry)
-                    .Include(p => p.Enquiry)
+                    .Include(p => p.Registration)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
@@ -1805,6 +1804,7 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
+
               return context
                     .CandidateFees
                     .Include(p => p.Organisation)
@@ -1819,11 +1819,10 @@ namespace Nidan.Data
                             Property = "CandidateFeeId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
-                    })
-                    .Paginate(paging);
-             }
+                      }
+                    ).Paginate(paging);
+            }
         }
-
 
         public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
@@ -1858,12 +1857,12 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-              return context
-                    .CentreCourses
-                    .Include(c => c.Organisation)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Course)
-                    .AsNoTracking().ToList();
+                return context
+                      .CentreCourses
+                      .Include(c => c.Organisation)
+                      .Include(c => c.Centre)
+                      .Include(c => c.Course)
+                      .AsNoTracking().ToList();
             }
         }
 
@@ -1926,7 +1925,6 @@ namespace Nidan.Data
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-
                     .Registrations
                     .Include(p => p.Enquiry)
                     .Include(p => p.Course)
@@ -1937,6 +1935,45 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.RegistrationId == registrationId);
+            }
+        }
+
+        public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateInstallments
+                    .Include(p => p.Organisation)
+                    .Include(p => p.CourseInstallment)
+
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateInstallments
+                    .Include(p => p.CourseInstallment)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CandidateInstallmentId == candidateInstallmentId);
             }
         }
 

@@ -12,10 +12,8 @@ namespace Nidan.Entity
         public Enquiry()
         {
             Counsellings = new HashSet<Counselling>();
-            Admissions = new HashSet<Admission>();
             RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
-            Admissions = new HashSet<Admission>();
             Registrations = new HashSet<Registration>();
         }
 
@@ -209,9 +207,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admission> Admissions { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
