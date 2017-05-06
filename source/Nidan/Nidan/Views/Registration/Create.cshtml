@@ -26,49 +26,52 @@
                         }
 
                         <div class="row">
-
-                            <div class="col-lg-9">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Mobile</button>
-                                    </span>
-                                    <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Mobile</button>
+                                        </span>
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Email</button>
+                                        </span>
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Email</button>
-                                    </span>
-                                    <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Scheme</button>
+                                        </span>
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Sector</button>
+                                        </span>
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
+                            <div class="col-lg-12">
                                 <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Interested Scheme</button>
-                                    </span>
-                                    <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
-                                </div>
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Interested Sector</button>
-                                    </span>
-                                    <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
-                                </div>
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="input-group">
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-primary">Interested Course(s)</button>
                                         </span>
                                     </div>
                                     @foreach (var course in Model.Courses)
                                     {
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-6">
                                             <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
                                         </div>
                                     }
@@ -320,23 +323,23 @@
                         aboveTens();
                         break;
 
-                        //            This is optional.
+                    //            This is optional.
 
-                        //            case 9:
-                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        //                    word[j] = '';
-                        //                }
-                        //                else {
-                        //                    word[j] = once[rev[i]];
-                        //                }
-                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        //                    word[j] = word[j] + " Arab";
-                        //                }
-                        //                break;
+                    //            case 9:
+                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                    //                    word[j] = '';
+                    //                }
+                    //                else {
+                    //                    word[j] = once[rev[i]];
+                    //                }
+                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                    //                    word[j] = word[j] + " Arab";
+                    //                }
+                    //                break;
 
-                        //            case 10:
-                        //                aboveTens();
-                        //                break;
+                    //            case 10:
+                    //                aboveTens();
+                    //                break;
 
                     default: break;
                 }
@@ -390,13 +393,13 @@
             alert($("Registration_CandidateInstallment_PaymentMethod").val());
         }));
         $('input:radio[name="Registration.CandidateInstallment.PaymentMethod"]').change(
-          function () {
-        if (this.checked && this.value == 'MonthlyInstallment') {
-            $("#downPaymentDiv").show();
-        } else {
-            $("#downPaymentDiv").hide();
-        }
-    });
+            function () {
+                if (this.checked && this.value == 'MonthlyInstallment') {
+                    $("#downPaymentDiv").show();
+                } else {
+                    $("#downPaymentDiv").hide();
+                }
+            });
         function GetCourseInstallmentsByCourseId(courseId) {
             $.ajax({
                 url: '/Registration/GetCourseInstallmentByCourseId',

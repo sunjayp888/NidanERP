@@ -6,10 +6,10 @@
 
 <div>
     <div class="row">
-        <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>@*@Model.Counselling.CandidateName*@<small>Create Counselling</small></h2>
+                    <h2><button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1}", @Model.Enquiry.FirstName, @Model.Enquiry.LastName)</button>  Enquiry Details<small>create registration</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -21,7 +21,7 @@
                     @using (Html.BeginForm())
                     {
                         @*@Html.HiddenFor(model => model.Counselling.CentreId)
-                        @Html.HiddenFor(model => model.Counselling.Enquiry.Title)*@
+                            @Html.HiddenFor(model => model.Counselling.Enquiry.Title)*@
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
                             @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -53,27 +53,150 @@
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.StateId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.TalukaId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.PreferredMonthForJoining)
-                           
-                            <div class="horizontal">
-                                @Html.Partial("_Counselling", Model)
-                            </div>
-                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
-                                <div class="form-group">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-success">Submit</button>
-                                        @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
-                                                Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
-                                            </a>*@
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Mobile</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Email</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Interested Scheme</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Interested Sector</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="input-group">
+                                        <div class="col-lg-5">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                            </span>
+                                        </div>
+
+                                        @foreach (var course in Model.Courses)
+                                        {
+                                            <div class="col-lg-7">
+                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>Create Counselling <small></small></h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        @Html.TextBoxFor(model => model.Counselling.PreferTiming, new { @class = "form-control col-md-7 col-xs-12" })
+                                                        @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychomatric Test Done</label>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
+                                                            <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
+                                                                <input type="radio" name="psychomatricTest" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                                            </label>
+                                                            <label id="psychomatricTestNo" class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "No")
+                                                                <input type="radio" name="psychomatricTest" value="No" data-parsley-multiple="gender"> No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Counselling.ConversionProspect, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        @Html.DropDownListFor(model => model.Counselling.ConversionProspect, Model.ConversionProspectList, null, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Counselling.ConversionProspect, "", new { @class = "help-block" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Counselling.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        @Html.EditorFor(model => model.Counselling.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+                                                        @Html.ValidationMessageFor(model => model.Counselling.Remarks, "", new { @class = "help-block" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Counselling.RemarkByBm, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                                        @Html.EditorFor(model => model.Counselling.RemarkByBm, new { @class = "form-control col-md-7 col-xs-12" })
+                                                        @Html.ValidationMessageFor(model => model.Counselling.RemarkByBm, "", new { @class = "help-block" })
+                                                    </div>
+                                                </div>
+
+
+                                                @*@Html.Partial("_Counselling", Model)*@
+
+                                                <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
+                                                    <div class="form-group">
+                                                        <div class="pull-right">
+                                                            <button type="submit" class="btn btn-success">Submit</button>
+                                                            <button type="button" class="btn btn-success" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                                                            @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
+                                            Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
+                                        </a>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     }
                 </div>
             </div>
         </div>
 
-        <div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
+        @*<div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Quick Actions<small></small></h2>
@@ -95,10 +218,11 @@
                     }
                     <button type="button" class="btn btn-lg btn-success col-md-10 col-sm-12" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                     @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
+        @*</div>
                 </div>
-            </div>
-        </div>
+            </div>*@
     </div>
+   
     <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>

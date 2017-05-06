@@ -42,10 +42,8 @@ namespace Nidan.Controllers
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
             var casteCategories = NidanBusinessService.RetrieveCasteCategories(organisationId, e => true);
-            //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-
             var followUp = NidanBusinessService.RetrieveFollowUps(organisationId, e => e.MobilizationId == (id.Value == 0 ? -1 : id.Value)).Items.FirstOrDefault();
             var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
@@ -69,7 +67,6 @@ namespace Nidan.Controllers
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
                 Religions = new SelectList(religions, "ReligionId", "Name"),
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
-                // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
@@ -174,7 +171,6 @@ namespace Nidan.Controllers
                 Occupations = new SelectList(occupations, "OccupationId", "Name"),
                 Religions = new SelectList(religions, "ReligionId", "Name"),
                 CasteCategories = new SelectList(casteCategories, "CasteCategoryId", "Caste"),
-                // AreaOfInterests = new SelectList(areaOfInterests, "AreaOfInterestId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Schemes = new SelectList(schemes, "SchemeId", "Name"),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),

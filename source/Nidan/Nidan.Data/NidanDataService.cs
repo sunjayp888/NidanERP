@@ -1805,22 +1805,22 @@ namespace Nidan.Data
             using (var context = _databaseFactory.Create(organisationId))
             {
 
-              return context
-                    .CandidateFees
-                    .Include(p => p.Organisation)
-                    .Include(p => p.CandidateInstallment)
-                    .Include(p => p.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
+                return context
+                      .CandidateFees
+                      .Include(p => p.Organisation)
+                      .Include(p => p.CandidateInstallment)
+                      .Include(p => p.Centre)
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
                         new OrderBy
                         {
                             Property = "CandidateFeeId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
-                      }
-                    ).Paginate(paging);
+                        }
+                      ).Paginate(paging);
             }
         }
 
@@ -1876,7 +1876,7 @@ namespace Nidan.Data
                       .CandidateInstallments
                       .Include(p => p.Organisation)
                       .Include(p => p.CourseInstallment)
-                      
+
                       .AsNoTracking()
                       .Where(predicate)
                       .OrderBy(orderBy ?? new List<OrderBy>
@@ -1899,6 +1899,7 @@ namespace Nidan.Data
                 return context
                     .CandidateInstallments
                     .Include(p => p.CourseInstallment)
+                    .Include(p => p.Registrations)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateInstallmentId == candidateInstallmentId);

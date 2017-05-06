@@ -172,9 +172,9 @@
                     <div class="form-group">
                         @*@Html.LabelFor(model => model.Enquiry.DateOfBirth, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                         <div class="col-md-12 col-sm-6 col-xs-12 dob">
-                            @Html.TextBoxFor(model => model.Enquiry.DateOfBirth, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @placeholder = "Date Of Birth" })
+                            @Html.TextBoxFor(model => model.Enquiry.DateOfBirth, "{0:dd MMMM yyyy}", new {@class = "form-control col-md-7 col-xs-12 date", @placeholder = "Date Of Birth"})
                             <span class="fa fa-birthday-cake form-control-feedback right" aria-hidden="true"></span>
-                            @Html.ValidationMessageFor(model => model.Enquiry.DateOfBirth, "", new { @class = "help-block" })
+                            @Html.ValidationMessageFor(model => model.Enquiry.DateOfBirth, "", new {@class = "help-block"})
                         </div>
                     </div>
                 </div>
@@ -195,11 +195,11 @@
                         <label class="control-label col-md-2 col-sm-4 col-xs-12">Gender</label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <div id="gender" class="btn-group" data-toggle="buttons">
-                                <label class='@(Model.Enquiry.Gender == "Male" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                <label class='@(Model.Enquiry.Gender == "Male" ? "btn btn-default active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                     @Html.RadioButtonFor(model => model.Enquiry.Gender, "Male")
                                     <input type="radio" name="gender" value="Male" data-parsley-multiple="gender"> &nbsp; Male &nbsp;
                                 </label>
-                                <label class='@(Model.Enquiry.Gender == "Female" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                <label class='@(Model.Enquiry.Gender == "Female" ? "btn btn-default active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                     @Html.RadioButtonFor(model => model.Enquiry.Gender, "Female")
                                     <input type="radio" name="gender" value="Female" data-parsley-multiple="gender"> Female
                                 </label>

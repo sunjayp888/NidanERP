@@ -20,14 +20,6 @@
 </div>
 
 <div id="courseInstallmentDiv">
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Registration.CourseInstallment.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            @Html.TextBoxFor(model => model.Registration.CourseInstallment.Name, null, new { @class = "form-control col-md-7 col-xs-12", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.Registration.CourseInstallment.Name, "", new { @class = "help-block" })
-        </div>
-    </div>*@
-
     <div class="form-group">
         @Html.LabelFor(model => model.Registration.CourseInstallment.Fee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -51,14 +43,6 @@
             @Html.ValidationMessageFor(model => model.Registration.CourseInstallment.LumpsumAmount, "", new { @class = "help-block" })
         </div>
     </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.Registration.CourseInstallment.NumberOfInstallment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            @Html.TextBoxFor(model => model.Registration.CourseInstallment.NumberOfInstallment, null, new { @class = "form-control col-md-7 col-xs-12", @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.Registration.CourseInstallment.NumberOfInstallment, "", new { @class = "help-block" })
-        </div>
-    </div>*@
 </div>
 
 <div id="IsTotalAmountDiscountDiv">
@@ -74,16 +58,7 @@
 </div>
 
 
-
 <div id="overrideFeeDiv">
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Registration.CandidateInstallment.CandidateCourseFee, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.Registration.CandidateInstallment.CandidateCourseFee, null, new { @class = "form-control col-md-7 col-xs-12" })
-                @Html.ValidationMessageFor(model => model.Registration.CandidateInstallment.CandidateCourseFee, "", new { @class = "help-block" })
-            </div>
-        </div>*@
-
     <div class="form-group">
         @Html.LabelFor(model => model.Registration.CandidateInstallment.DiscountAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -91,24 +66,13 @@
             @Html.ValidationMessageFor(model => model.Registration.CandidateInstallment.DiscountAmount, "", new { @class = "help-block" })
         </div>
     </div>
-
-
-
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Registration.CandidateInstallment.LumpsumAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.Registration.CandidateInstallment.LumpsumAmount, null, new { @class = "form-control col-md-7 col-xs-12" })
-                @Html.ValidationMessageFor(model => model.Registration.CandidateInstallment.LumpsumAmount, "", new { @class = "help-block" })
-            </div>
-        </div>*@
 </div>
 <div>
     <div class="form-group" id="paymentMethodDiv">
         @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
         <div class="col-md-7 col-sm-3 col-xs-12">
             <label class="btn btn-info pull-right col-md-6">
-                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod, "MonthlyInstallment", new { @class = "col-md-2 col-xs-12", autocomplete = "off",id= "Registration.CandidateInstallment.PaymentMethodMonthly" })
+                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod, "MonthlyInstallment", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Registration.CandidateInstallment.PaymentMethodMonthly" })
                 Pay Fee In Installments
             </label>
             <label class="btn btn-info pull-right col-md-6">

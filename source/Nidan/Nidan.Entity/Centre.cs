@@ -19,7 +19,6 @@ namespace Nidan.Entity
             Budgets = new HashSet<Budget>();
             Eventdays = new HashSet<Eventday>();
             Postevents = new HashSet<Postevent>();
-            RegistrationPaymentReceipts = new HashSet<RegistrationPaymentReceipt>();
             CourseInstallments = new HashSet<CourseInstallment>();
             Rooms=new HashSet<Room>();
             Batches = new HashSet<Batch>();
@@ -73,9 +72,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseInstallment> CourseInstallments { get; set; }

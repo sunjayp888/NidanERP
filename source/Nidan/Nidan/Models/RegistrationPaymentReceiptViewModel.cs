@@ -9,7 +9,6 @@ namespace Nidan.Models
 {
     public class RegistrationPaymentReceiptViewModel : BaseViewModel
     {
-        public RegistrationPaymentReceipt RegistrationPaymentReceipt { get; set; }
         public SelectList PaymentModes { get; set; }
        // public SelectList Enquiries { get; set; }
         public int EnquiryId { get; set; }

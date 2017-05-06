@@ -155,7 +155,6 @@
     <Compile Include="Partials\Organisation.cs" />
     <Compile Include="Partials\Host.cs" />
     <Compile Include="Partials\Personnel.cs" />
-    <Compile Include="Partials\RegistrationPaymentReceipt.cs" />
     <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />
     <Compile Include="Partials\Subject.cs" />
@@ -174,7 +173,6 @@
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Registration.cs" />
-    <Compile Include="RegistrationPaymentReceipt.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomType.cs" />
