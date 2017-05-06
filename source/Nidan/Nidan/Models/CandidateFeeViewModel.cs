@@ -11,5 +11,7 @@ namespace Nidan.Models
     {
         public CandidateFee CandidateFee { get; set; }
         public SelectList PaymentModes { get; set; }
+        public List<CandidateFee> CandidateFeeList { get; set; }
+
     }
 }

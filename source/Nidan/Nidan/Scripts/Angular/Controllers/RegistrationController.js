@@ -12,6 +12,7 @@
         var vm = this;
         vm.Registrations = [];
         vm.enquiries = [];
+        vm.candidateFees = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -24,6 +25,7 @@
         vm.viewRegistration = viewRegistration;
         vm.createRegistration = createRegistration;
         vm.retrieveEnquiries = retrieveEnquiries;
+        vm.viewCandidateFee = viewCandidateFee;
         vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
@@ -112,6 +114,11 @@
 
         function createRegistration(enquiryId) {
             $window.location.href = "/Registration/Create/" + enquiryId;
+        }
+
+        function viewCandidateFee(candidateInstallmentId) {
+            $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
+            return RegistrationService.viewCandidateFee(candidateInstallmentId);
         }
 
     }

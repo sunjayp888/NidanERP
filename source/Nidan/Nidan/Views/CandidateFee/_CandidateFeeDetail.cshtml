@@ -1,0 +1,113 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.CandidateFeeViewModel
+
+@{
+//ViewBag.Title = "Detail";
+}
+
+<div ng-controller="CandidateFeeController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                CandidateFees <small></small>
+            </h3>
+        </div>
+        @*<div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCounselling(searchField)" class="form-control" placeholder="Search for Counselling...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="model.searchCounselling(searchField)" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    @*@if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-app" href="@Url.Action("Create", "Registration")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }*@
+    @*Search*@
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.PaymentDate')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.PaymentDate')">Payment Date</th>
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.PaidAmount')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.PaidAmount')">Paid Amount</th>
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.FeeTypeId')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.FeeTypeId')">Fee Type</th>
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.InstallmentDate')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.InstallmentDate')">InstallmentDate</th>
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.InstallmentAmount')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.InstallmentAmount')">Installment Amount</th>
+                                            <th ng-click="model.order('CandidateFee.CandidateInstallment.BalanceInstallmentAmount')" ng-class="model.orderClass('CandidateFee.CandidateInstallment.BalanceInstallmentAmount')">BalanceInstallment Amount</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCandidateFee(candidateFee.CandidateFeeId)">
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.PaymentDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.PaidAmount"></span></td>
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.FeeTypeId"></span></td>
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.InstallmentDate"></span></td>
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.InstallmentAmount"></span></td>
+                                        <td><span ng-bind="candidateFee.CandidateInstallment.BalanceInstallmentAmount"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    {
+                                                        @*<li>
+                                                            <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/ViewDetails/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
+                                                                View Details
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Admission/Create/{{registrationPaymentReceipt.RegistrationPaymentReceiptId}}">
+                                                                Create Admission
+                                                            </a>
+                                                        </li>*@
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

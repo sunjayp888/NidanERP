@@ -10,6 +10,7 @@
     function RegistrationService($http) {
         var service = {
             retrieveRegistrations: retrieveRegistrations,
+            viewCandidateFee: viewCandidateFee,
             retrieveEnquiries: retrieveEnquiries,
             canDeleteRegistration: canDeleteRegistration,
             deleteRegistration: deleteRegistration,
@@ -25,6 +26,16 @@
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function viewCandidateFee(candidateInstallmentId) {
+
+            var url = "/CandidateFee/Detail",
+                data = {
+                    candidateInstallmentId: candidateInstallmentId
                 };
 
             return $http.post(url, data);
