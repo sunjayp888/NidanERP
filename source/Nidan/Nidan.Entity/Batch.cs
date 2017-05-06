@@ -36,9 +36,9 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime BatchEndDate { get; set; }
 
-        public int NoOfHolidays { get; set; }
+        public int NumberOfHolidays { get; set; }
 
-        public int NoOfHoursDaily { get; set; }
+        public int NumberOfHoursDaily { get; set; }
 
         public int BatchStartTimeHours { get; set; }
 
@@ -57,7 +57,7 @@ namespace Nidan.Entity
         public string BatchEndTimeSpan { get; set; } = "AM";
 
         [Column(TypeName = "date")]
-        public DateTime AssesmentDate { get; set; }
+        public DateTime AssessmentDate { get; set; }
 
         public int CentreId { get; set; }
 
@@ -71,7 +71,7 @@ namespace Nidan.Entity
 
         public int Month { get; set; }
 
-        public int NoOfInstallment { get; set; }
+        public int NumberOfInstallment { get; set; }
 
         public int? FirstInstallment { get; set; }
 

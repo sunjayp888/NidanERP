@@ -1273,6 +1273,10 @@ namespace Nidan.Data
                 return context
                     .Centres
                     .Include(p => p.Organisation)
+                    .Include(p => p.Enquiries)
+                    .Include(p => p.Mobilizations)
+                    .Include(p => p.Registrations)
+                    .Include(p => p.Admissions)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

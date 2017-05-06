@@ -168,6 +168,8 @@ namespace Nidan.Entity
 
         public bool IsRegistrationDone { get; set; }
 
+        public bool IsCounsellingDone { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }

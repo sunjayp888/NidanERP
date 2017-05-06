@@ -631,7 +631,7 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
 
-        public Admission CreateAdmission(int organisationId,int centreId, Admission admission)
+        public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var batchData = RetrieveBatch(organisationId, admission.BatchId);
@@ -641,7 +641,7 @@ namespace Nidan.Business
             var candidateFeeData = new CandidateFee()
             {
                 PaymentDate = DateTime.UtcNow.Date,
-                CandidateInstallmentId =registrationData.CandidateInstallmentId,
+                CandidateInstallmentId = registrationData.CandidateInstallmentId,
                 PaidAmount = admission.CandidateFee.PaidAmount,
                 PaymentModeId = admission.CandidateFee.PaymentModeId,
                 FeeTypeId = 2,
@@ -660,7 +660,7 @@ namespace Nidan.Business
             // Update data in CandidateInstallment
             var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId);
             candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-            candidateInstallment.NumberOfInstallment = batchData.NoOfInstallment;
+            candidateInstallment.NumberOfInstallment = batchData.NumberOfInstallment;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
 
             // Inserting Row in CandidateFee according to NumberOfInstallment
@@ -672,7 +672,7 @@ namespace Nidan.Business
 
             //    }
             //}
-            
+
 
             // Update Registration IsAdmissionDone
             registrationData.IsAdmissionDone = true;
@@ -787,7 +787,7 @@ namespace Nidan.Business
             var followUp = RetrieveFollowUp(organisationId, registration.EnquiryId);
             followUp.RegistrationId = registration.RegistrationId;
             followUp.FollowUpType = "Registration";
-            followUp.FollowUpUrl= string.Format("/Registration/Edit/{0}", data?.RegistrationId);
+            followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             return data;
         }
@@ -1245,7 +1245,7 @@ namespace Nidan.Business
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
+            return _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
         }
 
         public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -1574,6 +1574,26 @@ namespace Nidan.Business
         public List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId)
         {
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
+        }
+
+        public List<Graph> RetrieveGraphCount(int organisationId)
+        {
+            var centre = RetrieveCentres(organisationId, e => true).ToList();
+            var graphData = new List<Graph>();
+            foreach (var item in centre)
+            {
+                graphData.Add(new Graph
+                {
+                    CentreId = item.CentreId,
+                    CentreName = item.Name,
+                    MobilizationCount = item.Mobilizations.Count,
+                    AdmissionCount = item.Admissions.Count,
+                    EnquiryCount = item.Enquiries.Count,
+                    RegistrationCount = item.Registrations.Count,
+                    CounsellingCount = item.Counsellings.Count
+                });
+            }
+            return graphData;
         }
 
         #endregion

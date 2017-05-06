@@ -88,19 +88,20 @@ $(function () {
     //});
 
 
-    Morris.Donut({
-        element: 'graph_donut',
-        data: [
-            {label: 'Enquiry', value: 25},
-            {label: 'Counselling', value: 40},
-            {label: 'Mobilization', value: 25}
-            
-        ],
-        colors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-        formatter: function (y) {
-            return y + "%"
-        }
-    });
+    //Morris.Donut({
+    //    element: 'graph_donut',
+    //    data: [
+    //        { label: 'Enquiry', value: 25 },
+    //        { label: 'Counselling', value: 40 },
+    //        { label: 'Mobilization', value: 25 },
+    //        { label: 'Admission', value: 25 }
+
+    //    ],
+    //    colors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+    //    formatter: function (y) {
+    //        return y + "%"
+    //    }
+    //});
 
     //new Morris.Line({
     //    element: 'graph_line',
