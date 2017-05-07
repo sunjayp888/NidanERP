@@ -205,6 +205,7 @@ namespace Nidan.Business.Interfaces
         Session UpdateSession(int organisationId, Session session);
         Room UpdateRoom(int organisationId, Room room);
         BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay);
+        CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

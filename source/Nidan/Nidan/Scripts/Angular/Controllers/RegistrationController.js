@@ -118,7 +118,6 @@
 
         function viewCandidateFee(candidateInstallmentId) {
             $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
-            return RegistrationService.viewCandidateFee(candidateInstallmentId);
         }
 
     }

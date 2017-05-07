@@ -21,6 +21,7 @@
         vm.searchCandidateFee = searchCandidateFee;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.removeError = removeError;
         initialise();
 
         function initialise() {
@@ -67,6 +68,11 @@
 
         function editCandidateFee(id) {
             $window.location.href = "/CandidateFee/Edit/" + id;
+        }
+
+        function removeError() {
+            vm.Errors.length = 0;
+            vm.documentFile = null;
         }
 
     }

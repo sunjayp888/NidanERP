@@ -1985,6 +1985,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchDay);
         }
 
+        public CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFee);
+        }
+
 
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
