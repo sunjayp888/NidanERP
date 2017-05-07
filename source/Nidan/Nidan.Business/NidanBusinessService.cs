@@ -635,10 +635,6 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
         {
-
-            var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
-            var batchData = RetrieveBatch(organisationId, admission.BatchId);
-            var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
             CreateCandidateFee(organisationId, centreId, admission);
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
             // Update Registration IsAdmissionDone
@@ -670,7 +666,7 @@ namespace Nidan.Business
             var candidateBatch = RetrieveBatch(organisationId, admission.BatchId);
             // Update data in CandidateInstallment
             candidateInstallment.PaymentMethod = feePaymentMethod;
-            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString() ? candidateBatch.NoOfInstallment : 0;
+            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString() ? candidateBatch.NumberOfInstallment : 0;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
 
             var candidateFees = new List<CandidateFee>();
@@ -682,9 +678,9 @@ namespace Nidan.Business
                     CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
                     PaymentModeId = (int)Enum.PaymentMode.Cash,
                     FeeTypeId = (int)FeeType.Installment,
-                    FollowUpDate = candidateBatch.BatchStartDate.AddMonths(candidateBatch.NoOfInstallment),
+                    FollowUpDate = candidateBatch.BatchStartDate.AddMonths(candidateBatch.NumberOfInstallment),
                     FiscalYear = DateTime.Now.FiscalYear(),
-                    InstallmentAmount = candidateInstallment.CourseFee / candidateBatch.NoOfInstallment,
+                    InstallmentAmount = candidateInstallment.CourseFee / candidateBatch.NumberOfInstallment,
                     CentreId = centreId,
                     OrganisationId = organisationId
                 });
