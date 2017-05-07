@@ -635,9 +635,12 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
         {
+
+            var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
+            var batchData = RetrieveBatch(organisationId, admission.BatchId);
+            var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
             CreateCandidateFee(organisationId, centreId, admission);
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
-
             // Update Registration IsAdmissionDone
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
@@ -1226,7 +1229,7 @@ namespace Nidan.Business
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<Centre>(organisationId, e => true);
+            return _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
         }
 
         public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -1555,6 +1558,26 @@ namespace Nidan.Business
         public List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId)
         {
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
+        }
+
+        public List<Graph> RetrieveGraphCount(int organisationId)
+        {
+            var centre = RetrieveCentres(organisationId, e => true).ToList();
+            var graphData = new List<Graph>();
+            foreach (var item in centre)
+            {
+                graphData.Add(new Graph
+                {
+                    CentreId = item.CentreId,
+                    CentreName = item.Name,
+                    MobilizationCount = item.Mobilizations.Count,
+                    AdmissionCount = item.Admissions.Count,
+                    EnquiryCount = item.Enquiries.Count,
+                    RegistrationCount = item.Registrations.Count,
+                    CounsellingCount = item.Counsellings.Count
+                });
+            }
+            return graphData;
         }
 
         #endregion

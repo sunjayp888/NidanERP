@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Extensions;
 using Nidan.Models;
@@ -23,8 +25,8 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveGraphCount(organisationId);
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
@@ -72,6 +74,28 @@ namespace Nidan.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View(new BaseViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult Statistics()
+        {
+            var data = NidanBusinessService.RetrieveGraphCount(UserOrganisationId);
+            var graphData = new List<PieGraph>()
+            {
+                new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
+                new PieGraph() {Label = "Enquiry",Value = data.Sum(e => e.EnquiryCount).ToString()},
+                new PieGraph() {Label = "Admission",Value = data.Sum(e => e.AdmissionCount).ToString()},
+                new PieGraph() {Label = "Registration",Value = data.Sum(e => e.RegistrationCount).ToString()},
+                new PieGraph() {Label = "Counselling",Value = data.Sum(e => e.CounsellingCount).ToString()}
+            };
+            return this.JsonNet(graphData);
+        }
+
+        [HttpPost]
+        public ActionResult StatisticsByCentre(int id)
+        {
+            var data = NidanBusinessService.RetrieveGraphCount(UserOrganisationId).Where(e => e.CentreId == id);
+            return this.JsonNet(data);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Nidan.Models
         public int TotalEnquiryCount { get; set; }
         public int TotalMobilizationCount { get; set; }
 
-        public IEnumerable<int> SelectedCompanyIds { get; set; }        
+        public IEnumerable<int> SelectedCompanyIds { get; set; }
         public string CompanyIdsArray => SelectedCompanyIds != null ? string.Format("[{0}]", string.Join(",", SelectedCompanyIds)) : "null";
 
         public IEnumerable<int> SelectedDepartmentIds { get; set; }
@@ -21,5 +21,11 @@ namespace Nidan.Models
         //public IEnumerable<Division> Divisions { get; set; }
         public IEnumerable<int> SelectedDivisionIds { get; set; }
         public string DivisionIdsArray => SelectedDivisionIds != null ? string.Format("[{0}]", string.Join(",", SelectedDivisionIds)) : "null";
+    }
+
+    public class PieGraph
+    {
+        public string Label { get; set; }
+        public string Value { get; set; }
     }
 }

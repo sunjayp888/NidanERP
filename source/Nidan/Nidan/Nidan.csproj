@@ -1093,6 +1093,8 @@
     <None Include="Content\less\Site.less" />
     <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
@@ -1111,6 +1113,7 @@
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
+    <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
@@ -1125,6 +1128,8 @@
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
+    <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
+    <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
@@ -1138,6 +1143,7 @@
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
@@ -1214,6 +1220,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
+    <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -1541,6 +1548,11 @@
     <Content Include="Views\Shared\_TrainerDocument.cshtml" />
     <Content Include="Views\Shared\_SessionDocument.cshtml" />
     <Content Include="Views\Registration\_Registration.cshtml" />
+    <Content Include="Views\CandidateFee\Create.cshtml" />
+    <Content Include="Views\CandidateFee\Detail.cshtml" />
+    <Content Include="Views\CandidateFee\Index.cshtml" />
+    <Content Include="Views\CandidateFee\_CandidateFee.cshtml" />
+    <Content Include="Views\CandidateFee\_CandidateFeeDetail.cshtml" />
     <Content Include="Views\Counselling\Create.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>

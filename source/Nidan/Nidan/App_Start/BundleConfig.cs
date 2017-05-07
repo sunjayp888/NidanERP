@@ -36,7 +36,7 @@ namespace Nidan
                 "~/Scripts/Angular/app.js",
                 "~/Scripts/Angular/Prototypes/*.js",
                 "~/Scripts/Angular/Controllers/*.js",
-                //"~/Scripts/moris/*.js",
+                "~/Scripts/moris/*.js",
                 "~/Scripts/Angular/Services/*.js",
                 "~/Scripts/Angular/Filters/*.js",
                 "~/Scripts/Angular/Directives/*.js",
