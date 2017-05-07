@@ -6,7 +6,6 @@ using Nidan.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Web.Mvc;
 
@@ -15,20 +14,13 @@ namespace Nidan.Controllers
     [Authorize]
     public class EnquiryController : BaseController
     {
-        private static string EnquiryName { get; set; }
-        private ApplicationRoleManager _roleManager;
-        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
 
         // GET: Enquiry
-
         public ActionResult Index()
         {
-            EnquiryViewModel model = new EnquiryViewModel();
-
             return View(new BaseViewModel());
         }
 
@@ -77,7 +69,7 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
-                SelectedCourseIds = new List<int> { },
+                SelectedCourseIds = new List<int>(),
             };
 
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
@@ -181,7 +173,7 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
-                SelectedCourseIds = enquiry?.EnquiryCourses.Select(e => e.CourseId).ToList()
+                SelectedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
@@ -200,14 +192,8 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.Close = "No";
-                //enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(organisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
-
             }
-            var viewModel = new EnquiryViewModel
-            {
-                Enquiry = enquiryViewModel.Enquiry
-            };
             return RedirectToAction("Index");
         }
 
@@ -215,53 +201,43 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (User.IsSuperAdmin() || p.CentreId == UserCentreId) && p.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword,
-                p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (User.IsSuperAdmin() || p.CentreId == UserCentreId), orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging);
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (User.IsSuperAdmin() || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.SectorId == sectorId).ToList();
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.SectorId == sectorId).ToList());
         }
 
         [HttpPost]
         public ActionResult GetSector(int schemeId)
         {
-            var data = NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList();
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList());
         }
 
         [HttpPost]
         public ActionResult GetTaluka(int districtId)
         {
-            var data = NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList();
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
         }
 
         [HttpPost]
         public ActionResult GetDistrict(int stateId)
         {
-            var data = NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList();
-            return this.JsonNet(data);
+            return this.JsonNet(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList());
         }
     }
 }
