@@ -252,7 +252,6 @@ namespace Nidan.Data
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
-                admission.CandidateFee = null;
                 admission.Registration = null;
                 admission = context.Admissions.Add(admission);
                 context.SaveChanges();
@@ -1277,6 +1276,7 @@ namespace Nidan.Data
                     .Include(p => p.Mobilizations)
                     .Include(p => p.Registrations)
                     .Include(p => p.Admissions)
+                    .Include(p => p.Counsellings)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

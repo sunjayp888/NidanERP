@@ -635,12 +635,21 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
         {
-            CreateCandidateFee(organisationId, centreId, admission);
-            var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
-            // Update Registration IsAdmissionDone
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
+            var candidatInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId, e => true);
+            var courseInstallment = RetrieveCourseInstallment(organisationId, registrationData.CourseInstallmentId);
+            candidatInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatInstallment);
+            CreateCandidateFee(organisationId, centreId, admission);
+
+            admission.OrganisationId = organisationId;
+            admission.CentreId = centreId;
+            admission.AdmissionDate=DateTime.UtcNow;
+            var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
+            // Update Registration IsAdmissionDone
             registrationData.IsAdmissionDone = true;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationData);
             // EnquiryStatus Update
             enquiryData.Close = "Yes";
             enquiryData.ClosingRemark = "Admission Done";
@@ -764,11 +773,20 @@ namespace Nidan.Business
             enquiry.IsRegistrationDone = true;
             enquiry.EnquiryStatus = "Registration";
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
-            var followUp = RetrieveFollowUp(organisationId, registration.EnquiryId);
-            followUp.RegistrationId = registration.RegistrationId;
-            followUp.FollowUpType = "Registration";
-            followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
+            if (counselling != null)
+            {
+                counselling.IsRegistrationDone = true;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
+            }
+            var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
+            if (followUp != null)
+            {
+                followUp.RegistrationId = data.RegistrationId;
+                followUp.FollowUpType = "Registration";
+                followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            }
             return data;
         }
 

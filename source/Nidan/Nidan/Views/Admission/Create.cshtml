@@ -52,6 +52,7 @@
                         @Html.HiddenFor(m => m.CourseInstallment.Name)
                         @Html.HiddenFor(m => m.Admission.RegistrationId)
                         @Html.HiddenFor(m => m.Registration.CandidateInstallmentId)
+                        @Html.HiddenFor(m => m.Admission.Registration.EnquiryId)
                         
 
                         @*-----------------------------------------Candidate Details-----------------------------------------*@
@@ -389,6 +390,8 @@
             $('#lumpsum').show();
         });
 
+        
+
         if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
             $('#PaymentDetails').show();
             $('.bank-details-textbox-admission').show();
@@ -399,8 +402,8 @@
             $('#PaymentDetails').show();
         }
 
-        $("#Admission_CandidateFee_PaymentModeId").change(function () {
-            if ($('#Admission_CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+        $("#CandidateFee_PaymentModeId").change(function () {
+            if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
                 $('#PaymentDetails').show();
                 $('.bank-details-textbox-admission').show();
                 $("#Admission_BankName").val("");
@@ -411,15 +414,9 @@
             }
         });
 
-        $('#installmentRadioButton').click(function () {
-            $('#divAdmissionDownpayment').show();
-            $('#divAdmissionLumpsum').hide();
-        });
+       
 
-        $('#lumpsumRadioButton').click(function () {
-            $('#divAdmissionDownpayment').hide();
-            $('#divAdmissionLumpsum').show();
-        });
+        
 
         $("#Admission_Discount").change(function () {
             if ($('#Admission_Discount :selected').text() == "Select Discount") {
@@ -473,7 +470,7 @@
                         $("#txtBatchMonth").val(result.Month);
                         $("#txtBatchStartDate").val(result.BatchStartDate);
                         $("#txtBatchEndDate").val(result.BatchEndDate);
-                        $("#txtBatchAssessmentDate").val(result.AssesmentDate);
+                        $("#txtBatchAssessmentDate").val(result.AssessmentDate);
                         $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
                         $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
                     });
@@ -481,6 +478,14 @@
                 async: true,
                 processData: false
             });
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+                $('#downpayment').show();
+                $('#lumpsum').hide();
+            }
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+                $('#downpayment').hide();
+                $('#lumpsum').show();
+            }
         });
 
         //========================================================================================================

@@ -12,6 +12,7 @@ namespace Nidan.Models
     {
         public Admission Admission { get; set; }
         public Registration Registration { get; set; }
+        public CandidateFee CandidateFee { get; set; }
         public Batch Batch { get; set; }
         public CourseInstallment CourseInstallment { get; set; }
         public Counselling Counselling { get; set; }
