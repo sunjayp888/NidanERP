@@ -130,7 +130,7 @@ namespace Nidan.Controllers
                 PersonnelId = personnel.PersonnelId,
                 CentreId = personnel.CentreId
             };
-            var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+            var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "Trainer").Id;
             createUser.Roles.Add(new IdentityUserRole { UserId = createUser.Id, RoleId = roleId });
 
             var result = UserManager.Create(createUser, "Password1!");

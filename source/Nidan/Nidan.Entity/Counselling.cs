@@ -73,8 +73,5 @@ namespace Nidan.Entity
         public virtual Sector Sector { get; set; }
 
         public virtual Personnel Personnel { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
     }
 }

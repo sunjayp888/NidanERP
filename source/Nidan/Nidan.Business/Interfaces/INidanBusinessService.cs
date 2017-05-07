@@ -47,7 +47,6 @@ namespace Nidan.Business.Interfaces
         Admission CreateAdmission(int organisationId,int centreId, Admission admission);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
-        Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -177,12 +176,12 @@ namespace Nidan.Business.Interfaces
         CandidateFee RetrieveCandidateFee(int organisationId, int id);
         PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate);
-        CandidateInstallment RetrieveCandidateInstallment(int organisationId, int id);
         PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<Course> RetrieveCentreCourses(int organisationId, int centreId);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
         List<Graph> RetrieveGraphCount(int organisationId);
+        Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
 
             // Update
             //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

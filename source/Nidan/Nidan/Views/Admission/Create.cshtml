@@ -9,7 +9,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>
-                    <button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button>Create New Admission <small></small>
+                    <button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Registration?.Enquiry?.Title, @Model.Registration?.Enquiry?.FirstName, @Model.Registration?.Enquiry?.MiddleName, @Model.Registration?.Enquiry?.LastName)</button>Create New Admission <small></small>
                 </h2>
                 <div class="clearfix"></div>
             </div>
@@ -34,8 +34,6 @@
                             has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
                             @Model.Registration.CandidateInstallment.CourseFee
                         </div>
-                        @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
                         @Html.HiddenFor(m => m.Registration.Enquiry.Address1)
                         @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
                         @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
@@ -51,12 +49,10 @@
                         @Html.HiddenFor(m => m.Registration.RegistrationId)
                         @Html.HiddenFor(m => m.Admission.RegistrationId)
                         @Html.HiddenFor(m => m.Admission.Registration.CandidateInstallmentId)
-                        @*@Html.HiddenFor(m => m.Admission.EnquiryId)
-                            @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)
-                            @Html.HiddenFor(m => m.Admission.ChequeNo)
-                            @Html.HiddenFor(m => m.Admission.BankName)
-                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Title)*@
                         @Html.HiddenFor(m => m.CourseInstallment.Name)
+                        @Html.HiddenFor(m => m.Admission.RegistrationId)
+                        @Html.HiddenFor(m => m.Registration.CandidateInstallmentId)
+                        
 
                         @*-----------------------------------------Candidate Details-----------------------------------------*@
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -133,9 +129,7 @@
                                     <h2>
                                         <i class="fa fa-bars"></i> Registration Details
                                     </h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        
-                                    </ul>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="row">
@@ -511,9 +505,9 @@
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function (ev, picker) {
-                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                    });
+                function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
         });
 
         ////================================================================== Calculation Sum Of Rupees
@@ -618,23 +612,23 @@
                         aboveTens();
                         break;
 
-                        //            This is optional.
+                    //            This is optional.
 
-                        //            case 9:
-                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        //                    word[j] = '';
-                        //                }
-                        //                else {
-                        //                    word[j] = once[rev[i]];
-                        //                }
-                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        //                    word[j] = word[j] + " Arab";
-                        //                }
-                        //                break;
+                    //            case 9:
+                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                    //                    word[j] = '';
+                    //                }
+                    //                else {
+                    //                    word[j] = once[rev[i]];
+                    //                }
+                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                    //                    word[j] = word[j] + " Arab";
+                    //                }
+                    //                break;
 
-                        //            case 10:
-                        //                aboveTens();
-                        //                break;
+                    //            case 10:
+                    //                aboveTens();
+                    //                break;
 
                     default: break;
                 }

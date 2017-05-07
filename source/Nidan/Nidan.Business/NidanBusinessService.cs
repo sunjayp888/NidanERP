@@ -16,6 +16,7 @@ using Nidan.Business.Models;
 using Nidan.Data.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
+using PaymentMode = Nidan.Entity.PaymentMode;
 
 
 namespace Nidan.Business
@@ -381,6 +382,7 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             }
             enquiry.EnquiryStatus = "Counselling";
+            enquiry.IsCounsellingDone = true;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             return data;
         }
@@ -633,67 +635,21 @@ namespace Nidan.Business
 
         public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
         {
+
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var batchData = RetrieveBatch(organisationId, admission.BatchId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
-
-            // Insert data in CandidateFee
-            var candidateFeeData = new CandidateFee()
-            {
-                PaymentDate = DateTime.UtcNow.Date,
-                CandidateInstallmentId = registrationData.CandidateInstallmentId,
-                PaidAmount = admission.CandidateFee.PaidAmount,
-                PaymentModeId = admission.CandidateFee.PaymentModeId,
-                FeeTypeId = 2,
-                ChequeNumber = admission.CandidateFee.ChequeNumber,
-                ChequeDate = admission.CandidateFee.ChequeDate,
-                BankName = admission.CandidateFee.BankName,
-                StudentCode = registrationData.StudentCode,
-                CentreId = admission.CentreId,
-                OrganisationId = admission.OrganisationId
-            };
-            _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
-
-            admission.CandidateFeeId = candidateFeeData.CandidateFeeId;
-            var data = _nidanDataService.CreateAdmission(organisationId, admission);
-
-            // Update data in CandidateInstallment
-            var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId);
-            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-            candidateInstallment.NumberOfInstallment = batchData.NumberOfInstallment;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
-
-            // Inserting Row in CandidateFee according to NumberOfInstallment
-            var numberOfInstallment = candidateInstallment.NumberOfInstallment;
-            //if (numberOfInstallment != null)
-            //{
-            //    for (int i = 1; i <= numberOfInstallment; i++)
-            //    {
-
-            //    }
-            //}
-
-
+            CreateCandidateFee(organisationId, centreId, admission);
+            var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
             // Update Registration IsAdmissionDone
+            var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
+            var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
             registrationData.IsAdmissionDone = true;
-
             // EnquiryStatus Update
-
-            enquiryData.EnquiryStatus = "Admission";
             enquiryData.Close = "Yes";
             enquiryData.ClosingRemark = "Admission Done";
+            enquiryData.IsAdmissionDone = true;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
-            // Counselling Update
-            var counselling = RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiryData.EnquiryId)
-                .Items.FirstOrDefault();
-            if (counselling != null)
-            {
-                var course = RetrieveCourse(organisationId, counselling.CourseOfferedId);
-                counselling.Close = "Yes";
-                counselling.ClosingRemark = "Admission Done";
-                //data.Particulars = data.FeeByStudent + " Against " + course.Name;
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
-            }
             //FollowUp Update
             var followup = RetrieveFollowUps(organisationId, e => e.EnquiryId == enquiryData.EnquiryId)
                 .Items.FirstOrDefault();
@@ -704,8 +660,36 @@ namespace Nidan.Business
                 followup.ClosingRemark = "Admission Done";
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
             }
-            return data;
+            return admissionData;
+        }
 
+        private void CreateCandidateFee(int organisationId, int centreId, Admission admission)
+        {
+            var candidateInstallment = RetrieveCandidateInstallment(organisationId, admission.Registration.CandidateInstallmentId, c => true);
+            var feePaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
+            var candidateBatch = RetrieveBatch(organisationId, admission.BatchId);
+            // Update data in CandidateInstallment
+            candidateInstallment.PaymentMethod = feePaymentMethod;
+            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString() ? candidateBatch.NoOfInstallment : 0;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
+
+            var candidateFees = new List<CandidateFee>();
+
+            for (int i = 0; i <= candidateInstallment.NumberOfInstallment; i++)
+            {
+                candidateFees.Add(new CandidateFee
+                {
+                    CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
+                    PaymentModeId = (int)Enum.PaymentMode.Cash,
+                    FeeTypeId = (int)FeeType.Installment,
+                    FollowUpDate = candidateBatch.BatchStartDate.AddMonths(candidateBatch.NoOfInstallment),
+                    FiscalYear = DateTime.Now.FiscalYear(),
+                    InstallmentAmount = candidateInstallment.CourseFee / candidateBatch.NoOfInstallment,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+            }
+            _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
         }
 
         public CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee)
@@ -1696,7 +1680,7 @@ namespace Nidan.Business
 
         public Batch RetrieveBatch(int organisationId, int id)
         {
-            return _nidanDataService.RetrieveBatch(organisationId, id, p => true);
+            return _nidanDataService.RetrieveBatch(organisationId, id, b => true);
         }
 
         public Counselling RetrieveCounselling(int organisationId, int counsellingId,
@@ -1751,11 +1735,6 @@ namespace Nidan.Business
         public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate)
         {
             return _nidanDataService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, p => true);
-        }
-
-        public CandidateInstallment RetrieveCandidateInstallment(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveCandidateInstallment(organisationId, id, p => true);
         }
 
         public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate,

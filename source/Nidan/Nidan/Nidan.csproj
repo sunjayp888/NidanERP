@@ -1553,6 +1553,7 @@
     <Content Include="Views\CandidateFee\Index.cshtml" />
     <Content Include="Views\CandidateFee\_CandidateFee.cshtml" />
     <Content Include="Views\CandidateFee\_CandidateFeeDetail.cshtml" />
+    <Content Include="Views\Counselling\Create.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1611,7 +1612,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58518/</IISUrl>
+          <IISUrl>http://localhost:58519/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

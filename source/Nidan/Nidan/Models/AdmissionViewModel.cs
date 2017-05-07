@@ -42,19 +42,6 @@ namespace Nidan.Models
             new DiscountType() {Id=5,Name = "5%"},
             new DiscountType() {Id=10,Name = "10%"}
         };
-        public List<int> SelectedTrainerIds
-        {
-            get
-            {
-                return JsonConvert.DeserializeObject<List<int>>(SelectedTrainerIdsJson);
-            }
-            set
-            {
-                SelectedTrainerIdsJson = JsonConvert.SerializeObject(value);
-            }
-        }
-
-        public string SelectedTrainerIdsJson { get; set; }
     }
     public class DiscountType
     {

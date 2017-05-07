@@ -56,26 +56,13 @@ namespace Nidan.Controllers
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
-            var registration =NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
+            var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
             var viewModel = new AdmissionViewModel
             {
-                Course = new Course()
-                {
-                    Name = "Test"
-                },
-                CourseInstallment = new CourseInstallment()
-                {
-                    Name = "Test"
-                },
-                Batch = new Batch()
-                {
-                    Name = "Test"
-                },
-                BatchDay = new BatchDay()
-                {
-                    BatchDayId = 0
-                },
-                // Counselling = counselling,
+                Course = new Course { Name = "Test" },
+                CourseInstallment = new CourseInstallment { Name = "Test" },
+                Batch = new Batch { Name = "Test" },
+                BatchDay = new BatchDay { BatchDayId = 0 },
                 Registration = registration,
                 RegistrationId = id.Value,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
@@ -111,37 +98,43 @@ namespace Nidan.Controllers
             {
                 admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, admissionViewModel.Admission);
                 // Create Personnel
-                var personnel = new Personnel()
-                {
-                    OrganisationId = organisationId,
-                    Title = enquiryData.Title,
-                    Forenames = enquiryData.FirstName,
-                    Surname = enquiryData.LastName,
-                    DOB = enquiryData.DateOfBirth ?? DateTime.UtcNow,
-                    Address1 = enquiryData.Address1,
-                    Address2 = enquiryData.Address2,
-                    Address3 = enquiryData.Address3,
-                    Address4 = enquiryData.Address4,
-                    Postcode = enquiryData.PinCode.ToString(),
-                    Mobile = enquiryData.Mobile.ToString(),
-                    Email = enquiryData.EmailId,
-                    CentreId = enquiryData.CentreId
-                };
-                NidanBusinessService.CreatePersonnel(organisationId, personnel);
+                var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
                 NidanBusinessService.UpdateAdmission(organisationId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
             }
             admissionViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
-            admissionViewModel.PaymentModes =new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(),"PaymentModeId", "Name");
+            admissionViewModel.PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name");
             admissionViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name");
             admissionViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
-            admissionViewModel.BatchTimePrefers =new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(),"BatchTimePreferId", "Name");
+            admissionViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name");
             admissionViewModel.Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name");
-            admissionViewModel.Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(),"RoomId", "Description");
+            admissionViewModel.Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description");
             admissionViewModel.CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList());
             return View(admissionViewModel);
+        }
+
+        private Personnel Personnel(int organisationId, Enquiry enquiryData)
+        {
+            var personnel = new Personnel()
+            {
+                OrganisationId = organisationId,
+                Title = enquiryData.Title,
+                Forenames = enquiryData.FirstName,
+                Surname = enquiryData.LastName,
+                DOB = enquiryData.DateOfBirth ?? DateTime.UtcNow,
+                Address1 = enquiryData.Address1,
+                Address2 = enquiryData.Address2,
+                Address3 = enquiryData.Address3,
+                Address4 = enquiryData.Address4,
+                Postcode = enquiryData.PinCode.ToString(),
+                Mobile = enquiryData.Mobile.ToString(),
+                Email = enquiryData.EmailId,
+                CentreId = enquiryData.CentreId
+            };
+            NidanBusinessService.CreatePersonnel(organisationId, personnel);
+            return personnel;
         }
 
         private IdentityResult CreateCandidateUserAndRole(Personnel personnel)

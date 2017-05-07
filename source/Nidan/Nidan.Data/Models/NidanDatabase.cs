@@ -64,7 +64,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Holiday> Holidays { get; set; }
         public virtual DbSet<PaymentMode> PaymentModes { get; set; }
         public virtual DbSet<Registration> Registrations { get; set; }
-        public virtual DbSet<RegistrationPaymentReceipt> RegistrationPaymentReceipts { get; set; }
         public virtual DbSet<CourseType> CourseTypes { get; set; }
         public virtual DbSet<CourseInstallment> CourseInstallments { get; set; }
         public virtual DbSet<CourseSubject> CourseSubjects { get; set; }
@@ -603,26 +602,6 @@ namespace Nidan.Data.Models
                  .Property(e => e.Name)
                  .IsUnicode(false);
 
-            modelBuilder.Entity<PaymentMode>()
-                .HasMany(e => e.RegistrationPaymentReceipts)
-                .WithRequired(e => e.PaymentMode)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<RegistrationPaymentReceipt>()
-                .Property(e => e.ChequeNo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationPaymentReceipt>()
-                .Property(e => e.BankName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationPaymentReceipt>()
-                .Property(e => e.Particulars)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationPaymentReceipt>()
-                .Property(e => e.FinancialYear)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Holiday>()
                .Property(e => e.Name)

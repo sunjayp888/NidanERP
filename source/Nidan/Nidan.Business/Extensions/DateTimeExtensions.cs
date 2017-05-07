@@ -21,5 +21,10 @@ namespace Nidan.Business.Extensions
         {
             return from.RangeTo(to, step);
         }
+
+        public static string FiscalYear(this DateTime now)
+        {
+            return string.Concat(now.Year, "-", now.AddYears(1).Year);
+        }
     }
 }
