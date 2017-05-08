@@ -66,8 +66,8 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
-                registrationViewModel.Registration.FollowupDate=DateTime.Now.AddDays(2);
-                registrationViewModel.Registration.RegistrationDate=DateTime.Now;
+                registrationViewModel.Registration.FollowupDate=DateTime.UtcNow.AddDays(2);
+                registrationViewModel.Registration.RegistrationDate=DateTime.UtcNow;
                 var registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, registrationViewModel.StudentCode, registrationViewModel.Registration);
                 return RedirectToAction("Edit", new {id = registration.RegistrationId});
             }
@@ -126,7 +126,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.IsAdmissionDone==false, orderBy, paging));
         }
 
         [HttpPost]

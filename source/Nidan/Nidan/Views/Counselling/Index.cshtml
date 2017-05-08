@@ -145,8 +145,8 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{counselling.Enquiry.EnquiryId}}">
+                                                            <li ng-if="!counselling.Enquiry.IsRegistrationDone">
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Create/{{counselling.Enquiry.EnquiryId}}">
                                                                     Create Registration
                                                                 </a>
                                                             </li>

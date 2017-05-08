@@ -149,11 +149,18 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            @*<li>
-                                                                <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{enquiry.EnquiryId}}">
+
+                                                            <li ng-if="!enquiry.IsCounsellingDone">
+                                                                <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
+                                                                    Create Counselling
+                                                                </a>
+                                                            </li>
+
+                                                            <li ng-if="!enquiry.IsRegistrationDone">
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
                                                                     Create Registration
                                                                 </a>
-                                                            </li>*@
+                                                            </li>
                                                         }
                                                     </ul>
                                                 </div>

@@ -13,7 +13,6 @@ namespace Nidan.Entity
         public CandidateFee()
         {
             Registrations = new HashSet<Registration>();
-            Admissions=new HashSet<Admission>();
         }
         public int CandidateFeeId { get; set; }
 
@@ -66,8 +65,5 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Admission> Admissions { get; set; }
     }
 }

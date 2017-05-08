@@ -15,8 +15,6 @@ namespace Nidan.Entity
 
         public int BatchId { get; set; }
 
-        public int CandidateFeeId { get; set; }
-
         public int CentreId { get; set; }
 
         [Column(TypeName = "date")]
@@ -29,8 +27,6 @@ namespace Nidan.Entity
         public virtual Registration Registration { get; set; }
 
         public virtual Batch Batch { get; set; }
-
-        public virtual CandidateFee CandidateFee { get; set; }
 
         public virtual Centre Centre { get; set; }
 

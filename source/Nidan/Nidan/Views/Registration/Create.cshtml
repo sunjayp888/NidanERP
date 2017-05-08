@@ -124,6 +124,7 @@
                     @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.ChequeNo)
                         @Html.HiddenFor(model => model.RegistrationPaymentReceipt.BankName)*@
                     @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.Particulars)*@
+                    @Html.HiddenFor(model => model.Registration.CourseInstallment.Name)
                     @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
@@ -220,6 +221,8 @@
                 });
             });
         });
+
+
 
 
         //-----------------------------------------

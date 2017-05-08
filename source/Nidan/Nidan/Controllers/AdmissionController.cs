@@ -92,7 +92,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var enquiryId = admissionViewModel.Admission.Registration.EnquiryId;
+            var registrationData = NidanBusinessService.RetrieveRegistration(organisationId,admissionViewModel.Admission.RegistrationId);
+            var enquiryId = registrationData.EnquiryId;
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
@@ -131,6 +132,8 @@ namespace Nidan.Controllers
                 Postcode = enquiryData.PinCode.ToString(),
                 Mobile = enquiryData.Mobile.ToString(),
                 Email = enquiryData.EmailId,
+                Telephone = "12345678",
+                NINumber = "NZ1234567",
                 CentreId = enquiryData.CentreId
             };
             NidanBusinessService.CreatePersonnel(organisationId, personnel);
