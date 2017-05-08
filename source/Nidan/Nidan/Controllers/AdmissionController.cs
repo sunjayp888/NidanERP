@@ -97,7 +97,7 @@ namespace Nidan.Controllers
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
-                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, admissionViewModel.Admission);
+                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, admissionViewModel.Admission,admissionViewModel.CandidateFee);
                 // Create Personnel
                 var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;

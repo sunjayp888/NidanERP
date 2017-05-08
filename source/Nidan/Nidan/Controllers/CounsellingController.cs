@@ -188,7 +188,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Enquiry.EnquiryStatus == "Enquiry" && p.Close != "yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.Enquiry.IsRegistrationDone==false && p.Close != "yes", orderBy, paging));
         }
 
         [HttpPost]

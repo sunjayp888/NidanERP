@@ -1772,7 +1772,13 @@ namespace Nidan.Data
                     .Admissions
                     .Include(p => p.Organisation)
                     .Include(p => p.Registration)
+                    .Include(p => p.Batch)
                     .Include(p => p.Registration.Enquiry)
+                    .Include(p => p.Registration.CandidateFee)
+                    .Include(p => p.Registration.CandidateInstallment)
+                    .Include(p => p.Registration.CandidateInstallment.CandidateFees)
+                    .Include(p => p.Registration.Course)
+                    .Include(p => p.Registration.CourseInstallment)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
