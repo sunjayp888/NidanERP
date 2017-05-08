@@ -633,7 +633,7 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
 
-        public Admission CreateAdmission(int organisationId, int centreId, Admission admission)
+        public Admission CreateAdmission(int organisationId, int centreId, Admission admission, CandidateFee candidateFee)
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
@@ -641,11 +641,28 @@ namespace Nidan.Business
             var courseInstallment = RetrieveCourseInstallment(organisationId, registrationData.CourseInstallmentId);
             candidatInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatInstallment);
+            var candidatefeeCreate = new CandidateFee()
+            {
+                PaymentDate = DateTime.UtcNow,
+                CandidateInstallmentId = candidatInstallment.CandidateInstallmentId,
+                PaidAmount = candidateFee.PaidAmount,
+                PaymentModeId = candidateFee.PaymentModeId,
+                FeeTypeId = (int)FeeType.Admission,
+                ChequeNumber = candidateFee.ChequeNumber,
+                ChequeDate = candidateFee.ChequeDate,
+                BankName = candidateFee.BankName,
+                Penalty = null,
+                StudentCode = registrationData.StudentCode,
+                FiscalYear = DateTime.Now.FiscalYear(),
+                CentreId = centreId,
+                OrganisationId = organisationId
+            };
+            _nidanDataService.Create<CandidateFee>(organisationId, candidatefeeCreate);
             CreateCandidateFee(organisationId, centreId, admission);
 
             admission.OrganisationId = organisationId;
             admission.CentreId = centreId;
-            admission.AdmissionDate=DateTime.UtcNow;
+            admission.AdmissionDate = DateTime.UtcNow;
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
             // Update Registration IsAdmissionDone
             registrationData.IsAdmissionDone = true;
@@ -675,12 +692,12 @@ namespace Nidan.Business
             var candidateBatch = RetrieveBatch(organisationId, admission.BatchId);
             // Update data in CandidateInstallment
             candidateInstallment.PaymentMethod = feePaymentMethod;
-            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString() ? candidateBatch.NumberOfInstallment : 0;
+            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString() ? candidateBatch.NumberOfInstallment : 1;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
 
             var candidateFees = new List<CandidateFee>();
 
-            for (int i = 0; i <= candidateInstallment.NumberOfInstallment; i++)
+            for (int i = 1; i <= candidateInstallment.NumberOfInstallment; i++)
             {
                 candidateFees.Add(new CandidateFee
                 {
@@ -688,8 +705,8 @@ namespace Nidan.Business
                     PaymentModeId = (int)Enum.PaymentMode.Cash,
                     FeeTypeId = (int)FeeType.Installment,
                     FollowUpDate = candidateBatch.BatchStartDate.AddMonths(candidateBatch.NumberOfInstallment),
-                    FiscalYear = DateTime.Now.FiscalYear(),
-                    InstallmentAmount = candidateInstallment.CourseFee / candidateBatch.NumberOfInstallment,
+                    FiscalYear = DateTime.UtcNow.FiscalYear(),
+                    InstallmentAmount = (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / candidateBatch.NumberOfInstallment,
                     CentreId = centreId,
                     OrganisationId = organisationId
                 });
@@ -766,7 +783,7 @@ namespace Nidan.Business
                 StudentCode = studentCode,
                 Remarks = registration.Remarks,
                 OrganisationId = organisationId,
-
+                RegistrationDate = registration.RegistrationDate
             };
             var data = _nidanDataService.Create<Registration>(organisationId, registrationData);
             var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);
@@ -806,6 +823,7 @@ namespace Nidan.Business
                 PaymentDate = DateTime.Now,
                 StudentCode = studentCode,
                 PaymentModeId = candidateFee.PaymentModeId,
+                FiscalYear = DateTime.UtcNow.FiscalYear()
             };
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }

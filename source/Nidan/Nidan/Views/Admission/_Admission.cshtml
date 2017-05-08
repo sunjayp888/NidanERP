@@ -97,20 +97,21 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.TextBoxFor(model => model.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
                     @Html.ValidationMessageFor(model => model.CandidateFee.PaidAmount, "", new { @class = "help-block" })
                 </div>
             </div>
-        </div>
-
-
-        <div id="PaymentDetails">
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Sum Of Rupees</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div id="divDisplayWords" style="font-size: 15px; font-family: Arial;" class="form-control col-md-7 col-xs-12"></div>
                 </div>
             </div>
+        </div>
+
+
+        <div id="PaymentDetails">
+            
             <div class="form-group bank-details-textbox-admission">
                 @Html.LabelFor(model => model.CandidateFee.BankName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
