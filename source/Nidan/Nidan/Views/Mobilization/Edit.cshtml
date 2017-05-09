@@ -6,7 +6,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.Mobilization.FirstName<small>Edit mobilizer</small></h2>
+                <h2>@string.Format("{0} {1} {2} {3}", Model.Mobilization.Title, Model.Mobilization.FirstName, Model.Mobilization.MiddleName, Model.Mobilization.LastName)<small>Edit mobilizer</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -146,6 +146,12 @@
                 $('.eventId').hide();
             }
         });
+
+        if ($('#Mobilization_MobilizationTypeId :selected').text() == "Event") {
+            $('.eventId').show();
+        } else {
+            $('.eventId').hide();
+        }
 
         if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
             $('.interestedCourseId').show();
