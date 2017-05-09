@@ -17,7 +17,7 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCandidateFee = editCandidateFee;
-        vm.viewCandidateFee = viewCandidateFee;
+       // vm.viewCandidateFee = viewCandidateFee;
         vm.searchCandidateFee = searchCandidateFee;
         vm.searchKeyword = "";
         vm.searchMessage = "";
