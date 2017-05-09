@@ -173,7 +173,7 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
-                SelectedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
+                SelectedCourseIds =enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
@@ -201,7 +201,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (User.IsSuperAdmin() || p.CentreId == UserCentreId) && p.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false && p.IsAdmissionDone == false, orderBy, paging));
         }
 
         [HttpPost]
@@ -213,7 +214,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (User.IsSuperAdmin() || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate, orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.IsAdmissionDone==false, orderBy, paging));
         }
 
         [HttpPost]

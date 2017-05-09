@@ -275,7 +275,7 @@ namespace Nidan.Business
             var interestedCourses = RetrieveCourses(organisationId, c => true);
             var qualifications = RetrieveQualifications(organisationId, q => true);
             var mobilizationType =
-                RetrieveMobilizationTypes(organisationId, e => e.Name.ToLower() == "event").FirstOrDefault();
+                RetrieveMobilizationTypes(organisationId, e => e.Name == "Event").FirstOrDefault();
             var followUpList = new List<FollowUp>();
             foreach (var item in mobilizations)
             {
@@ -364,6 +364,10 @@ namespace Nidan.Business
 
         public Counselling CreateCounselling(int organisationId, Counselling counselling)
         {
+            counselling.Title = counselling.Enquiry.Title;
+            counselling.FirstName = counselling.Enquiry.FirstName;
+            counselling.MiddleName = counselling.Enquiry.MiddleName;
+            counselling.LastName = counselling.Enquiry.LastName;
             var data = _nidanDataService.CreateCounselling(organisationId, counselling);
             var enquiry = RetrieveEnquiry(organisationId, data.EnquiryId);
             var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
@@ -1233,7 +1237,7 @@ namespace Nidan.Business
         public List<MobilizationType> RetrieveMobilizationTypes(int organisationId,
             Expression<Func<MobilizationType, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<MobilizationType>(organisationId, e => true);
+            return _nidanDataService.Retrieve<MobilizationType>(organisationId, predicate);
         }
 
         public PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null,

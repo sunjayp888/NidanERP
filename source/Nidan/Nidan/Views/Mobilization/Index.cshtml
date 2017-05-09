@@ -104,11 +104,10 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">First Name</th>
-                                            <th ng-click="model.order('LastName')" ng-class="model.orderClass('LastName')">Last Name</th>
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
                                             <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>
@@ -121,8 +120,7 @@
                                     <tbody>
                                         <tr ng-repeat="mobilizer in model.mobilizations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewMobilization(mobilizer.MobilizationId)">
                                             @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
-                                            <td><span ng-bind="mobilizer.FirstName"></span></td>
-                                            <td><span ng-bind="mobilizer.LastName"></span></td>
+                                            <td><span ng-bind="mobilizer.FirstName"></span> <span ng-bind="mobilizer.MiddleName"></span> <span ng-bind="mobilizer.LastName"></span></td>
                                             <td><span ng-bind="mobilizer.Mobile"></span></td>
                                             <td><span ng-bind="mobilizer.Course.Name"></span></td>
                                             <td><span ng-bind="mobilizer.Qualification.Name"></span></td>

@@ -103,10 +103,13 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, counselling.EnquiryId);
+            var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
