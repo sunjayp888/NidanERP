@@ -5,65 +5,53 @@
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-             @*   <h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.Title, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.FirstName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.MiddleName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.LastName)</button> Candidate Fees Details<small></small></h2>*@
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <p class="text-muted font-13 m-b-30">
-                </p>
-                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+        <div ng-controller="CandidateFeeController as model" ng-init="model.initialise(@Model.CandidateInstallmentId)">
+            <div class="x_panel">
+                <div class="x_title">
+                    @*   <h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.Title, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.FirstName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.MiddleName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.LastName)</button> Candidate Fees Details<small></small></h2>*@
+                    <div class="clearfix"></div>
+                </div>
+                @Html.TextBoxFor(m=>m.CandidateInstallmentId);
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Pay Amount</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
+                                            <td><span ng-bind="candidateFee.PaidAmount"></span></td>
+                                            <td><button id="btnPayFee" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal">Pay</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @*     @Html.Partial("Pagination/_pagination")*@
+                    </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <table id="tblCandidateFees" wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                <thead>
-                                <tr role="row">
-                                    <th>Total Fees</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody id="tbody">
-                                @foreach (var item in Model.CandidateFeeList)
-                                {
-                                    @Html.HiddenFor(model => model.CandidateFeeId)
-                                    @Html.HiddenFor(model => model.CandidateFee.CandidateFeeId)
-                                    <tr>
-                                        <td>@item.InstallmentAmount</td>
-                                        <td>
-                                            <button id="btnPayFee" type="button" class="btn btn-success" ng-click="model.removeError()" data-toggle="modal" data-target="#candidateFeeModal" href="@Url.Action("Edit", "CandidateFee", new {id = item.CandidateFeeId})">Pay</button>
-                                            <button id="btnPayFee" type="button" class="btn btn-dark" disabled="disabled">Print</button>
-                                        </td>
-                                    </tr>
-                                }
-
-                                </tbody>
-                            </table>
+                            <label ng-bind="model.searchMessage"></label>
                         </div>
-                    </div>
-                    @*     @Html.Partial("Pagination/_pagination")*@
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label ng-bind="model.searchMessage"></label>
                     </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
-                <span class="fa fa-chevron-left"></span>&nbsp;Back to list
-            </a>
-        </div>
-        <div ng-controller="CandidateFeeController as model" ng-init="model.initialise(@Model.CandidateFeeId.ToString())">
-            @using (Html.BeginForm())
-            {
-                @Html.HiddenFor(model => model.CandidateFeeId)
-                @Html.HiddenFor(model => model.CandidateFee.CandidateFeeId)
-                @Html.AntiForgeryToken()
-                @Html.Partial("_CandidateFee")
-
-            }
+            <div>
+                <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+                    <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+                </a>
+            </div>
+            @Html.HiddenFor(model => model.CandidateInstallmentId)
+            @Html.HiddenFor(model => model.CandidateFee.CandidateFeeId)
+            @Html.AntiForgeryToken()
+            @Html.Partial("_CandidateFee")
         </div>
     </div>
 </div>

@@ -22,21 +22,23 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.removeError = removeError;
-        initialise();
+        vm.candidateInstallmentId;
+        vm.saveFee = saveFee;
+        vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
+        vm.initialise = initialise;
 
-        function initialise() {
+        function initialise(candidateInstallmentId) {
+            vm.candidateInstallmentId = candidateInstallmentId;
             vm.orderBy.property = "InstallmentDate";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "desc";
             order("InstallmentDate");
         }
 
-        function retrieveCandidateFees(candidateInstallmentId,paging, orderBy) {
-            return CandidateFeeService.retrieveCandidateFees(candidateInstallmentId, paging, orderBy)
+        function retrieveCandidateFees() {
+            return CandidateFeeService.retrieveCandidateFees(vm.candidateInstallmentId)
                 .then(function (response) {
-                    vm.candidateFees = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.candidateFees = response.data;
                     return vm.candidateFees;
                 });
         }
@@ -51,6 +53,10 @@
                   vm.searchMessage = vm.candidateFees.length === 0 ? "No Records Found" : "";
                   return vm.candidateFees;
               });
+        }
+
+        function saveFee() {
+            var candidateFee = new CandidateFee{}
         }
 
         function pageChanged() {
@@ -73,6 +79,13 @@
         function removeError() {
             vm.Errors.length = 0;
             vm.documentFile = null;
+        }
+
+        function openCandidateFeeModalPopUp(candidateFeeId) {
+            return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
+              .then(function (response) {
+                  $("#txtPaidAmount").val(response.data.PaidAmount);
+                });
         }
 
     }

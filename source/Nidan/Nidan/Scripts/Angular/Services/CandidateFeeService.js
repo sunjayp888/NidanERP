@@ -15,15 +15,10 @@
 
         return service;
 
-        function retrieveCandidateFees(paging, orderBy) {
+        function retrieveCandidateFees(id) {
 
-            var url = "/CandidateFee/List",
-                data = {
-                    paging: paging,
-                    orderBy: new Array(orderBy)
-                };
-
-            return $http.post(url, data);
+            var url = "/CandidateFee/CandidateFeeList/" + id;
+            return $http.post(url);
         }
 
         function searchCandidateFee(SearchKeyword, Paging, OrderBy) {

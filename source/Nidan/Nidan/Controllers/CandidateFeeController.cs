@@ -55,7 +55,7 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Detail(CandidateFeeViewModel candidateFeeViewModel)
+        public ActionResult SaveFee(CandidateFeeViewModel candidateFeeViewModel)
         {
             var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
@@ -76,12 +76,6 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        //[Authorize(Roles = "Admin")]
-        //public ActionResult GetCandidateFee(int? id)
-        //{
-        //    return View(viewModel);
-        //}
-
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
@@ -93,17 +87,18 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Detail(int? id)
         {
-            var isSuperAdmin = User.IsSuperAdmin();
-            var candidateFee = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, c=>c.CandidateInstallmentId==id.Value).Items.FirstOrDefault();
-            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == id).Items;
-            var candidateFeeModel = new CandidateFeeViewModel
-            {
-                CandidateFeeList = data.ToList(),
-                CandidateFeeId = candidateFee?.CandidateFeeId,//this id contains candidateinstalmentid not candidatefeeid
-                //var candidateFee = NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value);
-                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, e => true).ToList(), "PaymentModeId", "Name")
-            };
+            var candidateFeeModel = new CandidateFeeViewModel { CandidateInstallmentId = id.Value};
             return View(candidateFeeModel);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult CandidateFeeList(int? id)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var candidateFee = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, c => c.CandidateInstallmentId == id.Value).Items;
+            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == id).Items;
+            return this.JsonNet(data);
         }
 
         [HttpPost]
