@@ -58,15 +58,10 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveCandidateFee(userOrganisationId, id));
         }
 
-        //post : create/candidatefee
-        [Authorize(Roles = "Admin")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult SaveFee(CandidateFee candidateFee)
         {
             var organisationId = UserOrganisationId;
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     candidateFee.OrganisationId = organisationId;
@@ -82,9 +77,6 @@ namespace Nidan.Controllers
                 {
                     return this.JsonNet(false);
                 }
-                
-            }
-            return this.JsonNet(false);
         }
 
         [HttpPost]
