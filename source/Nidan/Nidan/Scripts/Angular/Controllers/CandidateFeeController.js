@@ -11,20 +11,23 @@
         /* jshint validthis:true */
         var vm = this;
         vm.candidateFees = [];
+        vm.paymentModes = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCandidateFee = editCandidateFee;
-       // vm.viewCandidateFee = viewCandidateFee;
+        // vm.viewCandidateFee = viewCandidateFee;
         vm.searchCandidateFee = searchCandidateFee;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.removeError = removeError;
         vm.candidateInstallmentId;
+        vm.paymentModeId;
         vm.saveFee = saveFee;
         vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
+        vm.retrievePaymentModes = retrievePaymentModes;
         vm.initialise = initialise;
 
         function initialise(candidateInstallmentId) {
@@ -33,7 +36,9 @@
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "desc";
             order("InstallmentDate");
+            retrievePaymentModes();
         }
+
 
         function retrieveCandidateFees() {
             return CandidateFeeService.retrieveCandidateFees(vm.candidateInstallmentId)
@@ -56,7 +61,27 @@
         }
 
         function saveFee() {
-            var candidateFee = new CandidateFee{}
+            var candidateFee = {
+                PaidAmount: $("#txtAmount").val(),
+                PaymentModeId: vm.paymentModeId,
+                ChequeNumber: $("#txtChequeNumber").val(),
+                ChequeDate: $("#txtChequeDate").val(),
+                BankName: $("#txtAmount").val(),
+                FollowUpDate: $("#txtBankName").val()
+            }
+
+            return CandidateFeeService.saveFee(candidateFee)
+               .then(function (response) {
+                   retrieveCandidateFees();
+               });
+        }
+
+        function retrievePaymentModes() {
+            return CandidateFeeService.retrievePaymentModes()
+               .then(function (response) {
+                   vm.paymentModes = response.data;
+                   return vm.paymentModes;
+               });
         }
 
         function pageChanged() {
@@ -85,7 +110,7 @@
             return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
               .then(function (response) {
                   $("#txtPaidAmount").val(response.data.PaidAmount);
-                });
+              });
         }
 
     }

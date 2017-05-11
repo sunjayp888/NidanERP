@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Nidan.Business.Enum;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -50,30 +51,40 @@ namespace Nidan.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult GetFeeCandidate(int id)
+        {
+            var userOrganisationId = UserOrganisationId;
+            return this.JsonNet(NidanBusinessService.RetrieveCandidateFee(userOrganisationId, id));
+        }
 
         //post : create/candidatefee
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveFee(CandidateFeeViewModel candidateFeeViewModel)
+        public ActionResult SaveFee(CandidateFee candidateFee)
         {
             var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-                candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
-                candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
-                candidateFeeViewModel.CandidateFee.PaymentDate = DateTime.UtcNow;
-                candidateFeeViewModel.CandidateFee.InstallmentDate = DateTime.UtcNow;
-                candidateFeeViewModel.CandidateFee.FeeTypeId = 2;
-                candidateFeeViewModel.CandidateFee.FiscalYear = "2017-18";
-                candidateFeeViewModel.CandidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeViewModel.CandidateFee);
-                return RedirectToAction("Index");
+                try
+                {
+                    candidateFee.OrganisationId = organisationId;
+                    candidateFee.CentreId = UserCentreId;
+                    candidateFee.PaymentDate = DateTime.UtcNow;
+                    candidateFee.InstallmentDate = DateTime.UtcNow;
+                    candidateFee.FeeTypeId = (int)FeeType.Installment;
+                    candidateFee.FiscalYear = "2017-18";
+                    candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFee);
+                    return this.JsonNet(true);
+                }
+                catch (Exception e)
+                {
+                    return this.JsonNet(false);
+                }
+                
             }
-            var viewModel = new CandidateFeeViewModel
-            {
-                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name")
-            };
-            return View(viewModel);
+            return this.JsonNet(false);
         }
 
         [HttpPost]
@@ -87,7 +98,7 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Detail(int? id)
         {
-            var candidateFeeModel = new CandidateFeeViewModel { CandidateInstallmentId = id.Value};
+            var candidateFeeModel = new CandidateFeeViewModel { CandidateInstallmentId = id.Value };
             return View(candidateFeeModel);
         }
 
@@ -106,6 +117,12 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             return this.JsonNet(NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult PaymentMode()
+        {
+            return this.JsonNet(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, c => true));
         }
     }
 }
