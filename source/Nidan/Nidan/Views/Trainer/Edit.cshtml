@@ -6,7 +6,7 @@
 
 <div>
     <div class="row">
-        <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>@Model.Trainer.FirstName<small>Edit trainer</small></h2>
@@ -29,40 +29,16 @@
                             @Html.HiddenFor(model => Model.Trainer.TrainerId)
                             @Html.Partial("_Trainer", Model)
 
-                            <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#trainerDocumentModal">Upload Document</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     }
-                </div>
-            </div>
-        </div>
-        <div id="quickActions" class="col-md-3 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Quick Actions<small></small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    @if (ViewContext.ViewData.ModelState.Any(x => x.Key == "EntitlementError"))
-                    {
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
-                            </div>
-                        </div>
-                    }
-                    <button type="button" class="btn btn-lg btn-success col-md-10 col-sm-12" ng-click="model.removeError()" data-toggle="modal" data-target="#trainerDocumentModal">Upload Document</button>
-                    @*<a id="viewDocument" ng-click="model.retrieveStudentDocuments('@Model.Counselling.Enquiry.StudentCode','psychometric')" class="btn btn-lg btn-success col-md-10 col-sm-12">View Document</a>*@
                 </div>
             </div>
         </div>
@@ -78,6 +54,25 @@
 </div>
 @section scripts {
     <script>
+
+        jQuery(function () {
+            if (!$('#Trainer_Certified').is(':checked')) {
+                $('.trainer-certification-textbox').hide();
+            } else {
+                $('.trainer-certification-textbox').show();
+            }
+
+
+            $('#yesRadioButton').click(function () {
+                $('.trainer-certification-textbox').show();
+            });
+
+            $('#noRadioButton').click(function () {
+                $('.trainer-certification-textbox').hide();
+            });
+
+        });
+
         $('#Trainer_SectorId').change(function () {
             var sectorId = $('#Trainer_SectorId :selected').val();
             $.ajax({

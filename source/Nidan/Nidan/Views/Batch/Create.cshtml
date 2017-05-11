@@ -29,7 +29,7 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="btnsubmit"type="submit" class="btn btn-success" disabled="disabled">Submit</button>
+                                    <button id="btnsubmit" type="submit" class="btn btn-success" disabled="disabled">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -47,14 +47,14 @@
 @section scripts {
     <script>
         $("#Batch_Intake").val("");
-        $("#Batch_NoOfHolidays").val("");
-        $("#Batch_NoOfHoursDaily").val("");
+        $("#Batch_NumberOfHolidays").val("");
+        $("#Batch_NumberOfHoursDaily").val("");
         $("#Batch_BatchStartTimeHours").val("");
         $("#Batch_BatchStartTimeMinutes").val("");
         $("#Batch_BatchEndTimeHours").val("");
         $("#Batch_BatchEndTimeMinutes").val("");
         $("#Batch_Month").val("");
-        $("#Batch_NoOfInstallment").val("");
+        $("#Batch_NumberOfInstallment").val("");
         $("#CourseInstallment_Fee").val("");
         $("#CourseInstallment_DownPayment").val("");
         var daterangepickerOptions = {
@@ -65,19 +65,19 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function () {
+            onSelect: function() {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
-        jQuery(function () {
+        jQuery(function() {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function (ev, picker) {
+                    function(ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
@@ -112,7 +112,8 @@
         $(document)
             .ready(function() {
                 /* Allow digits only */
-                $(".batchStartTime")
+                $(".batchStartTime") &&
+                    $(".Batch_NumberOfHoursDaily")
                     .keypress(function(e) {
                         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                             $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
@@ -128,7 +129,7 @@
             });
         //========================================================================= do not allow 0 in number of hours
 
-        $("#Batch_NoOfHoursDaily")
+        $("#Batch_NumberOfHoursDaily")
             .on("keypress keyup",
                 function() {
                     if ($(this).val() == '0') {
@@ -140,10 +141,10 @@
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
             var startMinutr = $("#Batch_BatchStartTimeMinutes").val();
-            var dailyhours = $("#Batch_NoOfHoursDaily").val();
+            var dailyhours = $("#Batch_NumberOfHoursDaily").val();
 
             if (startHours == 12) {
-                var dailyHours12 = $("#Batch_NoOfHoursDaily").val();
+                var dailyHours12 = $("#Batch_NumberOfHoursDaily").val();
                 var startHours12 = 0;
                 var endTime12 = parseInt(startHours12) + parseInt(dailyHours12);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTime12;
@@ -155,7 +156,7 @@
                     var endTime1 = parseInt(startHours1) + parseInt(dailyhours);
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime1;
                 } else {
-                    var dailyHours11 = $("#Batch_NoOfHoursDaily").val();
+                    var dailyHours11 = $("#Batch_NumberOfHoursDaily").val();
                     var startHours11 = -1;
                     var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
@@ -169,7 +170,7 @@
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime2;
 
                 } else {
-                    var dailyHours10 = $("#Batch_NoOfHoursDaily").val();
+                    var dailyHours10 = $("#Batch_NumberOfHoursDaily").val();
                     var startHours10 = -2;
                     var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
@@ -184,7 +185,7 @@
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime4;
 
                 } else {
-                    var dailyHours09 = $("#Batch_NoOfHoursDaily").val();
+                    var dailyHours09 = $("#Batch_NumberOfHoursDaily").val();
                     var startHours09 = -3;
                     var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
@@ -199,14 +200,14 @@
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime5;
 
                 } else {
-                    var dailyHours08 = $("#Batch_NoOfHoursDaily").val();
+                    var dailyHours08 = $("#Batch_NumberOfHoursDaily").val();
                     var startHours08 = -4;
                     var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
                     document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
                 }
 
             } else {
-                var dailyHoursB = $("#Batch_NoOfHoursDaily").val();
+                var dailyHoursB = $("#Batch_NumberOfHoursDaily").val();
                 var startHoursB = $("#Batch_BatchStartTimeHours").val();
                 var endTimeB = parseInt(startHoursB) + parseInt(dailyHoursB);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTimeB;
@@ -234,36 +235,325 @@
 
         // ($(this).find('input[name="lineup[]"]:checked').length
 
-        $("#countbutton")
-            .click(function () {
-                var checkboxlength = $("[type='checkbox']:checked").length - 1;
+        function checkboxes() {
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length - 1;
+            //$('#chkcount').text(value);
 
-                if (checkboxlength == 0) {
-                    alert("Please Select Atleast Any One Day");
-                } else if (checkboxlength > 0) {
-                    var courseDuration = $("#Course_Duration").val();
-                    var hours = $("#Batch_NoOfHoursDaily").val();
-                    var checkboxcount = $("[type='checkbox']:checked").length - 1;
-                    var perweek = checkboxcount * hours;
-                    var perMonth = perweek * 4;
-                    var roundresult = courseDuration / perMonth;
-                    var result = Math.round((roundresult * 100) / 100);
-                    $("#Batch_Month").val(result);
-                    var noofinstallment = result - 2;
-                    $("#Batch_NoOfInstallment").val(noofinstallment);
+            if (checkboxlength == 0) {
+                alert("Please Select Atleast Any One Day");
+            } else if (checkboxlength > 0) {
+                var courseDuration = $("#Course_Duration").val();
+                var hours = $("#Batch_NumberOfHoursDaily").val();
+                var checkboxcount = $("[type='checkbox']:checked").length - 1;
+                var perweek = checkboxcount * hours;
+                var perMonth = perweek * 4;
+                var roundresult = courseDuration / perMonth;
+                var result = Math.round((roundresult * 100) / 100);
+                $("#Batch_Month").val(result);
+                var noofinstallment = result - 2;
+                $("#Batch_NumberOfInstallment").val(noofinstallment);
+
+                 if ($("#Batch_NumberOfInstallment") == "") {
+                    $('.fisrt-installment-textbox').hide();
+                    $('.second-installment-textbox').hide();
+                    $('.third-installment-textbox').hide();
+                    $('.forth-installment-textbox').hide();
+                    $('.fifth-installment-textbox').hide();
+                    $('.sixth-installment-textbox').hide();
+                    $('.seventh-installment-textbox').hide();
+                    $('.eighth-installment-textbox').hide();
+                    $('.nineth-installment-textbox').hide();
+                    $('.tenth-installment-textbox').hide();
+                    $('.eleventh-installment-textbox').hide();
+                    $('.twelveth-installment-textbox').hide();
                 }
+                else {
 
-                //===================================================No Of Installment Do not allow grater than Month
-                $("#Batch_NoOfInstallment")
-                    .keyup(function() {
-                        var noofinstallmentvalue = noofinstallment;
-                        var noofinstallmentext = $("#Batch_NoOfInstallment").val();
-                        if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
-                            alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
-                            $(this).val("");
-                        }
-                    });
-            });
+                    var fee = $("#CourseInstallment_Fee").val();
+                    var dp = $("#CourseInstallment_DownPayment").val();
+                    //var noofinstallment = $("#Batch_NumberOfInstallment").val();
+
+           //         $("#Batch_NumberOfInstallment")
+           //.keypress(function () {
+           //    var noofinstallmentvalue = noofinstallment2;
+           //    var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
+           //    if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+           //        alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+           //        $(this).val("");
+           //    }
+           //});
+
+                    if (!fee || !dp)
+                        return false; // Wait till both values are set
+                    var answer = fee - dp;
+                    var ansvalue = answer / noofinstallment;
+                    var value = Math.round((ansvalue * 100) / 100);
+                    if (noofinstallment == 1) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').hide();
+                        $('.third-installment-textbox').hide();
+                        $('.forth-installment-textbox').hide();
+                        $('.fifth-installment-textbox').hide();
+                        $('.sixth-installment-textbox').hide();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                    }
+                    if (noofinstallment == 2) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').hide();
+                        $('.forth-installment-textbox').hide();
+                        $('.fifth-installment-textbox').hide();
+                        $('.sixth-installment-textbox').hide();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                    }
+                    if (noofinstallment == 3) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').hide();
+                        $('.fifth-installment-textbox').hide();
+                        $('.sixth-installment-textbox').hide();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                    }
+                    if (noofinstallment == 4) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').hide();
+                        $('.sixth-installment-textbox').hide();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                    }
+                    if (noofinstallment == 5) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').hide();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                    }
+                    if (noofinstallment == 6) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').hide();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                    }
+                    if (noofinstallment == 7) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').hide();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                    }
+                    if (noofinstallment == 8) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').show();
+                        $('.nineth-installment-textbox').hide();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                        $("#Batch_EighthInstallment").val(value);
+                    }
+                    if (noofinstallment == 9) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').show();
+                        $('.nineth-installment-textbox').show();
+                        $('.tenth-installment-textbox').hide();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                        $("#Batch_EighthInstallment").val(value);
+                        $("#Batch_NinethInstallment").val(value);
+                    }
+                    if (noofinstallment == 10) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').show();
+                        $('.nineth-installment-textbox').show();
+                        $('.tenth-installment-textbox').show();
+                        $('.eleventh-installment-textbox').hide();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                        $("#Batch_EighthInstallment").val(value);
+                        $("#Batch_NinethInstallment").val(value);
+                        $("#Batch_TenthInstallment").val(value);
+                    }
+                    if (noofinstallment == 11) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').show();
+                        $('.nineth-installment-textbox').show();
+                        $('.tenth-installment-textbox').show();
+                        $('.eleventh-installment-textbox').show();
+                        $('.twelveth-installment-textbox').hide();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                        $("#Batch_EighthInstallment").val(value);
+                        $("#Batch_NinethInstallment").val(value);
+                        $("#Batch_TenthInstallment").val(value);
+                        $("#Batch_EleventhInstallment").val(value);
+                    }
+                    if (noofinstallment == 12) {
+                        $('.fisrt-installment-textbox').show();
+                        $('.second-installment-textbox').show();
+                        $('.third-installment-textbox').show();
+                        $('.forth-installment-textbox').show();
+                        $('.fifth-installment-textbox').show();
+                        $('.sixth-installment-textbox').show();
+                        $('.seventh-installment-textbox').show();
+                        $('.eighth-installment-textbox').show();
+                        $('.nineth-installment-textbox').show();
+                        $('.tenth-installment-textbox').show();
+                        $('.eleventh-installment-textbox').show();
+                        $('.twelveth-installment-textbox').show();
+                        $("#Batch_FirstInstallment").val(value);
+                        $("#Batch_SecondInstallment").val(value);
+                        $("#Batch_ThirdInstallment").val(value);
+                        $("#Batch_FourthInstallment").val(value);
+                        $("#Batch_FifthInstallment").val(value);
+                        $("#Batch_SixthInstallment").val(value);
+                        $("#Batch_SeventhInstallment").val(value);
+                        $("#Batch_EighthInstallment").val(value);
+                        $("#Batch_NinethInstallment").val(value);
+                        $("#Batch_TenthInstallment").val(value);
+                        $("#Batch_EleventhInstallment").val(value);
+                        $("#Batch_TwelvethInstallment").val(value);
+                    }
+                }
+            }
+        }
+
+
+        //===================================================No Of Installment Do not allow grater than Month
+       
+        //var numofinstallment = $("#Batch_NumberOfInstallment").val();
+
+        //$("#Batch_NumberOfInstallment")
+        //    .keypress(function() {
+        //        var noofinstallmentvalue = numofinstallment;
+        //        var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
+        //        if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+        //            alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+        //            $(this).val("");
+        //        }
+        //    });
+           
+
 
         //================================================================== Calculation Of Installment
 
@@ -279,269 +569,288 @@
         $('.tenth-installment-textbox').hide();
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
-        $("#addbutton")
-            .click(function () {
-                var fee = $("#CourseInstallment_Fee").val();
-                var dp = $("#CourseInstallment_DownPayment").val();
-                var noofinstallment = $("#Batch_NoOfInstallment").val();
-                if (!fee || !dp)
-                    return false; // Wait till both values are set
-                var answer = fee - dp;
-                var ansvalue = answer / noofinstallment;
-                var value = Math.round((ansvalue * 100) / 100);
-                if (noofinstallment == 1) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').hide();
-                    $('.third-installment-textbox').hide();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                }
-                if (noofinstallment == 2) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').hide();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                }
-                if (noofinstallment == 3) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                }
-                if (noofinstallment == 4) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                }
-                if (noofinstallment == 5) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                }
-                if (noofinstallment == 6) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                }
-                if (noofinstallment == 7) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                }
-                if (noofinstallment == 8) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                }
-                if (noofinstallment == 9) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                }
-                if (noofinstallment == 10) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                }
-                if (noofinstallment == 11) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').show();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                    $("#Batch_EleventhInstallment").val(value);
-                }
-                if (noofinstallment == 12) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').show();
-                    $('.twelveth-installment-textbox').show();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                    $("#Batch_EleventhInstallment").val(value);
-                    $("#Batch_TwelvethInstallment").val(value);
-                }
-            });
+        //$("#Batch_NumberOfInstallment")
+        //    .ready(function() {
+        //        if ($("#Batch_NumberOfInstallment") == "") {
+        //            $('.fisrt-installment-textbox').hide();
+        //            $('.second-installment-textbox').hide();
+        //            $('.third-installment-textbox').hide();
+        //            $('.forth-installment-textbox').hide();
+        //            $('.fifth-installment-textbox').hide();
+        //            $('.sixth-installment-textbox').hide();
+        //            $('.seventh-installment-textbox').hide();
+        //            $('.eighth-installment-textbox').hide();
+        //            $('.nineth-installment-textbox').hide();
+        //            $('.tenth-installment-textbox').hide();
+        //            $('.eleventh-installment-textbox').hide();
+        //            $('.twelveth-installment-textbox').hide();
+        //        }
+        //        else {
+
+        //            var fee = $("#CourseInstallment_Fee").val();
+        //            var dp = $("#CourseInstallment_DownPayment").val();
+        //            var noofinstallment = $("#Batch_NumberOfInstallment").val();
+        //            if (!fee || !dp)
+        //                return false; // Wait till both values are set
+        //            var answer = fee - dp;
+        //            var ansvalue = answer / noofinstallment;
+        //            var value = Math.round((ansvalue * 100) / 100);
+        //            if (noofinstallment == 1) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').hide();
+        //                $('.third-installment-textbox').hide();
+        //                $('.forth-installment-textbox').hide();
+        //                $('.fifth-installment-textbox').hide();
+        //                $('.sixth-installment-textbox').hide();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 2) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').hide();
+        //                $('.forth-installment-textbox').hide();
+        //                $('.fifth-installment-textbox').hide();
+        //                $('.sixth-installment-textbox').hide();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 3) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').hide();
+        //                $('.fifth-installment-textbox').hide();
+        //                $('.sixth-installment-textbox').hide();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 4) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').hide();
+        //                $('.sixth-installment-textbox').hide();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 5) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').hide();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 6) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').hide();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 7) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').hide();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 8) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').show();
+        //                $('.nineth-installment-textbox').hide();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //                $("#Batch_EighthInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 9) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').show();
+        //                $('.nineth-installment-textbox').show();
+        //                $('.tenth-installment-textbox').hide();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //                $("#Batch_EighthInstallment").val(value);
+        //                $("#Batch_NinethInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 10) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').show();
+        //                $('.nineth-installment-textbox').show();
+        //                $('.tenth-installment-textbox').show();
+        //                $('.eleventh-installment-textbox').hide();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //                $("#Batch_EighthInstallment").val(value);
+        //                $("#Batch_NinethInstallment").val(value);
+        //                $("#Batch_TenthInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 11) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').show();
+        //                $('.nineth-installment-textbox').show();
+        //                $('.tenth-installment-textbox').show();
+        //                $('.eleventh-installment-textbox').show();
+        //                $('.twelveth-installment-textbox').hide();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //                $("#Batch_EighthInstallment").val(value);
+        //                $("#Batch_NinethInstallment").val(value);
+        //                $("#Batch_TenthInstallment").val(value);
+        //                $("#Batch_EleventhInstallment").val(value);
+        //            }
+        //            if (noofinstallment == 12) {
+        //                $('.fisrt-installment-textbox').show();
+        //                $('.second-installment-textbox').show();
+        //                $('.third-installment-textbox').show();
+        //                $('.forth-installment-textbox').show();
+        //                $('.fifth-installment-textbox').show();
+        //                $('.sixth-installment-textbox').show();
+        //                $('.seventh-installment-textbox').show();
+        //                $('.eighth-installment-textbox').show();
+        //                $('.nineth-installment-textbox').show();
+        //                $('.tenth-installment-textbox').show();
+        //                $('.eleventh-installment-textbox').show();
+        //                $('.twelveth-installment-textbox').show();
+        //                $("#Batch_FirstInstallment").val(value);
+        //                $("#Batch_SecondInstallment").val(value);
+        //                $("#Batch_ThirdInstallment").val(value);
+        //                $("#Batch_FourthInstallment").val(value);
+        //                $("#Batch_FifthInstallment").val(value);
+        //                $("#Batch_SixthInstallment").val(value);
+        //                $("#Batch_SeventhInstallment").val(value);
+        //                $("#Batch_EighthInstallment").val(value);
+        //                $("#Batch_NinethInstallment").val(value);
+        //                $("#Batch_TenthInstallment").val(value);
+        //                $("#Batch_EleventhInstallment").val(value);
+        //                $("#Batch_TwelvethInstallment").val(value);
+        //            }
+        //        }
+        //    });
+
 
         $('#addbutton')
             .click(function() { // on a click on the button with id 'one'
                 $("#btnsubmit").attr('disabled', false);
             });
 
+        //--------------------------------------------------------------------------------------------
     </script>}
 
 

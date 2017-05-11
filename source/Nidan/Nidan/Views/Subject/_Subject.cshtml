@@ -44,7 +44,7 @@
             <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteSubjectTrainer(@Model.Subject.SubjectId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
                 <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
                 <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
-                    <span ng-bind-html="trainer.Name"></span>
+                    <span ng-bind-html="trainer.Title"></span> <span ng-bind-html="trainer.FirstName"></span> <span ng-bind-html="trainer.MiddleName"></span> <span ng-bind-html="trainer.LastName"></span>
                 </ui-select-choices>
             </ui-select>
         </div>
