@@ -24,6 +24,7 @@
         vm.searchMessage = "";
         vm.removeError = removeError;
         vm.candidateInstallmentId;
+        vm.candidateFeeId;
         vm.paymentModeId;
         vm.saveFee = saveFee;
         vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
@@ -62,12 +63,12 @@
 
         function saveFee() {
             var candidateFee = {
+                CandidateFeeId: vm.candidateFeeId,
                 PaidAmount: $("#txtAmount").val(),
                 PaymentModeId: vm.paymentModeId,
                 ChequeNumber: $("#txtChequeNumber").val(),
                 ChequeDate: $("#txtChequeDate").val(),
-                BankName: $("#txtAmount").val(),
-                FollowUpDate: $("#txtBankName").val()
+                BankName: $("#txtBankName").val(),
             }
 
             return CandidateFeeService.saveFee(candidateFee)
@@ -107,9 +108,10 @@
         }
 
         function openCandidateFeeModalPopUp(candidateFeeId) {
+            vm.candidateFeeId = candidateFeeId;
             return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
               .then(function (response) {
-                  $("#txtPaidAmount").val(response.data.PaidAmount);
+                  $("#txtAmount").val(response.data.PaidAmount);
               });
         }
 

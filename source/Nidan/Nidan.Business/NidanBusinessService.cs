@@ -2023,7 +2023,7 @@ namespace Nidan.Business
 
         public CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFee);
+            return _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
         }
 
 

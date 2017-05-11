@@ -62,21 +62,26 @@ namespace Nidan.Controllers
         public ActionResult SaveFee(CandidateFee candidateFee)
         {
             var organisationId = UserOrganisationId;
-                try
-                {
-                    candidateFee.OrganisationId = organisationId;
-                    candidateFee.CentreId = UserCentreId;
-                    candidateFee.PaymentDate = DateTime.UtcNow;
-                    candidateFee.InstallmentDate = DateTime.UtcNow;
-                    candidateFee.FeeTypeId = (int)FeeType.Installment;
-                    candidateFee.FiscalYear = "2017-18";
-                    candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFee);
-                    return this.JsonNet(true);
-                }
-                catch (Exception e)
-                {
-                    return this.JsonNet(false);
-                }
+            try
+            {
+                var candidateFeeData = NidanBusinessService.RetrieveCandidateFee(organisationId, candidateFee.CandidateFeeId);
+                candidateFee.OrganisationId = organisationId;
+                candidateFee.CentreId = UserCentreId;
+                candidateFeeData.PaymentDate = DateTime.UtcNow;
+                candidateFeeData.FeeTypeId = (int)FeeType.Installment;
+                candidateFeeData.FiscalYear = "2017-18";
+                candidateFeeData.BankName = candidateFee.BankName;
+                candidateFeeData.ChequeDate = candidateFee.ChequeDate;
+                candidateFeeData.PaidAmount = candidateFee.PaidAmount;
+                candidateFeeData.PaymentModeId = candidateFee.PaymentModeId;
+                candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
+                candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
+                return this.JsonNet(true);
+            }
+            catch (Exception e)
+            {
+                return this.JsonNet(false);
+            }
         }
 
         [HttpPost]
