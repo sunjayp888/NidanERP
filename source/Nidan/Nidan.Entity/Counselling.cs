@@ -42,6 +42,7 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string RemarkByBranchManager { get; set; }
 
         public int SectorId { get; set; }
@@ -56,9 +57,6 @@ namespace Nidan.Entity
 
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
-
-        [DataType(DataType.MultilineText)]
-        public string RemarkByBm { get; set; }
 
         public bool IsRegistrationDone { get; set; }
 

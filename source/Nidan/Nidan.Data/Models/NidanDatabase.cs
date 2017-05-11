@@ -785,7 +785,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Enquiry>()
-                .Property(e => e.RemarkByBm)
+                .Property(e => e.RemarkByBranchManager)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
@@ -829,7 +829,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
-                .Property(e => e.RemarkByBm)
+                .Property(e => e.RemarkByBranchManager)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
@@ -1081,7 +1081,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.RemarkByBm)
+                .Property(e => e.RemarkByBranchManager)
                 .IsUnicode(false);
 
             modelBuilder.Entity<EnquirySearchField>()

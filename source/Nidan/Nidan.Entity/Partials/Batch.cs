@@ -26,11 +26,11 @@ namespace Nidan.Entity
             [Display(Name = "Batch End Date")]
             public DateTime BatchEndDate { get; set; }
 
-            //[Display(Name = "No Of Holidays")]
-            //public int NoOfHolidays { get; set; }
+            [Display(Name = "Number Of Hours Daily")]
+            public int NumberOfHoursDaily { get; set; }
 
-            //[Display(Name = "No Of Hours Daily")]
-            //public int NoOfHoursDaily { get; set; }
+            [Display(Name = "Number Of Holidays")]
+            public int NumberOfHolidays { get; set; }
 
             [Display(Name = "Batch Start Time Hours")]
             public int BatchStartTimeHours { get; set; }
@@ -50,11 +50,11 @@ namespace Nidan.Entity
             [Display(Name = "Batch End Time Span")]
             public string BatchEndTimeSpan { get; set; }
 
-            //[Display(Name = "Assesment Date")]
-            //public DateTime AssesmentDate { get; set; }
+            [Display(Name = "Assessment Date")]
+            public DateTime AssessmentDate { get; set; }
 
-            //[Display(Name = "No Of Installment")]
-            //public int NoOfInstallment { get; set; }
+            [Display(Name = "Number Of Installment")]
+            public int NumberOfInstallment { get; set; }
 
             [Display(Name = "First Installment")]
             public int? FirstInstallment { get; set; }

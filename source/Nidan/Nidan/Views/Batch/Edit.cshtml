@@ -108,7 +108,7 @@
         $(document)
             .ready(function() {
                 /* Allow digits only */
-                $(".batchStartTime")
+                $(".batchStartTime") && $(".Batch_NumberOfHoursDaily")
                     .keypress(function(e) {
                         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                             $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
@@ -127,39 +127,73 @@
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
             var startMinutr = $("#Batch_BatchStartTimeMinutes").val();
+            var dailyhours = $("#Batch_NumberOfHoursDaily").val();
 
             if (startHours == 12) {
-                var dailyHours12 = $("#Batch_NoOfHoursDaily").val();
+                var dailyHours12 = $("#Batch_NumberOfHoursDaily").val();
                 var startHours12 = 0;
                 var endTime12 = parseInt(startHours12) + parseInt(dailyHours12);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTime12;
 
             } else if (startHours == 11) {
-                var dailyHours11 = $("#Batch_NoOfHoursDaily").val();
-                var startHours11 = -1;
-                var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
+
+                if (dailyhours == 1) {
+                    var startHours1 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime1 = parseInt(startHours1) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime1;
+                } else {
+                    var dailyHours11 = $("#Batch_NumberOfHoursDaily").val();
+                    var startHours11 = -1;
+                    var endTime11 = parseInt(startHours11) + parseInt(dailyHours11);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime11;
+                }
 
             } else if (startHours == 10) {
-                var dailyHours10 = $("#Batch_NoOfHoursDaily").val();
-                var startHours10 = -2;
-                var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
+
+                if (dailyhours == 2 || dailyhours == 1) {
+                    var startHours2 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime2 = parseInt(startHours2) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime2;
+
+                } else {
+                    var dailyHours10 = $("#Batch_NumberOfHoursDaily").val();
+                    var startHours10 = -2;
+                    var endTime10 = parseInt(startHours10) + parseInt(dailyHours10);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime10;
+                }
+
 
             } else if (startHours == 09 || startHours == 9) {
-                var dailyHours09 = $("#Batch_NoOfHoursDaily").val();
-                var startHours09 = -2;
-                var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
+
+                if (dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours4 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime4 = parseInt(startHours4) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime4;
+
+                } else {
+                    var dailyHours09 = $("#Batch_NumberOfHoursDaily").val();
+                    var startHours09 = -3;
+                    var endTime09 = parseInt(startHours09) + parseInt(dailyHours09);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime09;
+                }
+
 
             } else if (startHours == 08 || startHours == 8) {
-                var dailyHours08 = $("#Batch_NoOfHoursDaily").val();
-                var startHours08 = -2;
-                var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
-                document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
+
+                if (dailyhours == 4 || dailyhours == 3 || dailyhours == 2 || dailyhours == 1) {
+                    var startHours5 = $("#Batch_BatchStartTimeHours").val();
+                    var endTime5 = parseInt(startHours5) + parseInt(dailyhours);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime5;
+
+                } else {
+                    var dailyHours08 = $("#Batch_NumberOfHoursDaily").val();
+                    var startHours08 = -4;
+                    var endTime08 = parseInt(startHours08) + parseInt(dailyHours08);
+                    document.getElementById('Batch_BatchEndTimeHours').value = endTime08;
+                }
 
             } else {
-                var dailyHoursB = $("#Batch_NoOfHoursDaily").val();
+                var dailyHoursB = $("#Batch_NumberOfHoursDaily").val();
                 var startHoursB = $("#Batch_BatchStartTimeHours").val();
                 var endTimeB = parseInt(startHoursB) + parseInt(dailyHoursB);
                 document.getElementById('Batch_BatchEndTimeHours').value = endTimeB;
@@ -195,7 +229,7 @@
                     alert("Please Select Atleast Any One Day");
                 } else if (checkboxlength > 0) {
                     var courseDuration = $("#Course_Duration").val();
-                    var hours = $("#Batch_NoOfHoursDaily").val();
+                    var hours = $("#Batch_NumberOfHoursDaily").val();
                     var checkboxcount = $("[type='checkbox']:checked").length - 1;
                     var perweek = checkboxcount * hours;
                     var perMonth = perweek * 4;
@@ -203,15 +237,15 @@
                     var result = Math.round((roundresult * 100) / 100);
                     $("#Batch_Month").val(result);
                     var noofinstallment = result - 2;
-                    $("#Batch_NoOfInstallment").val(noofinstallment);
+                    $("#Batch_NumberOfInstallment").val(noofinstallment);
                 }
             });
 
         //===================================================No Of Installment Do not allow grater than Month
 
-        $("#Batch_NoOfInstallment").keyup(function () {
+        $("#Batch_NumberOfInstallment").keyup(function () {
             var noofinstallmentvalue = noofinstallment;
-            var noofinstallmentext = $("#Batch_NoOfInstallment").val();
+            var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
             if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
                 alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
                 $(this).val("");
@@ -236,7 +270,7 @@
             .click(function () {
                 var fee = $("#CourseInstallment_Fee").val();
                 var dp = $("#CourseInstallment_DownPayment").val();
-                var noofinstallment = $("#Batch_NoOfInstallment").val();
+                var noofinstallment = $("#Batch_NumberOfInstallment").val();
                 if (!fee || !dp)
                     return false; // Wait till both values are set
                 var answer = fee - dp;
@@ -490,8 +524,3 @@
                 }
             });
     </script>}
-
-
-
-
-

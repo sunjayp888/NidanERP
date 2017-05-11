@@ -18,7 +18,7 @@
         vm.deleteEnquiryCourse = deleteEnquiryCourse;
 
         function initialise(enquiryId) {
-            vm.enquiryId = enquiryId
+            vm.enquiryId = enquiryId;
             retrieveTeams();
         }
 

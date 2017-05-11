@@ -163,7 +163,7 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string OtherInterestedCourse { get; set; }
 
-        public string RemarkByBm { get; set; }
+        public string RemarkByBranchManager { get; set; }
 
         public bool IsCounsellingDone { get; set; }
 

@@ -29,7 +29,7 @@ namespace Nidan.Entity
             public string ClosingRemark { get; set; }
 
             [Display(Name = "Remarks By Branch Manager")]
-            public string RemarkByBm { get; set; }
+            public string RemarkByBranchManager { get; set; }
         }
     }
 }

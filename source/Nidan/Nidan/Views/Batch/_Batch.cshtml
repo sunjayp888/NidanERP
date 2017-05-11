@@ -108,94 +108,52 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-offset-2 col-md-6 col-sm-6 col-xs-12">
                 <table>
-                    @*<thead>
-                            <tr>
-                                <th>
-                                    <label>
-                                        Monday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Tuesday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Wednesday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Thursday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Friday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Saturday
-                                    </label>
-                                </th>
-                                <th>
-                                    <label>
-                                        Sunday
-                                    </label>
-                                </th>
-                            </tr>
-                        </thead>*@
                     <tbody>
                         <tr>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { onchange = "checkboxes()", autocomplete = "off"})
                                     Monday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Tuesday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Wednesday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Thursday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Friday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Saturday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { onchange = "checkboxes()", autocomplete = "off" })
                                     Sunday
                                 </label>
 
-                            </td>
-                            <td>
-                                <button id="countbutton" type="button" class="btn btn-warning">Get Month(s)</button>
                             </td>
                         </tr>
                     </tbody>
@@ -274,7 +232,7 @@
                         <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
                             <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
                             <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
-                                <span ng-bind-html="trainer.Name"></span>
+                                <span ng-bind-html="trainer.Title"></span> <span ng-bind-html="trainer.FirstName"></span> <span ng-bind-html="trainer.MiddleName"></span> <span ng-bind-html="trainer.LastName"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>

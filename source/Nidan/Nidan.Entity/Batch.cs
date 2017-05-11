@@ -11,9 +11,9 @@ namespace Nidan.Entity
     {
         public Batch()
         {
-            BatchDays=new HashSet<BatchDay>();
-            BatchTrainers=new HashSet<BatchTrainer>();
-            Admissions=new HashSet<Admission>();
+            BatchDays = new HashSet<BatchDay>();
+            BatchTrainers = new HashSet<BatchTrainer>();
+            Admissions = new HashSet<Admission>();
         }
 
         public int BatchId { get; set; }

@@ -133,7 +133,7 @@ namespace Nidan.Entity
 
             [DataType(DataType.MultilineText)]
             [Display(Name = "Remarks By Branch Manager")]
-            public string RemarkByBm { get; set; }
+            public string RemarkByBranchManager { get; set; }
 
             [Display(Name = "Address")]
             public string Address1 { get; set; }
