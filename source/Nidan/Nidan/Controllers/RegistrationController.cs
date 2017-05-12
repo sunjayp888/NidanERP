@@ -84,8 +84,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
-            var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
@@ -94,12 +92,15 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
+            var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, registration.EnquiryId);
             var viewModel = new RegistrationViewModel()
             {
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
-                EnquiryId = id.Value,
+                EnquiryId = enquiry.EnquiryId,
                 Registration = registration,
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
             };
@@ -109,24 +110,30 @@ namespace Nidan.Controllers
         // POST: RegistrationPaymentReceipt/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Registration registrationViewModel)
+        public ActionResult Edit(RegistrationViewModel registrationViewModel)
         {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
-               
+                registrationViewModel.Registration.OrganisationId = organisationId;
+                registrationViewModel.Registration.CentreId = centreId;
+                registrationViewModel.Registration = _nidanBusinessService.UpdateRegistartion(organisationId, registrationViewModel.Registration);
+                return RedirectToAction("Edit", new { id = registrationViewModel.Registration.RegistrationId });
             }
-            var viewModel = new RegistrationPaymentReceiptViewModel
+            var viewModel = new RegistrationViewModel
             {
-              //  RegistrationPaymentReceipt = registrationPaymentReceiptViewModel.RegistrationPaymentReceipt
+                Registration = registrationViewModel.Registration
             };
-            return View(viewModel);
+
+                return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging));
         }
 
         [HttpPost]

@@ -41,11 +41,11 @@
 
         function searchCourse(SearchKeyword, Paging, OrderBy) {
             var url = "/Course/Search",
-            data = {
-                searchKeyword: SearchKeyword,
-                paging: Paging,
-                orderBy: new Array(OrderBy)
-            };
+                data = {
+                    searchKeyword: SearchKeyword,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
             return $http.post(url, data);
         }
@@ -66,19 +66,19 @@
 
         function deleteEnquiryCourse(enquiryId, courseId) {
             var url = "/EnquiryCourse/Delete",
-              data = {
-                  enquiryId: enquiryId,
-                  courseId: courseId
-              };
+                data = {
+                    enquiryId: enquiryId,
+                    courseId: courseId
+                };
             return $http.post(url, data);
         }
 
         function deleteSubjectCourse(subjectId, courseId) {
             var url = "/SubjectCourse/Delete",
-              data = {
-                  subjectId: subjectId,
-                  courseId: courseId
-              };
+                data = {
+                    subjectId: subjectId,
+                    courseId: courseId
+                };
             return $http.post(url, data);
         }
     }

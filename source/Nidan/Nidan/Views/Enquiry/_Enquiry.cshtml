@@ -463,36 +463,35 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="x_content">
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.SchemeId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.SchemeId, Model.Schemes, "Select Scheme", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.SchemeId, "", new { @class = "help-block" })
+        <div ng-controller="CourseController as model">
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.SchemeId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Enquiry.SchemeId, Model.Schemes, "Select Scheme", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.SchemeId, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Enquiry.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.DropDownListFor(model => model.Enquiry.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveCourseBySectorId()" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.SectorId, "", new { @class = "help-block" })
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Enquiry.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Enquiry.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveCourseBySectorId()" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.SectorId, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div class="row">
-                <div class="col-lg-12">
+                <div class="row">
                     <div class="col-lg-12">
-                        <div ng-controller="CourseController as model">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 @Html.Label("Interested Course", new { @class = "control-label col-md-2 col-sm-4 col-xs-12" })
                                 <div class="col-md-10 col-sm-4 col-xs-12">
@@ -506,13 +505,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group other-interested-course-textbox">
-                            @Html.LabelFor(model => model.Enquiry.OtherInterestedCourse, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
-                            <div class="col-md-8 col-sm-4 col-xs-12">
-                                @Html.TextBoxFor(model => model.Enquiry.OtherInterestedCourse, new { @class = "form-control col-md-7 col-xs-12" })
-                                @Html.ValidationMessageFor(model => model.Enquiry.OtherInterestedCourse, "", new { @class = "help-block" })
+                        <div class="col-lg-6">
+                            <div class="form-group other-interested-course-textbox">
+                                @Html.LabelFor(model => model.Enquiry.OtherInterestedCourse, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Enquiry.OtherInterestedCourse, new { @class = "form-control col-md-7 col-xs-12" })
+                                    @Html.ValidationMessageFor(model => model.Enquiry.OtherInterestedCourse, "", new { @class = "help-block" })
+                                </div>
                             </div>
                         </div>
                     </div>

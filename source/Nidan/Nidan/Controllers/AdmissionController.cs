@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.Provider;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Nidan.Business.Enum;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -167,11 +168,13 @@ namespace Nidan.Controllers
             }
             var organisationId = UserOrganisationId;
             var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+           
 
             if (admission == null)
             {
                 return HttpNotFound();
             }
+            var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -187,8 +190,9 @@ namespace Nidan.Controllers
                     Name = "Test"
                 },
                 Registration = admission.Registration,
-                RegistrationId = id.Value,
+                RegistrationId = admission.RegistrationId,
                 Admission = admission,
+                CandidateFee = candidateFeeByAdmission ?? admission.Registration.CandidateFee,
                 Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
                 PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
                 Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),

@@ -60,13 +60,13 @@
         function searchCourse(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return CourseService.searchCourse(vm.searchKeyword, vm.paging, vm.orderBy)
-              .then(function (response) {
-                  vm.courses = response.data.Items;
-                  vm.paging.totalPages = response.data.TotalPages;
-                  vm.paging.totalResults = response.data.TotalResults;
-                  vm.searchMessage = vm.courses.length === 0 ? "No Records Found" : "";
-                  return vm.courses;
-              });
+                .then(function (response) {
+                    vm.courses = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.courses.length === 0 ? "No Records Found" : "";
+                    return vm.courses;
+                });
         }
 
         function pageChanged() {
@@ -110,14 +110,14 @@
 
         function deleteEnquiryCourse(enquiryId, $item) {
             return CourseService.deleteEnquiryCourse(enquiryId, $item.CourseId)
-              .then(function () {
-              });
+                .then(function () {
+                });
         }
 
         function deleteSubjectCourse(subjectId, $item) {
             return CourseService.deleteSubjectCourse(subjectId, $item.CourseId)
-              .then(function () {
-              });
+                .then(function () {
+                });
         }
     }
 

@@ -1121,6 +1121,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
                     .Include(p => p.CandidateFee)
+                    .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CandidateInstallment)
                     .AsNoTracking()
@@ -1801,6 +1802,10 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Registration)
+                    .Include(p => p.Registration.Course)
+                    .Include(p => p.Registration.CandidateFee)
+                    .Include(p => p.Registration.CandidateInstallment)
+                    .Include(p => p.Registration.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);

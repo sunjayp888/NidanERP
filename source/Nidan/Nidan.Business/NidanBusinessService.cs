@@ -2026,6 +2026,20 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
         }
 
+        public Registration UpdateRegistartion(int organisationId, Registration registration)
+        {
+            // Update Paid Amount in CandidateFee
+            var candidateFeeData = RetrieveCandidateFee(organisationId, registration.CandidateFeeId);
+            candidateFeeData.PaidAmount = registration.CandidateFee.PaidAmount;
+            candidateFeeData.PaymentModeId = registration.CandidateFee.PaymentModeId;
+            candidateFeeData.BankName = registration.CandidateFee.BankName;
+            candidateFeeData.ChequeNumber = registration.CandidateFee.ChequeNumber;
+            candidateFeeData.ChequeDate = registration.CandidateFee.ChequeDate;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFeeData);
+
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
+        }
+
 
         public Admission UpdateAdmission(int organisationId, Admission admission)
         {
