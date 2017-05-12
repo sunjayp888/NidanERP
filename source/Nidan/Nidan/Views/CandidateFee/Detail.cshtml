@@ -11,7 +11,6 @@
                     @*   <h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.Title, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.FirstName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.MiddleName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.LastName)</button> Candidate Fees Details<small></small></h2>*@
                     <div class="clearfix"></div>
                 </div>
-                @Html.TextBoxFor(m=>m.CandidateInstallmentId);
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -68,14 +67,28 @@
 @section scripts
 {
     <script>
-        $('.bank-details-textbox').hide();
-        $("#CandidateFee_PaymentModeId").change(function () {
-            if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
-                $('.bank-details-textbox').show();
-                $("#CandidateFee_BankName").val("");
-                $("#CandidateFee_ChequeNumber").val("");
+
+        $("#labelChequeNumber").hide();
+        $("#labelChequeDate").hide();
+        $("#labelBankName").hide();
+        $("#txtChequeNumber").hide();
+        $("#txtChequeDate").hide();
+        $("#txtBankName").hide();
+        $("#txtChequeDate").val('');
+        
+        $("#dropDownPaymentMode").change(function () {
+            if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
+                $("#txtChequeNumber").show();
+                $("#txtChequeDate").show();
+                $("#txtBankName").show();
+                $("#labelChequeNumber").show();
+                $("#labelChequeDate").show();
+                $("#labelBankName").show();
             } else {
-                $('.bank-details-textbox').hide();
+                $("#txtChequeDate").val('');
+                $("#txtChequeNumber").hide();
+                $("#txtChequeDate").hide();
+                $("#txtBankName").hide();
             }
         });
 

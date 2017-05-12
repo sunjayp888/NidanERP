@@ -28,7 +28,7 @@ namespace Nidan.Entity
 
         public DateTime? FollowupDate { get; set; }
 
-        public DateTime? RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
 
         public int CentreId { get; set; }
 

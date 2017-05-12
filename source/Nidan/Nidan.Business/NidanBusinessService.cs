@@ -1596,7 +1596,7 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
         }
 
-        public List<Graph> RetrieveGraphCount(int organisationId)
+        public List<Graph> RetrievePieGraphStatistics(int organisationId)
         {
             var centre = RetrieveCentres(organisationId, e => true).ToList();
             var graphData = new List<Graph>();
@@ -1615,6 +1615,31 @@ namespace Nidan.Business
             }
             return graphData;
         }
+
+        public List<Graph> RetrieveBarGraphStatistics(int organisationId)
+        {
+            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+            var endOfWeekDate = startOfWeekDate.AddDays(6);
+            var enquiries = RetrieveEnquiries(organisationId, e => e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate).ToList();
+            var mobilizations = RetrieveMobilizations(organisationId, e => e.CreatedDate >= startOfWeekDate && e.CreatedDate <= endOfWeekDate).Items.ToList();
+            var registrations = RetrieveRegistrations(organisationId, e => e.RegistrationDate >= startOfWeekDate && e.RegistrationDate <= endOfWeekDate).Items.ToList();
+            var admissions = RetrieveAdmissions(organisationId, e => e.AdmissionDate >= startOfWeekDate && e.AdmissionDate <= endOfWeekDate).Items.ToList();
+            var graphData = new List<Graph>();
+
+            foreach (var date in endOfWeekDate.RangeFrom(startOfWeekDate))
+            {
+                graphData.Add(new Graph
+                {
+                    MobilizationCount = mobilizations.Count(e => e.CreatedDate.Date == date.Date),
+                    AdmissionCount = admissions.Count(e => e.AdmissionDate.Date == date.Date),
+                    EnquiryCount = enquiries.Count(e => e.EnquiryDate.Date == date.Date),
+                    RegistrationCount = registrations.Count(e => e.RegistrationDate.Date == date),
+                    Date = date
+                });
+            }
+            return graphData;
+        }
+
 
         #endregion
 

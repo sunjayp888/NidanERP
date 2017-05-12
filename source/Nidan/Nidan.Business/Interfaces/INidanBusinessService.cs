@@ -180,11 +180,12 @@ namespace Nidan.Business.Interfaces
         List<Course> RetrieveCentreCourses(int organisationId, int centreId);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
-        List<Graph> RetrieveGraphCount(int organisationId);
+        List<Graph> RetrievePieGraphStatistics(int organisationId);
         Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
+        List<Graph> RetrieveBarGraphStatistics(int organisationId);
 
-            // Update
-            //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
+        // Update
+        //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
         Personnel UpdatePersonnel(int organisationId, Personnel personnel);
         Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> courseIds);
         Mobilization UpdateMobilization(int organisationId, Mobilization mobilization);

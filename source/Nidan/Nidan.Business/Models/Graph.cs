@@ -15,5 +15,6 @@ namespace Nidan.Business.Models
         public int CounsellingCount { get; set; }
         public int RegistrationCount { get; set; }
         public int AdmissionCount { get; set; }
+        public DateTime Date { get; set; }
     }
 }

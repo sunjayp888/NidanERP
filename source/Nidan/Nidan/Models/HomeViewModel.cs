@@ -28,4 +28,11 @@ namespace Nidan.Models
         public string Label { get; set; }
         public string Value { get; set; }
     }
+
+    public class BarGraph
+    {
+        public string Date { get; set; }
+        public string MobilizationCount { get; set; }
+        public string Value { get; set; }
+    }
 }

@@ -52,13 +52,13 @@
         function searchCandidateFee(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return CandidateFeeService.searchCandidateFee(vm.searchKeyword, vm.paging, vm.orderBy)
-              .then(function (response) {
-                  vm.candidateFees = response.data.Items;
-                  vm.paging.totalPages = response.data.TotalPages;
-                  vm.paging.totalResults = response.data.TotalResults;
-                  vm.searchMessage = vm.candidateFees.length === 0 ? "No Records Found" : "";
-                  return vm.candidateFees;
-              });
+                .then(function (response) {
+                    vm.candidateFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.candidateFees.length === 0 ? "No Records Found" : "";
+                    return vm.candidateFees;
+                });
         }
 
         function saveFee() {
@@ -72,17 +72,17 @@
             }
 
             return CandidateFeeService.saveFee(candidateFee)
-               .then(function (response) {
-                   retrieveCandidateFees();
-               });
+                .then(function (response) {
+                    retrieveCandidateFees();
+                });
         }
 
         function retrievePaymentModes() {
             return CandidateFeeService.retrievePaymentModes()
-               .then(function (response) {
-                   vm.paymentModes = response.data;
-                   return vm.paymentModes;
-               });
+                .then(function (response) {
+                    vm.paymentModes = response.data;
+                    return vm.paymentModes;
+                });
         }
 
         function pageChanged() {
@@ -110,9 +110,21 @@
         function openCandidateFeeModalPopUp(candidateFeeId) {
             vm.candidateFeeId = candidateFeeId;
             return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
-              .then(function (response) {
-                  $("#txtAmount").val(response.data.PaidAmount);
-              });
+                .then(function (response) {
+                    $("#txtAmount").val(response.data.PaidAmount);
+                    $("#txtChequeDate").val('');
+                    $("#dropDownPaymentMode").filter(function() {
+                        return !this.value || $.trim(this.value).length == 0;
+                    });
+                    $("#dropDownPaymentMode").val(1);
+                    $("#labelChequeNumber").hide();
+                    $("#labelChequeDate").hide();
+                    $("#labelBankName").hide();
+                    $("#txtChequeNumber").hide();
+                    $("#txtChequeDate").hide();
+                    $("#txtBankName").hide();
+                    $("#txtChequeDate").val('');
+                });
         }
 
     }

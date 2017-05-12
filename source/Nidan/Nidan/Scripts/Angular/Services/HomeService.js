@@ -10,7 +10,8 @@
     function HomeService($http) {
         var service = {
             retrieveStatistics: retrieveStatistics,
-            retrieveStatisticsByCentre: retrieveStatisticsByCentre
+            retrieveStatisticsByCentre: retrieveStatisticsByCentre,
+            retrieveBarGraphStatistics: retrieveBarGraphStatistics
         };
 
         return service;
@@ -29,6 +30,12 @@
                 };
 
             return $http.post(url, data);
+        }
+
+        function retrieveBarGraphStatistics() {
+
+            var url = "/Home/StatisticsBarGraph";
+            return $http.post(url);
         }
     }
 })();

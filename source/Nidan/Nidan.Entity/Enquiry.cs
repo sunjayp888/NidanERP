@@ -107,7 +107,7 @@ namespace Nidan.Entity
         public string Promotional { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? EnquiryDate { get; set; }
+        public DateTime EnquiryDate { get; set; }
 
         public int CentreId { get; set; }
 

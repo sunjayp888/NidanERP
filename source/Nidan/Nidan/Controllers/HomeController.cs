@@ -26,7 +26,7 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveGraphCount(organisationId);
+            var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
@@ -79,7 +79,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Statistics()
         {
-            var data = NidanBusinessService.RetrieveGraphCount(UserOrganisationId);
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId);
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
@@ -94,7 +94,21 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult StatisticsByCentre(int id)
         {
-            var data = NidanBusinessService.RetrieveGraphCount(UserOrganisationId).Where(e => e.CentreId == id);
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult StatisticsBarGraph()
+        {
+            var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult StatisticsBarGraphByCentre(int id)
+        {
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id);
             return this.JsonNet(data);
         }
     }

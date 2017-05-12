@@ -1,26 +1,26 @@
 $(function () {
 
     /* data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
-    var day_data = [
-        { "period": "2016-10-01", "Mobilization": 10, "Enquiry": 60,"Counselling":50,"Registration":40,"Admission":30 },
-        { "period": "2016-09-30", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
-        { "period": "2016-09-29", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
-        { "period": "2016-09-20", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
-        { "period": "2016-09-19", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
-        { "period": "2016-09-18", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
-        { "period": "2016-09-17", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 }
-    ];
+    //var day_data = [
+    //    { "period": "2016-10-01", "Mobilization": 10, "Enquiry": 60,"Counselling":50,"Registration":40,"Admission":30 },
+    //    { "period": "2016-09-30", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
+    //    { "period": "2016-09-29", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
+    //    { "period": "2016-09-20", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
+    //    { "period": "2016-09-19", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
+    //    { "period": "2016-09-18", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 },
+    //    { "period": "2016-09-17", "Mobilization": 10, "Enquiry": 60, "Counselling": 50, "Registration": 40, "Admission": 30 }
+    //];
 
-    Morris.Bar({
-        element: 'graph_bar_group',
-        data: day_data,
-        xkey: 'period',
-        barColors: ['#26B99A', '#ff69b4', '#ffa500', '#3498DB', '#800080'],
-        ykeys: ['Mobilization', 'Enquiry','Counselling','Registration','Admission'],
-        labels: ['Mobilization', 'Enquiry', 'Counselling', 'Registration', 'Admission'],
-        hideHover: 'auto',
-        xLabelAngle: 60
-    });
+    //Morris.Bar({
+    //    element: 'graph_bar_group',
+    //    data: day_data,
+    //    xkey: 'period',
+    //    barColors: ['#26B99A', '#ff69b4', '#ffa500', '#3498DB', '#800080'],
+    //    ykeys: ['Mobilization', 'Enquiry','Counselling','Registration','Admission'],
+    //    labels: ['Mobilization', 'Enquiry', 'Counselling', 'Registration', 'Admission'],
+    //    hideHover: 'auto',
+    //    xLabelAngle: 60
+    //});
 
     //Morris.Bar({
     //    element: 'graph_bar',
