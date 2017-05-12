@@ -29,16 +29,17 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             id = id ?? 0;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
             var casteCategories = NidanBusinessService.RetrieveCasteCategories(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var followUp = NidanBusinessService.RetrieveFollowUps(organisationId, e => e.MobilizationId == (id.Value == 0 ? -1 : id.Value)).Items.FirstOrDefault();
-            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
-            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e=>e.CentreId==centreId);
+            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId,centreId, e => true);
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
@@ -135,16 +136,17 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
             var religions = NidanBusinessService.RetrieveReligions(organisationId, e => true);
             var casteCategories = NidanBusinessService.RetrieveCasteCategories(organisationId, e => true);
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
-            var schemes = NidanBusinessService.RetrieveSchemes(organisationId, e => true);
-            var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => true);
+            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId, centreId, e => true);
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e=>true);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
@@ -221,13 +223,13 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.SectorId == sectorId).ToList());
+            return this.JsonNet(NidanBusinessService.RetrieveCentreCourses(UserOrganisationId,UserCentreId, e => e.Course.SectorId == sectorId).ToList());
         }
 
         [HttpPost]
         public ActionResult GetSector(int schemeId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => e.Scheme.SchemeId == schemeId).ToList());
+            return this.JsonNet(NidanBusinessService.RetrieveCentreSectors(UserOrganisationId, UserCentreId, e => e.Sector.SchemeId == schemeId).ToList());
         }
 
         [HttpPost]

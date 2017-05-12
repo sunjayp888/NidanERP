@@ -1779,11 +1779,23 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateFeeBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
-        public List<Course> RetrieveCentreCourses(int organisationId, int centreId)
+        public List<Course> RetrieveCentreCourses(int organisationId, int centreId, Expression<Func<CentreCourse, bool>> predicate)
         {
             // var t = _nidanDataService.RetrieveCentreCourses(organisationId, centreId);
-            var courses = _nidanDataService.RetrieveCentreCourses(organisationId, centreId).Select(e => e.Course);
+            var courses = _nidanDataService.RetrieveCentreCourses(organisationId, centreId, predicate).Select(e => e.Course);
             return courses.ToList();
+        }
+
+        public List<Scheme> RetrieveCentreSchemes(int organisationId, int centreId, Expression<Func<CentreScheme, bool>> predicate)
+        {
+            var schemes = _nidanDataService.RetrieveCentreSchemes(organisationId, centreId, predicate).Select(e => e.Scheme);
+            return schemes.ToList();
+        }
+
+        public List<Sector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate)
+        {
+            var sectors = _nidanDataService.RetrieveCentreSectors(organisationId, centreId, predicate).Select(e => e.Sector);
+            return sectors.ToList();
         }
 
         public Registration RetrieveRegistration(int organisationId, int id)
