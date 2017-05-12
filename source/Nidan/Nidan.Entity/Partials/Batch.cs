@@ -65,7 +65,7 @@ namespace Nidan.Entity
             [Display(Name = "Third Installment")]
             public int? ThirdInstallment { get; set; }
 
-            [Display(Name = "Forth Installment")]
+            [Display(Name = "Fourth Installment")]
             public int? FourthInstallment { get; set; }
 
             [Display(Name = "Fifth Installment")]
