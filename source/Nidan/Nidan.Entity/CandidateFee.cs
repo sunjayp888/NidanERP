@@ -49,6 +49,8 @@ namespace Nidan.Entity
 
         public string FiscalYear { get; set; }
 
+        public bool? IsPaymentDone { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }

@@ -1451,6 +1451,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCourseInstallment(organisationId, id, p => true);
         }
 
+        public PagedResult<CourseInstallment> RetrieveCourseInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CourseInstallment, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCourseInstallmentBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
         public PagedResult<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveSubjects(organisationId, predicate, orderBy, paging);
