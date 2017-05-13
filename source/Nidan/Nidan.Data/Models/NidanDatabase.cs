@@ -85,6 +85,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateInstallment> CandidateInstallments { get; set; }
         public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
+        public virtual DbSet<CourseInstallmentSearchField> CourseInstallmentSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1227,6 +1228,14 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidateInstallment>()
               .Property(e => e.PaymentMethod)
               .IsUnicode(false);
+
+            modelBuilder.Entity<CourseInstallmentSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseInstallmentSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
 
             //modelBuilder.Entity<Registration>()
             //    .HasOptional(e => e.Registration1)

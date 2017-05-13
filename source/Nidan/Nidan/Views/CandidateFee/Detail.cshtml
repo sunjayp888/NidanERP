@@ -26,6 +26,7 @@
                                         <th>Payment Mode</th>
                                         <th>Payment Date</th>
                                         <th>Amount</th>
+                                        <th>Payment Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -37,6 +38,11 @@
                                         <td><span ng-bind="candidateFee.PaymentMode.Name"></span></td>
                                         <td><span ng-bind="candidateFee.PaymentDate"></span></td>
                                         <td><span ng-bind="candidateFee.PaidAmount"></span></td>
+                                        <td class="col-lg-2">
+
+                                            <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Payment Pending</button>
+                                            <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-success btn-xs">Payment Done</button>
+                                        </td>
                                         <td><button id="btnPayFee" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button><button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button></td>
                                     </tr>
                                     </tbody>
