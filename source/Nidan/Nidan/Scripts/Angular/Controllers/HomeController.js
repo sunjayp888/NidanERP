@@ -45,6 +45,20 @@
         function retrieveStatisticsByCentre(centreId) {
             return HomeService.retrieveStatisticsByCentre(centreId).then(function (response) {
                 vm.statisticsByCentre = response.data;
+                Morris.Donut({
+                    element: 'graph_donut',
+                    data: [
+                        { label: vm.statistics[0].Label, value: vm.statistics[0].Value },
+                        { label: vm.statistics[1].Label, value: vm.statistics[1].Value },
+                        { label: vm.statistics[2].Label, value: vm.statistics[2].Value },
+                        { label: vm.statistics[3].Label, value: vm.statistics[3].Value },
+                        { label: vm.statistics[4].Label, value: vm.statistics[4].Value }
+                    ],
+                    colors: ['#26B99A', '#FF69B4', '#800080', '#3498DB', '#FFA500'],
+                    formatter: function (y) {
+                        return y;
+                    }
+                });
             });
         };
 
@@ -72,7 +86,7 @@
                 });
             });
         };
-        
+
         function getFormattedDate(dateObject) {
             var d = new Date(dateObject);
             var day = d.getDate();

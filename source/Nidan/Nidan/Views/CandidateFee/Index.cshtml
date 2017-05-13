@@ -60,7 +60,7 @@
                                         <th ng-click="model.order('Registration.Enquiry.FirstName')" ng-class="model.orderClass('Registration.Enquiry.FirstName')">Candidate Name</th>
                                         <th ng-click="model.order('Registration.CandidateInstallment.CourseFee')" ng-class="model.orderClass('Registration.CandidateInstallment.CourseFee')">Total Fees</th>
                                         <th ng-click="model.order('PaidAmount')" ng-class="model.orderClass('PaidAmount')">Paid Amount</th>
-                                        <th ng-click="model.order('Balance')" ng-class="model.orderClass('Balance')">Balance</th>
+                                        @*<th ng-click="model.order('Balance')" ng-class="model.orderClass('Balance')">Balance</th>*@
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -68,8 +68,8 @@
                                     <tr id="tr" ng-repeat="registration in model.candidateFees" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCandidateFee(registration.CandidateInstallmentId)">
                                         <td><span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
                                         <td><span ng-bind="registration.CandidateInstallment.CourseFee"></span></td>
-                                        <td><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
-                                        <td class="balance" name="balance" id="balance"></td>
+                                        <td><span ng-bind="registration.CandidateInstallment.PaidAmount"></span></td>
+                                        @*<td class="balance" name="balance" id="balance"></td>*@
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
