@@ -230,7 +230,7 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="hidden" id="@Html.IdFor(model => model.SelectedTrainerIdsJson)" name="@Html.NameFor(model => model.SelectedTrainerIdsJson)" ng-init="model.selectedTrainers = @Model.SelectedTrainerIdsJson" value="{{model.selectedTrainers}}" />
                         <ui-select multiple tagging ng-model="model.selectedTrainers" on-remove="model.deleteBatchTrainer(@Model.Batch.BatchId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.trainers.length <=0">
-                            <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                            <ui-select-match placeholder="Select Trainers"> <span ng-bind-html="$item.Title"></span> <span ng-bind-html="$item.FirstName"></span> <span ng-bind-html="$item.MiddleName"></span> <span ng-bind-html="$item.LastName"></span></ui-select-match>
                             <ui-select-choices repeat="trainer.TrainerId as trainer in model.trainers | filter:$select.search">
                                 <span ng-bind-html="trainer.Title"></span> <span ng-bind-html="trainer.FirstName"></span> <span ng-bind-html="trainer.MiddleName"></span> <span ng-bind-html="trainer.LastName"></span>
                             </ui-select-choices>

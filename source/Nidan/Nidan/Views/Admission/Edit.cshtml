@@ -25,13 +25,301 @@
                             </div>
 
                         }
+                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
+                            @Model.Registration.CandidateInstallment.CourseFee
+                        </div>
                         @Html.HiddenFor(m => m.Admission.AdmissionId)
                         @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
                         @*@Html.HiddenFor(m => m.Admission.EnquiryId)
-                        @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)*@
+                            @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)*@
+                        @*-----------------------------------------Candidate Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Candidate Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Mobile</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.Mobile" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Email</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.Enquiry.EmailId" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-md-6">
+                                            </div>
+                                            <div class="col-md-6">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*-----------------------------------------Registration Details-----------------------------------------*@
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Registration Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course Fee</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateInstallment.CourseFee" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Fee Paid</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*-----------------------------------------Batch Details-----------------------------------------*@
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel" style="height:auto">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i>Select Batch
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-down"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Admission.BatchId, "Batch", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                <div id="divBatchDetails">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
+                                                                    Monday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
+                                                                    Tuesday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
+                                                                    Wednesday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
+                                                                    Thursday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
+                                                                    Friday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
+                                                                    Saturday
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                <label class="btn btn-info">
+                                                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
+                                                                    Sunday
+                                                                </label>
+
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Start Time</button>
+                                                        </span>
+                                                        <input id="txtBatchStartTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch End Time</button>
+                                                        </span>
+                                                        <input id="txtBatchEndTime" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Start Date</button>
+                                                        </span>
+                                                        <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch End Date</button>
+                                                        </span>
+                                                        <input id="txtBatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Batch Assessment Date</button>
+                                                        </span>
+                                                        <input id="txtBatchAssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-primary">Duration In Month</button>
+                                                        </span>
+                                                        <input id="txtBatchMonth" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @Html.Partial("_Admission", Model)
                         <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -54,6 +342,94 @@
 
 @section scripts{
     <script>
+        //---------------- Admission Cash/Cheque ----------------
+        $('#downpayment').hide();
+        $('#lumpsum').hide();
+        var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+        var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
+            $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
+            $('#downpayment').show();
+            $('#lumpsum').hide();
+        });
+        var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+        var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function () {
+            $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
+            $('#downpayment').hide();
+            $('#lumpsum').show();
+        });
+
+
+
+        //if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
+        //    $('#PaymentDetails').show();
+        //    $('.bank-details-textbox-admission').show();
+        //    $("#Admission_BankName").val("");
+        //    $("#Admission_ChequeNo").val("");
+        //} else {
+        //    $('.bank-details-textbox-admission').hide();
+        //    $('#PaymentDetails').show();
+        //}
+
+        //$("#CandidateFee_PaymentModeId").ready(function () {
+        //    if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+        //        $('#PaymentDetails').show();
+        //        $('.bank-details-textbox-admission').show();
+        //    } else {
+        //        $('.bank-details-textbox-admission').hide();
+        //        $('#PaymentDetails').show();
+        //    }
+        //});
+
+        $("#CandidateFee_PaymentModeId").change(function () {
+            if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+                $('.bank-details-textbox-admission').show();
+                $('#PaymentDetails').show();
+            } else {
+                $('.bank-details-textbox-admission').hide();
+                $('#PaymentDetails').hide();
+            }
+        });
+
+        if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+            $('.bank-details-textbox-admission').show();
+        } else {
+            $('.bank-details-textbox-admission').hide();
+        }
+
+
+
+
+
+        $("#Admission_Discount").ready(function () {
+            if ($('#Admission_Discount :selected').text() == "Select Discount") {
+                $('#divDiscountFee').hide();
+            } else {
+                $('#divDiscountFee').show();
+                var fee = $("#Admission_Fee").val();
+                var discount = $('#Admission_Discount :selected').val();
+                var discountFee = fee * (discount / 100);
+                var total = fee - discountFee;
+                $("#Admission_DiscountFee").val(total);
+            }
+        });
+
+        //---------------- Admission Installment/Lumpsum ----------------
+
+       // $('#BatchDetails').hide();
+        $("#Admission_BatchId").ready(function () {
+            $('#divBatchDetails').show();
+            $('#PaymentType').show();
+        });
+        $('#PaymentType').hide();
+        $('#PaymentDetails').hide();
+        $('#divDiscountFee').hide();
+        $('#divBatchDetails').hide();
+
+
         //=========================================================================
 
         $('#Admission_BatchId').ready(function () {
@@ -72,328 +448,205 @@
                     $("#Batch_CourseInstallmentId").empty();
                     $("#Batch_CourseId").empty();
                     $.each(result, function (key, value) {
-                        $("#Batch_RoomId").append($("<option></option>").val(result.Room.RoomId).html(result.Room.Description));
-                        $("#Batch_Intake").val(result.Intake);
-                        $("#Batch_CourseInstallmentId").append($("<option></option>").val(result.CourseInstallment.CourseInstallmentId).html(result.CourseInstallment.Name));
-                        $("#Batch_CourseId").append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                        $("#CourseInstallment_Fee").val(result.CourseInstallment.Fee);
-                        $("#CourseInstallment_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Course_Duration").val(result.Course.Duration);
-                        $("#Batch_NoOfHoursDaily").val(result.NoOfHoursDaily);
-                        $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
                         $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
                         $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
                         $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
                         $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
                         $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
                         $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
-                        $("#Batch_Month").val(result.Month);
-                        $("#Batch_BatchStartDate").val(result.BatchStartDate);
-                        $("#Batch_NoOfHolidays").val(result.NoOfHolidays);
-                        $("#Batch_BatchEndDate").val(result.BatchEndDate);
-                        $("#Batch_AssesmentDate").val(result.AssesmentDate);
-                        $("#Batch_BatchStartTimeHours").val(result.BatchStartTimeHours);
-                        $("#Batch_BatchStartTimeMinutes").val(result.BatchStartTimeMinutes);
-                        $("#rbBatchStartTimeSpan").val(result.BatchStartTimeSpan);
-                        $("#Batch_BatchEndTimeHours").val(result.BatchEndTimeHours);
-                        $("#Batch_BatchEndTimeMinutes").val(result.BatchEndTimeMinutes);
-                        $("#rbBatchEndTimeSpan").val(result.BatchEndTimeSpan);
-                        $("#Batch_Remarks").val(result.Remarks);
-                        $("#Batch_NoOfInstallment").val(result.NoOfInstallment);
-                        $("#Admission_Fee").val(result.CourseInstallment.Fee);
-                        $("#Admission_DownPayment").val(result.CourseInstallment.DownPayment);
-                        $("#Admission_Lumpsum").val(result.CourseInstallment.LumpsumAmt);
-
+                        $("#txtBatchMonth").val(result.Month);
+                        $("#txtBatchStartDate").val(result.BatchStartDate);
+                        $("#txtBatchEndDate").val(result.BatchEndDate);
+                        $("#txtBatchAssessmentDate").val(result.AssessmentDate);
+                        $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
+                        $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
                     });
                 },
                 async: true,
                 processData: false
             });
+            var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+            var registrationAmount1=@Model.Registration.CandidateFee.PaidAmount;
+            var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount1);
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+                $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
+                $('#downpayment').show();
+                $('#lumpsum').hide();
+            }
+            var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+            var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+            var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+                $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
+                $('#downpayment').hide();
+                $('#lumpsum').show();
+            }
         });
 
         //========================================================================================================
 
-        ////===================================================No Of Installment Do not allow grater than Month
-
-        $("#Batch_NoOfInstallment").keyup(function () {
-            var noofinstallmentvalue = noofinstallment;
-            var noofinstallmentext = $("#Batch_NoOfInstallment").val();
-            if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
-                alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
-                $(this).val("");
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            onSelect: function () {
+                selectedDate = moment().format('DD MMMM YYYY');
+            },
+            locale: {
+                "format": "DD MMMM YYYY"
             }
+        };
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
+            $(".generated .date")
+                .on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
         });
 
-        ////================================================================== Calculation Of Installment
+        ////================================================================== Calculation Sum Of Rupees
 
-        $('.fisrt-installment-textbox').hide();
-        $('.second-installment-textbox').hide();
-        $('.third-installment-textbox').hide();
-        $('.forth-installment-textbox').hide();
-        $('.fifth-installment-textbox').hide();
-        $('.sixth-installment-textbox').hide();
-        $('.seventh-installment-textbox').hide();
-        $('.eighth-installment-textbox').hide();
-        $('.nineth-installment-textbox').hide();
-        $('.tenth-installment-textbox').hide();
-        $('.eleventh-installment-textbox').hide();
-        $('.twelveth-installment-textbox').hide();
-        $("#addbutton")
-            .click(function () {
-                var fee = $("#CourseInstallment_Fee").val();
-                var dp = $("#CourseInstallment_DownPayment").val();
-                var noofinstallment = $("#Batch_NoOfInstallment").val();
-                if (!fee || !dp)
-                    return false; // Wait till both values are set
-                var answer = fee - dp;
-                var ansvalue = answer / noofinstallment;
-                var value = Math.round((ansvalue * 100) / 100);
-                if (noofinstallment == 1) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').hide();
-                    $('.third-installment-textbox').hide();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
+        function onlyNumbers(evt) {
+            var e = event || evt; // For trans-browser compatibility
+            var charCode = e.which || e.keyCode;
+
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function NumToWord(inputNumber, outputControl) {
+            var str = new String(inputNumber)
+            var splt = str.split("");
+            var rev = splt.reverse();
+            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+            var twos = ['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+            var tens = ['', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'];
+
+            numLength = rev.length;
+            var word = new Array();
+            var j = 0;
+
+            for (i = 0; i < numLength; i++) {
+                switch (i) {
+
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+
+                        //            This is optional.
+
+                        //            case 9:
+                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        //                    word[j] = '';
+                        //                }
+                        //                else {
+                        //                    word[j] = once[rev[i]];
+                        //                }
+                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        //                    word[j] = word[j] + " Arab";
+                        //                }
+                        //                break;
+
+                        //            case 10:
+                        //                aboveTens();
+                        //                break;
+
+                    default: break;
                 }
-                if (noofinstallment == 2) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').hide();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                }
-                if (noofinstallment == 3) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').hide();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                }
-                if (noofinstallment == 4) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').hide();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                }
-                if (noofinstallment == 5) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').hide();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                }
-                if (noofinstallment == 6) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').hide();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                }
-                if (noofinstallment == 7) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').hide();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                }
-                if (noofinstallment == 8) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').hide();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                }
-                if (noofinstallment == 9) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').hide();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                }
-                if (noofinstallment == 10) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').hide();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                }
-                if (noofinstallment == 11) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').show();
-                    $('.twelveth-installment-textbox').hide();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                    $("#Batch_EleventhInstallment").val(value);
-                }
-                if (noofinstallment == 12) {
-                    $('.fisrt-installment-textbox').show();
-                    $('.second-installment-textbox').show();
-                    $('.third-installment-textbox').show();
-                    $('.forth-installment-textbox').show();
-                    $('.fifth-installment-textbox').show();
-                    $('.sixth-installment-textbox').show();
-                    $('.seventh-installment-textbox').show();
-                    $('.eighth-installment-textbox').show();
-                    $('.nineth-installment-textbox').show();
-                    $('.tenth-installment-textbox').show();
-                    $('.eleventh-installment-textbox').show();
-                    $('.twelveth-installment-textbox').show();
-                    $("#Batch_FirstInstallment").val(value);
-                    $("#Batch_SecondInstallment").val(value);
-                    $("#Batch_ThirdInstallment").val(value);
-                    $("#Batch_ForthInstallment").val(value);
-                    $("#Batch_FifthInstallment").val(value);
-                    $("#Batch_SixthInstallment").val(value);
-                    $("#Batch_SeventhInstallment").val(value);
-                    $("#Batch_EighthInstallment").val(value);
-                    $("#Batch_NinethInstallment").val(value);
-                    $("#Batch_TenthInstallment").val(value);
-                    $("#Batch_EleventhInstallment").val(value);
-                    $("#Batch_TwelvethInstallment").val(value);
-                }
-            });
+                j++;
+            }
+
+            function aboveTens() {
+                if (rev[i] == 0) { word[j] = ''; }
+                else if (rev[i] == 1) { word[j] = twos[rev[i - 1]]; }
+                else { word[j] = tens[rev[i]]; }
+            }
+
+            word.reverse();
+            var finalOutput = '';
+            for (i = 0; i < numLength; i++) {
+                finalOutput = finalOutput + word[i];
+            }
+            document.getElementById(outputControl).innerHTML = finalOutput + " Only";
+        }
     </script>
 }

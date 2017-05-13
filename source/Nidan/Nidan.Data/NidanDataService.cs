@@ -1121,6 +1121,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
                     .Include(p => p.CandidateFee)
+                    .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CandidateInstallment)
                     .AsNoTracking()
@@ -1801,6 +1802,10 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Registration)
+                    .Include(p => p.Registration.Course)
+                    .Include(p => p.Registration.CandidateFee)
+                    .Include(p => p.Registration.CandidateInstallment)
+                    .Include(p => p.Registration.Enquiry)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
@@ -1820,7 +1825,7 @@ namespace Nidan.Data
                       .Include(p => p.Organisation)
                       .Include(p => p.CandidateInstallment)
                       .Include(p => p.Registrations)
-                      .Include(p => p.Registrations.Select(e=>e.Enquiry))
+                      .Include(p => p.Registrations.Select(e => e.Enquiry))
                       .Include(p => p.Centre)
                       .AsNoTracking()
                       .Where(predicate)
@@ -1864,7 +1869,7 @@ namespace Nidan.Data
             }
         }
 
-        public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId)
+        public IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, Expression<Func<CentreCourse, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -1874,7 +1879,38 @@ namespace Nidan.Data
                       .Include(c => c.Organisation)
                       .Include(c => c.Centre)
                       .Include(c => c.Course)
+                      .Where(predicate)
                       .AsNoTracking().ToList();
+            }
+        }
+
+        public IEnumerable<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, Expression<Func<CentreScheme, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreSchemes
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Scheme)
+                    .Where(predicate)
+                    .AsNoTracking().ToList();
+            }
+        }
+
+        public IEnumerable<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreSectors
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Sector)
+                    .Where(predicate)
+                    .AsNoTracking().ToList();
             }
         }
 

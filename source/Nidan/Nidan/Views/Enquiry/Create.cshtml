@@ -274,9 +274,9 @@
                 },
                 success: function (result) {
                     $("#Enquiry_SectorId").empty();
+                    $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
                     $.each(result, function (key, value) {
                         $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
-
                     });
                 },
                 async: true,

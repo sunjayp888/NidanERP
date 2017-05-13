@@ -9,7 +9,11 @@ namespace Nidan.Entity
     [Table("Registration")]
     public partial class Registration
     {
-       
+        public Registration()
+        {
+            FollowUps = new HashSet<FollowUp>();
+        }
+
         public int RegistrationId { get; set; }
 
         public string StudentCode { get; set; }
@@ -53,10 +57,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual Centre Centre { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual Organisation Organisation { get; set; }
 
     }

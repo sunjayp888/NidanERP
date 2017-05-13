@@ -51,7 +51,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
@@ -75,10 +75,10 @@
                                                                 </a>
                                                             </li>
                                                             @*<li >
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                        Archive
-                                                                    </a>
-                                                                </li>*@
+                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                            Archive
+                                        </a>
+                                    </li>*@
                                                         }
                                                     </ul>
                                                 </div>

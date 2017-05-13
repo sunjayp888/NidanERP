@@ -114,7 +114,8 @@ namespace Nidan.Controllers
 
         public ActionResult CentreCourses(int centreId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, centreId));
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, centreId);
+            return this.JsonNet(data);
         }
 
         public ActionResult AssignCentreCourseInstallment(int centreId, int courseInstallmentId)
