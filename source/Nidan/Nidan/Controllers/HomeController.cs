@@ -92,7 +92,7 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult StatisticsByCentre(int id)
+        public ActionResult StatisticsByCentre(int? id)
         {
             var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id);
             return this.JsonNet(data);
@@ -109,6 +109,13 @@ namespace Nidan.Controllers
         public ActionResult StatisticsBarGraphByCentre(int id)
         {
             var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCentres()
+        {
+            var data = NidanBusinessService.RetrieveCentres(UserOrganisationId);
             return this.JsonNet(data);
         }
     }

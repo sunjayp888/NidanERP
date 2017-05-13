@@ -11,7 +11,9 @@
         var service = {
             retrieveStatistics: retrieveStatistics,
             retrieveStatisticsByCentre: retrieveStatisticsByCentre,
-            retrieveBarGraphStatistics: retrieveBarGraphStatistics
+            retrieveBarGraphStatistics: retrieveBarGraphStatistics,
+            retrieveCentres: retrieveCentres,
+            change: change
         };
 
         return service;
@@ -26,7 +28,7 @@
 
             var url = "/Home/StatisticsByCentre",
                 data = {
-                    centreId:centreId
+                    id:centreId
                 };
 
             return $http.post(url, data);
@@ -36,6 +38,27 @@
 
             var url = "/Home/StatisticsBarGraph";
             return $http.post(url);
+        }
+
+        function retrieveCentres(Paging, OrderBy) {
+
+            var url = "/Home/GetCentres",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function change(centreId) {
+
+            var url = "/Home/StatisticsByCentre",
+                data = {
+                    centreId: centreId
+                };
+
+            return $http.post(url, data);
         }
     }
 })();

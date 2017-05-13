@@ -75,7 +75,7 @@
                                             <td><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
                                             <td><span ng-bind="registration.Particulars"></span></td>
                                             <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
-                                            <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-success btn-xs">Admission Pending</button></td>
+                                            <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
