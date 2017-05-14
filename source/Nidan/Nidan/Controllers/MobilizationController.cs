@@ -35,7 +35,8 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var centreId = UserCentreId;
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId==centreId);
             var mobilizationTypes = NidanBusinessService.RetrieveMobilizationTypes(organisationId, e => true);
             var qualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var events = NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList();

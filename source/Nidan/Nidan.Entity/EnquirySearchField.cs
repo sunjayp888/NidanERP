@@ -139,21 +139,20 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string Promotional { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? EnquiryDate { get; set; }
-
         [Key]
-        [Column(Order = 19)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        [Column(Order = 19, TypeName = "date")]
+        public DateTime EnquiryDate { get; set; }
 
         [Key]
         [Column(Order = 20)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrganisationId { get; set; }
+        public int CentreId { get; set; }
 
         [Key]
         [Column(Order = 21)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int OrganisationId { get; set; }
+
         [StringLength(100)]
         public string StudentCode { get; set; }
 
@@ -218,7 +217,9 @@ namespace Nidan.Entity
 
         public string RemarkByBranchManager { get; set; }
 
-        public bool? Registered { get; set; }
+        [Key]
+        [Column(Order = 26)]
+        public bool IsRegistrationDone { get; set; }
 
         [StringLength(7740)]
         public string SearchField { get; set; }

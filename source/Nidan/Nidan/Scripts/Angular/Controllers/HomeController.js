@@ -12,14 +12,19 @@
         var vm = this;
         vm.statistics = [];
         vm.statisticsByCentre = [];
+        vm.centres = [];
         vm.retrieveStatistics = retrieveStatistics;
         vm.retrieveStatisticsByCentre = retrieveStatisticsByCentre;
         vm.retrieveBarGraphStatistics = retrieveBarGraphStatistics;
+        vm.retrieveCentres = retrieveCentres;
+        vm.change = change;
+
         initialise();
 
         function initialise() {
             retrieveStatistics();
             retrieveBarGraphStatistics();
+            retrieveCentres();
         }
 
         function retrieveStatistics() {
@@ -43,8 +48,9 @@
         };
 
         function retrieveStatisticsByCentre(centreId) {
+            alert(centreId);
             return HomeService.retrieveStatisticsByCentre(centreId).then(function (response) {
-                vm.statisticsByCentre = response.data;
+                vm.statistics = response.data;
                 Morris.Donut({
                     element: 'graph_donut',
                     data: [
@@ -102,6 +108,20 @@
 
             return date;
         };
+
+        function retrieveCentres() {
+            return HomeService.retrieveCentres(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.centres = response.data.Items;
+                   // vm.paging.totalPages = response.data.TotalPages;
+                    //vm.paging.totalResults = response.data.TotalResults;
+                    return vm.centres;
+                });
+        }
+
+        function change(centreId) {
+            retrieveStatisticsByCentre(centreId);
+        }
     }
 
 })();
