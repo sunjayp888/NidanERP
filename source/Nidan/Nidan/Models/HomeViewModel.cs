@@ -8,9 +8,9 @@ namespace Nidan.Models
         public int AbsencesRequiringApproval { get; set; }
         public int FollowUpCount { get; set; }
         public int EnquiryCount { get; set; }
-        public int CounsellingCount { get; set; }
-        public int TotalEnquiryCount { get; set; }
-        public int TotalMobilizationCount { get; set; }
+        public int RegistraionCount { get; set; }
+        public int MobilizationCount { get; set; }
+        public int AdmissionCount { get; set; }
 
         public IEnumerable<int> SelectedCompanyIds { get; set; }
         public string CompanyIdsArray => SelectedCompanyIds != null ? string.Format("[{0}]", string.Join(",", SelectedCompanyIds)) : "null";
