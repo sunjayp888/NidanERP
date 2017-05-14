@@ -29,17 +29,18 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
-            var enquiryCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "enquiry").Items.Count();
+            var enquiryCount = NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
+               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate == _today && e.EnquiryStatus=="Enquiry").Count();
 
-            var totalEnquiryCount =
-                NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes" && e.IsRegistrationDone == false).Count();
+            var mobilizationCount =
+                NidanBusinessService.RetrieveMobilizations(UserOrganisationId,
+               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate == _today && e.Close == "No").Items.Count();
 
-            var counsellingCount = NidanBusinessService.RetrieveFollowUps(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime == _today && e.FollowUpType.ToLower() == "counselling").Items.Count();
+            var registraionCount = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,
+               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate == _today && e.IsAdmissionDone == false).Items.Count();
 
-            var totalMobilizationCount =
-                NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.Close != "Yes")
+            var admissionCount =
+                NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate== _today)
                     .Items.Count();
 
 
@@ -50,9 +51,9 @@ namespace Nidan.Controllers
             {
                 Permissions = permissions,
                 EnquiryCount = enquiryCount,
-                CounsellingCount = counsellingCount,
-                TotalEnquiryCount = totalEnquiryCount,
-                TotalMobilizationCount = totalMobilizationCount
+                RegistraionCount = registraionCount,
+                MobilizationCount = mobilizationCount,
+                AdmissionCount = admissionCount
                 //Divisions = initialDivisions,
                 //SelectedDivisionIds = permissions.IsAdmin ? null : initialDivisions.Select(c => c.DivisionId).ToList()
             };

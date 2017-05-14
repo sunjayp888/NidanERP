@@ -70,6 +70,7 @@ namespace Nidan.Controllers
                 candidateFeeData.PaymentDate = DateTime.UtcNow;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
                 candidateFeeData.FiscalYear = "2017-18";
+                candidateFeeData.IsPaymentDone = true;
                 candidateFeeData.BankName = candidateFee.BankName;
                 candidateFeeData.ChequeDate = candidateFee.ChequeDate;
                 candidateFeeData.PaidAmount = candidateFee.PaidAmount;

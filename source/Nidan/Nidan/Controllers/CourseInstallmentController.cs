@@ -119,5 +119,12 @@ namespace Nidan.Controllers
                         orderBy, paging));
             }
         }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveCourseInstallmentBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+        }
     }
 }

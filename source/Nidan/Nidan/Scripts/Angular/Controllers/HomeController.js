@@ -92,7 +92,7 @@
                 });
             });
         };
-        
+
         function getFormattedDate(dateObject) {
             var d = new Date(dateObject);
             var day = d.getDate();

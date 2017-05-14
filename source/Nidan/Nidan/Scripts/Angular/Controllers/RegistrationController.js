@@ -24,6 +24,7 @@
         vm.searchRegistration = searchRegistration;
         vm.viewRegistration = viewRegistration;
         vm.createRegistration = createRegistration;
+        vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
         vm.retrieveEnquiries = retrieveEnquiries;
         vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
         vm.viewCandidateFee = viewCandidateFee;
@@ -63,6 +64,16 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.Registrations;
+                });
+        }
+
+        function retrieveCandidateFeeList() {
+            return RegistrationService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidateFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidateFees;
                 });
         }
 
