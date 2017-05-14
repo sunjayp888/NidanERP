@@ -1853,6 +1853,7 @@ namespace Nidan.Data
                       .Include(p => p.Organisation)
                       .Include(p => p.CandidateInstallment)
                       .Include(p => p.Registrations)
+                      .Include(p => p.PaymentMode)
                       .Include(p => p.Registrations.Select(e => e.Enquiry))
                       .Include(p => p.Centre)
                       .AsNoTracking()
