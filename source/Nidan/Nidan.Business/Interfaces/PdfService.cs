@@ -9,7 +9,8 @@ namespace Nidan.Business.Interfaces
     {
         public byte[] CreatePDFfromHtml(string html)
         {
-            var htmlpdf = new HtmlToPdf { SerialNumber = "sfnY4OHV1/3Y08PQw8iEn4GRgJGAkYWCgZGCgJ+Ag5+IiIiI" };
+            //var htmlpdf = new HtmlToPdf();// { }//SerialNumber = "sfnY4OHV1/3Y08PQw8iEn4GRgJGAkYWCgZGCgJ+Ag5+IiIiI" };
+            var htmlpdf = new HtmlToPdf { };
             htmlpdf.Document.Margins = new PdfMargins(20, 20, 20, 10);
             using (var result = new MemoryStream())
             {

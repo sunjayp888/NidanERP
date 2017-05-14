@@ -72,7 +72,9 @@
     </div>
 </div>
 <div>
-    <button type="submit" class="btn btn-success" onclick="printDiv('printableArea')">Print Registration Receipt</button>
+    <a href="@Url.Action("Download", "Registration", new { id =Model.Registration.RegistrationId })" class="btn btn-success" role="button">
+        Print Registration Receipt
+    </a>
 </div>
 @section scripts
 {

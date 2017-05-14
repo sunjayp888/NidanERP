@@ -66,10 +66,10 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
-                registrationViewModel.Registration.FollowupDate=DateTime.UtcNow.AddDays(2);
-                registrationViewModel.Registration.RegistrationDate=DateTime.UtcNow;
+                registrationViewModel.Registration.FollowupDate = DateTime.UtcNow.AddDays(2);
+                registrationViewModel.Registration.RegistrationDate = DateTime.UtcNow;
                 var registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, registrationViewModel.StudentCode, registrationViewModel.Registration);
-                return RedirectToAction("Edit", new {id = registration.RegistrationId});
+                return RedirectToAction("Edit", new { id = registration.RegistrationId });
             }
             return View();
         }
@@ -126,7 +126,7 @@ namespace Nidan.Controllers
                 Registration = registrationViewModel.Registration
             };
 
-                return View(viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -171,5 +171,11 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseInstallmentId == courseInstallmentId).FirstOrDefault());
         }
 
+      //  [HttpPost]
+        public ActionResult Download(int? id)
+        {
+            var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);
+            return File(data, ".pdf", "Registration Reciept.pdf");
+        }
     }
 }

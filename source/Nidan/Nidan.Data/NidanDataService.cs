@@ -2007,8 +2007,11 @@ namespace Nidan.Data
                     .Include(p => p.Course)
                     .Include(p => p.Enquiry.EnquiryCourses)
                     .Include(p => p.CourseInstallment)
+                    .Include(p => p.CourseInstallment.Course)
                     .Include(p => p.CandidateFee)
                     .Include(p => p.CandidateInstallment)
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.RegistrationId == registrationId);

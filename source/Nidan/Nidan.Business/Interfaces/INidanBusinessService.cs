@@ -186,6 +186,7 @@ namespace Nidan.Business.Interfaces
         List<Graph> RetrievePieGraphStatistics(int organisationId);
         Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId);
+        
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -229,5 +230,8 @@ namespace Nidan.Business.Interfaces
         Document RetrieveDocument(int organisationId, Guid documentGuid);
         //Document CreateDocument(int organisationId, int centreId, int documentTypeId, string filePath,
         //    string studentCode, string studentName, string description, string fileName);
+
+        //Template
+        byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
     }
 }
