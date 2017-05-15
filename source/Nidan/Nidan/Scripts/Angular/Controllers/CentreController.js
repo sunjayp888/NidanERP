@@ -17,6 +17,7 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editCentre = editCentre;
+        vm.viewCentre = viewCentre;
         vm.courseInstallments = [];
         vm.retrieveCourseInstallments = retrieveCourseInstallments;
         initialise();
@@ -57,6 +58,10 @@
                 vm.courseInstallments = response.data;
             });
         };
+
+        function viewCentre(centreId) {
+            $window.location.href = "/Centre/Edit/" + centreId;
+        }
     }
 
 })();

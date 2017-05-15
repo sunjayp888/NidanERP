@@ -131,6 +131,7 @@
                                             <td class="col-lg-4">
                                                 
                                                 <button ng-if="!enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
+                                                <button ng-if="enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
                                                 <button ng-if="!enquiry.IsRegistrationDone" type="button" class="btn btn-round btn-warning btn-xs">Registration Pending</button>
                                             </td>
                                             <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>

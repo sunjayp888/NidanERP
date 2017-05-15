@@ -129,6 +129,39 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Registration/Edit/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
+            var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
+
+            if (registration == null)
+            {
+                return HttpNotFound();
+            }
+            var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, registration.EnquiryId);
+            var viewModel = new RegistrationViewModel()
+            {
+                PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                EnquiryId = enquiry.EnquiryId,
+                Registration = registration,
+                CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {

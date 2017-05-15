@@ -480,7 +480,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Enquiry.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                                 <div class="col-md-8 col-sm-4 col-xs-12">
-                                    @Html.DropDownListFor(model => model.Enquiry.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveCourseBySectorId()" })
+                                    @Html.DropDownListFor(model => model.Enquiry.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveCourseBySectorId()"})
                                     @Html.ValidationMessageFor(model => model.Enquiry.SectorId, "", new { @class = "help-block" })
                                 </div>
                             </div>

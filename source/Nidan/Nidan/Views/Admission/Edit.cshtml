@@ -29,7 +29,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong>@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            <strong><i class="fa fa-info-circle"></i> &nbsp;@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
                             has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
                             @Model.Registration.CandidateInstallment.CourseFee
                         </div>

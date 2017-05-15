@@ -6,7 +6,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@string.Format("{0} {1} {2}", Model.Enquiry.FirstName,Model.Enquiry.MiddleName,Model.Enquiry.LastName)<small>Edit Enquiry</small></h2>
+                <h2>@string.Format("{0} {1} {2} {3}", Model.Enquiry.Title, Model.Enquiry.FirstName,Model.Enquiry.MiddleName,Model.Enquiry.LastName)<small>Edit Enquiry</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -41,12 +41,19 @@
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Submit</button>
-                                    <a href="@Url.Action("Create", "Counselling", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
-                                        Create Counselling
-                                    </a>
-                                    <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
-                                        Create Registration
-                                    </a>
+                                    @if (!Model.Enquiry.IsCounsellingDone)
+                                    {
+                                        <a href="@Url.Action("Create", "Counselling", new { id = Model.Enquiry.EnquiryId })" class="btn btn-warning" role="button">
+                                            Create Counselling
+                                        </a>
+                                    }
+                                    @if (!Model.Enquiry.IsRegistrationDone)
+                                    {
+                                        <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
+                                            Create Registration
+                                        </a>
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -144,7 +151,7 @@
                 showDropdowns: true,
                 showCustomRangeLabel: false,
                 opens: 'left',
-                startDate: '@Model.Enquiry.EnquiryDate.Value.ToString("dd/MMMM/yyyy")',
+                startDate: '@Model.Enquiry.EnquiryDate.ToString("dd/MMMM/yyyy")',
                 locale: {
                     format: 'DD MMMM YYYY'
                 }
@@ -160,6 +167,9 @@
                 }
             });
         });
+
+        //var sector = $('#Enquiry_SectorId :selected').text();
+        //$('#Enquiry_SectorId :selected').text(sector);
 
         //$('.closing-remarks-textbox').hide();
 

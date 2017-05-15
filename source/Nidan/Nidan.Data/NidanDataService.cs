@@ -2010,6 +2010,7 @@ namespace Nidan.Data
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CourseInstallment.Course)
                     .Include(p => p.CandidateFee)
+                    .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CandidateInstallment)
                     .Include(p => p.Organisation)
                     .Include(p => p.Centre)
