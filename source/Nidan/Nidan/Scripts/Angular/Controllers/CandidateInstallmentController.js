@@ -19,6 +19,8 @@
         vm.editCandidateInstallment = editCandidateInstallment;
         vm.viewCandidateInstallment = viewCandidateInstallment;
         vm.searchCandidateInstallment = searchCandidateInstallment;
+        vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
+        vm.viewCandidateFee = viewCandidateFee;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
@@ -52,12 +54,23 @@
               });
         }
 
+        function retrieveCandidateFeeList() {
+            return CandidateInstallmentService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidateFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidateFees;
+                });
+        }
+
         function pageChanged() {
             return retrieveCandidateInstallments();
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
+            retrieveCandidateFeeList();
             return retrieveCandidateInstallments();
         }
 
@@ -69,7 +82,9 @@
             $window.location.href = "/CandidateInstallment/Edit/" + id;
         }
 
-
+        function viewCandidateFee(candidateInstallmentId) {
+            $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
+        }
 
 
         function viewCandidateInstallment(candidateInstallmentId) {

@@ -135,6 +135,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateInstallment RetrieveCandidateInstallment(int organisationId, int candidateInstallmentId, Expression<Func<CandidateInstallment, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int registrationId, Expression<Func<Registration, bool>> predicate);
+        Registration RetrieveRegistration(int organisationId,int centreId ,int registrationId, Expression<Func<Registration, bool>> predicate);
 
         // Update
 

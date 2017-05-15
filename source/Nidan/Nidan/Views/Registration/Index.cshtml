@@ -55,12 +55,10 @@
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">First Name</th>
-                                            <th ng-click="model.order('Enquiry.LastName')" ng-class="model.orderClass('Enquiry.LastName')">Last Name</th>
+                                            <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
                                             <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
                                             <th ng-click="model.order('PaymentMode.Name')" ng-class="model.orderClass('PaymentMode.Name')">Payment Mode</th>
                                             <th ng-click="model.order('Fees')" ng-class="model.orderClass('Fees')">Fees</th>
-                                            <th ng-click="model.order('Particulars')" ng-class="model.orderClass('Particulars')">Particulars</th>
                                             <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -68,12 +66,10 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
-                                            <td><span ng-bind="registration.Enquiry.FirstName"></span></td>
-                                            <td><span ng-bind="registration.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
                                             <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
                                             <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
                                             <td><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
-                                            <td><span ng-bind="registration.Particulars"></span></td>
                                             <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
                                             <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button></td>
                                             <td>

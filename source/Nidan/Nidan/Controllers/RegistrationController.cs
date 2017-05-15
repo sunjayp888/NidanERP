@@ -63,12 +63,13 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
                 registrationViewModel.Registration.FollowupDate = DateTime.UtcNow.AddDays(2);
                 registrationViewModel.Registration.RegistrationDate = DateTime.UtcNow;
-                var registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, registrationViewModel.StudentCode, registrationViewModel.Registration);
+                var registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, personnelId, registrationViewModel.StudentCode, registrationViewModel.Registration);
                 return RedirectToAction("Edit", new { id = registration.RegistrationId });
             }
             return View();

@@ -15,6 +15,7 @@ namespace Nidan.Entity
             Mobilizations = new HashSet<Mobilization>();
             Trainers=new HashSet<Trainer>();
             Admissions=new HashSet<Admission>();
+            CandidateFees = new HashSet<CandidateFee>();
         }
 
         public int PersonnelId { get; set; }
@@ -116,5 +117,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Admission> Admissions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateFee> CandidateFees { get; set; }
     }
 }

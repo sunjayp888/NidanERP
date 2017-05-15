@@ -10,8 +10,8 @@
     function RegistrationService($http) {
         var service = {
             retrieveRegistrations: retrieveRegistrations,
-            retrieveCandidateFeeList: retrieveCandidateFeeList,
-            viewCandidateFee: viewCandidateFee,
+            //retrieveCandidateFeeList: retrieveCandidateFeeList,
+            //viewCandidateFee: viewCandidateFee,
             retrieveEnquiries: retrieveEnquiries,
             canDeleteRegistration: canDeleteRegistration,
             deleteRegistration: deleteRegistration,
@@ -32,26 +32,26 @@
             return $http.post(url, data);
         }
 
-        function retrieveCandidateFeeList(Paging, OrderBy) {
+        //function retrieveCandidateFeeList(Paging, OrderBy) {
 
-            var url = "/Registration/CandidateFeeList",
-                data = {
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
-                };
+        //    var url = "/Registration/CandidateFeeList",
+        //        data = {
+        //            paging: Paging,
+        //            orderBy: new Array(OrderBy)
+        //        };
 
-            return $http.post(url, data);
-        }
+        //    return $http.post(url, data);
+        //}
 
-        function viewCandidateFee(candidateInstallmentId) {
+        //function viewCandidateFee(candidateInstallmentId) {
 
-            var url = "/CandidateFee/Detail",
-                data = {
-                    candidateInstallmentId: candidateInstallmentId
-                };
+        //    var url = "/CandidateFee/Detail",
+        //        data = {
+        //            candidateInstallmentId: candidateInstallmentId
+        //        };
 
-            return $http.post(url, data);
-        }
+        //    return $http.post(url, data);
+        //}
 
         function retrieveEnquiries(Paging, OrderBy) {
 

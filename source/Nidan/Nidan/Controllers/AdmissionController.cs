@@ -93,12 +93,13 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             var registrationData = NidanBusinessService.RetrieveRegistration(organisationId,admissionViewModel.Admission.RegistrationId);
             var enquiryId = registrationData.EnquiryId;
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
-                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, admissionViewModel.Admission,admissionViewModel.CandidateFee);
+                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission,admissionViewModel.CandidateFee);
                 // Create Personnel
                 var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;

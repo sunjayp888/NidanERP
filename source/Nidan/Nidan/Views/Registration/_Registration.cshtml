@@ -72,11 +72,11 @@
         @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
         <div class="col-md-7 col-sm-3 col-xs-12">
             <label class="btn btn-info pull-right col-md-6">
-                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod, "MonthlyInstallment", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Registration.CandidateInstallment.PaymentMethodMonthly" })
+                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod, "MonthlyInstallment", new { @class = "col-md-2 col-xs-12 classname", autocomplete = "off", id = "Registration.CandidateInstallment.PaymentMethodMonthly" })
                 Pay Fee In Installments
             </label>
             <label class="btn btn-info pull-right col-md-6">
-                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod, "LumpsumAmount", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Registration.CandidateInstallment.PaymentMethodLumpsum" })
+                @Html.RadioButtonFor(model => model.Registration.CandidateInstallment.PaymentMethod,"LumpsumAmount", new { @class = "col-md-2 col-xs-12 classname", autocomplete = "off", id = "Registration.CandidateInstallment.PaymentMethodLumpsum"})
                 Pay Fee In Lumpsum Amount
             </label>
         </div>
@@ -101,7 +101,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.Registration.CandidateFee.PaidAmount, "Paid Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Registration.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup = "NumToWord(this.value,'divDisplayWords')" })
+        @Html.TextBoxFor(model => model.Registration.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup= "NumToWord(this.value,'divDisplayWords')" })
         @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
         @Html.ValidationMessageFor(model => model.Registration.CandidateFee.PaidAmount, "", new { @class = "help-block" })
     </div>

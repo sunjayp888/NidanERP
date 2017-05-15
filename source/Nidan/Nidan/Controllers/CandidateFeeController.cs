@@ -76,6 +76,7 @@ namespace Nidan.Controllers
                 candidateFeeData.PaidAmount = candidateFee.PaidAmount;
                 candidateFeeData.PaymentModeId = candidateFee.PaymentModeId;
                 candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
+                candidateFeeData.PersonnelId = UserPersonnelId;
                 candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
                 return this.JsonNet(true);
             }
