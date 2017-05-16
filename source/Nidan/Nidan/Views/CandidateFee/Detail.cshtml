@@ -9,18 +9,18 @@
             <div class="x_panel">
                 <div class="x_title">
                     @*<h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.Title, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.FirstName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.MiddleName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.LastName)</button> Candidate Fees Details<small></small></h2>*@
-                    <div class="clearfix"></div>
+                    < div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
-                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div id = "datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <div class="row">
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        <th>Bank Name</th>
+                                    <tr role = "row" >
+                                        < th > Bank Name</th>
                                         <th>ChequeDate</th>
                                         <th>Cheque Number</th>
                                         <th>Payment Mode</th>
@@ -31,7 +31,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
+                                    <tr ng-repeat= "candidateFee in model.candidateFees" class="odd gradeX">
                                         <td><span ng-bind="candidateFee.BankName"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeNumber"></span></td>
@@ -39,12 +39,11 @@
                                         <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
                                         <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind="candidateFee.InstallmentAmount"></span></td>
                                         <td class="col-lg-1">
-
                                             <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
                                             <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
                                         </td>
                                         <td>
-                                            <button id="btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
+                                            <button id = "btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
                                             <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
                                         </td>
                                     </tr>

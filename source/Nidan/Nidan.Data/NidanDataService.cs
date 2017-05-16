@@ -2019,6 +2019,20 @@ namespace Nidan.Data
             }
         }
 
+        public Registration RetrieveRegistration(int organisationId, int centreId, int registrationId, Expression<Func<Registration, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Registrations
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.RegistrationId == registrationId);
+            }
+        }
+
         #endregion
 
         #region // Update

@@ -51,6 +51,8 @@ namespace Nidan.Entity
 
         public bool? IsPaymentDone { get; set; }
 
+        public int? PersonnelId { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
@@ -64,6 +66,8 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual PaymentMode PaymentMode { get; set; }
+
+        public virtual Personnel Personnel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }

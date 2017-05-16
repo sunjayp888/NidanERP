@@ -24,10 +24,9 @@
         vm.searchRegistration = searchRegistration;
         vm.viewRegistration = viewRegistration;
         vm.createRegistration = createRegistration;
-        vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
+        //vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
         vm.retrieveEnquiries = retrieveEnquiries;
-        vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
-        vm.viewCandidateFee = viewCandidateFee;
+        //vm.viewCandidateFee = viewCandidateFee;
         vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
@@ -47,16 +46,6 @@
                 });
         }
 
-        function retrieveCandidateFeeList() {
-            return RegistrationService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.candidateFees = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    return vm.candidateFees;
-                });
-        }
-
         function retrieveEnquiries() {
             return RegistrationService.retrieveRegistrations(vm.paging, vm.orderBy)
                 .then(function (response) {
@@ -67,15 +56,15 @@
                 });
         }
 
-        function retrieveCandidateFeeList() {
-            return RegistrationService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.candidateFees = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    return vm.candidateFees;
-                });
-        }
+        //function retrieveCandidateFeeList() {
+        //    return RegistrationService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.candidateFees = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.candidateFees;
+        //        });
+        //}
 
         function searchRegistration(searchKeyword) {
             vm.searchKeyword = searchKeyword;
@@ -107,7 +96,7 @@
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            retrieveCandidateFeeList();
+            //retrieveCandidateFeeList();
             return retrieveRegistrations();
         }
 
@@ -139,9 +128,9 @@
             $window.location.href = "/Registration/Create/" + enquiryId;
         }
 
-        function viewCandidateFee(candidateInstallmentId) {
-            $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
-        }
+        //function viewCandidateFee(candidateInstallmentId) {
+        //    $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
+        //}
 
     }
 

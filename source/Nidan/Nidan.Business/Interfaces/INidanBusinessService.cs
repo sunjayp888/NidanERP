@@ -44,7 +44,7 @@ namespace Nidan.Business.Interfaces
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
         CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
-        Admission CreateAdmission(int organisationId, int centreId, Admission admission, CandidateFee candidateFee);
+        Admission CreateAdmission(int organisationId, int centreId, int personnelId,Admission admission, CandidateFee candidateFee);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
 
@@ -184,9 +184,10 @@ namespace Nidan.Business.Interfaces
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
         List<Graph> RetrievePieGraphStatistics(int organisationId);
-        Registration CreateCandidateRegistration(int organisationId, int centreId, string studentCode, Registration registration);
+        Registration CreateCandidateRegistration(int organisationId, int centreId,int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId);
-        
+        Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
+
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

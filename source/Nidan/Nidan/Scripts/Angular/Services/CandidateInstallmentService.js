@@ -11,6 +11,8 @@
         var service = {
             retrieveCandidateInstallments: retrieveCandidateInstallments,
             searchCandidateInstallment: searchCandidateInstallment,
+            retrieveCandidateFeeList: retrieveCandidateFeeList,
+            viewCandidateFee: viewCandidateFee
         };
 
         return service;
@@ -21,6 +23,27 @@
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateFeeList(Paging, OrderBy) {
+
+            var url = "/Registration/CandidateFeeList",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function viewCandidateFee(candidateInstallmentId) {
+
+            var url = "/CandidateFee/Detail",
+                data = {
+                    candidateInstallmentId: candidateInstallmentId
                 };
 
             return $http.post(url, data);

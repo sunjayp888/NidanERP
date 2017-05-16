@@ -81,7 +81,7 @@
             <div id="lumpsum" class="form-group">
                 @Html.LabelFor(model => model.Registration.CandidateInstallment.LumpsumAmount, "Lumpsum Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Registration.CandidateInstallment.LumpsumAmount, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.TextBoxFor(model => model.Registration.CandidateInstallment.LumpsumAmount, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
                     @Html.ValidationMessageFor(model => model.Registration.CandidateInstallment.LumpsumAmount, "", new { @class = "help-block" })
                 </div>
             </div>
