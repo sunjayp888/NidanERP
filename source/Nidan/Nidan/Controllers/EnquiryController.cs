@@ -119,12 +119,9 @@ namespace Nidan.Controllers
             enquiryViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
             enquiryViewModel.StudentTypes = new SelectList(NidanBusinessService.RetrieveStudentTypes(organisationId, e => true).ToList());
             enquiryViewModel.EnquiryTypes = new SelectList(NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true).ToList());
-            enquiryViewModel.Talukas =
-                new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
-            enquiryViewModel.Districts =
-                new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
-            enquiryViewModel.States =
-                new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
+            enquiryViewModel.Talukas =new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
+            enquiryViewModel.Districts =new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
+            enquiryViewModel.States =new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 

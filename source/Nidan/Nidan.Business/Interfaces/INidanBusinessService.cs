@@ -224,6 +224,9 @@ namespace Nidan.Business.Interfaces
         void DeleteSubjectTrainer(int organisationId, int subjectId, int trainerId);
         void DeleteBatchTrainer(int organisationId, int batchId, int trainerId);
         void DeleteCentreCourse(int organisationId, int centreId, int courseId);
+        void DeleteCentreScheme(int organisationId, int centreId, int schemeId);
+        void DeleteCentreSector(int organisationId, int centreId, int sectorId);
+        void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

@@ -32,11 +32,17 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
+            var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
+            var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
+            var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var viewModel = new CentreViewModel
             {
+                Talukas = new SelectList(talukas, "TalukaId", "Name"),
+                Districts = new SelectList(districts, "DistrictId", "Name"),
+                States = new SelectList(states, "StateId", "Name"),
                 Centre = new Centre
                 {
-                    OrganisationId = UserOrganisationId
+                    OrganisationId = organisationId
                 }
             };
             return View(viewModel);
@@ -51,10 +57,13 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-                centreViewModel.Centre.OrganisationId = UserOrganisationId;
-                centreViewModel.Centre = NidanBusinessService.CreateCentre(UserOrganisationId, centreViewModel.Centre);
+                centreViewModel.Centre.OrganisationId = organisationId;
+                centreViewModel.Centre = NidanBusinessService.CreateCentre(organisationId, centreViewModel.Centre);
                 return RedirectToAction("Index");
             }
+            centreViewModel.Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
+            centreViewModel.Districts = new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
+            centreViewModel.States = new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             return View(centreViewModel);
         }
 
@@ -65,13 +74,20 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, id.Value);
+            var organisationId = UserOrganisationId;
+            var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
+            var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
+            var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
+            var centre = NidanBusinessService.RetrieveCentre(organisationId, id.Value);
             if (centre == null)
             {
                 return HttpNotFound();
             }
             var viewModel = new CentreViewModel
             {
+                Talukas = new SelectList(talukas, "TalukaId", "Name"),
+                Districts = new SelectList(districts, "DistrictId", "Name"),
+                States = new SelectList(states, "StateId", "Name"),
                 Centre = centre
 
             };
@@ -83,10 +99,11 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CentreViewModel centreViewModel)
         {
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
-                centreViewModel.Centre.OrganisationId = UserOrganisationId;
-                centreViewModel.Centre = NidanBusinessService.UpdateCentre(UserOrganisationId, centreViewModel.Centre);
+                centreViewModel.Centre.OrganisationId = organisationId;
+                centreViewModel.Centre = NidanBusinessService.UpdateCentre(organisationId, centreViewModel.Centre);
                 return RedirectToAction("Index");
             }
             var viewModel = new CentreViewModel
@@ -174,6 +191,27 @@ namespace Nidan.Controllers
         public ActionResult UnassignCentreCourse(int centreId, int courseId)
         {
             NidanBusinessService.DeleteCentreCourse(UserOrganisationId, centreId, courseId);
+            return this.JsonNet("");
+        }
+
+        [HttpPost]
+        public ActionResult UnassignCentreScheme(int centreId, int schemeId)
+        {
+            NidanBusinessService.DeleteCentreScheme(UserOrganisationId, centreId, schemeId);
+            return this.JsonNet("");
+        }
+
+        [HttpPost]
+        public ActionResult UnassignCentreSector(int centreId, int sectorId)
+        {
+            NidanBusinessService.DeleteCentreSector(UserOrganisationId, centreId, sectorId);
+            return this.JsonNet("");
+        }
+
+        [HttpPost]
+        public ActionResult UnassignCentreCourseInstallment(int centreId, int courseInstallmentId)
+        {
+            NidanBusinessService.DeleteCentreCourseInstallment(UserOrganisationId, centreId, courseInstallmentId);
             return this.JsonNet("");
         }
     }

@@ -31,8 +31,6 @@
         vm.assignCentreScheme = assignCentreScheme;
         vm.editAbsencePolicyEntitlement = editAbsencePolicyEntitlement;
         vm.openAbsencePolicyEntitlementForm = openAbsencePolicyEntitlementForm;
-        //vm.updateAbsencePolicyEntitlement = updateAbsencePolicyEntitlement;
-
 
         function initialise(centreId) {
             vm.centreId = centreId;
@@ -43,40 +41,40 @@
 
         function retrieveCentreSchemes() {
             return CentreService.retrieveCentreSchemes(vm.centreId)
-               .then(function (response) {
-                   vm.centreSchemeError = false;
-                   vm.centreSchemes = response.data.Items;
-                   if (vm.centreSchemes.length > 0) {
-                       vm.centreSchemeCount = vm.centreSchemes.length;
+                .then(function (response) {
+                    vm.centreSchemeError = false;
+                    vm.centreSchemes = response.data.Items;
+                    if (vm.centreSchemes.length > 0) {
+                        vm.centreSchemeCount = vm.centreSchemes.length;
 
-                   } else {
-                       vm.centreSchemeError = true;
-                       vm.centreSchemeCount = 0;
+                    } else {
+                        vm.centreSchemeError = true;
+                        vm.centreSchemeCount = 0;
 
 
-                   }
-                   vm.paging.totalPages = response.data.TotalPages;
-                   vm.paging.totalResults = response.data.TotalResults;
-               });
+                    }
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                });
         }
 
         function retrieveUnassignedCentreSchemes() {
             return CentreService.retrieveUnassignedCentreSchemes(vm.centreId)
-               .then(function (response) {
-                   vm.ddSchemes = response.data;
-                   vm.ddScheme = response.data[0];
-                   vm.assigning = vm.ddSchemes.length == 0;
-                   return vm.ddSchemes;
-               });
+                .then(function (response) {
+                    vm.ddSchemes = response.data;
+                    vm.ddScheme = response.data[0];
+                    vm.assigning = vm.ddSchemes.length == 0;
+                    return vm.ddSchemes;
+                });
         }
 
         function editAbsencePolicyEntitlement(absencePolicyEntitlementId) {
             return CentreService.editAbsencePolicyEntitlement(vm.centreId, absencePolicyEntitlementId)
-               .then(function (response) {
-                   jQuery("#absencePolicyEntitlementModalBody").html(response.data);
-                   $('#absencePolicyEntitlementErrorSummary').hide();
-                   $("#absencePolicyEntitlementModal").modal('show');
-               });
+                .then(function (response) {
+                    jQuery("#absencePolicyEntitlementModalBody").html(response.data);
+                    $('#absencePolicyEntitlementErrorSummary').hide();
+                    $("#absencePolicyEntitlementModal").modal('show');
+                });
         }
 
         function openAbsencePolicyEntitlementForm(absencePolicyEntitlementId, absenceType) {
@@ -98,21 +96,17 @@
         }
 
         function isCentreSchemeAssignToCentre(schemeId) {
-            vm.loadingActions = true;
-            vm.absenceTypeId = absenceTypeId;
-            CentreService.isAbsencesAssignedToAbsencePolicyAbsenceType(vm.centreId, absenceTypeId).then(function (response) {
-                $filter('filter')(vm.centreSchemes, { AbsenceTypeId: vm.absenceTypeId })[0]["CanUnassign"] = !response.data;
-                vm.loadingActions = false;
-            });
+            vm.schemeId = schemeId;
+            $filter('filter')(vm.centreSchemes, { SchemeId: vm.schemeId })[0]["CanUnassign"] = true;
         }
 
         function assignCentreScheme() {
             vm.assigning = true;
             return CentreService.assignCentreScheme(vm.centreId, vm.ddScheme.SchemeId)
-              .then(function () {
-                  retrieveCentreSchemes();
-                  retrieveUnassignedCentreSchemes();
-              });
+                .then(function () {
+                    retrieveCentreSchemes();
+                    retrieveUnassignedCentreSchemes();
+                });
         }
 
         function changeScheme(ddScheme) {
