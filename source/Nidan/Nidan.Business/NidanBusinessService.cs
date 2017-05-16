@@ -849,7 +849,6 @@ namespace Nidan.Business
                 IsPaymentDone = true,
                 PaymentDate = DateTime.Now,
                 StudentCode = studentCode,
-                IsPaymentDone = true,
                 PaymentModeId = candidateFee.PaymentModeId,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
                 PersonnelId = personnelId
@@ -1688,11 +1687,11 @@ namespace Nidan.Business
                 {
                     CentreId = item.CentreId,
                     CentreName = item.Name,
-                    MobilizationCount = item.Mobilizations.Count,
+                    MobilizationCount = item.Mobilizations.Count(e => e.Close == "No"),
                     AdmissionCount = item.Admissions.Count,
-                    EnquiryCount = item.Enquiries.Count,
-                    RegistrationCount = item.Registrations.Count,
-                    CounsellingCount = item.Counsellings.Count
+                    EnquiryCount = item.Enquiries.Count(e=>e.IsRegistrationDone==false),
+                    RegistrationCount = item.Registrations.Count(e=>e.IsAdmissionDone==false),
+                    CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false)
                 });
             }
             return graphData;
@@ -1720,10 +1719,10 @@ namespace Nidan.Business
             {
                 graphData.Add(new Graph
                 {
-                    MobilizationCount = mobilizations.Count(e => e.CreatedDate.Date == date.Date),
+                    MobilizationCount = mobilizations.Count(e => e.CreatedDate.Date == date.Date && e.Close == "No"),
                     AdmissionCount = admissions.Count(e => e.AdmissionDate.Date == date.Date),
-                    EnquiryCount = enquiries.Count(e => e.EnquiryDate.Date == date.Date),
-                    RegistrationCount = registrations.Count(e => e.RegistrationDate.Date == date),
+                    EnquiryCount = enquiries.Count(e => e.EnquiryDate.Date == date.Date && e.IsRegistrationDone == false),
+                    RegistrationCount = registrations.Count(e => e.RegistrationDate.Date == date && e.IsAdmissionDone == false),
                     Date = date
                 });
             }

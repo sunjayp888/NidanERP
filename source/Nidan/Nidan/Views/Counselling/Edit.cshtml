@@ -22,6 +22,9 @@
                     {
                         @Html.HiddenFor(model => model.Counselling.CentreId)
                         @Html.HiddenFor(model => model.Counselling.Enquiry.Title)
+                        @Html.HiddenFor(model => model.Counselling.Enquiry.FirstName)
+                        @Html.HiddenFor(model => model.Counselling.Enquiry.MiddleName)
+                        @Html.HiddenFor(model => model.Counselling.Enquiry.LastName)
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
                             @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -50,7 +53,7 @@
                                 <div class="form-group">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-success">Submit</button>
-                                        <button type="button" class="btn btn-success" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                                        <button type="button" class="btn btn-info" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                         <a href="@Url.Action("Create", "Registration", new { id = Model.Counselling.EnquiryId })" class="btn btn-primary" role="button">
                                             Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
                                         </a>

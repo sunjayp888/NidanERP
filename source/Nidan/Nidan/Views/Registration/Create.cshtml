@@ -174,7 +174,7 @@
 </div>
 
 <div>
-    <a href="@Url.Action(" Index")" class="btn btn-primary" role="button">
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
@@ -194,6 +194,12 @@
             }
         });
 
+        $('input[type=radio]').click(function () {
+            if (this.previous) {
+                this.checked = false;
+            }
+            this.previous = this.checked;
+        });
 
         $(function () {
             $("#RegistrationPaymentReceipt_FollowUpDate").val("");

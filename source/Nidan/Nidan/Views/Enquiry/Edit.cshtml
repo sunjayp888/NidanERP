@@ -49,7 +49,7 @@
                                     }
                                     @if (!Model.Enquiry.IsRegistrationDone)
                                     {
-                                        <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-primary" role="button">
+                                        <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-info" role="button">
                                             Create Registration
                                         </a>
                                     }
@@ -72,6 +72,9 @@
 
 @section scripts {
     <script>
+        
+        
+
         if ($('#Enquiry_SectorId :selected').text() == "Others") {
             $('.other-interested-course-textbox').show();
         } else {

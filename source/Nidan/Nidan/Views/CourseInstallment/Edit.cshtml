@@ -26,6 +26,7 @@
 
                         }
                         @Html.HiddenFor(model => Model.CourseInstallment.CourseInstallmentId)
+                        @Html.HiddenFor(model => Model.CourseInstallment.CreatedDate)
                         @Html.Partial("_CourseInstallment", Model)
 
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
@@ -49,6 +50,19 @@
 @section scripts
 {
     <script>
-        
+        function greaternum() {
+            var coursetotalfee = $('#CourseInstallment_Fee').val();
+            var downpayment = $('#CourseInstallment_DownPayment').val();
+            var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
+            if (parseInt(downpayment) > parseInt(coursetotalfee)) {
+                alert("DownPayment Amount Should Not Be GreaterThan Course Fee.");
+                $('#CourseInstallment_DownPayment').val("");
+            }
+
+            if (parseInt(lumpsum) > parseInt(coursetotalfee)) {
+                alert("Lumpsum Amount Should Not Be GreaterThan Course Fee.");
+                $('#CourseInstallment_LumpsumAmount').val("");
+            }
+        }
     </script>
 }

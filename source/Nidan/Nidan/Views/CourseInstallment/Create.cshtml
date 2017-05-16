@@ -50,6 +50,29 @@
         $('#CourseInstallment_Fee').val("");
         $('#CourseInstallment_DownPayment').val("");
         $('#CourseInstallment_LumpsumAmount').val("");
+
+       
+           function greaternum() {
+               var coursetotalfee = $('#CourseInstallment_Fee').val();
+               var downpayment=$('#CourseInstallment_DownPayment').val();
+                var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
+                if (parseInt(downpayment) > parseInt(coursetotalfee)) {
+                    alert("DownPayment Amount Should Not Be GreaterThan Course Fee.");
+                    $('#CourseInstallment_DownPayment').val("");
+                }
+
+                if (parseInt(lumpsum) > parseInt(coursetotalfee)) {
+                    alert("Lumpsum Amount Should Not Be GreaterThan Course Fee.");
+                    $('#CourseInstallment_LumpsumAmount').val("");
+                }
+            }
+        //var coursetotalfee = $('#CourseInstallment_Fee').val();
+        //var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
+
+        //if (lumpsum > coursetotalfee) {
+        //    alert("Lumpsum Amount Should Not Be GreaterThan Course Fee.");
+        //}
+
     </script>
 }
 

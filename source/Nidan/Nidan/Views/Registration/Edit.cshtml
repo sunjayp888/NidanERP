@@ -141,10 +141,11 @@
 
         //----------------------------------------------------------------- radio button selection
 
-        $(document).on('dblclick','.className',function(){
-            if(this.checked){
-                $(this).prop('checked', false);
+        $('input[type=radio]').click(function () {
+            if (this.previous) {
+                this.checked = false;
             }
+            this.previous = this.checked;
         });
 
             //===============================================================================
@@ -381,7 +382,7 @@
                     processData: false
                 });
             }
-        });
+       
 
         $("#Registration_CandidateFee_PaymentModeId").change(function () {
             if ($('#Registration_CandidateFee_PaymentModeId :selected').text() == "Cheque") {

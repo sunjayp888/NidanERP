@@ -36,10 +36,11 @@ namespace Nidan.Entity
         }
 
         public int CentreId { get; set; }
-
+        
         [StringLength(100)]
         public string CentreCode { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string Name { get; set; }
 
