@@ -43,38 +43,40 @@
 
         function retrieveCentreCourseInstallments() {
             return CentreService.retrieveCentreCourseInstallments(vm.centreId)
-               .then(function (response) {
-                   vm.centreCourseInstallmentError = false;
-                   vm.centreCourseInstallments = response.data.Items;
-                   if (vm.centreCourseInstallments.length > 0) {
-                       vm.centreCourseInstallmentCount = vm.centreCourseInstallments.length;
+                .then(function (response) {
+                    vm.centreCourseInstallmentError = false;
+                    vm.centreCourseInstallments = response.data.Items;
+                    if (vm.centreCourseInstallments.length > 0) {
+                        vm.centreCourseInstallmentCount = vm.centreCourseInstallments.length;
 
-                   } else {
-                       vm.centreCourseInstallmentError = true;
-                       vm.centreCourseInstallmentCount = 0;
-                   }
-                   vm.paging.totalPages = response.data.TotalPages;
-                   vm.paging.totalResults = response.data.TotalResults;
-               });
+                    } else {
+                        vm.centreCourseInstallmentError = true;
+                        vm.centreCourseInstallmentCount = 0;
+
+
+                    }
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                });
         }
 
         function retrieveUnassignedCentreCourseInstallments() {
             return CentreService.retrieveUnassignedCentreCourseInstallments(vm.centreId)
-               .then(function (response) {
-                   vm.ddCourseInstallments = response.data;
-                   vm.ddCourseInstallment = response.data[0];
-                   vm.assigning = vm.ddCourseInstallments.length == 0;
-                   return vm.ddCourseInstallments;
-               });
+                .then(function (response) {
+                    vm.ddCourseInstallments = response.data;
+                    vm.ddCourseInstallment = response.data[0];
+                    vm.assigning = vm.ddCourseInstallments.length == 0;
+                    return vm.ddCourseInstallments;
+                });
         }
 
         function editAbsencePolicyEntitlement(absencePolicyEntitlementId) {
             return CentreService.editAbsencePolicyEntitlement(vm.centreId, absencePolicyEntitlementId)
-               .then(function (response) {
-                   jQuery("#absencePolicyEntitlementModalBody").html(response.data);
-                   $('#absencePolicyEntitlementErrorSummary').hide();
-                   $("#absencePolicyEntitlementModal").modal('show');
-               });
+                .then(function (response) {
+                    jQuery("#absencePolicyEntitlementModalBody").html(response.data);
+                    $('#absencePolicyEntitlementErrorSummary').hide();
+                    $("#absencePolicyEntitlementModal").modal('show');
+                });
         }
 
         function openAbsencePolicyEntitlementForm(absencePolicyEntitlementId, absenceType) {
@@ -96,21 +98,17 @@
         }
 
         function isCentreCourseInstallmentAssignToCentre(courseInstallmentId) {
-            vm.loadingActions = true;
-            vm.absenceTypeId = absenceTypeId;
-            CentreService.isAbsencesAssignedToAbsencePolicyAbsenceType(vm.centreId, absenceTypeId).then(function (response) {
-                $filter('filter')(vm.centreCourseInstallments, { AbsenceTypeId: vm.absenceTypeId })[0]["CanUnassign"] = !response.data;
-                vm.loadingActions = false;
-            });
+            vm.courseInstallmentId = courseInstallmentId;
+            $filter('filter')(vm.centreCourseInstallments, { CourseInstallmentId: vm.courseInstallmentId })[0]["CanUnassign"] = true;
         }
 
         function assignCentreCourseInstallment() {
             vm.assigning = true;
             return CentreService.assignCentreCourseInstallment(vm.centreId, vm.ddCourseInstallment.CourseInstallmentId)
-              .then(function () {
-                  retrieveCentreCourseInstallments();
-                  retrieveUnassignedCentreCourseInstallments();
-              });
+                .then(function () {
+                    retrieveCentreCourseInstallments();
+                    retrieveUnassignedCentreCourseInstallments();
+                });
         }
 
         function changeCourseInstallment(ddCourseInstallment) {

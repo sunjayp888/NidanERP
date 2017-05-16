@@ -31,8 +31,6 @@
         vm.assignCentreSector = assignCentreSector;
         vm.editAbsencePolicyEntitlement = editAbsencePolicyEntitlement;
         vm.openAbsencePolicyEntitlementForm = openAbsencePolicyEntitlementForm;
-        //vm.updateAbsencePolicyEntitlement = updateAbsencePolicyEntitlement;
-
 
         function initialise(centreId) {
             vm.centreId = centreId;
@@ -43,40 +41,40 @@
 
         function retrieveCentreSectors() {
             return CentreService.retrieveCentreSectors(vm.centreId)
-               .then(function (response) {
-                   vm.centreSectorError = false;
-                   vm.centreSectors = response.data.Items;
-                   if (vm.centreSectors.length > 0) {
-                       vm.centreSectorCount = vm.centreSectors.length;
+                .then(function (response) {
+                    vm.centreSectorError = false;
+                    vm.centreSectors = response.data.Items;
+                    if (vm.centreSectors.length > 0) {
+                        vm.centreSectorCount = vm.centreSectors.length;
 
-                   } else {
-                       vm.centreSectorError = true;
-                       vm.centreSectorCount = 0;
+                    } else {
+                        vm.centreSectorError = true;
+                        vm.centreSectorCount = 0;
 
 
-                   }
-                   vm.paging.totalPages = response.data.TotalPages;
-                   vm.paging.totalResults = response.data.TotalResults;
-               });
+                    }
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                });
         }
 
         function retrieveUnassignedCentreSectors() {
             return CentreService.retrieveUnassignedCentreSectors(vm.centreId)
-               .then(function (response) {
-                   vm.ddSectors = response.data;
-                   vm.ddSector = response.data[0];
-                   vm.assigning = vm.ddSectors.length == 0;
-                   return vm.ddSectors;
-               });
+                .then(function (response) {
+                    vm.ddSectors = response.data;
+                    vm.ddSector = response.data[0];
+                    vm.assigning = vm.ddSectors.length == 0;
+                    return vm.ddSectors;
+                });
         }
 
         function editAbsencePolicyEntitlement(absencePolicyEntitlementId) {
             return CentreService.editAbsencePolicyEntitlement(vm.centreId, absencePolicyEntitlementId)
-               .then(function (response) {
-                   jQuery("#absencePolicyEntitlementModalBody").html(response.data);
-                   $('#absencePolicyEntitlementErrorSummary').hide();
-                   $("#absencePolicyEntitlementModal").modal('show');
-               });
+                .then(function (response) {
+                    jQuery("#absencePolicyEntitlementModalBody").html(response.data);
+                    $('#absencePolicyEntitlementErrorSummary').hide();
+                    $("#absencePolicyEntitlementModal").modal('show');
+                });
         }
 
         function openAbsencePolicyEntitlementForm(absencePolicyEntitlementId, absenceType) {
@@ -98,21 +96,17 @@
         }
 
         function isCentreSectorAssignToCentre(sectorId) {
-            vm.loadingActions = true;
-            vm.absenceTypeId = absenceTypeId;
-            CentreService.isAbsencesAssignedToAbsencePolicyAbsenceType(vm.centreId, absenceTypeId).then(function (response) {
-                $filter('filter')(vm.centreSectors, { AbsenceTypeId: vm.absenceTypeId })[0]["CanUnassign"] = !response.data;
-                vm.loadingActions = false;
-            });
+            vm.sectorId = sectorId;
+            $filter('filter')(vm.centreSectors, { SectorId: vm.sectorId })[0]["CanUnassign"] = true;
         }
 
         function assignCentreSector() {
             vm.assigning = true;
             return CentreService.assignCentreSector(vm.centreId, vm.ddSector.SectorId)
-              .then(function () {
-                  retrieveCentreSectors();
-                  retrieveUnassignedCentreSectors();
-              });
+                .then(function () {
+                    retrieveCentreSectors();
+                    retrieveUnassignedCentreSectors();
+                });
         }
 
         function changeSector(ddSector) {

@@ -1,10 +1,8 @@
 ﻿@model Nidan.Models.CentreViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Centre";
 }
-
-<h3>Create</h3>
 
 <div class="x_panel">
     <div class="x_title">
@@ -44,10 +42,82 @@
                         @Html.ValidationMessageFor(model => model.Centre.Name, "", new { @class = "help-block" })
                     </div>
                 </div>
-                <div class="ln_solid"></div>
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-3">
-                        <button id="send" type="submit" class="btn btn-success">Submit</button>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.Address1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.Address1, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.Address1, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.Address2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.Address2, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.Address2, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.Address3, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.Address3, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.Address3, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.Address4, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.Address4, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.Address4, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Centre.StateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Centre.StateId, Model.States, "Select State", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.StateId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Centre.DistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Centre.DistrictId, Model.Districts, "Select District", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.DistrictId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Centre.TalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Centre.TalukaId, Model.Talukas, "Select Taluka", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.TalukaId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.PinCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.PinCode, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.PinCode, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.EmailId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Centre.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Centre.Telephone, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Centre.Telephone, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                @*<div class="ln_solid"></div>*@
+                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,3 +129,9 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+@section scripts {
+    <script>
+        $("#Centre_PinCode").val(""); 
+        $("#Centre_Telephone").val("");
+    </script>
+}

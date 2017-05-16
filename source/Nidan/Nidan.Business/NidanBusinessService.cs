@@ -849,7 +849,6 @@ namespace Nidan.Business
                 IsPaymentDone = true,
                 PaymentDate = DateTime.Now,
                 StudentCode = studentCode,
-                IsPaymentDone = true,
                 PaymentModeId = candidateFee.PaymentModeId,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
                 PersonnelId = personnelId
@@ -2268,6 +2267,20 @@ namespace Nidan.Business
             _nidanDataService.Delete<CentreCourse>(organisationId, p => p.CentreId == centreId && p.CourseId == courseId);
         }
 
+        public void DeleteCentreScheme(int organisationId, int centreId, int schemeId)
+        {
+            _nidanDataService.Delete<CentreScheme>(organisationId, p => p.CentreId == centreId && p.SchemeId == schemeId);
+        }
+
+        public void DeleteCentreSector(int organisationId, int centreId, int sectorId)
+        {
+            _nidanDataService.Delete<CentreSector>(organisationId, p => p.CentreId == centreId && p.SectorId == sectorId);
+        }
+
+        public void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
+        {
+            _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CentreCourseInstallmentId == courseInstallmentId);
+        }
 
         #endregion
 
