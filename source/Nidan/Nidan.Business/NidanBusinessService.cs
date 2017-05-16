@@ -846,6 +846,7 @@ namespace Nidan.Business
                 ChequeNumber = candidateFee.ChequeNumber,
                 FeeTypeId = (int)FeeType.Registration,
                 PaidAmount = candidateFee.PaidAmount,
+                IsPaymentDone = true,
                 PaymentDate = DateTime.Now,
                 StudentCode = studentCode,
                 IsPaymentDone = true,

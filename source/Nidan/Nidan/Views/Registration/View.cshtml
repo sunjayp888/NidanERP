@@ -1,0 +1,168 @@
+﻿@model Nidan.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = string.Format("View Registration ({0})", Model.Registration.Enquiry.FirstName);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                
+                <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button> Registration Details<small>View Registration</small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+
+                        @*@Html.HiddenFor(model => model.Registration.RegistrationId)
+                        @Html.HiddenFor(model => model.Registration.CandidateFeeId)
+                        @Html.HiddenFor(model => model.Registration.CandidateInstallmentId)
+                        @Html.HiddenFor(model => model.Registration.EnquiryId)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.EnquiryId)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.Address1)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.Mobile)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.LastName)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.MiddleName)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.FirstName)
+                        @Html.HiddenFor(model => model.Registration.Enquiry.Title)
+                        @Html.HiddenFor(model => model.Registration.RegistrationDate)
+                        @Html.HiddenFor(model => model.Registration.Remarks)
+                        @Html.HiddenFor(model => model.Registration.StudentCode)
+                        @Html.HiddenFor(model => model.Registration.CourseInstallmentId)
+                        @Html.HiddenFor(model => model.Registration.CourseInstallment.Name)
+                        @Html.HiddenFor(model => model.Registration.CourseInstallment.CourseInstallmentId)
+                        @Html.HiddenFor(model => model.Registration.CandidateFee.CandidateFeeId)
+                        @Html.HiddenFor(model => model.Registration.CandidateInstallment.CandidateInstallmentId)*@
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong><i class="fa fa-info-circle"></i> &nbsp;@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
+                            @Model.Registration.CandidateInstallment.CourseFee
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Registration Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Course Fee</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateInstallment.CourseFee" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Registration Fee Paid</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Payment Mode</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaymentMode.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        @if (Model.Registration.CandidateFee.PaymentModeId == 2)
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Bank Name</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.BankName" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                @if (Model.Registration.CandidateFee.PaymentModeId == 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Cheque Number</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.ChequeNumber" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary">Cheque Date</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.ChequeDate" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+    <a href="@Url.Action("Download", "Registration", new {id = Model.Registration.RegistrationId})" class="btn btn-success" role="button">
+        <i class="fa fa-print"></i> Print Registration Receipt
+    </a>
+</div>

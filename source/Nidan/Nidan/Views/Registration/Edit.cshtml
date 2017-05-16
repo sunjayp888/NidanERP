@@ -8,7 +8,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2><button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button>  Registration Details<small>Edit Registration</small></h2>
+                <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button>  Registration Details<small>Edit Registration</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -48,7 +48,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong>@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
+                            <strong><i class="fa fa-info-circle"></i> &nbsp;@string.Format("{0} {1}", @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.LastName)</strong>
                             has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
                             @Model.Registration.CandidateInstallment.CourseFee
                         </div>
@@ -73,7 +73,7 @@
 </div>
 <div>
     <a href="@Url.Action("Download", "Registration", new { id =Model.Registration.RegistrationId })" class="btn btn-success" role="button">
-        Print Registration Receipt
+        <i class="fa fa-print"></i> Print Registration Receipt
     </a>
 </div>
 @section scripts
@@ -380,6 +380,14 @@
                     async: true,
                     processData: false
                 });
+            }
+        });
+
+        $("#Registration_CandidateFee_PaymentModeId").change(function () {
+            if ($('#Registration_CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+                $('.bank-details-textbox').show();
+            } else {
+                $('.bank-details-textbox').hide();
             }
         });
 
