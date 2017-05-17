@@ -9,7 +9,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2><button type="button" class="btn btn-success btn-lg">@string.Format("{0} {1} {2} {3}", @Model.Enquiry.Title,@Model.Enquiry.FirstName, @Model.Enquiry.MiddleName, @Model.Enquiry.LastName)</button>  Enquiry Details<small></small></h2>
+                    <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Enquiry.Title, @Model.Enquiry.FirstName, @Model.Enquiry.MiddleName, @Model.Enquiry.LastName)</button>  Enquiry Details<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -97,17 +97,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
-                                        <div class="col-lg-5">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                            </span>
-                                        </div>
-
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                        </span>
                                         @foreach (var course in Model.Courses)
                                         {
-                                            <div class="col-lg-7">
-                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-                                            </div>
+                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
                                         }
                                     </div>
                                 </div>
@@ -184,8 +179,8 @@
                                                             <button type="submit" class="btn btn-success">Submit</button>
                                                             <button type="button" class="btn btn-info" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                                             @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
-                                            Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
-                                        </a>*@
+                                                                    Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
+                                                                </a>*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,7 +222,7 @@
                 </div>
             </div>*@
     </div>
-   
+
     <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>

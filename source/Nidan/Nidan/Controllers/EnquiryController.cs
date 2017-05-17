@@ -94,8 +94,13 @@ namespace Nidan.Controllers
                     //Close Mobilization 
                     var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, enquiryViewModel.MobilizationId);
                     mobilization.Close = "Yes";
+                    mobilization.ClosingRemark = "Converted To Enquiry";
                     NidanBusinessService.UpdateMobilization(organisationId, mobilization);
-                    NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                    var followup = NidanBusinessService.RetrieveFollowUp(organisationId,enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                    followup.Close = "Yes";
+                    followup.Remark = "Converted To Enquiry";
+                    NidanBusinessService.UpdateFollowUp(organisationId, followup);
+                    // NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
@@ -119,12 +124,9 @@ namespace Nidan.Controllers
             enquiryViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
             enquiryViewModel.StudentTypes = new SelectList(NidanBusinessService.RetrieveStudentTypes(organisationId, e => true).ToList());
             enquiryViewModel.EnquiryTypes = new SelectList(NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true).ToList());
-            enquiryViewModel.Talukas =
-                new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
-            enquiryViewModel.Districts =
-                new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
-            enquiryViewModel.States =
-                new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
+            enquiryViewModel.Talukas =new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
+            enquiryViewModel.Districts =new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
+            enquiryViewModel.States =new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 

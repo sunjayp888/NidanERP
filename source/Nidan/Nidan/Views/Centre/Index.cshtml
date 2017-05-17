@@ -7,19 +7,19 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Centres <small></small>
+                Centres<small></small>
             </h3>
         </div>
         @*<div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCentre(searchField)" class="form-control" placeholder="Search for Centre...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchCentre(searchField)" type="button">Go!</button>
-                    </span>
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCentre(searchField)" class="form-control" placeholder="Search for Centre...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="model.searchCentre(searchField)" type="button">Go!</button>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
     @if (User.IsInAnyRoles("Admin"))
     {
@@ -55,12 +55,16 @@
                                     <thead>
                                         <tr role="row">
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                            <th ng-click="model.order('Email')" ng-class="model.orderClass('Email')">Email</th>
+                                            <th ng-click="model.order('ContactNumber')" ng-class="model.orderClass('ContactNumber')">Contact Number</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="centre in model.centres" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentre(centre.CentreId)">
                                             <td><span ng-bind="centre.Name"></span></td>
+                                            <td><span ng-bind="centre.EmailId"></span></td>
+                                            <td><span ng-bind="centre.Telephone"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -75,10 +79,10 @@
                                                                 </a>
                                                             </li>
                                                             @*<li >
-                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                            Archive
-                                        </a>
-                                    </li>*@
+                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.Name}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                        Archive
+                                                                    </a>
+                                                                </li>*@
                                                         }
                                                     </ul>
                                                 </div>

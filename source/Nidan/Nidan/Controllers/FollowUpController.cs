@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -31,6 +32,8 @@ namespace Nidan.Controllers
         // GET: FollowUp/Edit/{id}
         public ActionResult Edit(int? id)
         {
+            TempData["FollowUpId"] = id;
+            var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,10 +43,16 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
+            var interestedCourses = followUp.Enquiry?.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var interestedCourseIds = interestedCourses ?? followUp.IntrestedCourseId.ToIEnumarable();
+
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true)
+                          .Where(e => interestedCourseIds?.Contains(e.CourseId) ?? true);
+
             var viewModel = new FollowUpViewModel
             {
                 FollowUp = followUp,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name")
+                Courses = new SelectList(courses, "CourseId", "Name")
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             return View(viewModel);
@@ -111,6 +120,13 @@ namespace Nidan.Controllers
                , orderBy, paging));
         }
 
+        [HttpPost]
+        public ActionResult FollowUpHistoryList(Paging paging, List<OrderBy> orderBy)
+        {
+            var followUpId = Convert.ToInt32(TempData["FollowUpId"]);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUpHistories(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpId == followUpId, orderBy, paging));
+        }
 
         public void Read(int id)
         {

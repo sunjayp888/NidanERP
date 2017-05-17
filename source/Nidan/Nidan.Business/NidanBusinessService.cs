@@ -178,7 +178,20 @@ namespace Nidan.Business
                 FollowUpUrl = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
                 ReadDateTime = _today.AddYears(-100)
             };
-            _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            var followUpData = _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            var followUpHistory = new FollowUpHistory
+            {
+                FollowUpId = followUpData.FollowUpId,
+                FollowUpType = followUpData.FollowUpType,
+                Remarks = followUpData.Remark,
+                Close = followUpData.Close,
+                ClosingRemarks = followUpData.ClosingRemark,
+                FollowUpDate = followUpData.FollowUpDateTime.Date,
+                CreatedDate = DateTime.UtcNow.Date,
+                CentreId = followUpData.CentreId,
+                OrganisationId = organisationId
+            };
+            _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             return data;
         }
 
@@ -244,7 +257,7 @@ namespace Nidan.Business
             var followUp = new FollowUp
             {
                 CentreId = enquiry.CentreId,
-                FollowUpDateTime = enquiry.FollowUpDate.Value,
+                FollowUpDateTime = enquiry.FollowUpDate.Value.Date,
                 EnquiryId = enquiry.EnquiryId,
                 Remark = enquiry.Remarks,
                 Title = enquiry.Title,
@@ -260,7 +273,20 @@ namespace Nidan.Business
                 Close = "No",
                 ReadDateTime = _today.AddYears(-100)
             };
-            _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            var followUpData = _nidanDataService.Create<FollowUp>(organisationId, followUp);
+            var followUpHistory = new FollowUpHistory
+            {
+                FollowUpId = followUpData.FollowUpId,
+                FollowUpType = followUpData.FollowUpType,
+                Remarks = followUpData.Remark,
+                Close = followUpData.Close,
+                ClosingRemarks = followUpData.ClosingRemark,
+                FollowUpDate = followUpData.FollowUpDateTime.Date,
+                CreatedDate = DateTime.UtcNow.Date,
+                CentreId = followUpData.CentreId,
+                OrganisationId = organisationId
+            };
+            _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
         }
 
         private string GenerateStudentCode(int organisationId, int enquiryId, int centreId)
@@ -277,6 +303,7 @@ namespace Nidan.Business
             var mobilizationType =
                 RetrieveMobilizationTypes(organisationId, e => e.Name == "Event").FirstOrDefault();
             var followUpList = new List<FollowUp>();
+            var followUpHistoryList = new List<FollowUpHistory>();
             foreach (var item in mobilizations)
             {
                 var interestedCourseId =
@@ -329,10 +356,24 @@ namespace Nidan.Business
                     FollowUpType = "Mobilization",
                     FollowUpUrl = string.Format("/Mobilization/Edit/{0}", data.MobilizationId)
                 });
-
             }
-
-            _nidanDataService.Create<FollowUp>(organisationId, followUpList);
+             _nidanDataService.Create<FollowUp>(organisationId, followUpList);
+            foreach (var item in followUpList)
+            {
+                var followUpHistory = new FollowUpHistory
+                {
+                    FollowUpId = item.FollowUpId,
+                    FollowUpType = item.FollowUpType,
+                    Remarks = item.Remark,
+                    Close = item.Close,
+                    ClosingRemarks = item.ClosingRemark,
+                    FollowUpDate = item.FollowUpDateTime,
+                    CreatedDate = DateTime.UtcNow.Date,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                };
+                _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
+            }
         }
 
         public void UploadSession(int organisationId, List<Session> session)
@@ -364,30 +405,43 @@ namespace Nidan.Business
 
         public Counselling CreateCounselling(int organisationId, Counselling counselling)
         {
-            counselling.Title = counselling.Enquiry.Title;
-            counselling.FirstName = counselling.Enquiry.FirstName;
-            counselling.MiddleName = counselling.Enquiry.MiddleName;
-            counselling.LastName = counselling.Enquiry.LastName;
+            var enquiryData = RetrieveEnquiry(organisationId, counselling.EnquiryId);
+            counselling.Title = enquiryData.Title;
+            counselling.FirstName = enquiryData.FirstName;
+            counselling.MiddleName = enquiryData.MiddleName;
+            counselling.LastName = enquiryData.LastName;
             var data = _nidanDataService.CreateCounselling(organisationId, counselling);
-            var enquiry = RetrieveEnquiry(organisationId, data.EnquiryId);
             var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
             if (followUp != null)
             {
                 followUp.Remark = data.Remarks;
-                followUp.Title = enquiry.Title;
-                followUp.FirstName = enquiry.FirstName;
-                followUp.MiddleName = enquiry.MiddleName;
-                followUp.LastName = enquiry.LastName;
+                followUp.Title = enquiryData.Title;
+                followUp.FirstName = enquiryData.FirstName;
+                followUp.MiddleName = enquiryData.MiddleName;
+                followUp.LastName = enquiryData.LastName;
                 followUp.IntrestedCourseId = data.CourseOfferedId;
-                followUp.Mobile = enquiry.Mobile;
+                followUp.Mobile = enquiryData.Mobile;
                 followUp.FollowUpType = "Counselling";
                 followUp.FollowUpUrl = string.Format("/Counselling/Edit/{0}", data.CounsellingId);
                 followUp.CounsellingId = data.CounsellingId;
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                var followUpHistory = new FollowUpHistory
+                {
+                    FollowUpId = followUpData.FollowUpId,
+                    FollowUpType = followUpData.FollowUpType,
+                    Remarks = followUpData.Remark,
+                    Close = followUpData.Close,
+                    ClosingRemarks = followUpData.ClosingRemark,
+                    FollowUpDate = counselling.FollowUpDate ?? followUpData.FollowUpDateTime.Date ,
+                    CreatedDate = DateTime.UtcNow.Date,
+                    CentreId = followUpData.CentreId,
+                    OrganisationId = organisationId
+                };
+                _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
-            enquiry.EnquiryStatus = "Counselling";
-            enquiry.IsCounsellingDone = true;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
+            enquiryData.EnquiryStatus = "Counselling";
+            enquiryData.IsCounsellingDone = true;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
             return data;
         }
 
@@ -638,7 +692,7 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
 
-        public Admission CreateAdmission(int organisationId, int centreId, int personnelId,Admission admission,
+        public Admission CreateAdmission(int organisationId, int centreId, int personnelId, Admission admission,
             CandidateFee candidateFee)
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
@@ -690,12 +744,25 @@ namespace Nidan.Business
                 followup.FollowUpType = "Admission";
                 followup.Close = "Yes";
                 followup.ClosingRemark = "Admission Done";
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
+                var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
+                var followUpHistory = new FollowUpHistory
+                {
+                    FollowUpId = followUpData.FollowUpId,
+                    FollowUpType = followUpData.FollowUpType,
+                    Remarks = followUpData.Remark,
+                    Close = followUpData.Close,
+                    ClosingRemarks = followUpData.ClosingRemark,
+                    FollowUpDate = followUpData.FollowUpDateTime.Date,
+                    CreatedDate = DateTime.UtcNow.Date,
+                    CentreId = followUpData.CentreId,
+                    OrganisationId = organisationId
+                };
+                _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
             return admissionData;
         }
 
-        private void CreateCandidateFee(int organisationId, int centreId,int personnelId, Admission admission)
+        private void CreateCandidateFee(int organisationId, int centreId, int personnelId, Admission admission)
         {
             var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 admission.Registration.CandidateInstallmentId, c => true);
@@ -737,7 +804,12 @@ namespace Nidan.Business
             return _nidanDataService.CreateCandidateFee(organisationId, candidateFee);
         }
 
-        public Registration CreateCandidateRegistration(int organisationId, int centreId,int personnelId, string studentCode,
+        public FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory)
+        {
+            return _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
+        }
+
+        public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode,
             Registration registration)
         {
             registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
@@ -827,12 +899,25 @@ namespace Nidan.Business
                 followUp.RegistrationId = data.RegistrationId;
                 followUp.FollowUpType = "Registration";
                 followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+                var followUpHistory = new FollowUpHistory
+                {
+                    FollowUpId = followUpData.FollowUpId,
+                    FollowUpType = followUpData.FollowUpType,
+                    Remarks = followUpData.Remark,
+                    Close = followUpData.Close,
+                    ClosingRemarks = followUpData.ClosingRemark,
+                    FollowUpDate = registration.FollowupDate ?? followUpData.FollowUpDateTime.Date,
+                    CreatedDate = DateTime.UtcNow.Date,
+                    CentreId = followUpData.CentreId,
+                    OrganisationId = organisationId
+                };
+                _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
             return data;
         }
 
-        private CandidateFee CandidateFee(int organisationId, int centreId, int personnelId,string studentCode,
+        private CandidateFee CandidateFee(int organisationId, int centreId, int personnelId, string studentCode,
             int? candidateInstallmentId, CandidateFee candidateFee)
         {
             var candidateFeeData = new CandidateFee()
@@ -1734,6 +1819,16 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRegistration(organisationId, centreId, registraionId, p => true);
         }
 
+        public PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFollowUpHistories(organisationId, predicate, orderBy, paging);
+        }
+
+        public FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveFollowUpHistory(organisationId, followUpHistoryId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2020,6 +2115,7 @@ namespace Nidan.Business
                 mobilization.ClosingRemark = followUp.ClosingRemark;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, mobilization);
+
             }
 
             //Update Enquiry Date
@@ -2060,17 +2156,22 @@ namespace Nidan.Business
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
 
-            //Update RegistrationPaymentReceipt Date
-            //if (followUp.RegistrationId.HasValue && followUp.RegistrationId.Value != 0)
-            //{
-            //    var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, followUp.RegistrationId.Value, e => true);
-            //    registrationPaymentReceipt.FollowUpDate = followUp.FollowUpDateTime;
-            //    //registrationPaymentReceipt.Close = followUp.Close;
-            //    //registrationPaymentReceipt.ClosingRemark = followUp.ClosingRemark;
-            //    _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registrationPaymentReceipt);
-            //}
 
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            var followUpHistory = new FollowUpHistory
+            {
+                FollowUpId = followUp.FollowUpId,
+                FollowUpType = followUp.FollowUpType,
+                Remarks = followUp.Remark,
+                Close = followUp.Close,
+                ClosingRemarks = followUp.ClosingRemark,
+                FollowUpDate = followUp.FollowUpDateTime.Date,
+                CreatedDate = DateTime.UtcNow.Date,
+                CentreId = followUp.CentreId,
+                OrganisationId = organisationId
+            };
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
+            _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
+            return data;
         }
 
         public Centre UpdateCentre(int organisationId, Centre centre)
@@ -2267,6 +2368,20 @@ namespace Nidan.Business
             _nidanDataService.Delete<CentreCourse>(organisationId, p => p.CentreId == centreId && p.CourseId == courseId);
         }
 
+        public void DeleteCentreScheme(int organisationId, int centreId, int schemeId)
+        {
+            _nidanDataService.Delete<CentreScheme>(organisationId, p => p.CentreId == centreId && p.SchemeId == schemeId);
+        }
+
+        public void DeleteCentreSector(int organisationId, int centreId, int sectorId)
+        {
+            _nidanDataService.Delete<CentreSector>(organisationId, p => p.CentreId == centreId && p.SectorId == sectorId);
+        }
+
+        public void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
+        {
+            _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CentreCourseInstallmentId == courseInstallmentId);
+        }
 
         #endregion
 
