@@ -59,7 +59,7 @@
                                             <th ng-click="model.order('CourseId')" ng-class="model.orderClass('CourseId')">Course</th>
                                             <th ng-click="model.order('Fee')" ng-class="model.orderClass('Fee')">Fee</th>
                                             <th ng-click="model.order('DownPayment')" ng-class="model.orderClass('DownPayment')">Down Payment</th>
-                                            <th ng-click="model.order('LumpsumAmt')" ng-class="model.orderClass('LumpsumAmt')">Lumpsum Amount</th>
+                                            <th ng-click="model.order('LumpsumAmount')" ng-class="model.orderClass('LumpsumAmount')">Lumpsum Amount</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -69,7 +69,7 @@
                                             <td><span ng-bind="courseInstallment.Course.Name"></span></td>
                                             <td><span ng-bind="courseInstallment.Fee"></span></td>
                                             <td><span ng-bind="courseInstallment.DownPayment"></span></td>
-                                            <td><span ng-bind="courseInstallment.LumpsumAmt"></span></td>
+                                            <td><span ng-bind="courseInstallment.LumpsumAmount"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

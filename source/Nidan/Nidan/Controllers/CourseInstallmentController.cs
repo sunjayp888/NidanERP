@@ -47,15 +47,17 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseInstallmentViewModel courseInstallmentViewModel)
         {
-            courseInstallmentViewModel.CourseInstallment.OrganisationId = UserOrganisationId;
-            courseInstallmentViewModel.CourseInstallment.CentreId = UserCentreId;
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
+            courseInstallmentViewModel.CourseInstallment.CentreId = centreId;
             courseInstallmentViewModel.CourseInstallment.CreatedDate= DateTime.UtcNow;
             if (ModelState.IsValid)
             {
-                courseInstallmentViewModel.CourseInstallment = NidanBusinessService.CreateCourseInstallment(UserOrganisationId, courseInstallmentViewModel.CourseInstallment);
+                courseInstallmentViewModel.CourseInstallment = NidanBusinessService.CreateCourseInstallment(organisationId, courseInstallmentViewModel.CourseInstallment);
                 return RedirectToAction("Index", "CourseInstallment");
             }
-            courseInstallmentViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList());
+            courseInstallmentViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             return View(courseInstallmentViewModel);
         }
 
@@ -68,7 +70,7 @@ namespace Nidan.Controllers
             }
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var courseInstallment = NidanBusinessService.RetrieveCourseInstallment(UserOrganisationId, id.Value);
+            var courseInstallment = NidanBusinessService.RetrieveCourseInstallment(organisationId, id.Value);
             if (courseInstallment == null)
             {
                 return HttpNotFound();
@@ -87,10 +89,12 @@ namespace Nidan.Controllers
         public ActionResult Edit(CourseInstallmentViewModel courseInstallmentViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
-                courseInstallmentViewModel.CourseInstallment.OrganisationId = UserOrganisationId;
-                courseInstallmentViewModel.CourseInstallment = NidanBusinessService.UpdateCourseInstallment(UserOrganisationId, courseInstallmentViewModel.CourseInstallment);
+                courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
+                courseInstallmentViewModel.CourseInstallment.CentreId = centreId;
+                courseInstallmentViewModel.CourseInstallment = NidanBusinessService.UpdateCourseInstallment(organisationId, courseInstallmentViewModel.CourseInstallment);
                 return RedirectToAction("Index","CourseInstallment");
             }
             var viewModel = new CourseInstallmentViewModel

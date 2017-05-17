@@ -331,7 +331,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Enquiry.PinCode, new { @class = "control-label col-md-2 col-sm-6 col-xs-12" })
                         <div class="col-md-10 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(model => model.Enquiry.PinCode, new { @class = "form-control" })
+                            @Html.TextBoxFor(model => model.Enquiry.PinCode, new { @class = "form-control" , @maxlength = "6" })
                             @Html.ValidationMessageFor(model => model.Enquiry.PinCode, "", new { @class = "help-block" })
                         </div>
                     </div>

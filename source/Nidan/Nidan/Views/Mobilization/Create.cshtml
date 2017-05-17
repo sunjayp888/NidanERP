@@ -71,7 +71,7 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function () {
+            onSelect: function() {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
@@ -79,68 +79,76 @@
             }
         };
 
-        $(function () {
-            $('.name').keypress(function (e) {
-                var txt = String.fromCharCode(e.which);
-                console.log(txt + ' : ' + e.which);
-                if (!txt.match(/[A-Za-z+#.]/))//+#-.
-                {
-                    return false;
-                }
-            });
+        $(function() {
+            $('.name')
+                .keypress(function(e) {
+                    var txt = String.fromCharCode(e.which);
+                    console.log(txt + ' : ' + e.which);
+                    if (!txt.match(/[A-Za-z+#.]/)) //+#-.
+                    {
+                        return false;
+                    }
+                });
         });
-        
 
-        jQuery(function () {
+
+        jQuery(function() {
             //Generated date.
             jQuery(".generated").daterangepicker(daterangepickerOptions);
             $('#Mobilization_GeneratedDate').val(moment().format('DD MMMM YYYY'));
-            $(".generated").on('apply.daterangepicker',
-                function(ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
+            $(".generated")
+                .on('apply.daterangepicker',
+                    function(ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
 
             //Follow Up Date
             jQuery(".followUpDate").daterangepicker(followUpDaterangepickerOptions);
             $('#Mobilization_FollowUpDate').val(moment().add('2', 'days').format('DD MMMM YYYY'));
-            $(".followUpDate").on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            });
+            $(".followUpDate")
+                .on('apply.daterangepicker',
+                    function(ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
         });
 
-
-       
+        var newOption = "Others";
+        $("#Mobilization_InterestedCourseId").append($("<option></option>").text(newOption).html(newOption));
+           
 
 
         function phoneno() {
-            $('#phone').keypress(function(e) {
-                var a = [];
-                var k = e.which;
+            $('#phone')
+                .keypress(function(e) {
+                    var a = [];
+                    var k = e.which;
 
-                for (i = 48; i < 58; i++)
-                    a.push(i);
+                    for (i = 48; i < 58; i++)
+                        a.push(i);
 
-                if (!(a.indexOf(k) >= 0))
-                    e.preventDefault();
-            });
+                    if (!(a.indexOf(k) >= 0))
+                        e.preventDefault();
+                });
         }
 
         $('.eventId').hide();
-        $("#Mobilization_MobilizationTypeId").change(function () {
-           if ($('#Mobilization_MobilizationTypeId :selected').text() == "Event") {
-               $('.eventId').show();
-           } else {
-               $('.eventId').hide();
-           }
-        });
+        $("#Mobilization_MobilizationTypeId")
+            .change(function() {
+                if ($('#Mobilization_MobilizationTypeId :selected').text() == "Event") {
+                    $('.eventId').show();
+                } else {
+                    $('.eventId').hide();
+                }
+            });
 
         $('.interestedCourseId').hide();
-        $("#Mobilization_InterestedCourseId").change(function () {
-            if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
-                $('.interestedCourseId').show();
-            } else {
-                $('.interestedCourseId').hide();
-            }
-        });
+        $("#Mobilization_InterestedCourseId")
+            .change(function() {
+                if ($('#Mobilization_InterestedCourseId :selected').text() == "Others") {
+                    $('.interestedCourseId').show();
+                } else {
+                    $('.interestedCourseId').hide();
+                }
+            });
     </script>
 }

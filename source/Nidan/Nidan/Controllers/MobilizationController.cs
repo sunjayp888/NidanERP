@@ -81,10 +81,13 @@ namespace Nidan.Controllers
         // GET: Mobilization/Edit/{id}
         public ActionResult Edit(int? id)
         {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
             var mobilization = NidanBusinessService.RetrieveMobilization(UserOrganisationId, id.Value);
             if (mobilization == null)
             {
@@ -93,7 +96,7 @@ namespace Nidan.Controllers
             var viewModel = new MobilizationViewModel
             {
                 Mobilization = mobilization,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name"),
                 MobilizationTypes = new SelectList(NidanBusinessService.RetrieveMobilizationTypes(UserOrganisationId, e => true).ToList(), "MobilizationTypeId", "Name"),
                 Events = new SelectList(NidanBusinessService.RetrieveEvents(UserOrganisationId, e => true).Items.ToList(), "EventId", "Name"),
                 EventId = mobilization.EventId,

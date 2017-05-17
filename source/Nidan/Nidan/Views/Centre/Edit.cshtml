@@ -209,6 +209,20 @@
                         <div class="col-xs-12">
                             <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                 <thead>
+
+                                    <tr role="row">
+                                        <th ng-click="model.order('SchemeId')" ng-class="model.orderClass('Name')">Scheme</th>
+                                        @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+                    <th ng-click="model.order('HasEntitlement')" ng-class="model.orderClass('HasEntitlement')">Has Entitlement</th>
+                    <th ng-click="model.order('Entitlement')" ng-class="model.orderClass('Entitlement')">Entitlement</th>
+                    <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
+                    <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
+                    <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
+                                        @if (User.IsInAnyRoles("Admin"))
+                                        {
+                                            <th>Actions</th>
+                                        }
+                                    </tr>
                                 <tr role="row">
                                     <th ng-click="model.order('SchemeId')" ng-class="model.orderClass('Name')">Scheme</th>
                                     @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
@@ -222,6 +236,7 @@
                                         <th>Actions</th>
                                     }
                                 </tr>
+
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="centreScheme in model.centreSchemes" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">
@@ -363,9 +378,15 @@
                         <div class="col-xs-12">
                             <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                 <thead>
+
+                                    <tr role="row">
+                                        <th ng-click="model.order('SectorId')" ng-class="model.orderClass('Name')">Sector</th>
+                                        @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+
                                 <tr role="row">
                                     <th ng-click="model.order('SectorId')" ng-class="model.orderClass('Name')">Sector</th>
                                     @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+
                                             <th ng-click="model.order('HasEntitlement')" ng-class="model.orderClass('HasEntitlement')">Has Entitlement</th>
                                             <th ng-click="model.order('Entitlement')" ng-class="model.orderClass('Entitlement')">Entitlement</th>
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
@@ -671,6 +692,21 @@
                         <div class="col-xs-12">
                             <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                 <thead>
+
+                                    <tr role="row">
+                                        <th ng-click="model.order('CourseInstallmentId')" ng-class="model.orderClass('Name')">Course Installment</th>
+                                        @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
+                    <th ng-click="model.order('HasEntitlement')" ng-class="model.orderClass('HasEntitlement')">Has Entitlement</th>
+                    <th ng-click="model.order('Entitlement')" ng-class="model.orderClass('Entitlement')">Entitlement</th>
+                    <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
+                    <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
+                    <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
+                                        @if (User.IsInAnyRoles("Admin"))
+                                        {
+                                            <th>Actions</th>
+                                        }
+                                    </tr>
+
                                 <tr role="row">
                                     <th ng-click="model.order('CourseInstallmentId')" ng-class="model.orderClass('Name')">CourseInstallment</th>
                                     @*<th ng-click="model.order('Frequency')" ng-class="model.orderClass('Frequency')">Frequency</th>
@@ -684,6 +720,7 @@
                                         <th>Actions</th>
                                     }
                                 </tr>
+
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="centreCourseInstallment in model.centreCourseInstallments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.openAbsencePolicyEntitlementForm(absenceTypeEntitlement.AbsencePolicyEntitlementId,absenceTypeEntitlement.AbsenceType.Name)">

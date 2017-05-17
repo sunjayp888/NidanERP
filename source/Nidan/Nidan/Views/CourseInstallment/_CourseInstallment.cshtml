@@ -33,7 +33,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.CourseInstallment.DownPayment, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12 calculate">
-        @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.TextBoxFor(model => model.CourseInstallment.DownPayment, new { @class = "form-control col-md-7 col-xs-12", @onkeyup = "greaternum()" })
         @Html.ValidationMessageFor(model => model.CourseInstallment.DownPayment, "", new { @class = "help-block" })
     </div>
 </div>
@@ -43,7 +43,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.CourseInstallment.LumpsumAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.CourseInstallment.LumpsumAmount, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.TextBoxFor(model => model.CourseInstallment.LumpsumAmount, new { @class = "form-control col-md-7 col-xs-12",@onkeyup= "greaternum()" })
         @Html.ValidationMessageFor(model => model.CourseInstallment.LumpsumAmount, "", new { @class = "help-block" })
     </div>
 </div>
