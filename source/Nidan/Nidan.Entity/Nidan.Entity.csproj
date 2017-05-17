@@ -129,6 +129,7 @@
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
+    <Compile Include="FollowUpHistory.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HowDidYouKnowAbout.cs" />
