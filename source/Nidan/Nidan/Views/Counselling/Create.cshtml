@@ -97,17 +97,12 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
-                                        <div class="col-lg-5">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                            </span>
-                                        </div>
-
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                        </span>
                                         @foreach (var course in Model.Courses)
                                         {
-                                            <div class="col-lg-7">
-                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-                                            </div>
+                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
                                         }
                                     </div>
                                 </div>
@@ -184,8 +179,8 @@
                                                             <button type="submit" class="btn btn-success">Submit</button>
                                                             <button type="button" class="btn btn-success" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                                             @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
-                                            Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
-                                        </a>*@
+                                                                    Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
+                                                                </a>*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -227,7 +222,7 @@
                 </div>
             </div>*@
     </div>
-   
+
     <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>

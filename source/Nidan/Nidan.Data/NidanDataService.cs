@@ -770,6 +770,7 @@ namespace Nidan.Data
                     .FollowUps
                     .Include(f => f.Mobilization)
                     .Include(f => f.Enquiry)
+                    .Include(f => f.Enquiry.EnquiryCourses)
                     .Include(f => f.Enquiry.Counsellings)
                     .AsNoTracking()
                     .Where(predicate)
@@ -2031,6 +2032,41 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.RegistrationId == registrationId);
+            }
+        }
+
+        public PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUpHistories
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpHistoryId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUpHistories
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.FollowUpHistoryId == followUpHistoryId);
             }
         }
 

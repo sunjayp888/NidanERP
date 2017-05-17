@@ -103,32 +103,28 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">First Name</th>
-                                            <th ng-click="model.order('LastName')" ng-class="model.orderClass('LastName')">Last Name</th>
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('IntrestedCourse')" ng-class="model.orderClass('IntrestedCourse')">Interested Course</th>
                                             <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
                                             <th ng-click="model.order('FollowUpType')" ng-class="model.orderClass('FollowUpType')">FollowUp Type</th>
-                                    @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
+                                            @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
                                             <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
-                                            <th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Follow-Up Status Closed</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="followUp in model.followUps" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewFollowUp(followUp.FollowUpId)">
                                             @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
-                                            <td><span ng-bind="followUp.FirstName"></span></td>
-                                            <td><span ng-bind="followUp.LastName"></span></td>
+                                            <td><span ng-bind="followUp.Title"></span> <span ng-bind="followUp.FirstName"></span> <span ng-bind="followUp.MiddleName"></span> <span ng-bind="followUp.LastName"></span></td>
                                             <td><span ng-bind="followUp.Mobile"></span></td>
                                             <td><span ng-bind="followUp.Course.Name"></span></td>
-                                            <td><span ng-bind="followUp.Remarks"></span></td>
-                                          <td><span ng-bind="followUp.FollowUpType"></span></td>
+                                            <td><span ng-bind="followUp.Remark"></span></td>
+                                            <td><span ng-bind="followUp.FollowUpType"></span></td>
                                             <td><span ng-bind="followUp.FollowUpDateTime|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="followUp.Close"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -143,10 +139,10 @@
                                                                 </a>
                                                             </li>
                                                             @*<li>
-                                                                <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
-                                                                    Mark As Read
-                                                                </a>
-                                                            </li>*@
+                                        <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
+                                            Mark As Read
+                                        </a>
+                                    </li>*@
                                                         }
                                                     </ul>
                                                 </div>
