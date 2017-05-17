@@ -1,3 +1,5 @@
+using System.Web;
+
 namespace Nidan.Entity
 {
     using System;
@@ -33,6 +35,7 @@ namespace Nidan.Entity
             Registrations = new HashSet<Registration>();
             Admissions=new HashSet<Admission>();
             Mobilizations = new HashSet<Mobilization>();
+            FollowUpHistories=new HashSet<FollowUpHistory>();
         }
 
         public int CentreId { get; set; }
@@ -140,5 +143,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mobilization> Mobilizations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FollowUpHistory> FollowUpHistories { get; set; }
     }
 }

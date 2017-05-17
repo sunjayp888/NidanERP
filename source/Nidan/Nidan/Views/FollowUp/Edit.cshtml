@@ -6,7 +6,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.FollowUp.FirstName<small>Edit Follow-Up</small></h2>
+                <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.FollowUp.Title, @Model.FollowUp.FirstName, @Model.FollowUp.MiddleName, @Model.FollowUp.LastName)</button>  @Model.FollowUp.FollowUpType Details For Follow-Up<small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -25,6 +25,10 @@
                         }
                         @Html.HiddenFor(model => Model.FollowUp.FollowUpId)
                         @Html.HiddenFor(model => Model.FollowUp.Title)
+                        @Html.HiddenFor(model => Model.FollowUp.FirstName)
+                        @Html.HiddenFor(model => Model.FollowUp.MiddleName)
+                        @Html.HiddenFor(model => Model.FollowUp.LastName)
+                        @Html.HiddenFor(model => Model.FollowUp.Mobile)
                         @Html.HiddenFor(model => Model.FollowUp.MobilizationId)
                         @Html.HiddenFor(model => Model.FollowUp.EnquiryId)
                         @Html.HiddenFor(model => Model.FollowUp.CounsellingId)
@@ -34,8 +38,11 @@
                         @Html.HiddenFor(model => Model.FollowUp.IntrestedCourseId)
                         @Html.HiddenFor(model => Model.FollowUp.FollowUpType)
                         @Html.HiddenFor(model => Model.FollowUp.FollowUpUrl)
+
+                        @Html.Partial("_FollowUpHistory", Model)
+
                         @Html.Partial("_FollowUp", Model)
-                        
+
                         <div class="form-group">
                             <label class="control-label col-md-4 col-sm-4 col-xs-12">Close</label>
                             <div class="col-md-8 col-sm-8 col-xs-12">

@@ -86,6 +86,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateFee> CandidateFees { get; set; }
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
         public virtual DbSet<CourseInstallmentSearchField> CourseInstallmentSearchFields { get; set; }
+        public virtual DbSet<FollowUpHistory> FollowUpHistories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1221,9 +1222,21 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
-            //modelBuilder.Entity<Registration>()
-            //    .HasOptional(e => e.Registration1)
-            //    .WithRequired(e => e.Registration2);
+            modelBuilder.Entity<FollowUpHistory>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistory>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistory>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistory>()
+                .Property(e => e.ClosingRemarks)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

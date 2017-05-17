@@ -46,6 +46,7 @@ namespace Nidan.Business.Interfaces
         CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
         Admission CreateAdmission(int organisationId, int centreId, int personnelId,Admission admission, CandidateFee candidateFee);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
+        FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
 
         // Retrieve
@@ -187,6 +188,8 @@ namespace Nidan.Business.Interfaces
         Registration CreateCandidateRegistration(int organisationId, int centreId,int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId);
         Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
+        PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate);
 
 
         // Update

@@ -94,8 +94,13 @@ namespace Nidan.Controllers
                     //Close Mobilization 
                     var mobilization = NidanBusinessService.RetrieveMobilization(organisationId, enquiryViewModel.MobilizationId);
                     mobilization.Close = "Yes";
+                    mobilization.ClosingRemark = "Converted To Enquiry";
                     NidanBusinessService.UpdateMobilization(organisationId, mobilization);
-                    NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                    var followup = NidanBusinessService.RetrieveFollowUp(organisationId,enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
+                    followup.Close = "Yes";
+                    followup.Remark = "Converted To Enquiry";
+                    NidanBusinessService.UpdateFollowUp(organisationId, followup);
+                    // NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
