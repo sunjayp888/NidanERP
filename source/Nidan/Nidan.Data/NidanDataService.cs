@@ -1125,6 +1125,7 @@ namespace Nidan.Data
                     .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CandidateInstallment)
+                    .Include(p => p.CandidateInstallment.CandidateFees)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

@@ -9,29 +9,18 @@
 
     function SubjectCourseService($http) {
         var service = {
-            createSubjectCourse: createSubjectCourse,
-            retrieveSubjectCourses: retrieveSubjectCourses,
-            deleteSubjectCourse: deleteSubjectCourse
+            retrieveCourses: retrieveCourses,
+            deleteSubjectCourse: deleteSubjectCourse,
         };
 
         return service;
 
-        function createSubjectCourse(subjectId, courseId) {
+        function retrieveCourses(Paging, OrderBy) {
 
-            var url = "/SubjectCourse/Create",
+            var url = "/Course/SubjectCourseList",
                 data = {
-                    SubjectId: subjectId,
-                    CourseId: courseId
-                };
-
-            return $http.post(url, data);
-        }
-
-        function retrieveSubjectCourses(subjectId) {
-
-            var url = "/SubjectCourse/List",
-                data = {
-                    subjectId: subjectId
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);
@@ -39,12 +28,11 @@
 
         function deleteSubjectCourse(subjectId, courseId) {
             var url = "/SubjectCourse/Delete",
-              data = {
-                  subjectId: subjectId,
-                  courseId: courseId
-              };
+                data = {
+                    subjectId: subjectId,
+                    courseId: courseId
+                };
             return $http.post(url, data);
         }
-
     }
 })();

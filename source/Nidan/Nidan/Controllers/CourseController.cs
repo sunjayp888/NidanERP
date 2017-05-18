@@ -113,7 +113,16 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isAdmin = User.IsInAnyRoles("Admin");
-            return this.JsonNet(NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isAdmin, orderBy, paging));
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isAdmin, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SubjectCourseList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isAdmin = User.IsInAnyRoles("Admin");
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isAdmin);
+            return this.JsonNet(data);
         }
 
         [HttpPost]

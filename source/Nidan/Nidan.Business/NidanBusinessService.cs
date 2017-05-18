@@ -591,7 +591,6 @@ namespace Nidan.Business
 
         private void CreateSubjectCourse(int organisationId, int subjectId, List<int> couserIds)
         {
-
             //Create Department Employment
             var subjectCourse = couserIds.Select(item => new SubjectCourse()
             {

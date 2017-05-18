@@ -72,7 +72,7 @@ namespace Nidan.Entity
 
         public int SectorId { get; set; }
 
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
 
         public int CentreId { get; set; }
 

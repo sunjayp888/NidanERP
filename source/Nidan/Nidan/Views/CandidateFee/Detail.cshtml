@@ -3,13 +3,14 @@
 @{
     ViewBag.Title = "Detail";
 }
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div ng-controller="CandidateFeeController as model" ng-init="model.initialise(@Model.CandidateInstallmentId)">
             <div class="x_panel">
                 <div class="x_title">
-                    @*<h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.Title, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.FirstName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.MiddleName, @Model.CandidateFeeList.FirstOrDefault().Registrations.FirstOrDefault().Enquiry.LastName)</button> Candidate Fees Details<small></small></h2>*@
-                    < div class="clearfix"></div>
+                    @*<h2><button type="button" class="btn btn-round btn-info btn-lg">@string.Format("{0} {1} {2} {3}", @title, @firstName, @middleName, @lastName)</button> Candidate Fees Details<small></small></h2>*@
+                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
@@ -20,7 +21,6 @@
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                     <tr role = "row" >
-                                        < th > Bank Name</th>
                                         <th>ChequeDate</th>
                                         <th>Cheque Number</th>
                                         <th>Payment Mode</th>
@@ -32,7 +32,6 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat= "candidateFee in model.candidateFees" class="odd gradeX">
-                                        <td><span ng-bind="candidateFee.BankName"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeNumber"></span></td>
                                         <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentMode.Name"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span></td>

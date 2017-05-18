@@ -255,7 +255,7 @@
                 </div>
 
                 <div class="col-md-2 col-sm-6 col-xs-12 batchStartTime">
-                    @Html.TextBoxFor(model => model.Batch.BatchStartTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @max = 60 , @maxlenghth = "2",@onkeyup = "getendtime()" })
+                    @Html.TextBoxFor(model => model.Batch.BatchStartTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @max = 60 , @maxlenghth = "2" })
                     @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeMinutes, "", new { @class = "help-block" })
                 </div>
 
