@@ -219,6 +219,15 @@
 
             }
 
+            $("#Batch_BatchStartTimeMinutes")
+                .val()
+                .onkeypress(function() {
+
+                    var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
+
+                    $("#Batch_BatchEndTimeMinutes").val(startimeminute);
+                });
+
             //===================================================== readiobutton AM / PM selection
 
             if (startHours < 12) {
@@ -235,6 +244,8 @@
             }
 
         }
+
+
 
         //==================================================================== Calculation Of Month based on duration of course but holiday count pending
 

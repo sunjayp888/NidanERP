@@ -90,6 +90,9 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string EmailId { get; set; }
 
+        [StringLength(100)]
+        public string Certified { get; set; }
+
         [StringLength(500)]
         public string CertificationNo { get; set; }
 
@@ -98,25 +101,22 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 
-        [Key]
-        [Column(Order = 15)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseId { get; set; }
+        public int? CourseId { get; set; }
 
         [Key]
-        [Column(Order = 16)]
+        [Column(Order = 15)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 16)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         public int? PersonnelId { get; set; }
 
         [Key]
-        [Column(Order = 18, TypeName = "date")]
+        [Column(Order = 17, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [StringLength(3500)]

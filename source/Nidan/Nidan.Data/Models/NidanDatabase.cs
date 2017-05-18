@@ -87,6 +87,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationSearchField> MobilizationSearchFields { get; set; }
         public virtual DbSet<CourseInstallmentSearchField> CourseInstallmentSearchFields { get; set; }
         public virtual DbSet<FollowUpHistory> FollowUpHistories { get; set; }
+        public virtual DbSet<FollowUpSearchField> FollowUpSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1106,16 +1107,12 @@ namespace Nidan.Data.Models
                 .Property(e => e.OtherInterestedCourse)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CounsellingSearchField>()
-               .Property(e => e.PreferTiming)
-               .IsUnicode(false);
-
-            modelBuilder.Entity<CounsellingSearchField>()
-                .Property(e => e.Remarks)
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.Close)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CounsellingSearchField>()
-                .Property(e => e.RemarkByBranchManager)
+            modelBuilder.Entity<MobilizationSearchField>()
+                .Property(e => e.ClosingRemark)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
@@ -1135,7 +1132,31 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
                 .Property(e => e.PsychomatricTest)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.RemarkByBm)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CounsellingSearchField>()
@@ -1195,6 +1216,10 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<TrainerSearchField>()
+                .Property(e => e.Certified)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.CertificationNo)
                 .IsUnicode(false);
 
@@ -1236,6 +1261,46 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<FollowUpHistory>()
                 .Property(e => e.ClosingRemarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FollowUpURL)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

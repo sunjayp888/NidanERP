@@ -13,7 +13,8 @@
             canDeleteFollowUp: canDeleteFollowUp,
             deleteFollowUp: deleteFollowUp,
             markAsReadFollowUp: markAsReadFollowUp,
-            searchFollowUpByDate: searchFollowUpByDate
+            searchFollowUpByDate: searchFollowUpByDate,
+            searchFollowUp: searchFollowUp
         };
 
         return service;
@@ -34,6 +35,17 @@
             data = {
                 fromDate: FromDate,
                 toDate: ToDate,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
+
+            return $http.post(url, data);
+        }
+
+        function searchFollowUp(SearchKeyword, Paging, OrderBy) {
+            var url = "/FollowUp/Search",
+            data = {
+                searchKeyword: SearchKeyword,
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };

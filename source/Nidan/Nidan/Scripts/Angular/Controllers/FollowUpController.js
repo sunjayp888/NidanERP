@@ -18,6 +18,7 @@
         vm.orderClass = orderClass;
         vm.editFollowUp = editFollowUp;
         vm.canDeleteFollowUp = canDeleteFollowUp;
+        vm.searchFollowUp = searchFollowUp;
         vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.deleteFollowUp = deleteFollowUp;
         vm.viewFollowUp = viewFollowUp;
@@ -74,6 +75,18 @@
             $('.dropdown-menu').slideUp('fast');
             $('.' + id).toggle();
             FollowUpService.canDeleteFollowUp(id).then(function (response) { vm.CanDeleteFollowUp = response.data, vm.loadingActions = false });
+        }
+
+        function searchFollowUp(searchKeyword) {
+            vm.searchKeyword = searchKeyword;
+            return FollowUpService.searchFollowUp(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.followUps = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                  return vm.followUps;
+              });
         }
        
         function deleteFollowUp(id) {
