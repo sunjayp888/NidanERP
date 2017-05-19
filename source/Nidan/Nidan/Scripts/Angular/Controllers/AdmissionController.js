@@ -25,6 +25,7 @@
         vm.retrieveBatches = retrieveBatches;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.searchAdmissionByDate = searchAdmissionByDate;
         initialise();
 
         function initialise() {
@@ -47,6 +48,19 @@
         function searchAdmission(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return AdmissionService.searchAdmission(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.admissions = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.admissions.length === 0 ? "No Records Found" : "";
+                  return vm.admissions;
+              });
+        }
+
+        function searchAdmissionByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return AdmissionService.searchAdmissionByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.admissions = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;

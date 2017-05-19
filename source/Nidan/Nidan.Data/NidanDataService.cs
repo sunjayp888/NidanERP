@@ -2062,6 +2062,33 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<RegistrationSearchField>("SearchRegistration @SearchKeyword", category).ToList();
+
+                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee);
+
+                var data = searchData.Join(registrations, e => e.RegistrationId, m => m.RegistrationId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
         #endregion
 
         #region // Update

@@ -88,6 +88,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CourseInstallmentSearchField> CourseInstallmentSearchFields { get; set; }
         public virtual DbSet<FollowUpHistory> FollowUpHistories { get; set; }
         public virtual DbSet<FollowUpSearchField> FollowUpSearchFields { get; set; }
+        public virtual DbSet<RegistrationSearchField> RegistrationSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -148,11 +149,6 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
-
-            //modelBuilder.Entity<CandidateFee>()
-            //    .HasMany(e => e.Registrations)
-            //    .WithRequired(e => e.CandidateFee)
-            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Registration>()
                 .Property(e => e.Remarks)
@@ -1300,6 +1296,18 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationSearchField>()
+               .Property(e => e.StudentCode)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationSearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 

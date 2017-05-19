@@ -241,5 +241,13 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveBatch(UserOrganisationId, batchId);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e =>(isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate >= fromDate && e.AdmissionDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

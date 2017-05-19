@@ -184,13 +184,13 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false, orderBy, paging));
         }
 
-        //[HttpPost]
-        //public ActionResult EnquirySearch(string searchKeyword, Paging paging, List<OrderBy> orderBy)
-        //{
-        //    //bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-        //    //var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
-        //    //return this.JsonNet(data);
-        //}
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.IsAdmissionDone==false, orderBy, paging);
+            return this.JsonNet(data);
+        }
 
         [HttpPost]
         public ActionResult GetCourseInstallmentByCourseId(int courseId)

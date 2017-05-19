@@ -1829,6 +1829,13 @@ namespace Nidan.Business
                 paging);
         }
 
+        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveRegistrationBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
+                paging);
+        }
+
         #endregion
 
         #region // Update

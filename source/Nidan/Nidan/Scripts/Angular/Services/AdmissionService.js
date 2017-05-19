@@ -12,7 +12,8 @@
             retrieveAdmissions: retrieveAdmissions,
             canDeleteAdmission: canDeleteAdmission,
             deleteAdmission: deleteAdmission,
-            searchAdmission: searchAdmission
+            searchAdmission: searchAdmission,
+            searchAdmissionByDate: searchAdmissionByDate
         };
 
         return service;
@@ -35,6 +36,18 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+
+            return $http.post(url, data);
+        }
+
+        function searchAdmissionByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Admission/SearchByDate",
+            data = {
+                fromDate: FromDate,
+                toDate: ToDate,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
             return $http.post(url, data);
         }

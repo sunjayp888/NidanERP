@@ -25,7 +25,7 @@
         vm.retrieveFees = retrieveDownPayments;
         vm.durations = [];
         vm.retrieveDurations = retrieveDurations;
-        //vm.searchMobilization = searchMobilization;
+        vm.searchBatchByDate = searchBatchByDate;
         vm.viewBatch = viewBatch;
         //vm.searchKeyword = "";
         //vm.searchMessage = "";
@@ -48,17 +48,18 @@
                 });
         }
 
-        //function searchMobilization(searchKeyword) {
-        //    vm.searchKeyword = searchKeyword;
-        //    return MobilizationService.searchMobilization(vm.searchKeyword, vm.paging, vm.orderBy)
-        //      .then(function (response) {
-        //          vm.mobilizations = response.data.Items;
-        //          vm.paging.totalPages = response.data.TotalPages;
-        //          vm.paging.totalResults = response.data.TotalResults;
-        //          vm.searchMessage = vm.mobilizations.length === 0 ? "No Records Found" : "";
-        //          return vm.mobilizations;
-        //      });
-        //}
+        function searchBatchByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return BatchService.searchBatchByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.batches = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.batches.length === 0 ? "No Records Found" : "";
+                  return vm.batches;
+              });
+        }
 
         function pageChanged() {
             return retrieveBatches();

@@ -10,16 +10,16 @@
                 Registrations <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
+        <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                     <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCounselling(searchField)" class="form-control" placeholder="Search for Counselling...">
+                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchRegistration(searchField)" class="form-control" placeholder="Search for Registration...">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchCounselling(searchField)" type="button">Go!</button>
+                            <button class="btn btn-default" ng-click="model.searchRegistration(searchField)" type="button">Go!</button>
                         </span>
                     </div>
                 </div>
-            </div>*@
+            </div>
     </div>
     @*@if (User.IsInAnyRoles("Admin"))
     {
