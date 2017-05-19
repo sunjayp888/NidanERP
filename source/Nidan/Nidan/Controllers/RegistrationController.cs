@@ -173,8 +173,17 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult CandidateFeeList(Paging paging, List<OrderBy> orderBy)
         {
+            var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrations(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            foreach (var item in data.Items)
+            {
+                var candidateInstallmentId = item.CandidateInstallmentId;
+                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId,e=>true).CourseFee;
+                var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
+                item.CandidateFee.PaidAmount = totalPaidAmount;
+                item.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
+            }
             return this.JsonNet(data);
         }
 

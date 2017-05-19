@@ -98,10 +98,10 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 
-        [Key]
-        [Column(Order = 15)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseId { get; set; }
+        //[Key]
+        //[Column(Order = 15)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //public int CourseId { get; set; }
 
         [Key]
         [Column(Order = 16)]

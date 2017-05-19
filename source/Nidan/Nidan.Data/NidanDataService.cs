@@ -1146,22 +1146,6 @@ namespace Nidan.Data
             return null;
         }
 
-        //public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
-        //    Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
-        //{
-        //    using (ReadUncommitedTransactionScope)
-        //    using (var context = _databaseFactory.Create(organisationId))
-        //    {
-        //        return context
-        //            .RegistrationPaymentReceipts
-        //            .Include(e => e.Enquiry)
-        //            .AsNoTracking()
-        //            .Where(predicate)
-        //            .SingleOrDefault(p => p.RegistrationPaymentReceiptId == registrationPaymentReceiptId);
-
-        //    }
-        //}
-
         public PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -1424,7 +1408,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<TrainerSearchField>("SearchTrainer @SearchKeyword", category).ToList();
 
-                var trainers = context.Trainers.Include(e => e.Course).Include(e => e.Sector);
+                var trainers = context.Trainers.Include(e => e.Sector);
 
                 var data = searchData.Join(trainers, e => e.TrainerId, m => m.TrainerId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>

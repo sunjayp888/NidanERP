@@ -55,7 +55,6 @@
                                     <thead>
                                     <tr role="row">
                                         <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
-                                        <th ng-click="model.order('Course')" ng-class="model.orderClass('Course')">Course</th>
                                         <th ng-click="model.order('Type')" ng-class="model.orderClass('Type')">Type</th>
                                         <th ng-click="model.order('TotalMarks')" ng-class="model.orderClass('TotalMarks')">Total Marks</th>
                                         <th ng-click="model.order('PassingMarks')" ng-class="model.orderClass('PassingMarks')">Passing Marks</th>
@@ -66,7 +65,6 @@
                                     <tbody>
                                     <tr ng-repeat="subject in model.subjects" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editSubject(subject.SubjectId)">
                                         <td><span ng-bind="subject.Name"></span></td>
-                                        <td><span ng-bind="subject.Course.Name"></span></td>
                                         <td><span ng-bind="subject.CourseType.Name"></span></td>
                                         <td><span ng-bind="subject.TotalMarks"></span></td>
                                         <td><span ng-bind="subject.PassingMarks"></span></td>
