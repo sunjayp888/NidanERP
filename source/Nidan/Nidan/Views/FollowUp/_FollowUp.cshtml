@@ -5,6 +5,8 @@
 @*@Html.HiddenFor(m => m.FollowUp.IntrestedCourseId)*@
 @{
     var email = Model?.FollowUp?.Enquiry?.EmailId;
+    var mobile = Model?.FollowUp?.Enquiry?.Mobile ?? Model?.FollowUp?.Mobile;
+
 }
 <div class="row">
     <div class="col-lg-12">
@@ -13,7 +15,7 @@
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-primary">Mobile</button>
                 </span>
-                <input type="text" disabled="disabled" value="@email" class="form-control col-lg-4">
+                <input type="text" disabled="disabled" value="@mobile" class="form-control col-lg-4">
             </div>
         </div>
         <div class="col-lg-6">
@@ -21,7 +23,7 @@
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-primary">Email</button>
                 </span>
-                <input type="text" disabled="disabled" value="@{ }" class="form-control col-lg-4">
+                <input type="text" disabled="disabled" value="@email" class="form-control col-lg-4">
             </div>
         </div>
     </div>

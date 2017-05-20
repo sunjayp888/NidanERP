@@ -97,7 +97,15 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Detail(int? id)
         {
-            var candidateFeeModel = new CandidateFeeViewModel { CandidateInstallmentId = id.Value };
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
+            var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).FirstOrDefault();
+
+            var candidateFeeModel = new CandidateFeeViewModel
+            {
+                CandidateName = String.Format("{0} {1} {2} {3}",enquiry?.Title,enquiry?.FirstName,enquiry?.MiddleName,enquiry?.LastName),
+                CandidateInstallmentId = id.Value
+            };
             return View(candidateFeeModel);
         }
 

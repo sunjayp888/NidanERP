@@ -56,7 +56,7 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            //var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
@@ -64,7 +64,7 @@ namespace Nidan.Controllers
             var viewModel = new TrainerViewModel
             {
                 Trainer = new Trainer(),
-                Courses = new SelectList(courses, "CourseId", "Name"),
+                //Courses = new SelectList(courses, "CourseId", "Name"),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
                 Talukas = new SelectList(talukas, "TalukaId", "Name"),
                 Districts = new SelectList(districts, "DistrictId", "Name"),
@@ -112,7 +112,7 @@ namespace Nidan.Controllers
                 CreateTrainerUserAndRole(personnel);
                 return RedirectToAction("Edit", new { id = trainerViewModel.Trainer.TrainerId });
             }
-            trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
+            //trainerViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             trainerViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList());
             trainerViewModel.Talukas =new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
             trainerViewModel.Districts =new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
@@ -153,7 +153,7 @@ namespace Nidan.Controllers
             var viewModel = new TrainerViewModel
             {
                 Trainer = trainer,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
+                //Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(UserOrganisationId, e => true).ToList(), "SectorId", "Name"),
                 Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => true).ToList(), "TalukaId", "Name"),
                 Districts = new SelectList(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => true).ToList(), "DistrictId", "Name"),
@@ -233,12 +233,12 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveTrainers(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
         }
 
-        [HttpPost]
-        public ActionResult GetCourse(int sectorId)
-        {
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
-            return this.JsonNet(data);
-        }
+        //[HttpPost]
+        //public ActionResult GetCourse(int sectorId)
+        //{
+        //    var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
+        //    return this.JsonNet(data);
+        //}
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)

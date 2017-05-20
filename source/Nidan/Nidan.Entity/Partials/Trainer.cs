@@ -19,8 +19,8 @@ namespace Nidan.Entity
             [Display(Name = "Sector")]
             public int SectorId { get; set; }
 
-            [Display(Name = "Course")]
-            public int CourseId { get; set; }
+            //[Display(Name = "Course")]
+            //public int CourseId { get; set; }
 
             [Display(Name = "Address 1")]
             public string Address1 { get; set; }
