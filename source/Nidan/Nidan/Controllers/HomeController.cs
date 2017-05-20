@@ -30,17 +30,17 @@ namespace Nidan.Controllers
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate == _today && e.EnquiryStatus=="Enquiry").Count();
+               e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && e.EnquiryStatus=="Enquiry").Count();
 
             var mobilizationCount =
                 NidanBusinessService.RetrieveMobilizations(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate == _today && e.Close == "No").Items.Count();
+               e => (isSuperAdmin || e.CentreId == centreId) && e.CreatedDate == _today && e.Close == "No").Items.Count();
 
             var registraionCount = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate == _today && e.IsAdmissionDone == false).Items.Count();
+               e => (isSuperAdmin || e.CentreId == centreId) && e.RegistrationDate == _today && e.IsAdmissionDone == false).Items.Count();
 
             var admissionCount =
-                NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate== _today)
+                NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionDate== _today)
                     .Items.Count();
 
 

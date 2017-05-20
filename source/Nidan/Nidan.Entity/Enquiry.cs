@@ -41,6 +41,7 @@ namespace Nidan.Entity
 
         public long? AlternateMobile { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string EmailId { get; set; }
 

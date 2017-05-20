@@ -159,8 +159,18 @@
                 return true;
             }
 
-            function NumToWord(inputNumber, outputControl) {
-                var str = new String(inputNumber)
+        //$(document)
+        //    .ready(function() {
+        //        var paidAmount = $('#Registration_CandidateFee_PaidAmount').val();
+        //        var paidAmountresult = Math.round((paidAmount * 100) / 100);
+        //        $('#Registration_CandidateFee_PaidAmount').val(paidAmountresult);
+        //        NumToWord(paidAmountresult);
+        //    });
+           
+            
+
+        function NumToWord(paidAmountresult, outputControl) {
+            var str = new String(paidAmountresult);
                 var splt = str.split("");
                 var rev = splt.reverse();
                 var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];

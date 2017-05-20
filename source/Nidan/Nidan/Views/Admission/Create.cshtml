@@ -409,7 +409,24 @@
                 $('#lumpsum').show();
             });
         }*@
-        
+        var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+        var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
+            $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
+            $('#downpayment').show();
+            $('#lumpsum').hide();
+            $('#CandidateFee_PaidAmount').val(resultDownpayment);
+        });
+        var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+        var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function () {
+            $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
+            $('#downpayment').hide();
+            $('#lumpsum').show();
+            $('#CandidateFee_PaidAmount').val(resultLumpsum);
+        });
 
 
 
