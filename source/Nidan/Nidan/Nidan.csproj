@@ -1113,6 +1113,7 @@
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
+    <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
@@ -1141,6 +1142,7 @@
     <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
+    <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />

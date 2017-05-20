@@ -87,7 +87,7 @@
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select id="pieCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.change(model.centreId)">
+                                    <select id="pieCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.retrieveStatisticsByCentre(model.centreId)">
                                         <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
                                     </select>
                                 </div>
@@ -97,6 +97,12 @@
                     </div>
                     <div class="x_content2">
                         <div id="graph_donut" style="width:100%; height:300px;"></div>
+                        <div  ng-show="model.NoRecord" class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>No Data Found.</strong>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,7 +115,7 @@
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select id="barCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.change(model.centreId)">
+                                    <select id="barCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.statisticsBarByCentre(model.centreId)">
                                         <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
                                     </select>
                                 </div>
@@ -119,6 +125,7 @@
                     </div>
                     <div class="x_content1">
                         <div id="graph_bar_group" style="width:100%; height:300px;"></div>
+                       
                     </div>
                 </div>
             </div>

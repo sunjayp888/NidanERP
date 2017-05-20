@@ -140,7 +140,6 @@
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
-    <Compile Include="Model1.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
@@ -177,6 +176,7 @@
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Registration.cs" />
+    <Compile Include="RegistrationSearchField.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomType.cs" />

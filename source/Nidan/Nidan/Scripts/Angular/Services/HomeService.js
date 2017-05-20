@@ -12,8 +12,10 @@
             retrieveStatistics: retrieveStatistics,
             retrieveStatisticsByCentre: retrieveStatisticsByCentre,
             retrieveBarGraphStatistics: retrieveBarGraphStatistics,
+            retrieveBarGraphStatisticsByCentre: retrieveBarGraphStatisticsByCentre,
             retrieveCentres: retrieveCentres,
-            change: change
+            statisticsByCentre: statisticsByCentre,
+            statisticsBarByCentre: statisticsBarByCentre
         };
 
         return service;
@@ -29,6 +31,16 @@
             var url = "/Home/StatisticsByCentre",
                 data = {
                     id:centreId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveBarGraphStatisticsByCentre(centreId) {
+
+            var url = "/Home/StatisticsBarGraphByCentre",
+                data = {
+                    id: centreId
                 };
 
             return $http.post(url, data);
@@ -50,10 +62,20 @@
 
             return $http.post(url, data);
         }
-
-        function change(centreId) {
+        
+        function statisticsByCentre(centreId) {
 
             var url = "/Home/StatisticsByCentre",
+                data = {
+                    centreId: centreId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function statisticsBarByCentre(centreId) {
+
+            var url = "/Home/StatisticsBarGraphByCentre",
                 data = {
                     centreId: centreId
                 };

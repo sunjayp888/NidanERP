@@ -2385,7 +2385,7 @@ namespace Nidan.Business
 
         public void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
         {
-            _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CentreCourseInstallmentId == courseInstallmentId);
+            _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CourseInstallmentId == courseInstallmentId);
         }
 
         #endregion
