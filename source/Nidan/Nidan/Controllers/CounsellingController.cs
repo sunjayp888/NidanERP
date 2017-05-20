@@ -43,13 +43,16 @@ namespace Nidan.Controllers
             //var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId,UserCentreId,id.Value).Select(e=>e.CourseId).ToList();
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            //var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => true);
+            var enquiryCourses= NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var viewModel = new CounsellingViewModel
             {
                 Enquiry = enquiry,
                 EnquiryId = id.Value,
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                EnquiryCourses = new SelectList(enquiryCourses, "CourseId", "Name"),
                 Counselling = new Counselling()
                 {
                     Title = enquiry.Title,

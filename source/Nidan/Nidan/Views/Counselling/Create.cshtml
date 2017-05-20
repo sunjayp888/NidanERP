@@ -100,7 +100,21 @@
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-primary">Interested Course(s)</button>
                                         </span>
-                                        @foreach (var course in Model.Courses)
+                                        @*@{
+                                            var interestedCourseIds = Model.Enquiry.EnquiryCourses.Select(a => a.CourseId);
+                                        }
+                                        @foreach (var id in interestedCourseIds)
+                                        {
+                                            foreach (var course in Model.Courses)
+                                            {
+
+                                                if (course.Value == id.ToString())
+                                                {
+                                                    <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                                }
+                                            }
+                                        }*@
+                                        @foreach (var course in Model.EnquiryCourses)
                                         {
                                             <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
                                         }
@@ -191,7 +205,7 @@
                             </div>
 
                         </div>
-                    }
+                                            }
                 </div>
             </div>
         </div>
