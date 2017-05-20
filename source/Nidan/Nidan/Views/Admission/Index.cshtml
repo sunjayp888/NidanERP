@@ -124,42 +124,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                        <tr role="row">
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                            <th ng-click="model.order('Batch')" ng-class="model.orderClass('Batch')">Batch</th>
-                                            <th ng-click="model.order('TotalFee')" ng-class="model.orderClass('TotalFee')">Total Fees</th>
-                                            <th ng-click="model.order('PaidAmount')" ng-class="model.orderClass('PaidAmount')">Paid Amount</th>
-                                            <th ng-click="model.order('PendingAmount')" ng-class="model.orderClass('PendingAmount')">Pending Amount</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
-                                            <td><span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
-                                            <td><span ng-bind="admission.Batch.Name"></span></td>
-                                            <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span></td>
-                                            <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span></td>
-                                            <td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>
-                                            @*<td><span ng-bind="batch.BatchStartDate|date : format : shortDate"></span></td>*@
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin"))
-                                                        {
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Admission/Edit/{{admission.AdmissionId}}">
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>

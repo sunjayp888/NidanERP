@@ -110,7 +110,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(organisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
                 //return RedirectToAction("Index");
-                return RedirectToAction("Edit", new { id = enquiryViewModel.Enquiry.EnquiryId });
+                return RedirectToAction("Index");
             }
             enquiryViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             enquiryViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());

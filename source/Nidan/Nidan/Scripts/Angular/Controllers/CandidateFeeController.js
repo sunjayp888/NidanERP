@@ -68,7 +68,7 @@
                 PaymentModeId: vm.paymentModeId,
                 ChequeNumber: $("#txtChequeNumber").val(),
                 ChequeDate: $("#txtChequeDate").val(),
-                BankName: $("#txtBankName").val(),
+                BankName: $("#txtBankName").val()
             }
 
             return CandidateFeeService.saveFee(candidateFee)
@@ -111,7 +111,7 @@
             vm.candidateFeeId = candidateFeeId;
             return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
                 .then(function (response) {
-                    $("#txtAmount").val(response.data.PaidAmount);
+                    $("#txtAmount").val(response.data.InstallmentAmount);
                     $("#txtChequeDate").val('');
                     $("#dropDownPaymentMode").filter(function() {
                         return !this.value || $.trim(this.value).length == 0;
