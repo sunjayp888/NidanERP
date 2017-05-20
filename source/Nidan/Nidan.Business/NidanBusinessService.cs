@@ -584,37 +584,49 @@ namespace Nidan.Business
         {
 
             var data = _nidanDataService.Create<Subject>(organisationId, subject);
-            CreateSubjectCourse(organisationId, data.SubjectId, courseIds);
+            CreateSubjectCourse(organisationId,data.SubjectId, courseIds);
             CreateSubjectTrainer(organisationId, data.SubjectId, trainerIds);
             return data;
         }
 
         private void CreateSubjectCourse(int organisationId, int subjectId, List<int> couserIds)
         {
-
-            //Create Department Employment
-            var subjectCourse = couserIds.Select(item => new SubjectCourse()
+            var subjectCourses = RetrieveSubjectCourses(organisationId, subjectId).ToList();
+            var subjectCourseList = new List<SubjectCourse>();
+            foreach (var item in couserIds)
             {
-                OrganisationId = organisationId,
-                SubjectId = subjectId,
-                CourseId = item,
-            }).ToList();
-            _nidanDataService.Create<SubjectCourse>(organisationId, subjectCourse);
-
+                if (!subjectCourses.Any(e => e.CourseId == item && e.SubjectId == subjectId))
+                {
+                    subjectCourseList.Add(new SubjectCourse()
+                    {
+                        OrganisationId = organisationId,
+                        SubjectId = subjectId,
+                        CourseId = item,
+                    });
+                }
+            }
+            if (subjectCourseList.Any())
+                _nidanDataService.Create<SubjectCourse>(organisationId, subjectCourseList);
         }
 
         private void CreateSubjectTrainer(int organisationId, int subjectId, List<int> trainerIds)
         {
-
-            //Create Department Employment
-            var subjectTrainer = trainerIds.Select(item => new SubjectTrainer()
+            var subjectTrainers = RetrieveSubjectTrainers(organisationId, subjectId).ToList();
+            var subjectTrainerList = new List<SubjectTrainer>();
+            foreach (var item in trainerIds)
             {
-                OrganisationId = organisationId,
-                SubjectId = subjectId,
-                TrainerId = item,
-            }).ToList();
-            _nidanDataService.Create<SubjectTrainer>(organisationId, subjectTrainer);
-
+                if (!subjectTrainers.Any(e => e.TrainerId == item && e.SubjectId == subjectId))
+                {
+                    subjectTrainerList.Add(new SubjectTrainer()
+                    {
+                        OrganisationId = organisationId,
+                        SubjectId = subjectId,
+                        TrainerId = item,
+                    });
+                }
+            }
+            if (subjectTrainerList.Any())
+                _nidanDataService.Create<SubjectTrainer>(organisationId, subjectTrainerList);
         }
 
         public Session CreateSession(int organisationId, Session session)
@@ -1482,20 +1494,6 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveRegistrations(organisationId, predicate, orderBy, paging);
         }
-
-        //public RegistrationPaymentReceipt RetrieverRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId,
-        //    Expression<Func<RegistrationPaymentReceipt, bool>> predicate)
-        //{
-        //    var registrationPaymentReceipt = _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, registrationPaymentReceiptId, p => true);
-        //    return registrationPaymentReceipt;
-        //}
-
-        //public RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int id)
-        //{
-        //    return _nidanDataService.RetrieveRegistrationPaymentReceipt(organisationId, id, p => true);
-
-        //}
-
 
         public Trainer RetrieveTrainer(int organisationId, int id)
         {

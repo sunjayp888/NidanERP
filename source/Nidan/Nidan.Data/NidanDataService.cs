@@ -1106,6 +1106,7 @@ namespace Nidan.Data
                     .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CandidateInstallment)
+                    .Include(p => p.CandidateInstallment.CandidateFees)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1388,7 +1389,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<TrainerSearchField>("SearchTrainer @SearchKeyword", category).ToList();
 
-                var trainers = context.Trainers.Include(e => e.Course).Include(e => e.Sector);
+                var trainers = context.Trainers.Include(e => e.Sector);
 
                 var data = searchData.Join(trainers, e => e.TrainerId, m => m.TrainerId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>

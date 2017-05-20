@@ -44,7 +44,7 @@ namespace Nidan.Controllers
                 return HttpNotFound();
             }
             var interestedCourses = followUp.Enquiry?.EnquiryCourses.Select(e => e.CourseId).ToList();
-            var interestedCourseIds = interestedCourses ?? followUp.IntrestedCourseId.ToIEnumarable();
+            var interestedCourseIds = followUp.FollowUpType=="Enquiry" ? interestedCourses : followUp.IntrestedCourseId.ToIEnumarable();
 
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true)
                           .Where(e => interestedCourseIds?.Contains(e.CourseId) ?? true);

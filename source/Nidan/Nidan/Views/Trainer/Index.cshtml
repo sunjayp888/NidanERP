@@ -56,7 +56,6 @@
                                             <th ng-click="model.order('LastName')" ng-class="model.orderClass('LastName')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('Sector.Name')" ng-class="model.orderClass('Sector.Name')">Sector</th>
-                                            <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -65,7 +64,6 @@
                                             <td><span ng-bind="trainer.Title"></span> <span ng-bind="trainer.FirstName"></span> <span ng-bind="trainer.MiddleName"></span> <span ng-bind="trainer.LastName"></span></td>
                                             <td><span ng-bind="trainer.Mobile"></span></td>
                                             <td><span ng-bind="trainer.Sector.Name"></span></td>
-                                            <td><span ng-bind="trainer.Course.Name"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

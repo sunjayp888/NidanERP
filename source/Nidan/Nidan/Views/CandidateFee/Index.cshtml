@@ -21,7 +21,6 @@
             </div>
         </div>
     </div>
-
     @if (User.IsInAnyRoles("Admin"))
     {
         @*<div class="row">
@@ -60,6 +59,7 @@
                                             <th ng-click="model.order('Registration.Enquiry.FirstName')" ng-class="model.orderClass('Registration.Enquiry.FirstName')">Candidate Name</th>
                                             <th ng-click="model.order('Registration.CandidateInstallment.CourseFee')" ng-class="model.orderClass('Registration.CandidateInstallment.CourseFee')">Total Fees</th>
                                             <th ng-click="model.order('PaidAmount')" ng-class="model.orderClass('PaidAmount')">Paid Amount</th>
+                                            <th>Pending Amount</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -68,6 +68,7 @@
                                             <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
                                             <td><span ng-bind="registration.CandidateInstallment.CourseFee"></span></td>
                                             <td><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
+                                            <td><span ng-bind="registration.CandidateFee.Particulars"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

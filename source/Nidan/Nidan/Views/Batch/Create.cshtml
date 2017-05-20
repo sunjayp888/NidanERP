@@ -68,7 +68,7 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function() {
+            onSelect: function () {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
@@ -76,12 +76,12 @@
             }
         };
 
-        jQuery(function() {
+        jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function(ev, picker) {
+                    function (ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
@@ -89,7 +89,7 @@
         //=========================================================================populate course based on courseInstallment
 
         $('#Batch_CourseInstallmentId')
-            .change(function() {
+            .change(function () {
                 var courseInstallmentId = $('#Batch_CourseInstallmentId :selected').val();
                 $.ajax({
                     url: '/Batch/GetCourse',
@@ -97,10 +97,10 @@
                     data: JSON.stringify({ courseInstallmentId: courseInstallmentId }),
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
-                    error: function(xhr) {
+                    error: function (xhr) {
                         alert('Error: ' + xhr.statusText);
                     },
-                    success: function(result) {
+                    success: function (result) {
                         $("#Batch_CourseId").empty();
                         $("#Batch_CourseId")
                             .append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
@@ -115,11 +115,11 @@
 
         //=======================================================================Do not allow decimal
         $(document)
-            .ready(function() {
+            .ready(function () {
                 /* Allow digits only */
                 $(".batchStartTime") &&
                     $(".Batch_NumberOfHoursDaily")
-                    .keypress(function(e) {
+                    .keypress(function (e) {
                         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                             $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
                             return false;
@@ -128,7 +128,7 @@
                 /* Do not allow paste */
                 $('.batchStartTime')
                     .bind("paste",
-                        function(e) {
+                        function (e) {
                             e.preventDefault();
                         });
             });
@@ -136,7 +136,7 @@
 
         $("#Batch_NumberOfHoursDaily")
             .on("keypress keyup",
-                function() {
+                function () {
                     if ($(this).val() == '0') {
                         $(this).val('');
                     }
@@ -220,7 +220,6 @@
             }
 
             
-
             //=============================================================================== on num of daily hours change month and installment
             $('#Batch_NumberOfHoursDaily')
                 .keyup(function () {
@@ -228,7 +227,6 @@
                     getendtime();
                     checkboxes();
                 });
-
             //===================================================== readiobutton AM / PM selection
 
             if (startHours < 12) {
@@ -245,8 +243,6 @@
             }
 
         }
-
-
 
         //==================================================================== Calculation Of Month based on duration of course but holiday count pending
 
@@ -268,7 +264,7 @@
 
                 var numberofinstallment = result - 2;
                 $("#Batch_NumberOfInstallment").val(numberofinstallment);
-// after calculation of month numberofinstallment value appear based on month calculation
+                // after calculation of month numberofinstallment value appear based on month calculation
 
                 if ($("#Batch_NumberOfInstallment") == "") {
                     $('.fisrt-installment-textbox').hide();
@@ -568,7 +564,11 @@
         $('.tenth-installment-textbox').hide();
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
-
+        $("#Batch_BatchStartTimeMinutes").keyup(function () {
+            var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
+            $("#Batch_BatchEndTimeMinutes").val(startimeminute);
+        });
+        //--------------------------------------------------------------------------------------------
     </script>}
 
 
