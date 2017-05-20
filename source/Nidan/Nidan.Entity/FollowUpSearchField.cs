@@ -6,18 +6,23 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("CounsellingSearchField")]
-    public partial class CounsellingSearchField
+    [Table("FollowUpSearchField")]
+    public partial class FollowUpSearchField
     {
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CounsellingId { get; set; }
+        public int FollowUpId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int EnquiryId { get; set; }
+        public DateTime? FollowUpDateTime { get; set; }
+
+        public int? MobilizationId { get; set; }
+
+        public int? EnquiryId { get; set; }
+
+        public int? CounsellingId { get; set; }
+
+        public int? RegistrationId { get; set; }
 
         [StringLength(50)]
         public string Title { get; set; }
@@ -31,10 +36,17 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string LastName { get; set; }
 
+        public string Remark { get; set; }
+
+        public bool? Closed { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        public DateTime ReadDateTime { get; set; }
+
         [Key]
         [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
         [Key]
         [Column(Order = 3)]
@@ -44,44 +56,29 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PersonnelId { get; set; }
+        public int CentreId { get; set; }
+
+        public long? Mobile { get; set; }
 
         [Key]
         [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseOfferedId { get; set; }
+        public int IntrestedCourseId { get; set; }
 
-        [StringLength(500)]
-        public string PreferTiming { get; set; }
+        [StringLength(200)]
+        public string FollowUpType { get; set; }
 
-        public string Remarks { get; set; }
+        public long? AlternateMobile { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? FollowUpDate { get; set; }
-
-        public string RemarkByBranchManager { get; set; }
-
-        public int? SectorId { get; set; }
-
-        [StringLength(100)]
-        public string PsychomatricTest { get; set; }
-
-        public int? ConversionProspect { get; set; }
+        [StringLength(2000)]
+        public string FollowUpURL { get; set; }
 
         [StringLength(5)]
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
 
-        public string RemarkByBm { get; set; }
-
-        [Key]
-        [Column(Order = 6)]
-        public bool IsRegistrationDone { get; set; }
-
-        [Key]
-        [Column(Order = 7)]
-        [StringLength(1470)]
+        [StringLength(1580)]
         public string SearchField { get; set; }
     }
 }

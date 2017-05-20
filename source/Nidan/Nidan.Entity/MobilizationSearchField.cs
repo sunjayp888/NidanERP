@@ -54,6 +54,8 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
+        public long? AlternateMobile { get; set; }
+
         [Key]
         [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -88,10 +90,22 @@ namespace Nidan.Entity
         public string OtherInterestedCourse { get; set; }
 
         [Key]
-        [Column(Order = 13, TypeName = "date")]
+        [Column(Order = 13)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int MobilizationTypeId { get; set; }
+
+        [Key]
+        [Column(Order = 14, TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
-        [StringLength(3800)]
+        public int? PersonnelId { get; set; }
+
+        [StringLength(5)]
+        public string Close { get; set; }
+
+        public string ClosingRemark { get; set; }
+
+        [StringLength(4000)]
         public string SearchField { get; set; }
     }
 }

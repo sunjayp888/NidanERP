@@ -121,7 +121,7 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="counselling in model.counsellings | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCounselling(counselling.CounsellingId)">
-                                            <td><span ng-bind="counselling.Enquiry.Title"></span> <span ng-bind="counselling.Enquiry.FirstName"></span> <span ng-bind="counselling.Enquiry.MiddleName"></span> <span ng-bind="counselling.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="counselling.Title"></span> <span ng-bind="counselling.FirstName"></span> <span ng-bind="counselling.MiddleName"></span> <span ng-bind="counselling.LastName"></span></td>
                                             <td><span ng-bind="counselling.Course.Name"></span></td>
                                             <td><span ng-bind="counselling.PreferTiming"></span></td>
                                             <td><span ng-bind="counselling.Remarks"></span></td>

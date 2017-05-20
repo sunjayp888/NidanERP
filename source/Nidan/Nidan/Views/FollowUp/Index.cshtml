@@ -10,16 +10,16 @@
                Follow Ups <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
+        <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchMobilization(searchField)" class="form-control" placeholder="Search for mobilizer...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchFollowUp(searchField)" class="form-control" placeholder="Search for FollowUp...">
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="model.searchFollowUp(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
-        </div>*@
+        </div>
     </div>
     @*@if (User.IsInAnyRoles("Admin"))
     {

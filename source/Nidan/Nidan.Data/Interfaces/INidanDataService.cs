@@ -34,7 +34,6 @@ namespace Nidan.Data.Interfaces
         Budget CreateBudget(int organisationId, Budget budget);
         Eventday CreateEventday(int organisationId, Eventday eventday);
         Postevent CreatePostevent(int organisationId, Postevent postevent);
-        //RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
         
@@ -100,7 +99,6 @@ namespace Nidan.Data.Interfaces
         Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
         PagedResult<Trainer> RetrieveTrainerBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Registration> RetrieveRegistrations(int organisationId, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        //RegistrationPaymentReceipt RetrieveRegistrationPaymentReceipt(int organisationId, int registrationPaymentReceiptId, Expression<Func<RegistrationPaymentReceipt, bool>> predicate);
         PagedResult<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CourseInstallment RetrieveCourseInstallment(int organisationId, int courseInstallmentId, Expression<Func<CourseInstallment, bool>> predicate);
         PagedResult<CourseInstallment> RetrieveCourseInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CourseInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -138,6 +136,9 @@ namespace Nidan.Data.Interfaces
         Registration RetrieveRegistration(int organisationId,int centreId ,int registrationId, Expression<Func<Registration, bool>> predicate);
         PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate);
+        PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+
 
         // Update
 

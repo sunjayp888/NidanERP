@@ -169,5 +169,12 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveCourseInstallment(UserOrganisationId, courseInstallmentId));
         }
 
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveBatches(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging));
+        }
+
     }
 }

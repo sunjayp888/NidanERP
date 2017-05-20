@@ -1354,12 +1354,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Occupation>(organisationId, e => true);
         }
 
-        public PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword,
-            Expression<Func<EnquirySearchField, bool>> predicate,
+        public PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
-                paging);
+            return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, predicate,
+                orderBy, paging);
         }
 
         public List<MobilizationType> RetrieveMobilizationTypes(int organisationId,
@@ -1387,12 +1386,6 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveMobilizationBySearchKeyword(organisationId, searchKeyword, predicate,
                 orderBy, paging);
         }
-
-        //public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate,
-        //    List<OrderBy> orderBy = null, Paging paging = null)
-        //{
-        //    return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
-        //}
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
@@ -1825,6 +1818,20 @@ namespace Nidan.Business
         public FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate)
         {
             return _nidanDataService.RetrieveFollowUpHistory(organisationId, followUpHistoryId, predicate);
+        }
+
+        public PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFollowUpBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
+                paging);
+        }
+
+        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveRegistrationBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
+                paging);
         }
 
         #endregion

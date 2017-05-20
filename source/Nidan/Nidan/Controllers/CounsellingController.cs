@@ -191,14 +191,16 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.Enquiry.IsRegistrationDone==false && p.Close != "yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.Enquiry.IsRegistrationDone==false && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellingBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            var data = NidanBusinessService.RetrieveCounsellingBySearchKeyword(UserOrganisationId, searchKeyword,
+                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]

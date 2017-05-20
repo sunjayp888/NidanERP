@@ -212,7 +212,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (User.IsSuperAdmin() || p.CentreId == UserCentreId), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (User.IsSuperAdmin() || p.CentreId == UserCentreId)&& p.Close=="No", orderBy, paging));
         }
 
         [HttpPost]

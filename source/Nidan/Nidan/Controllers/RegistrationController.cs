@@ -195,10 +195,10 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult EnquirySearch(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveEnquiryBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.IsAdmissionDone==false, orderBy, paging);
             return this.JsonNet(data);
         }
 

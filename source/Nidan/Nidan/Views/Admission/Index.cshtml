@@ -21,25 +21,61 @@
                 </div>
             </div>*@
     </div>
-    @*@if (User.IsInAnyRoles("Admin"))
-        {
-            <div class="row">
-                <div class="col-xs-12">
-                    <a class="btn btn-app" href="@Url.Action("Create", "Admission")">
-                        <i class="fa fa-user"></i> Create
-                    </a>
-                </div>
-            </div>
-        }*@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            Admissions<small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="button" ng-click="model.searchAdmissionByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -54,6 +90,40 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
+                                    <tr role="row">
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                        <th ng-click="model.order('Batch')" ng-class="model.orderClass('Batch')">Batch</th>
+                                        <th ng-click="model.order('TotalFee')" ng-class="model.orderClass('TotalFee')">Total Fee</th>
+                                        <th ng-click="model.order('FeePaid')" ng-class="model.orderClass('FeePaid')">Fees Paid</th>
+                                        <th ng-click="model.order('AdmissionDate')" ng-class="model.orderClass('AdmissionDate')">Admission Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
+                                        <td><span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
+                                        <td><span ng-bind="admission.Batch.Name"></span></td>
+                                        <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span></td>
+                                        <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span></td>
+                                        <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Admission/Edit/{{admission.AdmissionId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
                                         <tr role="row">
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('Batch')" ng-class="model.orderClass('Batch')">Batch</th>
@@ -105,3 +175,33 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+    $(function () {
+
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            //minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            onSelect: function () {
+                selectedDate = moment().format('DD MMMM YYYY');
+            },
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('.date').val(moment().format('DD MMMM YYYY'));
+            $(".date").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+        });
+    });
+    </script>
+}

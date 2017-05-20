@@ -645,27 +645,6 @@ namespace Nidan.Data
             }
         }
 
-        //public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy, Paging paging)
-        //{
-        //    using (ReadUncommitedTransactionScope)
-        //    using (var context = _databaseFactory.Create(organisationId))
-        //    {
-        //        var category = new SqlParameter("@SearchKeyword", searchKeyword);
-
-        //        return context.Database
-        //            .SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList().AsQueryable().
-        //            OrderBy(orderBy ?? new List<OrderBy>
-        //            {
-        //                new OrderBy
-        //                {
-        //                    Property = "CandidateName",
-        //                    Direction = System.ComponentModel.ListSortDirection.Ascending
-        //                }
-        //            })
-        //            .Paginate(paging);
-        //    }
-        //}
-
         public List<T> Retrieve<T>(int organisationId, Expression<Func<T, bool>> predicate) where T : class
         {
             using (ReadUncommitedTransactionScope)
@@ -789,7 +768,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList();
 
-                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification);
+                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e=>e.MobilizationType);
 
                 var data = searchData.Join(mobilizations, e => e.MobilizationId, m => m.MobilizationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -815,7 +794,9 @@ namespace Nidan.Data
                 var searchData =
                     context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
 
-                var enquiries = context.Enquiries.Include(e => e.Course).Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.BatchTimePrefer);
+                var enquiries = context.Enquiries.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
+                    .Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
+                    .Include(e => e.Qualification).Include(e => e.Taluka);
 
                 var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
 
@@ -823,7 +804,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "FirstName",
+                            Property = "EnquiryDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -967,9 +948,9 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<CounsellingSearchField>("SearchCounselling @SearchKeyword", category).ToList();
 
-                var counsellings = context.Counsellings.Include(e => e.Course).Include(e => e.Enquiry);
+                var counsellings = context.Counsellings.Include(e => e.Course);
 
-                var data = searchData.Join(counsellings, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
+                var data = searchData.Join(counsellings, e => e.CounsellingId, m => m.CounsellingId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -2052,6 +2033,60 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.FollowUpHistoryId == followUpHistoryId);
+            }
+        }
+
+        public PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<FollowUpSearchField>("SearchFollowUp @SearchKeyword", category).ToList();
+
+                var followUps = context.FollowUps.Include(e => e.Course);
+
+                var data = searchData.Join(followUps, e => e.FollowUpId, m => m.FollowUpId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<RegistrationSearchField>("SearchRegistration @SearchKeyword", category).ToList();
+
+                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee);
+
+                var data = searchData.Join(registrations, e => e.RegistrationId, m => m.RegistrationId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
             }
         }
 
