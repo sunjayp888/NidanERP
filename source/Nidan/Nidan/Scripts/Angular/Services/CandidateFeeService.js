@@ -13,7 +13,8 @@
             searchCandidateFee: searchCandidateFee,
             retrievePaymentModes: retrievePaymentModes,
             retrieveCandidateFee: retrieveCandidateFee,
-            saveFee:saveFee
+            saveFee: saveFee,
+            print:print
         };
 
         return service;

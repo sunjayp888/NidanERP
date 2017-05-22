@@ -1,8 +1,13 @@
-﻿@model Nidan.Models.CandidateFeeViewModel
+﻿@using Nidan.Business.Enum
+@model Nidan.Models.CandidateFeeViewModel
 
 @{
     ViewBag.Title = "Detail";
 }
+@*@{
+    int value = CandidateFee.FeeTypeId;
+    FeeType feeType = (FeeType)value;
+}*@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -20,7 +25,8 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role = "row" >
+                                    <tr role="row">
+                                        <th>Fee Type</th>
                                         <th>ChequeDate</th>
                                         <th>Cheque Number</th>
                                         <th>Payment Mode</th>
@@ -31,7 +37,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat= "candidateFee in model.candidateFees" class="odd gradeX">
+                                    <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
+                                        <td>
+                                            <span ng-if="candidateFee.FeeTypeId==1">Registration</span>
+                                            <span ng-if="candidateFee.FeeTypeId==2">Admission</span>
+                                            <span ng-if="candidateFee.FeeTypeId==3">Installment</span>
+                                        </td>
                                         <td><span ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeNumber"></span></td>
                                         <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentMode.Name"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span></td>
@@ -42,8 +53,8 @@
                                             <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
                                         </td>
                                         <td>
-                                            <button id = "btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
-                                            <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                                            <button id="btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
+                                            <button class="btn btn-default" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
                                         </td>
                                     </tr>
                                     </tbody>

@@ -100,7 +100,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).FirstOrDefault();
-
             var candidateFeeModel = new CandidateFeeViewModel
             {
                 CandidateName = String.Format("{0} {1} {2} {3}",enquiry?.Title,enquiry?.FirstName,enquiry?.MiddleName,enquiry?.LastName),
@@ -130,6 +129,15 @@ namespace Nidan.Controllers
         public ActionResult PaymentMode()
         {
             return this.JsonNet(NidanBusinessService.RetrievePaymentModes(UserOrganisationId, c => true));
+        }
+
+        public ActionResult Download(int? id)
+        {
+            var organisationId = UserOrganisationId;
+            var feeTypeId = NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value).FeeTypeId;
+            FeeType feeType = (FeeType)feeTypeId;
+            var data = NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, UserCentreId, id.Value);
+            return File(data, ".pdf", feeType.ToString()+".pdf");
         }
     }
 }
