@@ -1556,6 +1556,8 @@
     <Content Include="Views\CandidateFee\_CandidateFee.cshtml" />
     <Content Include="Views\CandidateFee\_CandidateFeeDetail.cshtml" />
     <Content Include="Views\Counselling\Create.cshtml" />
+    <Content Include="Views\Admission\View.cshtml" />
+    <Content Include="Views\Admission\AssignBatch.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

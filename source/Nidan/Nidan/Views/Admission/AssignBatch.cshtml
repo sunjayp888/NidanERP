@@ -1,16 +1,14 @@
-﻿@using System.Drawing
-@model Nidan.Models.AdmissionViewModel
+﻿@model Nidan.Models.AdmissionViewModel
 
 @{
-    ViewBag.Title = "Create Admission";
+    ViewBag.Title = string.Format("Assign Batch To ({0})", Model.Admission.AdmissionId);
 }
+
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>
-                    <button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration?.Enquiry?.Title, @Model.Registration?.Enquiry?.FirstName, @Model.Registration?.Enquiry?.MiddleName, @Model.Registration?.Enquiry?.LastName)</button> Create New Admission <small></small>
-                </h2>
+                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -25,6 +23,7 @@
                                     @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
                                 </div>
                             </div>
+
                         }
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -34,28 +33,16 @@
                             has been registered for course @Model.Registration.Course.Name and paid Rs @Model.Registration.CandidateFee.PaidAmount out of total Amount
                             @Model.Registration.CandidateInstallment.CourseFee
                         </div>
-                        @Html.HiddenFor(m => m.Registration.Enquiry.Address1)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.Mobile)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.Title)
-                        @Html.HiddenFor(m => m.Registration.Enquiry.EmailId)
+                        @Html.HiddenFor(m => m.Admission.AdmissionId)
+                        @Html.HiddenFor(m => m.Admission.AdmissionDate)
+                        @Html.HiddenFor(m => m.Admission.RegistrationId)
+                        @Html.HiddenFor(m => m.RegistrationId)
+                        @*@Html.HiddenFor(m => m.RegistrationPaymentReceipt.Enquiry.Address1)
+                            @Html.HiddenFor(m => m.RegistrationPaymentReceipt.Particulars)*@
                         @Html.HiddenFor(m => m.Batch.Name)
                         @Html.HiddenFor(m => m.Course.Name)
-                        @Html.HiddenFor(m => m.Batch.BatchId)
-                        @Html.HiddenFor(m => m.BatchDay.BatchDayId)
-                        @Html.HiddenFor(m => m.Course.CourseId)
-                        @Html.HiddenFor(m => m.CourseInstallment.CourseInstallmentId)
-                        @Html.HiddenFor(m => m.Registration.RegistrationId)
-                        @Html.HiddenFor(m => m.Admission.RegistrationId)
-                        @Html.HiddenFor(m => m.Admission.Registration.CandidateInstallmentId)
-                        @Html.HiddenFor(m => m.CourseInstallment.Name)
-                        @Html.HiddenFor(m => m.Admission.RegistrationId)
-                        @Html.HiddenFor(m => m.Registration.CandidateInstallmentId)
-                        @Html.HiddenFor(m => m.Admission.Registration.EnquiryId)
-
-
+                        @*@Html.HiddenFor(m => m.Admission.EnquiryId)
+                            @Html.HiddenFor(m => m.Admission.RegistrationPaymentReceiptId)*@
                         @*-----------------------------------------Candidate Details-----------------------------------------*@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="x_panel" style="height:auto">
@@ -336,13 +323,11 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        @Html.Partial("_Admission", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                        @*@Html.Partial("_Admission", Model)*@
+                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="admissionSubmit" type="submit" class="btn btn-success" disabled="disabled">Submit</button>
+                                    <button type="submit" class="btn btn-success">Assign Batch</button>
                                 </div>
                             </div>
                         </div>
@@ -357,59 +342,12 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+
 @section scripts{
     <script>
-
-        //---------------- Registration Cash/Cheque ----------------
-        if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
-            $('.bank-details-textbox').show();
-            $("#RegistrationPaymentReceipt_BankName").val("");
-            $("#RegistrationPaymentReceipt_ChequeNo").val("");
-        } else {
-            $('.bank-details-textbox').hide();
-        }
-
-        $("#RegistrationPaymentReceipt_PaymentModeId").change(function () {
-            if ($('#RegistrationPaymentReceipt_PaymentModeId :selected').text() == "Cheque") {
-                $('.bank-details-textbox').show();
-                $("#RegistrationPaymentReceipt_BankName").val("");
-                $("#RegistrationPaymentReceipt_ChequeNo").val("");
-            } else {
-                $('.bank-details-textbox').hide();
-            }
-        });
-
         //---------------- Admission Cash/Cheque ----------------
         $('#downpayment').hide();
         $('#lumpsum').hide();
-        @*var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
-        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
-        if (registrationAmount >= downpaymentAmount) {
-            alert("Down Payment is already paid in Registraion");
-            $('#downpayment').show();
-            $('#lumpsum').hide();
-        } else {
-            var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
-            $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
-                $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
-                $('#downpayment').show();
-                $('#lumpsum').hide();
-            });
-        }
-        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
-        var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
-        if (registrationAmount >= lumpsumAmount) {
-            alert("Down Payment is already paid in Registraion");
-            $('#lumpsum').show();
-            $('#downpayment').hide();
-        } else {
-            var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
-            $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function () {
-                $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
-                $('#downpayment').hide();
-                $('#lumpsum').show();
-            });
-        }*@
         var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
         var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
         var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
@@ -417,7 +355,6 @@
             $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
             $('#downpayment').show();
             $('#lumpsum').hide();
-            $('#CandidateFee_PaidAmount').val(resultDownpayment);
         });
         var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
         var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
@@ -426,38 +363,30 @@
             $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
             $('#downpayment').hide();
             $('#lumpsum').show();
-            $('#CandidateFee_PaidAmount').val(resultLumpsum);
         });
 
-
-
-        if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
-            $('#PaymentDetails').show();
-            $('.bank-details-textbox-admission').show();
-            $("#Admission_BankName").val("");
-            $("#Admission_ChequeNo").val("");
-        } else {
-            $('.bank-details-textbox-admission').hide();
-            $('#PaymentDetails').show();
-        }
 
         $("#CandidateFee_PaymentModeId").change(function () {
             if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
-                $('#PaymentDetails').show();
                 $('.bank-details-textbox-admission').show();
-                $("#Admission_BankName").val("");
-                $("#Admission_ChequeNo").val("");
+                $('#PaymentDetails').show();
             } else {
                 $('.bank-details-textbox-admission').hide();
-                $('#PaymentDetails').show();
+                $('#PaymentDetails').hide();
             }
         });
 
+        if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
+            $('.bank-details-textbox-admission').show();
+        } else {
+            $('.bank-details-textbox-admission').hide();
+        }
 
 
 
 
-        $("#Admission_Discount").change(function () {
+
+        $("#Admission_Discount").ready(function () {
             if ($('#Admission_Discount :selected').text() == "Select Discount") {
                 $('#divDiscountFee').hide();
             } else {
@@ -473,19 +402,25 @@
         //---------------- Admission Installment/Lumpsum ----------------
 
         $('#BatchDetails').hide();
-        $("#Admission_BatchId").change(function () {
+        $('#Admission_BatchId').change(function() {
             if ($('#Admission_BatchId :selected').val() == "") {
                 $('#divBatchDetails').hide();
             } else {
                 $('#divBatchDetails').show();
             }
-
-            //$('#PaymentType').show();
         });
-        $('#PaymentType').show();
+        //$("#Admission_BatchId").ready(function () {
+        //    if ($('#Admission_BatchId :selected').val() == "") {
+                
+        //    }
+        //    $('#divBatchDetails').show();
+        //    $('#PaymentType').show();
+        //});
+        $('#PaymentType').hide();
         $('#PaymentDetails').hide();
         $('#divDiscountFee').hide();
         $('#divBatchDetails').hide();
+
 
         //=========================================================================
 
@@ -524,48 +459,23 @@
                     processData: false
                 });
             }
-
-
-
-            var downpaymentAmount1 = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+           
+            var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
             var registrationAmount1=@Model.Registration.CandidateFee.PaidAmount;
-            $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly')
-                .click(function() {
-                    $('#downpayment').show();
-                    $('#lumpsum').hide();
-                });
-
-            if (registrationAmount1 >= downpaymentAmount1) {
-                alert("Down Payment is already paid in Registraion");
+            var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount1);
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+                $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
                 $('#downpayment').show();
                 $('#lumpsum').hide();
-            } else {
-                var resultDownpayment1 = parseFloat(downpaymentAmount1) - parseFloat(registrationAmount1);
-                if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
-                    $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment1);
-                    $('#downpayment').show();
-                    $('#lumpsum').hide();
-                }
             }
-
-
-            var lumpsumAmount1 = $('#Registration_CandidateInstallment_LumpsumAmount').val();
-            $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum')
-                .click(function() {
-                    $('#downpayment').hide();
-                    $('#lumpsum').show();
-                });
-            if (lumpsumAmount1 == registrationAmount1) {
-                alert("Lumpsum Amount is already paid in Registraion");
-            } else {
-                var resultLumpsum1 = parseFloat(lumpsumAmount1) - parseFloat(registrationAmount1);
-                if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
-                    $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum1);
-                    $('#downpayment').hide();
-                    $('#lumpsum').show();
-                }
+            var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+            var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+            var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+                $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
+                $('#downpayment').hide();
+                $('#lumpsum').show();
             }
-
         });
 
         //========================================================================================================
@@ -590,9 +500,9 @@
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
         });
 
         ////================================================================== Calculation Sum Of Rupees
@@ -733,9 +643,5 @@
             }
             document.getElementById(outputControl).innerHTML = finalOutput + " Only";
         }
-
-        $(":radio").on('click',function() {
-            $('#admissionSubmit').attr('disabled', false);
-        });
     </script>
 }
