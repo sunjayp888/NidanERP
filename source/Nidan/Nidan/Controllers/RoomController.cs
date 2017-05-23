@@ -108,7 +108,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("Admin");
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
         }
     }

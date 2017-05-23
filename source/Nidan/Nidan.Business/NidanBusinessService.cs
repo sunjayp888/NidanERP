@@ -2333,9 +2333,26 @@ namespace Nidan.Business
         public Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds)
         {
             var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batch);
-            if (!batch.BatchTrainers.Any() && trainerIds.Any())
-                CreateBatchTrainer(organisationId, batch.CentreId, batch.BatchId, trainerIds);
+            //if (!batch.BatchTrainers.Any() && trainerIds.Any())
+            //    CreateBatchTrainer(organisationId, batch.CentreId, batch.BatchId, trainerIds);
             UpdateBatchDay(organisationId, batchDays);
+
+            var batchTrainers = RetrieveBatchTrainers(organisationId, batch.BatchId).ToList();
+            var batchTrainerList = new List<BatchTrainer>();
+            foreach (var item in trainerIds)
+            {
+                if (!batchTrainers.Any(e => e.TrainerId == item && e.BatchId == batch.BatchId))
+                {
+                    batchTrainerList.Add(new BatchTrainer()
+                    {
+                        OrganisationId = organisationId,
+                        BatchId = batch.BatchId,
+                        TrainerId = item,
+                    });
+                }
+            }
+            if (batchTrainerList.Any())
+                _nidanDataService.Create<BatchTrainer>(organisationId, batchTrainerList);
             return data;
         }
 

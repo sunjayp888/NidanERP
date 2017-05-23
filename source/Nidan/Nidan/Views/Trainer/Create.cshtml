@@ -66,29 +66,53 @@
 
         });
 
-        //$('#Trainer_SectorId').change(function() {
-        //    var sectorId = $('#Trainer_SectorId :selected').val();
-        //    $.ajax({
-        //        url: '/Trainer/GetCourse',
-        //        type: 'POST',
-        //        data: JSON.stringify({ sectorId: sectorId }),
-        //        dataType: 'json',
-        //        contentType: 'application/json; charset=utf-8',
-        //        error: function(xhr) {
-        //            alert('Error: ' + xhr.statusText);
-        //        },
-        //        success: function(result) {
-        //            $("#Trainer_CourseId").empty();
-        //            $.each(result,
-        //                function(key, value) {
-        //                    $("#Trainer_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+        $('#Trainer_StateId').change(function () {
+            var stateId = $('#Trainer_StateId :selected').val();
+            $.ajax({
+                url: '/Trainer/GetDistrict',
+                type: 'POST',
+                data: JSON.stringify({ stateId: stateId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Trainer_DistrictId").empty();
+                    $("#Trainer_DistrictId").append($("<option></option>").html("Select District"));
+                    $.each(result, function (key, value) {
+                        $("#Trainer_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
 
-        //                });
-        //        },
-        //        async: true,
-        //        processData: false
-        //    });
-        //});
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Trainer_DistrictId').change(function () {
+            var districtId = $('#Trainer_DistrictId :selected').val();
+            $.ajax({
+                url: '/Trainer/GetTaluka',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Trainer_TalukaId").empty();
+                    $("#Trainer_TalukaId").append($("<option></option>").html("Select Taluka"));
+                    $.each(result, function (key, value) {
+                        $("#Trainer_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
 
     </script>
 }

@@ -43,9 +43,14 @@
                                             <span ng-if="candidateFee.FeeTypeId==2">Admission</span>
                                             <span ng-if="candidateFee.FeeTypeId==3">Installment</span>
                                         </td>
-                                        <td><span ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
+                                        <td>
+                                            <span ng-if="candidateFee.PaymentMode.Name='Cheque'" ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.ChequeNumber"></span></td>
-                                        <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentMode.Name"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span></td>
+                                        <td>
+                                            <span ng-if="candidateFee.PaymentModeId==1 && candidateFee.IsPaymentDone">Cash</span>
+                                            <span ng-if="candidateFee.PaymentModeId==2 && candidateFee.IsPaymentDone">Cheque</span>
+                                            <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span>
+                                        </td>
                                         <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
                                         <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind="candidateFee.InstallmentAmount"></span></td>
                                         <td class="col-lg-1">
@@ -54,7 +59,7 @@
                                         </td>
                                         <td>
                                             <button id="btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
-                                            <button class="btn btn-default" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
+                                            <button class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -107,6 +112,9 @@
                 $("#txtChequeNumber").hide();
                 $("#txtChequeDate").hide();
                 $("#txtBankName").hide();
+                $("#labelChequeNumber").hide();
+                $("#labelChequeDate").hide();
+                $("#labelBankName").hide();
             }
         });
 
@@ -276,6 +284,13 @@
         //======================================================================on payment mode selection enable submit payment button
         var paymentmode = $('#dropDownPaymentMode').val();
         
+        //
+        $('#dropDownPaymentMode')
+            .change(function() {
+                if (paymentmode == "Select Payment Mode") {
+                    $('#btnSaveCandidateFee').attr('disabled', false);
+                }
 
+            });
     </script>
 }

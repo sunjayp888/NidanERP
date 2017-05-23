@@ -210,7 +210,7 @@
                 document.getElementById('Batch_BatchEndTimeHours').value = endTimeB;
 
             }
-            document.getElementById('Batch_BatchEndTimeMinutes').value = startMinutr;
+            //document.getElementById('Batch_BatchEndTimeMinutes').value = startMinutr;
         }
         //=============================================================================== on num of daily hours change month and installment
         $('#Batch_NumberOfHoursDaily')
@@ -518,14 +518,20 @@
 
         //===================================================No Of Installment Do not allow grater than Month
 
-        //$("#Batch_NumberOfInstallment").keyup(function () {
-        //    var noofinstallmentvalue = noofinstallment;
-        //    var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
-        //    if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
-        //        alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
-        //        $(this).val("");
-        //    }
-        //});
+        $(document)
+            .ready(function() {
+                var numofinstallment = $("#Batch_NumberOfInstallment").val();
+
+                    $("#Batch_NumberOfInstallment").keyup(function () {
+                        var noofinstallmentvalue = numofinstallment;
+                        var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
+                        if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+                            alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+                            $(this).val("");
+                        }
+                        
+                    });
+            });
 
         $('.fisrt-installment-textbox').hide();
         $('.second-installment-textbox').hide();
@@ -539,4 +545,132 @@
         $('.tenth-installment-textbox').hide();
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
+
+        //==================================================================== num of installment on page load
+
+        $(document)
+            .ready(function numofinstallments() {
+                var numofinstallment = $("#Batch_NumberOfInstallment").val();
+
+                if (numofinstallment == 1) {
+                    $('.fisrt-installment-textbox').show();
+                }
+
+                if (numofinstallment == 2) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                }
+
+                if (numofinstallment == 43) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                }
+
+                if (numofinstallment == 4) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 5) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 6) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 7) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                }
+
+                if (numofinstallment == 8) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                    $('.eighth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 9) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                    $('.eighth-installment-textbox').show();
+                    $('.nineth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 10) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                    $('.eighth-installment-textbox').show();
+                    $('.nineth-installment-textbox').show();
+                    $('.tenth-installment-textbox').show();
+                }
+
+                if (numofinstallment == 11) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                    $('.eighth-installment-textbox').show();
+                    $('.nineth-installment-textbox').show();
+                    $('.tenth-installment-textbox').show();
+                    $('.eleventh-installment-textbox').show();
+                }
+
+                if (numofinstallment == 12) {
+                    $('.fisrt-installment-textbox').show();
+                    $('.second-installment-textbox').show();
+                    $('.third-installment-textbox').show();
+                    $('.forth-installment-textbox').show();
+                    $('.fifth-installment-textbox').show();
+                    $('.sixth-installment-textbox').show();
+                    $('.seventh-installment-textbox').show();
+                    $('.eighth-installment-textbox').show();
+                    $('.nineth-installment-textbox').show();
+                    $('.tenth-installment-textbox').show();
+                    $('.eleventh-installment-textbox').show();
+                    $('.twelveth-installment-textbox').show();
+                }
+                
+
+            });
+
+        $("#Batch_BatchStartTimeMinutes").keyup(function () {
+            var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
+            $("#Batch_BatchEndTimeMinutes").val(startimeminute);
+        });
     </script>}

@@ -204,6 +204,7 @@
                 },
                 success: function (result) {
                     $("#Enquiry_DistrictId").empty();
+                    $("#Enquiry_DistrictId").append($("<option></option>").html("Select District"));
                     $.each(result, function (key, value) {
                         $("#Enquiry_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
 
@@ -227,6 +228,7 @@
                 },
                 success: function (result) {
                     $("#Enquiry_TalukaId").empty();
+                    $("#Enquiry_TalukaId").append($("<option></option>").html("Select Taluka"));
                     $.each(result, function (key, value) {
                         $("#Enquiry_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
 

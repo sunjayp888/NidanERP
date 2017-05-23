@@ -40,7 +40,17 @@
                                 <li>
                                     <a><i class="fa fa-cogs"></i> Reports <span class="fa fa-chevron-up"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="@Url.Action("Index", "OrganisationalChart")">Organizational Chart</a></li>
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
+                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
+                                            <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
+                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
+                                            <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
+                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
+                                            <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
+                                        }
+                                        
                                     </ul>
                                 </li>
                                 @if (User.IsInAnyRoles("Admin"))
@@ -53,7 +63,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin"))
+                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Mobilization <span class="fa fa-chevron-up"></span></a>
@@ -64,21 +74,6 @@
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
                                             <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
-
-                                            @*<li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
-                                            <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
-                                             <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
-                                            <li><a href='@Url.Action("Index", "Enquiry")'>Enquiry</a></li>
-                                            <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
-                                            <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
-                                            <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
-                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
-                                            <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
-                                            <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>*@
                                         </ul>
                                     </li>
                                 }
@@ -89,11 +84,9 @@
                                         <ul class="nav child_menu">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <li><a href="@Url.Action("Index", "Organisation")">Organisation</a></li>
+                                               
                                             }
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
-                                            @*<li><a href='@Url.Action("Index", "Event")'>Event</a></li>*@
-                                            @*<li><a href='@Url.Action("Index", "AreaOfInterest")'>Area Of Interest</a></li>*@
                                             <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
@@ -102,21 +95,6 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            @*<li><a href="@Url.Action("Index", "Company")">Companies</a></li>
-                                                <li><a href="@Url.Action("Index", "Country")">Countries</a></li>
-                                                <li><a href="@Url.Action("Index", "Department")">Departments</a></li>
-                                                <li><a href="@Url.Action("Index", "Team")">Teams</a></li>
-                                                <li><a href="@Url.Action("Index", "Site")">Sites</a></li>
-                                                <li><a href="@Url.Action("Index", "Building")">Buildings</a></li>
-                                                <li><a href="@Url.Action("Index", "AbsenceType")">Absence Types</a></li>
-                                                <li><a href="@Url.Action("Index", "AbsencePeriod")">Absence Periods</a></li>
-                                                <li><a href="@Url.Action("Index", "AbsencePolicy")">Absence Policies</a></li>
-                                                <li><a href="@Url.Action("Index", "PublicHolidayPolicy")">Public Holiday Policies</a></li>*@
-                                            @*<li><a href="@Url.Action("Index", "Alert")">Alerts</a></li>*@
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <li><a href="@Url.Action("Index", "User")">Users</a></li>
-                                            }
                                         </ul>
                                     </li>
                                 }

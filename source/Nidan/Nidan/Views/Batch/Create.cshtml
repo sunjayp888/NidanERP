@@ -219,7 +219,7 @@
 
             }
 
-            
+
             //=============================================================================== on num of daily hours change month and installment
             $('#Batch_NumberOfHoursDaily')
                 .keyup(function () {
@@ -247,7 +247,7 @@
         //==================================================================== Calculation Of Month based on duration of course but holiday count pending
 
         function checkboxes() {
-            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length - 1;
 
             if (checkboxlength == 0) {
                 alert("Please Select Atleast Any One Day");
@@ -255,7 +255,7 @@
             else if (checkboxlength > 0) {
                 var courseDuration = $("#Course_Duration").val();
                 var hours = $("#Batch_NumberOfHoursDaily").val();
-                var checkboxcount = $("[type='checkbox']:checked").length;
+                var checkboxcount = $("[type='checkbox']:checked").length - 1;
                 var perweek = checkboxcount * hours;
                 var perMonth = perweek * 4;
                 var roundresult = courseDuration / perMonth;
@@ -534,20 +534,23 @@
                     $("#Batch_EleventhInstallment").val(value);
                     $("#Batch_TwelvethInstallment").val(value);
                 }
+
+
             }
         }
 
         //===================================================No Of Installment Do not allow grater than Month
-        //var numofinstallment = numberofinstallment;
-        //$("#Batch_NumberOfInstallment").keypress(function ()
-        //{
-        //    var noofinstallmentvalue = numofinstallment;
-        //            var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
-        //            if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
-        //                alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
-        //                $(this).val("");
-        //            }
-        //});
+
+        var numberofinstallment = $("#Batch_NumberOfInstallment").text();
+
+        $("#Batch_NumberOfInstallment").keypress(function () {
+            var noofinstallmentvalue = numberofinstallment;
+            var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
+            if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
+                alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
+                $(this).val("");
+            }
+        });
 
 
         //================================================================== Calculation Of Installment
@@ -564,6 +567,7 @@
         $('.tenth-installment-textbox').hide();
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
+
         $("#Batch_BatchStartTimeMinutes").keyup(function () {
             var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
             $("#Batch_BatchEndTimeMinutes").val(startimeminute);
