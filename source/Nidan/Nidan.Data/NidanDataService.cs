@@ -1957,7 +1957,11 @@ namespace Nidan.Data
             {
                 return context
                     .CandidateFees
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
                     .Include(p => p.CandidateInstallment)
+                    .Include(p => p.CandidateInstallment.CourseInstallment)
+                    .Include(p => p.CandidateInstallment.CourseInstallment.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);

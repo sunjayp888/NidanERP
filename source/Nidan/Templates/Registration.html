@@ -59,7 +59,7 @@
             <td class="CenterText TopText" width="50%">
 				<h1>@Model.OrganisationName</h1>
 				<h3>@Model.CentreAddress</h3>
-                <h3>Registration Statement</h3>
+                <h3>Invoice</h3>
                 <b>Invoiced by @Model.CentreName</b>
             </td>
             <td class="TopText RightText" width="25%">                
@@ -99,8 +99,8 @@
     <div class="PayslipBox">
         <table border="0">
             <tr>
-                <td><b>REGISTRATION DETAILS</b></td>
-                <td></td>
+                 <td><b>Fee Type :</b></td>
+                <td>@Model.FeeTypeName</td>
                 <td></td>
             </tr>
             <tr>
