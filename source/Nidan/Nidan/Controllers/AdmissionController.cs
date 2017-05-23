@@ -103,7 +103,7 @@ namespace Nidan.Controllers
                 // Create Personnel
                 var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
-                NidanBusinessService.UpdateAdmission(organisationId, admissionViewModel.Admission);
+                NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
             }
@@ -214,17 +214,139 @@ namespace Nidan.Controllers
         public ActionResult Edit(AdmissionViewModel admissionViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 admissionViewModel.Admission.OrganisationId = organisationId;
-                admissionViewModel.Admission.CentreId = UserCentreId;
-                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, admissionViewModel.Admission);
+                admissionViewModel.Admission.CentreId = centreId;
+                admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
             var viewModel = new AdmissionViewModel
             {
                 Admission = admissionViewModel.Admission
             };
+            return View(viewModel);
+        }
+
+        // GET: Admission/AssignBatch/{id}
+        public ActionResult AssignBatch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+
+
+            if (admission == null)
+            {
+                return HttpNotFound();
+            }
+            var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
+            var viewModel = new AdmissionViewModel
+            {
+                Course = new Course()
+                {
+                    Name = "Test"
+                },
+                CourseInstallment = new CourseInstallment()
+                {
+                    Name = "Test"
+                },
+                Batch = new Batch()
+                {
+                    Name = "Test"
+                },
+                Registration = admission.Registration,
+                RegistrationId = admission.RegistrationId,
+                Admission = admission,
+                CandidateFee = candidateFeeByAdmission ?? admission.Registration.CandidateFee,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
+                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
+                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
+                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
+                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name")
+            };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");
+            return View(viewModel);
+        }
+
+        // POST: Admission/AssignBatch/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignBatch(AdmissionViewModel admissionViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            if (ModelState.IsValid)
+            {
+                admissionViewModel.Admission.OrganisationId = organisationId;
+                admissionViewModel.Admission.CentreId = centreId;
+                admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
+                return RedirectToAction("Index");
+            }
+            var viewModel = new AdmissionViewModel
+            {
+                Admission = admissionViewModel.Admission
+            };
+            return View(viewModel);
+        }
+
+        // GET: Admission/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+
+
+            if (admission == null)
+            {
+                return HttpNotFound();
+            }
+            var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
+            var viewModel = new AdmissionViewModel
+            {
+                Course = new Course()
+                {
+                    Name = "Test"
+                },
+                CourseInstallment = new CourseInstallment()
+                {
+                    Name = "Test"
+                },
+                Batch = new Batch()
+                {
+                    Name = "Test"
+                },
+                Registration = admission.Registration,
+                RegistrationId = admission.RegistrationId,
+                Admission = admission,
+                CandidateFee = candidateFeeByAdmission ?? admission.Registration.CandidateFee,
+                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
+                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
+                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
+                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
+                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
+                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
+                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name")
+            };
+            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");
             return View(viewModel);
         }
 

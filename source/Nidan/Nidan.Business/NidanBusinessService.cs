@@ -357,7 +357,7 @@ namespace Nidan.Business
                     FollowUpUrl = string.Format("/Mobilization/Edit/{0}", data.MobilizationId)
                 });
             }
-             _nidanDataService.Create<FollowUp>(organisationId, followUpList);
+            _nidanDataService.Create<FollowUp>(organisationId, followUpList);
             foreach (var item in followUpList)
             {
                 var followUpHistory = new FollowUpHistory
@@ -432,7 +432,7 @@ namespace Nidan.Business
                     Remarks = followUpData.Remark,
                     Close = followUpData.Close,
                     ClosingRemarks = followUpData.ClosingRemark,
-                    FollowUpDate = counselling.FollowUpDate ?? followUpData.FollowUpDateTime.Date ,
+                    FollowUpDate = counselling.FollowUpDate ?? followUpData.FollowUpDateTime.Date,
                     CreatedDate = DateTime.UtcNow.Date,
                     CentreId = followUpData.CentreId,
                     OrganisationId = organisationId
@@ -584,7 +584,7 @@ namespace Nidan.Business
         {
 
             var data = _nidanDataService.Create<Subject>(organisationId, subject);
-            CreateSubjectCourse(organisationId,data.SubjectId, courseIds);
+            CreateSubjectCourse(organisationId, data.SubjectId, courseIds);
             CreateSubjectTrainer(organisationId, data.SubjectId, trainerIds);
             return data;
         }
@@ -713,6 +713,7 @@ namespace Nidan.Business
                 registrationData.CandidateInstallmentId, e => true);
             var courseInstallment = RetrieveCourseInstallment(organisationId, registrationData.CourseInstallmentId);
             candidatInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
+            candidatInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatInstallment);
             var candidatefeeCreate = new CandidateFee()
             {
@@ -733,7 +734,11 @@ namespace Nidan.Business
                 IsPaymentDone = true
             };
             _nidanDataService.Create<CandidateFee>(organisationId, candidatefeeCreate);
-            CreateCandidateFee(organisationId, centreId, personnelId, admission);
+            if (admission.BatchId != null)
+            {
+                CreateCandidateFee(organisationId, centreId, personnelId, admission);
+            }
+
 
             admission.OrganisationId = organisationId;
             admission.CentreId = centreId;
@@ -741,8 +746,12 @@ namespace Nidan.Business
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
             // Update Registration IsAdmissionDone
             var registration = RetrieveRegistration(organisationId, centreId, admission.RegistrationId);
-            registration.IsAdmissionDone = true;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
+            if (registration != null)
+            {
+                registration.IsAdmissionDone = true;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
+            }
+            
             // EnquiryStatus Update
             enquiryData.Close = "Yes";
             enquiryData.ClosingRemark = "Admission Done";
@@ -779,7 +788,9 @@ namespace Nidan.Business
             var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 admission.Registration.CandidateInstallmentId, c => true);
             var feePaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-            var candidateBatch = RetrieveBatch(organisationId, admission.BatchId??0);
+
+            var candidateBatch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
+
             // Update data in CandidateInstallment
             candidateInstallment.PaymentMethod = feePaymentMethod;
             candidateInstallment.NumberOfInstallment = feePaymentMethod ==
@@ -805,7 +816,8 @@ namespace Nidan.Business
                     CentreId = centreId,
                     OrganisationId = organisationId,
                     PersonnelId = personnelId,
-                    IsPaymentDone = false
+                    IsPaymentDone = false,
+                    StudentCode = admission.Registration.StudentCode
                 });
             }
             _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
@@ -1765,8 +1777,8 @@ namespace Nidan.Business
                     CentreName = item.Name,
                     MobilizationCount = item.Mobilizations.Count(e => e.Close == "No"),
                     AdmissionCount = item.Admissions.Count,
-                    EnquiryCount = item.Enquiries.Count(e=>e.IsRegistrationDone==false),
-                    RegistrationCount = item.Registrations.Count(e=>e.IsAdmissionDone==false),
+                    EnquiryCount = item.Enquiries.Count(e => e.IsRegistrationDone == false),
+                    RegistrationCount = item.Registrations.Count(e => e.IsAdmissionDone == false),
                     CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false)
                 });
             }
@@ -2303,8 +2315,13 @@ namespace Nidan.Business
         }
 
 
-        public Admission UpdateAdmission(int organisationId, Admission admission)
+        public Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission)
         {
+            var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
+            admission.Registration = registrationData;
+
+            CreateCandidateFee(organisationId, centreId, personnelId, admission);
+            admission.Registration = null;
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 

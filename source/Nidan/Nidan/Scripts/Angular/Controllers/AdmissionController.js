@@ -100,7 +100,7 @@
         };
 
         function viewAdmission(admissionId) {
-            $window.location.href = "/Admission/Edit/" + admissionId;
+            $window.location.href = "/Admission/View/" + admissionId;
         }
 
         function retrieveBatches(batchId) {

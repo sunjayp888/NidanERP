@@ -13,7 +13,7 @@ namespace Nidan.Entity
 
         public int RegistrationId { get; set; }
 
-        public int BatchId { get; set; }
+        public int? BatchId { get; set; }
 
         public int CentreId { get; set; }
 

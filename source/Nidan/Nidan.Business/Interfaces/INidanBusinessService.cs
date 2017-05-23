@@ -206,7 +206,7 @@ namespace Nidan.Business.Interfaces
         //RegistrationPaymentReceipt UpdateRegistrationPaymentReceipt(int organisationId, RegistrationPaymentReceipt registrationPaymentReceipt);
         Batch UpdateBatch(int organisationId, Batch batch);
         Batch UpdateBatch(int organisationId, Batch batch, BatchDay batchDays, List<int> trainerIds);
-        Admission UpdateAdmission(int organisationId, Admission admission);
+        Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission);
         Course UpdateCourse(int organisationId, Course course);
         CourseInstallment UpdateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
         Question UpdateQuestion(int organisationId, Question question);
