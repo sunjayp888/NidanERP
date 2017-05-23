@@ -29,6 +29,7 @@
         vm.saveFee = saveFee;
         vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
         vm.retrievePaymentModes = retrievePaymentModes;
+        vm.print = print;
         vm.initialise = initialise;
 
         function initialise(candidateInstallmentId) {
@@ -100,6 +101,10 @@
 
         function editCandidateFee(id) {
             $window.location.href = "/CandidateFee/Edit/" + id;
+        }
+
+        function print(id) {
+            $window.location.href = "/CandidateFee/Download/" + id;
         }
 
         function removeError() {

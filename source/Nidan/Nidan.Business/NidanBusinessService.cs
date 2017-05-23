@@ -788,7 +788,9 @@ namespace Nidan.Business
             var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 admission.Registration.CandidateInstallmentId, c => true);
             var feePaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
+
             var candidateBatch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
+
             // Update data in CandidateInstallment
             candidateInstallment.PaymentMethod = feePaymentMethod;
             candidateInstallment.NumberOfInstallment = feePaymentMethod ==
@@ -2448,29 +2450,32 @@ namespace Nidan.Business
         #endregion
 
         //Template
-        public byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId)
+        public byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int id)
         {
-            var registrationData = _nidanDataService.RetrieveRegistration(organisationId, registrationId,
+            var candidateFeeData = _nidanDataService.RetrieveCandidateFee(organisationId, id,
                 r => r.CentreId == centreId);
-            var registrationReciept = new RegistrationReciept()
+            var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
+            int value = candidateFeeData.FeeTypeId;
+            FeeType feeType = (FeeType) value;
+            var candidateFeeReceipt = new CandidateFeeReceipt()
             {
-                OrganisationName = registrationData.Organisation.Name,
-                EmailId = registrationData.Enquiry.EmailId,
-                PaymentDate = registrationData.CandidateFee.PaymentDate.Value.ToShortDateString(),
+                OrganisationName = candidateFeeData.Organisation.Name,
+                EmailId = enquiry.EmailId,
+                PaymentDate = candidateFeeData.PaymentDate.Value.ToShortDateString(),
                 CandidateAddress =
-                    string.Concat(registrationData.Enquiry.Address1, registrationData.Enquiry.Address2,
-                        registrationData.Enquiry.Address3, registrationData.Enquiry.Address4),
-                CandidateName = registrationData.Enquiry.FirstName + " " + registrationData.Enquiry.LastName,
-                CentreName = registrationData.Centre.Name,
-                CourseDuration = registrationData.CourseInstallment.Course.Duration.ToString(),
-                CourseName = registrationData.CourseInstallment.Course.Name,
-                InvoiceNumber = registrationData.RegistrationId.ToString(),
-                RecievedAmount = registrationData.CandidateFee.PaidAmount.ToString(),
-                MobileNumber = registrationData.Enquiry.Mobile.ToString(),
-                TotalCourseFee = registrationData.CandidateInstallment.CourseFee.ToString()
+                    string.Concat(enquiry.Address1, enquiry.Address2,enquiry.Address3, enquiry.Address4),
+                CandidateName = enquiry.FirstName + " " + enquiry.LastName,
+                CentreName = candidateFeeData.Centre.Name,
+                CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
+                CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
+                FeeTypeName = feeType.ToString(),
+                InvoiceNumber = candidateFeeData.CandidateFeeId.ToString(),
+                RecievedAmount = candidateFeeData.PaidAmount.ToString(),
+                MobileNumber = enquiry.Mobile.ToString(),
+                TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString()
 
             };
-            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(registrationReciept), "Registration");
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Registration");
         }
 
     }
