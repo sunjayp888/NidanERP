@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
+using Nidan.Business.Models;
 using Nidan.Extensions;
 using Nidan.Models;
 
@@ -113,8 +114,43 @@ namespace Nidan.Controllers
         public ActionResult StatisticsBarGraph()
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId));
-            return this.JsonNet(data);
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+           // var centre = NidanBusinessService.RetrieveCentres(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
+            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+            var endOfWeekDate = startOfWeekDate.AddDays(6);
+            var graphData = new List<Graph>();
+            var enquiries =
+                NidanBusinessService.RetrieveEnquiries(organisationId,
+                        e =>(isSuperAdmin||e.CentreId== centreId) && e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate)
+                    .ToList();
+            var mobilizations =
+                NidanBusinessService.RetrieveMobilizations(organisationId,
+                        e => (isSuperAdmin || e.CentreId == centreId) && e.CreatedDate >= startOfWeekDate && e.CreatedDate <= endOfWeekDate)
+                    .Items.ToList();
+            var registrations =
+                NidanBusinessService.RetrieveRegistrations(organisationId,
+                        e => (isSuperAdmin || e.CentreId == centreId) && e.RegistrationDate >= startOfWeekDate && e.RegistrationDate <= endOfWeekDate)
+                    .Items.ToList();
+            var admissions =
+                NidanBusinessService.RetrieveAdmissions(organisationId,
+                        e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionDate >= startOfWeekDate && e.AdmissionDate <= endOfWeekDate)
+                    .Items.ToList();
+
+            foreach (var date in endOfWeekDate.RangeFrom(startOfWeekDate))
+            {
+                graphData.Add(new Graph
+                {
+                    MobilizationCount = mobilizations.Count(e => e.CreatedDate.Date == date.Date && e.Close == "No"),
+                    AdmissionCount = admissions.Count(e => e.AdmissionDate.Date == date.Date),
+                    EnquiryCount = enquiries.Count(e => e.EnquiryDate.Date == date.Date && e.IsRegistrationDone == false),
+                    RegistrationCount = registrations.Count(e => e.RegistrationDate.Date == date && e.IsAdmissionDone == false),
+                    Date = date
+                });
+            }
+
+            //var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId));
+            return this.JsonNet(graphData);
         }
 
         [HttpPost]

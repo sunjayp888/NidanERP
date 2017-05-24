@@ -14,21 +14,19 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CandidateFeeId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        public DateTime PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
         public int? CandidateInstallmentId { get; set; }
 
         public decimal? PaidAmount { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PaymentModeId { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FeeTypeId { get; set; }
 
@@ -42,9 +40,7 @@ namespace Nidan.Entity
 
         public decimal? Penalty { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
-        public DateTime InstallmentDate { get; set; }
+        public DateTime? InstallmentDate { get; set; }
 
         [StringLength(50)]
         public string StudentCode { get; set; }
@@ -53,26 +49,32 @@ namespace Nidan.Entity
 
         public decimal? BalanceInstallmentAmount { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
+        public string Particulars { get; set; }
+
         [StringLength(50)]
         public string FiscalYear { get; set; }
 
+        public DateTime? FollowUpDate { get; set; }
+
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        public string Particulars { get; set; }
+        [Key]
+        [Column(Order = 5)]
+        public bool IsPaymentDone { get; set; }
+
+        public int? PersonnelId { get; set; }
 
         [Key]
-        [Column(Order = 8)]
-        [StringLength(300)]
+        [Column(Order = 6)]
+        [StringLength(350)]
         public string SearchField { get; set; }
     }
 }

@@ -327,15 +327,18 @@
                             </div>
                         </div>
                         @*@Html.Partial("_Admission", Model)*@
-                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
+                    <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
+                        @if (Model.Admission.BatchId == null)
+                        {
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <a href="@Url.Action("AssignBatch", "Admission", new { id = Model.Admission.AdmissionId })" class="btn btn-success" role="button">
+                                    <a href="@Url.Action("AssignBatch", "Admission", new {id = Model.Admission.AdmissionId})" class="btn btn-success" role="button">
                                         Assign Batch
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        }
+                    </div>
                     </div>
                 }
             </div>
@@ -445,7 +448,7 @@
                             $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
                             $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
                             $("#txtBatchMonth").val(result.Month);
-                            $("#txtBatchStartDate").val(result.BatchStartDate);
+                            $("#txtBatchStartDate").val(result.BatchStartDate.toLocaleString('dd-mm-yyyy'));
                             $("#txtBatchEndDate").val(result.BatchEndDate);
                             $("#txtBatchAssessmentDate").val(result.AssessmentDate);
                             $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);

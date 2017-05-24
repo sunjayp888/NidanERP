@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="AbsenceType.cs" />
     <Compile Include="Admission.cs" />
+    <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
     <Compile Include="Batch.cs" />
     <Compile Include="BatchDay.cs" />

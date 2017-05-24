@@ -70,7 +70,7 @@ namespace Nidan.Controllers
                 candidateFee.CentreId = UserCentreId;
                 candidateFeeData.PaymentDate = DateTime.UtcNow;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
-                candidateFeeData.FiscalYear =DateTime.UtcNow.FiscalYear();
+                candidateFeeData.FiscalYear = DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
                 candidateFeeData.BankName = candidateFee.BankName;
                 candidateFeeData.ChequeDate = candidateFee.ChequeDate;
@@ -79,7 +79,7 @@ namespace Nidan.Controllers
                 candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
                 candidateFeeData.PersonnelId = UserPersonnelId;
                 candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
-               // RedirectToAction("Detail", new { id = candidateFeeData.CandidateInstallmentId });
+                // RedirectToAction("Detail", new { id = candidateFeeData.CandidateInstallmentId });
                 return this.JsonNet(true);
             }
             catch (Exception e)
@@ -104,7 +104,7 @@ namespace Nidan.Controllers
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).FirstOrDefault();
             var candidateFeeModel = new CandidateFeeViewModel
             {
-                CandidateName = String.Format("{0} {1} {2} {3}",enquiry?.Title,enquiry?.FirstName,enquiry?.MiddleName,enquiry?.LastName),
+                CandidateName = String.Format("{0} {1} {2} {3}", enquiry?.Title, enquiry?.FirstName, enquiry?.MiddleName, enquiry?.LastName),
                 CandidateInstallmentId = id.Value
             };
             return View(candidateFeeModel);
@@ -124,7 +124,8 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            return this.JsonNet(NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
+            var data = NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
@@ -139,7 +140,7 @@ namespace Nidan.Controllers
             var feeTypeId = NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value).FeeTypeId;
             FeeType feeType = (FeeType)feeTypeId;
             var data = NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, UserCentreId, id.Value);
-            return File(data, ".pdf", feeType.ToString()+".pdf");
+            return File(data, ".pdf", feeType.ToString() + ".pdf");
         }
     }
 }
