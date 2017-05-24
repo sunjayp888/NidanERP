@@ -23,6 +23,10 @@
         vm.searchMessage = "";
         vm.courses = [];
         vm.retrieveCourses = retrieveCourses;
+        vm.disticts = [];
+        vm.retrieveDistricts = retrieveDistricts;
+        vm.talukas = [];
+        vm.retrieveTalukas = retrieveTalukas;
         vm.deleteSubjectTrainer = deleteSubjectTrainer;
         vm.deleteBatchTrainer = deleteBatchTrainer;
         initialise();
@@ -76,6 +80,18 @@
         function viewTrainer(trainerId) {
             $window.location.href = "/Trainer/Edit/" + trainerId;
         }
+
+        function retrieveDistricts(stateId) {
+            return TrainerService.retrieveDistricts(stateId).then(function () {
+                vm.disticts = response.data;
+            });
+        };
+
+        function retrieveTalukas(districtId) {
+            return TrainerService.retrieveTalukas(districtId).then(function () {
+                vm.talukas = response.data;
+            });
+        };
 
         function retrieveCourses(sectorId) {
             return TrainerService.retrieveCourses(sectorId).then(function () {

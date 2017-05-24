@@ -610,6 +610,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
                     .Include(p => p.Qualification)
+                    .Include(p=>p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -664,6 +665,7 @@ namespace Nidan.Data
                 return context
                     .Enquiries
                     .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
                     .Include(p => p.EnquiryCourses)
                     .Include(p => p.Qualification)
                     .Include(p => p.Religion)
@@ -725,7 +727,10 @@ namespace Nidan.Data
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry.Course)
+                    .Include(p => p.Registration.Course)
                     .Include(p => p.Course)
+                    .Include(p=> p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -768,7 +773,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<MobilizationSearchField>("SearchMobilization @SearchKeyword", category).ToList();
 
-                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e=>e.MobilizationType);
+                var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e=>e.MobilizationType).Include(e=>e.Centre);
 
                 var data = searchData.Join(mobilizations, e => e.MobilizationId, m => m.MobilizationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -907,6 +912,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
                     .Include(p => p.Course)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1107,6 +1113,7 @@ namespace Nidan.Data
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.CandidateInstallment)
                     .Include(p => p.CandidateInstallment.CandidateFees)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1349,6 +1356,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Sector)
                     .Include(p => p.Course)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1767,6 +1775,7 @@ namespace Nidan.Data
                 return context
                     .Admissions
                     .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
                     .Include(p => p.Registration)
                     .Include(p => p.Batch)
                     .Include(p => p.Registration.Enquiry)

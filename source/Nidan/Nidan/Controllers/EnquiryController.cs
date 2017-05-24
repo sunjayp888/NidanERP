@@ -38,8 +38,8 @@ namespace Nidan.Controllers
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var followUp = NidanBusinessService.RetrieveFollowUps(organisationId, e => e.MobilizationId == (id.Value == 0 ? -1 : id.Value)).Items.FirstOrDefault();
             var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e=>e.CentreId==centreId);
-            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId,centreId, e => true);
-            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => true);
+            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId,centreId, e => e.CentreId == centreId);
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
@@ -146,9 +146,9 @@ namespace Nidan.Controllers
             //var areaOfInterests = NidanBusinessService.RetrieveAreaOfInterests(organisationId, e => true);
             var howDidYouKnowAbouts = NidanBusinessService.RetrieveHowDidYouKnowAbouts(organisationId, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
-            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => true);
-            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId, centreId, e => true);
-            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e=>true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => e.CentreId == centreId);
+            var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId, centreId, e => e.CentreId == centreId);
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e=> e.CentreId == centreId);
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
@@ -219,7 +219,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.IsAdmissionDone==false, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.IsAdmissionDone==false && e.IsRegistrationDone==false, orderBy, paging));
         }
 
         [HttpPost]

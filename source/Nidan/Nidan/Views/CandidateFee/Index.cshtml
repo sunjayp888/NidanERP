@@ -24,22 +24,22 @@
     @if (User.IsInAnyRoles("Admin"))
     {
         @*<div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "CandidateFee")">
-                    <i class="fa fa-user"></i> Create
-                </a>
-            </div>
-        </div>*@
+                <div class="col-xs-12">
+                    <a class="btn btn-app" href="@Url.Action("Create", "CandidateFee")">
+                        <i class="fa fa-user"></i> Create
+                    </a>
+                </div>
+            </div>*@
     }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 @*<div class="x_title">
-                    <h2>
-                        Candidate Fees Details<small></small>
-                    </h2>
-                    <div class="clearfix"></div>
-                </div>*@
+                        <h2>
+                            Candidate Fees Details<small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -68,7 +68,10 @@
                                             <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
                                             <td><span ng-bind="registration.CandidateInstallment.CourseFee"></span></td>
                                             <td><span ng-bind="registration.CandidateFee.PaidAmount"></span></td>
-                                            <td><span ng-bind="registration.CandidateFee.Particulars"></span></td>
+                                            <td>
+                                                <button ng-if="registration.CandidateFee.Particulars==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                                <span ng-if="registration.CandidateFee.Particulars!=0.00" ng-bind="registration.CandidateFee.Particulars"></span>
+                                            </td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -76,13 +79,13 @@
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
                                                         @if (User.IsInAnyRoles("Admin"))
-                                                {
+                                                        {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/CandidateFee/Detail/{{registration.CandidateInstallmentId}}">
                                                                     Fee Detail
                                                                 </a>
                                                             </li>
-                                                }
+                                                        }
                                                     </ul>
                                                 </div>
                                             </td>
@@ -106,7 +109,7 @@
 @section scripts
 {
     <script>
-       
+
         //$(document).ready(function () {
         //    var sum = 0;
         //    var quantity = 0;
@@ -118,7 +121,7 @@
 
         //    $('#balance').html(sum);
         //});
-</script>
+    </script>
 }
 
 

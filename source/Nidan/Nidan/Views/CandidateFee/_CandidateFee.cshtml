@@ -24,7 +24,8 @@
                             <div class="row">
                                 <label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select id="dropDownPaymentMode" ng-model="model.paymentModeId" class="form-control col-md-7 col-xs-12">
+                                    <select id="dropDownPaymentMode" class="form-control col-md-7 col-xs-12">
+                                        <option>Select Payment Mode</option>
                                         <option data-ng-repeat="t in model.paymentModes" ng-model="model.paymentModeId" value="{{t.PaymentModeId}}">{{t.Name}}</option>
                                     </select>
                                 </div>
@@ -61,7 +62,7 @@
                                     <div class="control-label col-md-14 col-sm-14 col-xs-12">
                                         <div class="pull-right col-md-12">
                                             <div class="col-md-9">
-                                                <button type="button" id="btnSaveCandidateFee" ng-click="model.saveFee()" class="btn btn-success"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                                                <button type="button" id="btnSaveCandidateFee" ng-click="model.saveFee()" class="btn btn-success" disabled="disabled"><i class="fa fa-credit-card"></i> Submit Payment</button>
                                             </div>
                                             <div class="pull-right col-md-3">
                                                 <button type="button" id="btnCancel" class="btn btn-info" data-dismiss="modal">Cancel</button>

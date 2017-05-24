@@ -83,5 +83,7 @@ namespace Nidan.Entity
         public virtual Personnel Personnel { get; set; }
 
         public virtual Event Event { get; set; }
+
+        public virtual Centre Centre { get; set; }
     }
 }

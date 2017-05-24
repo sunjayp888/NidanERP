@@ -233,12 +233,17 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveTrainers(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
         }
 
-        //[HttpPost]
-        //public ActionResult GetCourse(int sectorId)
-        //{
-        //    var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
-        //    return this.JsonNet(data);
-        //}
+        [HttpPost]
+        public ActionResult GetTaluka(int districtId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult GetDistrict(int stateId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList());
+        }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)

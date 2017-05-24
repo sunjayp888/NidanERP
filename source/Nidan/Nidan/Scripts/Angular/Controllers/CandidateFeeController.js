@@ -121,7 +121,7 @@
                     $("#dropDownPaymentMode").filter(function() {
                         return !this.value || $.trim(this.value).length == 0;
                     });
-                    $("#dropDownPaymentMode").val(1);
+                    $("#dropDownPaymentMode").val();
                     $("#labelChequeNumber").hide();
                     $("#labelChequeDate").hide();
                     $("#labelBankName").hide();

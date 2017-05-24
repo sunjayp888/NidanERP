@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Enum;
+using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -69,7 +70,7 @@ namespace Nidan.Controllers
                 candidateFee.CentreId = UserCentreId;
                 candidateFeeData.PaymentDate = DateTime.UtcNow;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
-                candidateFeeData.FiscalYear = "2017-18";
+                candidateFeeData.FiscalYear =DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
                 candidateFeeData.BankName = candidateFee.BankName;
                 candidateFeeData.ChequeDate = candidateFee.ChequeDate;
@@ -78,6 +79,7 @@ namespace Nidan.Controllers
                 candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
                 candidateFeeData.PersonnelId = UserPersonnelId;
                 candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
+               // RedirectToAction("Detail", new { id = candidateFeeData.CandidateInstallmentId });
                 return this.JsonNet(true);
             }
             catch (Exception e)

@@ -1558,6 +1558,7 @@
     <Content Include="Views\Counselling\Create.cshtml" />
     <Content Include="Views\Admission\View.cshtml" />
     <Content Include="Views\Admission\AssignBatch.cshtml" />
+    <Content Include="Views\FollowUp\_FollowUpHistory.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
