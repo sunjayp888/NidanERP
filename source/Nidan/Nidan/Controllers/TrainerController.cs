@@ -86,6 +86,7 @@ namespace Nidan.Controllers
             {
                 trainerViewModel.Trainer.OrganisationId = UserOrganisationId;
                 trainerViewModel.Trainer.CentreId = UserCentreId;
+                trainerViewModel.Trainer.EmailId = trainerViewModel.Trainer.EmailId.ToLower();
                 trainerViewModel.Trainer = NidanBusinessService.CreatetTrainer(UserOrganisationId, trainerViewModel.Trainer);
                 var personnel = new Personnel()
                 {
@@ -172,6 +173,7 @@ namespace Nidan.Controllers
             {
                 trainerViewModel.Trainer.OrganisationId = UserOrganisationId;
                 trainerViewModel.Trainer.CentreId = UserCentreId;
+                trainerViewModel.Trainer.EmailId = trainerViewModel.Trainer.EmailId.ToLower();
                 trainerViewModel.Trainer = NidanBusinessService.UpdateTrainer(UserOrganisationId, trainerViewModel.Trainer);
                 return RedirectToAction("Index");
             }

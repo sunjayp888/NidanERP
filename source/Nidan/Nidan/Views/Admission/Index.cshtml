@@ -110,7 +110,7 @@
                                         {
                                             <td><span ng-bind="admission.Centre.Name"></span></td>
                                         }
-                                        <td><span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
+                                        <td><span ng-bind="admission.Registration.Enquiry.Title"></span> <span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
                                         <td>
                                             <span ng-bind="admission.Batch.Name"></span>
                                             <button ng-if="admission.BatchId==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
@@ -118,6 +118,10 @@
                                         <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span>.00</td>
                                         <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span>.00</td>
                                         <td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>
+                                        <td>
+                                            <button ng-if="admission.Registration.CandidateFee.Particulars==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                            <span ng-if="admission.Registration.CandidateFee.Particulars!=0.00" ng-bind="admission.Registration.CandidateFee.Particulars"></span>
+                                        </td>
                                         <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">

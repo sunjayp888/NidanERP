@@ -4,30 +4,6 @@
     ViewBag.Title = "Home";
 }
 
-
-@*<div class="row top_tiles">*@
-@*<a href='@Url.Action("Index","FollowUp",new {followUpType="Enquiry"})'>
-    <a href='@Url.Action("Index","FollowUp")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-calendar-check-o"></i>
-                    </div>
-                    <div class="count">@Model.FollowUpCount</div>
-                    <h3>Follow Ups</h3>
-                    <p>follow up for Enquiry and Mobilization</p>
-                </div>
-            </div>
-        </a>*@
-@*<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-        <div class="tile-stats">
-            <div class="icon"><i class="fa fa-tachometer"></i>
-            </div>
-            <div class="count">3</div>
-            <h3>Bradford Factor</h3>
-            <p>Warnings.</p>
-        </div>
-    </div>*@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -41,7 +17,7 @@
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon">
-                            <i class="fa fa-paper-plane"></i>
+                            <i class="fa fa-users"></i>
                         </div>
                         <div class="count">@Model.MobilizationCount</div>
                         <h3>Mobilization</h3>
@@ -53,7 +29,7 @@
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon">
-                            <i class="fa fa-paper-plane"></i>
+                            <i class="fa fa-clipboard"></i>
                         </div>
                         <div class="count">@Model.EnquiryCount</div>
                         <h3>Enquiry</h3>
@@ -77,7 +53,7 @@
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon">
-                            <i class="fa fa-smile-o"></i>
+                            <i class="fa fa-institution"></i>
                         </div>
                         <div class="count">@Model.AdmissionCount</div>
                         <h3>Admission</h3>
@@ -104,6 +80,7 @@
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                     <select id="pieCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.retrieveStatisticsByCentre(model.centreId)">
+                                        <option>Select Centre</option>
                                         <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
                                     </select>
                                 </div>

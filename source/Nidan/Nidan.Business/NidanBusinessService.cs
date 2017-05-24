@@ -765,6 +765,7 @@ namespace Nidan.Business
                 followup.FollowUpType = "Admission";
                 followup.Close = "Yes";
                 followup.ClosingRemark = "Admission Done";
+                followup.AdmissionId = admissionData.AdmissionId;
                 var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
                 var followUpHistory = new FollowUpHistory
                 {

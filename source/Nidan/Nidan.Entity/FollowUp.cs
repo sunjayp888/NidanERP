@@ -74,6 +74,8 @@ namespace Nidan.Entity
 
         public virtual Centre Centre { get; set; }
 
+        public int? AdmissionId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUpHistory> FollowUpHistories { get; set; }
     }

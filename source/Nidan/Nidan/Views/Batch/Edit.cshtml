@@ -107,15 +107,6 @@
         //=======================================================================Do not allow decimal
         $(document)
             .ready(function() {
-                /* Allow digits only */
-                $(".batchStartTime") &&
-                    $(".Batch_NumberOfHoursDaily")
-                    .keypress(function(e) {
-                        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                            $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
-                            return false;
-                        }
-                    });
                 /* Do not allow paste */
                 $('.batchStartTime')
                     .bind("paste",
@@ -127,6 +118,14 @@
         //========================================================================= do not allow 0 in numberofhoursdaily
 
         $("#Batch_NumberOfHoursDaily")
+            .on("keypress keyup",
+                function() {
+                    if ($(this).val() == '0') {
+                        $(this).val('');
+                    }
+                });
+
+        $("#Batch_BatchStartTimeHours")
             .on("keypress keyup",
                 function() {
                     if ($(this).val() == '0') {
@@ -212,6 +211,7 @@
             }
             //document.getElementById('Batch_BatchEndTimeMinutes').value = startMinutr;
         }
+
         //=============================================================================== on num of daily hours change month and installment
         $('#Batch_NumberOfHoursDaily')
             .keyup(function() {
@@ -219,8 +219,7 @@
                 getendtime();
                 checkboxes();
             });
-       
-       
+
 
         //==================================================================== Calculation Of Month add holiday count
 
@@ -229,8 +228,7 @@
 
             if (checkboxlength == 0) {
                 alert("Please Select Atleast Any One Day");
-            }
-            else if (checkboxlength > 0) {
+            } else if (checkboxlength > 0) {
                 var courseDuration = $("#Course_Duration").val();
                 var hours = $("#Batch_NumberOfHoursDaily").val();
                 var checkboxcount = $("[type='checkbox']:checked").length - 1;
@@ -522,14 +520,15 @@
             .ready(function() {
                 var numofinstallment = $("#Batch_NumberOfInstallment").val();
 
-                    $("#Batch_NumberOfInstallment").keyup(function () {
+                $("#Batch_NumberOfInstallment")
+                    .keyup(function() {
                         var noofinstallmentvalue = numofinstallment;
                         var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
                         if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
                             alert("You can Not allow Greater Than " + noofinstallmentvalue + " Number");
                             $(this).val("");
                         }
-                        
+
                     });
             });
 
@@ -665,12 +664,13 @@
                     $('.eleventh-installment-textbox').show();
                     $('.twelveth-installment-textbox').show();
                 }
-                
+
 
             });
 
-        $("#Batch_BatchStartTimeMinutes").keyup(function () {
-            var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
-            $("#Batch_BatchEndTimeMinutes").val(startimeminute);
-        });
+        $("#Batch_BatchStartTimeMinutes")
+            .keyup(function() {
+                var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
+                $("#Batch_BatchEndTimeMinutes").val(startimeminute);
+            });
     </script>}

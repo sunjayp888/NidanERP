@@ -108,6 +108,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
+                enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
                 enquiryViewModel.Enquiry = NidanBusinessService.CreateEnquiry(organisationId, UserPersonnelId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
                 //return RedirectToAction("Index");
                 return RedirectToAction("Index");
@@ -196,6 +197,7 @@ namespace Nidan.Controllers
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
                 enquiryViewModel.Enquiry.Close = "No";
+                enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(organisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
             }
             return RedirectToAction("Index");
