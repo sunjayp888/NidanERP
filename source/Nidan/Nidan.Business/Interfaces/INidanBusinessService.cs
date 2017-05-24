@@ -184,9 +184,9 @@ namespace Nidan.Business.Interfaces
         List<Sector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
-        List<Graph> RetrievePieGraphStatistics(int organisationId);
+        List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         Registration CreateCandidateRegistration(int organisationId, int centreId,int personnelId, string studentCode, Registration registration);
-        List<Graph> RetrieveBarGraphStatistics(int organisationId);
+        List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
         PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate);

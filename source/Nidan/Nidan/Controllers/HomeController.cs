@@ -26,7 +26,7 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
+           // var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
@@ -80,7 +80,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Statistics()
         {
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId,e=>(isSuperAdmin || e.CentreId==UserCentreId));
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
@@ -95,7 +96,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult StatisticsByCentre(int? id)
         {
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id).ToList();
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId)).Where(e => e.CentreId == id).ToList();
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
@@ -110,14 +112,16 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult StatisticsBarGraph()
         {
-            var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId));
             return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult StatisticsBarGraphByCentre(int? id)
         {
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId).Where(e => e.CentreId == id);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveBarGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId)).Where(e => e.CentreId == id);
             return this.JsonNet(data);
         }
 

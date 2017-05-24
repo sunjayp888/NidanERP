@@ -751,7 +751,7 @@ namespace Nidan.Business
                 registration.IsAdmissionDone = true;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
             }
-            
+
             // EnquiryStatus Update
             enquiryData.Close = "Yes";
             enquiryData.ClosingRemark = "Admission Done";
@@ -920,6 +920,7 @@ namespace Nidan.Business
             var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
             if (followUp != null)
             {
+                followUp.IntrestedCourseId = data.CourseId;
                 followUp.RegistrationId = data.RegistrationId;
                 followUp.FollowUpType = "Registration";
                 followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
@@ -1401,7 +1402,7 @@ namespace Nidan.Business
 
         public List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
-            return _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
+            return _nidanDataService.RetrieveCentres(organisationId, predicate).Items.ToList();
         }
 
         public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword,
@@ -1765,9 +1766,9 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
         }
 
-        public List<Graph> RetrievePieGraphStatistics(int organisationId)
+        public List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
-            var centre = RetrieveCentres(organisationId, e => true).ToList();
+            var centre = RetrieveCentres(organisationId, predicate).ToList();
             var graphData = new List<Graph>();
             foreach (var item in centre)
             {
@@ -1785,23 +1786,32 @@ namespace Nidan.Business
             return graphData;
         }
 
-        public List<Graph> RetrieveBarGraphStatistics(int organisationId)
+        public List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
+            var centre = RetrieveCentres(organisationId, predicate).ToList();
             var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
+            var graphData = new List<Graph>();
+            //foreach (var item in centre)
+            //{
+
+            //}
             var enquiries =
-                RetrieveEnquiries(organisationId,
-                    e => e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate).ToList();
+                   RetrieveEnquiries(organisationId,
+                           e => e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate)
+                       .ToList();
             var mobilizations =
                 RetrieveMobilizations(organisationId,
-                    e => e.CreatedDate >= startOfWeekDate && e.CreatedDate <= endOfWeekDate).Items.ToList();
+                        e => e.CreatedDate >= startOfWeekDate && e.CreatedDate <= endOfWeekDate)
+                    .Items.ToList();
             var registrations =
                 RetrieveRegistrations(organisationId,
-                    e => e.RegistrationDate >= startOfWeekDate && e.RegistrationDate <= endOfWeekDate).Items.ToList();
+                        e => e.RegistrationDate >= startOfWeekDate && e.RegistrationDate <= endOfWeekDate)
+                    .Items.ToList();
             var admissions =
                 RetrieveAdmissions(organisationId,
-                    e => e.AdmissionDate >= startOfWeekDate && e.AdmissionDate <= endOfWeekDate).Items.ToList();
-            var graphData = new List<Graph>();
+                        e => e.AdmissionDate >= startOfWeekDate && e.AdmissionDate <= endOfWeekDate)
+                    .Items.ToList();
 
             foreach (var date in endOfWeekDate.RangeFrom(startOfWeekDate))
             {
@@ -1814,6 +1824,7 @@ namespace Nidan.Business
                     Date = date
                 });
             }
+
             return graphData;
         }
 
@@ -2317,11 +2328,13 @@ namespace Nidan.Business
 
         public Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission)
         {
-            var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
-            admission.Registration = registrationData;
-
-            CreateCandidateFee(organisationId, centreId, personnelId, admission);
-            admission.Registration = null;
+            if (admission.BatchId != null)
+            {
+                var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
+                admission.Registration = registrationData;
+                CreateCandidateFee(organisationId, centreId, personnelId, admission);
+                admission.Registration = null;
+            }
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 
@@ -2473,14 +2486,14 @@ namespace Nidan.Business
                 r => r.CentreId == centreId);
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
             int value = candidateFeeData.FeeTypeId;
-            FeeType feeType = (FeeType) value;
+            FeeType feeType = (FeeType)value;
             var candidateFeeReceipt = new CandidateFeeReceipt()
             {
                 OrganisationName = candidateFeeData.Organisation.Name,
                 EmailId = enquiry.EmailId,
                 PaymentDate = candidateFeeData.PaymentDate.Value.ToShortDateString(),
                 CandidateAddress =
-                    string.Concat(enquiry.Address1, enquiry.Address2,enquiry.Address3, enquiry.Address4),
+                    string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.FirstName + " " + enquiry.LastName,
                 CentreName = candidateFeeData.Centre.Name,
                 CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),

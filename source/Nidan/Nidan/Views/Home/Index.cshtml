@@ -1,88 +1,104 @@
-﻿@model Nidan.Models.HomeViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.HomeViewModel
 @{
     ViewBag.Title = "Home";
 }
 
 
-    <div class="row top_tiles">
-        <a href='@Url.Action("Index","FollowUp",new {followUpType="Enquiry"})'>
-        @*<a href='@Url.Action("Index","FollowUp")'>
+@*<div class="row top_tiles">*@
+@*<a href='@Url.Action("Index","FollowUp",new {followUpType="Enquiry"})'>
+    <a href='@Url.Action("Index","FollowUp")'>
+            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon">
+                        <i class="fa fa-calendar-check-o"></i>
+                    </div>
+                    <div class="count">@Model.FollowUpCount</div>
+                    <h3>Follow Ups</h3>
+                    <p>follow up for Enquiry and Mobilization</p>
+                </div>
+            </div>
+        </a>*@
+@*<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="tile-stats">
+            <div class="icon"><i class="fa fa-tachometer"></i>
+            </div>
+            <div class="count">3</div>
+            <h3>Bradford Factor</h3>
+            <p>Warnings.</p>
+        </div>
+    </div>*@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Today's Count<small></small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <a href='@Url.Action("Index","Mobilization")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="tile-stats">
                         <div class="icon">
-                            <i class="fa fa-calendar-check-o"></i>
+                            <i class="fa fa-paper-plane"></i>
                         </div>
-                        <div class="count">@Model.FollowUpCount</div>
-                        <h3>Follow Ups</h3>
-                        <p>follow up for Enquiry and Mobilization</p>
+                        <div class="count">@Model.MobilizationCount</div>
+                        <h3>Mobilization</h3>
+                        <p>Today's Mobilization Count</p>
                     </div>
                 </div>
-            </a>*@
-        @*<div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon"><i class="fa fa-tachometer"></i>
+            </a>
+            <a href='@Url.Action("Index","Enquiry")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-paper-plane"></i>
+                        </div>
+                        <div class="count">@Model.EnquiryCount</div>
+                        <h3>Enquiry</h3>
+                        <p>Today's Enquiry Count</p>
                     </div>
-                    <div class="count">3</div>
-                    <h3>Bradford Factor</h3>
-                    <p>Warnings.</p>
                 </div>
-            </div>*@
-        <a href='@Url.Action("Index","Mobilization")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-paper-plane"></i>
+            </a>
+            <a href='@Url.Action("Index","Registration")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="count">@Model.RegistraionCount</div>
+                        <h3>Registration</h3>
+                        <p>Today's Registration Count</p>
                     </div>
-                    <div class="count">@Model.MobilizationCount</div>
-                    <h3>Mobilization</h3>
-                    <p>Today's Mobilization Count</p>
                 </div>
-            </div>
-        </a>
-        <a href='@Url.Action("Index","Enquiry")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-paper-plane"></i>
+            </a>
+            <a href='@Url.Action("Index","Admission")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-smile-o"></i>
+                        </div>
+                        <div class="count">@Model.AdmissionCount</div>
+                        <h3>Admission</h3>
+                        <p>Today's Admission Count</p>
                     </div>
-                    <div class="count">@Model.EnquiryCount</div>
-                    <h3>Enquiry</h3>
-                    <p>Today's Enquiry Count</p>
                 </div>
-            </div>
-        </a>
-        <a href='@Url.Action("Index","Registration")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-paper-plane"></i>
-                    </div>
-                    <div class="count">@Model.RegistraionCount</div>
-                    <h3>Registration</h3>
-                    <p>Today's Registration Count</p>
-                </div>
-            </div>
-        </a>
-        <a href='@Url.Action("Index","Admission")'>
-            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                    <div class="icon">
-                        <i class="fa fa-paper-plane"></i>
-                    </div>
-                    <div class="count">@Model.AdmissionCount</div>
-                    <h3>Admission</h3>
-                    <p>Today's Admission Count</p>
-                </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
-    <!-- pie chart -->
-    <div class="row">
-        <div ng-controller="HomeController as model">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Mobilization<small>Till date</small>  <small><b>Select Centre</b></small></h2>
+</div>
+
+@*</div>*@
+<!-- pie chart -->
+<div class="row">
+    <div ng-controller="HomeController as model">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Mobilization<small>Till date</small>  <small><b>Select Centre</b></small></h2>
+                    @if (User.IsInAnyRoles("SuperAdmin"))
+                    {
                         <div id="pie" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
@@ -93,24 +109,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content2">
-                        <div id="graph_donut" style="width:100%; height:300px;"></div>
-                        <div  ng-show="model.NoRecord" class="alert alert-danger alert-dismissible fade in" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong>No Data Found.</strong>
-                        </div>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content2">
+                    <div id="graph_donut" style="width:100%; height:300px;"></div>
+                    <div ng-show="model.NoRecord" class="alert alert-danger alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>No Data Found.</strong>
                     </div>
                 </div>
             </div>
-            <!-- bar charts group -->
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Bar Chart Group <small>Sessions</small>  <small><b>Select Centre</b></small></h2>
+        </div>
+        <!-- bar charts group -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Bar Chart Group <small>Sessions</small>  <small><b>Select Centre</b></small></h2>
+                    @if (User.IsInAnyRoles("SuperAdmin"))
+                    {
                         <div id="bar" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
@@ -121,13 +140,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content1">
-                        <div id="graph_bar_group" style="width:100%; height:300px;"></div>
-                       
-                    </div>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content1">
+                    <div id="graph_bar_group" style="width:100%; height:300px;"></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
