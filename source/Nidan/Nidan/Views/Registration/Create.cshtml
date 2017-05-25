@@ -409,6 +409,7 @@
                     $("#downPaymentDiv").hide();
                 }
             });
+
         function GetCourseInstallmentsByCourseId(courseId) {
             $.ajax({
                 url: '/Registration/GetCourseInstallmentByCourseId',
@@ -433,6 +434,7 @@
                 processData: false
             });
         }
+
         function GetCourseInstallment(courseInstallmentId) {
             $.ajax({
                 url: '/Registration/GetCourseInstallment',

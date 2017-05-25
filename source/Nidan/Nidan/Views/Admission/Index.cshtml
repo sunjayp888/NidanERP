@@ -105,44 +105,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                    <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <td><span ng-bind="admission.Centre.Name"></span></td>
-                                        }
-                                        <td><span ng-bind="admission.Registration.Enquiry.Title"></span> <span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
-                                        <td>
-                                            <span ng-bind="admission.Batch.Name"></span>
-                                            <button ng-if="admission.BatchId==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
-                                        </td>
-                                        <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span>.00</td>
-                                        <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span>.00</td>
-                                        <td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>
-                                        <td>
-                                            <button ng-if="admission.Registration.CandidateFee.Particulars==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
-                                            <span ng-if="admission.Registration.CandidateFee.Particulars!=0.00" ng-bind="admission.Registration.CandidateFee.Particulars"></span>
-                                        </td>
-                                        <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
-                                                    {
-                                                        @*<li>
-                                                            <a style="cursor: pointer;" ng-href="/Admission/Edit/{{admission.AdmissionId}}">
-                                                                Edit
-                                                            </a>
-                                                        </li>*@
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Admission/View/{{admission.AdmissionId}}">
-                                                                View
-                                                            </a>
-                                                        </li>
-
                                         <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {

@@ -48,8 +48,8 @@
     </style>
 </head>
 <body>
-<br/>
-<br/>
+    <br />
+    <br />
     <!-- Pay Statement Header -->
     <table border="0" width="100%">
         <tr>
@@ -57,13 +57,12 @@
                 <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
             </td>
             <td class="CenterText TopText" width="50%">
-				<h1>@Model.OrganisationName</h1>
-				<h3>@Model.CentreAddress</h3>
-                <h3>Invoice</h3>
-                <b>Invoiced by @Model.CentreName</b>
+                <h1>@Model.OrganisationName</h1>
+                <h3>@Model.CentreAddress</h3>
+                <h3>Receipt</h3>
+                <b>Receipt by @Model.CentreName</b>
             </td>
-            <td class="TopText RightText" width="25%">                
-            </td>
+            <td class="TopText RightText" width="25%"></td>
         </tr>
     </table>
     <br />
@@ -99,7 +98,7 @@
     <div class="PayslipBox">
         <table border="0">
             <tr>
-                 <td><b>Fee Type :</b></td>
+                <td><b>Fee Type :</b></td>
                 <td>@Model.FeeTypeName</td>
                 <td></td>
             </tr>
@@ -109,7 +108,7 @@
             </tr>
             <tr>
                 <td>Course Duration :</td>
-                <td>@Model.CourseDuration<h3>hrs</h3></td>
+                <td>@Model.CourseDuration Hours.</td>
             </tr>
             <tr>
                 <td>
@@ -122,17 +121,17 @@
             </tr>
             <tr>
                 <td>
-                    Payment Date : @Model.PaymentDate
+                    Receipt Date : @Model.PaymentDate
                 </td>
                 <td>
-                    Invoice No. : @Model.InvoiceNumber
+                    Receipt No. : @Model.InvoiceNumber
                 </td>
                 <td></td>
             </tr>
         </table>
     </div>
     <div class="PayslipBox">
-        <p><b>Please Note: Registration is valid upto 30 days and registration amount is not refundable in any circumstances</b></p>
+        <p><b>Please Note: If any student discontinued the course for any reason, course fee paid by student will not be refundable in any circumstances.</b></p>
         <table border="0">
             <tr>
                 <td>&nbsp;</td>

@@ -30,6 +30,7 @@
                                         <th>ChequeDate</th>
                                         <th>Cheque Number</th>
                                         <th>Payment Mode</th>
+                                        <th>Installment Date</th>
                                         <th>Payment Date</th>
                                         <th>Amount</th>
                                         <th>Payment Status</th>
@@ -51,6 +52,7 @@
                                             <span ng-if="candidateFee.PaymentModeId==2 && candidateFee.IsPaymentDone">Cheque</span>
                                             <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span>
                                         </td>
+                                        <td><span ng-bind="candidateFee.InstallmentDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
                                         <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind="candidateFee.InstallmentAmount"></span></td>
                                         <td class="col-lg-1">

@@ -43,6 +43,8 @@ namespace Nidan.Entity
         [StringLength(50)]
         public string StudentCode { get; set; }
 
+        public int? InstallmentNumber { get; set; }
+
         public decimal? InstallmentAmount { get; set; }
 
         public decimal? BalanceInstallmentAmount { get; set; }
