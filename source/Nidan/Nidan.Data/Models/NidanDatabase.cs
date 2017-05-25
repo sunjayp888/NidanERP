@@ -89,6 +89,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<FollowUpHistory> FollowUpHistories { get; set; }
         public virtual DbSet<FollowUpSearchField> FollowUpSearchFields { get; set; }
         public virtual DbSet<RegistrationSearchField> RegistrationSearchFields { get; set; }
+        public virtual DbSet<AdmissionSearchField> AdmissionSearchFields { get; set; }
+        public virtual DbSet<CandidateFeeSearchField> CandidateFeeSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1308,6 +1310,34 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<RegistrationSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.FiscalYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 

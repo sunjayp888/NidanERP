@@ -1304,6 +1304,7 @@ namespace Nidan.Data
                     .Batches
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.Centre)
                     .Include(p => p.BatchTrainers)
                     .Include(p => p.Room)
                     .AsNoTracking()
@@ -1858,7 +1859,6 @@ namespace Nidan.Data
                     .SqlQuery<CandidateFeeSearchField>("SearchCandidateFee @SearchKeyword", category).ToList();
 
                 var candidatefees = context.CandidateFees;
-                //.Include(e => e.CandidateInstallment.Admission.Enquiry.StudentCode);
 
                 var data = searchData.Join(candidatefees, e => e.CandidateFeeId, m => m.CandidateFeeId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -2095,6 +2095,33 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<AdmissionSearchField>("SearchAdmission @SearchKeyword", category).ToList();
+
+                var admissions = context.Admissions.Include(e=>e.Registration.Enquiry).Include(e => e.Registration.Course).Include(e=>e.Batch).Include(e => e.Registration.CandidateFee).Include(e => e.Registration.CandidateInstallment);
+
+                var data = searchData.Join(admissions, e => e.AdmissionId, m => m.AdmissionId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })

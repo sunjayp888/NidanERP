@@ -66,7 +66,7 @@
             var candidateFee = {
                 CandidateFeeId: vm.candidateFeeId,
                 PaidAmount: $("#txtAmount").val(),
-                PaymentModeId: vm.paymentModeId,
+                PaymentModeId: $("#dropDownPaymentMode").val(),
                 ChequeNumber: $("#txtChequeNumber").val(),
                 ChequeDate: $("#txtChequeDate").val(),
                 BankName: $("#txtBankName").val()
