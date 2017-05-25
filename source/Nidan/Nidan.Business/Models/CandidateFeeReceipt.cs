@@ -22,5 +22,7 @@ namespace Nidan.Business.Models
         public string RecievedAmount { get; set; }
         public string PaymentDate { get; set; }
         public string InvoiceNumber { get; set; }
+        public string TotalInstallment { get; set; }
+        public string InstallmentNumber { get; set; }
     }
 }

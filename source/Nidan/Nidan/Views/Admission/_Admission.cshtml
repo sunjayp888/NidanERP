@@ -74,7 +74,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CandidateFee.PaidAmount, "Paid Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                @Html.LabelFor(model => model.CandidateFee.PaidAmount, "Amount To Be Paid", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(model => model.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @TextReader = "NumToWord(this.value,'divDisplayWords')" ,@readonly=true})
                     @Html.ValidationMessageFor(model => model.CandidateFee.PaidAmount, "", new { @class = "help-block" })

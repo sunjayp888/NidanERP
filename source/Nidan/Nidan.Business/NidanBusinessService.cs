@@ -715,6 +715,7 @@ namespace Nidan.Business
             candidatInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
             candidatInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatInstallment);
+            admission.Registration.StudentCode = registrationData.StudentCode;
             var candidatefeeCreate = new CandidateFee()
             {
                 PaymentDate = DateTime.UtcNow,
@@ -818,7 +819,8 @@ namespace Nidan.Business
                     OrganisationId = organisationId,
                     PersonnelId = personnelId,
                     IsPaymentDone = false,
-                    StudentCode = admission.Registration.StudentCode
+                    StudentCode = admission.Registration.StudentCode,
+                    InstallmentNumber = i
                 });
             }
             _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
@@ -2490,8 +2492,8 @@ namespace Nidan.Business
         //Template
         public byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int id)
         {
-            var candidateFeeData = _nidanDataService.RetrieveCandidateFee(organisationId, id,
-                r => r.CentreId == centreId);
+            var candidateFeeData = _nidanDataService.RetrieveCandidateFee(organisationId, id, r => r.CentreId == centreId);
+            var totalInstallment = RetrieveCandidateInstallment(organisationId, candidateFeeData.CandidateInstallmentId ?? 0, e => true).NumberOfInstallment.ToString();
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
             int value = candidateFeeData.FeeTypeId;
             FeeType feeType = (FeeType)value;
@@ -2510,10 +2512,23 @@ namespace Nidan.Business
                 InvoiceNumber = candidateFeeData.CandidateFeeId.ToString(),
                 RecievedAmount = candidateFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
-                TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString()
-
+                TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
+                TotalInstallment=totalInstallment,
+                InstallmentNumber = candidateFeeData.InstallmentNumber.ToString()
             };
-            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Registration");
+            if (value == 1)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Registration");
+            }
+            else if (value == 3)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Installment");
+            }
+            else
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Admission");
+            }
+
         }
 
     }
