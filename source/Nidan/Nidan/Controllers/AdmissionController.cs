@@ -54,10 +54,10 @@ namespace Nidan.Controllers
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).Where(e => e.CourseId == registration.CourseId);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course { Name = "Test" },
@@ -94,16 +94,16 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var personnelId = UserPersonnelId;
-            var registrationData = NidanBusinessService.RetrieveRegistration(organisationId,admissionViewModel.Admission.RegistrationId);
+            var registrationData = NidanBusinessService.RetrieveRegistration(organisationId, admissionViewModel.Admission.RegistrationId);
             var enquiryId = registrationData.EnquiryId;
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
-                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission,admissionViewModel.CandidateFee);
+                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission, admissionViewModel.CandidateFee);
                 // Create Personnel
                 var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
-                NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
+                NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
             }
@@ -112,7 +112,7 @@ namespace Nidan.Controllers
             admissionViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name");
             admissionViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
             admissionViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name");
-            admissionViewModel.Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name");
+            admissionViewModel.Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => e.CourseId == registrationData.CourseId).ToList(), "BatchId", "Name");
             admissionViewModel.Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description");
             admissionViewModel.CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList());
             return View(admissionViewModel);
@@ -169,13 +169,14 @@ namespace Nidan.Controllers
             }
             var organisationId = UserOrganisationId;
             var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
-           
+
 
             if (admission == null)
             {
                 return HttpNotFound();
             }
             var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
+
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -221,7 +222,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
-                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
+                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
             var viewModel = new AdmissionViewModel
@@ -292,7 +293,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
-                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId,centreId,personnelId, admissionViewModel.Admission);
+                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
             var viewModel = new AdmissionViewModel
@@ -355,14 +356,14 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveAdmissions(organisationId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveAdmissions(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             foreach (var item in data.Items)
             {
                 var candidateInstallmentId = item.Registration.CandidateInstallmentId;
                 var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
                 var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
                 item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
-                item.Registration.CandidateFee.Particulars= (courseFee - totalPaidAmount).ToString();
+                item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
             }
             return this.JsonNet(data);
         }
@@ -378,7 +379,24 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e =>(isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate >= fromDate && e.AdmissionDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate >= fromDate && e.AdmissionDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveAdmissionBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            foreach (var item in data.Items)
+            {
+                var candidateInstallmentId = item.Registration.CandidateInstallmentId;
+                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
+                var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
+                item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
+                item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
+            }
             return this.JsonNet(data);
         }
     }

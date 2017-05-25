@@ -1858,6 +1858,13 @@ namespace Nidan.Business
                 paging);
         }
 
+        public PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAdmissionBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
+                paging);
+        }
+
         #endregion
 
         #region // Update

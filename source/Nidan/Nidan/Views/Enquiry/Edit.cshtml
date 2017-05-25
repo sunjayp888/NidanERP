@@ -72,9 +72,6 @@
 
 @section scripts {
     <script>
-        
-        
-
         if ($('#Enquiry_SectorId :selected').text() == "Others") {
             $('.other-interested-course-textbox').show();
         } else {
@@ -86,7 +83,6 @@
         } else {
             $('.other-interested-course-textbox').hide();
         }
-
         $("#Enquiry_SectorId").change(function () {
             if ($('#Enquiry_SectorId :selected').text() == "Others") {
                 $('.other-interested-course-textbox').show();
@@ -94,6 +90,7 @@
                 $('.other-interested-course-textbox').hide();
             }
         });
+     
 
         $("#Enquiry_IntrestedCourseId").change(function () {
             if ($('#Enquiry_IntrestedCourseId :selected').text() == "Others") {
@@ -171,46 +168,28 @@
             });
         });
 
-        //var sector = $('#Enquiry_SectorId :selected').text();
-        //$('#Enquiry_SectorId :selected').text(sector);
+        $('#Enquiry_SchemeId').change(function () {
+            var schemeId = $('#Enquiry_SchemeId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetSector',
+                type: 'POST',
+                data: JSON.stringify({ schemeId: schemeId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_SectorId").empty();
+                    $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
 
-        //$('.closing-remarks-textbox').hide();
-
-        //$('#yesRadioButton').click(function () {
-        //    $('.closing-remarks-textbox').show();
-        //});
-
-        //$('#noRadioButton').click(function () {
-        //    $('.closing-remarks-textbox').hide();
-        //});
-
-        //if (!$('#Enquiry_Close').is(':checked')) {
-        //    $('.closing-remarks-textbox').hide();
-        //} else {
-        //    $('.closing-remarks-textbox').show();
-        //}
-
-        //$('#Enquiry_SchemeId').ready(function () {
-        //    var schemeId = $('#Enquiry_SchemeId :selected').val();
-        //    $.ajax({
-        //        url: '/Enquiry/GetSector',
-        //        type: 'POST',
-        //        data: JSON.stringify({ schemeId: schemeId }),
-        //        dataType: 'json',
-        //        contentType: 'application/json; charset=utf-8',
-        //        error: function (xhr) {
-        //            alert('Error: ' + xhr.statusText);
-        //        },
-        //        success: function (result) {
-        //            $("#Enquiry_SectorId").empty();
-        //            $.each(result, function (key, value) {
-        //                $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
-
-        //            });
-        //        },
-        //        async: true,
-        //        processData: false
-        //    });
-        //});
     </script>
 }

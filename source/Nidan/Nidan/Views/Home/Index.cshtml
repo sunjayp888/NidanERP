@@ -72,7 +72,13 @@
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Mobilization<small>Till date</small>  <small><b>Select Centre</b></small></h2>
+                    <h2>
+                        Pie Chart<small>Till date</small>
+                        @if (User.IsInAnyRoles("SuperAdmin"))
+                        {
+                            <small><b>Centre</b></small>
+                        }
+                    </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
                         <div id="pie" class="form-group">
@@ -104,7 +110,13 @@
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Bar Chart Group <small>Sessions</small>  <small><b>Select Centre</b></small></h2>
+                    <h2>
+                        Bar Chart<small>Weekly</small>
+                        @if (User.IsInAnyRoles("SuperAdmin"))
+                        {
+                            <small><b>Centre</b></small>
+                        }
+                    </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
                         <div id="bar" class="form-group">
