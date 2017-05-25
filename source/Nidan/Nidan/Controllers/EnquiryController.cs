@@ -227,13 +227,15 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCentreCourses(UserOrganisationId,UserCentreId, e => e.Course.SectorId == sectorId).ToList());
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.Course.SectorId == sectorId && e.CentreId==UserCentreId).ToList();
+            return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult GetSector(int schemeId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCentreSectors(UserOrganisationId, UserCentreId, e => e.Sector.SchemeId == schemeId).ToList());
+            var data = NidanBusinessService.RetrieveCentreSectors(UserOrganisationId, UserCentreId, e => e.Sector.SchemeId == schemeId && e.CentreId == UserCentreId).ToList();
+            return this.JsonNet(data);
         }
 
         [HttpPost]

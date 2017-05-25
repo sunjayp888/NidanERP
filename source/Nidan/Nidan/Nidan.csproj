@@ -1561,6 +1561,7 @@
     <Content Include="Views\Admission\AssignBatch.cshtml" />
     <Content Include="Views\FollowUp\_FollowUpHistory.cshtml" />
     <Content Include="Views\CourseInstallment\Index.cshtml" />
+    <Content Include="Views\Registration\View.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

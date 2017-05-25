@@ -82,8 +82,8 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
                 counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId,counsellingViewModel.Counselling);
-                //return RedirectToAction("Index");
-                return RedirectToAction("Edit", new { id = counsellingViewModel.Counselling.CounsellingId });
+                return RedirectToAction("Index");
+                //return RedirectToAction("Edit", new { id = counsellingViewModel.Counselling.CounsellingId });
             }
             counsellingViewModel.Courses = new SelectList(
                NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
