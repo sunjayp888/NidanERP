@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body, p, td {
+            font-size: 16pt;
+            font-family: "Calibri";
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .CenterText {
+            text-align: center;
+        }
+
+        .RightText {
+            text-align: right;
+        }
+
+        .TopText {
+            vertical-align: top;
+        }
+
+        .DoubleBottomBorder td {
+            border-bottom: 1px solid black;
+            width: 25%;
+        }
+
+        .PayslipBox {
+            margin-top: 20px;
+            border: solid 2px gray;
+            padding: 10px;
+        }
+
+            .PayslipBox table {
+                width: 100%;
+                border-style: none;
+                border-collapse: collapse;
+                border-width: 0;
+            }
+
+                .PayslipBox table td, .PayslipBox p {
+                    font-size: 15pt;
+                }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <!-- Pay Statement Header -->
+    <table border="0" width="100%">
+        <tr>
+            <td class="TopText" width="25%">
+                <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
+            </td>
+            <td class="CenterText TopText" width="50%">
+                <h1>@Model.OrganisationName</h1>
+                <h3>@Model.CentreAddress</h3>
+                <h3>Receipt</h3>
+                <b>Receipt by @Model.CentreName</b>
+            </td>
+            <td class="TopText RightText" width="25%"></td>
+        </tr>
+    </table>
+    <br />
+    <!-- Address & Date -->
+    <h1 style="text-align: center">Enrollment Notification</h1>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td style="font-weight: bold">STUDENT DETAILS</td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Candidate Name :</td>
+                            <td>@Model.CandidateName</td>
+                            <td>EmailId :</td>
+                            <td>@Model.EmailId</td>
+                        </tr>
+                        <tr>
+                            <td>Address :</td>
+                            <td>@Model.CandidateAddress</td>
+                        </tr>
+                        <tr>
+                            <td>Contact No :</td>
+                            <td>@Model.MobileNumber</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td><b>COURSE DETAILS :</b></td>
+                <td>@Model.FeeTypeName</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Course Name :</td>
+                <td>@Model.CourseName</td>
+            </tr>
+            <tr>
+                <td>Course Duration :</td>
+                <td>@Model.CourseDuration Hours.</td>
+            </tr>
+            <tr>
+                <td>Course Duration Validity:</td>
+                <td>@Model.BatchStartDate &nbsp; upto &nbsp;@Model.BatchEndDate</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td><b>ADMISSION AND FEE DETAILS :</b></td>
+            </tr>
+            <tr>
+                <td>
+                    Total Course Fees : @Model.TotalCourseFee
+                </td>
+                <td>
+                    Down Recieved Amount : @Model.RecievedAmount
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    Receipt Date : @Model.PaymentDate
+                </td>
+                <td>
+                    Receipt No. : @Model.InvoiceNumber
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <br />
+        <table border="1">
+            <tr>
+                <th>Installment Date</th>
+                <th>Installment Amount</th>
+            </tr>
+            @foreach(var item in Model.InstallmentDetail)
+            {
+            <tr>
+                <td>item.InstallmentDate</td>
+                <td>item.InstallmentPayment</td>
+            </tr>
+            }
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td><b>MODULE DETAILS :</b></td>
+            </tr>
+        </table>
+        <table border="1">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Module Name</th>
+                <th>Number of Hours</th>
+            </tr>
+            @foreach(var item in Model.Module)
+            {
+            <tr>
+                <td style="text-align: center">item.Number</td>
+                <td>&nbsp;item.Name</td>
+                <td style="text-align: center">item.NumberOfHours</td>
+            </tr>
+            }
+        </table>
+    </div>
+    <div class="PayslipBox">
+
+        <table border="0">
+            <tr>
+                <td><b>STUDENT UNDERTAKING</b></td>
+            </tr>
+            <tr>
+                <td><b>I...........................................S/o....................................
+R/o………………….......................................................
+hereby declare that the information provided above
+are true to the best of my knowledge and belief and I
+have not attempted to suppress or exaggerate any
+information pertaining to me towards the above
+institution. I have read the rules and regulations
+(CODE OF CONDUCT mention in back side) of the
+Nidan Education & Skill Training.</b></td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <b><br/>candidate Sign.</b>
+                </td>
+                <td style="text-align: center">
+                </td>
+                <td style="text-align: center">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="PayslipBox">
+
+        <table border="0">
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <b>Candidate Sign.</b>
+                </td>
+                <td style="text-align: center">
+                    <b>Authorized Sign.</b>
+                </td>
+                <td style="text-align: center">
+                    <b>Branch Manager Sign.</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
