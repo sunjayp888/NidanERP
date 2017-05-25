@@ -1730,10 +1730,10 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging);
         }
 
-        public IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int schemeId)
+        public IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int centreId)
         {
             return
-                _nidanDataService.RetrieveSchemes(organisationId, a => !a.CentreSchemes.Any(d => d.SchemeId == schemeId),
+                _nidanDataService.RetrieveSchemes(organisationId, a => !a.CentreSchemes.Any(d => d.CentreId == centreId),
                     null, null).Items.ToList();
         }
 
@@ -1743,10 +1743,10 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreSchemes(organisationId, centreId, orderBy, paging);
         }
 
-        public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int sectorId)
+        public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int centreId)
         {
             return
-                _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.SectorId == sectorId),
+                _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId),
                     null, null).Items.ToList();
         }
 

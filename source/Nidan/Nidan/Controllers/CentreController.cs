@@ -157,7 +157,8 @@ namespace Nidan.Controllers
 
         public ActionResult UnassignedCentreSchemes(int centreId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveUnassignedCentreSchemes(UserOrganisationId, centreId));
+            var data = NidanBusinessService.RetrieveUnassignedCentreSchemes(UserOrganisationId, centreId);
+            return this.JsonNet(data);
         }
 
         public ActionResult CentreSchemes(int centreId)
