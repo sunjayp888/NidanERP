@@ -69,8 +69,9 @@ namespace Nidan.Controllers
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
                 registrationViewModel.Registration.FollowupDate = DateTime.UtcNow.AddDays(2);
                 registrationViewModel.Registration.RegistrationDate = DateTime.UtcNow;
-                var registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, personnelId, registrationViewModel.StudentCode, registrationViewModel.Registration);
-                return RedirectToAction("Edit", new { id = registration.RegistrationId });
+                registrationViewModel.Registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, personnelId, registrationViewModel.StudentCode, registrationViewModel.Registration);
+                // return RedirectToAction("Edit", new { id = registration.RegistrationId });
+                return RedirectToAction("Index");
             }
             return View();
         }
@@ -87,12 +88,11 @@ namespace Nidan.Controllers
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => true);
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
-
             if (registration == null)
             {
                 return HttpNotFound();
             }
+            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
             var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, registration.EnquiryId);
@@ -179,7 +179,7 @@ namespace Nidan.Controllers
             foreach (var item in data.Items)
             {
                 var candidateInstallmentId = item.CandidateInstallmentId;
-                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId,e=>true).CourseFee;
+                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
                 var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
                 item.CandidateFee.PaidAmount = totalPaidAmount;
                 item.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
@@ -198,7 +198,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.IsAdmissionDone==false, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -215,7 +215,7 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseInstallmentId == courseInstallmentId).FirstOrDefault());
         }
 
-      //  [HttpPost]
+        //  [HttpPost]
         public ActionResult Download(int? id)
         {
             var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);

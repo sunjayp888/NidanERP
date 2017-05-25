@@ -302,14 +302,12 @@
             }
 
 
-            $('#Registration_CourseId')
-                .change(function() {
+            $('#Registration_CourseId').change(function() {
                     var courseId = $('#Registration_CourseId :selected').val();
                     GetCourseInstallmentsByCourseId(courseId);
                     $("#IsTotalAmountDiscountDiv").hide();
                 });
-            $('#Registration_CourseInstallmentId')
-                .change(function() {
+            $('#Registration_CourseInstallmentId').change(function() {
                     var courseInstallmentId = $('#Registration_CourseInstallmentId :selected').val();
                     GetCourseInstallment(courseInstallmentId);
                 });
