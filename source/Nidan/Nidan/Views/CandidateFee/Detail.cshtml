@@ -42,7 +42,7 @@
                                         <td>
                                             <span ng-if="candidateFee.FeeTypeId==1">Registration</span>
                                             <span ng-if="candidateFee.FeeTypeId==2">Admission</span>
-                                            <span ng-if="candidateFee.FeeTypeId==3">Installment</span>
+                                            <span ng-if="candidateFee.FeeTypeId==3">Installment -</span> <span ng-if="candidateFee.FeeTypeId==3" ng-bind="candidateFee.InstallmentNumber"></span>
                                         </td>
                                         <td>
                                             <span ng-if="candidateFee.PaymentMode.Name='Cheque'" ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
@@ -61,7 +61,7 @@
                                         </td>
                                         <td>
                                             <button id="btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
-                                            <button class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
+                                            <button id="btn" class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -294,5 +294,17 @@
                 }
 
             });
+
+        //==============================================
+
+        $('#btn').click(function () {
+            var btn = $(this);
+            $.post({ delay: 3 }).complete(function () {
+                btn.prop('disabled', false);
+            });
+            btn.prop('disabled', true);
+
+        });
+
     </script>
 }

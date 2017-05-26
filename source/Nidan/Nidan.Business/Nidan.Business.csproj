@@ -112,6 +112,7 @@
     <Compile Include="Interfaces\MvcTemplateBase.cs" />
     <Compile Include="Interfaces\PdfService.cs" />
     <Compile Include="Interfaces\RazorService.cs" />
+    <Compile Include="Models\AdmissionReceipt.cs" />
     <Compile Include="Models\CandidateFeeReceipt.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />

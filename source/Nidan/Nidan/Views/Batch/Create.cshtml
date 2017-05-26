@@ -57,6 +57,7 @@
         $("#Batch_NumberOfInstallment").val("");
         $("#CourseInstallment_Fee").val("");
         $("#CourseInstallment_DownPayment").val("");
+        $("#Batch_BatchEndDate").val("");
 
         $("input:radio").attr("checked", false);
 
@@ -251,8 +252,10 @@
 
             if (checkboxlength == 0) {
                 alert("Please Select Atleast Any One Day");
+                $('#btnsubmit').attr('disabled', true);
             }
             else if (checkboxlength > 0) {
+                $('#btnsubmit').attr('disabled', false);
                 var courseDuration = $("#Course_Duration").val();
                 var hours = $("#Batch_NumberOfHoursDaily").val();
                 var checkboxcount = $("[type='checkbox']:checked").length - 1;
@@ -572,7 +575,16 @@
             var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
             $("#Batch_BatchEndTimeMinutes").val(startimeminute);
         });
-        //--------------------------------------------------------------------------------------------
+
+        $('#btnsubmit')
+            .onclick(function() {
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length - 1;
+
+                if (checkboxlength == 0)
+                    alert("Please Select Atleast Any One Day");
+            });
+        
+
     </script>}
 
 
