@@ -123,8 +123,10 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
+            //var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveCandidateFeeBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging);
+            //var registrations = NidanBusinessService.RetrieveRegistrations(organisationId, e => true);
+            var data = NidanBusinessService.RetrieveCandidateInstallmentBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging);
             return this.JsonNet(data);
         }
 
