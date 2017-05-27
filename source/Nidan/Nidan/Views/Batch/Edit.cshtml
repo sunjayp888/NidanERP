@@ -37,7 +37,7 @@
                         <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button id="btnsubmit" type="submit" class="btn btn-success" disabled="disabled">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,9 @@
 
             if (checkboxlength == 0) {
                 alert("Please Select Atleast Any One Day");
+                $('#btnsubmit').attr('disabled', true);
             } else if (checkboxlength > 0) {
+                $('#btnsubmit').attr('disabled', false);
                 var courseDuration = $("#Course_Duration").val();
                 var hours = $("#Batch_NumberOfHoursDaily").val();
                 var checkboxcount = $("[type='checkbox']:checked").length - 1;
@@ -673,4 +675,5 @@
                 var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
                 $("#Batch_BatchEndTimeMinutes").val(startimeminute);
             });
+        
     </script>}

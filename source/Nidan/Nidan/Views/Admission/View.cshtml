@@ -286,7 +286,7 @@
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-primary">Batch Start Date</button>
                                                         </span>
-                                                        <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                        <input id="txtBatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4"> 
                                                     </div>
                                                 </div>
 
@@ -463,9 +463,20 @@
                             $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
                             $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
                             $("#txtBatchMonth").val(result.Month);
-                            $("#txtBatchStartDate").val(result.BatchStartDate.toLocaleString('dd-mm-yyyy'));
-                            $("#txtBatchEndDate").val(result.BatchEndDate);
-                            $("#txtBatchAssessmentDate").val(result.AssessmentDate);
+                            var startDate=result.BatchStartDate.substr(0,10);
+                            startDate = startDate.split("-").reverse().join("-");
+                            $("#txtBatchStartDate").val(startDate);
+
+                            var endDate=result.BatchEndDate.substr(0,10);
+                            endDate = endDate.split("-").reverse().join("-");
+                            $("#txtBatchEndDate").val(endDate);
+
+                            var assessmentDate=result.AssessmentDate.substr(0,10);
+                            assessmentDate = assessmentDate.split("-").reverse().join("-");
+                            $("#txtBatchAssessmentDate").val(assessmentDate);
+
+                           // $("#txtBatchEndDate").val(result.BatchEndDate.substr(0,10));
+                            //$("#txtBatchAssessmentDate").val(result.AssessmentDate.substr(0,10));
                             $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
                             $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
                         });
