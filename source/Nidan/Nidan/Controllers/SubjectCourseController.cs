@@ -31,7 +31,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(int subjectId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, subjectId));
+            return this.JsonNet(NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, s => s.SubjectId == subjectId));
         }
 
         [HttpPost]

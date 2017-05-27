@@ -114,7 +114,7 @@ namespace Nidan.Data.Interfaces
         BatchDay RetrieveBatchDay(int organisationId, int batchDayId, Expression<Func<BatchDay, bool>> predicate);
         PagedResult<BatchDay> RetrieveBatchDays(int organisationId, Expression<Func<BatchDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId,int centreId, int enquiryId);
-        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
+        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, Expression<Func<SubjectCourse, bool>> predicate);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null,Paging paging = null);
         IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
@@ -127,7 +127,7 @@ namespace Nidan.Data.Interfaces
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
         PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate);
-        PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFeeSearchField> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFeeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, Expression<Func<CentreCourse, bool>> predicate);
         IEnumerable<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, Expression<Func<CentreScheme, bool>> predicate);
         IEnumerable<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate);
@@ -144,6 +144,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate);
+        PagedResult<CandidateInstallment> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
 
 

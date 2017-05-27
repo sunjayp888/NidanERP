@@ -96,6 +96,7 @@
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateInstallment.cs" />
+    <Compile Include="CandidateInstallmentSearchField.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />

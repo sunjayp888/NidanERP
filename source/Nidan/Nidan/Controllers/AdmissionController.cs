@@ -169,7 +169,8 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+            var centreId = UserCentreId;
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
 
 
             if (admission == null)
@@ -240,8 +241,9 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var centreId = UserCentreId;
             var organisationId = UserOrganisationId;
-            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
 
 
             if (admission == null)
@@ -312,53 +314,16 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
-
-
+            var centreId = UserCentreId;
+            var admission = NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
             if (admission == null)
             {
                 return HttpNotFound();
             }
-            var batchData = NidanBusinessService.RetrieveBatch(organisationId, admission.BatchId ?? 0);
-            var trainerIds = batchData?.BatchTrainers.Select(e => e.TrainerId).ToList();
-            var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
-            var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true).Where(e =>
-                {
-                    return trainerIds != null && trainerIds.Contains(e.TrainerId);
-                });
-
-            var enumerable = trainers as IList<Trainer> ?? trainers.ToList();
-            var name = enumerable.Select(e => e.Title + " " + e.FirstName + " " + e.MiddleName + " " + e.LastName);
             var viewModel = new AdmissionViewModel
             {
-                Course = new Course()
-                {
-                    Name = "Test"
-                },
-                CourseInstallment = new CourseInstallment()
-                {
-                    Name = "Test"
-                },
-                Batch = new Batch()
-                {
-                    Name = "Test"
-                },
-                Registration = admission.Registration,
-                RegistrationId = admission.RegistrationId,
                 Admission = admission,
-                CandidateFee = candidateFeeByAdmission ?? admission.Registration.CandidateFee,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name"),
-                PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => true).ToList(), "PaymentModeId", "Name"),
-                Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
-                BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
-                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
-                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
-                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name"),
-                TrainerName = name
             };
-            viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
-            viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -389,8 +354,17 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
+            var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate >= fromDate && e.AdmissionDate <= toDate, orderBy, paging);
+            foreach (var item in data.Items)
+            {
+                var candidateInstallmentId = item.Registration.CandidateInstallmentId;
+                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
+                var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
+                item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
+                item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
+            }
             return this.JsonNet(data);
         }
 
@@ -409,6 +383,13 @@ namespace Nidan.Controllers
                 item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
             }
             return this.JsonNet(data);
+        }
+
+        public ActionResult Download(int? id)
+        {
+            var admission = NidanBusinessService.RetrieveAdmission(UserOrganisationId, UserCentreId, id.Value);
+            var data = NidanBusinessService.CreateEnrollmentBytes(UserOrganisationId, UserCentreId, admission);
+            return File(data, ".pdf",string.Format("{0} {1} Enrollment.pdf", admission.Registration.Enquiry.FirstName, admission.Registration.Enquiry.LastName));
         }
     }
 }

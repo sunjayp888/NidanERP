@@ -94,6 +94,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<TrainerAvailable> TrainerAvailables { get; set; }
         public virtual DbSet<RoomAvailable> RoomAvailables { get; set; }
+        public virtual DbSet<CandidateInstallmentSearchField> CandidateInstallmentSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1370,6 +1371,18 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<RoomAvailable>()
                 .Property(e => e.EndTimeSpan)
+                .IsUnicode(false);
+                
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.PaymentMethod)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

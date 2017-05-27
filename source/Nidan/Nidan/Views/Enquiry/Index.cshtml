@@ -112,7 +112,7 @@
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
                                             <th ng-click="model.order('ContactNo')" ng-class="model.orderClass('ContactNo')">Contact No</th>
                                             @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
                                             @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
@@ -130,7 +130,7 @@
                                         {
                                             <td><span ng-bind="enquiry.Centre.Name"></span></td>
                                         }
-                                        <td><span ng-bind="enquiry.FirstName"></span> <span ng-bind="enquiry.MiddleName"></span> <span ng-bind="enquiry.LastName"></span></td>
+                                        <td><span ng-bind="enquiry.Title"></span> <span ng-bind="enquiry.FirstName"></span> <span ng-bind="enquiry.MiddleName"></span> <span ng-bind="enquiry.LastName"></span></td>
                                         <td><span ng-bind="enquiry.Mobile"></span></td>
                                         @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
                                         @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
