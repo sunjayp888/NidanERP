@@ -67,9 +67,9 @@
                                         <tr ng-repeat="courseInstallment in model.courseInstallments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCourseInstallment(courseInstallment.CourseInstallmentId)">
                                             <td><span ng-bind="courseInstallment.Name"></span></td>
                                             <td><span ng-bind="courseInstallment.Course.Name"></span></td>
-                                            <td><span ng-bind="courseInstallment.Fee"></span></td>
-                                            <td><span ng-bind="courseInstallment.DownPayment"></span></td>
-                                            <td><span ng-bind="courseInstallment.LumpsumAmount"></span></td>
+                                            <td><span ng-bind="courseInstallment.Fee"></span>.00</td>
+                                            <td><span ng-bind="courseInstallment.DownPayment"></span>.00</td>
+                                            <td><span ng-bind="courseInstallment.LumpsumAmount"></span>.00</td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

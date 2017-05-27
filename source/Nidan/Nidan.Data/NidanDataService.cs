@@ -1865,7 +1865,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFee, bool>> predicate,
+        public PagedResult<CandidateFeeSearchField> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFeeSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -1874,21 +1874,18 @@ namespace Nidan.Data
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
                 var searchData = context.Database
-                    .SqlQuery<CandidateFeeSearchField>("SearchCandidateFee @SearchKeyword", category).ToList();
-
-                var candidatefees = context.CandidateFees;
-
-                var data = searchData.Join(candidatefees, e => e.CandidateFeeId, m => m.CandidateFeeId, (e, m) => m).ToList().AsQueryable().
+                    .SqlQuery<CandidateFeeSearchField>("SearchCandidateFee @SearchKeyword", category)
+                    .ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
                         {
-                            Property = "CandidateFeeId",
+                            Property = "CandidateInstallmentId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
                     .Paginate(paging);
-                return data;
+                return searchData;
             }
         }
 
@@ -2181,6 +2178,33 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.ModuleId == moduleId);
+            }
+        }
+
+        public PagedResult<CandidateInstallment> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallment, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidateInstallment>("SearchCandidateInstallment @SearchKeyword", category).ToList().AsQueryable().
+
+                //var candidateInstallments = context.CandidateInstallments;
+
+                //var data = searchData.Join(candidateInstallments, e => e.CandidateInstallmentId, m => m.CandidateInstallmentId, (e, m) => m).ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return searchData;
             }
         }
 

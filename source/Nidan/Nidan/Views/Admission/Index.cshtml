@@ -95,10 +95,10 @@
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                            <th ng-click="model.order('Batch')" ng-class="model.orderClass('Batch')">Batch</th>
-                                            <th ng-click="model.order('TotalFee')" ng-class="model.orderClass('TotalFee')">Total Fees</th>
-                                            <th ng-click="model.order('FeePaid')" ng-class="model.orderClass('FeePaid')">Paid Amount</th>
+                                            <th ng-click="model.order('Registration.Enquiry.FirstName')" ng-class="model.orderClass('Registration.Enquiry.FirstName')">Candidate Name</th>
+                                            <th ng-click="model.order('Batch.Name')" ng-class="model.orderClass('Batch.Name')">Batch</th>
+                                            <th ng-click="model.order('Registration.CandidateInstallment.CourseFee')" ng-class="model.orderClass('Registration.CandidateInstallment.CourseFee')">Total Fees</th>
+                                            <th ng-click="model.order('Registration.CandidateFee.PaidAmount')" ng-class="model.orderClass('Registration.CandidateFee.PaidAmount')">Paid Amount</th>
                                             <th>Pending Amount</th>
                                             <th ng-click="model.order('AdmissionDate')" ng-class="model.orderClass('AdmissionDate')">Admission Date</th>
                                             <th>Actions</th>
@@ -110,14 +110,18 @@
                                             {
                                                 <td><span ng-bind="admission.Centre.Name"></span></td>
                                             }
-                                            <td><span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="admission.Registration.Enquiry.Title"></span> <span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
                                             <td>
                                                 <span ng-bind="admission.Batch.Name"></span>
                                                 <button ng-if="admission.BatchId==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
                                             </td>
                                             <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span>.00</td>
                                             <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span>.00</td>
-                                            <td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>
+                                            @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
+                                            <td>
+                                                <button ng-if="admission.Registration.CandidateFee.Particulars==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                                <span ng-if="admission.Registration.CandidateFee.Particulars!=0.00" ng-bind="admission.Registration.CandidateFee.Particulars"></span>
+                                            </td>
                                             <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">

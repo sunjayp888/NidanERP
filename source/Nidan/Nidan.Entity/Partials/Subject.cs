@@ -29,7 +29,7 @@ namespace Nidan.Entity
             [Display(Name = "Passing Marks")]
             public int PassingMarks { get; set; }
 
-            [Display(Name = "No Of Attempts Allowed")]
+            [Display(Name = "Number Of Attempts Allowed")]
             public int NoOfAttemptsAllowed { get; set; }
         }
     }

@@ -1894,6 +1894,13 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveModule(organisationId, moduleId, predicate);
         }
 
+        public PagedResult<CandidateInstallment> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallment, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateInstallmentBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
+                paging);
+        }
+
         #endregion
 
         #region // Update
@@ -2057,8 +2064,8 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, p => true);
         }
 
-        public PagedResult<CandidateFee> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword,
-            Expression<Func<CandidateFee, bool>> predicate,
+        public PagedResult<CandidateFeeSearchField> RetrieveCandidateFeeBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<CandidateFeeSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidateFeeBySearchKeyword(organisationId, searchKeyword, predicate,

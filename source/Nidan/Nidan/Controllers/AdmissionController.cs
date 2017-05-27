@@ -354,8 +354,17 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
+            var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AdmissionDate >= fromDate && e.AdmissionDate <= toDate, orderBy, paging);
+            foreach (var item in data.Items)
+            {
+                var candidateInstallmentId = item.Registration.CandidateInstallmentId;
+                var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
+                var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
+                item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
+                item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
+            }
             return this.JsonNet(data);
         }
 

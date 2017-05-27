@@ -64,7 +64,7 @@
                                         <th ng-click="model.order('Description')" ng-class="model.orderClass('Description')">Description</th>
                                         <th ng-click="model.order('CourseType')" ng-class="model.orderClass('CourseType')">Class Room Type</th>
                                         <th ng-click="model.order('Capacity')" ng-class="model.orderClass('Capacity')">Capacity</th>
-                                        <th ng-click="model.order('SquareFeet')" ng-class="model.orderClass('SquareFeet')">Sq.Ft.</th>
+                                        <th ng-click="model.order('SquareFeet')" ng-class="model.orderClass('SquareFeet')">Square Feet</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -77,8 +77,8 @@
                                         <td><span ng-bind="room.Centre.Name"></span></td>
                                         <td><span ng-bind="room.Description"></span></td>
                                         <td><span ng-bind="room.RoomType.Name"></span></td>
-                                        <td><span ng-bind="room.Capacity"></span></td>
-                                        <td><span ng-bind="room.SquareFeet"></span></td>
+                                        <td><span ng-bind="room.Capacity"></span> Candidate</td>
+                                        <td><span ng-bind="room.SquareFeet"></span> sq ft</td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
