@@ -591,7 +591,7 @@ namespace Nidan.Business
 
         private void CreateSubjectCourse(int organisationId, int subjectId, List<int> couserIds)
         {
-            var subjectCourses = RetrieveSubjectCourses(organisationId, subjectId).ToList();
+            var subjectCourses = RetrieveSubjectCourses(organisationId, e => e.SubjectId == subjectId).ToList();
             var subjectCourseList = new List<SubjectCourse>();
             foreach (var item in couserIds)
             {
@@ -704,42 +704,42 @@ namespace Nidan.Business
             return _nidanDataService.Create<CentreSector>(organisationId, centreSector);
         }
 
-        public Admission CreateAdmission(int organisationId, int centreId, int personnelId, Admission admission,
-            CandidateFee candidateFee)
+        public Admission CreateAdmission(int organisationId, int centreId, int personnelId, Admission admission, CandidateFee candidateFee)
         {
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
-            var candidatInstallment = RetrieveCandidateInstallment(organisationId,
+            var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 registrationData.CandidateInstallmentId, e => true);
             var courseInstallment = RetrieveCourseInstallment(organisationId, registrationData.CourseInstallmentId);
-            candidatInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
-            candidatInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatInstallment);
+            candidateInstallment.NumberOfInstallment = courseInstallment.NumberOfInstallment;
+            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
             admission.Registration.StudentCode = registrationData.StudentCode;
-            var candidatefeeCreate = new CandidateFee()
+            if (admission.Registration.CandidateInstallment.PaymentMethod == FeePaymentMethod.Lumpsum.ToString())
             {
-                PaymentDate = DateTime.UtcNow,
-                CandidateInstallmentId = candidatInstallment.CandidateInstallmentId,
-                PaidAmount = candidateFee.PaidAmount,
-                PaymentModeId = candidateFee.PaymentModeId,
-                FeeTypeId = (int)FeeType.Admission,
-                ChequeNumber = candidateFee.ChequeNumber,
-                ChequeDate = candidateFee.ChequeDate,
-                BankName = candidateFee.BankName,
-                Penalty = null,
-                StudentCode = registrationData.StudentCode,
-                FiscalYear = DateTime.Now.FiscalYear(),
-                CentreId = centreId,
-                OrganisationId = organisationId,
-                PersonnelId = personnelId,
-                IsPaymentDone = true
-            };
-            _nidanDataService.Create<CandidateFee>(organisationId, candidatefeeCreate);
-            if (admission.BatchId != null)
-            {
-                CreateCandidateFee(organisationId, centreId, personnelId, admission);
+                var candidatefeeCreate = new CandidateFee()
+                {
+                    PaymentDate = DateTime.UtcNow,
+                    CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
+                    PaidAmount = candidateInstallment.LumpsumAmount - registrationData.CandidateFee.PaidAmount,
+                    PaymentModeId = candidateFee.PaymentModeId,
+                    FeeTypeId = (int)FeeType.Admission,
+                    ChequeNumber = candidateFee.ChequeNumber,
+                    ChequeDate = candidateFee.ChequeDate,
+                    BankName = candidateFee.BankName,
+                    Penalty = null,
+                    StudentCode = registrationData.StudentCode,
+                    FiscalYear = DateTime.Now.FiscalYear(),
+                    CentreId = centreId,
+                    OrganisationId = organisationId,
+                    PersonnelId = personnelId,
+                    IsPaymentDone = true
+                };
+                _nidanDataService.Create<CandidateFee>(organisationId, candidatefeeCreate);
             }
 
+            
+            CreateCandidateFee(organisationId, centreId, personnelId, admission, registrationData, candidateFee);
 
             admission.OrganisationId = organisationId;
             admission.CentreId = centreId;
@@ -790,20 +790,19 @@ namespace Nidan.Business
             return admissionData;
         }
 
-        private void CreateCandidateFee(int organisationId, int centreId, int personnelId, Admission admission)
+        private void CreateCandidateFee(int organisationId, int centreId, int personnelId, Admission admission, Registration registration, CandidateFee candidateFee)
         {
             var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 admission.Registration.CandidateInstallmentId, c => true);
             var feePaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
-
+            var isLumpsum = admission.Registration.CandidateInstallment.PaymentMethod == FeePaymentMethod.Lumpsum.ToString();
             var candidateBatch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
 
             // Update data in CandidateInstallment
             candidateInstallment.PaymentMethod = feePaymentMethod;
-            candidateInstallment.NumberOfInstallment = feePaymentMethod ==
-                                                       FeePaymentMethod.MonthlyInstallment.ToString()
-                ? candidateBatch.NumberOfInstallment
-                : 1;
+            candidateInstallment.NumberOfInstallment = feePaymentMethod == FeePaymentMethod.MonthlyInstallment.ToString()
+                                                       ? candidateBatch.NumberOfInstallment : 1;
+
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
 
             var candidateFees = new List<CandidateFee>();
@@ -813,19 +812,22 @@ namespace Nidan.Business
                 candidateFees.Add(new CandidateFee
                 {
                     CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
-                    PaymentModeId = (int)Enum.PaymentMode.Cash,
-                    FeeTypeId = (int)FeeType.Installment,
-                    FollowUpDate = candidateBatch.BatchStartDate.AddMonths(candidateBatch.NumberOfInstallment),
+                    PaymentModeId = candidateFee.PaymentModeId,
+                    FeeTypeId = isLumpsum ? (int)FeeType.Admission : (int)FeeType.Installment,
+                    FollowUpDate = candidateBatch?.BatchStartDate.AddMonths(candidateBatch.NumberOfInstallment),
                     FiscalYear = DateTime.UtcNow.FiscalYear(),
-                    InstallmentAmount =
-                        (candidateInstallment.CourseFee - candidateInstallment.DownPayment) /
-                        candidateBatch.NumberOfInstallment,
+                    InstallmentAmount = (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / candidateBatch?.NumberOfInstallment,
                     CentreId = centreId,
                     OrganisationId = organisationId,
                     PersonnelId = personnelId,
                     IsPaymentDone = false,
                     StudentCode = admission.Registration.StudentCode,
-                    InstallmentNumber = i
+                    InstallmentNumber = i,
+                    PaidAmount = admission.Registration.CandidateInstallment.PaymentMethod == FeePaymentMethod.Lumpsum.ToString()
+                                 ? candidateInstallment.LumpsumAmount - registration.CandidateFee.PaidAmount
+                                 : candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount
+
+
                 });
             }
             _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
@@ -1707,9 +1709,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreCourses(organisationId, centreId, orderBy, paging);
         }
 
-        public IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId)
+        public IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, Expression<Func<SubjectCourse, bool>> predicate)
         {
-            return _nidanDataService.RetrieveSubjectCourses(organisationId, subjectId);
+            return _nidanDataService.RetrieveSubjectCourses(organisationId, predicate);
         }
 
         public IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId)
@@ -1887,7 +1889,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveModules(organisationId, predicate, orderBy, paging);
         }
 
-        public Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate)
+        public Entity.Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate)
         {
             return _nidanDataService.RetrieveModule(organisationId, moduleId, predicate);
         }
@@ -2014,9 +2016,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveAdmission(organisationId, admissionId, p => true);
         }
 
-        public Admission RetrieveAdmission(int organisationId, int id)
+        public Admission RetrieveAdmission(int organisationId, int centreId, int id)
         {
-            return _nidanDataService.RetrieveAdmission(organisationId, id, p => true);
+            return _nidanDataService.RetrieveAdmission(organisationId, id, a => a.CentreId == centreId);
         }
 
         public List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate)
@@ -2310,7 +2312,7 @@ namespace Nidan.Business
 
         public Subject UpdateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds)
         {
-            var subjectCourseId = RetrieveSubjectCourses(organisationId, subject.SubjectId);
+            var subjectCourseId = RetrieveSubjectCourses(organisationId, s => s.SubjectId == subject.SubjectId);
             if (subjectCourseId.Any() != courseIds.Any())
             {
 
@@ -2532,13 +2534,13 @@ namespace Nidan.Business
             var candidateFeeReceipt = new CandidateFeeReceipt()
             {
                 OrganisationName = candidateFeeData.Organisation.Name,
-                EmailId = enquiry.EmailId,
+                EmailId = enquiry?.EmailId,
                 PaymentDate = candidateFeeData.PaymentDate.Value.ToShortDateString(),
                 CandidateAddress =
                     string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.FirstName + " " + enquiry.LastName,
                 CentreName = candidateFeeData.Centre.Name,
-                CentreAddress = string.Concat(centre.Address1,centre.Address2,centre.Address3,centre.Address4),
+                CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
                 CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
                 FeeTypeName = feeType.ToString(),
@@ -2546,7 +2548,7 @@ namespace Nidan.Business
                 RecievedAmount = candidateFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
                 TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
-                TotalInstallment=totalInstallment,
+                TotalInstallment = totalInstallment,
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString()
             };
             if (value == 1)
@@ -2564,6 +2566,72 @@ namespace Nidan.Business
 
         }
 
+        public byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission)
+        {
+            var modules = RetrieveSubjectCourses(organisationId, s => s.CourseId == admission.Registration.CourseId);
+            var organisationName = RetrieveOrganisation(organisationId);
+            var centre = RetrieveCentre(organisationId, centreId);
+            var moduleList = new List<ModuleDetail>();
+            var feeDetailList = new List<FeeDetail>();
+            int number = 0;
+            foreach (var item in modules)
+            {
+                number++;
+                moduleList.Add(new ModuleDetail()
+                {
+                    Name = item.Subject.Name,
+                    Number = number.ToString(),
+                    AttemptAllowed = item.Subject.NoOfAttemptsAllowed.ToString(),
+                    PassingMarks = item.Subject.PassingMarks.ToString(),
+                    TotalMarks = item.Subject.TotalMarks.ToString()
+                });
+            }
+            var candidateFee = RetrieveCandidateFees(organisationId, c => c.StudentCode == admission.Registration.StudentCode).Items.ToList();
+
+            foreach (var item in candidateFee)
+            {
+                feeDetailList.Add(new FeeDetail()
+                {
+                    InstallmentDate = item.InstallmentDate.ToString(),
+                    InstallmentAmount = item.InstallmentAmount.ToString(),
+                    Paymentdate = item.PaymentDate.ToString(),
+                    Status = item.IsPaymentDone != null && item.IsPaymentDone.Value ? "Paid" : "Pending",
+                    Type = System.Enum.GetName(typeof(FeeType), item.FeeTypeId) == FeeType.Installment.ToString()
+                          ? string.Format("{0}-{1}", System.Enum.GetName(typeof(FeeType), item.FeeTypeId), item.InstallmentNumber)
+                          : System.Enum.GetName(typeof(FeeType), item.FeeTypeId),
+                    AmountPaid = item.PaidAmount.ToString()
+                });
+            }
+
+            var enrollmentData = new CandidateEnrollment
+            {
+                BatchEndDate = admission.Batch?.BatchStartDate.ToShortDateString(),
+                BatchStartDate = admission.Batch?.BatchEndDate.ToShortDateString(),
+                CandidateAddress =
+                    string.Format("{0} {1} {2} {3}", admission.Registration.Enquiry.Address1,
+                        admission.Registration.Enquiry.Address2, admission.Registration.Enquiry.Address3,
+                        admission.Registration.Enquiry.Address4),
+                CandidateName =
+                    string.Format("{0} {1} {2}", admission.Registration.Enquiry.FirstName,
+                        admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName),
+                CentreAddress =
+                    string.Format("{0} {1} {2} {3} {4}", centre.Address1, centre.Address2,
+                        centre.Address3, centre.Address4, centre.PinCode),
+                CentreName = centre.Name,
+                CourseDuration = admission.Registration.CourseInstallment.Course.Duration.ToString(),
+                CourseName = admission.Registration.CourseInstallment.Course.Name,
+                EmailId = admission.Registration.Enquiry.EmailId,
+                MobileNumber = admission.Registration.Enquiry.Mobile.ToString(),
+                OrganisationName = organisationName.Name,
+                Modules = moduleList,
+                FeeDetails = feeDetailList,
+                TotalCourseFee = admission.Registration.CandidateInstallment.CourseFee.ToString(),
+                TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
+                BalanceFee = (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
+            };
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(enrollmentData), "Enrollment");
+
+        }
     }
 }
 

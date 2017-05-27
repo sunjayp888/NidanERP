@@ -84,7 +84,7 @@ namespace Nidan.Controllers
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
             var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
             var subject = NidanBusinessService.RetrieveSubject(UserOrganisationId, id.Value);
-            var selectedCourseIds = NidanBusinessService.RetrieveSubjectCourses(organisationId, id.Value);
+            var selectedCourseIds = NidanBusinessService.RetrieveSubjectCourses(organisationId,s=>s.SubjectId== id.Value);
 
             if (subject == null)
             {

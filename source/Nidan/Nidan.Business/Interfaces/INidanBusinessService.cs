@@ -161,7 +161,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int centreId, int enquiryId);
         IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
-        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, int subjectId);
+        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId,Expression<Func<SubjectCourse, bool>> predicate);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
         IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId);
@@ -172,7 +172,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
-        Admission RetrieveAdmission(int organisationId, int id);
+        Admission RetrieveAdmission(int organisationId,int centreId, int id);
         List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
         PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate);
@@ -247,5 +247,6 @@ namespace Nidan.Business.Interfaces
 
         //Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
+        byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission);
     }
 }

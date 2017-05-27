@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nidan.Business.Models
 {
-    class CandidateFeeReceipt
+    public class CandidateFeeReceipt
     {
         public string OrganisationName { get; set; }
         public string CentreAddress { get; set; }
