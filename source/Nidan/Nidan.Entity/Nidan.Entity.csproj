@@ -182,6 +182,7 @@
     <Compile Include="RegistrationSearchField.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="RoomAvailable.cs" />
     <Compile Include="RoomType.cs" />
     <Compile Include="Scheme.cs" />
     <Compile Include="Sector.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Taluka.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Trainer.cs" />
+    <Compile Include="TrainerAvailable.cs" />
     <Compile Include="TrainerSearchField.cs" />
     <Compile Include="UserAuthorisationFilter.cs" />
     <Compile Include="Validation\DateGreaterThanAttribute.cs" />

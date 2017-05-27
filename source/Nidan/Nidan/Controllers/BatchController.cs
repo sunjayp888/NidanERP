@@ -35,14 +35,14 @@ namespace Nidan.Controllers
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e=>e.CentreId==UserCentreId);
+            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var viewModel = new BatchViewModel()
             {
                 Batch = new Batch(),
                 BatchDay = new BatchDay(),
                 Course = new Course()
                 {
-                   Name = "Test"
+                    Name = "Test"
                 },
                 CourseInstallment = new CourseInstallment()
                 {
@@ -54,6 +54,8 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 SelectedTrainerIds = new List<int> { }
             };
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Id");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Id");
             return View(viewModel);
         }
 
@@ -73,7 +75,7 @@ namespace Nidan.Controllers
                 batchViewModel.Batch.OrganisationId = organisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
 
-                batchViewModel.Batch = NidanBusinessService.CreateBatch(organisationId, batchViewModel.Batch, batchViewModel.BatchDay,batchViewModel.SelectedTrainerIds);
+                batchViewModel.Batch = NidanBusinessService.CreateBatch(organisationId, batchViewModel.Batch, batchViewModel.BatchDay, batchViewModel.SelectedTrainerIds);
                 return RedirectToAction("Index");
             }
             batchViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
@@ -105,7 +107,7 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var batch = NidanBusinessService.RetrieveBatch(organisationId, id.Value);
-            var batchDay= NidanBusinessService.RetrieveBatchDay(organisationId, id.Value);
+            var batchDay = NidanBusinessService.RetrieveBatchDay(organisationId, id.Value);
             if (batch == null)
             {
                 return HttpNotFound();
@@ -133,6 +135,8 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => true).ToList(), "CourseInstallmentId", "Name"),
                 SelectedTrainerIds = batch?.BatchTrainers.Select(e => e.TrainerId).ToList()
             };
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Id");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Id");
             return View(viewModel);
         }
 
@@ -145,7 +149,7 @@ namespace Nidan.Controllers
             {
                 batchViewModel.Batch.OrganisationId = UserOrganisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
-                batchViewModel.Batch = NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch,batchViewModel.BatchDay,batchViewModel.SelectedTrainerIds);
+                batchViewModel.Batch = NidanBusinessService.UpdateBatch(UserOrganisationId, batchViewModel.Batch, batchViewModel.BatchDay, batchViewModel.SelectedTrainerIds);
                 //batchViewModel.BatchDay = NidanBusinessService.UpdateBatchDay(UserOrganisationId, batchViewModel.BatchDay);
                 return RedirectToAction("Index");
             }
@@ -176,5 +180,11 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveBatches(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging));
         }
 
+        [HttpPost]
+        public ActionResult GetRoom(int hours)
+        {
+            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours ).ToList();
+            return this.JsonNet(data);
+        }
     }
 }

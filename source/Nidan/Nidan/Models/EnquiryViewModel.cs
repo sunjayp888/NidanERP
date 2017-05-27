@@ -106,20 +106,4 @@ namespace Nidan.Models
         public string Name { get; set; }
         public int Id { get; set; }
     }
-
-    //public enum Month
-    //{
-    //    January,
-    //    February,
-    //    March,
-    //    April,
-    //    May,
-    //    June,
-    //    July,
-    //    August,
-    //    September,
-    //    October,
-    //    November,
-    //    December
-    //}
 }

@@ -10,7 +10,8 @@
     function BatchService($http) {
         var service = {
             retrieveBatches: retrieveBatches,
-            searchBatchByDate: searchBatchByDate
+            searchBatchByDate: searchBatchByDate,
+            retrieveRoomByHours: retrieveRoomByHours
         };
 
         return service;
@@ -35,6 +36,14 @@
                 orderBy: new Array(OrderBy)
             };
 
+            return $http.post(url, data);
+        }
+
+        function retrieveRoomByHours(hours) {
+            var url = "/Batch/GetRoom",
+                data = {
+                    hours: hours
+                };
             return $http.post(url, data);
         }
 

@@ -1931,6 +1931,36 @@ namespace Nidan.Data
             }
         }
 
+        public IEnumerable<RoomAvailable> RetrieveRoomAvailables(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .RoomAvailables
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Room)
+                    .Where(predicate)
+                    .AsNoTracking().ToList();
+            }
+        }
+
+        public IEnumerable<TrainerAvailable> RetrieveTrainerAvailables(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .TrainerAvailables
+                    .Include(c => c.Organisation)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Trainer)
+                    .Where(predicate)
+                    .AsNoTracking().ToList();
+            }
+        }
+
         public PagedResult<CandidateInstallment> RetrieveCandidateInstallments(int organisationId, Expression<Func<CandidateInstallment, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {

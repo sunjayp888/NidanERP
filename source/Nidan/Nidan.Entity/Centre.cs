@@ -37,6 +37,8 @@ namespace Nidan.Entity
             Mobilizations = new HashSet<Mobilization>();
             FollowUpHistories=new HashSet<FollowUpHistory>();
             FollowUps = new HashSet<FollowUp>();
+            RoomAvailables=new HashSet<RoomAvailable>();
+            TrainerAvailables=new HashSet<TrainerAvailable>();
         }
 
         public int CentreId { get; set; }
@@ -150,5 +152,11 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomAvailable> RoomAvailables { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TrainerAvailable> TrainerAvailables { get; set; }
     }
 }

@@ -48,6 +48,8 @@ namespace Nidan.Business.Interfaces
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory);
         Module CreateModule(int organisationId, Module module);
+        RoomAvailable CreateRoomAvailable(int organisationId, RoomAvailable roomAvailable);
+        TrainerAvailable CreateTrainerAvailable(int organisationId, TrainerAvailable trainerAvailable);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
 
         // Retrieve
@@ -183,6 +185,8 @@ namespace Nidan.Business.Interfaces
         List<Course> RetrieveCentreCourses(int organisationId, int centreId, Expression<Func<CentreCourse, bool>> predicate);
         List<Scheme> RetrieveCentreSchemes(int organisationId, int centreId, Expression<Func<CentreScheme, bool>> predicate);
         List<Sector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate);
+        List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate);
+        List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
         List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);

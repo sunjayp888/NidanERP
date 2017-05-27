@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.batches = [];
+        vm.rooms = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -25,8 +26,10 @@
         vm.retrieveFees = retrieveDownPayments;
         vm.durations = [];
         vm.retrieveDurations = retrieveDurations;
+        vm.retrieveRoomByHours = retrieveRoomByHours;
         vm.searchBatchByDate = searchBatchByDate;
         vm.viewBatch = viewBatch;
+        vm.hours = "";
         //vm.searchKeyword = "";
         //vm.searchMessage = "";
         initialise();
@@ -59,6 +62,13 @@
                   vm.searchMessage = vm.batches.length === 0 ? "No Records Found" : "";
                   return vm.batches;
               });
+        }
+
+        function retrieveRoomByHours() {
+            return BatchService.retrieveRoomByHours(vm.hours).then(function (response) {
+                vm.rooms = response.data;
+                return vm.rooms;
+            });
         }
 
         function pageChanged() {
