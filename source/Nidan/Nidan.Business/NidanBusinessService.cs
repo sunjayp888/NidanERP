@@ -108,8 +108,251 @@ namespace Nidan.Business
             var data = _nidanDataService.CreateBatch(organisationId, batch);
             CreateBatchDay(organisationId, data.BatchId, data.CentreId, batchDays);
             CreateBatchTrainer(organisationId, data.CentreId, data.BatchId, trainerIds);
+            CreateRommAvailable(organisationId, data.CentreId, batch, batchDays);
+            //CreateTrainerAvailable(organisationId, data.CentreId, batch, batchDays);
+
             return data;
         }
+
+        private void CreateRommAvailable(int organisationId, int centreId, Batch batch, BatchDay batchDays)
+        {
+            var batchTrainerData = RetrieveBatchTrainers(organisationId, batch.BatchId).ToList();
+            var roomAvailables = new List<RoomAvailable>();
+            var trainerAvailables = new List<TrainerAvailable>();
+            if (batchDays.IsMonday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Monday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Monday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+
+            }
+            if (batchDays.IsTuesday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Tuesday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Tuesday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            if (batchDays.IsWednesday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Wednesday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Wednesday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            if (batchDays.IsThursday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Thursday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Thursday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            if (batchDays.IsFriday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Friday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Friday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            if (batchDays.IsSaturday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Saturday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Saturday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            if (batchDays.IsSunday)
+            {
+                roomAvailables.Add(new RoomAvailable
+                {
+                    RoomId = batch.RoomId,
+                    Day = "Sunday",
+                    StartTimeHours = batch.BatchStartTimeHours,
+                    StartTimeMinutes = batch.BatchStartTimeMinutes,
+                    StartTimeSpan = batch.BatchStartTimeSpan,
+                    EndTimeHours = batch.BatchEndTimeHours,
+                    EndTimeMinutes = batch.BatchEndTimeMinutes,
+                    EndTimeSpan = batch.BatchEndTimeSpan,
+                    CentreId = centreId,
+                    OrganisationId = organisationId
+                });
+                foreach (var batchTrainer in batchTrainerData)
+                {
+                    trainerAvailables.Add(new TrainerAvailable
+                    {
+                        TrainerId = batchTrainer.TrainerId,
+                        Day = "Sunday",
+                        StartTimeHours = batch.BatchStartTimeHours,
+                        StartTimeMinutes = batch.BatchStartTimeMinutes,
+                        StartTimeSpan = batch.BatchStartTimeSpan,
+                        EndTimeHours = batch.BatchEndTimeHours,
+                        EndTimeMinutes = batch.BatchEndTimeMinutes,
+                        EndTimeSpan = batch.BatchEndTimeSpan,
+                        CentreId = centreId,
+                        OrganisationId = organisationId
+                    });
+                }
+            }
+            _nidanDataService.Create<RoomAvailable>(organisationId, roomAvailables);
+            _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailables);
+        }
+
+        //private void CreateTrainerAvailable(int organisationId, int centreId, Batch batch, BatchDay batchDays)
+        //{
+        //    var trainerAvailables = new List<TrainerAvailable>();
+
+        //}
 
         private void CreateBatchTrainer(int organisationId, int centreId, int batchId, List<int> trainerIds)
         {
@@ -846,6 +1089,16 @@ namespace Nidan.Business
         public Module CreateModule(int organisationId, Module module)
         {
             return _nidanDataService.CreateModule(organisationId, module);
+        }
+
+        public RoomAvailable CreateRoomAvailable(int organisationId, RoomAvailable roomAvailable)
+        {
+            return _nidanDataService.Create<RoomAvailable>(organisationId, roomAvailable);
+        }
+
+        public TrainerAvailable CreateTrainerAvailable(int organisationId, TrainerAvailable trainerAvailable)
+        {
+            return _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailable);
         }
 
         public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode,
@@ -2095,6 +2348,20 @@ namespace Nidan.Business
             var sectors =
                 _nidanDataService.RetrieveCentreSectors(organisationId, centreId, predicate).Select(e => e.Sector);
             return sectors.ToList();
+        }
+
+        public List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
+        {
+            var rooms =
+                _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, predicate).Select(e => e.Room);
+            return rooms.ToList();
+        }
+
+        public List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate)
+        {
+            var trainers =
+                _nidanDataService.RetrieveTrainerAvailables(organisationId, centreId, predicate).Select(e => e.Trainer);
+            return trainers.ToList();
         }
 
         public Registration RetrieveRegistration(int organisationId, int id)
