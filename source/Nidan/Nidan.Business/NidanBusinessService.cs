@@ -841,6 +841,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
         }
 
+        public Module CreateModule(int organisationId, Module module)
+        {
+            return _nidanDataService.CreateModule(organisationId, module);
+        }
+
         public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode,
             Registration registration)
         {
@@ -1872,6 +1877,21 @@ namespace Nidan.Business
                 paging);
         }
 
+        public Module RetrieveModule(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveModule(organisationId, id, p => true);
+        }
+
+        public PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveModules(organisationId, predicate, orderBy, paging);
+        }
+
+        public Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveModule(organisationId, moduleId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2338,6 +2358,11 @@ namespace Nidan.Business
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFeeData);
 
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
+        }
+
+        public Module UpdateModule(int organisationId, Module module)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, module);
         }
 
 
