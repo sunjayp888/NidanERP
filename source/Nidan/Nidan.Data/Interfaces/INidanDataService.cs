@@ -45,6 +45,7 @@ namespace Nidan.Data.Interfaces
         Admission CreateAdmission(int organisationId, Admission admission);
         Counselling CreateCounselling(int organisationId, Counselling counselling);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
+        Module CreateModule(int organisationId, Module module);
 
 
         // Retrieve
@@ -139,6 +140,8 @@ namespace Nidan.Data.Interfaces
         PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate);
 
 
         // Update

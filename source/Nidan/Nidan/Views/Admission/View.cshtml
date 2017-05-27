@@ -191,7 +191,7 @@
                                 <div id="batchDropDown" class="form-group">
                                     @Html.LabelFor(model => model.Admission.BatchId, "Batch", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.DropDownListFor(model => model.Admission.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12", @disabled = "disabled" })
                                         @Html.ValidationMessageFor(model => model.Admission.BatchId, "", new { @class = "help-block" })
                                     </div>
                                 </div>
@@ -322,23 +322,37 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Trainer(s)</button>
+                                                </span>
+
+                                                @foreach (var trainer in Model.TrainerName)
+                                                {
+
+                                                    <input type="text" disabled="disabled" value="@trainer" class="form-control col-lg-4">
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @*@Html.Partial("_Admission", Model)*@
-                    <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
-                        @if (Model.Admission.BatchId == null)
-                        {
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <a href="@Url.Action("AssignBatch", "Admission", new {id = Model.Admission.AdmissionId})" class="btn btn-success" role="button">
-                                        Assign Batch
-                                    </a>
+                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
+                            @if (Model.Admission.BatchId == null)
+                            {
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <a href="@Url.Action("AssignBatch", "Admission", new {id = Model.Admission.AdmissionId})" class="btn btn-success" role="button">
+                                            Assign Batch
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
                     </div>
                 }
             </div>
@@ -447,6 +461,7 @@
                             $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
                             $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
                             $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
+                            $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
                             $("#txtBatchMonth").val(result.Month);
                             $("#txtBatchStartDate").val(result.BatchStartDate.toLocaleString('dd-mm-yyyy'));
                             $("#txtBatchEndDate").val(result.BatchEndDate);
@@ -459,7 +474,7 @@
                     processData: false
                 });
             }
-           
+
             var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
             var registrationAmount1=@Model.Registration.CandidateFee.PaidAmount;
             var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount1);

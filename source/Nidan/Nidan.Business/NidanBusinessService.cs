@@ -767,6 +767,11 @@ namespace Nidan.Business
                 followup.Close = "Yes";
                 followup.ClosingRemark = "Admission Done";
                 followup.AdmissionId = admissionData.AdmissionId;
+                followup.Centre = null;
+                followup.Course = null;
+                followup.Enquiry = null;
+                followup.Organisation = null;
+                followup.Registration = null;
                 var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
                 var followUpHistory = new FollowUpHistory
                 {
@@ -834,6 +839,11 @@ namespace Nidan.Business
         public FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory)
         {
             return _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
+        }
+
+        public Module CreateModule(int organisationId, Module module)
+        {
+            return _nidanDataService.CreateModule(organisationId, module);
         }
 
         public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode,
@@ -1867,6 +1877,21 @@ namespace Nidan.Business
                 paging);
         }
 
+        public Module RetrieveModule(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveModule(organisationId, id, p => true);
+        }
+
+        public PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveModules(organisationId, predicate, orderBy, paging);
+        }
+
+        public Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveModule(organisationId, moduleId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2335,6 +2360,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
         }
 
+        public Module UpdateModule(int organisationId, Module module)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, module);
+        }
+
 
         public Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission)
         {
@@ -2371,6 +2401,7 @@ namespace Nidan.Business
                         OrganisationId = organisationId,
                         BatchId = batch.BatchId,
                         TrainerId = item,
+                        CentreId = batch.CentreId
                     });
                 }
             }
@@ -2495,6 +2526,7 @@ namespace Nidan.Business
             var candidateFeeData = _nidanDataService.RetrieveCandidateFee(organisationId, id, r => r.CentreId == centreId);
             var totalInstallment = RetrieveCandidateInstallment(organisationId, candidateFeeData.CandidateInstallmentId ?? 0, e => true).NumberOfInstallment.ToString();
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
+            var centre = RetrieveCentre(organisationId, centreId);
             int value = candidateFeeData.FeeTypeId;
             FeeType feeType = (FeeType)value;
             var candidateFeeReceipt = new CandidateFeeReceipt()
@@ -2506,6 +2538,7 @@ namespace Nidan.Business
                     string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.FirstName + " " + enquiry.LastName,
                 CentreName = candidateFeeData.Centre.Name,
+                CentreAddress = string.Concat(centre.Address1,centre.Address2,centre.Address3,centre.Address4),
                 CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
                 CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
                 FeeTypeName = feeType.ToString(),

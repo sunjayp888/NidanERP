@@ -67,6 +67,17 @@
         </tr>
     </table>
     <br />
+	<table border="0" width="100%">
+		<tr>
+			<td style="float : left">
+                <b>Receipt Date : @Model.PaymentDate</b>
+            </td>
+            <td style="float : right">
+                <b>Receipt No. : @Model.InvoiceNumber</b>
+            </td>
+            <td></td>
+		</tr>
+	</table>
     <!-- Address & Date -->
 
     <div class="PayslipBox">
@@ -109,7 +120,6 @@
             </tr>
             <tr>
                 <td>Course Duration :</td>
-                <td>@Model.CourseDuration<h3>hrs</h3></td>
                 <td>@Model.CourseDuration Hours.</td>
             </tr>
             <tr>
@@ -121,15 +131,15 @@
                 </td>
                 <td></td>
             </tr>
-            <tr>
-                <td>
-                    Receipt Date : @Model.PaymentDate
-                </td>
-                <td>
-                    Receipt No. : @Model.InvoiceNumber
-                </td>
-                <td></td>
-            </tr>
+            <!-- <tr> -->
+                <!-- <td> -->
+                    <!-- Receipt Date : @Model.PaymentDate -->
+                <!-- </td> -->
+                <!-- <td> -->
+                    <!-- Receipt No. : @Model.InvoiceNumber -->
+                <!-- </td> -->
+                <!-- <td></td> -->
+            <!-- </tr> -->
         </table>
     </div>
     <div class="PayslipBox">

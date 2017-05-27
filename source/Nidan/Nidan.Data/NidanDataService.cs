@@ -284,6 +284,18 @@ namespace Nidan.Data
             }
         }
 
+        public Module CreateModule(int organisationId, Module module)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                //admission.RegistrationPaymentReceipt = null;
+                module = context.Modules.Add(module);
+                context.SaveChanges();
+
+                return module;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -2127,6 +2139,42 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Modules
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Course)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ModuleId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Modules
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ModuleId == moduleId);
             }
         }
 

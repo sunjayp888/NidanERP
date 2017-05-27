@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using Microsoft.Owin.Security.Provider;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -318,7 +319,16 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
+            var batchData = NidanBusinessService.RetrieveBatch(organisationId, admission.BatchId ?? 0);
+            var trainerIds = batchData?.BatchTrainers.Select(e => e.TrainerId).ToList();
             var candidateFeeByAdmission = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.StudentCode == admission.Registration.StudentCode && e.FeeTypeId == (int)FeeType.Admission).Items.FirstOrDefault();
+            var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true).Where(e =>
+                {
+                    return trainerIds != null && trainerIds.Contains(e.TrainerId);
+                });
+
+            var enumerable = trainers as IList<Trainer> ?? trainers.ToList();
+            var name = enumerable.Select(e => e.Title + " " + e.FirstName + " " + e.MiddleName + " " + e.LastName);
             var viewModel = new AdmissionViewModel
             {
                 Course = new Course()
@@ -344,7 +354,8 @@ namespace Nidan.Controllers
                 BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
                 Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
                 Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
-                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name")
+                CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name"),
+                TrainerName = name
             };
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
             viewModel.DiscountList = new SelectList(viewModel.DiscountType, "Id", "Name");

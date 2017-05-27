@@ -26,11 +26,13 @@ namespace Nidan.Models
         public SelectList Batches { get; set; }
         public SelectList Rooms { get; set; }
         public SelectList CourseInstallments { get; set; }
+        public SelectList Trainers { get; set; }
         public int RegistrationId { get; set; }
         public int IntrestedCourseId { get; set; }
         public int BatchTimePreferId { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
         public IEnumerable<SelectListItem> DiscountList { get; set; }
+        public IEnumerable<string> TrainerName { get; set; }
         public List<TitleType> TitleType => new List<TitleType>()
         {
             new TitleType() {Name = "Mr.",Value = "Mr."},

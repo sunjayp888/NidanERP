@@ -47,6 +47,7 @@ namespace Nidan.Business.Interfaces
         Admission CreateAdmission(int organisationId, int centreId, int personnelId,Admission admission, CandidateFee candidateFee);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory);
+        Module CreateModule(int organisationId, Module module);
         //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
 
         // Retrieve
@@ -193,7 +194,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        Module RetrieveModule(int organisationId, int id);
+        PagedResult<Module> RetrieveModules(int organisationId, Expression<Func<Module, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -219,6 +222,7 @@ namespace Nidan.Business.Interfaces
         BatchDay UpdateBatchDay(int organisationId, BatchDay batchDay);
         CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee);
         Registration UpdateRegistartion(int organisationId, Registration registration);
+        Module UpdateModule(int organisationId, Module module);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
