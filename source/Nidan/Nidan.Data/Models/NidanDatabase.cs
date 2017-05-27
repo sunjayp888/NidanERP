@@ -91,6 +91,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<RegistrationSearchField> RegistrationSearchFields { get; set; }
         public virtual DbSet<AdmissionSearchField> AdmissionSearchFields { get; set; }
         public virtual DbSet<CandidateFeeSearchField> CandidateFeeSearchFields { get; set; }
+        public virtual DbSet<Module> Modules { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1339,6 +1340,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateFeeSearchField>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Module>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -256,6 +256,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobilizationController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MobilizationViewModel.cs" />
+    <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1149,6 +1151,7 @@
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
+    <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
@@ -1180,6 +1183,7 @@
     <Content Include="Scripts\getorgchart.js" />
     <Content Include="Scripts\graphics.png" />
     <Content Include="Scripts\jquery-validate-bootstrap.js" />
+    <Content Include="Scripts\ModuleController.js" />
     <Content Include="Scripts\moris\example.js" />
     <Content Include="Scripts\moris\morris.min.js" />
     <Content Include="Scripts\moris\raphael-min.js" />
@@ -1563,6 +1567,8 @@
     <Content Include="Views\FollowUp\_FollowUpHistory.cshtml" />
     <Content Include="Views\CourseInstallment\Index.cshtml" />
     <Content Include="Views\Registration\View.cshtml" />
+    <Content Include="Views\Module\Index.cshtml" />
+    <Content Include="Views\Module\Create.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
