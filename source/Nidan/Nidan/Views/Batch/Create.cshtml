@@ -92,7 +92,7 @@
                 //then add days in days like days = days + publicholidaycount
                 var numberOfPublicHoliday = 3;
                 days = days + numberOfPublicHoliday;
-                $('#Batch_BatchEndDate').val(batchEndDate);
+                $('#Batch_BatchEndDate').val(moment().add(days, 'days').format('DD MMMM YYYY'));
             }
         });
 
