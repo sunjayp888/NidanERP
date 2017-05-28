@@ -53,7 +53,7 @@ namespace Nidan.Controllers
         {
             var studentData =
                 NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-                    e => e.CentreId == UserCentreId && e.StudentCode == documentViewModel.StudentCode).FirstOrDefault();
+                    e => e.CentreId == UserCentreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
             _documentService.Create(UserOrganisationId, UserCentreId,
                             documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
                             studentData?.FirstName, "Counselling Document", documentViewModel.Attachment.FileName,

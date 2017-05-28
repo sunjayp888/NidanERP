@@ -16,7 +16,6 @@ namespace Nidan.Controllers
     [Authorize]
     public class BatchController : BaseController
     {
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public BatchController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
@@ -74,7 +73,6 @@ namespace Nidan.Controllers
             {
                 batchViewModel.Batch.OrganisationId = organisationId;
                 batchViewModel.Batch.CentreId = UserCentreId;
-
                 batchViewModel.Batch = NidanBusinessService.CreateBatch(organisationId, batchViewModel.Batch, batchViewModel.BatchDay, batchViewModel.SelectedTrainerIds);
                 return RedirectToAction("Index");
             }
@@ -112,10 +110,6 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var course = NidanBusinessService.RetrieveCourse(organisationId, batch.CourseId);
-            //var room = NidanBusinessService.RetrieveRoom(organisationId, batch.RoomId);
-            var courseInstallment = NidanBusinessService.RetrieveCourseInstallment(organisationId,
-                batch.CourseInstallmentId);
             var viewModel = new BatchViewModel
             {
                 Batch = batch,

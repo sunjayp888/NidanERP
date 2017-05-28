@@ -13,6 +13,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
+
                 @using (Html.BeginForm())
                 {
                     <div class="form-horizontal">
@@ -63,18 +64,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="input-group">
-
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                    </span>
-
-                                    @foreach (var course in Model.Courses)
-                                    {
-
-                                        <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-
-                                    }
+                                <div class="col-lg-12">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                        </span>
+                                        @foreach (var course in Model.Courses)
+                                        {
+                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,41 +91,11 @@
                 <h2>Create Registration <small></small></h2>
                 <div class="clearfix"></div>
             </div>
-            @*<div class="title_right">
-                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                        <div class="input-group">
-                            <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>*@
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
-                    @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.RegistrationPaymentReceiptId)
-                        @Html.HiddenFor(model => model.EnquiryId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.IntrestedCourseId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.SchemeId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.SectorId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.Address1)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.StudentCode)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.EnquiryTypeId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.HowDidYouKnowAboutId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.OccupationId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.EducationalQualificationId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.ReligionId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.StudentTypeId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.Enquiry.BatchTimePreferId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.CourseId)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.RegistrationDate)*@
-                    @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.ChequeNo)
-                        @Html.HiddenFor(model => model.RegistrationPaymentReceipt.BankName)*@
-                    @*@Html.HiddenFor(model => model.RegistrationPaymentReceipt.Particulars)*@
                     @Html.HiddenFor(model => model.Registration.CourseInstallment.Name)
                     @Html.AntiForgeryToken()
-
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
                         {
@@ -136,28 +105,6 @@
                                 </div>
                             </div>
                         }
-                        @*@if (Model.EnquiryId != 0)
-                            {
-                            if (Model.Registration.Enquiry.EnquiryStatus == "Enquiry")
-                            {
-                            @Html.Partial("_RegistrationFromEnquiry", Model)
-                            }
-                            if (Model.RegistrationPaymentReceipt.Enquiry.EnquiryStatus != "Enquiry")
-                            {
-                            @Html.Partial("_RegistrationPaymentReceipt", Model)
-                            }
-                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                                <div class="form-group">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-success">Register</button>
-                                    </div>
-                                </div>
-                            </div>
-                            }
-                            @if (Model.EnquiryId == 0)
-                            {
-                            @Html.Partial("_SearchEnquiry", Model)
-                            }*@
                         @Html.Partial("_Registration", Model)
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
