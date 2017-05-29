@@ -6,12 +6,12 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("AdmissionSearchField")]
-    public partial class AdmissionSearchField
+    [Table("AdmissionGrid")]
+    public partial class AdmissionGrid
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(353)]
+        [StringLength(302)]
         public string CandidateName { get; set; }
 
         [Key]
@@ -43,10 +43,5 @@ namespace Nidan.Entity
         [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
-
-        [Key]
-        [Column(Order = 6)]
-        [StringLength(1470)]
-        public string SearchField { get; set; }
     }
 }

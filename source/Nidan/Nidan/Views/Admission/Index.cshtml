@@ -108,19 +108,19 @@
                                         <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="admission.Centre.Name"></span></td>
+                                                <td><span ng-bind="admission.CentreName"></span></td>
                                             }
-                                            <td><span ng-bind="admission.Registration.Enquiry.Title"></span> <span ng-bind="admission.Registration.Enquiry.FirstName"></span> <span ng-bind="admission.Registration.Enquiry.MiddleName"></span> <span ng-bind="admission.Registration.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="admission.CandidateName"></span></td>
                                             <td>
-                                                <span ng-bind="admission.Batch.Name"></span>
-                                                <button ng-if="admission.BatchId==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
+                                                <span ng-bind="admission.BatchName"></span>
+                                                <button ng-if="admission.BatchName==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
                                             </td>
-                                            <td><span ng-bind="admission.Registration.CandidateInstallment.CourseFee"></span>.00</td>
-                                            <td><span ng-bind="admission.Registration.CandidateFee.PaidAmount"></span>.00</td>
+                                            <td><span ng-bind="admission.TotalFee"></span>.00</td>
+                                            <td><span ng-bind="admission.PaidAmount"></span>.00</td>
                                             @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
                                             <td>
-                                                <button ng-if="admission.Registration.CandidateFee.Particulars==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
-                                                <span ng-if="admission.Registration.CandidateFee.Particulars!=0.00" ng-bind="admission.Registration.CandidateFee.Particulars"></span>
+                                                <button ng-if="admission.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                                <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount"></span>
                                             </td>
                                             <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                             <td>

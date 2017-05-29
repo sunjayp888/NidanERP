@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="AbsenceType.cs" />
     <Compile Include="Admission.cs" />
+    <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
     <Compile Include="Batch.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Brainstorming.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="CandidateFee.cs" />
+    <Compile Include="CandidateFeeGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
