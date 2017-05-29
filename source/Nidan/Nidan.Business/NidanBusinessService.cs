@@ -1808,10 +1808,10 @@ namespace Nidan.Business
                 paging);
         }
 
-        public PagedResult<Holiday> RetrieveHolidays(int organisationId, List<OrderBy> orderBy = null,
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveHolidays(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveHolidays(organisationId, predicate, orderBy, paging);
         }
 
         public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)

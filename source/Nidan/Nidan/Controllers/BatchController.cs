@@ -180,5 +180,13 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours ).ToList();
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult GetHoliday(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveHolidays(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.HolidayDate >= fromDate && e.HolidayDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

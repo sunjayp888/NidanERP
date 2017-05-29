@@ -68,31 +68,63 @@
             showCustomRangeLabel: false,
             opens: 'left',
             minDate: moment(),
+            daysOfTheWeek: ['M', 'T', 'W', 'T', 'F'],
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
+        moment.weekdays(true);
 
-
-        jQuery(function() {
+        jQuery(function () {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".date")
                 .on('apply.daterangepicker',
-                    function(ev, picker) {
+                    function (ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
 
-        $('#Batch_BatchStartDate').change(function() {
+        //$(function () {
+        //    $("#Batch_BatchStartDate").daterangepicker({ dateFormat: "yy-mm-dd" });
+        //    $("#datepicker").on("change", function () {
+        //        var selected = $(this).val();
+        //        alert(selected);
+        //    });
+        //});
+
+        $('#Batch_BatchStartDate').change(function () {
             var days = $('#Course_Duration').val() / $('#Batch_NumberOfHoursDaily').val();
-            if (days != 0) {
+            if (days != 0 || days != NaN) {
+                var batchStartDate = $('#Batch_BatchStartDate').val();
                 var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
                 //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
                 //then add days in days like days = days + publicholidaycount
-                var numberOfPublicHoliday = 3;
-                days = days + numberOfPublicHoliday;
-                $('#Batch_BatchEndDate').val(moment().add(days, 'days').format('DD MMMM YYYY'));
+                
+                $.ajax({
+                    url: '/Batch/GetHoliday',
+                    type: 'POST',
+                    data: JSON.stringify({ fromDate: batchStartDate, toDate: batchEndDate }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    error: function (xhr) {
+                        alert('Error: ' + xhr.statusText);
+                    },
+                    success: function (result) {
+                        $("#Batch_NumberOfHolidays").empty();
+                        $("#Batch_NumberOfHolidays").val(result.Items.length);
+                        //$("#Batch_CourseId")
+                        //    .append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
+                        //$("#Course_Duration").val(result.Course.Duration);
+                        //$("#CourseInstallment_Fee").val(result.Fee);
+                        //$("#CourseInstallment_DownPayment").val(result.DownPayment);
+                        var numberOfPublicHoliday = result.Items.length;
+                        days = days + numberOfPublicHoliday;
+                        $('#Batch_BatchEndDate').val(moment().add(days, 'days').format('DD MMMM YYYY'));
+                    },
+                    async: true,
+                    processData: false
+                });
             }
         });
 
@@ -100,7 +132,7 @@
         //=========================================================================populate course based on courseInstallment
 
         $('#Batch_CourseInstallmentId')
-            .change(function() {
+            .change(function () {
                 var courseInstallmentId = $('#Batch_CourseInstallmentId :selected').val();
                 $.ajax({
                     url: '/Batch/GetCourse',
@@ -108,10 +140,10 @@
                     data: JSON.stringify({ courseInstallmentId: courseInstallmentId }),
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
-                    error: function(xhr) {
+                    error: function (xhr) {
                         alert('Error: ' + xhr.statusText);
                     },
-                    success: function(result) {
+                    success: function (result) {
                         $("#Batch_CourseId").empty();
                         $("#Batch_CourseId")
                             .append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
@@ -126,11 +158,11 @@
 
         //=======================================================================Do not allow decimal
         $(document)
-            .ready(function() {
+            .ready(function () {
                 /* Allow digits only */
                 $(".batchStartTime") &&
                     $(".Batch_NumberOfHoursDaily")
-                    .keypress(function(e) {
+                    .keypress(function (e) {
                         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                             $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
                             return false;
@@ -139,7 +171,7 @@
                 /* Do not allow paste */
                 $('.batchStartTime')
                     .bind("paste",
-                        function(e) {
+                        function (e) {
                             e.preventDefault();
                         });
             });
@@ -147,7 +179,7 @@
 
         $("#Batch_NumberOfHoursDaily")
             .on("keypress keyup",
-                function() {
+                function () {
                     if ($(this).val() == '0') {
                         $(this).val('');
                     }
@@ -233,10 +265,10 @@
 
             //=============================================================================== on num of daily hours change month and installment
             $('#Batch_NumberOfHoursDaily')
-                .keyup(function() {
+                .keyup(function () {
 
                     getendtime();
-                    checkboxes();
+                    //checkboxes();
                 });
             //===================================================== readiobutton AM / PM selection
 
@@ -556,7 +588,7 @@
 
         var numberofinstallment = $("#Batch_NumberOfInstallment").text();
 
-        $("#Batch_NumberOfInstallment").keypress(function() {
+        $("#Batch_NumberOfInstallment").keypress(function () {
             var noofinstallmentvalue = numberofinstallment;
             var noofinstallmentext = $("#Batch_NumberOfInstallment").val();
             if (parseInt(noofinstallmentvalue) < parseInt(noofinstallmentext)) {
@@ -581,13 +613,13 @@
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
 
-        $("#Batch_BatchStartTimeMinutes").keyup(function() {
+        $("#Batch_BatchStartTimeMinutes").keyup(function () {
             var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
             $("#Batch_BatchEndTimeMinutes").val(startimeminute);
         });
 
         $('#btnsubmit')
-            .onclick(function() {
+            .click(function () {
                 var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length - 1;
 
                 if (checkboxlength == 0)
@@ -600,36 +632,36 @@
 
 
 @*Create view [dbo].[AdmissionGrid]
-AS
-Select
-CandidateName = E.FirstName+' '+E.MiddleName+' '+E.Lastname,
-BatchName=B.Name,
-TotalFee=CI.CourseFee,
-PaidAmount=sum(CF.PaidAmount),
-PendingAmount = CI.CourseFee - sum(CF.PaidAmount),
-A.AdmissionDate,
-A.AdmissionId,
-CentreName=C.Name,
-C.CentreId
-from Admission A
-INNER JOIN REGISTRATION R ON R.RegistrationId =  A.RegistrationId
-INNER JOIN ENQUIRY E ON E.EnquiryId = R.EnquiryId
-INNER JOIN BATCH B ON B.BatchId = A.BatchId
-INNER JOIN CandidateInstallment CI on CI.StudentCode = E.StudentCode
-INNER JOIN CandidateFee CF on CF.CandidateInstallmentId = CI.CandidateInstallmentId
-INNER JOIN Centre C on C.CentreId = A.CentreId
-group by
-E.MiddleName,
-E.FirstName,
-E.Lastname,
-B.Name,
-CI.CourseFee,
-A.AdmissionDate,
-C.CentreId,
-C.Name,
-A.AdmissionId
+    AS
+    Select
+    CandidateName = E.FirstName+' '+E.MiddleName+' '+E.Lastname,
+    BatchName=B.Name,
+    TotalFee=CI.CourseFee,
+    PaidAmount=sum(CF.PaidAmount),
+    PendingAmount = CI.CourseFee - sum(CF.PaidAmount),
+    A.AdmissionDate,
+    A.AdmissionId,
+    CentreName=C.Name,
+    C.CentreId
+    from Admission A
+    INNER JOIN REGISTRATION R ON R.RegistrationId =  A.RegistrationId
+    INNER JOIN ENQUIRY E ON E.EnquiryId = R.EnquiryId
+    INNER JOIN BATCH B ON B.BatchId = A.BatchId
+    INNER JOIN CandidateInstallment CI on CI.StudentCode = E.StudentCode
+    INNER JOIN CandidateFee CF on CF.CandidateInstallmentId = CI.CandidateInstallmentId
+    INNER JOIN Centre C on C.CentreId = A.CentreId
+    group by
+    E.MiddleName,
+    E.FirstName,
+    E.Lastname,
+    B.Name,
+    CI.CourseFee,
+    A.AdmissionDate,
+    C.CentreId,
+    C.Name,
+    A.AdmissionId
 
-GO*@
+    GO*@
 
 
 
