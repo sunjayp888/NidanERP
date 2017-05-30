@@ -2154,7 +2154,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveModule(organisationId, moduleId, predicate);
         }
 
-        public PagedResult<CandidateInstallment> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallment, bool>> predicate,
+        public PagedResult<CandidateInstallmentSearchField> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallmentSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidateInstallmentBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
