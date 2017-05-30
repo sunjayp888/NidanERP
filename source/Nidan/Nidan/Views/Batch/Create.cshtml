@@ -93,34 +93,44 @@
         //    });
         //});
 
+
+
+
         $('#Batch_BatchStartDate').change(function () {
             var days = $('#Course_Duration').val() / $('#Batch_NumberOfHoursDaily').val();
-            if (days != 0 || days != NaN) {
+            if (days != 0) {
                 var batchStartDate = $('#Batch_BatchStartDate').val();
+                var numberOfCourseHours = $('#Course_Duration').val();
+                var dailyBatchHours = $('#Batch_NumberOfHoursDaily').val();
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length - 1;
+                var numberOfWeekDays = checkboxlength;
                 var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
                 //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
                 //then add days in days like days = days + publicholidaycount
-                
+
                 $.ajax({
                     url: '/Batch/GetHoliday',
                     type: 'POST',
-                    data: JSON.stringify({ fromDate: batchStartDate, toDate: batchEndDate }),
+                    data: JSON.stringify({
+                        startDate: batchStartDate,
+                        numberOfCourseHours: numberOfCourseHours,
+                        dailyBatchHours: dailyBatchHours,
+                        numberOfWeekDays: numberOfWeekDays
+                    }),
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
-                    error: function (xhr) {
-                        alert('Error: ' + xhr.statusText);
-                    },
+                    //error: function (xhr) {
+                    //    alert('Error: ' + xhr.statusText);
+                    //},
                     success: function (result) {
+                        //var start = result.StartDate.getDate() + " " + result.StartDate.getMonthName() + " " + result.StartDate.getFullYear();
                         $("#Batch_NumberOfHolidays").empty();
-                        $("#Batch_NumberOfHolidays").val(result.Items.length);
-                        //$("#Batch_CourseId")
-                        //    .append($("<option></option>").val(result.Course.CourseId).html(result.Course.Name));
-                        //$("#Course_Duration").val(result.Course.Duration);
-                        //$("#CourseInstallment_Fee").val(result.Fee);
-                        //$("#CourseInstallment_DownPayment").val(result.DownPayment);
-                        var numberOfPublicHoliday = result.Items.length;
-                        days = days + numberOfPublicHoliday;
-                        $('#Batch_BatchEndDate').val(moment().add(days, 'days').format('DD MMMM YYYY'));
+                        $("#Batch_NumberOfHolidays").val(result.Holiday);
+                        $('#Batch_BatchStartDate').val(result.StartDate);
+                        $('#Batch_BatchEndDate').val(result.EndDate);
+                        $('#Batch_AssessmentDate').val(result.AssessmentDate);
+                        $('#Batch_Month').val(result.Month); 
+                        $('#Batch_NumberOfInstallment').val(result.Month-2);
                     },
                     async: true,
                     processData: false

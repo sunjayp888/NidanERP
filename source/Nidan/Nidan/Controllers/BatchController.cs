@@ -31,10 +31,11 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
+            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => e.CentreId==centreId);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
-            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
+            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == centreId);
             var viewModel = new BatchViewModel()
             {
                 Batch = new Batch(),
@@ -53,8 +54,8 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 SelectedTrainerIds = new List<int> { }
             };
-            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Id");
-            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Id");
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -129,8 +130,8 @@ namespace Nidan.Controllers
                 CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, e => true).ToList(), "CourseInstallmentId", "Name"),
                 SelectedTrainerIds = batch?.BatchTrainers.Select(e => e.TrainerId).ToList()
             };
-            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Id");
-            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Id");
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -177,15 +178,15 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetRoom(int hours)
         {
-            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours ).ToList();
+            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => true).ToList();
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult GetHoliday(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
-         {
+        public ActionResult GetHoliday(int numberOfCourseHours, int dailyBatchHours, int numberOfWeekDays, DateTime startDate)
+        {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveHolidays(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.HolidayDate >= fromDate && e.HolidayDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.GetBatchDetail(UserOrganisationId, UserCentreId, numberOfCourseHours, startDate, dailyBatchHours, numberOfWeekDays);
             return this.JsonNet(data);
         }
     }

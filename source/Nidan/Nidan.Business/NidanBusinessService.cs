@@ -2161,6 +2161,28 @@ namespace Nidan.Business
                 paging);
         }
 
+        public BatchMonth GetBatchDetail(int organisationId,int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays)
+        {
+            var hoursPerWeekToWork = dailyBatchHours * numberOfWeekDays;
+            var totalNumberOfDays = (numberOfCourseHours / hoursPerWeekToWork) * 7;
+            var endDate = startDate.AddDays(totalNumberOfDays);
+            //calculate public holiday from startdate and endDate for eg 7
+            var date = endDate;
+            var publicHoliday = RetrieveHolidays(organisationId, e => e.HolidayDate >= startDate && e.HolidayDate <= date && e.CentreId==centreId).Items.Count();
+            int months = (endDate.Year - startDate.Year) * 12 + endDate.Month - startDate.Month;
+            endDate = endDate.AddDays(publicHoliday);
+            var assessmentDate = endDate.AddDays(3);
+
+            return new BatchMonth
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                Month = months,
+                Holiday = publicHoliday,
+                AssessmentDate = assessmentDate
+            };
+        }
+
         #endregion
 
         #region // Update
@@ -2360,8 +2382,9 @@ namespace Nidan.Business
         public List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
         {
             var rooms =
-                _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, predicate).Select(e => e.Room);
-            return rooms.ToList();
+                // _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, predicate).Select(e => e.Room);
+                _nidanDataService.RetrieveRooms(organisationId, e => true).Items.ToList();
+            return rooms;
         }
 
         public List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate)
