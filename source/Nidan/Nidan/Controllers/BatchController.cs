@@ -33,7 +33,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => e.CentreId==centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => e.CentreId == centreId);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == centreId);
             var viewModel = new BatchViewModel()
@@ -56,6 +56,7 @@ namespace Nidan.Controllers
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
+            viewModel.NumberOfHoursDailyList = new SelectList(viewModel.NumberOfHoursDailyType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -132,6 +133,7 @@ namespace Nidan.Controllers
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
+            viewModel.NumberOfHoursDailyList = new SelectList(viewModel.NumberOfHoursDailyType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -179,14 +181,15 @@ namespace Nidan.Controllers
         public ActionResult GetRoom(int hours)
         {
             var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => true).ToList();
+            //NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours).ToList();
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult GetHoliday(int numberOfCourseHours, int dailyBatchHours, int numberOfWeekDays, DateTime startDate)
+        public ActionResult GetHoliday(int numberOfCourseHours, int dailyBatchHours, int numberOfWeekDays, DateTime startDate, int courseFee, int downPayment)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.GetBatchDetail(UserOrganisationId, UserCentreId, numberOfCourseHours, startDate, dailyBatchHours, numberOfWeekDays);
+            var data = NidanBusinessService.GetBatchDetail(UserOrganisationId, UserCentreId, numberOfCourseHours, startDate, dailyBatchHours, numberOfWeekDays, courseFee, downPayment);
             return this.JsonNet(data);
         }
     }

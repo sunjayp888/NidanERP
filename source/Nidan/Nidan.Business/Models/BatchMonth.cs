@@ -13,5 +13,7 @@ namespace Nidan.Business.Models
         public DateTime AssessmentDate { get; set; }
         public int Month { get; set; }
         public int Holiday { get; set; }
+        public int NumberOfInstallment { get; set; }
+        public int InstallmentAmount { get; set; }
     }
 }

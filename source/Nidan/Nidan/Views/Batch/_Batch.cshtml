@@ -75,7 +75,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Batch.NumberOfHoursDaily, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.NumberOfHoursDaily, new { @class = "form-control col-md-7 col-xs-12", @max = 8, @onkeyup = "getendtime()" })
+                    @Html.DropDownListFor(model => model.Batch.NumberOfHoursDaily, Model.NumberOfHoursDailyList, "Select Hours", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Batch.NumberOfHoursDaily, "", new { @class = "help-block" })
                 </div>
             </div>

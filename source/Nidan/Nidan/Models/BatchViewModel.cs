@@ -22,6 +22,7 @@ namespace Nidan.Models
         public SelectList CourseInstallments { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
+        public IEnumerable<SelectListItem> NumberOfHoursDailyList { get; set; }
         public List<int> SelectedTrainerIds
         {
             get
@@ -117,6 +118,18 @@ namespace Nidan.Models
             new MinutesType() {Id = 60,Name = "60"}
 
         };
+
+        public List<NumberOfHoursDailyType> NumberOfHoursDailyType => new List<NumberOfHoursDailyType>()
+        {
+            new NumberOfHoursDailyType() { Id = 01,Name = "01"},
+            new NumberOfHoursDailyType() { Id = 02,Name = "02"},
+            new NumberOfHoursDailyType() { Id = 03,Name = "03"},
+            new NumberOfHoursDailyType() { Id = 04,Name = "04"},
+            new NumberOfHoursDailyType() { Id = 05,Name = "05"},
+            new NumberOfHoursDailyType() { Id = 06,Name = "06"},
+            new NumberOfHoursDailyType() { Id = 07,Name = "07"},
+            new NumberOfHoursDailyType() { Id = 08,Name = "08"}
+        };
     }
     public class HoursType
     {
@@ -125,6 +138,12 @@ namespace Nidan.Models
     }
 
     public class MinutesType
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class NumberOfHoursDailyType
     {
         public int Id { get; set; }
         public string Name { get; set; }
