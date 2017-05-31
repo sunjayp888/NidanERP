@@ -15,6 +15,7 @@ namespace Nidan.Models
         public CandidateInstallment CandidateInstallment { get; set; }
         public CourseInstallment CourseInstallment { get; set; }
         public SelectList PaymentModes { get; set; }
+        public SelectList CounsellingCourse { get; set; }
         public int EnquiryId { get; set; }
         public string StudentCode { get; set; }
         public SelectList Courses { get; set; }

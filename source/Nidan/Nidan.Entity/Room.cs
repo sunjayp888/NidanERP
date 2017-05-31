@@ -11,6 +11,7 @@ namespace Nidan.Entity
     {
         public int RoomId { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         public int Number { get; set; }

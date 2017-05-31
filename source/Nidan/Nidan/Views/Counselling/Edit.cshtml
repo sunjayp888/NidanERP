@@ -9,7 +9,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>@string.Format("{0} {1} {2} {3}", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName)<small>Edit Counselling</small></h2>
+                    <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName)</button>  <small>Edit Counselling</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -25,6 +25,12 @@
                         @Html.HiddenFor(model => model.Counselling.Enquiry.FirstName)
                         @Html.HiddenFor(model => model.Counselling.Enquiry.MiddleName)
                         @Html.HiddenFor(model => model.Counselling.Enquiry.LastName)
+                        @Html.HiddenFor(model => model.Counselling.Title)
+                        @Html.HiddenFor(model => model.Counselling.FirstName)
+                        @Html.HiddenFor(model => model.Counselling.MiddleName)
+                        @Html.HiddenFor(model => model.Counselling.LastName)
+                        @Html.HiddenFor(model => model.Counselling.CreatedDate)
+                        @Html.HiddenFor(model => model.Counselling.Enquiry.EmailId)
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
                             @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))

@@ -1080,8 +1080,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
+                 .Property(e => e.Title)
+                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
                 .Property(e => e.FirstName)

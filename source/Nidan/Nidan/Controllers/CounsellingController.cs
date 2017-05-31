@@ -44,8 +44,8 @@ namespace Nidan.Controllers
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             //var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
-            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => true);
-            var enquiryCourses= NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId);
+            var enquiryCourses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId).Where(e => interestedCourseIds.Contains(e.CourseId));
             var viewModel = new CounsellingViewModel
             {
                 Enquiry = enquiry,
@@ -80,8 +80,9 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling.OrganisationId = organisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
-                counsellingViewModel.Counselling.FollowUpDate=DateTime.UtcNow.AddDays(2);
-                counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId,counsellingViewModel.Counselling);
+                counsellingViewModel.Counselling.CreatedDate = DateTime.UtcNow;
+                counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
+                counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
                 //return RedirectToAction("Edit", new { id = counsellingViewModel.Counselling.CounsellingId });
             }
@@ -101,6 +102,7 @@ namespace Nidan.Controllers
             }
             TempData["CounsellingId"] = id;
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var counselling = NidanBusinessService.RetrieveCounselling(organisationId, id.Value);
             if (counselling == null)
             {
@@ -108,7 +110,7 @@ namespace Nidan.Controllers
             }
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, counselling.EnquiryId);
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
-            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
@@ -194,7 +196,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId)&& p.Enquiry.IsRegistrationDone==false && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Enquiry.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
@@ -210,7 +212,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e =>(isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDate >= fromDate && e.FollowUpDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

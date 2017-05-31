@@ -14,6 +14,7 @@ namespace Nidan.Entity
         {
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
+            MobilizationSearchFields=new HashSet<MobilizationSearchField>();
         }
 
         public int QualificationId { get; set; }
@@ -31,5 +32,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mobilization> Mobilizations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MobilizationSearchField> MobilizationSearchFields { get; set; }
     }
 }

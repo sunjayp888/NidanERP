@@ -688,7 +688,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "EnquiryDate",
+                            Property = "ConversionProspect",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
@@ -801,7 +801,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -811,9 +811,10 @@ namespace Nidan.Data
                 var searchData =
                     context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
 
-                var enquiries = context.Enquiries.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
-                    .Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
-                    .Include(e => e.Qualification).Include(e => e.Taluka);
+                var enquiries = context.EnquirySearchFields;
+                    //.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
+                    //.Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
+                    //.Include(e => e.Qualification).Include(e => e.Taluka);
 
                 var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
 

@@ -42,6 +42,8 @@ namespace Nidan.Controllers
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
+            var counsellingData = NidanBusinessService.RetrieveCounsellings(organisationId,e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
+            var counsellingCourse =NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => e.CourseId == counsellingData?.CourseOfferedId);
             var viewModel = new RegistrationViewModel
             {
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
@@ -51,6 +53,7 @@ namespace Nidan.Controllers
                 StudentCode = enquiry.StudentCode,
                 EnquiryId = enquiry.EnquiryId,
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
+                CounsellingCourse = new SelectList(counsellingCourse,"CourseId","Name")
             };
             return View(viewModel);
         }

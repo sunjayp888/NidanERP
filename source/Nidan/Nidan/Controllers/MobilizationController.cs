@@ -194,7 +194,8 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId)&&p.Close=="No", orderBy, paging));
+            var data = NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword,p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
