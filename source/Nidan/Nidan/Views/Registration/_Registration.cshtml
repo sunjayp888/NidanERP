@@ -101,7 +101,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.Registration.CandidateFee.PaidAmount, "Registraion Amount Paid", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Registration.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9", @onkeypress = "return onlyNumbers(this.value)", @onkeyup= "NumToWord(this.value,'divDisplayWords')" })
+        @Html.TextBoxFor(model => model.Registration.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9"})
         @*<input name="txtNumber" type="text" maxlength="9" id="txtNumber" onkeypress="return onlyNumbers(this.value);" onkeyup="NumToWord(this.value,'divDisplayWords');"/>*@
         @Html.ValidationMessageFor(model => model.Registration.CandidateFee.PaidAmount, "", new { @class = "help-block" })
     </div>
