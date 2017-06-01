@@ -11,6 +11,8 @@ namespace Nidan.Entity
     {
         public int HolidayId { get; set; }
 
+        public int CentreId { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime HolidayDate { get; set; }
 
@@ -24,5 +26,7 @@ namespace Nidan.Entity
         public string WeekDay { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Centre Centre { get; set; }
     }
 }

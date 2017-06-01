@@ -75,7 +75,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Batch.NumberOfHoursDaily, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.NumberOfHoursDaily, new { @class = "form-control col-md-7 col-xs-12", @max = 8, @onkeyup = "getendtime()" })
+                    @Html.DropDownListFor(model => model.Batch.NumberOfHoursDaily, Model.NumberOfHoursDailyList, "Select Hours", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Batch.NumberOfHoursDaily, "", new { @class = "help-block" })
                 </div>
             </div>
@@ -95,43 +95,43 @@
                                 <td></td>*@
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off" })
                                     Monday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off" })
                                     Tuesday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off" })
                                     Wednesday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off" })
                                     Thursday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off" })
                                     Friday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off" })
                                     Saturday
                                 </label>
                             </td>
                             <td>
                                 <label class="btn btn-info">
-                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { onchange = "checkboxes()", autocomplete = "off" })
+                                    @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off" })
                                     Sunday
                                 </label>
 
@@ -184,7 +184,7 @@
             <div class="form-group ">
                 @Html.LabelFor(model => model.Batch.BatchEndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(model => model.Batch.BatchEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                    @Html.TextBoxFor(model => model.Batch.BatchEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date",@readonly= true })
                     @Html.ValidationMessageFor(model => model.Batch.BatchEndDate, "", new { @class = "help-block" })
                 </div>
             </div>

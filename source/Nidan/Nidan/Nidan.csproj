@@ -1541,7 +1541,7 @@
     <Content Include="Views\CourseFeeBreakUp\Create.cshtml" />
     <Content Include="Views\CourseFeeBreakUp\Index.cshtml" />
     <Content Include="Views\CourseInstallment\Create.cshtml" />
-    <Content Include="Views\CourseInstallment\Edit.cshtml" />
+    <Content Include="Views\CourseInstallment\View.cshtml" />
     <Content Include="Views\CourseInstallment\_CourseInstallment.cshtml" />
     <Content Include="Views\Room\Create.cshtml" />
     <Content Include="Views\Room\Edit.cshtml" />

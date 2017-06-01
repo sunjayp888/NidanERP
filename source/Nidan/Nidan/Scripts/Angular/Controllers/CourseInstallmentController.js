@@ -69,7 +69,7 @@
         }
 
         function viewCourseInstallment(courseInstallmentId) {
-            $window.location.href = "/CourseInstallment/Edit/" + courseInstallmentId;
+            $window.location.href = "/CourseInstallment/View/" + courseInstallmentId;
         }
 
         function retrieveCourses(sectorId) {

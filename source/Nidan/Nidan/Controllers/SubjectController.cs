@@ -183,7 +183,8 @@ namespace Nidan.Controllers
             bool isAdmin = User.IsInAnyRoles("Admin");
             if (courseId != 0)
             {
-                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin) && p.CourseId == courseId, orderBy, paging));
+                var data = NidanBusinessService.RetrieveSubjects(UserOrganisationId,p => (isAdmin) && p.SubjectCourses.Select(e=>e.CourseId).Contains(courseId), orderBy, paging);
+                return this.JsonNet(data);
             }
             else
             {

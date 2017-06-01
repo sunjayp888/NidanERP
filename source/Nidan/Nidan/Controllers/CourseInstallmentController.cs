@@ -61,8 +61,8 @@ namespace Nidan.Controllers
             return View(courseInstallmentViewModel);
         }
 
-        // GET: CourseInstallment/Edit/{id}
-        public ActionResult Edit(int? id)
+        // GET: CourseInstallment/View/{id}
+        public ActionResult View(int? id)
         {
             if (id == null)
             {
@@ -83,43 +83,43 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        // POST: CourseInstallment/Edit/{id}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(CourseInstallmentViewModel courseInstallmentViewModel)
-        {
-            var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            if (ModelState.IsValid)
-            {
-                courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
-                courseInstallmentViewModel.CourseInstallment.CentreId = centreId;
-                courseInstallmentViewModel.CourseInstallment = NidanBusinessService.UpdateCourseInstallment(organisationId, courseInstallmentViewModel.CourseInstallment);
-                return RedirectToAction("Index","CourseInstallment");
-            }
-            var viewModel = new CourseInstallmentViewModel
-            {
-                CourseInstallment = courseInstallmentViewModel.CourseInstallment
-            };
-            return View(viewModel);
-        }
+        //// POST: CourseInstallment/Edit/{id}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(CourseInstallmentViewModel courseInstallmentViewModel)
+        //{
+        //    var organisationId = UserOrganisationId;
+        //    var centreId = UserCentreId;
+        //    if (ModelState.IsValid)
+        //    {
+        //        courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
+        //        courseInstallmentViewModel.CourseInstallment.CentreId = centreId;
+        //        courseInstallmentViewModel.CourseInstallment = NidanBusinessService.UpdateCourseInstallment(organisationId, courseInstallmentViewModel.CourseInstallment);
+        //        return RedirectToAction("Index","CourseInstallment");
+        //    }
+        //    var viewModel = new CourseInstallmentViewModel
+        //    {
+        //        CourseInstallment = courseInstallmentViewModel.CourseInstallment
+        //    };
+        //    return View(viewModel);
+        //}
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("Admin");
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var courseId = Convert.ToInt32(TempData["CourseId"]);
             TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
                 return
-                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin ) && p.CourseId == courseId,
+                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId,
                         orderBy, paging));
             }
             else
             {
                 return
-                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin),
+                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId==UserCentreId),
                         orderBy, paging));
             }
         }

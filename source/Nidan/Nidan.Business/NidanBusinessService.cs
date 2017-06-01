@@ -124,6 +124,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Monday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -139,6 +140,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Monday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -157,6 +159,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Tuesday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -172,6 +175,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Tuesday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -189,6 +193,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Wednesday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -204,6 +209,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Wednesday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -221,6 +227,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Thursday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -236,6 +243,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Thursday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -253,6 +261,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Friday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -268,6 +277,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Friday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -285,6 +295,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Saturday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -300,6 +311,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Saturday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -317,6 +329,7 @@ namespace Nidan.Business
                 roomAvailables.Add(new RoomAvailable
                 {
                     RoomId = batch.RoomId,
+                    BatchId = batch.BatchId,
                     Day = "Sunday",
                     StartTimeHours = batch.BatchStartTimeHours,
                     StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -332,6 +345,7 @@ namespace Nidan.Business
                     trainerAvailables.Add(new TrainerAvailable
                     {
                         TrainerId = batchTrainer.TrainerId,
+                        BatchId = batch.BatchId,
                         Day = "Sunday",
                         StartTimeHours = batch.BatchStartTimeHours,
                         StartTimeMinutes = batch.BatchStartTimeMinutes,
@@ -1808,10 +1822,10 @@ namespace Nidan.Business
                 paging);
         }
 
-        public PagedResult<Holiday> RetrieveHolidays(int organisationId, List<OrderBy> orderBy = null,
+        public PagedResult<Holiday> RetrieveHolidays(int organisationId, Expression<Func<Holiday, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveHolidays(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveHolidays(organisationId, predicate, orderBy, paging);
         }
 
         public Holiday RetrieveHoliday(int organisationId, int holidayId, Expression<Func<Holiday, bool>> predicate)
@@ -2161,6 +2175,37 @@ namespace Nidan.Business
                 paging);
         }
 
+        public BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays, int courseFee, int downPayment)
+        {
+            if (numberOfWeekDays != 0)
+            {
+            }
+
+            var hoursPerWeekToWork = dailyBatchHours * numberOfWeekDays;
+            var totalNumberOfDays = (numberOfCourseHours / hoursPerWeekToWork) * 7;
+            var endDate = startDate.AddDays(totalNumberOfDays);
+            //calculate public holiday from startdate and endDate for eg 7
+            var date = endDate;
+            var publicHoliday = RetrieveHolidays(organisationId, e => e.HolidayDate >= startDate && e.HolidayDate <= date && e.CentreId == centreId).Items.Count();
+            int months = (endDate.Year - startDate.Year) * 12 + endDate.Month - startDate.Month;
+            endDate = endDate.AddDays(publicHoliday);
+            var assessmentDate = endDate.AddDays(3);
+            var numberOfInstallment = months - 2;
+            var installmentAmount = (courseFee - downPayment) / numberOfInstallment;
+                
+
+            return new BatchMonth
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                Month = months,
+                Holiday = publicHoliday,
+                AssessmentDate = assessmentDate,
+                NumberOfInstallment = numberOfInstallment,
+                InstallmentAmount = installmentAmount
+            };
+        }
+
         #endregion
 
         #region // Update
@@ -2357,11 +2402,19 @@ namespace Nidan.Business
             return sectors.ToList();
         }
 
-        public List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
+        public List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<Room, bool>> predicate)
         {
+            var roomAvailables = _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, e => true);
             var rooms =
-                _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, predicate).Select(e => e.Room);
-            return rooms.ToList();
+                 _nidanDataService.RetrieveRooms(organisationId, predicate).Items.ToList();
+            return rooms;
+        }
+
+        public List<RoomAvailable> RetrieveRoomAvailables(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
+        {
+            var roomAvailable =
+                _nidanDataService.RetrieveRoomAvailables(organisationId,centreId ,predicate).ToList();
+            return roomAvailable;
         }
 
         public List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate)
