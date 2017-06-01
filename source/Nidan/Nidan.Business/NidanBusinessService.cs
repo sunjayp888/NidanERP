@@ -2187,7 +2187,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateFeeGrid(organisationId, predicate, orderBy,
                 paging);
         }
-        
+
         public BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays, int courseFee, int downPayment)
         {
             if (numberOfWeekDays != 0)
@@ -2203,9 +2203,10 @@ namespace Nidan.Business
             int months = (endDate.Year - startDate.Year) * 12 + endDate.Month - startDate.Month;
             endDate = endDate.AddDays(publicHoliday);
             var assessmentDate = endDate.AddDays(3);
-            var numberOfInstallment = months - 2;
-            var installmentAmount = (courseFee - downPayment) / numberOfInstallment;
-                
+            var numberOfInstallment = months - 2 != 0 ? months - 2 : 1;
+
+            var installmentAmount = (courseFee - downPayment) / (numberOfInstallment != 0 ? numberOfInstallment : 1);
+
 
             return new BatchMonth
             {
@@ -2426,7 +2427,7 @@ namespace Nidan.Business
         public List<RoomAvailable> RetrieveRoomAvailables(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate)
         {
             var roomAvailable =
-                _nidanDataService.RetrieveRoomAvailables(organisationId,centreId ,predicate).ToList();
+                _nidanDataService.RetrieveRoomAvailables(organisationId, centreId, predicate).ToList();
             return roomAvailable;
         }
 

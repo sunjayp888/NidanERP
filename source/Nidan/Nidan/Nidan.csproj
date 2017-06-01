@@ -1457,6 +1457,7 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Dev.pubxml" />
+    <None Include="Properties\PublishProfiles\Nidan.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Properties\PublishProfiles\sanjay.pubxml" />
     <None Include="Properties\PublishProfiles\UAT.pubxml" />
@@ -1530,7 +1531,6 @@
     <Content Include="Views\Registration\Create.cshtml" />
     <Content Include="Views\Registration\Edit.cshtml" />
     <Content Include="Views\Registration\Index.cshtml" />
-    <Content Include="Views\Registration\ViewDetails.cshtml" />
     <Content Include="Views\Subject\Create.cshtml" />
     <Content Include="Views\Subject\Edit.cshtml" />
     <Content Include="Views\Subject\Index.cshtml" />
@@ -1538,8 +1538,6 @@
     <Content Include="Views\Subject\_SessionView.cshtml" />
     <Content Include="Views\Subject\_Subject.cshtml" />
     <Content Include="Views\EnquiryCourse\_EnquiryCourse.cshtml" />
-    <Content Include="Views\CourseFeeBreakUp\Create.cshtml" />
-    <Content Include="Views\CourseFeeBreakUp\Index.cshtml" />
     <Content Include="Views\CourseInstallment\Create.cshtml" />
     <Content Include="Views\CourseInstallment\View.cshtml" />
     <Content Include="Views\CourseInstallment\_CourseInstallment.cshtml" />
