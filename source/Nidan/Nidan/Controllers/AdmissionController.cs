@@ -58,6 +58,33 @@ namespace Nidan.Controllers
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
+            var registrationAmount = registration.CandidateFee.PaidAmount;
+            var downpaymentAmount = registration.CandidateInstallment.DownPayment;
+            var lumpsumAmount = registration.CandidateInstallment.LumpsumAmount;
+            var courseFeeAmount = registration.CandidateInstallment.CourseFee;
+            if (downpaymentAmount >= registrationAmount)
+            {
+                if (downpaymentAmount != null)
+                {
+                    downpaymentAmount = (int)downpaymentAmount - (int)registrationAmount;
+                    registration.CandidateInstallment.DownPayment = downpaymentAmount;
+                    
+                }
+                if (lumpsumAmount != null)
+                {
+                    lumpsumAmount = (int)lumpsumAmount - (int)registrationAmount;
+                    registration.CandidateInstallment.LumpsumAmount = lumpsumAmount;
+                }
+            }
+            if (downpaymentAmount < registrationAmount)
+            {
+                registration.CandidateInstallment.DownPayment = 0;
+                if (lumpsumAmount != null)
+                {
+                    if (courseFeeAmount != null) lumpsumAmount = (int)courseFeeAmount - (int)registrationAmount;
+                    registration.CandidateInstallment.LumpsumAmount = lumpsumAmount;
+                }
+            }
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).Where(e => e.CourseId == registration.CourseId);
             var viewModel = new AdmissionViewModel
             {
@@ -381,7 +408,7 @@ namespace Nidan.Controllers
         {
             var admission = NidanBusinessService.RetrieveAdmission(UserOrganisationId, UserCentreId, id.Value);
             var data = NidanBusinessService.CreateEnrollmentBytes(UserOrganisationId, UserCentreId, admission);
-            return File(data, ".pdf",string.Format("{0} {1} Enrollment.pdf", admission.Registration.Enquiry.FirstName, admission.Registration.Enquiry.LastName));
+            return File(data, ".pdf", string.Format("{0} {1} Enrollment.pdf", admission.Registration.Enquiry.FirstName, admission.Registration.Enquiry.LastName));
         }
     }
 }
