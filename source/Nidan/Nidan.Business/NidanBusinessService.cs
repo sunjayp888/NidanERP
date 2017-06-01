@@ -2190,10 +2190,6 @@ namespace Nidan.Business
 
         public BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays, int courseFee, int downPayment)
         {
-            if (numberOfWeekDays != 0)
-            {
-            }
-
             var hoursPerWeekToWork = dailyBatchHours * numberOfWeekDays;
             var totalNumberOfDays = (numberOfCourseHours / hoursPerWeekToWork) * 7;
             var endDate = startDate.AddDays(totalNumberOfDays);
@@ -2204,10 +2200,7 @@ namespace Nidan.Business
             endDate = endDate.AddDays(publicHoliday);
             var assessmentDate = endDate.AddDays(3);
             var numberOfInstallment = months - 2 != 0 ? months - 2 : 1;
-
             var installmentAmount = (courseFee - downPayment) / (numberOfInstallment != 0 ? numberOfInstallment : 1);
-
-
             return new BatchMonth
             {
                 StartDate = startDate,
