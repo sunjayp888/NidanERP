@@ -114,8 +114,8 @@
                                         <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
                                         @*<th ng-click="model.order('Personnel')" ng-class="model.orderClass('CounselledBy')">Counseller</th>*@
                                         <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
-                                        <th ng-click="model.order('PreferTiming')" ng-class="model.orderClass('PreferTiming')">Prefer Timing</th>
-                                        <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
+                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Counselling Date</th>
+                                        <th>Remarks</th>
                                         <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                         @*  <th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Counselling Status Closed</th>*@
                                         <th>Status</th>
@@ -131,7 +131,7 @@
                                         }
                                         <td><span ng-bind="counselling.Title"></span> <span ng-bind="counselling.FirstName"></span> <span ng-bind="counselling.MiddleName"></span> <span ng-bind="counselling.LastName"></span></td>
                                         <td><span ng-bind="counselling.Course.Name"></span></td>
-                                        <td><span ng-bind="counselling.PreferTiming"></span></td>
+                                        <td><span ng-bind="counselling.CreatedDate |date : format : shortDate"></span></td>
                                         <td><span ng-bind="counselling.Remarks"></span></td>
                                         <td><span ng-bind="counselling.FollowUpDate|date : format : shortDate"></span></td>
                                         @* <td><span ng-bind="counselling.Close"></span></td>*@

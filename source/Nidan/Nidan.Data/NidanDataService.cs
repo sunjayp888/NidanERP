@@ -688,7 +688,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "EnquiryDate",
+                            Property = "ConversionProspect",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
@@ -801,7 +801,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Enquiry> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -811,9 +811,10 @@ namespace Nidan.Data
                 var searchData =
                     context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
 
-                var enquiries = context.Enquiries.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
-                    .Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
-                    .Include(e => e.Qualification).Include(e => e.Taluka);
+                var enquiries = context.EnquirySearchFields;
+                    //.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
+                    //.Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
+                    //.Include(e => e.Qualification).Include(e => e.Taluka);
 
                 var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
 
@@ -2148,7 +2149,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Admission> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Admission, bool>> predicate,
+        public PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<AdmissionSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2159,7 +2160,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<AdmissionSearchField>("SearchAdmission @SearchKeyword", category).ToList();
 
-                var admissions = context.Admissions.Include(e => e.Registration.Enquiry).Include(e => e.Registration.Course).Include(e => e.Batch).Include(e => e.Registration.CandidateFee).Include(e => e.Registration.CandidateInstallment);
+                var admissions = context.AdmissionSearchFields;
 
                 var data = searchData.Join(admissions, e => e.AdmissionId, m => m.AdmissionId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -2211,7 +2212,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidateInstallment> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallment, bool>> predicate,
+        public PagedResult<CandidateInstallmentSearchField> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallmentSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2220,11 +2221,13 @@ namespace Nidan.Data
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
                 var searchData = context.Database
-                    .SqlQuery<CandidateInstallment>("SearchCandidateInstallment @SearchKeyword", category).ToList().AsQueryable().
+                    .SqlQuery<CandidateInstallmentSearchField>("SearchCandidateInstallment @SearchKeyword", category)
+                    .ToList()
+                    .AsQueryable().
 
-                //var candidateInstallments = context.CandidateInstallments;
+                //var candidateFeeSearchFields = context.CandidateFeeSearchFields;
 
-                //var data = searchData.Join(candidateInstallments, e => e.CandidateInstallmentId, m => m.CandidateInstallmentId, (e, m) => m).ToList().AsQueryable().
+                //var data = searchData.Join(candidateFeeSearchFields, e => e.CandidateInstallmentId, m => m.CandidateInstallmentId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -2235,6 +2238,49 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
                 return searchData;
+            }
+        }
+
+        public PagedResult<AdmissionGrid> RetrieveAdmissionGrid(int organisationId, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .AdmissionGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "AdmissionDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .CandidateFeeGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "CandidateInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
             }
         }
 

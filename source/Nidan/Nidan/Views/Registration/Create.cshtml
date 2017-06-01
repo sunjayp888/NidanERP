@@ -51,7 +51,7 @@
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-primary">Interested Scheme</button>
                                         </span>
-                                        <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.Scheme.Name" class="form-control col-lg-4">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -63,19 +63,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
+
+                            @if (Model.Enquiry.IsCounsellingDone == true)
+                            {
                                 <div class="col-lg-12">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                        </span>
-                                        @foreach (var course in Model.Courses)
-                                        {
-                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-                                        }
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Course Offered</button>
+                                            </span>
+                                            @foreach (var course in Model.CounsellingCourse)
+                                            {
+                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                                            </span>
+                                            @foreach (var course in Model.Courses)
+                                            {
+                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 }

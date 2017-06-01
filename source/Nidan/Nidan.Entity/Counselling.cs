@@ -40,6 +40,9 @@ namespace Nidan.Entity
         public string Remarks { get; set; }
 
         [Column(TypeName = "date")]
+        public DateTime? CreatedDate { get; set; }
+
+        [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
         [DataType(DataType.MultilineText)]

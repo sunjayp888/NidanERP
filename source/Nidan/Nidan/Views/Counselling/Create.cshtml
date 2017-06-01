@@ -58,6 +58,7 @@
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.LastName)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.Mobile)
                             @Html.HiddenFor(model => Model.Counselling.EnquiryId)
+                            @Html.HiddenFor(model => model.Counselling.Enquiry.EmailId)
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="col-lg-6">
@@ -100,26 +101,23 @@
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-primary">Interested Course(s)</button>
                                         </span>
-                                        @*@{
-                                            var interestedCourseIds = Model.Enquiry.EnquiryCourses.Select(a => a.CourseId);
-                                        }
-                                        @foreach (var id in interestedCourseIds)
-                                        {
-                                            foreach (var course in Model.Courses)
-                                            {
-
-                                                if (course.Value == id.ToString())
-                                                {
-                                                    <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-                                                }
-                                            }
-                                        }*@
                                         @foreach (var course in Model.EnquiryCourses)
                                         {
                                             <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
                                         }
                                     </div>
                                 </div>
+                                @if (Model.Enquiry.OtherInterestedCourse!=null)
+                                {
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-primary">Other Interested Course</button>
+                                            </span>
+                                                <input type="text" disabled="disabled" value="@Model.Enquiry.OtherInterestedCourse" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">

@@ -9,49 +9,42 @@ namespace Nidan.Entity
     [Table("CandidateInstallmentSearchField")]
     public partial class CandidateInstallmentSearchField
     {
+        public int? CandidateInstallmentId { get; set; }
+
         [Key]
         [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CandidateInstallmentId { get; set; }
-
-        [StringLength(50)]
-        public string StudentCode { get; set; }
-
-        public int? CourseFee { get; set; }
-
-        public int? DownPayment { get; set; }
-
-        public int? DiscountAmount { get; set; }
-
-        public int? NumberOfInstallment { get; set; }
-
-        public int? LumpsumAmount { get; set; }
+        [StringLength(353)]
+        public string CandidateName { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        [StringLength(500)]
+        public string BatchName { get; set; }
+
+        public int? TotalFee { get; set; }
+
+        public decimal? PaidAmount { get; set; }
+
+        public decimal? PendingAmount { get; set; }
 
         [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrganisationId { get; set; }
+        [Column(Order = 2, TypeName = "date")]
+        public DateTime AdmissionDate { get; set; }
 
         [Key]
         [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CourseInstallmentId { get; set; }
+        public int AdmissionId { get; set; }
 
         [Key]
         [Column(Order = 4)]
-        public bool IsPercentageDiscount { get; set; }
+        [StringLength(500)]
+        public string CentreName { get; set; }
 
         [Key]
         [Column(Order = 5)]
-        public bool IsTotalAmountDiscount { get; set; }
-
-        [StringLength(100)]
-        public string PaymentMethod { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreId { get; set; }
 
         [Key]
         [Column(Order = 6)]

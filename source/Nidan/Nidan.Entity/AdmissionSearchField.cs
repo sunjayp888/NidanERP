@@ -11,35 +11,42 @@ namespace Nidan.Entity
     {
         [Key]
         [Column(Order = 0)]
+        [StringLength(353)]
+        public string CandidateName { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
+        [StringLength(500)]
+        public string BatchName { get; set; }
+
+        public int? TotalFee { get; set; }
+
+        public decimal? PaidAmount { get; set; }
+
+        public decimal? PendingAmount { get; set; }
+
+        [Key]
+        [Column(Order = 2, TypeName = "date")]
+        public DateTime AdmissionDate { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AdmissionId { get; set; }
 
         [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int RegistrationId { get; set; }
-
-        public int? BatchId { get; set; }
+        [Column(Order = 4)]
+        [StringLength(500)]
+        public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 3, TypeName = "date")]
-        public DateTime AdmissionDate { get; set; }
-
-        [Key]
-        [Column(Order = 4)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrganisationId { get; set; }
-
-        public int? PersonnelId { get; set; }
-
-        [Key]
-        [Column(Order = 5)]
-        [StringLength(1970)]
+        [Column(Order = 6)]
+        [StringLength(1470)]
         public string SearchField { get; set; }
     }
 }

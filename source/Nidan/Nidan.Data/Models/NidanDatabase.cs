@@ -95,6 +95,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<TrainerAvailable> TrainerAvailables { get; set; }
         public virtual DbSet<RoomAvailable> RoomAvailables { get; set; }
         public virtual DbSet<CandidateInstallmentSearchField> CandidateInstallmentSearchFields { get; set; }
+        public virtual DbSet<AdmissionGrid> AdmissionGrids { get; set; }
+        public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1078,8 +1080,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
+                 .Property(e => e.Title)
+                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationSearchField>()
                 .Property(e => e.FirstName)
@@ -1318,27 +1320,47 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.PaidAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.PendingAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AdmissionSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFeeSearchField>()
-                .Property(e => e.ChequeNumber)
+               .Property(e => e.CandidateName)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeSearchField>()
+                .Property(e => e.BatchName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFeeSearchField>()
-                .Property(e => e.BankName)
-                .IsUnicode(false);
+                .Property(e => e.PaidAmount)
+                .HasPrecision(38, 2);
 
             modelBuilder.Entity<CandidateFeeSearchField>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
+                .Property(e => e.PendingAmount)
+                .HasPrecision(38, 2);
 
             modelBuilder.Entity<CandidateFeeSearchField>()
-                .Property(e => e.Particulars)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidateFeeSearchField>()
-                .Property(e => e.FiscalYear)
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFeeSearchField>()
@@ -1372,17 +1394,69 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<RoomAvailable>()
                 .Property(e => e.EndTimeSpan)
                 .IsUnicode(false);
-                
+
             modelBuilder.Entity<CandidateInstallmentSearchField>()
-                .Property(e => e.StudentCode)
+                 .Property(e => e.CandidateName)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.BatchName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateInstallmentSearchField>()
-                .Property(e => e.PaymentMethod)
+                .Property(e => e.PaidAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.PendingAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateInstallmentSearchField>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateInstallmentSearchField>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.PaidAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.PendingAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.PaidAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.PendingAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

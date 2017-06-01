@@ -23,6 +23,7 @@ namespace Nidan.Entity
             EnquiryCourses=new HashSet<EnquiryCourse>();
             Registrations=new HashSet<Registration>();
             Modules=new HashSet<Module>();
+            MobilizationSearchFields=new HashSet<MobilizationSearchField>();
         }
 
         public int CourseId { get; set; }
@@ -93,5 +94,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Module> Modules { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MobilizationSearchField> MobilizationSearchFields { get; set; }
     }
 }
