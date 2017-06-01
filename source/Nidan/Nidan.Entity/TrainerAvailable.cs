@@ -13,6 +13,8 @@ namespace Nidan.Entity
 
         public int TrainerId { get; set; }
 
+        public int BatchId { get; set; }
+
         [Required]
         [StringLength(10)]
         public string Day { get; set; }
@@ -38,6 +40,8 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public virtual Trainer Trainer { get; set; }
+
+        public virtual Batch Batch { get; set; }
 
         public virtual Centre Centre { get; set; }
 
