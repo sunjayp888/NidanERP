@@ -120,7 +120,7 @@
                                             @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
                                             <td>
                                                 <button ng-if="admission.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
-                                                <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount"></span>
+                                                <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount">.00</span>
                                             </td>
                                             <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                             <td>
