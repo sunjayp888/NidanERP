@@ -180,7 +180,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetRoom(int hours)
         {
-            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => true).ToList();
+            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId).ToList();
             //NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours).ToList();
             return this.JsonNet(data);
         }

@@ -244,14 +244,14 @@
         });
 
         $('#Batch_NumberOfHoursDaily').change(function () {
-            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
             if (checkboxlength != 0) {
                 BatchLogic();
             }
         });
 
         $('input[type="checkbox"]').change(function () {
-            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
             if (checkboxlength != 0) {
                 BatchLogic();
             }
@@ -266,7 +266,7 @@
                 var dailyBatchHours = $('#Batch_NumberOfHoursDaily').val();
                 var courseFee = $('#CourseInstallment_Fee').val();
                 var downPayment = $('#CourseInstallment_DownPayment').val();
-                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
                 var numberOfWeekDays = checkboxlength;
                 var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
                 //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
