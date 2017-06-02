@@ -410,24 +410,29 @@
                 $('#lumpsum').show();
             });
         }*@
-        var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
-        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
-        var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
+        //var downpaymentAmount = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+        //var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+        //var resultDownpayment = parseFloat(downpaymentAmount) - parseFloat(registrationAmount);
         $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
          //   $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment);
             $('#downpayment').show();
             $('#lumpsum').hide();
           //  $('#CandidateFee_PaidAmount').val(resultDownpayment);
         });
-        var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
-        var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
-        var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
+        //var lumpsumAmount = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+        //var registrationAmount=@Model.Registration.CandidateFee.PaidAmount;
+       // var resultLumpsum = parseFloat(lumpsumAmount) - parseFloat(registrationAmount);
         $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function () {
           //  $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum);
             $('#downpayment').hide();
             $('#lumpsum').show();
           //  $('#CandidateFee_PaidAmount').val(resultLumpsum);
         });
+        if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+            // $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum1);
+            $('#downpayment').hide();
+            $('#lumpsum').show();
+        }
 
 
 
@@ -528,44 +533,49 @@
 
 
 
-            var downpaymentAmount1 = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
-            var registrationAmount1=@Model.Registration.CandidateFee.PaidAmount;
+            //var downpaymentAmount1 = $('#Admission_Registration_CandidateInstallment_DownPayment').val();
+            //var registrationAmount1=@Model.Registration.CandidateFee.PaidAmount;
             $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly')
                 .click(function() {
                     $('#downpayment').show();
                     $('#lumpsum').hide();
                 });
 
-            if (registrationAmount1 >= downpaymentAmount1) {
-                alert("Down Payment is already paid in Registraion");
-                $('#downpayment').show();
-                $('#lumpsum').hide();
-            } else {
-                var resultDownpayment1 = parseFloat(downpaymentAmount1) - parseFloat(registrationAmount1);
-                if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
-                    $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment1);
-                    $('#downpayment').show();
-                    $('#lumpsum').hide();
-                }
-            }
+            //if (registrationAmount1 >= downpaymentAmount1) {
+            //    alert("Down Payment is already paid in Registraion");
+            //    $('#downpayment').show();
+            //    $('#lumpsum').hide();
+            //} else {
+            //    var resultDownpayment1 = parseFloat(downpaymentAmount1) - parseFloat(registrationAmount1);
+            //    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+            //        $('#Admission_Registration_CandidateInstallment_DownPayment').val(resultDownpayment1);
+            //        $('#downpayment').show();
+            //        $('#lumpsum').hide();
+            //    }
+            //}
 
 
-            var lumpsumAmount1 = $('#Registration_CandidateInstallment_LumpsumAmount').val();
+            //var lumpsumAmount1 = $('#Registration_CandidateInstallment_LumpsumAmount').val();
             $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum')
                 .click(function() {
                     $('#downpayment').hide();
                     $('#lumpsum').show();
                 });
-            if (lumpsumAmount1 == registrationAmount1) {
-                alert("Lumpsum Amount is already paid in Registraion");
-            } else {
-                var resultLumpsum1 = parseFloat(lumpsumAmount1) - parseFloat(registrationAmount1);
-                if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
-                    $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum1);
-                    $('#downpayment').hide();
-                    $('#lumpsum').show();
-                }
+            if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+               // $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum1);
+                $('#downpayment').hide();
+                $('#lumpsum').show();
             }
+            //if (lumpsumAmount1 == registrationAmount1) {
+            //    alert("Lumpsum Amount is already paid in Registraion");
+            //} else {
+            //    var resultLumpsum1 = parseFloat(lumpsumAmount1) - parseFloat(registrationAmount1);
+            //    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+            //        $('#Registration_CandidateInstallment_LumpsumAmount').val(resultLumpsum1);
+            //        $('#downpayment').hide();
+            //        $('#lumpsum').show();
+            //    }
+            //}
 
         });
 

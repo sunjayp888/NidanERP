@@ -120,7 +120,7 @@
                                             @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
                                             <td>
                                                 <button ng-if="admission.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
-                                                <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount">.00</span>
+                                                <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount"></span>.00
                                             </td>
                                             <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                             <td>
@@ -131,18 +131,13 @@
                                                     <ul class="dropdown-menu slidedown">
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
-                                                            @*<li>
-                                                                    <a style="cursor: pointer;" ng-href="/Admission/Edit/{{admission.AdmissionId}}">
-                                                                        Edit
-                                                                    </a>
-                                                                </li>*@
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Admission/View/{{admission.AdmissionId}}">
                                                                     View
                                                                 </a>
                                                             </li>
 
-                                                            <li ng-if="admission.BatchId==null">
+                                                            <li ng-if="admission.BatchName==null">
                                                                 <a style="cursor: pointer;" ng-href="/Admission/AssignBatch/{{admission.AdmissionId}}">
                                                                     Assign Batch
                                                                 </a>
