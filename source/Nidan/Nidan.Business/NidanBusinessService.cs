@@ -1149,7 +1149,7 @@ namespace Nidan.Business
                     CourseFee = courseInstallment.Fee - candidateInstallment.DiscountAmount,
                     OrganisationId = organisationId,
                     DiscountAmount = candidateInstallment.DiscountAmount,
-                    LumpsumAmount = candidateInstallment.LumpsumAmount,
+                    LumpsumAmount = courseInstallment.LumpsumAmount - candidateInstallment.DiscountAmount,
                     IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
                     DownPayment = courseInstallment.DownPayment,
                     NumberOfInstallment = candidateInstallment.NumberOfInstallment,
@@ -2699,7 +2699,10 @@ namespace Nidan.Business
             candidateFeeData.ChequeNumber = registration.CandidateFee.ChequeNumber;
             candidateFeeData.ChequeDate = registration.CandidateFee.ChequeDate;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFeeData);
-
+            // Update CandidateInstallment PaymentMethod
+            var candidateInstallmentData =RetrieveCandidateInstallment(organisationId, registration.CandidateInstallmentId, e => true);
+            candidateInstallmentData.PaymentMethod = registration.CandidateInstallment.PaymentMethod;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallmentData);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
         }
 

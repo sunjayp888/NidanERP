@@ -230,7 +230,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-3 col-xs-12">Batch Start Timing</label>
                     <div class="col-md-2 col-sm-6 col-xs-12 add batchStartTime">
-                        @Html.DropDownListFor(model => model.Batch.BatchStartTimeHours, Model.HoursList, "HH", new { @class = "form-control", @ng_model = "model.hours", @ng_change = "retrieveRoomByHours()" })
+                        @Html.DropDownListFor(model => model.Batch.BatchStartTimeHours, Model.HoursList, "HH", new { @class = "form-control", @ng_model = "model.hours", @ng_change = "model.retrieveRoomByHours()" })
                         @Html.ValidationMessageFor(model => model.Batch.BatchStartTimeHours, "", new { @class = "help-block" })
                     </div>
 

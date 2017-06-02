@@ -16,7 +16,7 @@ namespace Nidan.Business.Enum
     public enum FeePaymentMethod
     {
         MonthlyInstallment,
-        Lumpsum
+        LumpsumAmount
     }
 
     public enum PaymentMode
