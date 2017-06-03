@@ -138,9 +138,13 @@ namespace Nidan.Data.Models
              .HasForeignKey(e => e.SectorId)
              .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Registration>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CandidateFee>()
-               .Property(e => e.ChequeNumber)
-               .IsUnicode(false);
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.BankName)
@@ -151,18 +155,12 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFee>()
-                .Property(e => e.FiscalYear)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Registration>()
-                .Property(e => e.Remarks)
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.FiscalYear)
                 .IsUnicode(false);
-
-            
             //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)

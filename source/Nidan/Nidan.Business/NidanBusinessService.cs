@@ -1054,7 +1054,7 @@ namespace Nidan.Business
         private void CreateCandidateFeeInstallment(int organisationId, int centreId, int personnelId, CandidateInstallment candidateInstallment, Admission admission, Registration registration, CandidateFee candidateFee)
         {
             var installmentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5, 0, 0, 0);
-            var batch = RetrieveBatch(organisationId, admission.BatchId.Value);
+            var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
             var candidateFees = new List<CandidateFee>();
             var candidateFeeData = new CandidateFee
             {
@@ -1067,32 +1067,36 @@ namespace Nidan.Business
                 PersonnelId = personnelId,
                 IsPaymentDone = true,
                 StudentCode = admission.Registration.StudentCode,
-                PaidAmount = candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount,
+                PaidAmount = candidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
+                              ? 0 : (candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount),
                 PaymentDate = DateTime.Now
             };
             candidateFees.Add(candidateFeeData);
-            for (int i = 1; i <= batch?.NumberOfInstallment; i++)
+            if (batch != null)
             {
-                candidateFees.Add(new CandidateFee
+                for (int i = 1; i <= batch?.NumberOfInstallment; i++)
                 {
-                    CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
-                    PaymentModeId = candidateFee.PaymentModeId,
-                    FeeTypeId = (int)FeeType.Installment,
-                    FollowUpDate = batch?.BatchStartDate.AddMonths(batch.NumberOfInstallment),
-                    FiscalYear = DateTime.UtcNow.FiscalYear(),
-                    InstallmentAmount = (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / batch?.NumberOfInstallment,
-                    CentreId = centreId,
-                    OrganisationId = organisationId,
-                    PersonnelId = personnelId,
-                    IsPaymentDone = false,
-                    StudentCode = admission.Registration.StudentCode,
-                    InstallmentNumber = i,
-                    InstallmentDate = installmentDate.AddMonths(i)
-                });
+                    candidateFees.Add(new CandidateFee
+                    {
+                        CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
+                        PaymentModeId = candidateFee.PaymentModeId,
+                        FeeTypeId = (int)FeeType.Installment,
+                        FollowUpDate = batch?.BatchStartDate.AddMonths(batch.NumberOfInstallment),
+                        FiscalYear = DateTime.UtcNow.FiscalYear(),
+                        InstallmentAmount = (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / batch?.NumberOfInstallment,
+                        CentreId = centreId,
+                        OrganisationId = organisationId,
+                        PersonnelId = personnelId,
+                        IsPaymentDone = false,
+                        StudentCode = admission.Registration.StudentCode,
+                        InstallmentNumber = i,
+                        InstallmentDate = installmentDate.AddMonths(i)
+                    });
+                }
+                candidateInstallment.NumberOfInstallment = batch?.NumberOfInstallment;
             }
             _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
-            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod; ;
-            candidateInstallment.NumberOfInstallment = batch?.NumberOfInstallment;
+            candidateInstallment.PaymentMethod = admission.Registration.CandidateInstallment.PaymentMethod;
             candidateInstallment.LumpsumAmount = null;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
         }
@@ -1149,7 +1153,7 @@ namespace Nidan.Business
                     CourseFee = courseInstallment.Fee - candidateInstallment.DiscountAmount,
                     OrganisationId = organisationId,
                     DiscountAmount = candidateInstallment.DiscountAmount,
-                    LumpsumAmount = courseInstallment.LumpsumAmount - candidateInstallment.DiscountAmount,
+                    LumpsumAmount = courseInstallment.LumpsumAmount,
                     IsTotalAmountDiscount = candidateInstallment.IsTotalAmountDiscount,
                     DownPayment = courseInstallment.DownPayment,
                     NumberOfInstallment = candidateInstallment.NumberOfInstallment,
@@ -2700,7 +2704,7 @@ namespace Nidan.Business
             candidateFeeData.ChequeDate = registration.CandidateFee.ChequeDate;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFeeData);
             // Update CandidateInstallment PaymentMethod
-            var candidateInstallmentData =RetrieveCandidateInstallment(organisationId, registration.CandidateInstallmentId, e => true);
+            var candidateInstallmentData = RetrieveCandidateInstallment(organisationId, registration.CandidateInstallmentId, e => true);
             candidateInstallmentData.PaymentMethod = registration.CandidateInstallment.PaymentMethod;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallmentData);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
@@ -2939,7 +2943,7 @@ namespace Nidan.Business
                     InstallmentDate = item.InstallmentDate.ToString(),
                     InstallmentAmount = item.InstallmentAmount.ToString(),
                     Paymentdate = item.PaymentDate.ToString(),
-                    Status = item.IsPaymentDone != null && item.IsPaymentDone.Value ? "Paid" : "Pending",
+                    Status = item.IsPaymentDone ? "Paid" : "Pending",
                     Type = System.Enum.GetName(typeof(FeeType), item.FeeTypeId) == FeeType.Installment.ToString()
                           ? string.Format("{0}-{1}", System.Enum.GetName(typeof(FeeType), item.FeeTypeId), item.InstallmentNumber)
                           : System.Enum.GetName(typeof(FeeType), item.FeeTypeId),
