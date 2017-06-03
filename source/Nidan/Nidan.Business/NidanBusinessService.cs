@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
@@ -13,6 +10,7 @@ using Nidan.Business.Models;
 using Nidan.Data.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
+using SharedTypes.DataContracts;
 using PaymentMode = Nidan.Entity.PaymentMode;
 
 
@@ -24,6 +22,7 @@ namespace Nidan.Business
         private ICacheProvider _cacheProvider;
         private ITemplateService _templateService;
         private IEmailService _emailService;
+        private ISMSService _smsService;
 
         //   private IDocumentServiceRestClient _documentServiceAPI;
         private enum ShowColour
@@ -43,13 +42,13 @@ namespace Nidan.Business
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Date.Year, DateTime.UtcNow.Date.Month,
             DateTime.UtcNow.Date.Day, 0, 0, 0);
 
-        public NidanBusinessService(INidanDataService nidanDataService, ICacheProvider cacheProvider,
-            ITemplateService templateService, IEmailService emailService)
+        public NidanBusinessService(INidanDataService nidanDataService, ICacheProvider cacheProvider, ITemplateService templateService, IEmailService emailService, ISMSService smsService)
         {
             _nidanDataService = nidanDataService;
             _cacheProvider = cacheProvider;
             _templateService = templateService;
             _emailService = emailService;
+            _smsService = smsService;
             //_documentServiceAPI = documentServiceAPI;
         }
 
@@ -1122,19 +1121,20 @@ namespace Nidan.Business
             return _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailable);
         }
 
-        public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode,
-            Registration registration)
+        public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration)
         {
             registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
-            var candidateInstallmentData = CandidateInstallment(organisationId, centreId, studentCode,
-                registration?.CandidateInstallment, registration?.CourseInstallment);
+            var candidateInstallmentData = CandidateInstallment(organisationId, centreId, studentCode, registration?.CandidateInstallment, registration?.CourseInstallment);
             registration.CandidateFee.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
             registration.CandidateInstallmentId = candidateInstallmentData.CandidateInstallmentId;
-            var candidateFeeData = CandidateFee(organisationId, centreId, personnelId, studentCode,
-                candidateInstallmentData.CandidateInstallmentId, registration?.CandidateFee);
-
-            return CandidateRegistration(organisationId, centreId, studentCode, registration,
-                candidateFeeData.CandidateFeeId);
+            var candidateFeeData = CandidateFee(organisationId, centreId, personnelId, studentCode, candidateInstallmentData.CandidateInstallmentId, registration?.CandidateFee);
+            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId);
+            var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
+            //Send Email
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            //Send SMS
+            SendRegistrationSms(registrationData);
+            return data;
         }
 
         private CandidateInstallment CandidateInstallment(int organisationId, int centreId, string studentCode,
@@ -2700,7 +2700,7 @@ namespace Nidan.Business
             candidateFeeData.ChequeDate = registration.CandidateFee.ChequeDate;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFeeData);
             // Update CandidateInstallment PaymentMethod
-            var candidateInstallmentData =RetrieveCandidateInstallment(organisationId, registration.CandidateInstallmentId, e => true);
+            var candidateInstallmentData = RetrieveCandidateInstallment(organisationId, registration.CandidateInstallmentId, e => true);
             candidateInstallmentData.PaymentMethod = registration.CandidateInstallment.PaymentMethod;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallmentData);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, registration);
@@ -2976,6 +2976,44 @@ namespace Nidan.Business
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(enrollmentData), "Enrollment");
 
         }
+
+        //Email
+
+        private void SendCandidateRegistrationEmail(int organisationId, int centreId, Registration registration)
+        {
+            var document = CreateRegistrationRecieptBytes(organisationId, centreId, registration.CandidateFeeId);
+            var emailData = new EmailData()
+            {
+                CCAddressList = new List<string> { "projectcoordinator@nidantech.com", "creative@nidantech.com" },
+                Body = "This is testing on registration",
+                Subject = "Registration Detail",
+                IsHtml = true,
+                ToAddressList = new List<string> { registration.Enquiry.EmailId }
+            };
+
+            var registrationReciept = new Dictionary<string, byte[]>
+            {
+                {registration.Enquiry.FirstName + " " +registration.Enquiry.LastName+" Registration Detail.pdf",document}
+            };
+            _emailService.SendEmail(emailData, registrationReciept);
+        }
+
+        //SMS
+
+        private void SendRegistrationSms(Registration registration)
+        {
+            if (!string.IsNullOrEmpty(registration.Enquiry.Mobile.ToString()))
+            {
+                var smsData = new SmsData()
+                {
+                    To = registration.Enquiry.Mobile.ToString(),
+                    MessageBody = string.Format("Hi {0}, you have been successfully registered.Paid amount on registration is {1}", registration.Enquiry.FirstName, registration.CandidateFee.PaidAmount)
+                };
+                _smsService.SendSMS(smsData);
+            }
+
+        }
+
     }
 }
 

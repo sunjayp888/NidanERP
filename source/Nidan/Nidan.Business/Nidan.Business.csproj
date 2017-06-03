@@ -63,6 +63,9 @@
       <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharedTypes">
+      <HintPath>..\..\..\..\..\EmailWCFService-master\EmailWCFService-master\Source\lib\SharedTypes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -108,6 +111,7 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Interfaces\IPdfService.cs" />
     <Compile Include="Interfaces\IRazorService.cs" />
+    <Compile Include="Interfaces\ISMSService.cs" />
     <Compile Include="Interfaces\ITemplateService.cs" />
     <Compile Include="Interfaces\MvcTemplateBase.cs" />
     <Compile Include="Interfaces\PdfService.cs" />
@@ -134,16 +138,12 @@
     <Compile Include="Models\PersonnelDetails.cs" />
     <Compile Include="Models\ValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\EmailServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\TemplateServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SMSService.cs" />
     <Compile Include="TemplateService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -164,19 +164,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\EmailServiceReference\EmailService.wsdl" />
-    <None Include="Service References\EmailServiceReference\EmailService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EmailServiceReference\EmailService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EmailServiceReference\EmailService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\EmailServiceReference\EmailService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\TemplateServiceReference\TemplateService.wsdl" />
     <None Include="Service References\TemplateServiceReference\TemplateService.xsd">
       <SubType>Designer</SubType>
@@ -189,7 +176,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\EmailServiceReference\" />
     <WCFMetadataStorage Include="Service References\TemplateServiceReference\" />
   </ItemGroup>
   <ItemGroup>
@@ -203,21 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\TemplateServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailServiceReference\EmailService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\EmailServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

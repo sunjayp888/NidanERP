@@ -71,6 +71,8 @@ namespace Nidan
             container.RegisterType<IPdfService, PdfService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IRazorService, RazorService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITemplateService, TemplateService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ISMSService, SMSService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEmailService, EmailService>(new ContainerControlledLifetimeManager());
         }
     }
 }
