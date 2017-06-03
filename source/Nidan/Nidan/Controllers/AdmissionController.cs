@@ -62,32 +62,48 @@ namespace Nidan.Controllers
             var downpaymentAmount = registration.CandidateInstallment.DownPayment;
             var lumpsumAmount = registration.CandidateInstallment.LumpsumAmount;
             var courseFeeAmount = registration.CandidateInstallment.CourseFee;
+            var lumpsumAfterRegistration = 0;
+            var courseFeeAfterRegistration = 0;
             if (downpaymentAmount >= registrationAmount)
             {
                 if (downpaymentAmount != null)
                 {
                     downpaymentAmount = (int)downpaymentAmount - (int)registrationAmount;
                     registration.CandidateInstallment.DownPayment = downpaymentAmount;
-                    
+
                 }
                 if (lumpsumAmount != null)
                 {
                     lumpsumAmount = (int)lumpsumAmount - (int)registrationAmount;
-                    registration.CandidateInstallment.LumpsumAmount = lumpsumAmount;
+                    lumpsumAfterRegistration = (int)lumpsumAmount;
                 }
             }
             if (downpaymentAmount < registrationAmount)
             {
                 registration.CandidateInstallment.DownPayment = 0;
-                if (lumpsumAmount != null)
+                if (registration.CandidateInstallment.PaymentMethod == FeePaymentMethod.LumpsumAmount.ToString())
                 {
-                    if (courseFeeAmount != null) lumpsumAmount = (int)courseFeeAmount - (int)registrationAmount;
-                    registration.CandidateInstallment.LumpsumAmount = lumpsumAmount;
+                    if (lumpsumAmount != null)
+                    {
+                        lumpsumAmount = (int)lumpsumAmount - (int)registrationAmount;
+                        lumpsumAfterRegistration = (int)lumpsumAmount;
+                    }
+                }
+                else
+                {
+                    if (courseFeeAmount != null)
+                    {
+                        courseFeeAmount = (int)courseFeeAmount - (int)registrationAmount;
+                        lumpsumAfterRegistration = (int)lumpsumAmount - (int)registrationAmount;
+                        courseFeeAfterRegistration = (int)courseFeeAmount;
+                    }
                 }
             }
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).Where(e => e.CourseId == registration.CourseId);
             var viewModel = new AdmissionViewModel
             {
+                LumpsumAfterRegistration = lumpsumAfterRegistration,
+                CourseFeeAfterRegistration = courseFeeAfterRegistration,
                 Course = new Course { Name = "Test" },
                 CourseInstallment = new CourseInstallment { Name = "Test" },
                 Batch = new Batch { Name = "Test" },

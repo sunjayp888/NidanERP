@@ -180,9 +180,22 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetRoom(int hours)
         {
-            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId).ToList();
+            var roomdata = NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId);
+            var roomAvailableData = NidanBusinessService.RetrieveRoomAvailables(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId);
+            var roomIds = roomdata.Select(e => e.RoomId).ToList();
+            var roomAvailableIds = roomAvailableData.Where(e => roomIds.Contains(e.RoomId)).ToList();
             //NidanBusinessService.RetrieveRooms(UserOrganisationId, UserCentreId, e => e.StartTimeHours != hours).ToList();
-            return this.JsonNet(data);
+            if (roomAvailableIds.Count == 0)
+            {
+                return this.JsonNet(roomdata.ToList());
+            }
+            else
+            {
+                var ids = roomAvailableIds.Where(e => e.StartTimeHours != hours).Select(e => e.RoomId).ToList();
+                var roomList = roomdata.Where(e => ids.Contains(e.RoomId)).ToList();
+                return this.JsonNet(roomList.ToList());
+            }
+            //return this.JsonNet(roomdata.ToList());
         }
 
         [HttpPost]

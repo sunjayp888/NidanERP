@@ -28,6 +28,8 @@ namespace Nidan.Models
         public SelectList CourseInstallments { get; set; }
         public SelectList Trainers { get; set; }
         public int RegistrationId { get; set; }
+        public int LumpsumAfterRegistration { get; set; }
+        public int CourseFeeAfterRegistration { get; set; }
         public int IntrestedCourseId { get; set; }
         public int BatchTimePreferId { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
