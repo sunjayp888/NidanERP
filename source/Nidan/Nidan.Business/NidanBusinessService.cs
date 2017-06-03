@@ -1245,7 +1245,7 @@ namespace Nidan.Business
                 BankName = candidateFee.BankName,
                 BalanceInstallmentAmount = candidateFee.BalanceInstallmentAmount,
                 CandidateInstallmentId = candidateInstallmentId,
-                ChequeDate = candidateFee.ChequeDate,
+                ChequeDate = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeDate,
                 ChequeNumber = candidateFee.ChequeNumber,
                 FeeTypeId = (int)FeeType.Registration,
                 PaidAmount = candidateFee.PaidAmount,
@@ -2721,8 +2721,32 @@ namespace Nidan.Business
             if (admission.BatchId != null)
             {
                 var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
-                admission.Registration = registrationData;
-                // CreateCandidateFee(organisationId, centreId, personnelId, admission);
+                var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId, e => true);
+                var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
+                var installmentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5, 0, 0, 0);
+                var candidateFees = new List<CandidateFee>();
+                for (int i = 1; i <= batch?.NumberOfInstallment; i++)
+                {
+                    candidateFees.Add(new CandidateFee
+                    {
+                        CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
+                        PaymentModeId = registrationData.CandidateFee.PaymentModeId,
+                        FeeTypeId = (int)FeeType.Installment,
+                        FollowUpDate = batch?.BatchStartDate.AddMonths(batch.NumberOfInstallment),
+                        FiscalYear = DateTime.UtcNow.FiscalYear(),
+                        InstallmentAmount = (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / batch?.NumberOfInstallment,
+                        CentreId = centreId,
+                        OrganisationId = organisationId,
+                        PersonnelId = personnelId,
+                        IsPaymentDone = false,
+                        StudentCode = registrationData.StudentCode,
+                        InstallmentNumber = i,
+                        InstallmentDate = installmentDate.AddMonths(i)
+                    });
+                }
+                candidateInstallment.NumberOfInstallment = batch?.NumberOfInstallment;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateInstallment);
+                _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
                 admission.Registration = null;
             }
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
