@@ -1,0 +1,53 @@
+﻿@model Nidan.Models.ExpenseHeaderViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Expense Header ({0})", Model.ExpenseHeader.Name);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Model.ExpenseHeader.Name<small>Edit Expense Header</small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.ExpenseHeader.ExpenseHeaderId)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ExpenseHeader.Name, "Expense Header Name", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.ExpenseHeader.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.ExpenseHeader.Name, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

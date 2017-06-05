@@ -9,7 +9,9 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
+                <h2>
+                    <button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Admission?.Registration?.Enquiry?.Title, @Model.Admission?.Registration?.Enquiry?.FirstName, @Model.Admission?.Registration?.Enquiry?.MiddleName, @Model.Admission?.Registration?.Enquiry?.LastName)</button> View Admission <small></small>
+                </h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">

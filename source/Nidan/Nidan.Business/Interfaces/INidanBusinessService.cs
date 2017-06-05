@@ -50,7 +50,7 @@ namespace Nidan.Business.Interfaces
         Module CreateModule(int organisationId, Module module);
         RoomAvailable CreateRoomAvailable(int organisationId, RoomAvailable roomAvailable);
         TrainerAvailable CreateTrainerAvailable(int organisationId, TrainerAvailable trainerAvailable);
-        //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
+        ExpenseHeader CreateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -206,6 +206,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<AdmissionGrid> RetrieveAdmissionGrid(int organisationId, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours,int numberOfWeekDays,int courseFee,int downPayment);
+        PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -232,6 +234,7 @@ namespace Nidan.Business.Interfaces
         CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee);
         Registration UpdateRegistartion(int organisationId, Registration registration);
         Module UpdateModule(int organisationId, Module module);
+        ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

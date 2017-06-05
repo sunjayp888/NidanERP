@@ -97,6 +97,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateInstallmentSearchField> CandidateInstallmentSearchFields { get; set; }
         public virtual DbSet<AdmissionGrid> AdmissionGrids { get; set; }
         public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
+        public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1455,6 +1456,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateFeeGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseHeader>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
