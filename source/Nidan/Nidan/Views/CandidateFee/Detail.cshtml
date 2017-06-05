@@ -309,5 +309,17 @@
 
         });
 
+        $('#checkBox').checked(function () {
+            if ($(this).is(":checked")) {
+                $("#overrideFeeDiv").show();
+                //$("#paymentMethodDiv").show();
+            } else {
+                $("#overrideFeeDiv").hide();
+                //$("#paymentMethodDiv").show();
+            }
+
+        });
+        $("#overrideFeeDiv").hide();
+
     </script>
 }

@@ -52,6 +52,7 @@ namespace Nidan.Business
             //_documentServiceAPI = documentServiceAPI;
         }
 
+        
         #region // Create
 
         public Personnel CreatePersonnel(int organisationId, Personnel personnel)
@@ -1254,7 +1255,8 @@ namespace Nidan.Business
                 StudentCode = studentCode,
                 PaymentModeId = candidateFee.PaymentModeId,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
-                PersonnelId = personnelId
+                PersonnelId = personnelId,
+                IsPaidAmountOverride = false
             };
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }

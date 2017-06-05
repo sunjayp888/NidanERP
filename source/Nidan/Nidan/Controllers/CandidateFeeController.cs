@@ -60,26 +60,42 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveFee(CandidateFee candidateFee)
+        public ActionResult SaveFee(CandidateFeeViewModel candidateFeeViewModel)
         {
             var organisationId = UserOrganisationId;
             try
             {
-                var candidateFeeData = NidanBusinessService.RetrieveCandidateFee(organisationId, candidateFee.CandidateFeeId);
-                candidateFee.OrganisationId = organisationId;
-                candidateFee.CentreId = UserCentreId;
+                var candidateFeeData = NidanBusinessService.RetrieveCandidateFee(organisationId, candidateFeeViewModel.CandidateFee.CandidateFeeId);
+                candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
+                candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
                 candidateFeeData.PaymentDate = DateTime.UtcNow;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
                 candidateFeeData.FiscalYear = DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
-                candidateFeeData.BankName = candidateFee.BankName;
-                candidateFeeData.ChequeDate = candidateFee.ChequeDate;
-                candidateFeeData.PaidAmount = candidateFee.PaidAmount;
-                candidateFeeData.PaymentModeId = candidateFee.PaymentModeId;
-                candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
+                candidateFeeData.BankName = candidateFeeViewModel.CandidateFee.BankName;
+                candidateFeeData.ChequeDate = candidateFeeViewModel.CandidateFee.ChequeDate;
+                //candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride ? candidateFeeViewModel.CandidateFee.PaidAmount : candidateFeeData.InstallmentAmount;
+                candidateFeeData.IsPaidAmountOverride = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride;
+                if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride == true)
+                {
+                    if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
+                    {
+                        candidateFeeViewModel.CandidateFee.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
+                    }
+                    if (candidateFeeData.PaidAmount > candidateFeeData.InstallmentAmount)
+                    {
+                        candidateFeeViewModel.CandidateFee.AdvancedAmount =  candidateFeeData.PaidAmount - candidateFeeData.InstallmentAmount;
+                    }
+                    candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
+                }
+                else
+                {
+                    candidateFeeData.PaidAmount = candidateFeeData.InstallmentAmount;
+                }
+                candidateFeeData.PaymentModeId = candidateFeeViewModel.CandidateFee.PaymentModeId;
+                candidateFeeData.ChequeNumber = candidateFeeViewModel.CandidateFee.ChequeNumber;
                 candidateFeeData.PersonnelId = UserPersonnelId;
-                candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
-                // RedirectToAction("Detail", new { id = candidateFeeData.CandidateInstallmentId });
+                candidateFeeViewModel.CandidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
                 return this.JsonNet(true);
             }
             catch (Exception e)

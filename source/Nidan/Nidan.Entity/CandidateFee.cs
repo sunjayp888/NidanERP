@@ -61,6 +61,10 @@ namespace Nidan.Entity
 
         public string Particulars { get; set; }
 
+        public bool IsPaidAmountOverride { get; set; }
+
+        public decimal? AdvancedAmount { get; set; }
+
         public virtual CandidateInstallment CandidateInstallment { get; set; }
 
         public virtual Centre Centre { get; set; }
