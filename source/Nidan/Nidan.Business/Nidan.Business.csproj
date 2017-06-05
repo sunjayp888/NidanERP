@@ -64,6 +64,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SharedTypes">
+      <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
+
       <HintPath>F:\DeveloperShared\SharedTypes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
