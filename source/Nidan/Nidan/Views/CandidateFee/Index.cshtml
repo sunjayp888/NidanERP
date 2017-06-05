@@ -69,8 +69,8 @@
                                             <td><i class="fa fa-inr"></i> <span ng-bind="registration.TotalFee"></span></td>
                                             <td><i class="fa fa-inr"></i> <span ng-bind="registration.PaidAmount"></span></td>
                                             <td>
-                                                <i class="fa fa-inr"></i> <button ng-if="registration.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
-                                                <span ng-if="registration.PendingAmount!=0.00" ng-bind="registration.PendingAmount"></span>
+                                               <button ng-if="registration.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                                <span class="fa fa-inr" ng-if="registration.PendingAmount!=0.00" ng-bind="registration.PendingAmount"></span>
                                             </td>
                                             <td>
                                                 <div class="btn-group pull-right">
