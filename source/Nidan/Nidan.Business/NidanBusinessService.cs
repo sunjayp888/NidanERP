@@ -1035,6 +1035,9 @@ namespace Nidan.Business
             {
                 CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
                 PaymentModeId = candidateFee.PaymentModeId,
+                ChequeDate = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeDate,
+                ChequeNumber = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeNumber,
+                BankName = candidateFee.PaymentModeId == 1 ? null : candidateFee.BankName,
                 FeeTypeId = (int)FeeType.Admission,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
                 CentreId = centreId,
@@ -1060,6 +1063,9 @@ namespace Nidan.Business
             {
                 CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
                 PaymentModeId = candidateFee.PaymentModeId,
+                ChequeDate = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeDate,
+                ChequeNumber = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeNumber,
+                BankName = candidateFee.PaymentModeId == 1 ? null : candidateFee.BankName,
                 FeeTypeId = (int)FeeType.Admission,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
                 CentreId = centreId,
@@ -1080,6 +1086,9 @@ namespace Nidan.Business
                     {
                         CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
                         PaymentModeId = candidateFee.PaymentModeId,
+                        ChequeDate = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeDate,
+                        ChequeNumber = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeNumber,
+                        BankName = candidateFee.PaymentModeId == 1 ? null : candidateFee.BankName,
                         FeeTypeId = (int)FeeType.Installment,
                         FollowUpDate = batch?.BatchStartDate.AddMonths(batch.NumberOfInstallment),
                         FiscalYear = DateTime.UtcNow.FiscalYear(),
@@ -1126,6 +1135,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailable);
         }
 
+        public ExpenseHeader CreateExpenseHeader(int organisationId, ExpenseHeader expenseHeader)
+        {
+            return _nidanDataService.Create<ExpenseHeader>(organisationId, expenseHeader);
+        }
+
         public Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration)
         {
             registration.CourseInstallment.CourseInstallmentId = registration.CourseInstallmentId;
@@ -1138,7 +1152,7 @@ namespace Nidan.Business
             //Send Email
             SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            SendRegistrationSms(registrationData);
+            //SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1243,11 +1257,11 @@ namespace Nidan.Business
             {
                 CentreId = centreId,
                 OrganisationId = organisationId,
-                BankName = candidateFee.BankName,
                 BalanceInstallmentAmount = candidateFee.BalanceInstallmentAmount,
                 CandidateInstallmentId = candidateInstallmentId,
                 ChequeDate = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeDate,
-                ChequeNumber = candidateFee.ChequeNumber,
+                ChequeNumber = candidateFee.PaymentModeId == 1 ? null : candidateFee.ChequeNumber,
+                BankName = candidateFee.PaymentModeId == 1 ? null : candidateFee.BankName,
                 FeeTypeId = (int)FeeType.Registration,
                 PaidAmount = candidateFee.PaidAmount,
                 IsPaymentDone = true,
@@ -2219,6 +2233,16 @@ namespace Nidan.Business
             };
         }
 
+        public PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveExpenseHeaders(organisationId, predicate, orderBy, paging);
+        }
+
+        public ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveExpenseHeader(organisationId, expenseHeaderId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2604,6 +2628,7 @@ namespace Nidan.Business
                 enquiryFollowUp.FollowUpType = "Counselling";
                 enquiryFollowUp.CounsellingId = counselling.CounsellingId;
                 enquiryFollowUp.IntrestedCourseId = counselling.CourseOfferedId;
+                enquiryFollowUp.Course = null;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
             }
 
@@ -2715,6 +2740,11 @@ namespace Nidan.Business
         public Module UpdateModule(int organisationId, Module module)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, module);
+        }
+
+        public ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
 
@@ -3014,7 +3044,7 @@ namespace Nidan.Business
             var document = CreateRegistrationRecieptBytes(organisationId, centreId, registration.CandidateFeeId);
             var emailData = new EmailData()
             {
-                CCAddressList = new List<string> { "projectcoordinator@nidantech.com", "creative@nidantech.com" },
+                CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
                 Body = "This is testing on registration",
                 Subject = "Registration Detail",
                 IsHtml = true,
