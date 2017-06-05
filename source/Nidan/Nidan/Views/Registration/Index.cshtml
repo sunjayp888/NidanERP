@@ -77,7 +77,7 @@
                                         <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
                                         <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
                                         <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
-                                        <td><span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
+                                        <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
                                         <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
                                         <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button></td>
                                         <td>

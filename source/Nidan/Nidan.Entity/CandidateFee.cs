@@ -51,7 +51,7 @@ namespace Nidan.Entity
 
         public string FiscalYear { get; set; }
 
-        public bool? IsPaymentDone { get; set; }
+        public bool IsPaymentDone { get; set; }
 
         public int? PersonnelId { get; set; }
 

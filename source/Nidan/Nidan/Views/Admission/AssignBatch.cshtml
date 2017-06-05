@@ -7,10 +7,12 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
-                <div class="clearfix"></div>
-            </div>
+        <div class="x_title">
+            <h2>
+                <button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration?.Enquiry?.Title, @Model.Registration?.Enquiry?.FirstName, @Model.Registration?.Enquiry?.MiddleName, @Model.Registration?.Enquiry?.LastName)</button> Assign Batch <small></small>
+            </h2>
+            <div class="clearfix"></div>
+        </div>
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
@@ -447,6 +449,7 @@
                             $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
                             $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
                             $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
+                            $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
                             $("#txtBatchMonth").val(result.Month);
                             $("#txtBatchStartDate").val(result.BatchStartDate);
                             $("#txtBatchEndDate").val(result.BatchEndDate);

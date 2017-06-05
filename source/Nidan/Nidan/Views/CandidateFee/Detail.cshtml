@@ -54,7 +54,10 @@
                                         </td>
                                         <td><span ng-bind="candidateFee.InstallmentDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
-                                        <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span> <span ng-if="!candidateFee.IsPaymentDone" ng-bind="candidateFee.InstallmentAmount"></span>.00</td>
+                                        <td>
+                                            <i class="fa fa-inr"></i> <span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span>
+                                            <span ng-if="!candidateFee.IsPaymentDone" ng-bind="candidateFee.InstallmentAmount"></span>.00
+                                        </td>
                                         <td class="col-lg-1">
                                             <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
                                             <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>

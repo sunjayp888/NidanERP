@@ -21,7 +21,7 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string BatchName { get; set; }
 
-        public int? TotalFee { get; set; }
+        public decimal? TotalFee { get; set; }
 
         public decimal? PaidAmount { get; set; }
 
