@@ -52,7 +52,7 @@ namespace Nidan.Business
             //_documentServiceAPI = documentServiceAPI;
         }
 
-        
+
         #region // Create
 
         public Personnel CreatePersonnel(int organisationId, Personnel personnel)
@@ -1275,6 +1275,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }
 
+        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
+        {
+            return _nidanDataService.Create<OtherFee>(organisationId, otherFee);
+        }
+
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -1645,7 +1650,7 @@ namespace Nidan.Business
 
         public List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<PaymentMode>(organisationId, e => true);
+            return _nidanDataService.Retrieve<PaymentMode>(organisationId, predicate);
         }
 
         public List<CourseInstallment> RetrieveCourseInstallments(int organisationId,
@@ -2243,6 +2248,16 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveExpenseHeader(organisationId, expenseHeaderId, predicate);
         }
 
+        public PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveOtherFees(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveOtherFee(organisationId, centreId, otherFeeId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2747,8 +2762,12 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
+        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
+        }
 
-        public Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission)
+        public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
             {
@@ -2781,6 +2800,11 @@ namespace Nidan.Business
                 _nidanDataService.Create<CandidateFee>(organisationId, candidateFees);
                 admission.Registration = null;
             }
+        }
+
+        public Admission UpdateAdmission(int organisationId, int centreId, int personnelId, Admission admission)
+        {
+
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, admission);
         }
 

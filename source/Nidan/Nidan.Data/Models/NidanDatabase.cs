@@ -98,6 +98,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<AdmissionGrid> AdmissionGrids { get; set; }
         public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
         public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
+        public virtual DbSet<OtherFee> OtherFees { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1460,6 +1461,26 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ExpenseHeader>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Project)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.CashMemo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.RupeesInWord)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
