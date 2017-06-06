@@ -65,7 +65,7 @@
                                             <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
                                         </td>
                                         <td>
-                                            <button id="btnPayFee" ng-disabled="candidateFee.IsPaymentDone" type="button" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
+                                            <button id="btnPayFee" type="button" ng-disabled="candidateFee.IsPaymentDone" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
                                             <button id="btn" class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
                                         </td>
                                     </tr>
@@ -105,6 +105,7 @@
         $("#txtChequeDate").hide();
         $("#txtBankName").hide();
         $("#txtChequeDate").val('');
+        $("#overrideFeeDiv").hide();
         
         $("#dropDownPaymentMode").change(function () {
             if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
@@ -311,17 +312,32 @@
 
         });
 
-        $('#checkBox').checked(function () {
+        $('#checkbox').change(function () {
             if ($(this).is(":checked")) {
                 $("#overrideFeeDiv").show();
-                //$("#paymentMethodDiv").show();
             } else {
                 $("#overrideFeeDiv").hide();
-                //$("#paymentMethodDiv").show();
             }
-
         });
-        $("#overrideFeeDiv").hide();
+       
+        //========================================================= Paid Amount can not allow 0 as a first digit.
+
+        $('#txtPaidAmount').keyup(function () { 
+            var myLength = $("#txtPaidAmount").val().length;
+            if (myLength == 1) //To check only when entering first character.
+            {
+                if ($(this).val() === '0') {
+                    alert('0 is not allowed as first character');
+                    $(this).val('');
+                }
+            }
+        });
+
+        //===========================================================================
+
+       $(document).ready(function () {
+           $("#btnPayFee").prop("disabled", true);
+       });
 
     </script>
 }
