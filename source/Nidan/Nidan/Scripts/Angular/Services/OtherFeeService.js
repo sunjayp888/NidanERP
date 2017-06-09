@@ -12,7 +12,8 @@
             retrieveOtherFees: retrieveOtherFees,
             canDeleteOtherFee: canDeleteOtherFee,
             deleteOtherFee: deleteOtherFee,
-            searchOtherFee: searchOtherFee
+            searchOtherFee: searchOtherFee,
+            //addExpense: addExpense
         };
 
         return service;
@@ -52,5 +53,12 @@
 
             return $http.post(url, data);
         }
+
+        //function addExpense() {
+        //    var url = "/OtherFee/Create",
+        //        data = { };
+
+        //    return $http.post(url, data);
+        //}
     }
 })();

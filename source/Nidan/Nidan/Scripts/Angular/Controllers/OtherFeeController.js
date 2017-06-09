@@ -21,6 +21,7 @@
         vm.deleteOtherFee = deleteOtherFee;
         vm.searchOtherFee = searchOtherFee;
         vm.viewOtherFee = viewOtherFee;
+        //vm.addExpense = addExpense;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
@@ -87,6 +88,11 @@
             $window.location.href = "/OtherFee/Edit/" + otherFeeId;
         }
 
+        //function addExpense() {
+        //    return OtherFeeService.addExpense.then(function() {
+
+        //    });
+        //}
     }
 
 })();

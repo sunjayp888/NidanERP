@@ -41,6 +41,16 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? PrintDate { get; set; }
 
+        public int? Unit { get; set; }
+
+        public decimal? Rate { get; set; }
+
+        public string Description { get; set; }
+
+        public bool Approved { get; set; }
+
+        public int? ApprovedBy { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }

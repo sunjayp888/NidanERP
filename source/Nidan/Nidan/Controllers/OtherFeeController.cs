@@ -28,14 +28,17 @@ namespace Nidan.Controllers
 
         // GET: OtherFee/Create
         [Authorize(Roles = "Admin")]
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
+            var otherFee = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId && e.CashMemo == id).Items.FirstOrDefault();
+            TempData["CashMemo"] = id;
             var viewModel = new OtherFeeViewModel()
             {
-                OtherFee = new OtherFee(),
+                OtherFee = otherFee,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name")
             };
@@ -58,14 +61,41 @@ namespace Nidan.Controllers
                 otherFeeViewModel.OtherFee.CentreId = centreId;
                 otherFeeViewModel.OtherFee.PersonnelId = personnelId;
                 otherFeeViewModel.OtherFee.CreatedDate = DateTime.UtcNow;
-                otherFeeViewModel.OtherFee.PaymentModeId = (int) PaymentMode.Cash;
+                otherFeeViewModel.OtherFee.PaymentModeId = (int)PaymentMode.Cash;
                 otherFeeViewModel.OtherFee = NidanBusinessService.CreateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee);
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", new { id = otherFeeViewModel.OtherFee.CashMemo });
             }
             otherFeeViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
             otherFeeViewModel.PaymentModes = new SelectList(NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1).ToList(), "PaymentModeId", "Name");
             return View(otherFeeViewModel);
         }
+
+        //// GET: OtherFee/Edit/{id}
+        //public ActionResult AddExpense(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var organisationId = UserOrganisationId;
+        //    var centreId = UserCentreId;
+        //    var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
+        //    var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
+        //    var otherFee = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId && e.CashMemo == id).Items.FirstOrDefault();
+        //    TempData["CashMemo"] = id;
+
+        //    if (otherFee == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    var viewModel = new OtherFeeViewModel
+        //    {
+        //        OtherFee = otherFee,
+        //        PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
+        //        ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name")
+        //    };
+        //    return View(viewModel);
+        //}
 
         // GET: OtherFee/Edit/{id}
         public ActionResult Edit(int? id)
@@ -78,7 +108,7 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
-            var otherFee = NidanBusinessService.RetrieveOtherFee(organisationId, centreId, id.Value, e => true);
+            var otherFee = NidanBusinessService.RetrieveOtherFee(organisationId, centreId, id.Value, e => e.CentreId == centreId);
 
             if (otherFee == null)
             {
@@ -120,8 +150,17 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
+            var cashMemo = Convert.ToString(TempData["CashMemo"]);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            if (cashMemo == "")
+            {
+                return this.JsonNet(NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            }
+            else
+            {
+                return this.JsonNet(NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CashMemo == cashMemo, orderBy, paging));
+            }
+            
         }
     }
 }

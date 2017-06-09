@@ -1583,6 +1583,8 @@
     <Content Include="Views\OtherFee\Create.cshtml" />
     <Content Include="Views\OtherFee\Edit.cshtml" />
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
+    <Content Include="Views\OtherFee\_Expenses.cshtml" />
+    <Content Include="Views\OtherFee\AddExpense.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
