@@ -126,15 +126,17 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).ToList().FirstOrDefault();
-            var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId,e => e.CandidateInstallmentId == id.Value);
+            var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == id.Value);
             var totalPaid = candidateFeeData.Items.Sum(e => e.PaidAmount);
-            var balanceAmount = data.CourseFee - totalPaid;
+            var courseFee = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee : data.LumpsumAmount;
+            var balanceAmount = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee - totalPaid : data.LumpsumAmount - totalPaid;
             var candidateFeeModel = new CandidateFeeViewModel
             {
                 CandidateName = String.Format("{0} {1} {2} {3}", enquiry?.Title, enquiry?.FirstName, enquiry?.MiddleName, enquiry?.LastName),
                 CandidateInstallmentId = id.Value,
                 TotalPaidFee = totalPaid,
-                BalanceFee = balanceAmount
+                BalanceFee = balanceAmount,
+                CourseFee = courseFee
             };
             return View(candidateFeeModel);
         }

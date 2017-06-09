@@ -299,7 +299,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
-                admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
+                NidanBusinessService.AssignBatch(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
             var viewModel = new AdmissionViewModel
