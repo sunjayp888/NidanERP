@@ -64,7 +64,7 @@
         }
 
         function saveFee() {
-            if ($scope.$("#checkbox").prop('checked')==true) {
+            if ($("#checkbox").prop('checked') == true) {
                 var candidateFee = {
                     CandidateFeeId: vm.candidateFeeId,
                     PaidAmount: $("#txtPaidAmount").val(),
@@ -79,9 +79,9 @@
                     .then(function (response) {
                         retrieveCandidateFees();
                     });
-                }
+            }
 
-            else  {
+            else {
                 var candidateFeedefault = {
                     CandidateFeeId: vm.candidateFeeId,
                     PaidAmount: $("#txtAmount").val(),
@@ -139,7 +139,7 @@
                 .then(function (response) {
                     $("#txtAmount").val(response.data.InstallmentAmount);
                     $("#txtChequeDate").val('');
-                    $("#dropDownPaymentMode").filter(function() {
+                    $("#dropDownPaymentMode").filter(function () {
                         return !this.value || $.trim(this.value).length == 0;
                     });
                     $("#dropDownPaymentMode").val();
