@@ -65,9 +65,10 @@
     </Reference>
     <Reference Include="SharedTypes">
       <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
-      <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
+      <HintPath>..\..\..\..\..\EmailWCFService-master\EmailWCFService-master\Source\lib\SharedTypes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -110,6 +111,8 @@
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\NodeExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Helper\CsvHelper.cs" />
+    <Compile Include="Helper\DataHelper.cs" />
     <Compile Include="Interfaces\IPdfService.cs" />
     <Compile Include="Interfaces\IRazorService.cs" />
     <Compile Include="Interfaces\ISMSService.cs" />
