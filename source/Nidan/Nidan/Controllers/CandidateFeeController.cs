@@ -136,7 +136,8 @@ namespace Nidan.Controllers
                 CandidateInstallmentId = id.Value,
                 TotalPaidFee = totalPaid,
                 BalanceFee = balanceAmount,
-                CourseFee = courseFee
+                CourseFee = courseFee,
+                CandidateFeeList = candidateFeeData.Items.ToList()
             };
             return View(candidateFeeModel);
         }

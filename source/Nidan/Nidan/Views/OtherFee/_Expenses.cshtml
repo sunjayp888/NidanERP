@@ -1,36 +1,5 @@
 ﻿@using Nidan.Extensions
-@{
-    ViewBag.Title = "OtherFee";
-}
-
 <div ng-controller="OtherFeeController as model">
-    <div class="page-title">
-        <div class="title_left">
-            <h3>
-                Other Fees <small></small>
-            </h3>
-        </div>
-        @*<div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>*@
-    </div>
-    @if (User.IsInAnyRoles("Admin"))
-    {
-        <div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "OtherFee")">
-                    <i class="fa fa-user"></i> Create
-                </a>
-            </div>
-        </div>
-    }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -60,9 +29,10 @@
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
                                             <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
-                                            <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
                                             <th ng-click="model.order('Project')" ng-class="model.orderClass('Project')">Project</th>
                                             <th ng-click="model.order('ExpenseHeaderId')" ng-class="model.orderClass('ExpenseHeaderId')">Expense Head</th>
+                                            <th ng-click="model.order('Unit')" ng-class="model.orderClass('Unit')">Unit</th>
+                                            <th ng-click="model.order('Rate')" ng-class="model.orderClass('Rate')">Rate per Unit</th>
                                             <th ng-click="model.order('DebitAmount')" ng-class="model.orderClass('DebitAmount')">Debit Amount</th>
                                             <th ng-click="model.order('PaidTo')" ng-class="model.orderClass('PaidTo')">Paid To</th>
                                             <th>Actions</th>
@@ -75,10 +45,11 @@
                                                 <td><span ng-bind="otherFee.Centre.Name"></span></td>
                                             }
                                             <td><span ng-bind="otherFee.CreatedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="otherFee.CashMemo"></span></td>
                                             <td><span ng-bind="otherFee.Project"></span></td>
                                             <td><span ng-bind="otherFee.ExpenseHeader.Name"></span></td>
-                                            <td><span ng-bind="otherFee.DebitAmount"></span></td>
+                                            <td><span ng-bind="otherFee.Unit"></span></td>
+                                            <td><span class="fa fa-inr" ng-bind="otherFee.Rate"></span></td>
+                                            <td><span class="fa fa-inr" ng-bind="otherFee.DebitAmount"></span></td>
                                             <td><span ng-bind="otherFee.PaidTo"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
@@ -93,11 +64,11 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            @*<li>
-                                                                    <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{enquiry.EnquiryId}}">
-                                                                        Create Registration
-                                                                    </a>
-                                                                </li>*@
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Edit/{{otherFee.OtherFeeId}}">
+                                                                    Delete
+                                                                </a>
+                                                            </li>
                                                         }
                                                     </ul>
                                                 </div>
@@ -114,24 +85,6 @@
                             <label ng-bind="model.searchMessage"></label>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Confirmation</h2>
-                </div>
-
-                <div class="modal-body">
-                    <input type="hidden" ng-model='model.OtherFeeId' />
-                    Are you sure, you want to delete Enquiry <span ng-bind="model.OtherFeeId"></span> ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
