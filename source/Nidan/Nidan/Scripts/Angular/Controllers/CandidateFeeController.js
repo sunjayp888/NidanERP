@@ -27,6 +27,7 @@
         vm.candidateFeeId;
         vm.paymentModeId;
         vm.saveFee = saveFee;
+        vm.PaidAmount;
         vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
         vm.retrievePaymentModes = retrievePaymentModes;
         vm.print = print;
@@ -63,19 +64,39 @@
         }
 
         function saveFee() {
-            var candidateFee = {
-                CandidateFeeId: vm.candidateFeeId,
-                PaidAmount: $("#txtAmount").val(),
-                PaymentModeId: $("#dropDownPaymentMode").val(),
-                ChequeNumber: $("#txtChequeNumber").val(),
-                ChequeDate: $("#txtChequeDate").val(),
-                BankName: $("#txtBankName").val()
+            if ($("#checkbox").prop('checked') == true) {
+                var candidateFee = {
+                    CandidateFeeId: vm.candidateFeeId,
+                    PaidAmount: $("#txtPaidAmount").val(),
+                    PaymentModeId: $("#dropDownPaymentMode").val(),
+                    ChequeNumber: $("#txtChequeNumber").val(),
+                    ChequeDate: $("#txtChequeDate").val(),
+                    BankName: $("#txtBankName").val(),
+                    IsPaidAmountOverride: $("#checkbox").prop('checked'),
+
+                }
+                return CandidateFeeService.saveFee(candidateFee)
+                    .then(function (response) {
+                        retrieveCandidateFees();
+                    });
             }
 
-            return CandidateFeeService.saveFee(candidateFee)
-                .then(function (response) {
-                    retrieveCandidateFees();
-                });
+            else {
+                var candidateFeedefault = {
+                    CandidateFeeId: vm.candidateFeeId,
+                    PaidAmount: $("#txtAmount").val(),
+                    PaymentModeId: $("#dropDownPaymentMode").val(),
+                    ChequeNumber: $("#txtChequeNumber").val(),
+                    ChequeDate: $("#txtChequeDate").val(),
+                    BankName: $("#txtBankName").val(),
+                    IsPaidAmountOverride: $("#checkbox").prop('checked'),
+
+                }
+                return CandidateFeeService.saveFee(candidateFeedefault)
+                    .then(function (response) {
+                        retrieveCandidateFees();
+                    });
+            }
         }
 
         function retrievePaymentModes() {
@@ -118,10 +139,11 @@
                 .then(function (response) {
                     $("#txtAmount").val(response.data.InstallmentAmount);
                     $("#txtChequeDate").val('');
-                    $("#dropDownPaymentMode").filter(function() {
+                    $("#dropDownPaymentMode").filter(function () {
                         return !this.value || $.trim(this.value).length == 0;
                     });
                     $("#dropDownPaymentMode").val();
+                    $("#checkbox").prop('checked');
                     $("#labelChequeNumber").hide();
                     $("#labelChequeDate").hide();
                     $("#labelBankName").hide();

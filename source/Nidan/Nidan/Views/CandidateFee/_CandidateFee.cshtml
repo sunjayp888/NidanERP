@@ -31,6 +31,26 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10 col-sm-3 col-xs-12">
+                                <label class="btn btn-info pull-right col-md-9">
+                                    @*@Html.CheckBoxFor(model => model.CandidateFee.IsPaidAmountOverride, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })*@
+                                    <input id="checkbox" type="checkbox" />
+                                    Do You Want To Override Fee.
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div id="overrideFeeDiv" class="form-group">
+                            @Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="txtPaidAmount" class="form-control" />
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="row">
                                 <label id="labelChequeNumber" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Number</label>

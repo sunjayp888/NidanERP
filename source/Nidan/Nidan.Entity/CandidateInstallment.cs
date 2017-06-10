@@ -20,15 +20,15 @@ namespace Nidan.Entity
 
         public int CourseInstallmentId { get; set; }
 
-        public int? CourseFee { get; set; }
+        public decimal? CourseFee { get; set; }
 
-        public int? DownPayment { get; set; }
+        public decimal? DownPayment { get; set; }
 
-        public int? DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
 
         public int? NumberOfInstallment { get; set; }
 
-        public int? LumpsumAmount { get; set; }
+        public decimal? LumpsumAmount { get; set; }
 
         public string StudentCode { get; set; }
 

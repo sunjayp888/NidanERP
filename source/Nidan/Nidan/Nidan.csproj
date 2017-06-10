@@ -252,11 +252,13 @@
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EnquiryCourseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\ExpenseHeaderController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\OtherFeeController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\ExpenseHeaderViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Authorization\IdentityModels.cs" />
@@ -296,6 +299,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MobilizationViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
+    <Compile Include="Models\OtherFeeViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1116,11 +1120,13 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
     <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
+    <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
+    <Content Include="Scripts\Angular\Controllers\OtherFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Controllers\RoomController.js" />
@@ -1147,12 +1153,14 @@
     <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
+    <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
+    <Content Include="Scripts\Angular\Services\OtherFeeService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
@@ -1568,6 +1576,15 @@
     <Content Include="Views\Registration\View.cshtml" />
     <Content Include="Views\Module\Index.cshtml" />
     <Content Include="Views\Module\Create.cshtml" />
+    <Content Include="Views\ExpenseHeader\Index.cshtml" />
+    <Content Include="Views\ExpenseHeader\Create.cshtml" />
+    <Content Include="Views\ExpenseHeader\Edit.cshtml" />
+    <Content Include="Views\OtherFee\Index.cshtml" />
+    <Content Include="Views\OtherFee\Create.cshtml" />
+    <Content Include="Views\OtherFee\Edit.cshtml" />
+    <Content Include="Views\OtherFee\_OtherFee.cshtml" />
+    <Content Include="Views\OtherFee\_Expenses.cshtml" />
+    <Content Include="Views\OtherFee\AddExpense.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

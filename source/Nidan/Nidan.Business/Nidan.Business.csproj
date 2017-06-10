@@ -64,7 +64,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SharedTypes">
-      <HintPath>..\..\..\..\..\EmailWCFService-master\EmailWCFService-master\Source\lib\SharedTypes.dll</HintPath>
+      <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
+      <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

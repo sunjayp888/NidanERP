@@ -131,6 +131,7 @@
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
     <Compile Include="EventQuestion.cs" />
+    <Compile Include="ExpenseHeader.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpHistory.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
+    <Compile Include="OtherFee.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Admission.cs" />
     <Compile Include="Partials\Batch.cs" />

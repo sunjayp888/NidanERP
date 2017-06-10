@@ -25,6 +25,9 @@
                         }
                         @Html.HiddenFor(model => Model.Enquiry.EnquiryId)
                         @Html.HiddenFor(model => Model.Enquiry.EnquiryDate)
+                        @Html.HiddenFor(model => Model.Enquiry.IsAdmissionDone)
+                        @Html.HiddenFor(model => Model.Enquiry.IsCounsellingDone)
+                        @Html.HiddenFor(model => Model.Enquiry.IsRegistrationDone)
                         @Html.Partial("_Enquiry", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                            

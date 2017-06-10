@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
@@ -60,26 +61,57 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveFee(CandidateFee candidateFee)
+        public ActionResult SaveFee(CandidateFeeViewModel candidateFeeViewModel)
         {
             var organisationId = UserOrganisationId;
             try
             {
-                var candidateFeeData = NidanBusinessService.RetrieveCandidateFee(organisationId, candidateFee.CandidateFeeId);
-                candidateFee.OrganisationId = organisationId;
-                candidateFee.CentreId = UserCentreId;
+                var candidateFeeData = NidanBusinessService.RetrieveCandidateFee(organisationId, candidateFeeViewModel.CandidateFee.CandidateFeeId);
+                var candidateInstallmentData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateFeeId > candidateFeeData.CandidateFeeId && e.CandidateInstallmentId == candidateFeeData.CandidateInstallmentId).Items.FirstOrDefault();
+                candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
+                candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
                 candidateFeeData.PaymentDate = DateTime.UtcNow;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
                 candidateFeeData.FiscalYear = DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
-                candidateFeeData.BankName = candidateFee.BankName;
-                candidateFeeData.ChequeDate = candidateFee.ChequeDate;
-                candidateFeeData.PaidAmount = candidateFee.PaidAmount;
-                candidateFeeData.PaymentModeId = candidateFee.PaymentModeId;
-                candidateFeeData.ChequeNumber = candidateFee.ChequeNumber;
+                candidateFeeData.BankName = candidateFeeViewModel.CandidateFee.BankName;
+                candidateFeeData.ChequeDate = candidateFeeViewModel.CandidateFee.ChequeDate;
+                candidateFeeData.IsPaidAmountOverride = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride;
+                if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride == true)
+                {
+                    if (candidateFeeViewModel.CandidateFee.PaidAmount != null)
+                    {
+                        if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
+                        {
+                            candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
+                            if (candidateInstallmentData != null)
+                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
+                        }
+                        if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
+                        {
+                            candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
+                            if (candidateInstallmentData != null)
+                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
+                        }
+                        if (candidateInstallmentData != null)
+                        {
+                            NidanBusinessService.UpdateCandidateFee(organisationId, candidateInstallmentData);
+                        }
+                        candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
+                    }
+                    else
+                    {
+                        return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                    }
+                }
+                else
+                {
+                    candidateFeeData.PaidAmount = candidateFeeData.InstallmentAmount;
+                }
+                candidateFeeData.PaymentModeId = candidateFeeViewModel.CandidateFee.PaymentModeId;
+                candidateFeeData.ChequeNumber = candidateFeeViewModel.CandidateFee.ChequeNumber;
                 candidateFeeData.PersonnelId = UserPersonnelId;
-                candidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
-                // RedirectToAction("Detail", new { id = candidateFeeData.CandidateInstallmentId });
+                candidateFeeViewModel.CandidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
                 return this.JsonNet(true);
             }
             catch (Exception e)
@@ -102,10 +134,18 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).ToList().FirstOrDefault();
+            var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == id.Value);
+            var totalPaid = candidateFeeData.Items.Sum(e => e.PaidAmount);
+            var courseFee = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee : data.LumpsumAmount;
+            var balanceAmount = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee - totalPaid : data.LumpsumAmount - totalPaid;
             var candidateFeeModel = new CandidateFeeViewModel
             {
                 CandidateName = String.Format("{0} {1} {2} {3}", enquiry?.Title, enquiry?.FirstName, enquiry?.MiddleName, enquiry?.LastName),
-                CandidateInstallmentId = id.Value
+                CandidateInstallmentId = id.Value,
+                TotalPaidFee = totalPaid,
+                BalanceFee = balanceAmount,
+                CourseFee = courseFee,
+                CandidateFeeList = candidateFeeData.Items.ToList()
             };
             return View(candidateFeeModel);
         }

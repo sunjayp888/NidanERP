@@ -44,13 +44,15 @@ namespace Nidan.Business.Interfaces
         CentreCourseInstallment CreateCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         CentreScheme CreateCentreScheme(int organisationId, int centreId, int schemeId);
         CentreSector CreateCentreSector(int organisationId, int centreId, int sectorId);
-        Admission CreateAdmission(int organisationId, int centreId, int personnelId,Admission admission, CandidateFee candidateFee);
+        Admission CreateAdmission(int organisationId, int centreId, int personnelId, Admission admission, CandidateFee candidateFee);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         FollowUpHistory CreateFollowUpHistory(int organisationId, FollowUpHistory followUpHistory);
         Module CreateModule(int organisationId, Module module);
         RoomAvailable CreateRoomAvailable(int organisationId, RoomAvailable roomAvailable);
         TrainerAvailable CreateTrainerAvailable(int organisationId, TrainerAvailable trainerAvailable);
-        //CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment);
+        ExpenseHeader CreateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
+        void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission);
+        OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -163,7 +165,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<EnquiryCourse> RetrieveEnquiryCourses(int organisationId, int centreId, int enquiryId);
         IEnumerable<Course> RetrieveUnassignedCentreCourses(int organisationId, int centreId);
         PagedResult<CentreCourse> RetrieveCentreCourses(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
-        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId,Expression<Func<SubjectCourse, bool>> predicate);
+        IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, Expression<Func<SubjectCourse, bool>> predicate);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
         IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId);
@@ -174,7 +176,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Admission> RetrieveAdmissions(int organisationId, Expression<Func<Admission, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Admission RetrieveAdmission(int organisationId, int admissionId, Expression<Func<Admission, bool>> predicate);
-        Admission RetrieveAdmission(int organisationId,int centreId, int id);
+        Admission RetrieveAdmission(int organisationId, int centreId, int id);
         List<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate);
         PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId, Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId, Expression<Func<CandidateFee, bool>> predicate);
@@ -189,9 +191,9 @@ namespace Nidan.Business.Interfaces
         List<RoomAvailable> RetrieveRoomAvailables(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate);
         List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
-        List<CourseInstallment> RetrieveCourseInstallments(int organisationId,int centreId);
+        List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId);
         List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
-        Registration CreateCandidateRegistration(int organisationId, int centreId,int personnelId, string studentCode, Registration registration);
+        Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
         PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -205,7 +207,11 @@ namespace Nidan.Business.Interfaces
         PagedResult<CandidateInstallmentSearchField> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallmentSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<AdmissionGrid> RetrieveAdmissionGrid(int organisationId, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours,int numberOfWeekDays,int courseFee,int downPayment);
+        BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays, int courseFee, int downPayment);
+        PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
+        PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -232,6 +238,8 @@ namespace Nidan.Business.Interfaces
         CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee);
         Registration UpdateRegistartion(int organisationId, Registration registration);
         Module UpdateModule(int organisationId, Module module);
+        ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
+        OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

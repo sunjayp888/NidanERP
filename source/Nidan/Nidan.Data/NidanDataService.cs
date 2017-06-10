@@ -812,9 +812,9 @@ namespace Nidan.Data
                     context.Database.SqlQuery<EnquirySearchField>("SearchEnquiry @SearchKeyword", category).ToList();
 
                 var enquiries = context.EnquirySearchFields;
-                    //.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
-                    //.Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
-                    //.Include(e => e.Qualification).Include(e => e.Taluka);
+                //.Include(e => e.Sector).Include(e => e.Scheme).Include(e => e.Religion)
+                //.Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
+                //.Include(e => e.Qualification).Include(e => e.Taluka);
 
                 var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
 
@@ -2281,6 +2281,78 @@ namespace Nidan.Data
                         }
                       })
                       .Paginate(paging);
+            }
+        }
+
+        public PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ExpenseHeaders
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ExpenseHeaderId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ExpenseHeaders
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ExpenseHeaderId == expenseHeaderId);
+            }
+        }
+
+        public PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .OtherFees
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
+                    .Include(p => p.ExpenseHeader)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .OtherFees
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
             }
         }
 

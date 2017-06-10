@@ -97,6 +97,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateInstallmentSearchField> CandidateInstallmentSearchFields { get; set; }
         public virtual DbSet<AdmissionGrid> AdmissionGrids { get; set; }
         public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
+        public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
+        public virtual DbSet<OtherFee> OtherFees { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -138,9 +140,13 @@ namespace Nidan.Data.Models
              .HasForeignKey(e => e.SectorId)
              .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Registration>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CandidateFee>()
-               .Property(e => e.ChequeNumber)
-               .IsUnicode(false);
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.BankName)
@@ -151,18 +157,12 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateFee>()
-                .Property(e => e.FiscalYear)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Registration>()
-                .Property(e => e.Remarks)
+            modelBuilder.Entity<CandidateFee>()
+                .Property(e => e.FiscalYear)
                 .IsUnicode(false);
-
-            
             //modelBuilder.Entity<Colour>()
             //    .HasMany(e => e.Divisions)
             //    .WithRequired(e => e.Colour)
@@ -1457,6 +1457,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateFeeGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseHeader>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Project)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.CashMemo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.RupeesInWord)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
