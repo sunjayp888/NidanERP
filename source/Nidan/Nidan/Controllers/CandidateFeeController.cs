@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
@@ -78,23 +79,30 @@ namespace Nidan.Controllers
                 candidateFeeData.IsPaidAmountOverride = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride;
                 if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride == true)
                 {
-                    if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
+                    if (candidateFeeViewModel.CandidateFee.PaidAmount != null)
                     {
-                        candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
+                        if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
+                        {
+                            candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
+                            if (candidateInstallmentData != null)
+                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
+                        }
+                        if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
+                        {
+                            candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
+                            if (candidateInstallmentData != null)
+                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
+                        }
                         if (candidateInstallmentData != null)
-                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
+                        {
+                            NidanBusinessService.UpdateCandidateFee(organisationId, candidateInstallmentData);
+                        }
+                        candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
                     }
-                    if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
+                    else
                     {
-                        candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
-                        if (candidateInstallmentData != null)
-                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
+                        return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
                     }
-                    if (candidateInstallmentData != null)
-                    {
-                        NidanBusinessService.UpdateCandidateFee(organisationId, candidateInstallmentData);
-                    }
-                    candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
                 }
                 else
                 {
