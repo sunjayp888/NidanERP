@@ -10,10 +10,10 @@
     function OtherFeeService($http) {
         var service = {
             retrieveOtherFees: retrieveOtherFees,
-            canDeleteOtherFee: canDeleteOtherFee,
+            //canDeleteOtherFee: canDeleteOtherFee,
             deleteOtherFee: deleteOtherFee,
             searchOtherFee: searchOtherFee,
-            //addExpense: addExpense
+            retrieveOtherFeesByCashMemo: retrieveOtherFeesByCashMemo
         };
 
         return service;
@@ -40,25 +40,34 @@
             return $http.post(url, data);
         }
 
-        function canDeleteOtherFee(id) {
-            var url = "/OtherFee/CanDeleteOtherFee",
-                data = { id: id };
-
-            return $http.post(url, data);
-        }
-
-        function deleteOtherFee(id) {
-            var url = "/OtherFee/Delete",
-                data = { id: id };
-
-            return $http.post(url, data);
-        }
-
-        //function addExpense() {
-        //    var url = "/OtherFee/Create",
-        //        data = { };
+        //function canDeleteOtherFee(id) {
+        //    var url = "/OtherFee/CanDeleteOtherFee",
+        //        data = { id: id };
 
         //    return $http.post(url, data);
         //}
+
+        function deleteOtherFee(centreId, otherfeeId, cashMemo) {
+            var url = "/OtherFee/Delete",
+                data = {
+                    centreId: centreId,
+                    otherfeeId: otherfeeId,
+                    cashMemo: cashMemo
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveOtherFeesByCashMemo(cashMemo, Paging, OrderBy) {
+            var url = "/OtherFee/ListByCashMemo",
+                data = {
+                    cashMemo: cashMemo,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
     }
 })();

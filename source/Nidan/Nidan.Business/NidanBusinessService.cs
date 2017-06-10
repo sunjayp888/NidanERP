@@ -1280,6 +1280,15 @@ namespace Nidan.Business
             return _nidanDataService.Create<OtherFee>(organisationId, otherFee);
         }
 
+        public CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash)
+        {
+            centrePettyCash.OrganisationId = organisationId;
+            centrePettyCash.CentreId = centreId;
+            centrePettyCash.CreatedBy = personnelId;
+            centrePettyCash.CreatedDate = DateTime.UtcNow;
+            return _nidanDataService.Create<CentrePettyCash>(organisationId, centrePettyCash);
+        }
+
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -2258,6 +2267,17 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveOtherFee(organisationId, centreId, otherFeeId, predicate);
         }
 
+        public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentrePettyCashs(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public CentrePettyCash RetrieveCentrePettyCash(int organisationId, int centreId, int centrePettyCashId, Expression<Func<CentrePettyCash, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCentrePettyCash(organisationId, centreId, centrePettyCashId, predicate);
+        }
+
         #endregion
 
         #region // Update
@@ -2767,6 +2787,14 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
         }
 
+        public CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash)
+        {
+            centrePettyCash.OrganisationId = organisationId;
+            centrePettyCash.CentreId = centreId;
+            centrePettyCash.CreatedBy = personnelId;
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centrePettyCash);
+        }
+
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
@@ -2904,6 +2932,11 @@ namespace Nidan.Business
         public void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
         {
             _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CourseInstallmentId == courseInstallmentId);
+        }
+
+        public void DeleteOtherFee(int organisationId, int centreId, int otherFeeId)
+        {
+            _nidanDataService.Delete<OtherFee>(organisationId, p => p.CentreId == centreId && p.OtherFeeId == otherFeeId);
         }
 
         #endregion

@@ -101,8 +101,18 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
+                                           
+                                        </ul>
+                                    </li>
+                                }
+                                @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-up"></span></a>
+                                        <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                             <li><a href='@Url.Action("Index", "OtherFee")'>Other Fee</a></li>
+                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                         </ul>
                                     </li>
                                 }

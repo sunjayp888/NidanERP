@@ -103,6 +103,7 @@
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
     <Compile Include="CentreCourseInstallment.cs" />
+    <Compile Include="CentrePettyCash.cs" />
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
     <Compile Include="Colour.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Partials\Mobilization.cs" />
     <Compile Include="Partials\Organisation.cs" />
     <Compile Include="Partials\Host.cs" />
+    <Compile Include="Partials\OtherFee.cs" />
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />

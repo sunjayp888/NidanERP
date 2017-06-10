@@ -17,14 +17,16 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editOtherFee = editOtherFee;
-        vm.canDeleteOtherFee = canDeleteOtherFee;
+        //vm.canDeleteOtherFee = canDeleteOtherFee;
         vm.deleteOtherFee = deleteOtherFee;
         vm.searchOtherFee = searchOtherFee;
         vm.viewOtherFee = viewOtherFee;
         //vm.addExpense = addExpense;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.retrieveOtherFeesByCashMemo = retrieveOtherFeesByCashMemo;
+        vm.initialise = initialise;
+        vm.cashMemo = "";
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
@@ -35,6 +37,20 @@
 
         function retrieveOtherFees() {
             return OtherFeeService.retrieveOtherFees(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.otherFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.otherFees;
+                });
+        }
+
+        function retrieveOtherFeesByCashMemo(cashMemo) {
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            vm.cashMemo = cashMemo == undefined ? $("#CashMemo").val() : cashMemo;
+            return OtherFeeService.retrieveOtherFeesByCashMemo(vm.cashMemo, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.otherFees = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -72,20 +88,23 @@
             $window.location.href = "/OtherFee/Edit/" + id;
         }
 
-        function canDeleteOtherFee(id) {
-            vm.loadingActions = true;
-            vm.CanDeleteOtherFee = false;
-            $('.dropdown-menu').slideUp('fast');
-            $('.' + id).toggle();
-            OtherFeeService.canDeleteOtherFee(id).then(function (response) { vm.CanDeleteOtherFee = response.data, vm.loadingActions = false });
-        }
-
-        function deleteOtherFee(id) {
-            return OtherFeeService.deleteOtherFee(id).then(function () { initialise(); });
-        };
+        //function canDeleteOtherFee(id) {
+        //    vm.loadingActions = true;
+        //    vm.CanDeleteOtherFee = false;
+        //    $('.dropdown-menu').slideUp('fast');
+        //    $('.' + id).toggle();
+        //    OtherFeeService.canDeleteOtherFee(id).then(function (response) { vm.CanDeleteOtherFee = response.data, vm.loadingActions = false });
+        //}
 
         function viewOtherFee(otherFeeId) {
             $window.location.href = "/OtherFee/Edit/" + otherFeeId;
+        }
+
+        function deleteOtherFee(centreId, otherfeeId, cashMemo) {
+            return OtherFeeService.deleteOtherFee(centreId, otherfeeId).then(function () {
+                retrieveOtherFeesByCashMemo(cashMemo);
+            });
+
         }
 
         //function addExpense() {

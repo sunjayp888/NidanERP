@@ -24,6 +24,7 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string CashMemo { get; set; }
 
+        [Range(0.0,5000.0, ErrorMessage = "Amount should be less than 5000")]
         public decimal DebitAmount { get; set; }
 
         [Required]
@@ -41,9 +42,9 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? PrintDate { get; set; }
 
-        public int? Unit { get; set; }
+        public int Unit { get; set; }
 
-        public decimal? Rate { get; set; }
+        public decimal Rate { get; set; }
 
         public string Description { get; set; }
 
