@@ -1,13 +1,15 @@
 ﻿@using Nidan.Business.Enum
+@using Nidan.Entity
+@using Nidan.Models
 @model Nidan.Models.CandidateFeeViewModel
 
 @{
     ViewBag.Title = "Detail";
 }
 @*@{
-    int value = CandidateFee.FeeTypeId;
-    FeeType feeType = (FeeType)value;
-}*@
+        int value = CandidateFee.FeeTypeId;
+        FeeType feeType = (FeeType)value;
+    }*@
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -48,55 +50,46 @@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
-                    
+
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <div class="row">
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        <th>Fee Type</th>
-                                        @*<th>ChequeDate</th>
-                                        <th>Cheque Number</th>*@
-                                        <th>Due Date</th>
-                                        <th>Amount To Be Paid</th>
-                                        <th>Payment Date</th>
-                                        <th>Payment Mode</th>
-                                        <th>Paid Amount</th>
-                                        <th>Payment Status</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr role="row">
+                                            <th>Fee Type</th>
+                                            <th>Due Date</th>
+                                            <th>Amount To Be Paid</th>
+                                            <th>Payment Date</th>
+                                            <th>Payment Mode</th>
+                                            <th>Paid Amount</th>
+                                            <th>Payment Status</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
-                                        <td>
-                                            <span ng-if="candidateFee.FeeTypeId==1">Registration</span>
-                                            <span ng-if="candidateFee.FeeTypeId==2">Admission</span>
-                                            <span ng-if="candidateFee.FeeTypeId==3">Installment -</span> <span ng-if="candidateFee.FeeTypeId==3" ng-bind="candidateFee.InstallmentNumber"></span>
-                                        </td>
-                                        @*<td>
-                                            <span ng-if="candidateFee.PaymentMode.Name='Cheque'" ng-bind="candidateFee.ChequeDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="candidateFee.ChequeNumber"></span></td>*@
-                                        <td><span ng-bind="candidateFee.InstallmentDate|date : format : shortDate"></span></td>
-                                        <td><span class="fa fa-inr" ng-if="candidateFee.InstallmentAmount!=null" ng-bind="candidateFee.InstallmentAmount"></span></td>
-                                        <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
-                                        <td>
-                                            <span ng-if="candidateFee.PaymentModeId==1 && candidateFee.IsPaymentDone">Cash</span>
-                                            <span ng-if="candidateFee.PaymentModeId==2 && candidateFee.IsPaymentDone">Cheque</span>
-                                            <span ng-if="!candidateFee.IsPaymentDone" ng-bind=""></span>
-                                        </td>
-                                        <td>
-                                            <span class="fa fa-inr" ng-if="candidateFee.IsPaymentDone"  ng-bind="candidateFee.PaidAmount"></span>
-                                        </td>
-                                        <td class="col-lg-1">
-                                            <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
-                                            <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
-                                        </td>
-                                        <td>
-                                            <button id="btnPayFee" type="button" ng-disabled="candidateFee.IsPaymentDone" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
-                                            <button id="btn" class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
+                                            <td>
+                                                <span ng-bind="candidateFee.FeeType"></span>
+                                            </td>
+                                            <td><span ng-bind="candidateFee.InstallmentDate|date : format : shortDate"></span></td>
+                                            <td><span class="fa fa-inr" ng-if="candidateFee.InstallmentAmount!=null" ng-bind="candidateFee.InstallmentAmount"></span></td>
+                                            <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
+                                            <td>
+                                                <span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentMode"></span>
+                                            </td>
+                                            <td>
+                                                <span class="fa fa-inr" ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaidAmount"></span>
+                                            </td>
+                                            <td class="col-lg-1">
+                                                <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
+                                                <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
+                                            </td>
+                                            <td>
+                                                <button id="btnPayFee" type="button" ng-disabled="!(candidateFee.InstallmentDate==candidateFee.NextInstallmentDate && candidateFee.InstallmentDate )" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
+                                                <button id="btn" class="btn btn-default" ng-disabled="!candidateFee.IsPaymentDone" ng-click="model.print(candidateFee.CandidateFeeId)"><i class="fa fa-print"></i> Print</button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -134,7 +127,7 @@
         $("#txtBankName").hide();
         $("#txtChequeDate").val('');
         $("#overrideFeeDiv").hide();
-        
+
         $("#dropDownPaymentMode").change(function () {
             if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
                 $("#txtChequeNumber").show();
@@ -318,16 +311,32 @@
         }
 
         //======================================================================on payment mode selection enable submit payment button
-        var paymentmode = $('#dropDownPaymentMode').val();
-        
+
+
         //
         $('#dropDownPaymentMode')
-            .change(function() {
-                if (paymentmode == "Select Payment Mode") {
+            .change(function () {
+                var paymentmode = $('#dropDownPaymentMode').val();
+                var paidAmount = $('#txtPaidAmount').val();
+                if (paymentmode == "Select Payment Mode" || paidAmount=="") {
+                    $('#btnSaveCandidateFee').attr('disabled', true);
+                } else {
                     $('#btnSaveCandidateFee').attr('disabled', false);
                 }
 
             });
+
+        $('#checkbox')
+            .change(function () {
+                if ($('#checkbox').is(":checked") == true) {
+                    $("#overrideFeeDiv").show();
+                    $('#btnSaveCandidateFee').attr('disabled', true);
+                } else {
+                    $("#overrideFeeDiv").hide();
+                    $('#btnSaveCandidateFee').attr('disabled', false);
+                }
+            });
+
 
         //==============================================
 
@@ -340,21 +349,27 @@
 
         });
 
-        $('#checkbox').change(function () {
-            if ($(this).is(":checked")) {
-                $("#overrideFeeDiv").show();
-            } else {
-                $("#overrideFeeDiv").hide();
-            }
-        });
        
+
         //========================================================= Paid Amount can not allow 0 as a first digit.
 
-        $('#txtPaidAmount').keyup(function () { 
+        $('#txtPaidAmount').keyup(function () {
+            var paidAmount = $('#txtPaidAmount').val();
+            if (paidAmount == "") {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            } else {
+                $('#btnSaveCandidateFee').attr('disabled', false);
+            }
             var myLength = $("#txtPaidAmount").val().length;
             if (myLength == 1) //To check only when entering first character.
             {
                 if ($(this).val() === '0') {
+                    
+                    if ($(this).val('')) {
+                        $('#btnSaveCandidateFee').attr('disabled', true);
+                    } else {
+                        $('#btnSaveCandidateFee').attr('disabled', false);
+                    }
                     alert('0 is not allowed as first character');
                     $(this).val('');
                 }
@@ -362,10 +377,6 @@
         });
 
         //===========================================================================
-
-       $(document).ready(function () {
-           $("#btnPayFee").prop("disabled", true);
-       });
 
     </script>
 }

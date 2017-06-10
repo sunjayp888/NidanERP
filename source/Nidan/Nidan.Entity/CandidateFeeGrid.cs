@@ -9,39 +9,73 @@ namespace Nidan.Entity
     [Table("CandidateFeeGrid")]
     public partial class CandidateFeeGrid
     {
-        public int? CandidateInstallmentId { get; set; }
-
         [Key]
         [Column(Order = 0)]
-        [StringLength(353)]
-        public string CandidateName { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CandidateFeeId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [StringLength(500)]
-        public string BatchName { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
-        public decimal? TotalFee { get; set; }
+        public int? CandidateInstallmentId { get; set; }
 
         public decimal? PaidAmount { get; set; }
 
-        public decimal? PendingAmount { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [StringLength(100)]
+        public string PaymentMode { get; set; }
+
+        [StringLength(100)]
+        public string FeeType { get; set; }
+
+        [StringLength(50)]
+        public string ChequeNumber { get; set; }
+
+        public DateTime? ChequeDate { get; set; }
+
+        [StringLength(1000)]
+        public string BankName { get; set; }
+
+        public decimal? Penalty { get; set; }
+
+        public DateTime? InstallmentDate { get; set; }
+
+        [StringLength(50)]
+        public string StudentCode { get; set; }
+
+        public int? InstallmentNumber { get; set; }
+
+        public decimal? InstallmentAmount { get; set; }
+
+        public decimal? BalanceInstallmentAmount { get; set; }
+
+        public string Particulars { get; set; }
+
+        [StringLength(50)]
+        public string FiscalYear { get; set; }
+
+        public DateTime? FollowUpDate { get; set; }
 
         [Key]
-        [Column(Order = 2, TypeName = "date")]
-        public DateTime AdmissionDate { get; set; }
+        [Column(Order = 2)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreId { get; set; }
 
         [Key]
         [Column(Order = 3)]
-        public int AdmissionId { get; set; }
+        [StringLength(100)]
+        public string Organisation { get; set; }
 
         [Key]
         [Column(Order = 4)]
-        [StringLength(500)]
-        public string CentreName { get; set; }
+        public bool IsPaymentDone { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
-        public int CentreId { get; set; }
+        public int? PersonnelId { get; set; }
+
+        public bool? IsPaidAmountOverride { get; set; }
+
+        public decimal? AdvancedAmount { get; set; }
+
+        public DateTime? NextInstallmentDate { get; set; }
     }
 }

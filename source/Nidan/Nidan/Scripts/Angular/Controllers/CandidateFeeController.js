@@ -46,7 +46,7 @@
         function retrieveCandidateFees() {
             return CandidateFeeService.retrieveCandidateFees(vm.candidateInstallmentId)
                 .then(function (response) {
-                    vm.candidateFees = response.data;
+                    vm.candidateFees = response.data.Items;
                     return vm.candidateFees;
                 });
         }
