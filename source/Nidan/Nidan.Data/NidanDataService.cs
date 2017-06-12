@@ -2356,6 +2356,57 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Projects
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ProjectId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Projects
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ProjectId == projectId);
+            }
+        }
+
+        public IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .OtherFeeProjects
+                    .Where(a => a.OtherFeeId == otherFeeId && a.CentreId == centreId)
+                    .Include(e => e.OtherFee)
+                    .Include(e => e.Project)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
         #endregion
 
         #region // Update

@@ -9,12 +9,16 @@ namespace Nidan.Entity
     [Table("OtherFee")]
     public partial class OtherFee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage","CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OtherFee()
+        {
+            OtherFeeProjects=new HashSet<OtherFeeProject>();
+        }
+
         public int OtherFeeId { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string Project { get; set; }
 
@@ -23,6 +27,12 @@ namespace Nidan.Entity
         [Required]
         [StringLength(500)]
         public string CashMemo { get; set; }
+
+        public int Unit { get; set; }
+
+        public decimal Rate { get; set; }
+
+        public string Description { get; set; }
 
         public decimal DebitAmount { get; set; }
 
@@ -38,16 +48,9 @@ namespace Nidan.Entity
 
         public int PaymentModeId { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? PrintDate { get; set; }
 
-        public int? Unit { get; set; }
-
-        public decimal? Rate { get; set; }
-
-        public string Description { get; set; }
-
-        public bool Approved { get; set; }
+        public bool? Approved { get; set; }
 
         public int? ApprovedBy { get; set; }
 
@@ -66,5 +69,8 @@ namespace Nidan.Entity
         public virtual Personnel Personnel { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OtherFeeProject> OtherFeeProjects { get; set; }
     }
 }

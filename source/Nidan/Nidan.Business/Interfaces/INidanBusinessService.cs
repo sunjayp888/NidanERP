@@ -52,7 +52,8 @@ namespace Nidan.Business.Interfaces
         TrainerAvailable CreateTrainerAvailable(int organisationId, TrainerAvailable trainerAvailable);
         ExpenseHeader CreateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission);
-        OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee);
+        OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds);
+        OtherFeeProject CreateOtherFeeProject(int organisationId, OtherFeeProject otherFeeProject);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -212,6 +213,10 @@ namespace Nidan.Business.Interfaces
         ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
         PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate);
+        List<Project> RetrieveProjects(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
+        PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
+        IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
