@@ -77,32 +77,25 @@ namespace Nidan.Controllers
                 candidateFeeData.BankName = candidateFeeViewModel.CandidateFee.BankName;
                 candidateFeeData.ChequeDate = candidateFeeViewModel.CandidateFee.ChequeDate;
                 candidateFeeData.IsPaidAmountOverride = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride;
-                if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride == true)
+                if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride && candidateFeeViewModel.CandidateFee.PaidAmount != null)
                 {
-                    if (candidateFeeViewModel.CandidateFee.PaidAmount != null)
+                    if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
                     {
-                        if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
-                        {
-                            candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
-                            if (candidateInstallmentData != null)
-                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
-                        }
-                        if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
-                        {
-                            candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
-                            if (candidateInstallmentData != null)
-                                candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
-                        }
+                        candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
                         if (candidateInstallmentData != null)
-                        {
-                            NidanBusinessService.UpdateCandidateFee(organisationId, candidateInstallmentData);
-                        }
-                        candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
+                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
                     }
-                    else
+                    if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
                     {
-                        return Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                        candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
+                        if (candidateInstallmentData != null)
+                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
                     }
+                    if (candidateInstallmentData != null)
+                    {
+                        NidanBusinessService.UpdateCandidateFee(organisationId, candidateInstallmentData);
+                    }
+                    candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
                 }
                 else
                 {
@@ -124,7 +117,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveCandidateFeeGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveCandidateInstallmentGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -134,7 +127,8 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).ToList().FirstOrDefault();
-            var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == id.Value);
+            //var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == id.Value);
+            var candidateFeeData = NidanBusinessService.RetrieveCandidateFeeGrid(organisationId, e => e.CandidateInstallmentId == id.Value);
             var totalPaid = candidateFeeData.Items.Sum(e => e.PaidAmount);
             var courseFee = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee : data.LumpsumAmount;
             var balanceAmount = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee - totalPaid : data.LumpsumAmount - totalPaid;
@@ -145,7 +139,6 @@ namespace Nidan.Controllers
                 TotalPaidFee = totalPaid,
                 BalanceFee = balanceAmount,
                 CourseFee = courseFee,
-                CandidateFeeList = candidateFeeData.Items.ToList()
             };
             return View(candidateFeeModel);
         }
@@ -155,8 +148,8 @@ namespace Nidan.Controllers
         public ActionResult CandidateFeeList(int? id)
         {
             var isSuperAdmin = User.IsSuperAdmin();
-            var candidateFee = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, c => c.CandidateInstallmentId == id.Value).Items;
-            var data = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == id).Items;
+            var data = NidanBusinessService.RetrieveCandidateFeeGrid(UserOrganisationId,
+                p => p.CandidateInstallmentId == id);
             return this.JsonNet(data);
         }
 

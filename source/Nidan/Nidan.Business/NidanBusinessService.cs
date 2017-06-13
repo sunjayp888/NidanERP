@@ -2216,9 +2216,9 @@ namespace Nidan.Business
                 paging);
         }
 
-        public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCandidateFeeGrid(organisationId, predicate, orderBy,
+            return _nidanDataService.RetrieveCandidateInstallmentGrid(organisationId, predicate, orderBy,
                 paging);
         }
 
@@ -2267,6 +2267,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveOtherFee(organisationId, centreId, otherFeeId, predicate);
         }
 
+
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -2276,6 +2277,11 @@ namespace Nidan.Business
         public CentrePettyCash RetrieveCentrePettyCash(int organisationId, int centreId, int centrePettyCashId, Expression<Func<CentrePettyCash, bool>> predicate)
         {
             return _nidanDataService.RetrieveCentrePettyCash(organisationId, centreId, centrePettyCashId, predicate);
+        }
+
+        public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateFeeGrid(organisationId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -2414,7 +2420,8 @@ namespace Nidan.Business
         public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId,
             Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
+            var data =  _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
+            return data;
         }
 
         public CandidateFee RetrieveCandidateFee(int organisationId, int candidateFeeId,

@@ -2263,13 +2263,13 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                      .CandidateFeeGrids
+                      .CandidateInstallmentGrids
                       .AsNoTracking()
                       .Where(predicate)
                       .OrderBy(orderBy ?? new List<OrderBy>
@@ -2355,7 +2355,28 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
             }
         }
-
+        
+        public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .CandidateFeeGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "CandidateInstallmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+        
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -2380,18 +2401,6 @@ namespace Nidan.Data
             }
         }
 
-        public CentrePettyCash RetrieveCentrePettyCash(int organisationId, int centreId, int centrePettyCashId, Expression<Func<CentrePettyCash, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CentrePettyCashes
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.CentrePettyCashId == centrePettyCashId);
-            }
-        }
 
         #endregion
 
