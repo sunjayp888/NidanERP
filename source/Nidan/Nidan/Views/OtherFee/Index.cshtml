@@ -3,7 +3,7 @@
     ViewBag.Title = "OtherFee";
 }
 
-<div ng-controller="OtherFeeController as model">
+<div ng-controller="OtherFeeController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -93,11 +93,7 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            @*<li>
-                                                                    <a style="cursor: pointer;" ng-href="/RegistrationPaymentReceipt/Create/{{enquiry.EnquiryId}}">
-                                                                        Create Registration
-                                                                    </a>
-                                                                </li>*@
+                                                            
                                                         }
                                                     </ul>
                                                 </div>

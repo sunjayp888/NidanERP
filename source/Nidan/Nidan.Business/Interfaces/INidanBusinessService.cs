@@ -54,6 +54,7 @@ namespace Nidan.Business.Interfaces
         void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission);
         OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds);
         OtherFeeProject CreateOtherFeeProject(int organisationId, OtherFeeProject otherFeeProject);
+        CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -207,7 +208,7 @@ namespace Nidan.Business.Interfaces
         Module RetrieveModule(int organisationId, int moduleId, Expression<Func<Module, bool>> predicate);
         PagedResult<CandidateInstallmentSearchField> RetrieveCandidateInstallmentBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateInstallmentSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<AdmissionGrid> RetrieveAdmissionGrid(int organisationId, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchMonth GetBatchDetail(int organisationId, int centreId, int numberOfCourseHours, DateTime startDate, int dailyBatchHours, int numberOfWeekDays, int courseFee, int downPayment);
         PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
@@ -217,6 +218,9 @@ namespace Nidan.Business.Interfaces
         PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
         IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId);
+        PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentrePettyCash RetrieveCentrePettyCash(int organisationId, int centreId, int centrePettyCashId, Expression<Func<CentrePettyCash, bool>> predicate);
+        PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -245,6 +249,7 @@ namespace Nidan.Business.Interfaces
         Module UpdateModule(int organisationId, Module module);
         ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
+        CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
@@ -259,6 +264,7 @@ namespace Nidan.Business.Interfaces
         void DeleteCentreScheme(int organisationId, int centreId, int schemeId);
         void DeleteCentreSector(int organisationId, int centreId, int sectorId);
         void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
+        void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

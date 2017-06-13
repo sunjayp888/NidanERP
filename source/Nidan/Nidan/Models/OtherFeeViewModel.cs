@@ -11,6 +11,8 @@ namespace Nidan.Models
     public class OtherFeeViewModel:BaseViewModel
     {
         public OtherFee OtherFee { get; set; }
+        public string CashMemo { get; set; }
+        public decimal AvailablePettyCash { get; set; }
         public SelectList ExpenseHeaders { get; set; }
         public SelectList PaymentModes { get; set; }
         public SelectList Projects { get; set; }

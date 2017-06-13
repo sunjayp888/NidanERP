@@ -14,7 +14,7 @@ namespace Nidan.Entity
             [Display(Name = "Expense Head")]
             public int ExpenseHeaderId { get; set; }
 
-            [Display(Name = "Cash Memo")]
+            [Display(Name = "Cash Memo Number")]
             public string CashMemo { get; set; }
 
             [Display(Name = "Debit Amount")]

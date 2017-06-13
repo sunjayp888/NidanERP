@@ -245,6 +245,7 @@
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
+    <Compile Include="Controllers\CentrePettyCashController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseInstallmentController.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
+    <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
@@ -1109,6 +1111,7 @@
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
+    <Content Include="Scripts\Angular\Controllers\CentrePettyCashController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSchemeController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSectorController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
@@ -1146,6 +1149,7 @@
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
     <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
+    <Content Include="Scripts\Angular\Services\CentrePettyCashService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
@@ -1592,6 +1596,9 @@
     <Content Include="Views\OtherFee\_Expenses.cshtml" />
     <Content Include="Views\OtherFee\AddExpense.cshtml" />
     <Content Include="Views\OtherFeeProject\_OtherFeeProject.cshtml" />
+    <Content Include="Views\CentrePettyCash\Index.cshtml" />
+    <Content Include="Views\CentrePettyCash\Create.cshtml" />
+    <Content Include="Views\CentrePettyCash\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

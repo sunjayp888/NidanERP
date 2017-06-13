@@ -34,6 +34,7 @@ namespace Nidan.Entity
 
         public string Description { get; set; }
 
+        [Range(0.0,5000.0, ErrorMessage = "Amount should be less than 5000")]
         public decimal DebitAmount { get; set; }
 
         [Required]
