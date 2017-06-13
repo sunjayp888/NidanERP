@@ -260,7 +260,9 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\OtherFeeController.cs" />
+    <Compile Include="Controllers\OtherFeeProjectController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
@@ -1130,7 +1132,9 @@
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\OtherFeeController.js" />
+    <Content Include="Scripts\Angular\Controllers\OtherFeeProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
+    <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Controllers\RoomController.js" />
     <Content Include="Scripts\Angular\Controllers\SessionController.js" />
@@ -1164,9 +1168,11 @@
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
+    <Content Include="Scripts\Angular\Services\OtherFeeProjectService.js" />
     <Content Include="Scripts\Angular\Services\OtherFeeService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
+    <Content Include="Scripts\Angular\Services\ProjectService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
     <Content Include="Scripts\Angular\Services\RoomService.js" />
     <Content Include="Scripts\Angular\Services\SessionService.js" />
@@ -1589,6 +1595,7 @@
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
     <Content Include="Views\OtherFee\_Expenses.cshtml" />
     <Content Include="Views\OtherFee\AddExpense.cshtml" />
+    <Content Include="Views\OtherFeeProject\_OtherFeeProject.cshtml" />
     <Content Include="Views\CentrePettyCash\Index.cshtml" />
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
     <Content Include="Views\CentrePettyCash\Edit.cshtml" />

@@ -1275,9 +1275,37 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }
 
-        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
+        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds)
         {
-            return _nidanDataService.Create<OtherFee>(organisationId, otherFee);
+            var data= _nidanDataService.Create<OtherFee>(organisationId, otherFee);
+            CreateOtherFeeProject(organisationId, otherFee.CentreId, data.OtherFeeId, projectIds);
+            return data;
+        }
+
+        private void CreateOtherFeeProject(int organisationId, int centreId,int otherFeeId, List<int> projectIds)
+        {
+            var otherFeeProjects = RetrieveOtherFeeProjects(organisationId, centreId, otherFeeId).ToList();
+            var otherFeeProjectList = new List<OtherFeeProject>();
+            foreach (var item in projectIds)
+            {
+                if (!otherFeeProjects.Any(e => e.ProjectId == item && e.OtherFeeId == otherFeeId))
+                {
+                    otherFeeProjectList.Add(new OtherFeeProject()
+                    {
+                        OrganisationId = organisationId,
+                        CentreId = centreId,
+                        OtherFeeId = otherFeeId,
+                        ProjectId = item
+                    });
+                }
+            }
+            if (otherFeeProjectList.Any())
+                _nidanDataService.Create<OtherFeeProject>(organisationId, otherFeeProjectList);
+        }
+
+        public OtherFeeProject CreateOtherFeeProject(int organisationId, OtherFeeProject otherFeeProject)
+        {
+            return _nidanDataService.Create<OtherFeeProject>(organisationId, otherFeeProject);
         }
 
         public CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash)
@@ -2267,6 +2295,25 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveOtherFee(organisationId, centreId, otherFeeId, predicate);
         }
 
+        public List<Project> RetrieveProjects(int organisationId, int projectId, Expression<Func<Project, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Project>(organisationId, p => p.ProjectId == projectId).ToList();
+        }
+
+        public PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveProjects(organisationId, predicate, orderBy, paging);
+        }
+
+        public Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveProject(organisationId, projectId, predicate);
+        }
+
+        public IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId)
+        {
+            return _nidanDataService.RetrieveOtherFeeProjects(organisationId, centreId, otherFeeId);
+        }
 
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)

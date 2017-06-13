@@ -99,6 +99,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateInstallmentGrid> CandidateInstallmentGrids { get; set; }
         public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
         public virtual DbSet<OtherFee> OtherFees { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<OtherFeeProject> OtherFeeProjects { get; set; }
         public virtual DbSet<CentrePettyCash> CentrePettyCashes { get; set; }
         public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
 
@@ -1474,6 +1476,10 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
                 .Property(e => e.RupeesInWord)
                 .IsUnicode(false);
 
@@ -1485,6 +1491,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
 
+
+            modelBuilder.Entity<Project>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CentrePettyCash>()
                 .Property(e => e.Particulars)

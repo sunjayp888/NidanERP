@@ -153,6 +153,7 @@
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
     <Compile Include="OtherFee.cs" />
+    <Compile Include="OtherFeeProject.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Admission.cs" />
     <Compile Include="Partials\Batch.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="Planning.cs" />
     <Compile Include="Postevent.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dto\Role.cs" />
     <Compile Include="Dto\Schedule.cs" />
