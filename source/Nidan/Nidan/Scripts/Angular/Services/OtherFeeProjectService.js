@@ -11,7 +11,7 @@
         var service = {
             createOtherFeeProject: createOtherFeeProject,
             retrieveOtherFeeProjects: retrieveOtherFeeProjects,
-            
+            deleteOtherFeeProject: deleteOtherFeeProject
         };
 
         return service;
@@ -34,6 +34,15 @@
                     otherFeeId: otherFeeId
                 };
 
+            return $http.post(url, data);
+        }
+
+        function deleteOtherFeeProject(otherFeeId, projectId) {
+            var url = "/OtherFeeProject/Delete",
+              data = {
+                  otherFeeId: otherFeeId,
+                  projectId: projectId
+              };
             return $http.post(url, data);
         }
     }

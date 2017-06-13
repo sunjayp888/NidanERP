@@ -248,7 +248,7 @@ namespace Nidan.Business.Interfaces
         Registration UpdateRegistartion(int organisationId, Registration registration);
         Module UpdateModule(int organisationId, Module module);
         ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
-        OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
+        OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds);
         CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
 
         //Delete
@@ -265,6 +265,7 @@ namespace Nidan.Business.Interfaces
         void DeleteCentreSector(int organisationId, int centreId, int sectorId);
         void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
+        void DeleteOtherFeeProject(int organisationId, int otherFeeId, int projectId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

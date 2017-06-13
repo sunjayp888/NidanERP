@@ -2836,8 +2836,10 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
-        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee)
+        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds)
         {
+            if (!otherFee.OtherFeeProjects.Any() && projectIds.Any())
+                CreateOtherFeeProject(organisationId, otherFee.CentreId, otherFee.OtherFeeId, projectIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
         }
 
@@ -2991,6 +2993,12 @@ namespace Nidan.Business
         public void DeleteOtherFee(int organisationId, int centreId, int otherFeeId)
         {
             _nidanDataService.Delete<OtherFee>(organisationId, p => p.CentreId == centreId && p.OtherFeeId == otherFeeId);
+        }
+
+        public void DeleteOtherFeeProject(int organisationId, int otherFeeId, int projectId)
+        {
+            _nidanDataService.Delete<OtherFeeProject>(organisationId,
+                p => p.OtherFeeId == otherFeeId && p.ProjectId == projectId);
         }
 
         #endregion

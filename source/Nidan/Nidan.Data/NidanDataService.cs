@@ -2328,6 +2328,7 @@ namespace Nidan.Data
                     .OtherFees
                     .Include(p => p.Organisation)
                     .Include(p => p.Centre)
+                    .Include(p=>p.OtherFeeProjects)
                     .Include(p => p.ExpenseHeader)
                     .AsNoTracking()
                     .Where(predicate)
@@ -2350,6 +2351,7 @@ namespace Nidan.Data
             {
                 return context
                     .OtherFees
+                    .Include(p=>p.OtherFeeProjects)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
@@ -2376,8 +2378,9 @@ namespace Nidan.Data
                       .Paginate(paging);
             }
         }
-        
-        public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
+
+        public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId,
+            Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2390,14 +2393,27 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CreatedDate",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
+                             {
+                                 new OrderBy
+                                 {
+                                     Property = "CreatedDate",
+                                     Direction = System.ComponentModel.ListSortDirection.Descending
+                                 }
+                             })
                     .Paginate(paging);
+            }
+        }
+
+        public CentrePettyCash RetrieveCentrePettyCash(int organisationId, int centreId, int centrePettyCashId, Expression<Func<CentrePettyCash, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentrePettyCashes
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CentrePettyCashId == centrePettyCashId);
             }
         }
 
