@@ -96,6 +96,7 @@
     <Compile Include="Budget.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
+    <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Admission.cs" />
     <Compile Include="Partials\Batch.cs" />
+    <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />
     <Compile Include="Partials\Counselling.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Partials\Mobilization.cs" />
     <Compile Include="Partials\Organisation.cs" />
     <Compile Include="Partials\Host.cs" />
+    <Compile Include="Partials\OtherFee.cs" />
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />

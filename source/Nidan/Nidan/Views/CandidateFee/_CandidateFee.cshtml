@@ -13,31 +13,33 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <div class="row">
-                                <label id="labelAmount" class="control-label col-md-3 col-sm-3 col-xs-12">Amount</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="txtAmount" class="form-control" readonly="readonly" />
-                                </div>
+                            <label id="labelAmount" class="control-label col-md-3 col-sm-3 col-xs-12">Amount</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="txtAmount" class="form-control" readonly="readonly" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select id="dropDownPaymentMode" class="form-control col-md-7 col-xs-12">
-                                        <option>Select Payment Mode</option>
-                                        <option data-ng-repeat="t in model.paymentModes" ng-model="model.paymentModeId" value="{{t.PaymentModeId}}">{{t.Name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        <br />
+                        <br />
 
                         <div class="form-group">
-                            <div class="col-md-10 col-sm-3 col-xs-12">
-                                <label class="btn btn-info pull-right col-md-9">
+                            <label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="dropDownPaymentMode" class="form-control col-md-7 col-sm-6 col-xs-12">
+                                    <option>Select Payment Mode</option>
+                                    <option data-ng-repeat="t in model.paymentModes" ng-model="model.paymentModeId" value="{{t.PaymentModeId}}">{{t.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            @*<label class="control-label col-md-3 col-sm-6 col-xs-12"></label>*@
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <label class="btn btn-info pull-right col-md-5">
                                     @*@Html.CheckBoxFor(model => model.CandidateFee.IsPaidAmountOverride, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })*@
                                     <input id="checkbox" type="checkbox" />
-                                    Do You Want To Override Fee.
+                                    Override Fee
                                 </label>
                             </div>
                         </div>
@@ -45,37 +47,42 @@
                         <br />
 
                         <div id="overrideFeeDiv" class="form-group">
-                            @Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            @*@Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Paid Amount</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" id="txtPaidAmount" class="form-control" />
                             </div>
                         </div>
+                        <br />
+                        <br />
 
                         <div class="form-group">
-                            <div class="row">
-                                <label id="labelChequeNumber" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Number</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="txtChequeNumber" type="text" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label id="labelChequeDate" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Date</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="txtChequeDate" type="text" class="form-control date" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <label id="labelBankName" class="control-label col-md-3 col-sm-3 col-xs-12">Bank Name</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="txtBankName" type="text" class="form-control" />
-                                </div>
+                            <label id="labelChequeNumber" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Number</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="txtChequeNumber" type="text" class="form-control" />
                             </div>
                         </div>
                         <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label id="labelChequeDate" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="txtChequeDate" type="text" class="form-control date" />
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
+                        <div class="form-group">
+                            <label id="labelBankName" class="control-label col-md-3 col-sm-3 col-xs-12">Bank Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="txtBankName" type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+
                         <div class="modal-footer">
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
@@ -98,3 +105,4 @@
         </div>
     </div>
 </div>
+

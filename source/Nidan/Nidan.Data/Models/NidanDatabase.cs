@@ -96,9 +96,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<RoomAvailable> RoomAvailables { get; set; }
         public virtual DbSet<CandidateInstallmentSearchField> CandidateInstallmentSearchFields { get; set; }
         public virtual DbSet<AdmissionGrid> AdmissionGrids { get; set; }
-        public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
+        public virtual DbSet<CandidateInstallmentGrid> CandidateInstallmentGrids { get; set; }
         public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
         public virtual DbSet<OtherFee> OtherFees { get; set; }
+        public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1439,23 +1440,23 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateFeeGrid>()
+            modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateFeeGrid>()
+            modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.BatchName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateFeeGrid>()
+            modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.PaidAmount)
                 .HasPrecision(38, 2);
 
-            modelBuilder.Entity<CandidateFeeGrid>()
+            modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.PendingAmount)
                 .HasPrecision(38, 2);
 
-            modelBuilder.Entity<CandidateFeeGrid>()
+            modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
@@ -1481,6 +1482,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<OtherFee>()
                 .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                 .Property(e => e.PaymentMode)
+                 .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.FeeType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeGrid>()
+                .Property(e => e.FiscalYear)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
