@@ -11,6 +11,7 @@ namespace Nidan.Entity
     {
         public int ExpenseHeaderId { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string Name { get; set; }
 

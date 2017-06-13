@@ -1,10 +1,42 @@
 ﻿@using Nidan.Extensions
-<div>
+
+@{
+    ViewBag.Title = "Centre Petty Cash";
+}
+
+<div ng-controller="CentrePettyCashController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Centre Petty Cash <small></small>
+            </h3>
+        </div>
+        @*<div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-app" href="@Url.Action("Create", "CentrePettyCash")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 @*<div class="x_title">
-                        <h2>    
+                        <h2>
                             Rooms<small></small>
                         </h2>
                         <div class="clearfix"></div>
@@ -28,29 +60,21 @@
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
-                                            <th ng-click="model.order('Project')" ng-class="model.orderClass('Project')">Project</th>
-                                            <th ng-click="model.order('ExpenseHeaderId')" ng-class="model.orderClass('ExpenseHeaderId')">Expense Head</th>
-                                            <th ng-click="model.order('Unit')" ng-class="model.orderClass('Unit')">Unit</th>
-                                            <th ng-click="model.order('Rate')" ng-class="model.orderClass('Rate')">Rate per Unit</th>
-                                            <th ng-click="model.order('DebitAmount')" ng-class="model.orderClass('DebitAmount')">Debit Amount</th>
-                                            <th ng-click="model.order('PaidTo')" ng-class="model.orderClass('PaidTo')">Paid To</th>
+                                            <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
+                                            <th ng-click="model.order('Amount')" ng-class="model.orderClass('Amount')">Amount</th>
+                                            <th ng-click="model.order('Particulars')" ng-class="model.orderClass('Particulars')">Particulars</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewOtherFee(otherFee.OtherFeeId)">
+                                        <tr ng-repeat="centrePettyCash in model.centrePettyCashs" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentrePettyCash(centrePettyCash.CentrePettyCashId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="otherFee.Centre.Name"></span></td>
+                                                <td><span ng-bind="enquiry.Centre.Name"></span></td>
                                             }
-                                            <td><span ng-bind="otherFee.CreatedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="otherFee.Project"></span></td>
-                                            <td><span ng-bind="otherFee.ExpenseHeader.Name"></span></td>
-                                            <td><span ng-bind="otherFee.Unit"></span></td>
-                                            <td><span class="fa fa-inr" ng-bind="otherFee.Rate"></span></td>
-                                            <td><span class="fa fa-inr" ng-bind="otherFee.DebitAmount"></span></td>
-                                            <td><span ng-bind="otherFee.PaidTo"></span></td>
+                                            <td><span ng-bind="centrePettyCash.Centre.Name"></span></td>
+                                            <td><span class="fa fa-inr" ng-bind="centrePettyCash.Amount"></span></td>
+                                            <td><span ng-bind="centrePettyCash.Particulars"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -60,13 +84,8 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true;model.editOtherFee(otherFee.OtherFeeId)">
+                                                                <a style="cursor: pointer;" ng-href="/CentrePettyCash/Edit/{{centrePettyCash.CentrePettyCashId}}">
                                                                     Edit
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true;model.deleteOtherFee(otherFee.CentreId,otherFee.OtherFeeId,otherFee.CashMemo)">
-                                                                    Delete
                                                                 </a>
                                                             </li>
                                                         }
