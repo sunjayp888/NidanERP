@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
@@ -1277,12 +1278,12 @@ namespace Nidan.Business
 
         public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds)
         {
-            var data= _nidanDataService.Create<OtherFee>(organisationId, otherFee);
+            var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
             CreateOtherFeeProject(organisationId, otherFee.CentreId, data.OtherFeeId, projectIds);
             return data;
         }
 
-        private void CreateOtherFeeProject(int organisationId, int centreId,int otherFeeId, List<int> projectIds)
+        private void CreateOtherFeeProject(int organisationId, int centreId, int otherFeeId, List<int> projectIds)
         {
             var otherFeeProjects = RetrieveOtherFeeProjects(organisationId, centreId, otherFeeId).ToList();
             var otherFeeProjectList = new List<OtherFeeProject>();
@@ -2467,7 +2468,7 @@ namespace Nidan.Business
         public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId,
             Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var data =  _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
+            var data = _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
             return data;
         }
 
@@ -3154,6 +3155,44 @@ namespace Nidan.Business
             };
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(enrollmentData), "Enrollment");
 
+        }
+
+        public byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees)
+        {
+            var otherFee = new OtherFeeReceipt();
+            var expenseHeader = "";
+            var voucherNumber = "";
+            var debitAmount = new List<decimal>();
+            var unit = new List<int>();
+            var rate = new List<decimal>();
+            var description = new List<string>();
+            foreach (var item in otherFees)
+            {
+                expenseHeader = otherFee.ExpenseHeader == null ? item.ExpenseHeader.Name : expenseHeader + " , " + item.ExpenseHeader.Name;
+                otherFee.ExpenseHeader = expenseHeader;
+                debitAmount.Add(item.DebitAmount);
+                unit.Add(item.Unit);
+                rate.Add(item.Rate);
+                description.Add(item.Description);
+            }
+            var projectNameGroup = (from itemOtherFeeProject in otherFees.FirstOrDefault()?.OtherFeeProjects select RetrieveProject(organisationId, itemOtherFeeProject.ProjectId, e => true).Name).Aggregate("", (current, projectName) => current + " , " + projectName);
+            projectNameGroup = projectNameGroup.Substring(3);
+            voucherNumber = string.Format("{0}/{1}/{2}", otherFees.FirstOrDefault()?.Centre.Name, DateTime.UtcNow.ToString("MMMM"), otherFees.FirstOrDefault()?.CashMemo);
+            otherFee.OrganisationName = otherFees.FirstOrDefault()?.Organisation.Name;
+            otherFee.CentreAddress = String.Format("{0} {1} {2} {3}.", otherFees.FirstOrDefault()?.Centre.Address1, otherFees.FirstOrDefault()?.Centre.Address2, otherFees.FirstOrDefault()?.Centre.Address3, otherFees.FirstOrDefault()?.Centre.Address4);
+            otherFee.CentreName = otherFees.FirstOrDefault()?.Centre.Name;
+            otherFee.VoucherNumber = voucherNumber;
+            otherFee.Project = projectNameGroup;
+            otherFee.ExpenseHeader = expenseHeader;
+            otherFee.CashMemo = otherFees.FirstOrDefault()?.CashMemo;
+            otherFee.DebitAmount = debitAmount;
+            otherFee.TotalDebitAmount = debitAmount.Sum();
+            otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
+            otherFee.Unit = unit;
+            otherFee.Rate = rate;
+            otherFee.Description = description;
+            var otherFeeData = otherFee;
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
         }
 
         //Email

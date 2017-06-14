@@ -64,7 +64,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SharedTypes">
-      <HintPath>..\..\..\..\SharedTypes.dll</HintPath>
+      <HintPath>F:\DeveloperShared\SharedTypes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -124,6 +124,7 @@
     <Compile Include="Models\CandidateEnrollment.cs" />
     <Compile Include="Models\CandidateFeeReceipt.cs" />
     <Compile Include="Models\Graph.cs" />
+    <Compile Include="Models\OtherFeeReceipt.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />
     <Compile Include="NidanBusinessService.cs" />
     <Compile Include="Interfaces\IAuthorisation.cs" />

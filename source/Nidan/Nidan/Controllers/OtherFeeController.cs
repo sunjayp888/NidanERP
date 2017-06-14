@@ -156,5 +156,13 @@ namespace Nidan.Controllers
         {
             NidanBusinessService.DeleteOtherFee(UserOrganisationId, centreId, otherFeeId);
         }
+
+        public ActionResult Download(string id)
+        {
+            var otherFee = NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, e=>e.CashMemo==id).Items.ToList();
+            var data = NidanBusinessService.CreateOtherFeeBytes(UserOrganisationId, UserCentreId, otherFee);
+            var cashMemoNumber = otherFee.FirstOrDefault()?.CashMemo;
+            return File(data, ".pdf", string.Format("{0} Other Fee.pdf", cashMemoNumber));
+        }
     }
 }
