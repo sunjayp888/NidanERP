@@ -33,5 +33,12 @@ namespace Nidan.Controllers
         {
             return this.JsonNet(NidanBusinessService.RetrieveOtherFeeProjects(UserOrganisationId, UserCentreId, otherFeeId));
         }
+
+        [HttpPost]
+        public ActionResult Delete(int otherFeeId, int projectId)
+        {
+            NidanBusinessService.DeleteOtherFeeProject(UserOrganisationId, otherFeeId, projectId);
+            return this.JsonNet("");
+        }
     }
 }

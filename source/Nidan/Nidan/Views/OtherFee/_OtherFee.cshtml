@@ -6,10 +6,10 @@
 <div ng-controller="ProjectController as model">
     <div class="form-group">
         @Html.Label("Project", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div id="divproject" class="col-md-6 col-sm-6 col-xs-12">
             <input type="hidden" id="@Html.IdFor(model => model.SelectedProjectIdsJson)" name="@Html.NameFor(model => model.SelectedProjectIdsJson)" ng-init="model.selectedProjects = @Model.SelectedProjectIdsJson" value="{{model.selectedProjects}}" />
-            <ui-select multiple tagging ng-model="model.selectedProjects" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.projects.length <=0">
-                <ui-select-match placeholder="Select projects"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+            <ui-select multiple tagging ng-model="model.selectedProjects" on-remove="model.deleteOtherFeeProject(@Model.OtherFee.OtherFeeId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.projects.length <=0">
+                <ui-select-match placeholder="Select Projects"> <span ng-bind-html="$item.Name"></span></ui-select-match>
                 <ui-select-choices repeat="project.ProjectId as project in model.projects | filter:$select.search">
                     <span ng-bind-html="project.Name"></span>
                 </ui-select-choices>

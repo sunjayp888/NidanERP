@@ -15,7 +15,7 @@
         vm.employmentTeams = [];
         vm.initialise = initialise;
         vm.createOtherFeeProject = createOtherFeeProject;
-        
+        vm.deleteOtherFeeProject = deleteOtherFeeProject;
 
         function initialise(otherFeeId) {
             vm.otherFeeId = otherFeeId;

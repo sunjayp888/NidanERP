@@ -40,12 +40,13 @@ namespace Nidan.Controllers
             var totalDebitAmount = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
             var viewModel = new OtherFeeViewModel()
             {
-                OtherFee = otherFee,
+                OtherFee = otherFee ?? new OtherFee(),
                 AvailablePettyCash = totalPettyCash - totalDebitAmount,
                 CashMemo = otherFee?.CashMemo,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
-                Projects = new SelectList(project, "ProjectId", "Name")
+                Projects = new SelectList(project, "ProjectId", "Name"),
+                SelectedProjectIds = otherFee == null ? new List<int> { } : otherFee?.OtherFeeProjects.Select(e => e.ProjectId).ToList()
             };
 
             return View(viewModel);
@@ -105,7 +106,8 @@ namespace Nidan.Controllers
             {
                 OtherFee = otherFee,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
-                ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name")
+                ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
+                SelectedProjectIds = otherFee.OtherFeeProjects.Select(e => e.ProjectId).ToList()
             };
             return View(viewModel);
         }
@@ -124,7 +126,7 @@ namespace Nidan.Controllers
                 otherFeeViewModel.OtherFee.CentreId = centreId;
                 otherFeeViewModel.OtherFee.PersonnelId = personnelId;
                 otherFeeViewModel.OtherFee.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.OtherFee = NidanBusinessService.UpdateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee);
+                otherFeeViewModel.OtherFee = NidanBusinessService.UpdateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee, otherFeeViewModel.SelectedProjectIds);
                 return RedirectToAction("Create", new { id = otherFeeViewModel.OtherFee.CashMemo });
             }
             var viewModel = new OtherFeeViewModel

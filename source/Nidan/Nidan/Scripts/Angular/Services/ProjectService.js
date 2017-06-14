@@ -10,6 +10,7 @@
     function ProjectService($http) {
         var service = {
             retrieveProjects: retrieveProjects,
+            deleteOtherFeeProject: deleteOtherFeeProject
         };
 
         return service;
@@ -22,6 +23,15 @@
                     orderBy: new Array(OrderBy)
                 };
 
+            return $http.post(url, data);
+        }
+
+        function deleteOtherFeeProject(otherFeeId, projectId) {
+            var url = "/OtherFeeProject/Delete",
+                data = {
+                    otherFeeId: otherFeeId,
+                    projectId: projectId
+                };
             return $http.post(url, data);
         }
     }

@@ -79,7 +79,7 @@
             $('#OtherFee_DebitAmount').val(amount);
             numberToWords();
         });
-        $('#OtherFee_Rate').keyup(function () {
+        $('#OtherFee_Unit').keyup(function () {
             var unit = $('#OtherFee_Unit').val();
             var rate = $('#OtherFee_Rate').val();
             if (unit != 0 || rate != 0) {
@@ -202,5 +202,23 @@
             }
             $('#OtherFee_RupeesInWord').val(finalOutput + " Rupees Only");
         };
+
+        $(document)
+            .ready(function() {
+                var cashmemo = $('#OtherFee_CashMemo').val();
+                var paidTo = $('#OtherFee_PaidTo').val();
+                var project = $('#txt_project').val();
+                if (cashmemo != "" && paidTo != "") {
+                    $('#OtherFee_CashMemo').attr('readonly', true);
+                    $('#OtherFee_PaidTo').attr('readonly', true);
+                    
+                } else {
+                    $('#OtherFee_CashMemo').attr('readonly', false);
+                    $('#OtherFee_PaidTo').attr('readonly', false);
+                    
+                }
+
+            });
+
     </script>
 }

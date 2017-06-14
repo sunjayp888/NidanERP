@@ -18,6 +18,7 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.viewProject = viewProject;
+        vm.deleteOtherFeeProject = deleteOtherFeeProject;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.type = "";
@@ -56,6 +57,12 @@
 
         function viewProject(projectId) {
             $window.location.href = "/Project/Edit/" + projectId;
+        }
+
+        function deleteOtherFeeProject(otherFeeId, $item) {
+            return ProjectService.deleteOtherFeeProject(otherFeeId, $item.ProjectId)
+                .then(function () {
+                });
         }
     }
 
