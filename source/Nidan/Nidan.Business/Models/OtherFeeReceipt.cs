@@ -23,5 +23,6 @@ namespace Nidan.Business.Models
         public decimal TotalDebitAmount { get; set; }
         public string RupeesInWords { get; set; }
         public string PaidTo { get; set; }
+        public string VoucherCreatedDate { get; set; }
     }
 }

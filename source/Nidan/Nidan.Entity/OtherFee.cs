@@ -10,17 +10,11 @@ namespace Nidan.Entity
     public partial class OtherFee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage","CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OtherFee()
-        {
-            OtherFeeProjects=new HashSet<OtherFeeProject>();
-        }
-
         public int OtherFeeId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
-        [StringLength(500)]
-        public string Project { get; set; }
+        public int ProjectId { get; set; }
 
         public int ExpenseHeaderId { get; set; }
 
@@ -63,6 +57,8 @@ namespace Nidan.Entity
 
         public virtual ExpenseHeader ExpenseHeader { get; set; }
 
+        public virtual Project Project { get; set; }
+
         public virtual PaymentMode PaymentMode { get; set; }
 
         public virtual Centre Centre { get; set; }
@@ -70,8 +66,5 @@ namespace Nidan.Entity
         public virtual Personnel Personnel { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OtherFeeProject> OtherFeeProjects { get; set; }
     }
 }

@@ -2327,8 +2327,8 @@ namespace Nidan.Data
                 return context
                     .OtherFees
                     .Include(p => p.Organisation)
+                    .Include(p => p.Project)
                     .Include(p => p.Centre)
-                    .Include(p=>p.OtherFeeProjects)
                     .Include(p => p.ExpenseHeader)
                     .AsNoTracking()
                     .Where(predicate)
@@ -2351,7 +2351,7 @@ namespace Nidan.Data
             {
                 return context
                     .OtherFees
-                    .Include(p=>p.OtherFeeProjects)
+                    .Include(p => p.Project)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
@@ -2453,21 +2453,7 @@ namespace Nidan.Data
             }
         }
 
-        public IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .OtherFeeProjects
-                    .Where(a => a.OtherFeeId == otherFeeId && a.CentreId == centreId)
-                    .Include(e => e.OtherFee)
-                    .Include(e => e.Project)
-                    .AsNoTracking()
-                    .ToList();
-            }
-        }
+       
 
         #endregion
 

@@ -45,8 +45,7 @@ namespace Nidan.Controllers
                 CashMemo = otherFee?.CashMemo,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
-                Projects = new SelectList(project, "ProjectId", "Name"),
-                SelectedProjectIds = otherFee == null ? new List<int> { } : otherFee?.OtherFeeProjects.Select(e => e.ProjectId).ToList()
+                Projects = new SelectList(project, "ProjectId", "Name")
             };
 
             return View(viewModel);
@@ -76,7 +75,7 @@ namespace Nidan.Controllers
                 otherFeeViewModel.OtherFee.PersonnelId = personnelId;
                 otherFeeViewModel.OtherFee.CreatedDate = DateTime.UtcNow;
                 otherFeeViewModel.OtherFee.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.OtherFee = NidanBusinessService.CreateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee, otherFeeViewModel.SelectedProjectIds);
+                otherFeeViewModel.OtherFee = NidanBusinessService.CreateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee);
                 return RedirectToAction("Create", new { id = otherFeeViewModel.OtherFee.CashMemo });
             }
             otherFeeViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
@@ -95,6 +94,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
+            var project = NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList();
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
             var otherFee = NidanBusinessService.RetrieveOtherFee(organisationId, centreId, id.Value, e => e.CentreId == centreId);
 
@@ -107,7 +107,7 @@ namespace Nidan.Controllers
                 OtherFee = otherFee,
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
-                SelectedProjectIds = otherFee.OtherFeeProjects.Select(e => e.ProjectId).ToList()
+                Projects = new SelectList(project, "ProjectId", "Name")
             };
             return View(viewModel);
         }
@@ -126,7 +126,7 @@ namespace Nidan.Controllers
                 otherFeeViewModel.OtherFee.CentreId = centreId;
                 otherFeeViewModel.OtherFee.PersonnelId = personnelId;
                 otherFeeViewModel.OtherFee.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.OtherFee = NidanBusinessService.UpdateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee, otherFeeViewModel.SelectedProjectIds);
+                otherFeeViewModel.OtherFee = NidanBusinessService.UpdateOtherFee(organisationId, centreId, otherFeeViewModel.OtherFee);
                 return RedirectToAction("Create", new { id = otherFeeViewModel.OtherFee.CashMemo });
             }
             var viewModel = new OtherFeeViewModel
