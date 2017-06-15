@@ -1,6 +1,6 @@
 ﻿@using Nidan.Extensions
 
-<div class="modal fade" id="trainerDocumentModal" ng-hide="model.ShowModal">
+<div class="modal fade" id="otherFeeDocumentModal" ng-hide="model.ShowModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <div class="pull-right col-md-7">
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-success" ng-click="model.createDocument(@Model.Trainer.TrainerId.ToString())">Save</button>
+                                <button type="button" class="btn btn-success" ng-click="model.createDocument(@Model.OtherFee.CashMemo.ToString())">Save</button>
                             </div>
                             <div class="pull-right col-md-6">
                                 <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
@@ -65,7 +65,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>
-                            Documents<small></small>
+                            Expense Documents<small></small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>

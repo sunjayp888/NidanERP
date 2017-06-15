@@ -17,6 +17,9 @@ namespace Nidan.Models
         public SelectList PaymentModes { get; set; }
         public SelectList Projects { get; set; }
 
+        public SelectList DocumentTypes { get; set; }
+        public Entity.Document Document { get; set; }
+
         public List<int> SelectedProjectIds
         {
             get

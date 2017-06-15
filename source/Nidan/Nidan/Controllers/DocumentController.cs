@@ -51,13 +51,45 @@ namespace Nidan.Controllers
         [HttpPost]
         public void CreateDocument(DocumentViewModel documentViewModel)
         {
-            var studentData =
-                NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-                    e => e.CentreId == UserCentreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
-            _documentService.Create(UserOrganisationId, UserCentreId,
-                            documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
-                            studentData?.FirstName, "Counselling Document", documentViewModel.Attachment.FileName,
-                            documentViewModel.Attachment.InputStream.ToBytes());
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId,e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
+
+            var trainerData =NidanBusinessService.RetrieveTrainers(organisationId,e => e.CentreId == centreId && e.TrainerId.ToString() == documentViewModel.StudentCode).ToList().FirstOrDefault();
+
+            var expenseData = NidanBusinessService.RetrieveOtherFees(organisationId,e => e.CentreId == centreId && e.CashMemo == documentViewModel.StudentCode).ToList().FirstOrDefault();
+
+            if (documentViewModel.DocumentTypeId == 2)
+            {
+                _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           studentData?.FirstName, "Psychometric Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+            }
+
+            if (documentViewModel.DocumentTypeId == 6)
+            {
+                _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           studentData?.FirstName, "Counselling Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+            }
+
+            if (documentViewModel.DocumentTypeId == 9)
+            {
+                _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           trainerData?.FirstName, "Trainer Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+            }
+
+            if (documentViewModel.DocumentTypeId == 12)
+            {
+                _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           expenseData?.CashMemo, "Expense Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+            }
         }
     }
 }

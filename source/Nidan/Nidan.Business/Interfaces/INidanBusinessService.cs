@@ -85,6 +85,7 @@ namespace Nidan.Business.Interfaces
         List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         List<RoomType> RetrieveRoomTypes(int organisationId, Expression<Func<RoomType, bool>> predicate);
         List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate);
+        List<OtherFee> RetrieveOtherFees(int organisationId, Expression<Func<OtherFee, bool>> predicate);
         List<Qualification> RetrieveQualifications(int organisationId, Expression<Func<Qualification, bool>> predicate);
         List<Religion> RetrieveReligions(int organisationId, Expression<Func<Religion, bool>> predicate);
         List<CasteCategory> RetrieveCasteCategories(int organisationId, Expression<Func<CasteCategory, bool>> predicate);

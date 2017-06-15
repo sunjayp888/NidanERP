@@ -1599,6 +1599,7 @@
     <Content Include="Views\CentrePettyCash\Index.cshtml" />
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
     <Content Include="Views\CentrePettyCash\Edit.cshtml" />
+    <Content Include="Views\OtherFee\_OtherFeeDocument.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
