@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
@@ -1275,37 +1276,10 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }
 
-        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds)
+        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
         {
-            var data= _nidanDataService.Create<OtherFee>(organisationId, otherFee);
-            CreateOtherFeeProject(organisationId, otherFee.CentreId, data.OtherFeeId, projectIds);
+            var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
             return data;
-        }
-
-        private void CreateOtherFeeProject(int organisationId, int centreId,int otherFeeId, List<int> projectIds)
-        {
-            var otherFeeProjects = RetrieveOtherFeeProjects(organisationId, centreId, otherFeeId).ToList();
-            var otherFeeProjectList = new List<OtherFeeProject>();
-            foreach (var item in projectIds)
-            {
-                if (!otherFeeProjects.Any(e => e.ProjectId == item && e.OtherFeeId == otherFeeId))
-                {
-                    otherFeeProjectList.Add(new OtherFeeProject()
-                    {
-                        OrganisationId = organisationId,
-                        CentreId = centreId,
-                        OtherFeeId = otherFeeId,
-                        ProjectId = item
-                    });
-                }
-            }
-            if (otherFeeProjectList.Any())
-                _nidanDataService.Create<OtherFeeProject>(organisationId, otherFeeProjectList);
-        }
-
-        public OtherFeeProject CreateOtherFeeProject(int organisationId, OtherFeeProject otherFeeProject)
-        {
-            return _nidanDataService.Create<OtherFeeProject>(organisationId, otherFeeProject);
         }
 
         public CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash)
@@ -2310,11 +2284,6 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveProject(organisationId, projectId, predicate);
         }
 
-        public IEnumerable<OtherFeeProject> RetrieveOtherFeeProjects(int organisationId, int centreId, int otherFeeId)
-        {
-            return _nidanDataService.RetrieveOtherFeeProjects(organisationId, centreId, otherFeeId);
-        }
-
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -2467,7 +2436,7 @@ namespace Nidan.Business
         public PagedResult<CandidateFee> RetrieveCandidateFees(int organisationId,
             Expression<Func<CandidateFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var data =  _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
+            var data = _nidanDataService.RetrieveCandidateFees(organisationId, predicate, orderBy, paging);
             return data;
         }
 
@@ -2836,10 +2805,8 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
-        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee, List<int> projectIds)
+        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee)
         {
-            if (!otherFee.OtherFeeProjects.Any() && projectIds.Any())
-                CreateOtherFeeProject(organisationId, otherFee.CentreId, otherFee.OtherFeeId, projectIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
         }
 
@@ -2995,12 +2962,6 @@ namespace Nidan.Business
             _nidanDataService.Delete<OtherFee>(organisationId, p => p.CentreId == centreId && p.OtherFeeId == otherFeeId);
         }
 
-        public void DeleteOtherFeeProject(int organisationId, int otherFeeId, int projectId)
-        {
-            _nidanDataService.Delete<OtherFeeProject>(organisationId,
-                p => p.OtherFeeId == otherFeeId && p.ProjectId == projectId);
-        }
-
         #endregion
 
         //Document
@@ -3154,6 +3115,45 @@ namespace Nidan.Business
             };
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(enrollmentData), "Enrollment");
 
+        }
+
+        public byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees)
+        {
+            var otherFee = new OtherFeeReceipt();
+            var expenseHeader = "";
+            var voucherNumber = "";
+            var debitAmount = new List<decimal>();
+            var unit = new List<int>();
+            var rate = new List<decimal>();
+            var description = new List<string>();
+            foreach (var item in otherFees)
+            {
+                expenseHeader = otherFee.ExpenseHeader == null ? item.ExpenseHeader.Name : expenseHeader + " , " + item.ExpenseHeader.Name;
+                otherFee.ExpenseHeader = expenseHeader;
+                debitAmount.Add(item.DebitAmount);
+                unit.Add(item.Unit);
+                rate.Add(item.Rate);
+                description.Add(item.Description);
+            }
+           // var projectNameGroup = (from itemOtherFeeProject in otherFees.FirstOrDefault()?.OtherFeeProjects select RetrieveProject(organisationId, itemOtherFeeProject.ProjectId, e => true).Name).Aggregate("", (current, projectName) => current + " , " + projectName);
+           // projectNameGroup = projectNameGroup.Substring(3);
+            voucherNumber = string.Format("{0}/{1}/{2}", otherFees.FirstOrDefault()?.Centre.Name, DateTime.UtcNow.ToString("MMMM"), otherFees.FirstOrDefault()?.CashMemo);
+            otherFee.OrganisationName = otherFees.FirstOrDefault()?.Organisation.Name;
+            otherFee.CentreAddress = String.Format("{0} {1} {2} {3}.", otherFees.FirstOrDefault()?.Centre.Address1, otherFees.FirstOrDefault()?.Centre.Address2, otherFees.FirstOrDefault()?.Centre.Address3, otherFees.FirstOrDefault()?.Centre.Address4);
+            otherFee.CentreName = otherFees.FirstOrDefault()?.Centre.Name;
+            otherFee.VoucherNumber = voucherNumber;
+            //otherFee.Project = projectNameGroup;
+            otherFee.ExpenseHeader = expenseHeader;
+            otherFee.CashMemo = otherFees.FirstOrDefault()?.CashMemo;
+            otherFee.DebitAmount = debitAmount;
+            otherFee.TotalDebitAmount = debitAmount.Sum();
+            otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
+            otherFee.Unit = unit;
+            otherFee.Rate = rate;
+            otherFee.Description = description;
+            otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.CreatedDate.ToShortDateString();
+            var otherFeeData = otherFee;
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
         }
 
         //Email

@@ -41,7 +41,6 @@ namespace Nidan.Entity
             TrainerAvailables=new HashSet<TrainerAvailable>();
             Holidays=new HashSet<Holiday>();
             OtherFees=new HashSet<OtherFee>();
-            OtherFeeProjects=new HashSet<OtherFeeProject>();
             CentrePettyCashs=new HashSet<CentrePettyCash>();
         }
 
@@ -168,9 +167,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OtherFee> OtherFees { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OtherFeeProject> OtherFeeProjects { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentrePettyCash> CentrePettyCashs { get; set; }

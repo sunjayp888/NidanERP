@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        body, p, td {
+            font-size: 16pt;
+            font-family: "Calibri";
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .CenterText {
+            text-align: center;
+        }
+
+        .RightText {
+            text-align: right;
+        }
+
+        .TopText {
+            vertical-align: top;
+        }
+
+        .DoubleBottomBorder td {
+            border-bottom: 1px solid black;
+            width: 25%;
+        }
+
+        .PayslipBox {
+            margin-top: 20px;
+            border: solid 2px gray;
+            padding: 10px;
+        }
+
+            .PayslipBox table {
+                width: 100%;
+                border-style: none;
+                border-collapse: collapse;
+                border-width: 0;
+            }
+
+                .PayslipBox table td, .PayslipBox p {
+                    font-size: 15pt;
+                }
+    </style>
+</head>
+<body>
+<br/>
+<br/>
+    <!-- Pay Statement Header -->
+    <table border="0" width="100%">
+        <tr>
+            <td class="TopText" width="25%">
+                <img src="E:\SanjayWorkArea\05-05-2017\NidanERP\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
+            </td>
+            <td class="CenterText TopText" width="50%">
+				<h1>@Model.OrganisationName</h1>
+				<h3>@Model.CentreAddress</h3>
+                <h3>PAYMENT VOUCHER</h3>
+                <!-- <b>Receipt by @Model.CentreName</b> --> 
+            </td>
+            <td class="TopText RightText" width="25%">               
+            </td>
+        </tr>
+    </table>
+    <br />
+	<table border="0" width="100%">
+		<tr>
+			<td style="float : left">
+                <b>Date : @Model.VoucherCreatedDate</b>
+            </td>
+            <td style="float : right">
+                <b>Voucher No. : @Model.VoucherNumber</b>
+            </td>
+            <td></td>
+		</tr>
+	</table>
+    <!-- Address & Date -->
+
+    <div class="PayslipBox">
+        <table border="0">
+            <!-- <tr>
+                <td style="font-weight: bold">STUDENT DETAILS</td>
+            </tr> -->
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>Project :</td>
+                            <td>@Model.Project</td>
+                            <!-- <td>EmailId :</td>
+                            <td>@Model.EmailId</td> -->
+                        </tr>
+                        <tr>
+                            <td>Expense Head :</td>
+                            <td>@Model.ExpenseHeader</td>
+                        </tr>
+                        <tr>
+                            <td>Cash Memo No :</td>
+                            <td>@Model.CashMemo</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                 <td><b>Fee Type :</b></td>
+                <td>@Model.FeeTypeName</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Course Name :</td>
+                <td>@Model.CourseName</td>
+            </tr>
+            <tr>
+                <td>Course Duration :</td>
+                <td>@Model.CourseDuration Hours.</td>
+            </tr>
+            <tr>
+                <td>
+                    Total Course Fees : @Model.TotalCourseFee
+                </td>
+                <td>
+                    Recieved Amount : @Model.RecievedAmount
+                </td>
+                <td></td>
+            </tr>
+            <!-- <tr> -->
+                <!-- <td> -->
+                    <!-- Receipt Date : @Model.PaymentDate -->
+                <!-- </td> -->
+                <!-- <td> -->
+                    <!-- Receipt No. : @Model.InvoiceNumber -->
+                <!-- </td> -->
+                <!-- <td></td> -->
+            <!-- </tr> -->
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <p>
+			<b>
+				Please Note: <br>1) Registration is valid upto 30 days and registration amount is not refundable in any circumstances
+							 <br>2) Admission will be confirmed after getting enrollment form & payment of downpayment or lumpsum amount.
+			</b>
+		</p>
+        <table border="0">
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Candidate Sign.</b>
+                </td>
+                <td>
+                    <b>Authorized Sign.</b>
+                </td>
+                <td>
+                    <b>Branch Manager Sign.</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
