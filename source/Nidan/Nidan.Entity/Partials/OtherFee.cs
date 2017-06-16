@@ -14,6 +14,9 @@ namespace Nidan.Entity
             [Display(Name = "Expense Head")]
             public int ExpenseHeaderId { get; set; }
 
+            [Display(Name = "Project")]
+            public int ProjectId { get; set; }
+
             [Display(Name = "Cash Memo Number")]
             public string CashMemo { get; set; }
 

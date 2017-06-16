@@ -100,7 +100,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
         public virtual DbSet<OtherFee> OtherFees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<OtherFeeProject> OtherFeeProjects { get; set; }
         public virtual DbSet<CentrePettyCash> CentrePettyCashes { get; set; }
         public virtual DbSet<CandidateFeeGrid> CandidateFeeGrids { get; set; }
 
@@ -1465,10 +1464,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ExpenseHeader>()
                 .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.Project)
                 .IsUnicode(false);
 
             modelBuilder.Entity<OtherFee>()

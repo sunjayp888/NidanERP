@@ -47,6 +47,9 @@
                                             @Html.Partial("_OtherFeeDocument")
                                         </div>
                                     }
+                                    <a href="@Url.Action("Download", new { id = Model.OtherFee.CashMemo })" class="btn btn-success" role="button">
+                                        <i class="fa fa-print"></i> Print
+                                    </a>
                                 </div>
                             </div>
                         </div>
