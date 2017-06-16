@@ -36,6 +36,13 @@ namespace Nidan.Controllers
             var project = NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList();
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
             var otherFee = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId && e.CashMemo == id).Items.FirstOrDefault();
+            if (otherFee != null)
+            {
+                otherFee.Project = null;
+                otherFee.ExpenseHeader = null;
+                otherFee.ProjectId = 0;
+                otherFee.ExpenseHeaderId = 0;
+            }
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.FirstOrDefault()?.Amount ?? 0;
             var totalDebitAmount = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
             var viewModel = new OtherFeeViewModel()

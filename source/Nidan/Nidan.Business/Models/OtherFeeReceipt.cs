@@ -9,6 +9,7 @@ namespace Nidan.Business.Models
 {
     class OtherFeeReceipt
     {
+        public List<OtherFeeReceipt> OtherFeeReceipts { get; set; }
         public string OrganisationName { get; set; }
         public string CentreAddress { get; set; }
         public string CentreName { get; set; }
@@ -16,10 +17,10 @@ namespace Nidan.Business.Models
         public string Project { get; set; }
         public string ExpenseHeader { get; set; }
         public string CashMemo { get; set; }
-        public List<decimal> DebitAmount { get; set; }
-        public List<int> Unit { get; set; }
-        public List<decimal> Rate { get; set; }
-        public List<string> Description { get; set; }
+        public decimal DebitAmount { get; set; }
+        public int Unit { get; set; }
+        public decimal Rate { get; set; }
+        public string Description { get; set; }
         public decimal TotalDebitAmount { get; set; }
         public string RupeesInWords { get; set; }
         public string PaidTo { get; set; }
