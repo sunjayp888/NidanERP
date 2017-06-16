@@ -31,17 +31,26 @@
                             </div>
                         }
                         @Html.HiddenFor(model => model.AvailablePettyCash)
-
+                        @Html.HiddenFor(model => model.CashMemo)
                         @Html.Partial("_OtherFee", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Submit</button>
+                                    @if (Model.CashMemo != null)
+                                    {
+                                        <a href="#" class="btn btn-success" role="button">
+                                            <i class="fa fa-print"></i> Print
+                                        </a>
+                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
+                                        <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+                                            @Html.Partial("_OtherFeeDocument")
+                                        </div>
+                                    }
                                     <a href="@Url.Action("Download", new { id = Model.OtherFee.CashMemo })" class="btn btn-success" role="button">
                                         <i class="fa fa-print"></i> Print
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -49,6 +58,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 @if (Model.CashMemo != null)
 {
@@ -204,18 +214,18 @@
         };
 
         $(document)
-            .ready(function() {
+            .ready(function () {
                 var cashmemo = $('#OtherFee_CashMemo').val();
                 var paidTo = $('#OtherFee_PaidTo').val();
                 var project = $('#txt_project').val();
                 if (cashmemo != "" && paidTo != "") {
                     $('#OtherFee_CashMemo').attr('readonly', true);
                     $('#OtherFee_PaidTo').attr('readonly', true);
-                    
+
                 } else {
                     $('#OtherFee_CashMemo').attr('readonly', false);
                     $('#OtherFee_PaidTo').attr('readonly', false);
-                    
+
                 }
 
             });

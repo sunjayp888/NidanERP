@@ -184,49 +184,49 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Upload(int id)
-        {
+        //public ActionResult Upload(int id)
+        //{
 
-            var viewModel = new TrainerViewModel
-            {
-                TrainerId = Convert.ToInt32(TempData["TrainerId"]),
-                Files = new List<HttpPostedFileBase>(),
-                DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")
-            };
-            return View(viewModel);
-        }
+        //    var viewModel = new TrainerViewModel
+        //    {
+        //        TrainerId = Convert.ToInt32(TempData["TrainerId"]),
+        //        Files = new List<HttpPostedFileBase>(),
+        //        DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId), "DocumentTypeId", "Name")
+        //    };
+        //    return View(viewModel);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Upload(TrainerViewModel trainerViewModel)
-        {
-            trainerViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId),
-                "DocumentTypeId", "Name");
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Upload(TrainerViewModel trainerViewModel)
+        //{
+        //    trainerViewModel.DocumentTypes = new SelectList(NidanBusinessService.RetrieveDocumentTypes(UserOrganisationId),
+        //        "DocumentTypeId", "Name");
 
-            if (trainerViewModel.Files != null)
-            {
-                if (trainerViewModel.Files != null && trainerViewModel.Files[0].ContentLength > 0)
-                {
-                    var trainerData = _nidanBusinessService.RetrieveTrainer(UserOrganisationId, trainerViewModel.TrainerId);
+        //    if (trainerViewModel.Files != null)
+        //    {
+        //        if (trainerViewModel.Files != null && trainerViewModel.Files[0].ContentLength > 0)
+        //        {
+        //            var trainerData = _nidanBusinessService.RetrieveTrainer(UserOrganisationId, trainerViewModel.TrainerId);
 
-                    if (trainerViewModel.Files[0].FileName.EndsWith(".pdf"))
-                    {
-                        _documentService.Create(UserOrganisationId, UserCentreId,
-                            trainerViewModel.Document.DocumentTypeId, trainerData.TrainerId.ToString(),
-                            trainerData.FirstName, "Trainer Document", trainerViewModel.Files[0].FileName,
-                            trainerViewModel.Files[0].InputStream.ToBytes());
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("FileFormat", "This file format is not supported");
-                        return View(trainerViewModel);
-                    }
-                    return RedirectToAction("Edit", new { id = trainerData.TrainerId });
-                }
-                ModelState.AddModelError("", "Please Upload Your file");
-            }
-            return View(trainerViewModel);
-        }
+        //            if (trainerViewModel.Files[0].FileName.EndsWith(".pdf"))
+        //            {
+        //                _documentService.Create(UserOrganisationId, UserCentreId,
+        //                    trainerViewModel.Document.DocumentTypeId, trainerData.TrainerId.ToString(),
+        //                    trainerData.FirstName, "Trainer Document", trainerViewModel.Files[0].FileName,
+        //                    trainerViewModel.Files[0].InputStream.ToBytes());
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("FileFormat", "This file format is not supported");
+        //                return View(trainerViewModel);
+        //            }
+        //            return RedirectToAction("Edit", new { id = trainerData.TrainerId });
+        //        }
+        //        ModelState.AddModelError("", "Please Upload Your file");
+        //    }
+        //    return View(trainerViewModel);
+        //}
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)

@@ -1595,6 +1595,11 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);
         }
 
+        public List<OtherFee> RetrieveOtherFees(int organisationId, Expression<Func<OtherFee, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<OtherFee>(organisationId, predicate);
+        }
+
         public List<Qualification> RetrieveQualifications(int organisationId,
             Expression<Func<Qualification, bool>> predicate)
         {
