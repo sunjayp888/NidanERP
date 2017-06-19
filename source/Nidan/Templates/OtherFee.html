@@ -54,13 +54,13 @@
     <table border="0" width="100%">
         <tr>
             <td class="TopText" width="25%">
-                <img src="E:\SanjayWorkArea\05-05-2017\NidanERP\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
+                <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
             </td>
             <td class="CenterText TopText" width="50%">
 				<h1>@Model.OrganisationName</h1>
-				<h3>@Model.CentreAddress</h3>
-                <h3>PAYMENT VOUCHER</h3>
-                <!-- <b>Receipt by @Model.CentreName</b> --> 
+				<h4>@Model.CentreAddress</h4>
+                <h3><u>PAYMENT VOUCHER</u></h3>
+                <b>Branch : @Model.CentreName</b>
             </td>
             <td class="TopText RightText" width="25%">               
             </td>
@@ -81,95 +81,84 @@
     <!-- Address & Date -->
 
     <div class="PayslipBox">
-        <table border="0">
-            <!-- <tr>
-                <td style="font-weight: bold">STUDENT DETAILS</td>
-            </tr> -->
-            <tr>
-                <td>
-                    <table>
-                        <tr>
-                            <td>Project :</td>
-                            <td>@Model.Project</td>
-                            <!-- <td>EmailId :</td>
-                            <td>@Model.EmailId</td> -->
-                        </tr>
-                        <tr>
-                            <td>Expense Head :</td>
-                            <td>@Model.ExpenseHeader</td>
-                        </tr>
-                        <tr>
-                            <td>Cash Memo No :</td>
-                            <td>@Model.CashMemo</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+	<table border="0" width="100%">
+		<tr>
+			<td style="float : left">
+                <b>Cash Memo No. : @Model.CashMemo</b>
+            </td>
+            <td style="float : right">
+                <b>Paid To : @Model.PaidTo</b>
+            </td>
+		</tr>
+	</table>
+    <table border="1">
+		<tr>
+			<th>Project</th>
+			<th>Expense Head</th>
+			<th>Unit</th>
+			<th>Rate</th>
+			<th>Debit Amount (Rs.)</th>
+		</tr>
+		@foreach(var item in Model.OtherFeeReceipts)
+		{
+			<tr>
+				<td>@item.Project</td>
+				<td>@item.ExpenseHeader</td>
+				<td>@item.Unit</td>
+				<td>@item.Rate</td>
+				<td>@item.DebitAmount</td>
+			</tr>
+		}
+		<tr>
+			<td colspan="3"></td>
+			<td><b>Total Debit Amount :</b></td>
+			<td><b>@Model.TotalDebitAmount</b></td>
+		</tr>
+		<tr>
+			<td colspan="5"><b>Rupees In Words : @Model.RupeesInWords</b></td>
+		</tr>
+		<tr>
+			<td colspan="5">Particulars :
+				@foreach(var otheritem in Model.OtherFeeReceipts)
+				{
+					@otheritem.Description
+				}
+			</td>
+		</tr>
+    </table>
     </div>
     <div class="PayslipBox">
         <table border="0">
             <tr>
-                 <td><b>Fee Type :</b></td>
-                <td>@Model.FeeTypeName</td>
-                <td></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
             <tr>
-                <td>Course Name :</td>
-                <td>@Model.CourseName</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
-            <tr>
-                <td>Course Duration :</td>
-                <td>@Model.CourseDuration Hours.</td>
-            </tr>
-            <tr>
+            <tr align="center">
                 <td>
-                    Total Course Fees : @Model.TotalCourseFee
+                    <b>Authorised by.</b>
                 </td>
                 <td>
-                    Recieved Amount : @Model.RecievedAmount
+                    <b>Checked Sign.</b>
                 </td>
-                <td></td>
+                <td>
+                    <b>Paid by.</b>
+                </td>
+				<td>
+                    <b>Receiver's Signature.</b>
+                </td>
             </tr>
-            <!-- <tr> -->
-                <!-- <td> -->
-                    <!-- Receipt Date : @Model.PaymentDate -->
-                <!-- </td> -->
-                <!-- <td> -->
-                    <!-- Receipt No. : @Model.InvoiceNumber -->
-                <!-- </td> -->
-                <!-- <td></td> -->
-            <!-- </tr> -->
-        </table>
+        </table>	
     </div>
-    <div class="PayslipBox">
-        <p>
-			<b>
-				Please Note: <br>1) Registration is valid upto 30 days and registration amount is not refundable in any circumstances
-							 <br>2) Admission will be confirmed after getting enrollment form & payment of downpayment or lumpsum amount.
-			</b>
-		</p>
-        <table border="0">
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>
-                    <b>Candidate Sign.</b>
-                </td>
-                <td>
-                    <b>Authorized Sign.</b>
-                </td>
-                <td>
-                    <b>Branch Manager Sign.</b>
-                </td>
-            </tr>
-        </table>
-    </div>
+	<div style="float : right">
+		Print Date : @DateTime.UtcNow.ToString("dd-MM-yyyy")
+	</div>
 </body>
 </html>

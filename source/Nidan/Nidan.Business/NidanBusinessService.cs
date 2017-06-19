@@ -3125,38 +3125,31 @@ namespace Nidan.Business
         public byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees)
         {
             var otherFee = new OtherFeeReceipt();
-            var expenseHeader = "";
+            var otherFeeList = new List<OtherFeeReceipt>();
             var voucherNumber = "";
-            var debitAmount = new List<decimal>();
-            var unit = new List<int>();
-            var rate = new List<decimal>();
-            var description = new List<string>();
             foreach (var item in otherFees)
             {
-                expenseHeader = otherFee.ExpenseHeader == null ? item.ExpenseHeader.Name : expenseHeader + " , " + item.ExpenseHeader.Name;
-                otherFee.ExpenseHeader = expenseHeader;
-                debitAmount.Add(item.DebitAmount);
-                unit.Add(item.Unit);
-                rate.Add(item.Rate);
-                description.Add(item.Description);
+                otherFeeList.Add(new OtherFeeReceipt()
+                {
+                    ExpenseHeader = item.ExpenseHeader.Name,
+                    Project = item.Project.Name,
+                    DebitAmount = item.DebitAmount,
+                    Unit = item.Unit,
+                    Rate = item.Rate,
+                    Description = string.Format("{0} ",item.Particulars)
+                });
             }
-           // var projectNameGroup = (from itemOtherFeeProject in otherFees.FirstOrDefault()?.OtherFeeProjects select RetrieveProject(organisationId, itemOtherFeeProject.ProjectId, e => true).Name).Aggregate("", (current, projectName) => current + " , " + projectName);
-           // projectNameGroup = projectNameGroup.Substring(3);
             voucherNumber = string.Format("{0}/{1}/{2}", otherFees.FirstOrDefault()?.Centre.Name, DateTime.UtcNow.ToString("MMMM"), otherFees.FirstOrDefault()?.CashMemo);
             otherFee.OrganisationName = otherFees.FirstOrDefault()?.Organisation.Name;
             otherFee.CentreAddress = String.Format("{0} {1} {2} {3}.", otherFees.FirstOrDefault()?.Centre.Address1, otherFees.FirstOrDefault()?.Centre.Address2, otherFees.FirstOrDefault()?.Centre.Address3, otherFees.FirstOrDefault()?.Centre.Address4);
             otherFee.CentreName = otherFees.FirstOrDefault()?.Centre.Name;
             otherFee.VoucherNumber = voucherNumber;
-            //otherFee.Project = projectNameGroup;
-            otherFee.ExpenseHeader = expenseHeader;
             otherFee.CashMemo = otherFees.FirstOrDefault()?.CashMemo;
-            otherFee.DebitAmount = debitAmount;
-            otherFee.TotalDebitAmount = debitAmount.Sum();
+            otherFee.TotalDebitAmount = otherFeeList.Select(e => e.DebitAmount).Sum();
             otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
-            otherFee.Unit = unit;
-            otherFee.Rate = rate;
-            otherFee.Description = description;
+            otherFee.RupeesInWords = "one thousand five hundred only";
             otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.CreatedDate.ToShortDateString();
+            otherFee.OtherFeeReceipts = otherFeeList;
             var otherFeeData = otherFee;
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
         }

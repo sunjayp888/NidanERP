@@ -39,17 +39,10 @@
                                     <button type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
-                                        <a href="#" class="btn btn-success" role="button">
+                                        <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
-                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
-                                        <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
-                                            @Html.Partial("_OtherFeeDocument")
-                                        </div>
                                     }
-                                    <a href="@Url.Action("Download", new { id = Model.OtherFee.CashMemo })" class="btn btn-success" role="button">
-                                        <i class="fa fa-print"></i> Print
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +51,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 @if (Model.CashMemo != null)
 {
@@ -66,6 +58,10 @@
     <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
         @Html.Partial("_Expenses")
     </div>
+    @*<button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+        @Html.Partial("_OtherFeeDocument")
+    </div>*@
 }
 
 <div>
