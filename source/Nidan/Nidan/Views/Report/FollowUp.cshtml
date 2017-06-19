@@ -1,14 +1,14 @@
 ﻿@using Nidan.Extensions
 
 @{
-    ViewBag.Title = "Enquiry Report";
+    ViewBag.Title = "FollowUp Report";
 }
 
 <div ng-controller="ReportController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Enquiry Reports <small></small>
+                Follow-Up Reports <small></small>
             </h3>
         </div>
         @*<div class="title_right">
@@ -22,7 +22,6 @@
                 </div>
             </div>*@
     </div>
-    
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -65,7 +64,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchEnquiryByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        <input type="button" ng-click="model.searchFollowUpByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
@@ -78,17 +77,16 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                <div class="x_title">
-                    @*<h2>
-                        Enquiries<small></small>
-                    </h2>*@
+                @*<div class="x_title">
+                    <h2>
+                        FollowUps <small></small>
+                    </h2>
                     <div class="clearfix"></div>
-                </div>
+                </div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-
                         <div class="row">
                             <div class="col-xs-12">
                                 @Html.Partial("Pagination/_pageSize")
@@ -104,38 +102,28 @@
                                             <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                         }
                                         <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
-                                        <th>Contact No</th>
-                                        @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
-                                        @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
-                                        @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
-                                        <th>Status</th>
-                                        <th ng-click="model.order('EnquiryDate')" ng-class="model.orderClass('EnquiryDate')">Enquiry Date</th>
-                                        <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                        @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
+                                        <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
+                                        <th ng-click="model.order('IntrestedCourseId')" ng-class="model.orderClass('IntrestedCourseId')">Interested Course</th>
+                                        <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remarks</th>
+                                        <th ng-click="model.order('FollowUpType')" ng-class="model.orderClass('FollowUpType')">FollowUp Type</th>
+                                        @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
+                                        <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="report in model.reports | orderBy:'EnquiryDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <tr ng-repeat="report in model.reports" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <td><span ng-bind="report.CentreName"></span></td>
                                         }
                                         <td><span ng-bind="report.CandidateName"></span></td>
                                         <td><span ng-bind="report.Mobile"></span></td>
-                                        @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
-                                        <td class="col-lg-4">
-                                            <button ng-if="report.IsAdmissionDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Admission Done</button>
-                                            <button ng-if="report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button>
-                                            <button ng-if="report.IsCounsellingDone=='NO' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Counselling Pending</button>
-                                            <button ng-if="report.IsCounsellingDone=='Yes' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="report.IsRegistrationDone=='NO' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Registration Pending</button>
-                                        </td>
-                                        <td><span ng-bind="report.EnquiryDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
-                                        @*<td><span ng-bind="enquiry.Close"></span></td>*@
+                                        <td><span ng-bind="report.CourseName"></span></td>
+                                        <td><span ng-bind="report.Remark"></span></td>
+                                        <td><span ng-bind="report.FollowUpType"></span></td>
+                                        <td><span ng-bind="report.FollowUpDateTime|date : format : shortDate"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -144,23 +132,16 @@
                                                 <ul class="dropdown-menu slidedown">
                                                     @if (User.IsInAnyRoles("Admin"))
                                                     {
-                                                        @*<li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
-                                                                Edit
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
+                                                                Follow-Up
                                                             </a>
                                                         </li>
-
-                                                        <li ng-if="!enquiry.IsCounsellingDone">
-                                                            <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
-                                                                Create Counselling
-                                                            </a>
-                                                        </li>
-
-                                                        <li ng-if="!enquiry.IsRegistrationDone">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
-                                                                Create Registration
-                                                            </a>
-                                                        </li>*@
+                                                            @*<li>
+                                        <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
+                                            Mark As Read
+                                        </a>
+                                    </li>*@
                                                     }
                                                 </ul>
                                             </div>
@@ -212,3 +193,5 @@
         });
     </script>
 }
+
+

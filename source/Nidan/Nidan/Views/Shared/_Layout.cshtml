@@ -40,15 +40,11 @@
                                 <li>
                                     <a><i class="fa fa-cogs"></i> Reports <span class="fa fa-chevron-up"></span></a>
                                     <ul class="nav child_menu">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        @if (User.IsInAnyRoles("SuperAdmin","Admin"))
                                         {
-                                            <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
-                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
-                                            <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
-                                            <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
-                                            <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
+                                            <li><a href='@Url.Action("Mobilization", "Report")'>Mobilization</a></li>
+                                            <li><a href='@Url.Action("Enquiry", "Report")'>Enquiry</a></li>
+                                            <li><a href='@Url.Action("FollowUp", "Report")'>FollowUp</a></li>
                                         }
 
                                     </ul>

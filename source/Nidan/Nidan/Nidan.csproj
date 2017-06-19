@@ -1173,6 +1173,7 @@
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
+    <Content Include="Scripts\Angular\Services\ReportService.js" />
     <Content Include="Scripts\Angular\Services\RoomService.js" />
     <Content Include="Scripts\Angular\Services\SessionService.js" />
     <Content Include="Scripts\Angular\Services\SubjectCourseService.js" />
@@ -1600,6 +1601,8 @@
     <Content Include="Views\CentrePettyCash\Edit.cshtml" />
     <Content Include="Views\OtherFee\_OtherFeeDocument.cshtml" />
     <Content Include="Views\Report\Enquiry.cshtml" />
+    <Content Include="Views\Report\Mobilization.cshtml" />
+    <Content Include="Views\Report\FollowUp.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
