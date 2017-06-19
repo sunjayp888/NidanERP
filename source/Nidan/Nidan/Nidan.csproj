@@ -263,6 +263,7 @@
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\SubjectCourseController.cs" />
@@ -1134,6 +1135,7 @@
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
+    <Content Include="Scripts\Angular\Controllers\ReportController.js" />
     <Content Include="Scripts\Angular\Controllers\RoomController.js" />
     <Content Include="Scripts\Angular\Controllers\SessionController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectController.js" />
@@ -1597,6 +1599,7 @@
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
     <Content Include="Views\CentrePettyCash\Edit.cshtml" />
     <Content Include="Views\OtherFee\_OtherFeeDocument.cshtml" />
+    <Content Include="Views\Report\Enquiry.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

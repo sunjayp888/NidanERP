@@ -2379,6 +2379,70 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, Expression<Func<MobilizationDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .MobilizationDataGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "MobilizationId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+
+        public PagedResult<EnquiryDataGrid> RetrieveEnquiryDataGrid(int organisationId, Expression<Func<EnquiryDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .EnquiryDataGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "EnquiryId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+
+        public PagedResult<FollowUpDataGrid> RetrieveFollowUpDataGrid(int organisationId, Expression<Func<FollowUpDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                      .FollowUpDataGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "FollowUpId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                      })
+                      .Paginate(paging);
+            }
+        }
+
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId,
             Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)

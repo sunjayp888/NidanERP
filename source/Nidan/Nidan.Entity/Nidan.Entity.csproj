@@ -125,6 +125,7 @@
     <Compile Include="Dto\TenantOrganisation.cs" />
     <Compile Include="Enquiry.cs" />
     <Compile Include="EnquiryCourse.cs" />
+    <Compile Include="EnquiryDataGrid.cs" />
     <Compile Include="EnquirySearchField.cs" />
     <Compile Include="EnquiryType.cs" />
     <Compile Include="Event.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="ExpenseHeader.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
+    <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
     <Compile Include="FollowUpSearchField.cs" />
     <Compile Include="Holiday.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Interfaces\IOrganisationFilterable.cs" />
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
+    <Compile Include="MobilizationDataGrid.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
     <Compile Include="Module.cs" />
