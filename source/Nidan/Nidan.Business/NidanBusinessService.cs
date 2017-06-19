@@ -2305,6 +2305,22 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateFeeGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, Expression<Func<MobilizationDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveMobilizationDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<EnquiryDataGrid> RetrieveEnquiryDataGrid(int organisationId, Expression<Func<EnquiryDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEnquiryDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<FollowUpDataGrid> RetrieveFollowUpDataGrid(int organisationId, Expression<Func<FollowUpDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFollowUpDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update

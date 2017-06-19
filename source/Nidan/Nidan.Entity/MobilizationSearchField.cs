@@ -78,10 +78,10 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        //[Key]
-        //[Column("Mobilized By", Order = 12)]
-        //[StringLength(100)]
-        //public string Mobilized_By { get; set; }
+        [Key]
+        [Column("Mobilized By", Order = 12)]
+        [StringLength(100)]
+        public string Mobilized_By { get; set; }
 
         [StringLength(500)]
         public string StudentLocation { get; set; }
