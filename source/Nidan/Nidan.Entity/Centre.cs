@@ -42,6 +42,7 @@ namespace Nidan.Entity
             Holidays=new HashSet<Holiday>();
             OtherFees=new HashSet<OtherFee>();
             CentrePettyCashs=new HashSet<CentrePettyCash>();
+            Vouchers=new HashSet<Voucher>();
         }
 
         public int CentreId { get; set; }
@@ -171,5 +172,7 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentrePettyCash> CentrePettyCashs { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Voucher> Vouchers { get; set; }
     }
 }

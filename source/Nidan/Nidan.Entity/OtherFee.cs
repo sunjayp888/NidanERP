@@ -12,6 +12,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage","CA2214:DoNotCallOverridableMethodsInConstructors")]
         public int OtherFeeId { get; set; }
 
+        public int VoucherId { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public int ProjectId { get; set; }
@@ -54,6 +56,8 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public int PersonnelId { get; set; }
+
+        public virtual Voucher Voucher { get; set; }
 
         public virtual ExpenseHeader ExpenseHeader { get; set; }
 

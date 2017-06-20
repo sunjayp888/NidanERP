@@ -1278,6 +1278,20 @@ namespace Nidan.Business
 
         public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
         {
+            var centre = RetrieveCentre(organisationId, centreId);
+            var voucherData = new Voucher();
+            var vouchers = RetrieveVouchers(organisationId, centreId, e => e.CashMemo == otherFee.CashMemo).Items.ToList();
+            if (!vouchers.Any(e => e.CashMemo == otherFee.CashMemo))
+            {
+                voucherData.CashMemo = otherFee.CashMemo;
+                voucherData.CentreId = centreId;
+                voucherData.OrganisationId = organisationId;
+                voucherData.CreatedDate=DateTime.UtcNow;
+                voucherData = _nidanDataService.Create<Voucher>(organisationId, voucherData);
+                voucherData.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"), voucherData.VoucherId);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, voucherData);
+            }
+            otherFee.VoucherId = voucherData.VoucherId == 0 ? vouchers.FirstOrDefault().VoucherId : voucherData.VoucherId;
             var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
             return data;
         }
@@ -1289,6 +1303,11 @@ namespace Nidan.Business
             centrePettyCash.CreatedBy = personnelId;
             centrePettyCash.CreatedDate = DateTime.UtcNow;
             return _nidanDataService.Create<CentrePettyCash>(organisationId, centrePettyCash);
+        }
+
+        public Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher)
+        {
+            return _nidanDataService.Create<Voucher>(organisationId, voucher);
         }
 
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
@@ -2321,6 +2340,23 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveFollowUpDataGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<Voucher> RetrieveVouchers(int organisationId, int centreId, Expression<Func<Voucher, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveVouchers(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public Voucher RetrieveVoucher(int organisationId, int centreId, int voucherId, Expression<Func<Voucher, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveVoucher(organisationId, centreId, voucherId, predicate);
+        }
+
+        public PagedResult<VoucherGrid> RetrieveVoucherGrids(int organisationId, int centreId, Expression<Func<VoucherGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveVoucherGrids(organisationId, centreId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -3152,19 +3188,19 @@ namespace Nidan.Business
                     DebitAmount = item.DebitAmount,
                     Unit = item.Unit,
                     Rate = item.Rate,
-                    Description = string.Format("{0} ",item.Particulars)
+                    Description = string.Format("{0} , ", item.Particulars)
                 });
             }
-            voucherNumber = string.Format("{0}/{1}/{2}", otherFees.FirstOrDefault()?.Centre.Name, DateTime.UtcNow.ToString("MMMM"), otherFees.FirstOrDefault()?.CashMemo);
+            voucherNumber = otherFees.FirstOrDefault()?.Voucher.VoucherNumber;
             otherFee.OrganisationName = otherFees.FirstOrDefault()?.Organisation.Name;
             otherFee.CentreAddress = String.Format("{0} {1} {2} {3}.", otherFees.FirstOrDefault()?.Centre.Address1, otherFees.FirstOrDefault()?.Centre.Address2, otherFees.FirstOrDefault()?.Centre.Address3, otherFees.FirstOrDefault()?.Centre.Address4);
             otherFee.CentreName = otherFees.FirstOrDefault()?.Centre.Name;
             otherFee.VoucherNumber = voucherNumber;
-            otherFee.CashMemo = otherFees.FirstOrDefault()?.CashMemo;
+            otherFee.CashMemo = otherFees.FirstOrDefault()?.Voucher.CashMemo;
             otherFee.TotalDebitAmount = otherFeeList.Select(e => e.DebitAmount).Sum();
             otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
             otherFee.RupeesInWords = "one thousand five hundred only";
-            otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.CreatedDate.ToShortDateString();
+            otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.Voucher.CreatedDate.ToShortDateString();
             otherFee.OtherFeeReceipts = otherFeeList;
             var otherFeeData = otherFee;
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");

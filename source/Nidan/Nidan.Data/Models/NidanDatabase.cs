@@ -105,6 +105,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<EnquiryDataGrid> EnquiryDataGrids { get; set; }
         public virtual DbSet<FollowUpDataGrid> FollowUpDataGrids { get; set; }
         public virtual DbSet<MobilizationDataGrid> MobilizationDataGrids { get; set; }
+        public virtual DbSet<Voucher> Vouchers { get; set; }
+        public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1740,6 +1742,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<FollowUpDataGrid>()
                 .Property(e => e.ClosingRemarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Voucher>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Voucher>()
+                .Property(e => e.CashMemo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<VoucherGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<VoucherGrid>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<VoucherGrid>()
+                .Property(e => e.CashMemo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<VoucherGrid>()
+                .Property(e => e.TotalDebitAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<VoucherGrid>()
+                .Property(e => e.PaidTo)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
