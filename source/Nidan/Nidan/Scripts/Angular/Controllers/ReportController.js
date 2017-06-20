@@ -144,7 +144,18 @@
         //}
 
         function pageChanged() {
-            //return retrieveReports();
+            vm.fromDate = $("#txt_FromDate").val();
+            vm.toDate = $("#txt_ToDate").val();
+            var path = window.location.pathname.split('/');
+            if (path[2] == "Enquiry") {
+                searchEnquiryByDate(vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "Mobilization") {
+                searchMobilizationByDate(vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "FollowUp") {
+                searchFollowUpByDate(vm.fromDate, vm.toDate);
+            }
         }
 
         function order(property) {
