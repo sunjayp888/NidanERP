@@ -7,6 +7,7 @@ using Nidan.Business;
 using Nidan.Business.Interfaces;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
+using Nidan.Models;
 
 namespace Nidan.Controllers
 {
@@ -19,14 +20,48 @@ namespace Nidan.Controllers
         // GET: Report
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report
+        public ActionResult Enquiry()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report
+        public ActionResult Mobilization()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report
+        public ActionResult FollowUp()
+        {
+            return View(new BaseViewModel());
         }
 
         [HttpPost]
-        public ActionResult Enquiry(Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin|| p.CentreId==UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin|| p.CentreId==UserCentreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchMobilizationByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchFollowUpByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
     }

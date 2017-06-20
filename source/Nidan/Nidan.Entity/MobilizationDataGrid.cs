@@ -12,33 +12,43 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MobilizationId { get; set; }
-
-        [StringLength(200)]
-        public string Name { get; set; }
+        public int CentreId { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        [StringLength(353)]
-        public string CandidateName { get; set; }
+        [StringLength(500)]
+        public string CentreName { get; set; }
 
         [Key]
         [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long Mobile { get; set; }
+        public int MobilizationId { get; set; }
+
+        [StringLength(200)]
+        public string EventName { get; set; }
 
         [Key]
-        [Column("Interested Course", Order = 3)]
-        [StringLength(1000)]
-        public string Interested_Course { get; set; }
+        [Column(Order = 3)]
+        [StringLength(353)]
+        public string CandidateName { get; set; }
 
         [Key]
         [Column(Order = 4)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Mobile { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
+        [StringLength(1000)]
+        public string InterestedCourse { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
         [StringLength(1000)]
         public string Qualification { get; set; }
 
         [Key]
-        [Column(Order = 5, TypeName = "date")]
+        [Column(Order = 7, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "date")]

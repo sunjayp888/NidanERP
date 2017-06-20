@@ -1678,32 +1678,12 @@ namespace Nidan.Data.Models
                 .Property(e => e.IsAdmissionDone)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.FollowUpType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.ClosingRemarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.Name)
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.Name)
+                .Property(e => e.EventName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationDataGrid>()
@@ -1711,7 +1691,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.Interested_Course)
+                .Property(e => e.InterestedCourse)
                 .IsUnicode(false);
 
             modelBuilder.Entity<MobilizationDataGrid>()
@@ -1736,6 +1716,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<MobilizationDataGrid>()
                 .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.ClosingRemarks)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

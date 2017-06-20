@@ -16,12 +16,15 @@
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
-        vm.viewReport = viewReport;
-        vm.searchReport = searchReport;
-        vm.retrieveReport = retrieveReport;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
+        //vm.retrieveEnquiryReports = retrieveEnquiryReports;
+        vm.searchEnquiryByDate = searchEnquiryByDate;
+        //vm.retrieveMobilizationReports = retrieveMobilizationReports;
+        vm.searchMobilizationByDate = searchMobilizationByDate;
+        //vm.retrieveFollowUpReports = retrieveFollowUpReports;
+        vm.searchFollowUpByDate = searchFollowUpByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -30,46 +33,124 @@
             order("ReportId");
         }
 
-        function retrieveReports() {
-            return ReportService.retrieveReports(vm.paging, vm.orderBy)
+        //function retrieveEnquiryReports() {
+        //    return ReportService.retrieveEnquiryReports(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.reports = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.reports;
+        //        });
+        //}
+
+        function searchEnquiryByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "EnquiryDate";
+            vm.orderBy.class = "asc";
+            order("EnquiryDate");
+            return ReportService.searchEnquiryByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
                     return vm.reports;
                 });
         }
 
-        function searchReport(searchKeyword) {
-            vm.searchKeyword = searchKeyword;
-            return ReportService.searchReport(vm.searchKeyword, vm.paging, vm.orderBy)
-              .then(function (response) {
-                  vm.reports = response.data.Items;
-                  vm.paging.totalPages = response.data.TotalPages;
-                  vm.paging.totalResults = response.data.TotalResults;
-                  vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                  return vm.reports;
-              });
-        }
+        //function retrieveMobilizationReports() {
+        //    return ReportService.retrieveMobilizationReports(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.reports = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.reports;
+        //        });
+        //}
 
-        function retrieveReport() {
-            return ReportService.retrieveReport(vm.paging, vm.orderBy)
+        function searchMobilizationByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.class = "asc";
+            order("CreatedDate");
+            return ReportService.searchMobilizationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
                     return vm.reports;
                 });
         }
+
+        //function retrieveFollowUpReports() {
+        //    return ReportService.retrieveFollowUpReports(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.reports = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.reports;
+        //        });
+        //}
+
+        function searchFollowUpByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "FollowUpId";
+            vm.orderBy.class = "asc";
+            order("FollowUpId");
+            return ReportService.searchFollowUpByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        //function retrieveReports() {
+        //    return ReportService.retrieveReports(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.reports = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.reports;
+        //        });
+        //}
+
+        //function searchReport(searchKeyword) {
+        //    vm.searchKeyword = searchKeyword;
+        //    return ReportService.searchReport(vm.searchKeyword, vm.paging, vm.orderBy)
+        //      .then(function (response) {
+        //          vm.reports = response.data.Items;
+        //          vm.paging.totalPages = response.data.TotalPages;
+        //          vm.paging.totalResults = response.data.TotalResults;
+        //          vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+        //          return vm.reports;
+        //      });
+        //}
+
+        //function retrieveReport() {
+        //    return ReportService.retrieveReport(vm.paging, vm.orderBy)
+        //        .then(function (response) {
+        //            vm.reports = response.data.Items;
+        //            vm.paging.totalPages = response.data.TotalPages;
+        //            vm.paging.totalResults = response.data.TotalResults;
+        //            return vm.reports;
+        //        });
+        //}
 
         function pageChanged() {
-            return retrieveReports();
+            //return retrieveReports();
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            retrieveReport();
-            return retrieveReports();
+            //retrieveReport();
+            //return retrieveReports();
         }
 
         function orderClass(property) {
