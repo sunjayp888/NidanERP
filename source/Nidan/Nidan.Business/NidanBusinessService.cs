@@ -1286,7 +1286,7 @@ namespace Nidan.Business
                 voucherData.CashMemo = otherFee.CashMemo;
                 voucherData.CentreId = centreId;
                 voucherData.OrganisationId = organisationId;
-                voucherData.CreatedDate=DateTime.UtcNow;
+                voucherData.CreatedDate = DateTime.UtcNow;
                 voucherData = _nidanDataService.Create<Voucher>(organisationId, voucherData);
                 voucherData.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"), voucherData.VoucherId);
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, voucherData);
@@ -2117,6 +2117,8 @@ namespace Nidan.Business
 
         public List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
+            var month = DateTime.UtcNow.Month;
+            var year = DateTime.UtcNow.Year;
             var centre = RetrieveCentres(organisationId, predicate).ToList();
             var graphData = new List<Graph>();
             foreach (var item in centre)
@@ -2125,11 +2127,11 @@ namespace Nidan.Business
                 {
                     CentreId = item.CentreId,
                     CentreName = item.Name,
-                    MobilizationCount = item.Mobilizations.Count(e => e.Close == "No"),
-                    AdmissionCount = item.Admissions.Count,
-                    EnquiryCount = item.Enquiries.Count(e => e.IsRegistrationDone == false),
-                    RegistrationCount = item.Registrations.Count(e => e.IsAdmissionDone == false),
-                    CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false)
+                    MobilizationCount = item.Mobilizations.Count(e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year),
+                    AdmissionCount = item.Admissions.Count(e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year),
+                    EnquiryCount = item.Enquiries.Count(e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year),
+                    RegistrationCount = item.Registrations.Count(e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year),
+                    CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year)
                 });
             }
             return graphData;
@@ -3198,12 +3200,60 @@ namespace Nidan.Business
             otherFee.VoucherNumber = voucherNumber;
             otherFee.CashMemo = otherFees.FirstOrDefault()?.Voucher.CashMemo;
             otherFee.TotalDebitAmount = otherFeeList.Select(e => e.DebitAmount).Sum();
+            var rupeesInWords = ConvertNumbertoWords((Int32) otherFee.TotalDebitAmount);
             otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
-            otherFee.RupeesInWords = "one thousand five hundred only";
+            otherFee.RupeesInWords = rupeesInWords + " ONLY.";
             otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.Voucher.CreatedDate.ToShortDateString();
             otherFee.OtherFeeReceipts = otherFeeList;
             var otherFeeData = otherFee;
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
+        }
+
+        //RupeesInWords
+        public string ConvertNumbertoWords(long number)
+        {
+            if (number == 0) return "ZERO";
+            if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));
+            string words = "";
+            if ((number / 1000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100000) + " LAKES ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000) + " THOUSAND ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100) + " HUNDRED ";
+                number %= 100;
+            }
+            //if ((number / 10) > 0)  
+            //{  
+            // words += ConvertNumbertoWords(number / 10) + " RUPEES ";  
+            // number %= 10;  
+            //}  
+            if (number > 0)
+            {
+                if (words != "") words += "AND ";
+                var unitsMap = new[]
+                {
+                    "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"
+                };
+                var tensMap = new[]
+                {
+                    "ZERO", "TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY"
+                };
+                if (number < 20) words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0) words += " " + unitsMap[number % 10];
+                }
+            }
+            return words;
         }
 
         //Email

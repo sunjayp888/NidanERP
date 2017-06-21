@@ -1,7 +1,12 @@
-﻿@using Nidan.Extensions
+﻿@using Nidan.Business.Extensions
+@using Nidan.Extensions
 @model Nidan.Models.HomeViewModel
 @{
     ViewBag.Title = "Home";
+    var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+    var endOfWeekDate = startOfWeekDate.AddDays(6);
+    var startOfWeek = startOfWeekDate.ToShortDateString();
+    var endOfWeek= startOfWeekDate.AddDays(6).ToShortDateString();
 }
 
 <div class="row">
@@ -9,7 +14,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>
-                    Today's Count<small></small>
+                    Today's Count<small> (@DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToString("dddd"))</small>
                 </h2>
                 <div class="clearfix"></div>
             </div>
@@ -73,7 +78,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Pie Chart<small>Till date</small>
+                        Pie Chart<small>Monthly (@string.Format("{0} - {1}", DateTime.UtcNow.ToString("MMMM"), DateTime.UtcNow.Year))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
                             <small><b>Centre</b></small>
@@ -111,7 +116,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Bar Chart<small>Weekly</small>
+                        Bar Chart<small>Weekly (@string.Format("{0} To {1}", startOfWeek, endOfWeek))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
                             <small><b>Centre</b></small>
