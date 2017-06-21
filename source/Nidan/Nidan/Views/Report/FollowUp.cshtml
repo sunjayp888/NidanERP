@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                        <input id ="txt_FromDate" type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                        <input id ="txt_ToDate" type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
@@ -119,11 +119,11 @@
                                             <td><span ng-bind="report.CentreName"></span></td>
                                         }
                                         <td><span ng-bind="report.CandidateName"></span></td>
-                                        <td><span ng-bind="report.Mobile"></span></td>
-                                        <td><span ng-bind="report.CourseName"></span></td>
-                                        <td><span ng-bind="report.Remark"></span></td>
+                                        <td><span ng-bind="report.FollowUp.Mobile"></span></td>
+                                        <td><span ng-bind="report.FollowUp.Course.Name"></span></td>
+                                        <td><span ng-bind="report.Remarks"></span></td>
                                         <td><span ng-bind="report.FollowUpType"></span></td>
-                                        <td><span ng-bind="report.FollowUpDateTime|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
