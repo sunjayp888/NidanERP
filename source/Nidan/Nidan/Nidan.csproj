@@ -1603,6 +1603,7 @@
     <Content Include="Views\Report\Enquiry.cshtml" />
     <Content Include="Views\Report\Mobilization.cshtml" />
     <Content Include="Views\Report\FollowUp.cshtml" />
+    <Content Include="Views\Admission\_AdmissionDocument.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -96,8 +96,8 @@
         //    OtherFeeService.canDeleteOtherFee(id).then(function (response) { vm.CanDeleteOtherFee = response.data, vm.loadingActions = false });
         //}
 
-        function viewOtherFee(otherFeeId) {
-            $window.location.href = "/OtherFee/Edit/" + otherFeeId;
+        function viewOtherFee(cashMemo) {
+            $window.location.href = "/OtherFee/Create/" + cashMemo;
         }
 
         function deleteOtherFee(centreId, otherfeeId, cashMemo) {

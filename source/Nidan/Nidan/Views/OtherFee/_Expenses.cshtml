@@ -39,7 +39,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewOtherFee(otherFee.OtherFeeId)">
+                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="otherFee.Centre.Name"></span></td>
