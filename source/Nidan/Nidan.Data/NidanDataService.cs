@@ -509,6 +509,7 @@ namespace Nidan.Data
             {
                 return context
                     .Personnels
+                    .Include(o => o.Admissions)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.PersonnelId == personnelId);

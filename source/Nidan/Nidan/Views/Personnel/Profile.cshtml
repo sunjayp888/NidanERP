@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.PersonnelProfileViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.PersonnelProfileViewModel
 @{
     ViewBag.Title = "Personnel Profile";
 }
@@ -94,7 +95,7 @@
                         </div>
                         <h3>@Model.Personnel.Fullname</h3>
                         <ul class="list-unstyled user_data">
-                          
+
                             <li>
                                 <i class="fa fa-map-marker user-profile-icon"></i> @Model.Personnel.AddressOverview
                             </li>
@@ -116,7 +117,7 @@
                         </ul>
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        
+
                     </div>
                 </div>
             </div>
@@ -153,7 +154,7 @@
                             Profile Picture
                         </button>
                         <a class="btn btn-lg btn-success col-md-10 col-sm-12" href="@Url.Action("Edit", "Personnel", new { id = Model.Personnel.PersonnelId })">
-                                Edit Profile
+                            Edit Profile
                         </a>
                         <br />
                     }
@@ -161,407 +162,546 @@
             </div>
         </div>
     </div>
-    @*<div class="row">
-        <div class="col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Department Planner<small>Activity</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content" ng-controller="AbsenceScheduleController as model" ng-init="model.initialise(@Model.PersonnelId,@Model.CompanyIdsArray,@Model.DepartmentIdsArray,@Model.DivisionIdsArray)">
-                    <div class="col-md-10 col-sm-12 col-xs-12">
-                        @Html.Partial("_Filter")
-                        @Html.Partial("_AbsenceSchedule")
+    @if (Model.Personnel.Admissions.FirstOrDefault()?.AdmissionId != null)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="x_panel" ng-controller="PersonnelProfileController as model" ng-init="model.retrieveAdmissions(@Model.Personnel.PersonnelId)">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-bars"></i> Admission Information <small></small>
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="col-md-2 col-sm-12 col-xs-12">
-                        <h4>Legend</h4>
-                        <div class="xs-mt-15">Colour by:</div>
-                        @Html.Partial("_ColourLegend")
-                        <div class="xs-mt-15">Absence Types:</div>
-                        <daily-schedule-legend items="model.schedule.types"></daily-schedule-legend>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                    <tr role="row">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                        }
+                                        <th ng-click="model.order('AdmissionDate')" ng-class="model.orderClass('AdmissionDate')">Admission Date</th>
+                                        <th ng-click="model.order('Batch.Name')" ng-class="model.orderClass('Batch.Name')">Batch</th>
+                                        <th ng-click="model.order('Registration.CandidateInstallment.CourseFee')" ng-class="model.orderClass('Registration.CandidateInstallment.CourseFee')">Total Fees</th>
+                                        <th ng-click="model.order('Registration.CandidateFee.PaidAmount')" ng-class="model.orderClass('Registration.CandidateFee.PaidAmount')">Paid Amount</th>
+                                        <th>Pending Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="admission.CentreName"></span></td>
+                                        }
+                                        <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
+                                        <td>
+                                            <span ng-bind="admission.BatchName"></span>
+                                            <button ng-if="admission.BatchName==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
+                                        </td>
+                                        <td><i class="fa fa-inr"></i> <span ng-bind="admission.TotalFee"></span></td>
+                                        <td><i class="fa fa-inr"></i> <span ng-bind="admission.PaidAmount"></span></td>
+                                        @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
+                                        <td>
+                                            <i class="fa fa-inr"></i> <button ng-if="admission.PendingAmount==0.00" type="button" class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                            <span ng-if="admission.PendingAmount!=0.00" ng-bind="admission.PendingAmount"></span>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Absence Report<small>Activity</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content" ng-controller="AbsenceController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
-                    <div class="col-xs-12">
-                        <label class="control-label">Period </label>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="fa fa-calendar fa-fw"></span>
-                                <span ng-bind="model.absencePeriod.Name"></span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li ng-repeat="period in model.absencePeriods">
-                                    <a ng-click="model.changeAbsencePeriod(period)" ng-bind="period.Name">
-                                    </a>
-                                </li>
-                            </ul>
+    }
+
+    @if (Model.Personnel.Admissions.FirstOrDefault()?.BatchId != null)
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="x_panel" ng-controller="PersonnelProfileController as model" ng-init="model.retrieveBatches(@Model.Personnel.PersonnelId)">
+                    <div class="x_title">
+                        <h2>
+                            <i class="fa fa-bars"></i> Batch Information <small></small>
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                    <tr role="row">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                        <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                        }
+                                        <th ng-click="model.order('Course.Name')" ng-class="model.orderClass('Course.Name')">Course</th>
+                                        <th>Batch Timing</th>
+                                        <th ng-click="model.order('BatchStartDate')" ng-class="model.orderClass('BatchStartDate')">Batch Start Date</th>
+                                        <th ng-click="model.order('BatchEndDate')" ng-class="model.orderClass('BatchEndDate')">Batch End Date</th>
+                                        <th ng-click="model.order('AssessmentDate')" ng-class="model.orderClass('AssessmentDate')">Assesment Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="batch in model.batches" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBatch(batch.BatchId)">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                        <td><span ng-bind="batch.Centre.Name"></span></td>
+                                        }
+                                        <td><span ng-bind="batch.Course.Name"></span></td>
+                                        <td><span ng-bind="batch.BatchStartTimeHours"></span>:<span ng-bind="batch.BatchStartTimeMinutes"></span> <span ng-bind="batch.BatchStartTimeSpan"></span> To <span ng-bind="batch.BatchEndTimeHours"></span>:<span ng-bind="batch.BatchEndTimeMinutes"></span> <span ng-bind="batch.BatchEndTimeSpan"></span></td>
+                                        <td><span ng-bind="batch.BatchStartDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="batch.BatchEndDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="batch.AssessmentDate|date : format : shortDate"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>Employment</th>
-                                                <th>Type</th>
-                                                <th>Begin Date</th>
-                                                <th>End Date</th>
-                                                <th>Duration in Day(s)</th>
-                                                <th>Status</th>
-                                                @if (Model.Permissions.CanAlterAbsence)
-                                                {
-                                                    <th>Actions</th>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="absence in model.absences" class="odd gradeX" @if (Model.Permissions.CanEditAbsence) { <text> ng-click="absence.AbsenceStatusId === 1 ? $event.originalEvent.ngClickHandled || model.absenceLink('Edit', absence.PersonnelId, absence.AbsenceId) : ''" </text>       }>
-                                                <td><span ng-bind="absence.Employment"></span></td>
-                                                <td><span ng-bind="absence.AbsenceTypeName"></span></td>
-                                                <td><span ng-bind-template="{{ absence.BeginDateUtc | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind-template="{{ absence.EndDateUtc | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind="absence.Days"></span></td>
-                                                <td>
-                                                    <span>
-                                                        <i class="fa fa-fw" ng-class="absence.AbsenceStatus.AbsenceStatusIcon" ng-attr-title="absence.AbsenceStatus.name"></i>
-                                                        <span ng-bind="absence.AbsenceStatus.name"></span>
-                                                    </span>
-                                                </td>
-                                                @if (Model.Permissions.CanAlterAbsence)
-                                                {
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @*<div class="row">
+            <div class="col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Department Planner<small>Activity</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-controller="AbsenceScheduleController as model" ng-init="model.initialise(@Model.PersonnelId,@Model.CompanyIdsArray,@Model.DepartmentIdsArray,@Model.DivisionIdsArray)">
+                        <div class="col-md-10 col-sm-12 col-xs-12">
+                            @Html.Partial("_Filter")
+                            @Html.Partial("_AbsenceSchedule")
+                        </div>
+                        <div class="col-md-2 col-sm-12 col-xs-12">
+                            <h4>Legend</h4>
+                            <div class="xs-mt-15">Colour by:</div>
+                            @Html.Partial("_ColourLegend")
+                            <div class="xs-mt-15">Absence Types:</div>
+                            <daily-schedule-legend items="model.schedule.types"></daily-schedule-legend>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Absence Report<small>Activity</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-controller="AbsenceController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
+                        <div class="col-xs-12">
+                            <label class="control-label">Period </label>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="fa fa-calendar fa-fw"></span>
+                                    <span ng-bind="model.absencePeriod.Name"></span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li ng-repeat="period in model.absencePeriods">
+                                        <a ng-click="model.changeAbsencePeriod(period)" ng-bind="period.Name">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Employment</th>
+                                                    <th>Type</th>
+                                                    <th>Begin Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Duration in Day(s)</th>
+                                                    <th>Status</th>
+                                                    @if (Model.Permissions.CanAlterAbsence)
+                                                    {
+                                                        <th>Actions</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="absence in model.absences" class="odd gradeX" @if (Model.Permissions.CanEditAbsence) { <text> ng-click="absence.AbsenceStatusId === 1 ? $event.originalEvent.ngClickHandled || model.absenceLink('Edit', absence.PersonnelId, absence.AbsenceId) : ''" </text>       }>
+                                                    <td><span ng-bind="absence.Employment"></span></td>
+                                                    <td><span ng-bind="absence.AbsenceTypeName"></span></td>
+                                                    <td><span ng-bind-template="{{ absence.BeginDateUtc | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind-template="{{ absence.EndDateUtc | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind="absence.Days"></span></td>
                                                     <td>
-                                                        <div class="btn-group pull-right">
-                                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                                <i class="fa fa-chevron-down"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu slidedown">
-                                                                @if (Model.Permissions.CanEditAbsence)
-                                                                {
-                                                                    <li ng-if="absence.Permissions.CanEditAbsence">
-                                                                        <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.absenceLink('Edit', absence.PersonnelId, absence.AbsenceId)">
+                                                        <span>
+                                                            <i class="fa fa-fw" ng-class="absence.AbsenceStatus.AbsenceStatusIcon" ng-attr-title="absence.AbsenceStatus.name"></i>
+                                                            <span ng-bind="absence.AbsenceStatus.name"></span>
+                                                        </span>
+                                                    </td>
+                                                    @if (Model.Permissions.CanAlterAbsence)
+                                                    {
+                                                        <td>
+                                                            <div class="btn-group pull-right">
+                                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                                    <i class="fa fa-chevron-down"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu slidedown">
+                                                                    @if (Model.Permissions.CanEditAbsence)
+                                                                    {
+                                                                        <li ng-if="absence.Permissions.CanEditAbsence">
+                                                                            <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.absenceLink('Edit', absence.PersonnelId, absence.AbsenceId)">
+                                                                                Edit
+                                                                            </a>
+                                                                        </li>
+                                                                    }
+                                                                    @if (Model.Permissions.CanCancelAbsence)
+                                                                    {
+                                                                        <li ng-if="absence.Permissions.CanCancelAbsence">
+                                                                            <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to cancel this absence?" ng-bootbox-confirm-action="model.cancelAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                                Cancel
+                                                                            </a>
+                                                                        </li>
+                                                                    }
+                                                                    @if (Model.Permissions.CanApproveAbsence)
+                                                                    {
+                                                                        <li ng-if="absence.Permissions.CanApproveAbsence">
+                                                                            <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to approve this absence?" ng-bootbox-confirm-action="model.approveAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                                Approve
+                                                                            </a>
+                                                                        </li>
+                                                                        <li ng-if="absence.Permissions.CanApproveAbsence">
+                                                                            <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to decline this absence?" ng-bootbox-confirm-action="model.declineAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                                Decline
+                                                                            </a>
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Entitlement History<small></small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-controller="PersonnelAbsenceEntitlementController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
+                        <div class="col-xs-12">
+                            <label class="control-label">Period </label>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="fa fa-calendar fa-fw"></span>
+                                    <span ng-bind="model.absencePeriod.Name"></span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li ng-repeat="period in model.absencePeriods">
+                                        <a ng-click="model.changeAbsencePeriod(period)" ng-bind="period.Name">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Employment</th>
+                                                    <th>Absence Type</th>
+                                                    <th>Begin Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Entitlement</th>
+                                                    <th>Carried Over</th>
+                                                    <th>Used</th>
+                                                    <th>Remaining</th>
+                                                    <th>Maximum Carry Forward</th>
+                                                    @if (Model.Permissions.CanEditEntitlements)
+                                                    {
+                                                        <th>Actions</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="personnelAbsenceEntitlement in model.personnelAbsenceEntitlements" class="odd gradeX" @if (Model.Permissions.CanEditEntitlements) { <text> ng-click="$event.originalEvent.ngClickHandled || model.personnelAbsenceEntitlementLink('Edit', personnelAbsenceEntitlement.PersonnelId, personnelAbsenceEntitlement.PersonnelAbsenceEntitlementId)" </text>      }>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.Employment.JobTitle"></span>&nbsp;-&nbsp;<span ng-bind-template="{{ personnelAbsenceEntitlement.Employment.StartDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.AbsenceType.Name"></span></td>
+                                                    <td><span ng-bind-template="{{ personnelAbsenceEntitlement.StartDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind-template="{{ personnelAbsenceEntitlement.EndDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.Entitlement"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.CarriedOver"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.Used"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.Remaining"></span></td>
+                                                    <td><span ng-bind="personnelAbsenceEntitlement.MaximumCarryForward"></span></td>
+                                                    @if (Model.Permissions.CanEditEntitlements)
+                                                    {
+                                                        <td>
+                                                            <div class="btn-group pull-right">
+                                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                                    <i class="fa fa-chevron-down"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu slidedown">
+                                                                    <li>
+                                                                        <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.personnelAbsenceEntitlementLink('Edit', personnelAbsenceEntitlement.PersonnelId, personnelAbsenceEntitlement.PersonnelAbsenceEntitlementId)">
+                                                                            Edit Entitlement
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            Employment History<small></small>
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-controller="EmploymentController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
+                        <div class="col-xs-12">
+                            @if (Model.Permissions.CanEditEmployments)
+                            {
+                                <a class="btn btn-success" href="@Url.Action("Create", "Employment", new { id = Model.Personnel.PersonnelId })"><i class="fa fa-briefcase m-right-xs"></i> Create</a>
+                            }
+                            <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Start Date</th>
+                                                    <th>Job Title</th>
+                                                    <th>Manager</th>
+                                                    <th>Division</th>
+                                                    <th>Building</th>
+                                                    <th>Department</th>
+                                                    <th>End Date</th>
+                                                    <th>Termination Date</th>
+                                                    @if (Model.Permissions.CanEditEmployments)
+                                                    {
+                                                        <th>Actions</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="employment in model.employments" class="odd gradeX" @if (Model.Permissions.CanEditEmployments) { <text> ng-click="$event.originalEvent.ngClickHandled || model.employmentLink('Edit', employment.PersonnelId, employment.EmploymentId)" </text>        }>
+                                                    <td><span ng-bind-template="{{ employment.StartDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind="employment.JobTitle"></span></td>
+                                                    <td><span ng-bind="employment.ReportsToPersonnel.Fullname"></span></td>
+                                                    <td><span ng-bind="employment.Division.Name"></span></td>
+                                                    <td><span ng-bind="employment.Building.Address1"></span></td>
+                                                    <td><span ng-bind="employment.Department.Name"></span></td>
+                                                    <td><span ng-bind-template="{{ employment.EndDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    <td><span ng-bind-template="{{ employment.TerminationDate | date:'dd MMMM yyyy'}}"></span></td>
+                                                    @if (Model.Permissions.CanEditEmployments)
+                                                    {
+                                                        <td ng-click="$event.stopPropagation()">
+                                                            <div class="btn-group pull-right">
+                                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="model.canDeletePersonnelEmployment(employment.EmploymentId);">
+                                                                    <i class="fa fa-chevron-down"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu slidedown {{employment.EmploymentId}}">
+                                                                    <li>
+                                                                        <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.employmentLink('Edit', employment.PersonnelId, employment.EmploymentId)">
+                                                                            Edit Employment
+                                                                        </a>
+                                                                    </li>
+                                                                    <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
+                                                                    <li class="Delete" ng-show="model.CanDeletePersonnelEmployment">
+                                                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to delete employment " ng-bootbox-confirm-action="model.deletePersonnelEmployment(employment.EmploymentId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
+                                                                            Delete Employment
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            Emergency Contact<small></small>
+                        </h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" ng-controller="EmergencyContactController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
+                        <div class="col-xs-12">
+                            @if (Model.Permissions.CanEditProfile)
+                            {
+                                <a class="btn btn-success" href="@Url.Action("Create", "EmergencyContact", new { id = Model.Personnel.PersonnelId })"><i class="fa fa-ambulance m-right-xs"></i>&nbsp;Create Emergency Contact</a>
+                            }
+                            <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th>Title</th>
+                                                    <th>Forenames</th>
+                                                    <th>Surname</th>
+                                                    <th>Relationship</th>
+                                                    <th>Telephone</th>
+                                                    <th>Mobile</th>
+                                                    @if (Model.Permissions.CanEditProfile)
+                                                    {
+                                                        <th>Actions</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="emergencyContact in model.emergencyContacts" class="odd gradeX" @if (Model.Permissions.CanEditProfile) { <text> ng-click="$event.originalEvent.ngClickHandled || model.editEmergencyContact(emergencyContact.EmergencyContactId)" </text>        }>
+                                                    <td><span ng-bind="emergencyContact.Title"></span></td>
+                                                    <td><span ng-bind="emergencyContact.Forenames"></span></td>
+                                                    <td><span ng-bind="emergencyContact.Surname"></span></td>
+                                                    <td><span ng-bind="emergencyContact.Relationship"></span></td>
+                                                    <td><span ng-bind="emergencyContact.Telephone"></span></td>
+                                                    <td><span ng-bind="emergencyContact.Mobile"></span></td>
+                                                    @if (Model.Permissions.CanEditProfile)
+                                                    {
+                                                        <td>
+                                                            <div class="btn-group pull-right">
+                                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                                    <i class="fa fa-chevron-down"></i>
+                                                                </a>
+                                                                <ul class="dropdown-menu slidedown">
+                                                                    <li>
+                                                                        <a style="cursor: pointer;" ng-href="/EmergencyContact/Edit/{{emergencyContact.EmergencyContactId}}">
                                                                             Edit
                                                                         </a>
                                                                     </li>
-                                                                }
-                                                                @if (Model.Permissions.CanCancelAbsence)
-                                                                {
-                                                                    <li ng-if="absence.Permissions.CanCancelAbsence">
-                                                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to cancel this absence?" ng-bootbox-confirm-action="model.cancelAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                            Cancel
+                                                                    <li>
+                                                                        <a style="cursor: pointer;" ng-href="/EmergencyContact/Details/{{emergencyContact.EmergencyContactId}}">
+                                                                            View
                                                                         </a>
                                                                     </li>
-                                                                }
-                                                                @if (Model.Permissions.CanApproveAbsence)
-                                                                {
-                                                                    <li ng-if="absence.Permissions.CanApproveAbsence">
-                                                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to approve this absence?" ng-bootbox-confirm-action="model.approveAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                            Approve
+                                                                    <li>
+                                                                        <a style="cursor: pointer;" ng-href="/EmergencyContact/Delete/{{emergencyContact.EmergencyContactId}}">
+                                                                            Delete
                                                                         </a>
                                                                     </li>
-                                                                    <li ng-if="absence.Permissions.CanApproveAbsence">
-                                                                        <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to decline this absence?" ng-bootbox-confirm-action="model.declineAbsence(absence.PersonnelId, absence.AbsenceId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                            Decline
-                                                                        </a>
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                }
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>Entitlement History<small></small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content" ng-controller="PersonnelAbsenceEntitlementController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
-                    <div class="col-xs-12">
-                        <label class="control-label">Period </label>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="fa fa-calendar fa-fw"></span>
-                                <span ng-bind="model.absencePeriod.Name"></span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li ng-repeat="period in model.absencePeriods">
-                                    <a ng-click="model.changeAbsencePeriod(period)" ng-bind="period.Name">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>Employment</th>
-                                                <th>Absence Type</th>
-                                                <th>Begin Date</th>
-                                                <th>End Date</th>
-                                                <th>Entitlement</th>
-                                                <th>Carried Over</th>
-                                                <th>Used</th>
-                                                <th>Remaining</th>
-                                                <th>Maximum Carry Forward</th>
-                                                @if (Model.Permissions.CanEditEntitlements)
-                                                {
-                                                    <th>Actions</th>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="personnelAbsenceEntitlement in model.personnelAbsenceEntitlements" class="odd gradeX" @if (Model.Permissions.CanEditEntitlements) { <text> ng-click="$event.originalEvent.ngClickHandled || model.personnelAbsenceEntitlementLink('Edit', personnelAbsenceEntitlement.PersonnelId, personnelAbsenceEntitlement.PersonnelAbsenceEntitlementId)" </text>      }>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.Employment.JobTitle"></span>&nbsp;-&nbsp;<span ng-bind-template="{{ personnelAbsenceEntitlement.Employment.StartDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.AbsenceType.Name"></span></td>
-                                                <td><span ng-bind-template="{{ personnelAbsenceEntitlement.StartDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind-template="{{ personnelAbsenceEntitlement.EndDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.Entitlement"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.CarriedOver"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.Used"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.Remaining"></span></td>
-                                                <td><span ng-bind="personnelAbsenceEntitlement.MaximumCarryForward"></span></td>
-                                                @if (Model.Permissions.CanEditEntitlements)
-                                                {
-                                                    <td>
-                                                        <div class="btn-group pull-right">
-                                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                                <i class="fa fa-chevron-down"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu slidedown">
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.personnelAbsenceEntitlementLink('Edit', personnelAbsenceEntitlement.PersonnelId, personnelAbsenceEntitlement.PersonnelAbsenceEntitlementId)">
-                                                                        Edit Entitlement
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                }
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Employment History<small></small>
-                    </h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content" ng-controller="EmploymentController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
-                    <div class="col-xs-12">
-                        @if (Model.Permissions.CanEditEmployments)
-                        {
-                            <a class="btn btn-success" href="@Url.Action("Create", "Employment", new { id = Model.Personnel.PersonnelId })"><i class="fa fa-briefcase m-right-xs"></i> Create</a>
-                        }
-                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>Start Date</th>
-                                                <th>Job Title</th>
-                                                <th>Manager</th>
-                                                <th>Division</th>
-                                                <th>Building</th>
-                                                <th>Department</th>
-                                                <th>End Date</th>
-                                                <th>Termination Date</th>
-                                                @if (Model.Permissions.CanEditEmployments)
-                                                {
-                                                    <th>Actions</th>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="employment in model.employments" class="odd gradeX" @if (Model.Permissions.CanEditEmployments) { <text> ng-click="$event.originalEvent.ngClickHandled || model.employmentLink('Edit', employment.PersonnelId, employment.EmploymentId)" </text>        }>
-                                                <td><span ng-bind-template="{{ employment.StartDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind="employment.JobTitle"></span></td>
-                                                <td><span ng-bind="employment.ReportsToPersonnel.Fullname"></span></td>
-                                                <td><span ng-bind="employment.Division.Name"></span></td>
-                                                <td><span ng-bind="employment.Building.Address1"></span></td>
-                                                <td><span ng-bind="employment.Department.Name"></span></td>
-                                                <td><span ng-bind-template="{{ employment.EndDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                <td><span ng-bind-template="{{ employment.TerminationDate | date:'dd MMMM yyyy'}}"></span></td>
-                                                @if (Model.Permissions.CanEditEmployments)
-                                                {
-                                                    <td ng-click="$event.stopPropagation()">
-                                                        <div class="btn-group pull-right">
-                                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="model.canDeletePersonnelEmployment(employment.EmploymentId);">
-                                                                <i class="fa fa-chevron-down"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu slidedown {{employment.EmploymentId}}">
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true; model.employmentLink('Edit', employment.PersonnelId, employment.EmploymentId)">
-                                                                        Edit Employment
-                                                                    </a>
-                                                                </li>
-                                                                <li ng-show="model.loadingActions"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw "></i></li>
-                                                                <li class="Delete" ng-show="model.CanDeletePersonnelEmployment">
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure you want to delete employment " ng-bootbox-confirm-action="model.deletePersonnelEmployment(employment.EmploymentId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                        Delete Employment
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                }
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Emergency Contact<small></small>
-                    </h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li>
-                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content" ng-controller="EmergencyContactController as model" ng-init="model.init(@Model.Personnel.PersonnelId)">
-                    <div class="col-xs-12">
-                        @if (Model.Permissions.CanEditProfile)
-                        {
-                            <a class="btn btn-success" href="@Url.Action("Create", "EmergencyContact", new { id = Model.Personnel.PersonnelId })"><i class="fa fa-ambulance m-right-xs"></i>&nbsp;Create Emergency Contact</a>
-                        }
-                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>Title</th>
-                                                <th>Forenames</th>
-                                                <th>Surname</th>
-                                                <th>Relationship</th>
-                                                <th>Telephone</th>
-                                                <th>Mobile</th>
-                                                @if (Model.Permissions.CanEditProfile)
-                                                {
-                                                    <th>Actions</th>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="emergencyContact in model.emergencyContacts" class="odd gradeX" @if (Model.Permissions.CanEditProfile) { <text> ng-click="$event.originalEvent.ngClickHandled || model.editEmergencyContact(emergencyContact.EmergencyContactId)" </text>        }>
-                                                <td><span ng-bind="emergencyContact.Title"></span></td>
-                                                <td><span ng-bind="emergencyContact.Forenames"></span></td>
-                                                <td><span ng-bind="emergencyContact.Surname"></span></td>
-                                                <td><span ng-bind="emergencyContact.Relationship"></span></td>
-                                                <td><span ng-bind="emergencyContact.Telephone"></span></td>
-                                                <td><span ng-bind="emergencyContact.Mobile"></span></td>
-                                                @if (Model.Permissions.CanEditProfile)
-                                                {
-                                                    <td>
-                                                        <div class="btn-group pull-right">
-                                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                                <i class="fa fa-chevron-down"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu slidedown">
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-href="/EmergencyContact/Edit/{{emergencyContact.EmergencyContactId}}">
-                                                                        Edit
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-href="/EmergencyContact/Details/{{emergencyContact.EmergencyContactId}}">
-                                                                        View
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-href="/EmergencyContact/Delete/{{emergencyContact.EmergencyContactId}}">
-                                                                        Delete
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                }
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
+        </div>*@
     @if (Model.Permissions.IsAdmin)
-    {
-        <div>
-            <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
-                <span class="fa fa-chevron-left"></span>&nbsp;Personnel List
-            </a>
-        </div>
+    { <div>
+        <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+            <span class="fa fa-chevron-left"></span>&nbsp;Personnel List
+        </a>
+    </div>
     }
 </div>

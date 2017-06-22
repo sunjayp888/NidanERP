@@ -56,7 +56,6 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-
             var isAdmin = User.IsInAnyRoles("Admin");
             List<int> selectedCompanyIds = null;
             List<int> selectedDepartmentIds = null;
@@ -81,7 +80,7 @@ namespace Nidan.Controllers
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
             var viewModel = new PersonnelProfileViewModel
             {
-                
+
                 Centres = new SelectList(centres, "CentreId", "Name"),
                 Personnel = new Personnel
                 {
@@ -116,7 +115,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 //Create Personnel
-                personnelViewModel.Personnel.CentreId = personnelViewModel.Personnel.CentreId == 0? UserCentreId:personnelViewModel.Personnel.CentreId;
+                personnelViewModel.Personnel.CentreId = personnelViewModel.Personnel.CentreId == 0 ? UserCentreId : personnelViewModel.Personnel.CentreId;
                 personnelViewModel.Personnel = NidanBusinessService.CreatePersonnel(UserOrganisationId, personnelViewModel.Personnel);
                 //var trainer =  NidanBusinessService.CreateTrainer
                 //create personnel
@@ -188,7 +187,7 @@ namespace Nidan.Controllers
                 return HttpNotFound();
             }
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
-           
+
             personnel.Email = UserManager.FindByPersonnelId(personnel.PersonnelId)?.Email;
             var viewModel = new PersonnelProfileViewModel
             {
@@ -284,6 +283,26 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             return this.JsonNet(NidanBusinessService.RetrievePersonnel(UserOrganisationId, UserCentreId, orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult AdmissionList(int personnelId)
+        {
+            var organisationId = UserOrganisationId;
+            var personnel = NidanBusinessService.RetrievePersonnel(organisationId, personnelId);
+            var admissionId = personnel.Admissions.FirstOrDefault()?.AdmissionId ?? 0;
+            var admissionData = NidanBusinessService.RetrieveAdmissionGrid(organisationId, e => e.AdmissionId == admissionId);
+            return this.JsonNet(admissionData);
+        }
+
+        [HttpPost]
+        public ActionResult BatchList(int personnelId)
+        {
+            var organisationId = UserOrganisationId;
+            var personnel = NidanBusinessService.RetrievePersonnel(organisationId, personnelId);
+            var batchId = personnel.Admissions.FirstOrDefault()?.BatchId ?? 0;
+            var batchData = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId && e.BatchId == batchId,null,null);
+            return this.JsonNet(batchData);
         }
 
         [HttpPost]

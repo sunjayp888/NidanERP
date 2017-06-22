@@ -10,10 +10,14 @@
     function PersonnelProfileController($window, PersonnelProfileService, Paging, OrderService, OrderBy, Order) {
         /* jshint validthis:true */
         var vm = this;
+        vm.admissions = [];
+        vm.batches = [];
         vm.personnelId;
         vm.initialise = initialise;
         vm.uploadPhoto = uploadPhoto;
         vm.deletePhoto = deletePhoto;
+        vm.retrieveBatches = retrieveBatches;
+        vm.retrieveAdmissions = retrieveAdmissions;
 
         var cropImage
 
@@ -22,7 +26,7 @@
         var cropImage = $('#UploadProfilePicture');
         var options = {
             aspectRatio: 1 / 1,
-            responsive : true,
+            responsive: true,
             crop: function (e) {
             }
         };
@@ -71,6 +75,24 @@
                         document.getElementById('ProfilePicture').setAttribute('src', location.protocol + '//' + location.host + '/Content/images/user.png');
                         $("#ProfilePictureModal").modal("hide")
                     });
+        }
+
+        function retrieveAdmissions(personnelId) {
+            vm.personnelId = personnelId;
+            return PersonnelProfileService.retrieveAdmissions(vm.personnelId)
+                .then(function (response) {
+                    vm.admissions = response.data.Items;
+                    return vm.admissions;
+                });
+        }
+
+        function retrieveBatches(personnelId) {
+            vm.personnelId = personnelId;
+            return PersonnelProfileService.retrieveBatches(vm.personnelId)
+                .then(function (response) {
+                    vm.batches = response.data.Items;
+                    return vm.batches;
+                });
         }
     }
 })();
