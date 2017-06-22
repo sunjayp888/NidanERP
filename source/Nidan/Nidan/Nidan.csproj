@@ -1049,6 +1049,7 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <Content Include="Content\images\NEST.jpg" />
+    <Content Include="Content\images\Nidan.jpg" />
     <Content Include="Content\images\user.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
