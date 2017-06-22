@@ -14,7 +14,8 @@
             //retrieveMobilizationReports: retrieveMobilizationReports,
             searchMobilizationByDate: searchMobilizationByDate,
             //retrieveFollowUpReports: retrieveFollowUpReports,
-            searchFollowUpByDate: searchFollowUpByDate
+            searchFollowUpByDate: searchFollowUpByDate,
+            searchAdmissionByDate: searchAdmissionByDate
         };
 
         return service;
@@ -78,6 +79,18 @@
 
         function searchFollowUpByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchFollowUpByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchAdmissionByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchAdmissionByDate",
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,
