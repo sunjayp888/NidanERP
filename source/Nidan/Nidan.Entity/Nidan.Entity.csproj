@@ -192,6 +192,7 @@
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Registration.cs" />
+    <Compile Include="RegistrationGrid.cs" />
     <Compile Include="RegistrationSearchField.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />

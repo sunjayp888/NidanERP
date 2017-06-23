@@ -107,6 +107,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationDataGrid> MobilizationDataGrids { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
+        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1770,6 +1771,18 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<VoucherGrid>()
                 .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.PaymentMode)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

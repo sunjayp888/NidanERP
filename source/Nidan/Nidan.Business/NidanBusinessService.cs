@@ -2359,6 +2359,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveVoucherGrids(organisationId, centreId, predicate, orderBy, paging);
         }
 
+        public PagedResult<RegistrationGrid> RetrieveRegistrationGrid(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveRegistrationGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
