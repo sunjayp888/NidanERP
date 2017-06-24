@@ -2526,6 +2526,76 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<Expense> RetrieveExpenses(int organisationId, int centreId, Expression<Func<Expense, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Expenses
+                    .Include(e=>e.ExpenseHeader)
+                    .Include(e => e.Centre)
+                    .Include(e => e.Organisation)
+                    .Include(e => e.ExpenseProjects)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Expense RetrieveExpense(int organisationId, int centreId, int expenseId, Expression<Func<Expense, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Expenses
+                    .Include(e=>e.ExpenseProjects)
+                    .Include(e => e.ExpenseHeader)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ExpenseId == expenseId);
+            }
+        }
+
+        public IEnumerable<ExpenseProject> RetrieveExpenseProjects(int organisationId, int centreId, int expenseId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ExpenseProjects
+                    .Where(a => a.ExpenseId == expenseId && a.CentreId == centreId)
+                    .Include(e => e.Expense)
+                    .Include(e => e.Project)
+                    .AsNoTracking()
+                    .ToList();
+            }
+        }
+
+        public CentreVoucherNumber RetrieveCentreVoucherNumber(int organisationId, int centreId, Expression<Func<CentreVoucherNumber, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreVoucherNumbers
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CentreId == centreId);
+            }
+        }
+
         public PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId,
             Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)

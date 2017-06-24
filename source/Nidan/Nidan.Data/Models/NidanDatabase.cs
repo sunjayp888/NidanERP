@@ -108,6 +108,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
         public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
+        public virtual DbSet<CentreVoucherNumber> CentreVoucherNumbers { get; set; }
+        public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1783,6 +1786,22 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<RegistrationGrid>()
                 .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.CashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
