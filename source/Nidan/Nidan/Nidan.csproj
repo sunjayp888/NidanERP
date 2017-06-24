@@ -1049,6 +1049,7 @@
       <DependentUpon>Site.css</DependentUpon>
     </Content>
     <Content Include="Content\images\NEST.jpg" />
+    <Content Include="Content\images\Nidan.jpg" />
     <Content Include="Content\images\user.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -1603,6 +1604,8 @@
     <Content Include="Views\Report\Enquiry.cshtml" />
     <Content Include="Views\Report\Mobilization.cshtml" />
     <Content Include="Views\Report\FollowUp.cshtml" />
+    <Content Include="Views\Admission\_AdmissionDocument.cshtml" />
+    <Content Include="Views\Report\Admission.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

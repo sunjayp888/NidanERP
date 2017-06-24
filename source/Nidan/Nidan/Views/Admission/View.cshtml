@@ -364,7 +364,11 @@
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
+    <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#admissionDocumentModal">Upload Document</button>
     <a href="@Url.Action("Download", new { id = Model.Admission.AdmissionId })" class="btn btn-success" role="button">
-    <i class="fa fa-print"></i>&nbsp;Print Enrollment Detail.
+        <i class="fa fa-print"></i>&nbsp;Print Enrollment Detail.
     </a>
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Admission.Registration.StudentCode)">
+        @Html.Partial("_AdmissionDocument")
+    </div>
 </div>

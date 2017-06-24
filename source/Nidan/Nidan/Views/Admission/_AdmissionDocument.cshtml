@@ -1,9 +1,5 @@
 ﻿@using Nidan.Extensions
-@{
-    var cashMemo= Model.OtherFee.CashMemo.ToString();
-}
-
-<div class="modal fade" id="otherFeeDocumentModal" ng-hide="model.ShowModal">
+<div class="modal fade" id="admissionDocumentModal" ng-hide="model.ShowModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,7 +44,7 @@
                     <div class="form-group">
                         <div class="pull-right col-md-7">
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-success" ng-click="model.createDocument(@cashMemo)" data-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-success" ng-click="model.createDocument(@Model.Admission.Registration.StudentCode.ToString())" data-dismiss="modal">Save</button>
                             </div>
                             <div class="pull-right col-md-6">
                                 <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
@@ -68,7 +64,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>
-                            Expense Documents<small></small>
+                            Admission Documents<small></small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>

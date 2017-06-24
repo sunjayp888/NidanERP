@@ -60,25 +60,23 @@
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
                                             <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
+                                            <th ng-click="model.order('VoucherNumber')" ng-class="model.orderClass('VoucherNumber')">Voucher Number</th>
                                             <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
-                                            <th ng-click="model.order('Project')" ng-class="model.orderClass('Project')">Project</th>
-                                            <th ng-click="model.order('ExpenseHeaderId')" ng-class="model.orderClass('ExpenseHeaderId')">Expense Head</th>
-                                            <th ng-click="model.order('DebitAmount')" ng-class="model.orderClass('DebitAmount')">Debit Amount</th>
+                                            <th ng-click="model.order('TotalDebitAmount')" ng-class="model.orderClass('TotalDebitAmount')">Debit Amount</th>
                                             <th ng-click="model.order('PaidTo')" ng-class="model.orderClass('PaidTo')">Paid To</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewOtherFee(otherFee.OtherFeeId)">
+                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewOtherFee(otherFee.CashMemo)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="otherFee.Centre.Name"></span></td>
+                                                <td><span ng-bind="otherFee.CentreName"></span></td>
                                             }
                                             <td><span ng-bind="otherFee.CreatedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="otherFee.VoucherNumber"></span></td>
                                             <td><span ng-bind="otherFee.CashMemo"></span></td>
-                                            <td><span ng-bind="otherFee.Project.Name"></span></td>
-                                            <td><span ng-bind="otherFee.ExpenseHeader.Name"></span></td>
-                                            <td><span ng-bind="otherFee.DebitAmount"></span></td>
+                                            <td><span class="fa fa-inr" ng-bind="otherFee.TotalDebitAmount"></span></td>
                                             <td><span ng-bind="otherFee.PaidTo"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
@@ -89,11 +87,16 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Edit/{{otherFee.OtherFeeId}}">
+                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Create/{{otherFee.CashMemo}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            
+
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Download/{{otherFee.CashMemo}}">
+                                                                    Download
+                                                                </a>
+                                                            </li>
                                                         }
                                                     </ul>
                                                 </div>

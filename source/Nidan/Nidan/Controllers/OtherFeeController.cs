@@ -30,12 +30,14 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(string id)
         {
+            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+            var endOfWeekDate = startOfWeekDate.AddDays(6);
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
             var project = NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList();
             var paymentModes = NidanBusinessService.RetrievePaymentModes(organisationId, e => e.PaymentModeId == 1);
-            var otherFee = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId && e.CashMemo == id).Items.FirstOrDefault();
+            var otherFee = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId && e.CashMemo == id && e.CreatedDate >= startOfWeekDate && e.CreatedDate <= endOfWeekDate).Items.FirstOrDefault();
             if (otherFee != null)
             {
                 otherFee.Project = null;
@@ -146,8 +148,10 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
+            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+            var endOfWeekDate = startOfWeekDate.AddDays(6);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveVoucherGrids(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= startOfWeekDate && p.CreatedDate <= endOfWeekDate, orderBy, paging));
         }
 
         [HttpPost]
@@ -168,8 +172,8 @@ namespace Nidan.Controllers
         {
             var otherFee = NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, e=>e.CashMemo==id).Items.ToList();
             var data = NidanBusinessService.CreateOtherFeeBytes(UserOrganisationId, UserCentreId, otherFee);
-            var cashMemoNumber = otherFee.FirstOrDefault()?.CashMemo;
-            return File(data, ".pdf", string.Format("{0} Other Fee.pdf", cashMemoNumber));
+            var voucherNumber = otherFee.FirstOrDefault()?.Voucher.VoucherNumber;
+            return File(data, ".pdf", string.Format("{0} Other Fee.pdf", voucherNumber));
         }
     }
 }

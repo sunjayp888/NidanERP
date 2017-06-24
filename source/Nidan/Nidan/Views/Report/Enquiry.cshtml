@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                        <input id ="txt_FromDate" type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                        <input id ="txt_ToDate" type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
                                     </div>
                                 </div>
                                 <div class="col-lg-1">
@@ -96,7 +96,7 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                @Html.Partial("Pagination/_pageSize")
+                                @Html.Partial("Pagination/_pagination")
                             </div>
                         </div>
                         <div class="row">

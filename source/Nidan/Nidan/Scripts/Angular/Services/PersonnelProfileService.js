@@ -10,7 +10,9 @@
     function PersonnelProfileService($http) {
         var service = {
             UploadPhoto: UploadPhoto,
-            DeletePhoto: DeletePhoto
+            DeletePhoto: DeletePhoto,
+            retrieveAdmissions: retrieveAdmissions,
+            retrieveBatches: retrieveBatches
         };
 
         return service;
@@ -32,5 +34,25 @@
             var url = "/Personnel/DeletePhoto/" + personnelId;
             return $http.post(url);
         };
+
+        function retrieveAdmissions(personnelId) {
+
+            var url = "/Personnel/AdmissionList",
+                data = {
+                    personnelId:personnelId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveBatches(personnelId) {
+
+            var url = "/Personnel/BatchList",
+                data = {
+                    personnelId: personnelId
+                };
+
+            return $http.post(url, data);
+        }
     }
 })();

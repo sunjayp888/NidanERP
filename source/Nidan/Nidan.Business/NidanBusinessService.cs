@@ -1278,6 +1278,20 @@ namespace Nidan.Business
 
         public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
         {
+            var centre = RetrieveCentre(organisationId, centreId);
+            var voucherData = new Voucher();
+            var vouchers = RetrieveVouchers(organisationId, centreId, e => e.CashMemo == otherFee.CashMemo).Items.ToList();
+            if (!vouchers.Any(e => e.CashMemo == otherFee.CashMemo))
+            {
+                voucherData.CashMemo = otherFee.CashMemo;
+                voucherData.CentreId = centreId;
+                voucherData.OrganisationId = organisationId;
+                voucherData.CreatedDate = DateTime.UtcNow;
+                voucherData = _nidanDataService.Create<Voucher>(organisationId, voucherData);
+                voucherData.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"), voucherData.VoucherId);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, voucherData);
+            }
+            otherFee.VoucherId = voucherData.VoucherId == 0 ? vouchers.FirstOrDefault().VoucherId : voucherData.VoucherId;
             var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
             return data;
         }
@@ -1289,6 +1303,11 @@ namespace Nidan.Business
             centrePettyCash.CreatedBy = personnelId;
             centrePettyCash.CreatedDate = DateTime.UtcNow;
             return _nidanDataService.Create<CentrePettyCash>(organisationId, centrePettyCash);
+        }
+
+        public Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher)
+        {
+            return _nidanDataService.Create<Voucher>(organisationId, voucher);
         }
 
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
@@ -2098,6 +2117,8 @@ namespace Nidan.Business
 
         public List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
+            var month = DateTime.UtcNow.Month;
+            var year = DateTime.UtcNow.Year;
             var centre = RetrieveCentres(organisationId, predicate).ToList();
             var graphData = new List<Graph>();
             foreach (var item in centre)
@@ -2106,11 +2127,11 @@ namespace Nidan.Business
                 {
                     CentreId = item.CentreId,
                     CentreName = item.Name,
-                    MobilizationCount = item.Mobilizations.Count(e => e.Close == "No"),
-                    AdmissionCount = item.Admissions.Count,
-                    EnquiryCount = item.Enquiries.Count(e => e.IsRegistrationDone == false),
-                    RegistrationCount = item.Registrations.Count(e => e.IsAdmissionDone == false),
-                    CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false)
+                    MobilizationCount = item.Mobilizations.Count(e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year),
+                    AdmissionCount = item.Admissions.Count(e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year),
+                    EnquiryCount = item.Enquiries.Count(e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year),
+                    RegistrationCount = item.Registrations.Count(e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year),
+                    CounsellingCount = item.Counsellings.Count(e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year)
                 });
             }
             return graphData;
@@ -2319,6 +2340,23 @@ namespace Nidan.Business
         public PagedResult<FollowUpDataGrid> RetrieveFollowUpDataGrid(int organisationId, Expression<Func<FollowUpDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveFollowUpDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<Voucher> RetrieveVouchers(int organisationId, int centreId, Expression<Func<Voucher, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveVouchers(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public Voucher RetrieveVoucher(int organisationId, int centreId, int voucherId, Expression<Func<Voucher, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveVoucher(organisationId, centreId, voucherId, predicate);
+        }
+
+        public PagedResult<VoucherGrid> RetrieveVoucherGrids(int organisationId, int centreId, Expression<Func<VoucherGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveVoucherGrids(organisationId, centreId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -3152,22 +3190,70 @@ namespace Nidan.Business
                     DebitAmount = item.DebitAmount,
                     Unit = item.Unit,
                     Rate = item.Rate,
-                    Description = string.Format("{0} ",item.Particulars)
+                    Description = string.Format("{0} , ", item.Particulars)
                 });
             }
-            voucherNumber = string.Format("{0}/{1}/{2}", otherFees.FirstOrDefault()?.Centre.Name, DateTime.UtcNow.ToString("MMMM"), otherFees.FirstOrDefault()?.CashMemo);
+            voucherNumber = otherFees.FirstOrDefault()?.Voucher.VoucherNumber;
             otherFee.OrganisationName = otherFees.FirstOrDefault()?.Organisation.Name;
             otherFee.CentreAddress = String.Format("{0} {1} {2} {3}.", otherFees.FirstOrDefault()?.Centre.Address1, otherFees.FirstOrDefault()?.Centre.Address2, otherFees.FirstOrDefault()?.Centre.Address3, otherFees.FirstOrDefault()?.Centre.Address4);
             otherFee.CentreName = otherFees.FirstOrDefault()?.Centre.Name;
             otherFee.VoucherNumber = voucherNumber;
-            otherFee.CashMemo = otherFees.FirstOrDefault()?.CashMemo;
+            otherFee.CashMemo = otherFees.FirstOrDefault()?.Voucher.CashMemo;
             otherFee.TotalDebitAmount = otherFeeList.Select(e => e.DebitAmount).Sum();
+            var rupeesInWords = ConvertNumbertoWords((Int32) otherFee.TotalDebitAmount);
             otherFee.PaidTo = otherFees.FirstOrDefault()?.PaidTo;
-            otherFee.RupeesInWords = "one thousand five hundred only";
-            otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.CreatedDate.ToShortDateString();
+            otherFee.RupeesInWords = rupeesInWords + " ONLY.";
+            otherFee.VoucherCreatedDate = otherFees.FirstOrDefault()?.Voucher.CreatedDate.ToShortDateString();
             otherFee.OtherFeeReceipts = otherFeeList;
             var otherFeeData = otherFee;
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
+        }
+
+        //RupeesInWords
+        public string ConvertNumbertoWords(long number)
+        {
+            if (number == 0) return "ZERO";
+            if (number < 0) return "minus " + ConvertNumbertoWords(Math.Abs(number));
+            string words = "";
+            if ((number / 1000000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100000) + " LAKES ";
+                number %= 1000000;
+            }
+            if ((number / 1000) > 0)
+            {
+                words += ConvertNumbertoWords(number / 1000) + " THOUSAND ";
+                number %= 1000;
+            }
+            if ((number / 100) > 0)
+            {
+                words += ConvertNumbertoWords(number / 100) + " HUNDRED ";
+                number %= 100;
+            }
+            //if ((number / 10) > 0)  
+            //{  
+            // words += ConvertNumbertoWords(number / 10) + " RUPEES ";  
+            // number %= 10;  
+            //}  
+            if (number > 0)
+            {
+                if (words != "") words += "AND ";
+                var unitsMap = new[]
+                {
+                    "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"
+                };
+                var tensMap = new[]
+                {
+                    "ZERO", "TEN", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY"
+                };
+                if (number < 20) words += unitsMap[number];
+                else
+                {
+                    words += tensMap[number / 10];
+                    if ((number % 10) > 0) words += " " + unitsMap[number % 10];
+                }
+            }
+            return words;
         }
 
         //Email

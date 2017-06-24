@@ -90,6 +90,14 @@ namespace Nidan.Controllers
                            expenseData?.CashMemo, "Expense Document", documentViewModel.Attachment.FileName,
                            documentViewModel.Attachment.InputStream.ToBytes());
             }
+
+            if (documentViewModel.DocumentTypeId == 15)
+            {
+                _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           studentData?.FirstName, "Admission Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+            }
         }
     }
 }

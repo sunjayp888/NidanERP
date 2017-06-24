@@ -213,6 +213,8 @@
     <Compile Include="TrainerSearchField.cs" />
     <Compile Include="UserAuthorisationFilter.cs" />
     <Compile Include="Validation\DateGreaterThanAttribute.cs" />
+    <Compile Include="Voucher.cs" />
+    <Compile Include="VoucherGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
