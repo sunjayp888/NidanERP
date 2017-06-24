@@ -2431,8 +2431,8 @@ namespace Nidan.Data
             {
                 return context
                       .FollowUpDataGrids
-                      .Include(p=>p.FollowUp)
-                      .Include(p=>p.FollowUp.Course)
+                      //.Include(p=>p.FollowUp)
+                      //.Include(p=>p.FollowUp.Course)
                       .AsNoTracking()
                       .Where(predicate)
                       .OrderBy(orderBy ?? new List<OrderBy>

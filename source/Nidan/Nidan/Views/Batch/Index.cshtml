@@ -114,7 +114,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="batch in model.batches" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBatch(batch.BatchId)">
+                                    <tr ng-repeat="batch in model.batches" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBatch(batch.BatchId))">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <td><span ng-bind="batch.Centre.Name"></span></td>

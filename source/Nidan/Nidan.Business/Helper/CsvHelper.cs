@@ -7,6 +7,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 
 
+
 namespace Nidan.Business.Helper
 {
     public static class CsvHelper
@@ -37,7 +38,7 @@ namespace Nidan.Business.Helper
             return stream;
         }
 
-        private static string GetCSV<T>(this IList<T> list)
+        public static string GetCSV<T>(this IList<T> list)
         {
             var sb = new StringBuilder();
 
@@ -69,7 +70,7 @@ namespace Nidan.Business.Helper
                 for (var j = 0; j <= propInfosLength; j++)
                 {
                     var property = item.GetType().GetProperty(propInfos[j].Name);
-                    var o = property.GetValue(item, null);
+                    var o = property.GetValue(item,null);
                     var formatString = property.IsDefined(typeof(DisplayFormatAttribute), false)
                         ? property.GetCustomAttributes(typeof(DisplayFormatAttribute), false).Cast<DisplayFormatAttribute>().Single().DataFormatString
                         : string.Empty;
@@ -94,6 +95,15 @@ namespace Nidan.Business.Helper
                         }
                         sb.Append(value);
                     }
+                    if (o == null)
+                    {
+                        var value = "";
+                        if (value.Contains(","))
+                        {
+                            value = string.Concat("\"", value, "\"");
+                        }
+                        sb.Append(value);
+                    }
                     if (j < propInfos.Length - 1)
                     {
                         sb.Append(",");
@@ -111,10 +121,29 @@ namespace Nidan.Business.Helper
             writer.Write(typeof(T) == typeof(string)
                 ? string.Join("\n", list)
                 : string.Join("\n", list.GetCSV()));
+            byte[] byteArray = Encoding.UTF8.GetBytes(typeof(T) == typeof(string)
+                ? string.Join("\n", list)
+                : string.Join("\n", list.GetCSV()));
+            //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
+            MemoryStream streamTest = new MemoryStream(byteArray);
 
             writer.Flush();
             stream.Position = 0;
             return stream;
         }
+
+        //public static void NullToString<T>(this T myObject) where T : class
+        //{
+        //    PropertyInfo[] properties = typeof(T).GetProperties();
+        //    foreach (var info in properties)
+        //    {
+        //        // if a string and null, set to String.Empty
+        //        if (info.PropertyType == typeof(string) &&
+        //           info.GetValue(myObject, null) == null)
+        //        {
+        //            info.SetValue(myObject, String.Empty, null);
+        //        }
+        //    }
+        //}
     }
 }

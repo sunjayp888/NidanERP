@@ -15,7 +15,7 @@
             searchMobilizationByDate: searchMobilizationByDate,
             //retrieveFollowUpReports: retrieveFollowUpReports,
             searchFollowUpByDate: searchFollowUpByDate,
-            downloadEnquiryCSVByDate: downloadEnquiryCSVByDate
+            downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
             searchAdmissionByDate: searchAdmissionByDate
         };
 

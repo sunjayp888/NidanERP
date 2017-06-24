@@ -7,7 +7,7 @@
 
     ReportController.$inject = ['$window', 'ReportService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal'];
 
-    function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal, $modalInstance) {
+    function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal) {
         /* jshint validthis:true */
         var vm = this;
         vm.reports = [];

@@ -80,7 +80,7 @@
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("Admin"))
+                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
@@ -93,12 +93,23 @@
                                             <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-
                                             <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
                                            
+                                        </ul>
+                                    </li>
+                                }
+                                @if (User.IsInAnyRoles("SuperAdmin", "Admin", "Trainer"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-cogs"></i>Candidate<span class="fa fa-chevron-up"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
+                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
+                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
+                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
                                         </ul>
                                     </li>
                                 }
