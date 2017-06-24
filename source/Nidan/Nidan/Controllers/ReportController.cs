@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business;
+using Nidan.Business.Dto;
+using Nidan.Business.Helper;
 using Nidan.Business.Interfaces;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -45,7 +47,8 @@ namespace Nidan.Controllers
         public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin|| p.CentreId==UserCentreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -63,6 +66,20 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsSuperAdmin();
             var data = NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
+        }
+
+        public ActionResult DownloadEnquiryCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var data =
+                NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate &&
+                        p.CreatedDate <= toDate).Items.ToList();
+
+            //var output = DataHelper.ToDataTable(data);
+            return File(data.ToList().ToCsvStream(), "text/csv", string.Format("{0}_EnquiryReport-{1:yyyy-MM-dd-hh-mm-ss}.csv", centre.Name, DateTime.Now));
         }
     }
 }

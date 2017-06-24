@@ -25,6 +25,7 @@
         vm.searchMobilizationByDate = searchMobilizationByDate;
         //vm.retrieveFollowUpReports = retrieveFollowUpReports;
         vm.searchFollowUpByDate = searchFollowUpByDate;
+        vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -155,6 +156,10 @@
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
         }
     }
 
