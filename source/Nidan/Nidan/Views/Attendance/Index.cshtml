@@ -1,34 +1,32 @@
 ﻿@using Nidan.Extensions
 @{
-    ViewBag.Title = "Mobilization";
+    ViewBag.Title = "Attendance";
 }
-<div ng-controller="MobilizationController as model">
+
+<div ng-controller="AttendanceController as model">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Mobilizations <small></small>
+                Attendances <small></small>
             </h3>
         </div>
-        <div class="title_right">
+        @*<div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchMobilization(searchField)" class="form-control" placeholder="Search for mobilizer...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchAttendance(searchField)" class="form-control" placeholder="Search for attendance...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchMobilization(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchAttendance(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Mobilization")">
+                <a class="btn btn-app" href="@Url.Action("Create", "Attendance")">
                     <i class="fa fa-user"></i> Create
-                </a>
-                <a class="btn btn-app" href="@Url.Action("Upload", "Mobilization")">
-                    <i class="fa fa-upload"></i> Upload
                 </a>
             </div>
         </div>
@@ -75,7 +73,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchMobilizationByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        <input type="button" ng-click="model.searchAttendanceByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
@@ -86,12 +84,6 @@
         </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            Mobilizations <small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -105,35 +97,28 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                        }
-                                        <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
-                                        <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                        <th ng-click="model.order('InterestedCourseId')" ng-class="model.orderClass('InterestedCourseId')">Interested Course</th>
-                                        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>
-                                        <th ng-click="model.order('GeneratedDate')" ng-class="model.orderClass('GeneratedDate')">Mobilized Date</th>
-                                        <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                        <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="mobilizer in model.mobilizations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewMobilization(mobilizer.MobilizationId)">
-                                            @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
+                                        <tr role="row">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="mobilizer.Centre.Name"></span></td>
+                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <td><span ng-bind="mobilizer.Title"></span> <span ng-bind="mobilizer.FirstName"></span> <span ng-bind="mobilizer.MiddleName"></span> <span ng-bind="mobilizer.LastName"></span></td>
-                                            <td><span ng-bind="mobilizer.Mobile"></span></td>
-                                            <td><span ng-bind="mobilizer.Course.Name"></span></td>
-                                            <td><span ng-bind="mobilizer.Qualification.Name"></span></td>
-                                            <td><span ng-bind="mobilizer.GeneratedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="mobilizer.FollowUpDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="mobilizer.StudentLocation"></span></td>
+                                            <th ng-click="model.order('StudentCode')" ng-class="model.orderClass('StudentCode')">Student Code</th>
+                                            <th ng-click="model.order('InHour')" ng-class="model.orderClass('InHour')">In Time</th>
+                                            <th ng-click="model.order('OutHour')" ng-class="model.orderClass('OutHour')">Out Time</th>
+                                            <th ng-click="model.order('AttendanceDate')" ng-class="model.orderClass('AttendanceDate')">Attendance Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="attendance in model.attendances" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAttendance(attendance.AttendanceId)">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="attendance.Centre.Name"></span></td>
+                                            }
+                                            <td><span ng-bind="attendance.StudentCode"></span></td>
+                                            <td><span ng-bind="attendance.InHour"></span> : <span ng-bind="attendance.InMinute"></span> <span ng-bind="attendance.InTimeSpan"></span></td>
+                                            <td><span ng-bind="attendance.OutHour"></span> : <span ng-bind="attendance.OutMinute"></span> <span ng-bind="attendance.OutTimeSpan"></span></td>
+                                            <td><span ng-bind="attendance.AttendanceDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -143,22 +128,10 @@
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{mobilizer.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Attendance/Edit/{{attendance.AttendanceId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
-
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Create/{{mobilizer.MobilizationId}}">
-                                                                    Create Enquiry
-                                                                </a>
-                                                            </li>
-
-                                                            @*<li >
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.FirstName}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                        Archive
-                                                                    </a>
-                                                                </li>*@
                                                         }
                                                     </ul>
                                                 </div>
@@ -175,23 +148,6 @@
                             <label ng-bind="model.searchMessage"></label>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Confirmation</h2>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" ng-model='model.MobilizationId' />
-                    Are you sure, you want to delete Mobilization <span ng-bind="model.MobilizationName"></span> ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -227,3 +183,7 @@
         });
     </script>
 }
+
+
+
+

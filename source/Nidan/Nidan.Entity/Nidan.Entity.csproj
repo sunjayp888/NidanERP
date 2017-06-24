@@ -88,7 +88,9 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="Attendance.cs" />
     <Compile Include="Batch.cs" />
+    <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />

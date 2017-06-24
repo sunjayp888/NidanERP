@@ -108,7 +108,6 @@
                                         <th ng-click="model.order('FollowUpType')" ng-class="model.orderClass('FollowUpType')">FollowUp Type</th>
                                         @*        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>*@
                                         <th ng-click="model.order('FollowUpDateTime')" ng-class="model.orderClass('FollowUpDateTime')">Follow-Up Date</th>
-                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -124,28 +123,6 @@
                                         <td><span ng-bind="report.Remarks"></span></td>
                                         <td><span ng-bind="report.FollowUpType"></span></td>
                                         <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
-                                                    {
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">
-                                                                Follow-Up
-                                                            </a>
-                                                        </li>
-                                                            @*<li>
-                                        <a style="cursor: pointer;" ng-click="model.markAsReadFollowUp(followUp.FollowUpId)">
-                                            Mark As Read
-                                        </a>
-                                    </li>*@
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

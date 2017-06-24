@@ -296,6 +296,16 @@ namespace Nidan.Data
             }
         }
 
+        public Attendance CreateAttendance(int organisationId, Attendance attendance)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                attendance = context.Attendances.Add(attendance);
+                context.SaveChanges();
+                return attendance;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -2523,6 +2533,45 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Attendances
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Centre)
+                    .Include(p => p.Personnel)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AttendanceId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Attendances
+                    .Include(c => c.Personnel)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.AttendanceId == attendanceId);
+
             }
         }
 

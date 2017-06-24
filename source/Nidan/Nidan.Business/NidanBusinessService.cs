@@ -1310,6 +1310,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<Voucher>(organisationId, voucher);
         }
 
+        public Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance)
+        {
+            return _nidanDataService.Create<Attendance>(organisationId, attendance);
+        }
+
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -2365,6 +2370,22 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRegistrationGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAttendances(organisationId, predicate, orderBy, paging);
+        }
+
+        public Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate)
+        {
+            var attendance = _nidanDataService.RetrieveAttendance(organisationId, attendanceId,p => true);
+            return attendance;
+        }
+
+        public Attendance RetrieveAttendance(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveAttendance(organisationId, id, p => true);
+        }
+
         #endregion
 
         #region // Update
@@ -2881,6 +2902,11 @@ namespace Nidan.Business
             centrePettyCash.CentreId = centreId;
             centrePettyCash.CreatedBy = personnelId;
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centrePettyCash);
+        }
+
+        public Attendance UpdateAttendance(int organisationId, Attendance attendance)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, attendance);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
