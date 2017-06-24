@@ -14,7 +14,8 @@
             //retrieveMobilizationReports: retrieveMobilizationReports,
             searchMobilizationByDate: searchMobilizationByDate,
             //retrieveFollowUpReports: retrieveFollowUpReports,
-            searchFollowUpByDate: searchFollowUpByDate
+            searchFollowUpByDate: searchFollowUpByDate,
+            downloadEnquiryCSVByDate: downloadEnquiryCSVByDate
         };
 
         return service;
@@ -87,6 +88,16 @@
 
             return $http.post(url, data);
         }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadEnquiryCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
 
 
     }
