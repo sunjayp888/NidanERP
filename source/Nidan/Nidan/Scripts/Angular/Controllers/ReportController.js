@@ -26,6 +26,7 @@
         //vm.retrieveFollowUpReports = retrieveFollowUpReports;
         vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.searchAdmissionByDate = searchAdmissionByDate;
+        vm.searchRegistrationByDate = searchRegistrationByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -140,15 +141,21 @@
         //      });
         //}
 
-        //function retrieveReport() {
-        //    return ReportService.retrieveReport(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.reports = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.reports;
-        //        });
-        //}
+        function searchRegistrationByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "RegistrationDate";
+            vm.orderBy.class = "asc";
+            order("RegistrationDate");
+            return ReportService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
 
         function pageChanged() {
             vm.fromDate = $("#txt_FromDate").val();
@@ -165,6 +172,9 @@
             }
             if (path[2] == "Admission") {
                 searchAdmissionByDate(vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "Registration") {
+                searchRegistrationByDate(vm.fromDate, vm.toDate);
             }
         }
 

@@ -15,7 +15,8 @@
             searchMobilizationByDate: searchMobilizationByDate,
             //retrieveFollowUpReports: retrieveFollowUpReports,
             searchFollowUpByDate: searchFollowUpByDate,
-            searchAdmissionByDate: searchAdmissionByDate
+            searchAdmissionByDate: searchAdmissionByDate,
+            searchRegistrationByDate: searchRegistrationByDate
         };
 
         return service;
@@ -91,6 +92,18 @@
 
         function searchAdmissionByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchAdmissionByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchRegistrationByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchRegistrationByDate",
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,

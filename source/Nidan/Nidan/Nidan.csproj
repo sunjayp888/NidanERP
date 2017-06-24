@@ -1606,6 +1606,7 @@
     <Content Include="Views\Report\FollowUp.cshtml" />
     <Content Include="Views\Admission\_AdmissionDocument.cshtml" />
     <Content Include="Views\Report\Admission.cshtml" />
+    <Content Include="Views\Report\Registration.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

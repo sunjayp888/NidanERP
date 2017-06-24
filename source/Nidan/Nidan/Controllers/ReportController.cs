@@ -46,6 +46,11 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        public ActionResult Registration()
+        {
+            return View(new BaseViewModel());
+        }
+
         [HttpPost]
         public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
@@ -75,6 +80,14 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var data = NidanBusinessService.RetrieveAdmissionGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate && p.AdmissionDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchRegistrationByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,p =>(isSuperAdmin || p.CentreId == UserCentreId) && p.RegistrationDate >= fromDate && p.RegistrationDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
     }
