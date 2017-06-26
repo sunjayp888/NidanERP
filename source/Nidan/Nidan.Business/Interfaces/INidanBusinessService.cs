@@ -55,6 +55,7 @@ namespace Nidan.Business.Interfaces
         OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee);
         CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
         Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher);
+        Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -228,6 +229,9 @@ namespace Nidan.Business.Interfaces
         Voucher RetrieveVoucher(int organisationId, int centreId, int voucherId, Expression<Func<Voucher, bool>> predicate);
         PagedResult<VoucherGrid> RetrieveVoucherGrids(int organisationId, int centreId, Expression<Func<VoucherGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<RegistrationGrid> RetrieveRegistrationGrid(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate);
+        Attendance RetrieveAttendance(int organisationId, int id);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -257,6 +261,7 @@ namespace Nidan.Business.Interfaces
         ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
         CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
+        Attendance UpdateAttendance(int organisationId, Attendance attendance);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

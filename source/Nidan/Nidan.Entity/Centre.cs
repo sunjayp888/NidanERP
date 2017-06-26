@@ -43,6 +43,8 @@ namespace Nidan.Entity
             OtherFees=new HashSet<OtherFee>();
             CentrePettyCashs=new HashSet<CentrePettyCash>();
             Vouchers=new HashSet<Voucher>();
+            Attendances = new HashSet<Attendance>();
+            BatchAttendances = new HashSet<BatchAttendance>();
         }
 
         public int CentreId { get; set; }
@@ -174,5 +176,11 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Voucher> Vouchers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attendance> Attendances { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
     }
 }

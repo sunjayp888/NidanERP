@@ -107,7 +107,6 @@
                                     <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
                                     <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                     <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
-                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -124,29 +123,6 @@
                                     <td><span ng-bind="report.CreatedDate|date : format : shortDate"></span></td>
                                     <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
                                     <td><span ng-bind="report.StudentLocation"></span></td>
-                                    <td>
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                <i class="fa fa-chevron-down"></i>
-                                            </a>
-                                            <ul class="dropdown-menu slidedown">
-                                                @if (User.IsInAnyRoles("Admin"))
-                                                {
-                                                    @*<li>
-                                                        <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{mobilizer.MobilizationId}}">
-                                                            Edit
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a style="cursor: pointer;" ng-href="/Enquiry/Create/{{mobilizer.MobilizationId}}">
-                                                            Create Enquiry
-                                                        </a>
-                                                    </li>*@
-                                                }
-                                            </ul>
-                                        </div>
-                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
