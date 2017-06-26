@@ -46,7 +46,7 @@ namespace Nidan.Data.Interfaces
         Counselling CreateCounselling(int organisationId, Counselling counselling);
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         Module CreateModule(int organisationId, Module module);
-
+        Attendance CreateAttendance(int organisationId, Attendance attendance);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -167,6 +167,8 @@ namespace Nidan.Data.Interfaces
         Expense RetrieveExpense(int organisationId, int centreId, int expenseId, Expression<Func<Expense, bool>> predicate);
         IEnumerable<ExpenseProject> RetrieveExpenseProjects(int organisationId, int centreId, int expenseId);
         CentreVoucherNumber RetrieveCentreVoucherNumber(int organisationId, int centreId, Expression<Func<CentreVoucherNumber, bool>> predicate);
+        PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate);
 
         // Update
 

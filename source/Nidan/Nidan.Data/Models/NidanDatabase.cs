@@ -111,6 +111,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<CentreVoucherNumber> CentreVoucherNumbers { get; set; }
         public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
+        public virtual DbSet<Attendance> Attendances { get; set; }
+        public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1802,6 +1805,26 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Expense>()
                 .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.InTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.OutTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.Topic)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

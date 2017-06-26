@@ -112,7 +112,6 @@
                                         <th ng-click="model.order('EnquiryDate')" ng-class="model.orderClass('EnquiryDate')">Enquiry Date</th>
                                         <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                         @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
-                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -136,35 +135,6 @@
                                         <td><span ng-bind="report.EnquiryDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
                                         @*<td><span ng-bind="enquiry.Close"></span></td>*@
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
-                                                    {
-                                                        @*<li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
-                                                                Edit
-                                                            </a>
-                                                        </li>
-
-                                                        <li ng-if="!enquiry.IsCounsellingDone">
-                                                            <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
-                                                                Create Counselling
-                                                            </a>
-                                                        </li>
-
-                                                        <li ng-if="!enquiry.IsRegistrationDone">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
-                                                                Create Registration
-                                                            </a>
-                                                        </li>*@
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
