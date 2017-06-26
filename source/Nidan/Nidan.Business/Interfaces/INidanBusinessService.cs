@@ -58,6 +58,7 @@ namespace Nidan.Business.Interfaces
         Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher);
         ExpenseProject CreateExpenseProject(int organisationId, ExpenseProject expenseProject);
         Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
+        BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -238,6 +239,10 @@ namespace Nidan.Business.Interfaces
         PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate);
         Attendance RetrieveAttendance(int organisationId, int id);
+        PagedResult<BatchAttendance> RetrieveBatchAttendances(int organisationId, Expression<Func<BatchAttendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchAttendance RetrieveBatchAttendance(int organisationId, int batchAttendanceId, Expression<Func<BatchAttendance, bool>> predicate);
+        BatchAttendance RetrieveBatchAttendance(int organisationId, int id);
+        PagedResult<AttendanceGrid> RetrieveAttendanceGrid(int organisationId, Expression<Func<AttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -269,6 +274,7 @@ namespace Nidan.Business.Interfaces
         Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds);
         CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
         Attendance UpdateAttendance(int organisationId, Attendance attendance);
+        BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

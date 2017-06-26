@@ -47,6 +47,7 @@ namespace Nidan.Data.Interfaces
         CandidateFee CreateCandidateFee(int organisationId, CandidateFee candidateFee);
         Module CreateModule(int organisationId, Module module);
         Attendance CreateAttendance(int organisationId, Attendance attendance);
+        BatchAttendance CreateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -169,6 +170,9 @@ namespace Nidan.Data.Interfaces
         CentreVoucherNumber RetrieveCentreVoucherNumber(int organisationId, int centreId, Expression<Func<CentreVoucherNumber, bool>> predicate);
         PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate);
+        PagedResult<BatchAttendance> RetrieveBatchAttendances(int organisationId, Expression<Func<BatchAttendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchAttendance RetrieveBatchAttendance(int organisationId, int batchattendanceId, Expression<Func<BatchAttendance, bool>> predicate);
+        PagedResult<AttendanceGrid> RetrieveAttendanceGrid(int organisationId, Expression<Func<AttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
 

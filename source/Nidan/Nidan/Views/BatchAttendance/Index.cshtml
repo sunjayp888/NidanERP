@@ -1,0 +1,17 @@
+﻿@using Nidan.Extensions
+
+@{
+    ViewBag.Title = "Index";
+}
+<div ng-controller="CourseController as model">
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-app" href="@Url.Action("Create", "BatchAttendance")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+</div>
