@@ -17,6 +17,7 @@ namespace Nidan.Entity
             Admissions=new HashSet<Admission>();
             CandidateFees = new HashSet<CandidateFee>();
             OtherFees=new HashSet<OtherFee>();
+            Expenses=new HashSet<Expense>();
             BatchAttendances = new HashSet<BatchAttendance>();
         }
 
@@ -125,6 +126,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OtherFee> OtherFees { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Expense> Expenses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }

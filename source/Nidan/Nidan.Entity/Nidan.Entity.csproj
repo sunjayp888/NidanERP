@@ -109,6 +109,7 @@
     <Compile Include="CentrePettyCash.cs" />
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
+    <Compile Include="CentreVoucherNumber.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
@@ -136,7 +137,9 @@
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
     <Compile Include="EventQuestion.cs" />
+    <Compile Include="Expense.cs" />
     <Compile Include="ExpenseHeader.cs" />
+    <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />

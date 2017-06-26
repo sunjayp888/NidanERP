@@ -53,8 +53,10 @@ namespace Nidan.Business.Interfaces
         ExpenseHeader CreateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission);
         OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee);
+        Expense CreateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds);
         CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
         Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher);
+        ExpenseProject CreateExpenseProject(int organisationId, ExpenseProject expenseProject);
         Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
 
         // Retrieve
@@ -216,6 +218,9 @@ namespace Nidan.Business.Interfaces
         ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
         PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate);
+        PagedResult<Expense> RetrieveExpenses(int organisationId, int centreId, Expression<Func<Expense, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Expense RetrieveExpense(int organisationId, int centreId, int expenseId, Expression<Func<Expense, bool>> predicate);
+        IEnumerable<ExpenseProject> RetrieveExpenseProjects(int organisationId, int centreId, int expenseId);
         List<Project> RetrieveProjects(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
         PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
@@ -229,6 +234,7 @@ namespace Nidan.Business.Interfaces
         Voucher RetrieveVoucher(int organisationId, int centreId, int voucherId, Expression<Func<Voucher, bool>> predicate);
         PagedResult<VoucherGrid> RetrieveVoucherGrids(int organisationId, int centreId, Expression<Func<VoucherGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<RegistrationGrid> RetrieveRegistrationGrid(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreVoucherNumber RetrieveCentreVoucherNumber(int organisationId, int centreId, Expression<Func<CentreVoucherNumber, bool>> predicate);
         PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate);
         Attendance RetrieveAttendance(int organisationId, int id);
@@ -260,6 +266,7 @@ namespace Nidan.Business.Interfaces
         Module UpdateModule(int organisationId, Module module);
         ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
+        Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds);
         CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
         Attendance UpdateAttendance(int organisationId, Attendance attendance);
 
@@ -277,6 +284,7 @@ namespace Nidan.Business.Interfaces
         void DeleteCentreSector(int organisationId, int centreId, int sectorId);
         void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
+        void DeleteExpenseProject(int organisationId, int expenseId, int projectId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);
@@ -289,5 +297,6 @@ namespace Nidan.Business.Interfaces
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
         byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission);
         byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees);
+        byte[] CreateExpenseBytes(int organisationId, int centreId, List<Expense> expenses);
     }
 }
