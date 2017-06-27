@@ -2609,6 +2609,7 @@ namespace Nidan.Data
                 return context
                     .Expenses
                     .Include(e=>e.ExpenseProjects)
+                    .Include(e => e.Centre)
                     .Include(e => e.ExpenseHeader)
                     .AsNoTracking()
                     .Where(predicate)

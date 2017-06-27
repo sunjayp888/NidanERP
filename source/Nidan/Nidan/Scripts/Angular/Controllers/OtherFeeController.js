@@ -49,7 +49,7 @@
             vm.orderBy.property = "CreatedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
-            vm.cashMemo = cashMemo == undefined ? $("#CashMemo").val() : cashMemo;
+            vm.cashMemo = cashMemo == undefined ? $("#Expense_CashMemoNumbers").val() : cashMemo;
             return OtherFeeService.retrieveOtherFeesByCashMemo(vm.cashMemo, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.otherFees = response.data.Items;

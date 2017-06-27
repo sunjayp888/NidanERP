@@ -11,7 +11,6 @@ namespace Nidan.Entity
     {
         public int ExpenseId { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string VoucherNumber { get; set; }
 

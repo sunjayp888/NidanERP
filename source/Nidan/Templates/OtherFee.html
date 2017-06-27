@@ -83,10 +83,12 @@
     <div class="PayslipBox">
 	<table border="0" width="100%">
 		<tr>
-			<td style="float : left">
+			<td>
                 <b>Cash Memo No. : @Model.CashMemo</b>
             </td>
-            <td style="float : right">
+		</tr>
+		<tr>
+            <td>
                 <b>Paid To : @Model.PaidTo</b>
             </td>
 		</tr>
@@ -95,22 +97,15 @@
 		<tr>
 			<th>Project</th>
 			<th>Expense Head</th>
-			<th>Unit</th>
-			<th>Rate</th>
 			<th>Debit Amount (Rs.)</th>
 		</tr>
-		@foreach(var item in Model.OtherFeeReceipts)
-		{
-			<tr>
-				<td>@item.Project</td>
-				<td>@item.ExpenseHeader</td>
-				<td>@item.Unit</td>
-				<td>@item.Rate</td>
-				<td>@item.DebitAmount</td>
-			</tr>
-		}
 		<tr>
-			<td colspan="3"></td>
+			<td>@Model.Project</td>
+			<td>@Model.ExpenseHeader</td>
+			<td>@Model.DebitAmount</td>
+		</tr>
+		<tr>
+			<td colspan="1"></td>
 			<td><b>Total Debit Amount :</b></td>
 			<td><b>@Model.TotalDebitAmount</b></td>
 		</tr>
@@ -118,11 +113,7 @@
 			<td colspan="5"><b>Rupees In Words : @Model.RupeesInWords</b></td>
 		</tr>
 		<tr>
-			<td colspan="5">Particulars :
-				@foreach(var otheritem in Model.OtherFeeReceipts)
-				{
-					@otheritem.Description
-				}
+			<td colspan="5">Particulars : @Model.Particulars
 			</td>
 		</tr>
     </table>
