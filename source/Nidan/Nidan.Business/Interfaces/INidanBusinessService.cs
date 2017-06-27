@@ -275,6 +275,7 @@ namespace Nidan.Business.Interfaces
         CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
         Attendance UpdateAttendance(int organisationId, Attendance attendance);
         BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
+        CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

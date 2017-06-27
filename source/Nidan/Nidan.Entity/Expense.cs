@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("Expense")]
     public partial class Expense
     {
+        public Expense()
+        {
+            ExpenseProjects=new HashSet<ExpenseProject>();
+        }
         public int ExpenseId { get; set; }
 
         [StringLength(500)]
@@ -35,6 +39,7 @@ namespace Nidan.Entity
         public string PaidTo { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Particulars { get; set; }
 
         public int PaymentModeId { get; set; }

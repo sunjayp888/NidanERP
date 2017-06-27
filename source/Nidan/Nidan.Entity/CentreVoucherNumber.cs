@@ -9,19 +9,13 @@ namespace Nidan.Entity
     [Table("CentreVoucherNumber")]
     public partial class CentreVoucherNumber
     {
-        [Key]
-        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreVoucherNumberId { get; set; }
+
         public int CentreId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Number { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         public virtual Centre Centre { get; set; }
