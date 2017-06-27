@@ -1844,6 +1844,14 @@ namespace Nidan.Data.Models
                 .Property(e => e.OutTime)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+               .Property(e => e.Topic)
+               .IsUnicode(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

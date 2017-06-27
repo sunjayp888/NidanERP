@@ -1623,6 +1623,9 @@
     <Content Include="Views\Attendance\Create.cshtml" />
     <Content Include="Views\Attendance\_Attendance.cshtml" />
     <Content Include="Views\BatchAttendance\Index.cshtml" />
+    <Content Include="Views\BatchAttendance\Create.cshtml" />
+    <Content Include="Views\BatchAttendance\_AttendanceDataGrid.cshtml" />
+    <Content Include="Views\BatchAttendance\_Attendance.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

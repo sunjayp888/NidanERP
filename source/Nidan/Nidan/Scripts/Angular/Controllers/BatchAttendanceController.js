@@ -22,12 +22,14 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.batches = [];
-        vm.retrieveBatches = retrieveBatches;
+        //vm.retrieveBatches = retrieveBatches;
         vm.subjects = [];
         vm.retrieveSubjects = retrieveSubjects;
         vm.sessions = [];
         vm.retrieveSessions = retrieveSessions;
-        initialise();
+        vm.retrieveBatchAttendancesByBatchId = retrieveBatchAttendancesByBatchId;
+        vm.type = "";
+        vm.initialise = initialise;
 
         function initialise() {
             vm.orderBy.property = "BatchAttendanceId";
@@ -38,12 +40,25 @@
 
         function retrieveBatchAttendances() {
             return BatchAttendanceService.retrieveBatchAttendances(vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.batchAttendances = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    return vm.batchAttendances;
-                });
+                    .then(function (response) {
+                        vm.batchAttendances = response.data.Items;
+                        vm.paging.totalPages = response.data.TotalPages;
+                        vm.paging.totalResults = response.data.TotalResults;
+                        return vm.batchAttendances;
+                    });
+        }
+
+        function retrieveBatchAttendancesByBatchId() {
+            vm.orderBy.property = "StudentCode";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
+                    .then(function (response) {
+                        vm.batchAttendances = response.data.Items;
+                        vm.paging.totalPages = response.data.TotalPages;
+                        vm.paging.totalResults = response.data.TotalResults;
+                        return vm.batchAttendances;
+                    });
         }
 
         function searchBatchAttendance(searchKeyword) {
@@ -75,8 +90,8 @@
             $window.location.href = "/BatchAttendance/Edit/" + id;
         }
 
-        function viewBatchAttendance(batchAttendanceId) {
-            $window.location.href = "/BatchAttendance/Edit/" + batchAttendanceId;
+        function viewBatchAttendance(batchId) {
+            $window.location.href = "/BatchAttendance/AttendanceList/" + batchId;
         }
 
         function retrieveSessions(subjectId) {
