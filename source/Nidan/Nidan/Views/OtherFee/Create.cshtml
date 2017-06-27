@@ -41,7 +41,7 @@
                                     {
                                         <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
 
-                                        <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
+                                        <a href="@Url.Action("Download", new { id = Model.Expense.ExpenseId })" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
                                     }
@@ -60,10 +60,10 @@
     <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
         @Html.Partial("_OtherFeeDocument")
     </div>
-    @Html.HiddenFor(m => m.CashMemo)
+    @*@Html.HiddenFor(m => m.CashMemo)
     <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
         @Html.Partial("_Expenses")
-    </div>
+    </div>*@
 }
 
 <div>
@@ -73,33 +73,16 @@
 </div>
 @section scripts {
     <script>
-        $('#OtherFee_DebitAmount').val("");
-        $('#OtherFee_Project').val("");
-        $('#OtherFee_Unit').val("");
-        $('#OtherFee_Rate').val("");
-        $('#OtherFee_Description').val("");
-        $('#OtherFee_RupeesInWord').val("");
+        $('#Expense_DebitAmount').val("");
+        $('#Expense_RupeesInWord').val("");
         $('#OtherFee_Particulars').val("");
-        $('#OtherFee_Rate').keyup(function () {
-            var unit = $('#OtherFee_Unit').val();
-            var rate = $('#OtherFee_Rate').val();
-            var amount = unit * rate;
-            $('#OtherFee_DebitAmount').val(amount);
-            numberToWords();
-        });
-        $('#OtherFee_Unit').keyup(function () {
-            var unit = $('#OtherFee_Unit').val();
-            var rate = $('#OtherFee_Rate').val();
-            if (unit != 0 || rate != 0) {
-                var amount = unit * rate;
-                $('#OtherFee_DebitAmount').val(amount);
-                numberToWords();
-            }
 
+        $('#Expense_DebitAmount').keyup(function() {
+            numberToWords();
         });
 
         function numberToWords() {
-            var inputNumber = $('#OtherFee_DebitAmount').val();
+            var inputNumber = $('#Expense_DebitAmount').val();
             var str = new String(inputNumber);
             var splt = str.split("");
             var rev = splt.reverse();
@@ -208,25 +191,25 @@
             for (i = 0; i < numLength; i++) {
                 finalOutput = finalOutput + word[i];
             }
-            $('#OtherFee_RupeesInWord').val(finalOutput + " Rupees Only");
+            $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
         };
 
-        $(document)
-            .ready(function () {
-                var cashmemo = $('#OtherFee_CashMemo').val();
-                var paidTo = $('#OtherFee_PaidTo').val();
-                var project = $('#txt_project').val();
-                if (cashmemo != "" && paidTo != "") {
-                    $('#OtherFee_CashMemo').attr('readonly', true);
-                    $('#OtherFee_PaidTo').attr('readonly', true);
+        //$(document)
+        //    .ready(function () {
+        //        var cashmemo = $('#OtherFee_CashMemo').val();
+        //        var paidTo = $('#OtherFee_PaidTo').val();
+        //        var project = $('#txt_project').val();
+        //        if (cashmemo != "" && paidTo != "") {
+        //            $('#OtherFee_CashMemo').attr('readonly', true);
+        //            $('#OtherFee_PaidTo').attr('readonly', true);
 
-                } else {
-                    $('#OtherFee_CashMemo').attr('readonly', false);
-                    $('#OtherFee_PaidTo').attr('readonly', false);
+        //        } else {
+        //            $('#OtherFee_CashMemo').attr('readonly', false);
+        //            $('#OtherFee_PaidTo').attr('readonly', false);
 
-                }
+        //        }
 
-            });
+        //    });
 
     </script>
 }

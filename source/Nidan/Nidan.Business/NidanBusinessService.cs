@@ -3313,9 +3313,29 @@ namespace Nidan.Business
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
         }
 
-        public byte[] CreateExpenseBytes(int organisationId, int centreId, List<Expense> expenses)
+        public byte[] CreateExpenseBytes(int organisationId, int centreId, Expense expense)
         {
-            throw new NotImplementedException();
+            var otherFee = new OtherFeeReceipt();
+            var projectIds = expense.ExpenseProjects.Select(e => e.ProjectId);
+            var projectName = "";
+            foreach (var projectId in projectIds)
+            {
+                var projectData = RetrieveProject(organisationId, projectId, e => true);
+                projectName = projectName=="" ? projectData.Name : projectName + " " + projectData.Name; ;
+            }
+            otherFee.CentreName = expense.Centre.Name;
+            otherFee.VoucherCreatedDate = expense.CreatedDate.ToShortDateString();
+            otherFee.VoucherNumber = expense.VoucherNumber;
+            otherFee.CashMemo = expense.CashMemoNumbers;
+            otherFee.PaidTo = expense.PaidTo;
+            otherFee.Project = projectName;
+            otherFee.ExpenseHeader = expense.ExpenseHeader.Name;
+            otherFee.DebitAmount = expense.DebitAmount;
+            otherFee.TotalDebitAmount = expense.DebitAmount;
+            otherFee.RupeesInWords = expense.RupeesInWord;
+            otherFee.Particulars = expense.Particulars;
+            var expenseData = otherFee;
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFee), "OtherFee");
         }
 
         //RupeesInWords

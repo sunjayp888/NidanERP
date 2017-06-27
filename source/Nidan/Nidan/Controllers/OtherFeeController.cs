@@ -98,8 +98,10 @@ namespace Nidan.Controllers
             var viewModel = new OtherFeeViewModel
             {
                 Expense = expense,
+                CashMemo = expense.CashMemoNumbers,
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
-                Projects = new SelectList(project, "ProjectId", "Name")
+                Projects = new SelectList(project, "ProjectId", "Name"),
+                SelectedProjectIds = expense?.ExpenseProjects.Select(e => e.ProjectId).ToList()
             };
             return View(viewModel);
         }
@@ -118,7 +120,7 @@ namespace Nidan.Controllers
                 otherFeeViewModel.Expense.CentreId = centreId;
                 otherFeeViewModel.Expense.PersonnelId = personnelId;
                 otherFeeViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.Expense = NidanBusinessService.UpdateExpense(organisationId, centreId, otherFeeViewModel.Expense,otherFeeViewModel.SelectedProjectIds);
+                otherFeeViewModel.Expense = NidanBusinessService.UpdateExpense(organisationId, centreId, otherFeeViewModel.Expense, otherFeeViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
             var viewModel = new OtherFeeViewModel
@@ -145,11 +147,11 @@ namespace Nidan.Controllers
 
         }
 
-        public ActionResult Download(string id)
+        public ActionResult Download(int? id)
         {
-            var otherFee = NidanBusinessService.RetrieveOtherFees(UserOrganisationId, UserCentreId, e=>e.CashMemo==id).Items.ToList();
-            var data = NidanBusinessService.CreateOtherFeeBytes(UserOrganisationId, UserCentreId, otherFee);
-            var voucherNumber = otherFee.FirstOrDefault()?.Voucher.VoucherNumber;
+            var expense = NidanBusinessService.RetrieveExpense(UserOrganisationId, UserCentreId, id.Value, e => true);
+            var data = NidanBusinessService.CreateExpenseBytes(UserOrganisationId, UserCentreId, expense);
+            var voucherNumber = expense.VoucherNumber;
             return File(data, ".pdf", string.Format("{0} Other Fee.pdf", voucherNumber));
         }
     }
