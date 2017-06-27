@@ -1354,6 +1354,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<Attendance>(organisationId, attendance);
         }
 
+        public BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance)
+        {
+            return _nidanDataService.Create<BatchAttendance>(organisationId, batchAttendance);
+        }
+
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -2446,6 +2451,27 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveAttendance(organisationId, id, p => true);
         }
 
+        public PagedResult<BatchAttendance> RetrieveBatchAttendances(int organisationId, Expression<Func<BatchAttendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchAttendances(organisationId, predicate, orderBy, paging);
+        }
+
+        public BatchAttendance RetrieveBatchAttendance(int organisationId, int batchAttendanceId, Expression<Func<BatchAttendance, bool>> predicate)
+        {
+            var batchAttendance = _nidanDataService.RetrieveBatchAttendance(organisationId, batchAttendanceId, p => true);
+            return batchAttendance;
+        }
+
+        public BatchAttendance RetrieveBatchAttendance(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveBatchAttendance(organisationId, id, p => true);
+        }
+
+        public PagedResult<AttendanceGrid> RetrieveAttendanceGrid(int organisationId, Expression<Func<AttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAttendanceGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -2974,6 +3000,11 @@ namespace Nidan.Business
         public Attendance UpdateAttendance(int organisationId, Attendance attendance)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, attendance);
+        }
+
+        public BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchAttendance);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

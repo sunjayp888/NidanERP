@@ -113,6 +113,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
+        public virtual DbSet<AttendanceGrid> AttendanceGrids { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -1825,6 +1826,22 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<BatchAttendance>()
                 .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.InTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.OutTime)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
