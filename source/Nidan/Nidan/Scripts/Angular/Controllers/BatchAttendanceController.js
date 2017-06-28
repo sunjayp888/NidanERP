@@ -49,7 +49,7 @@
         }
 
         function retrieveBatchAttendancesByBatchId() {
-            vm.orderBy.property = "StudentCode";
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
