@@ -98,7 +98,7 @@
         };
 
         function viewMobilization(mobilizationId) {
-            $window.location.href = "/Mobilization/Edit/" + mobilizationId;
+            $window.location.href = "/Mobilization/View/" + mobilizationId;
         }
 
     }
