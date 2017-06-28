@@ -1,0 +1,71 @@
+﻿@using Nidan.Extensions
+
+<div ng-controller="BatchAttendanceController as model">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            FollowUps <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped jambo_table bulk_action">
+                                        <thead>
+                                        <tr role="row">
+                                            <th>
+                                                <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" id="check-all" class="flat" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                            </th>
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                            }
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('InTime')" ng-class="model.orderClass('InTime')">In Time</th>
+                                            <th ng-click="model.order('OutTime')" ng-class="model.orderClass('OutTime')">Out Time</th>
+                                            <th ng-click="model.order('Topic')" ng-class="model.orderClass('Topic')">Topic</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="batchAttendance in model.batchAttendances" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td class="a-center ">
+                                                <div class="icheckbox_flat-green" style="position: relative;"><input type="checkbox" class="flat" name="table_records" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                            </td>
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="batchAttendance.CentreName"></span></td>
+                                            }
+                                            <td><span ng-bind="batchAttendance.CandidateName"></span></td>
+                                            <td><span ng-bind="batchAttendance.InTime"></span></td>
+                                            <td><span ng-bind="batchAttendance.OutTime"></span></td>
+                                            <td><span ng-bind="batchAttendance.Topic"></span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,5 +27,18 @@ namespace Nidan.Entity
 
         [StringLength(114)]
         public string OutTime { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreId { get; set; }
+
+        [StringLength(500)]
+        public string Topic { get; set; }
     }
 }

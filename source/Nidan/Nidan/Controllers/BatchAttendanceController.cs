@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
+using Nidan.Entity.Dto;
+using Nidan.Extensions;
 using Nidan.Models;
 
 namespace Nidan.Controllers
@@ -34,7 +36,12 @@ namespace Nidan.Controllers
             var viewModel = new BatchAttendanceViewModel
             {
                 BatchAttendance = new BatchAttendance(),
+                Batches = new SelectList(batch, "BatchId", "Name"),
+                Subjects = new SelectList(subject, "SubjectId", "Name"),
+                Sessions = new SelectList(session, "SessionId", "Name")
             };
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -60,5 +67,14 @@ namespace Nidan.Controllers
             }
             return View(batchAttendanceViewModel);
         }
+
+        [HttpPost]
+        public ActionResult AttendanceList(int batchId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }
+
