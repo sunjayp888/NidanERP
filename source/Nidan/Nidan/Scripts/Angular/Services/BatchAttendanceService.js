@@ -10,7 +10,8 @@
     function BatchAttendanceService($http) {
         var service = {
             retrieveBatchAttendances: retrieveBatchAttendances,
-            searchBatchAttendance: searchBatchAttendance
+            searchBatchAttendance: searchBatchAttendance,
+            retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId
         };
 
         return service;
@@ -19,6 +20,18 @@
 
             var url = "/BatchAttendance/AttendanceList",
                 data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveBatchAttendancesByBatchId(batchId, Paging, OrderBy) {
+
+            var url = "/BatchAttendance/AttendanceList",
+                data = {
+                    batchId: batchId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
