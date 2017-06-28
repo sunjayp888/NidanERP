@@ -1300,7 +1300,7 @@ namespace Nidan.Business
         {
             var centre = RetrieveCentre(organisationId, centreId);
             var centreVoucherNumber = RetrieveCentreVoucherNumber(organisationId, centreId, e => true);
-            expense.VoucherNumber=String.Format("{0}/{1}/{2}",centre.Name,DateTime.UtcNow.ToString("MMMM"),centreVoucherNumber.Number);
+            expense.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"), centreVoucherNumber.Number);
             var data = _nidanDataService.Create<Expense>(organisationId, expense);
             CreateExpenseProject(organisationId, expense.CentreId, data.ExpenseId, projectIds);
             centreVoucherNumber.Number = centreVoucherNumber.Number + 1;
@@ -1347,7 +1347,7 @@ namespace Nidan.Business
             }
             if (expenseProjectList.Any())
                 _nidanDataService.Create<ExpenseProject>(organisationId, expenseProjectList);
-         }
+        }
 
         public Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance)
         {
@@ -2442,7 +2442,7 @@ namespace Nidan.Business
 
         public Attendance RetrieveAttendance(int organisationId, int attendanceId, Expression<Func<Attendance, bool>> predicate)
         {
-            var attendance = _nidanDataService.RetrieveAttendance(organisationId, attendanceId,p => true);
+            var attendance = _nidanDataService.RetrieveAttendance(organisationId, attendanceId, p => true);
             return attendance;
         }
 
@@ -3007,6 +3007,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchAttendance);
         }
 
+        public CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreVoucherNumber);
+        }
+
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
@@ -3352,7 +3357,7 @@ namespace Nidan.Business
             foreach (var projectId in projectIds)
             {
                 var projectData = RetrieveProject(organisationId, projectId, e => true);
-                projectName = projectName=="" ? projectData.Name : projectName + " " + projectData.Name; ;
+                projectName = projectName == "" ? projectData.Name : projectName + " " + projectData.Name; ;
             }
             otherFee.CentreName = expense.Centre.Name;
             otherFee.VoucherCreatedDate = expense.CreatedDate.ToShortDateString();

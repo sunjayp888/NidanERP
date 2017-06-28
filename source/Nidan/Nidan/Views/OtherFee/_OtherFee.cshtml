@@ -19,7 +19,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Expense.ExpenseHeaderId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Expense.ExpenseHeaderId, "Expense Head", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Expense.ExpenseHeaderId, "", new { @class = "help-block" })
@@ -27,7 +27,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Expense.CashMemoNumbers, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Expense.CashMemoNumbers, "Cash Memo Numbers", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Expense.CashMemoNumbers, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Expense.CashMemoNumbers, "", new { @class = "help-block" })
@@ -35,7 +35,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Expense.DebitAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Expense.DebitAmount, "Debit Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12"})
         @Html.ValidationMessageFor(model => model.Expense.DebitAmount, "", new { @class = "help-block" })
@@ -43,7 +43,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Expense.RupeesInWord, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Expense.RupeesInWord, "Rupees In Word", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Expense.RupeesInWord, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
         @Html.ValidationMessageFor(model => model.Expense.RupeesInWord, "", new { @class = "help-block" })
@@ -51,7 +51,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Expense.PaidTo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Expense.PaidTo, "Paid To", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.Expense.PaidTo, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Expense.PaidTo, "", new { @class = "help-block" })
@@ -61,7 +61,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.Expense.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Expense.Particulars, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.EditorFor(model => model.Expense.Particulars, new { @class = "form-control col-md-7 col-xs-12 multi-line-text-area required" })
         @Html.ValidationMessageFor(model => model.Expense.Particulars, "", new { @class = "help-block" })
     </div>
 </div>

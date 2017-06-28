@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Project")]
     public partial class Project
     {
+        public Project()
+        {
+            OtherFees=new HashSet<OtherFee>();
+            ExpenseProjects=new HashSet<ExpenseProject>();
+        }
         public int ProjectId { get; set; }
 
         [Required]

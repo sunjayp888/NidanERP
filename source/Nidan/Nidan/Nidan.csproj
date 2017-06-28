@@ -1259,7 +1259,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
-    <Folder Include="Views\ExpenseProject\" />
     <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>
@@ -1623,6 +1622,7 @@
     <Content Include="Views\Attendance\Create.cshtml" />
     <Content Include="Views\Attendance\_Attendance.cshtml" />
     <Content Include="Views\BatchAttendance\Index.cshtml" />
+    <Content Include="Views\ExpenseProject\_ExpenseProject.cshtml" />
     <Content Include="Views\BatchAttendance\Create.cshtml" />
     <Content Include="Views\BatchAttendance\_AttendanceDataGrid.cshtml" />
     <Content Include="Views\BatchAttendance\_Attendance.cshtml" />
