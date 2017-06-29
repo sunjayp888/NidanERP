@@ -14,6 +14,8 @@ namespace Nidan.Models
     public class EnquiryViewModel : BaseViewModel
     {
         public Enquiry Enquiry { get; set; }
+        public List<string>CourseNames { get; set; }
+        public EnquiryDataGrid EnquiryDataGrid { get; set; }
         public SelectList EducationalQualifications { get; set; }
         public SelectList Occupations { get; set; }
         public SelectList Religions { get; set; }

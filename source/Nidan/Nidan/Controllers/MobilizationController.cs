@@ -36,7 +36,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId==centreId);
+            var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
             var mobilizationTypes = NidanBusinessService.RetrieveMobilizationTypes(organisationId, e => true);
             var qualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var events = NidanBusinessService.RetrieveEvents(organisationId, e => true).Items.ToList();
@@ -106,7 +106,7 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        // POST: Mobilizations/Edit/{id}
+        // POST: Mobilization/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MobilizationViewModel mobilizationViewModel)
@@ -118,13 +118,33 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
-                mobilizationViewModel.Mobilization.Close ="No";
+                mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
             var viewModel = new MobilizationViewModel
             {
                 Mobilization = mobilizationViewModel.Mobilization
+            };
+            return View(viewModel);
+        }
+
+        // GET: Mobilization/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var mobilizationDataGrid = NidanBusinessService.RetrieveMobilizationDataGrid(organisationId, e => e.MobilizationId == id).Items.FirstOrDefault();
+            if (mobilizationDataGrid == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new MobilizationViewModel
+            {
+                MobilizationDataGrid = mobilizationDataGrid
             };
             return View(viewModel);
         }
@@ -194,7 +214,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword,p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
+            var data = NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
             return this.JsonNet(data);
         }
 

@@ -169,6 +169,8 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
 
+        public int? ConversionProspect { get; set; }
+
         public string Remarks { get; set; }
 
         public DateTime? FollowUpDate { get; set; }
