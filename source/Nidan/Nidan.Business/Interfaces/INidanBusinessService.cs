@@ -243,6 +243,7 @@ namespace Nidan.Business.Interfaces
         BatchAttendance RetrieveBatchAttendance(int organisationId, int batchAttendanceId, Expression<Func<BatchAttendance, bool>> predicate);
         BatchAttendance RetrieveBatchAttendance(int organisationId, int id);
         PagedResult<AttendanceGrid> RetrieveAttendanceGrid(int organisationId, Expression<Func<AttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CounsellingDataGrid> RetrieveCounsellingGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

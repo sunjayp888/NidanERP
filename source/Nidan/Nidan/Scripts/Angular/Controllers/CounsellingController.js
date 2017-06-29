@@ -88,7 +88,7 @@
         }
 
         function viewCounselling(counsellingId) {
-            $window.location.href = "/Counselling/Edit/" + counsellingId;
+            $window.location.href = "/Counselling/View/" + counsellingId;
         }
 
         function retrieveCourses(sectorId) {

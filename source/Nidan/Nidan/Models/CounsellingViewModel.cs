@@ -10,6 +10,7 @@ namespace Nidan.Models
     public class CounsellingViewModel : BaseViewModel
     {
         public Counselling Counselling { get; set; }
+        public CounsellingDataGrid CounsellingDataGrid { get; set; }
         public Enquiry Enquiry { get; set; }
         public SelectList Courses { get; set; }
         public SelectList EnquiryCourses { get; set; }

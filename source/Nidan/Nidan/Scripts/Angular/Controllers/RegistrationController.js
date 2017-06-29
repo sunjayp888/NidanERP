@@ -121,7 +121,7 @@
         };
 
         function viewRegistration(registrationId) {
-            $window.location.href = "/Registration/Edit/" + registrationId;
+            $window.location.href = "/Registration/View/" + registrationId;
         }
 
         function createRegistration(enquiryId) {

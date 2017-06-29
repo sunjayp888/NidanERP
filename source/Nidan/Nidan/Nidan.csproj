@@ -1628,6 +1628,8 @@
     <Content Include="Views\BatchAttendance\_Attendance.cshtml" />
     <Content Include="Views\Mobilization\View.cshtml" />
     <Content Include="Views\Enquiry\View.cshtml" />
+    <Content Include="Views\Report\Counselling.cshtml" />
+    <Content Include="Views\Counselling\View.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

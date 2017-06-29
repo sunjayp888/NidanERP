@@ -146,6 +146,26 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Counselling/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
+            if (mobilizationDataGrid == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new CounsellingViewModel
+            {
+                CounsellingDataGrid = mobilizationDataGrid
+            };
+            return View(viewModel);
+        }
+
         public ActionResult Upload(int id)
         {
 

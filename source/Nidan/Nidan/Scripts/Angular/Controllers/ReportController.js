@@ -27,6 +27,7 @@
         vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.searchRegistrationByDate = searchRegistrationByDate;
+        vm.searchCounsellingByDate = searchCounsellingByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -157,6 +158,22 @@
                 });
         }
 
+        function searchCounsellingByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.class = "asc";
+            order("CreatedDate");
+            return ReportService.searchCounsellingByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
         function pageChanged() {
             vm.fromDate = $("#txt_FromDate").val();
             vm.toDate = $("#txt_ToDate").val();
@@ -176,12 +193,13 @@
             if (path[2] == "Registration") {
                 searchRegistrationByDate(vm.fromDate, vm.toDate);
             }
+            if (path[2] == "Counselling") {
+                searchCounsellingByDate(vm.fromDate, vm.toDate);
+            }
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            //retrieveReport();
-            //return retrieveReports();
         }
 
         function orderClass(property) {

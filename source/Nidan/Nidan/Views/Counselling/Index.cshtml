@@ -146,6 +146,11 @@
                                                     @if (User.IsInAnyRoles("Admin"))
                                                     {
                                                         <li>
+                                                            <a style="cursor: pointer;" ng-href="/Counselling/View/{{counselling.CounsellingId}}">
+                                                                View
+                                                            </a>
+                                                        </li>
+                                                        <li>
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Edit/{{counselling.CounsellingId}}">
                                                                 Edit
                                                             </a>

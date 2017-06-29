@@ -115,6 +115,7 @@
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
     <Compile Include="Counselling.cs" />
+    <Compile Include="CounsellingDataGrid.cs" />
     <Compile Include="CounsellingSearchField.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseInstallment.cs" />
