@@ -10,6 +10,7 @@ namespace Nidan.Models
     public class BatchAttendanceViewModel : BaseViewModel
     {
         public BatchAttendance BatchAttendance { get; set; }
+        public Attendance Attendance { get; set; }
         public SelectList Batches { get; set; }
         public SelectList Subjects { get; set; }
         public SelectList Sessions { get; set; }
