@@ -91,6 +91,14 @@ namespace Nidan.Controllers
             var sessiondata = NidanBusinessService.RetrieveSessions(UserOrganisationId,e=>e.SubjectId==subjectData.SubjectId).Items.ToList();
             return this.JsonNet(sessiondata);
         }
+
+        [HttpPost]
+        public ActionResult SearchByDate(int batchId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate && e.BatchId==batchId, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }
 

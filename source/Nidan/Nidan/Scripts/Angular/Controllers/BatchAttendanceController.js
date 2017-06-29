@@ -28,6 +28,7 @@
         vm.sessions = [];
         vm.retrieveSessions = retrieveSessions;
         vm.retrieveBatchAttendancesByBatchId = retrieveBatchAttendancesByBatchId;
+        vm.searchBatchAttendanceByDate = searchBatchAttendanceByDate;
         vm.type = "";
         vm.initialise = initialise;
 
@@ -64,6 +65,20 @@
         function searchBatchAttendance(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return BatchAttendanceService.searchBatchAttendance(vm.searchKeyword, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.batchAttendances = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.batchAttendances.length === 0 ? "No Records Found" : "";
+                  return vm.batchAttendances;
+              });
+        }
+
+        function searchBatchAttendanceByDate(batchId,fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.batchId = batchId;
+            return BatchAttendanceService.searchBatchAttendanceByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.batchAttendances = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;

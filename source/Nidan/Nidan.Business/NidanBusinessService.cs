@@ -2289,8 +2289,7 @@ namespace Nidan.Business
         public PagedResult<AdmissionGrid> RetrieveAdmissionGrid(int organisationId, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveAdmissionGrid(organisationId, predicate, orderBy,
-                paging);
+            return _nidanDataService.RetrieveAdmissionGrid(organisationId, predicate, orderBy,paging);
         }
 
         public PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)

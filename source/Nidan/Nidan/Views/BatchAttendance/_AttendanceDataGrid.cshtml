@@ -1,7 +1,7 @@
 ﻿@using Nidan.Extensions
 @model Nidan.Models.BatchAttendanceViewModel
 
-<div>
+
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -27,7 +27,7 @@
                                             <thead>
                                             <tr class="headings">
                                                 <th>
-                                                        <input type="checkbox" id="check-all">
+                                                <input type="checkbox" id="check-all" />
                                                 </th>
                                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                                 {
@@ -38,10 +38,14 @@
                                             </thead>
                                         <tbody>
                                         <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-click="$event.originalEvent.ngClickHandled">
+                                        @*<td>
+                                                <input type="checkbox" ng-model="batchAttendance.Attendance.IsPresent">
+                                            </td>*@
                                             <td>
-                                                @Html.CheckBoxFor(m => m.BatchAttendance.Attendance.IsPresent.Value)
+                                                
                                             </td>
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                           	
+                                            @if(User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="batchAttendance.CentreName"></span></td>
                                             }
@@ -63,4 +67,7 @@
             </div>
         </div>
     </div>
-</div>
+
+@section scripts{
+    <script src="~/Scripts/icheck/icheck.min.js"></script>
+    }
