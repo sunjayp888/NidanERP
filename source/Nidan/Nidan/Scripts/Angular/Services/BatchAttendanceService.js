@@ -11,7 +11,8 @@
         var service = {
             retrieveBatchAttendances: retrieveBatchAttendances,
             searchBatchAttendance: searchBatchAttendance,
-            retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId
+            retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId,
+            searchBatchAttendanceByDate: searchBatchAttendanceByDate
         };
 
         return service;
@@ -43,6 +44,19 @@
             var url = "/BatchAttendance/Search",
             data = {
                 searchKeyword: SearchKeyword,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
+
+            return $http.post(url, data);
+        }
+
+        function searchBatchAttendanceByDate(BatchId ,FromDate, ToDate, Paging, OrderBy) {
+            var url = "/BatchAttendance/SearchByDate",
+            data = {
+                batchId:BatchId,
+                fromDate: FromDate,
+                toDate: ToDate,
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };

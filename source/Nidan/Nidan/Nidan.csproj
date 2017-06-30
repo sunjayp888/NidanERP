@@ -1213,6 +1213,7 @@
     <Content Include="Scripts\getorgchart.css" />
     <Content Include="Scripts\getorgchart.js" />
     <Content Include="Scripts\graphics.png" />
+    <Content Include="Scripts\icheck\icheck.min.js" />
     <Content Include="Scripts\jquery-validate-bootstrap.js" />
     <Content Include="Scripts\ModuleController.js" />
     <Content Include="Scripts\moris\example.js" />

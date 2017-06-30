@@ -40,5 +40,10 @@ namespace Nidan.Entity
 
         [StringLength(500)]
         public string Topic { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime AttendanceDate { get; set; }
+
+        public bool? IsPresent { get; set; }
     }
 }
