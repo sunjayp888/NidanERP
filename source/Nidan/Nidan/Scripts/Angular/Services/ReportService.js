@@ -16,7 +16,8 @@
             //retrieveFollowUpReports: retrieveFollowUpReports,
             searchFollowUpByDate: searchFollowUpByDate,
             searchAdmissionByDate: searchAdmissionByDate,
-            searchRegistrationByDate: searchRegistrationByDate
+            searchRegistrationByDate: searchRegistrationByDate,
+            searchCounsellingByDate: searchCounsellingByDate
         };
 
         return service;
@@ -114,6 +115,16 @@
             return $http.post(url, data);
         }
 
+        function searchCounsellingByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchCounsellingByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
+            return $http.post(url, data);
+        }
     }
 })();

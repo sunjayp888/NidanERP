@@ -129,11 +129,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Address</button>
-                                            </span>
-                                            <input type="text" disabled="disabled" value="@string.Format("{0}, {1}, {2}, {3}, Pincode - {4}",Model.EnquiryDataGrid.Address1,Model.EnquiryDataGrid.Taluka,Model.EnquiryDataGrid.District,Model.EnquiryDataGrid.State,Model.EnquiryDataGrid.PinCode)" class="form-control col-lg-4">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Address</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0}, {1}, {2}, {3}, Pincode - {4}", Model.EnquiryDataGrid.Address1, Model.EnquiryDataGrid.Taluka, Model.EnquiryDataGrid.District, Model.EnquiryDataGrid.State, Model.EnquiryDataGrid.PinCode)" class="form-control col-lg-4">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -252,14 +254,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Interested Course</button>
-                                            </span>
-                                            @foreach (var course in Model.CourseNames)
-                                            {
-                                                <input type="text" disabled="disabled" value="@course" class="form-control col-lg-4">
-                                            }
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary">Interested Course</button>
+                                                </span>
+                                                @foreach (var course in Model.CourseNames)
+                                                {
+                                                    <input type="text" disabled="disabled" value="@course" class="form-control col-lg-4">
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

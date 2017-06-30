@@ -114,6 +114,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
         public virtual DbSet<AttendanceGrid> AttendanceGrids { get; set; }
+        public virtual DbSet<CounsellingDataGrid> CounsellingDataGrids { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -1851,6 +1852,50 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<AttendanceGrid>()
                .Property(e => e.Topic)
                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CourseOffered)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.PsychomatricTest)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

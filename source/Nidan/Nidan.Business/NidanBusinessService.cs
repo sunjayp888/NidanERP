@@ -2472,6 +2472,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveAttendanceGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<CounsellingDataGrid> RetrieveCounsellingGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCounsellingGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
