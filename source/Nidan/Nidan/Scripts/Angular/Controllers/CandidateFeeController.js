@@ -72,8 +72,9 @@
                     ChequeNumber: $("#txtChequeNumber").val(),
                     ChequeDate: $("#txtChequeDate").val(),
                     BankName: $("#txtBankName").val(),
-                    IsPaidAmountOverride: $("#checkbox").prop('checked'),
-
+                    IsPaidAmountOverride: $("#overrideFeeCheckbox").prop('checked'),
+                    HaveReceipt: $("#haveReceiptCheckbox").prop('checked'),
+                    ReceiptNumber: $("#txtReceiptNumber").val()
                 }
                 return CandidateFeeService.saveFee(candidateFee)
                     .then(function (response) {
@@ -89,8 +90,9 @@
                     ChequeNumber: $("#txtChequeNumber").val(),
                     ChequeDate: $("#txtChequeDate").val(),
                     BankName: $("#txtBankName").val(),
-                    IsPaidAmountOverride: $("#checkbox").prop('checked'),
-
+                    IsPaidAmountOverride: $("#overrideFeeCheckbox").prop('checked'),
+                    HaveReceipt: $("#haveReceiptCheckbox").prop('checked'),
+                    ReceiptNumber: $("#txtReceiptNumber").val()
                 }
                 return CandidateFeeService.saveFee(candidateFeedefault)
                     .then(function (response) {
@@ -138,18 +140,15 @@
             return CandidateFeeService.retrieveCandidateFee(candidateFeeId)
                 .then(function (response) {
                     $("#txtAmount").val(response.data.InstallmentAmount);
+                    $('#dropDownPaymentMode').val("Select Payment Mode");
                     $("#txtChequeDate").val('');
                     $("#dropDownPaymentMode").filter(function () {
                         return !this.value || $.trim(this.value).length == 0;
                     });
                     $("#dropDownPaymentMode").val();
                     $("#checkbox").prop('checked');
-                    $("#labelChequeNumber").hide();
-                    $("#labelChequeDate").hide();
-                    $("#labelBankName").hide();
-                    $("#txtChequeNumber").hide();
-                    $("#txtChequeDate").hide();
-                    $("#txtBankName").hide();
+                    $("#overrideFeeDiv").hide();
+                    $("#chequeDetailDiv").hide();
                     $("#txtChequeDate").val('');
                 });
         }

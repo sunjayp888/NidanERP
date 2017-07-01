@@ -17,9 +17,10 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <input type="text" id="txtAmount" class="form-control" readonly="readonly" />
                             </div>
+                            <br />
+                            <br />
                         </div>
-                        <br />
-                        <br />
+
 
                         <div class="form-group">
                             <label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>
@@ -29,61 +30,88 @@
                                     <option data-ng-repeat="t in model.paymentModes" ng-model="model.paymentModeId" value="{{t.PaymentModeId}}">{{t.Name}}</option>
                                 </select>
                             </div>
+                            <br />
+                            <br />
                         </div>
-                        <br />
-                        <br />
+
 
                         <div class="form-group">
                             @*<label class="control-label col-md-3 col-sm-6 col-xs-12"></label>*@
                             <div class="col-md-8 col-sm-6 col-xs-12">
-                                <label class="btn btn-info pull-right col-md-5">
+                                <label class="btn btn-info pull-right col-md-7">
                                     @*@Html.CheckBoxFor(model => model.CandidateFee.IsPaidAmountOverride, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })*@
-                                    <input id="checkbox" type="checkbox" />
+                                    <input id="overrideFeeCheckbox" type="checkbox" />
                                     Override Fee
                                 </label>
                             </div>
+                            <br />
+                            <br />
                         </div>
-                        <br />
-                        <br />
+                        
+                        <div class="form-group">
+                            @*<label class="control-label col-md-3 col-sm-6 col-xs-12"></label>*@
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                <label class="btn btn-info pull-right col-md-7">
+                                    @*@Html.CheckBoxFor(model => model.CandidateFee.IsPaidAmountOverride, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })*@
+                                    <input id="haveReceiptCheckbox" type="checkbox" />
+                                    Already Taken Payment
+                                </label>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        
+                        <div id="haveReceiptDiv" class="form-group">
+                            @*@Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Receipt Number</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="txtReceiptNumber" type="text" class="form-control" />
+                            </div>
+                            <br />
+                            <br />
+                        </div>
 
                         <div id="overrideFeeDiv" class="form-group">
                             @*@Html.LabelFor(model => model.CandidateFee.PaidAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Paid Amount</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input type="text" id="txtPaidAmount" class="form-control" />
+                                <input id="txtPaidAmount" type="text" class="form-control" />
                             </div>
+                            <br />
+                            <br />
                         </div>
-                        <br />
-                        <br />
-
-                        <div class="form-group">
-                            <label id="labelChequeNumber" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Number</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtChequeNumber" type="text" class="form-control" />
+                        
+                        <div id="chequeDetailDiv">
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Number</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="txtChequeNumber" type="text" class="form-control" />
+                                </div>
+                                <br />
+                                <br />
                             </div>
-                        </div>
-                        <br />
-                        <br />
 
-                        <div class="form-group">
-                            <label id="labelChequeDate" class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Date</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtChequeDate" type="text" class="form-control date" />
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Cheque Date</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="txtChequeDate" type="text" class="form-control date" />
+                                </div>
+                                <br />
+                                <br />
                             </div>
-                        </div>
-                        <br />
-                        <br />
 
-                        <div class="form-group">
-                            <label id="labelBankName" class="control-label col-md-3 col-sm-3 col-xs-12">Bank Name</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtBankName" type="text" class="form-control" />
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Bank Name</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="txtBankName" type="text" class="form-control" />
+                                </div>
+                                <br />
+                                <br />
                             </div>
-                        </div>
-                        <br />
-                        <br />
 
-                        <div class="modal-footer">
+                        </div>
+
+    <div class="modal-footer">
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="control-label col-md-14 col-sm-14 col-xs-12">
