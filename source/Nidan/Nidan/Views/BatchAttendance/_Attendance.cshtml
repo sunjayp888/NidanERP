@@ -1,17 +1,40 @@
-﻿@using Nidan.Models
+﻿@using Nidan.Extensions
+@using Nidan.Models
 @model Nidan.Models.BatchAttendanceViewModel
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="form-control-required-example"> = Required</div>
 </div>
 
-<div class="form-group" >
-    @Html.LabelFor(model => model.BatchAttendance.BatchId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.BatchAttendance.BatchId, Model.Batches, "Select Batch", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveBatchAttendancesByBatchId()" })
-        @Html.ValidationMessageFor(model => model.BatchAttendance.BatchId, "", new { @class = "help-block" })
-    </div>
-</div>
+@*<div class="form-group" >
+        @Html.LabelFor(model => model.BatchAttendance.BatchId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.BatchAttendance.BatchId, Model.Batches, "Select Batch", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveBatchAttendancesByBatchId()" })
+            @Html.ValidationMessageFor(model => model.BatchAttendance.BatchId, "", new { @class = "help-block" })
+        </div>
+    </div>*@
+
+<div class="row" ng-controller="CentreSchemeController as model" ng-init="model.initialise(@Model.BatchAttendance.CentreId)">
+        <div class="form-group">
+            @Html.Label("Batch", new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+            <input type="hidden" id="centreBatchCount" ng-value="model.centreBatchCount" />
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle col-md-6 col-sm-6 col-xs-12" type="button" id="dropdownMenuScheme" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="fa fa-list fa-fw"></span>
+                        @*  <span class="square" ng-style="{'background-color' : '#' + model.ddAbsenceType.Colour.Hex }"></span>*@
+                        <span ng-bind="model.ddBatch.Name"></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <li ng-repeat="scheme in model.ddBatch">
+                            @*<span class="square" ng-style="{'background-color' : '#' + absenceType.Colour.Hex }"></span>*@
+                            <span><a ng-click="model.changeBatch(batch)" ng-bind="batch.Name"></a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+   
 
 <div class="form-group">
     @Html.LabelFor(model => model.BatchAttendance.SubjectId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })

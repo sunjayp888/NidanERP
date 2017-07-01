@@ -11,7 +11,8 @@
         var service = {
             retrieveBatches: retrieveBatches,
             searchBatchByDate: searchBatchByDate,
-            retrieveRoomByHours: retrieveRoomByHours
+            retrieveRoomByHours: retrieveRoomByHours,
+            retrieveBatchByCentre: retrieveBatchByCentre
         };
 
         return service;
@@ -44,6 +45,15 @@
                 data = {
                     hours: hours
                 };
+            return $http.post(url, data);
+        }
+
+        function retrieveBatchByCentre(centreId) {
+            var url = "/Batch/CentreBatch",
+                data = {
+                    centreId: centreId
+                };
+
             return $http.post(url, data);
         }
 

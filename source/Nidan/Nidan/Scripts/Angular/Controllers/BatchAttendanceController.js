@@ -27,7 +27,6 @@
         vm.retrieveSubjects = retrieveSubjects;
         vm.sessions = [];
         vm.retrieveSessions = retrieveSessions;
-        vm.retrieveBatchAttendancesByBatchId = retrieveBatchAttendancesByBatchId;
         vm.searchBatchAttendanceByDate = searchBatchAttendanceByDate;
         vm.type = "";
         vm.initialise = initialise;
@@ -49,20 +48,7 @@
                     });
         }
 
-        function retrieveBatchAttendancesByBatchId() {
-            vm.orderBy.property = "AdmissionId";
-            vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "asc";
-            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
-                    .then(function (response) {
-                        vm.batchAttendances = response.data.Items;
-                        vm.paging.totalPages = response.data.TotalPages;
-                        vm.paging.totalResults = response.data.TotalResults;
-                        return vm.batchAttendances;
-                    });
-        }
-
-        function searchBatchAttendance(searchKeyword) {
+       function searchBatchAttendance(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return BatchAttendanceService.searchBatchAttendance(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
@@ -120,6 +106,6 @@
                 vm.subjects = response.data;
             });
         };
-    }
+        }
 
 })();
