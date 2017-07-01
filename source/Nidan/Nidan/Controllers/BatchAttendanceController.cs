@@ -99,6 +99,12 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate && e.BatchId==batchId, orderBy, paging);
             return this.JsonNet(data);
         }
+
+        public ActionResult CentreBatch(int centreId)
+        {
+            var data = NidanBusinessService.RetrieveBatches(UserOrganisationId, e => e.CentreId == centreId);
+            return this.JsonNet(data);
+        }
     }
 }
 

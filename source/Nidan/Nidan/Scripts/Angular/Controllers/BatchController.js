@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.batches = [];
+        vm.ddBatch = 0;
         vm.rooms = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
@@ -29,10 +30,14 @@
         vm.retrieveRoomByHours = retrieveRoomByHours;
         vm.searchBatchByDate = searchBatchByDate;
         vm.viewBatch = viewBatch;
+        vm.changeBatch = changeBatch;
+        vm.ddBatch = 0;
+        vm.centreBatchCount = 0;
+        vm.retrieveBatchByCentre = retrieveBatchByCentre;
         vm.hours = "";
         //vm.searchKeyword = "";
         //vm.searchMessage = "";
-        initialise();
+        vm.initialise=initialise();
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
@@ -49,6 +54,28 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.batches;
                 });
+        }
+
+        function retrieveBatchByCentre(centreId) {
+            vm.centreId = centreId;
+            return BatchService.retrieveBatchByCentre(vm.centreId)
+                .then(function (response) {
+                    vm.centreBatchError = false;
+                    vm.batches = response.data.Items;
+                    if (vm.batches.length > 0) {
+                        vm.centreBatchCount = vm.batches.length;
+
+                    } else {
+                        vm.batches = true;
+                        vm.centreBatchCount = 0;
+                    }
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                });
+        }
+
+        function changeBatch(ddBatch) {
+            vm.ddBatch = ddBatch;
         }
 
         function searchBatchByDate(fromDate, toDate) {
