@@ -1631,6 +1631,7 @@
     <Content Include="Views\Enquiry\View.cshtml" />
     <Content Include="Views\Report\Counselling.cshtml" />
     <Content Include="Views\Counselling\View.cshtml" />
+    <Content Include="Views\Report\Expense.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

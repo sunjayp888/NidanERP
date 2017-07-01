@@ -17,7 +17,8 @@
             searchFollowUpByDate: searchFollowUpByDate,
             searchAdmissionByDate: searchAdmissionByDate,
             searchRegistrationByDate: searchRegistrationByDate,
-            searchCounsellingByDate: searchCounsellingByDate
+            searchCounsellingByDate: searchCounsellingByDate,
+            searchExpenseByDate: searchExpenseByDate
         };
 
         return service;
@@ -117,6 +118,18 @@
 
         function searchCounsellingByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchCounsellingByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchExpenseByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/ExpenseReportByDate",
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,

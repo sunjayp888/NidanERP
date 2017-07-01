@@ -54,7 +54,7 @@ namespace Nidan.Business.Interfaces
         void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission);
         OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee);
         Expense CreateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds);
-        CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
+        CentrePettyCash CreateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash);
         Voucher CreateVoucher(int organisationId, int centreId, int personnelId, Voucher voucher);
         ExpenseProject CreateExpenseProject(int organisationId, ExpenseProject expenseProject);
         Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
@@ -244,6 +244,8 @@ namespace Nidan.Business.Interfaces
         BatchAttendance RetrieveBatchAttendance(int organisationId, int id);
         PagedResult<AttendanceGrid> RetrieveAttendanceGrid(int organisationId, Expression<Func<AttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CounsellingDataGrid> RetrieveCounsellingGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ExpenseDataGrid> RetrieveExpenseDataGrid(int organisationId, Expression<Func<ExpenseDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<ExpensePettyCashData> RetrieveExpensePettyCashDataByCentre(int organisationId, int centreId, DateTime startDate, DateTime endDate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -273,7 +275,7 @@ namespace Nidan.Business.Interfaces
         ExpenseHeader UpdateExpenseHeader(int organisationId, ExpenseHeader expenseHeader);
         OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee);
         Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds);
-        CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId,int personnelId, CentrePettyCash centrePettyCash);
+        CentrePettyCash UpdateCentrePettyCash(int organisationId, int centreId, int personnelId, CentrePettyCash centrePettyCash);
         Attendance UpdateAttendance(int organisationId, Attendance attendance);
         BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
         CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber);

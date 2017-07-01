@@ -140,6 +140,7 @@
     <Compile Include="EventFunctionType.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Expense.cs" />
+    <Compile Include="ExpenseDataGrid.cs" />
     <Compile Include="ExpenseHeader.cs" />
     <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

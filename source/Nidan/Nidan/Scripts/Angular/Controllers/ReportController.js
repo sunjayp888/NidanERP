@@ -28,6 +28,7 @@
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
+        vm.searchExpenseByDate = searchExpenseByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -165,6 +166,22 @@
             vm.orderBy.class = "asc";
             order("CreatedDate");
             return ReportService.searchCounsellingByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        } 
+
+        function searchExpenseByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.class = "asc";
+            order("CreatedDate");
+            return ReportService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

@@ -37,7 +37,7 @@ namespace Nidan.Business.Helper
             return stream;
         }
 
-        private static string GetCSV<T>(this IList<T> list)
+        public static string GetCSV<T>(this IList<T> list)
         {
             var sb = new StringBuilder();
 

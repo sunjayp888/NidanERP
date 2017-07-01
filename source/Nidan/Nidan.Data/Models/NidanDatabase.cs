@@ -115,6 +115,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
         public virtual DbSet<AttendanceGrid> AttendanceGrids { get; set; }
         public virtual DbSet<CounsellingDataGrid> CounsellingDataGrids { get; set; }
+        public virtual DbSet<ExpenseDataGrid> ExpenseDataGrids { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -1895,6 +1896,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CounsellingDataGrid>()
                 .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.ExpenseHeader)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
