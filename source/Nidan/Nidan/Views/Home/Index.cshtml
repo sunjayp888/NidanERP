@@ -6,7 +6,7 @@
     var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
     var endOfWeekDate = startOfWeekDate.AddDays(6);
     var startOfWeek = startOfWeekDate.ToShortDateString();
-    var endOfWeek= startOfWeekDate.AddDays(6).ToShortDateString();
+    var endOfWeek = startOfWeekDate.AddDays(6).ToShortDateString();
 }
 
 <div class="row">
@@ -20,7 +20,7 @@
             </div>
             <a href='@Url.Action("Index","Mobilization")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats" style="background: #b3ecff">
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
@@ -32,7 +32,7 @@
             </a>
             <a href='@Url.Action("Index","Enquiry")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats" style="background:#ffdb99">
                         <div class="icon">
                             <i class="fa fa-clipboard"></i>
                         </div>
@@ -44,7 +44,7 @@
             </a>
             <a href='@Url.Action("Index","Registration")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats"style="background:#ffcce7">
                         <div class="icon">
                             <i class="fa fa-check-square-o"></i>
                         </div>
@@ -56,7 +56,7 @@
             </a>
             <a href='@Url.Action("Index","Admission")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats"style="background:#ccffb3">
                         <div class="icon">
                             <i class="fa fa-institution"></i>
                         </div>

@@ -79,7 +79,7 @@
                                         <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
                                         <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
                                         <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
-                                        <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button></td>
+                                        <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -96,6 +96,11 @@
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Registration/Edit/{{registration.RegistrationId}}">
                                                                 Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
+                                                                Download
                                                             </a>
                                                         </li>
                                                         <li>

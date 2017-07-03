@@ -1,6 +1,7 @@
 ﻿@using Nidan.Business.Enum
 @using Nidan.Entity
 @using Nidan.Models
+@using ModelBinderAttribute = System.Web.Http.ModelBinding.ModelBinderAttribute
 @model Nidan.Models.CandidateFeeViewModel
 
 @{
@@ -68,7 +69,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="candidateFee in model.candidateFees" class="odd gradeX">
+                                        <tr ng-repeat="candidateFee in model.candidateFees" ng-if="@Model.CourseFee==@Model.TotalPaidFee" class="odd gradeX">
                                             <td>
                                                 <span ng-bind="candidateFee.FeeType"></span>
                                             </td>
@@ -83,7 +84,7 @@
                                             </td>
                                             <td class="col-lg-1">
                                                 <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
-                                                <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
+                                                <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-success btn-xs">Done</button>
                                             </td>
                                             <td>
                                                 <button id="btnPayFee" type="button" ng-disabled="!(candidateFee.InstallmentDate==candidateFee.NextInstallmentDate && candidateFee.InstallmentDate )" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
@@ -127,6 +128,7 @@
             if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
                 $("#chequeDetailDiv").show();
             } else {
+                $('#btnSaveCandidateFee').attr('disabled', false);
                 $("#txtChequeDate").val('');
                 $("#chequeDetailDiv").hide();
             }
