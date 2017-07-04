@@ -64,7 +64,7 @@
         }
 
         function saveFee() {
-            if ($("#checkbox").prop('checked') == true) {
+            if ($("#overrideFeeCheckbox").prop('checked') == true) {
                 var candidateFee = {
                     CandidateFeeId: vm.candidateFeeId,
                     PaidAmount: $("#txtPaidAmount").val(),

@@ -108,7 +108,6 @@
                                         @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
                                         @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
                                         @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
-                                        <th>Status</th>
                                         <th ng-click="model.order('EnquiryDate')" ng-class="model.orderClass('EnquiryDate')">Enquiry Date</th>
                                         <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                         @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
@@ -125,13 +124,6 @@
                                         @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
                                         @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
                                         @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
-                                        <td class="col-lg-4">
-                                            <button ng-if="report.IsAdmissionDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Admission Done</button>
-                                            <button ng-if="report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button>
-                                            <button ng-if="report.IsCounsellingDone=='NO' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Counselling Pending</button>
-                                            <button ng-if="report.IsCounsellingDone=='Yes' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="report.IsRegistrationDone=='NO' && report.IsAdmissionDone=='NO'" type="button" class="btn btn-round btn-warning btn-xs">Registration Pending</button>
-                                        </td>
                                         <td><span ng-bind="report.EnquiryDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
                                         @*<td><span ng-bind="enquiry.Close"></span></td>*@
