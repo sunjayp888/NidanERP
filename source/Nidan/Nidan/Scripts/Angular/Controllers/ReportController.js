@@ -29,6 +29,13 @@
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
         vm.searchExpenseByDate = searchExpenseByDate;
+        vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
+        vm.downloadMobilizationCSVByDate = downloadMobilizationCSVByDate;
+        vm.downloadFollowUpCSVByDate = downloadFollowUpCSVByDate;
+        vm.downloadAdmissionCSVByDate = downloadAdmissionCSVByDate;
+        vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
+        vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
+        vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -213,6 +220,34 @@
             if (path[2] == "Counselling") {
                 searchCounsellingByDate(vm.fromDate, vm.toDate);
             }
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
+        }
+
+        function downloadMobilizationCSVByDate(fromDate, toDate) {
+            return ReportService.downloadMobilizationCSVByDate(fromDate, toDate);
+        }
+
+        function downloadFollowUpCSVByDate(fromDate, toDate) {
+            return ReportService.downloadFollowUpCSVByDate(fromDate, toDate);
+        }
+
+        function downloadAdmissionCSVByDate(fromDate, toDate) {
+            return ReportService.downloadAdmissionCSVByDate(fromDate, toDate);
+        }
+
+        function downloadRegistrationCSVByDate(fromDate, toDate) {
+            return ReportService.downloadRegistrationCSVByDate(fromDate, toDate);
+        }
+
+        function downloadCounsellingCSVByDate(fromDate, toDate) {
+            return ReportService.downloadCounsellingCSVByDate(fromDate, toDate);
+        }
+
+        function downloadExpenseCSVByDate(fromDate, toDate) {
+            return ReportService.downloadExpenseCSVByDate(fromDate, toDate);
         }
 
         function order(property) {

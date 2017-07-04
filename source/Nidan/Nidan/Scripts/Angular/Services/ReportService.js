@@ -18,7 +18,14 @@
             searchAdmissionByDate: searchAdmissionByDate,
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
-            searchExpenseByDate: searchExpenseByDate
+            searchExpenseByDate: searchExpenseByDate,
+            downloadEnquiryCSVByDate : downloadEnquiryCSVByDate,
+            downloadMobilizationCSVByDate : downloadMobilizationCSVByDate,
+            downloadFollowUpCSVByDate : downloadFollowUpCSVByDate,
+            downloadAdmissionCSVByDate : downloadAdmissionCSVByDate,
+            downloadRegistrationCSVByDate : downloadRegistrationCSVByDate,
+            downloadCounsellingCSVByDate : downloadCounsellingCSVByDate,
+            downloadExpenseCSVByDate : downloadExpenseCSVByDate
         };
 
         return service;
@@ -137,6 +144,69 @@
                     orderBy: new Array(OrderBy)
                 };
 
+            return $http.post(url, data);
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadEnquiryCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadFollowUpCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadFollowUpCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadAdmissionCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadAdmissionCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadMobilizationCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadMobilizationCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadRegistrationCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadRegistrationCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadCounsellingCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadCounsellingCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadExpenseCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadExpenseCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
             return $http.post(url, data);
         }
     }

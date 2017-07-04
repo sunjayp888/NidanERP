@@ -186,6 +186,34 @@ namespace Nidan.Controllers
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-{1:yyyy-MM-dd-hh-mm-ss}.csv", centre.Name, DateTime.Now));
         }
 
+        [HttpPost]
+        public ActionResult DownloadCounsellingCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var data =
+                NidanBusinessService.RetrieveCounsellingGrid(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate &&
+                        p.CreatedDate <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_CounsellingReport-{1:yyyy-MM-dd-hh-mm-ss}.csv", centre.Name, DateTime.Now));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadRegistrationCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var data =
+                NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.RegistrationDate >= fromDate &&
+                        p.RegistrationDate <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-{1:yyyy-MM-dd-hh-mm-ss}.csv", centre.Name, DateTime.Now));
+        }
+
 
     }
 }
