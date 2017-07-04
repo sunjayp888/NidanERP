@@ -22,7 +22,7 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.batches = [];
-        //vm.retrieveBatches = retrieveBatches;
+        vm.retrieveBatches = retrieveBatches;
         vm.subjects = [];
         vm.retrieveSubjects = retrieveSubjects;
         vm.sessions = [];
@@ -60,10 +60,13 @@
               });
         }
 
-        function searchBatchAttendanceByDate(batchId,fromDate, toDate) {
+        function searchBatchAttendanceByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
-            vm.batchId = batchId;
+            vm.orderBy.property = "StudentCode";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            //vm.batchId = batchId;
             return BatchAttendanceService.searchBatchAttendanceByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.batchAttendances = response.data.Items;
@@ -106,6 +109,14 @@
                 vm.subjects = response.data;
             });
         };
+
+        function retrieveBatches() {
+            return BatchAttendanceService.retrieveBatches().then(function (response) {
+                vm.batches = response.data.Items;
+                return vm.batches;
+            });
+        }
+
         }
 
 })();

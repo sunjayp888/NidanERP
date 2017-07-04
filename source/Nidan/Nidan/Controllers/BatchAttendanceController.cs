@@ -93,16 +93,18 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchByDate(int batchId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate && e.BatchId==batchId, orderBy, paging);
+            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
-        public ActionResult CentreBatch(int centreId)
+        [HttpPost]
+        public ActionResult GetBatches()
         {
-            var data = NidanBusinessService.RetrieveBatches(UserOrganisationId, e => e.CentreId == centreId);
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId,null,null);
             return this.JsonNet(data);
         }
     }

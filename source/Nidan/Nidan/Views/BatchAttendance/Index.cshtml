@@ -1,9 +1,8 @@
 ﻿@using Nidan.Extensions
-
 @{
     ViewBag.Title = "Index";
 }
-<div ng-controller="BatchAttendanceController as model">
+<div ng-controller="BatchAttendanceController as model" ng-init="model.retrieveBatches()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -11,15 +10,15 @@
             </h3>
         </div>
         @*<div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchTrainer(searchField)" class="form-control" placeholder="Search for trainer...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchTrainer(searchField)" type="button">Go!</button>
-                    </span>
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchTrainer(searchField)" class="form-control" placeholder="Search for trainer...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="model.searchTrainer(searchField)" type="button">Go!</button>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
     </div>
     @if (User.IsInAnyRoles("Admin"))
     {
@@ -31,7 +30,7 @@
             </div>
         </div>
     }
-    
+
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -49,6 +48,23 @@
                             <div class="col-lg-12">
                                 <div class="col-lg-1">
                                     <div class="form-group">
+                                        <label>Batch</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <select class="form-control col-md-7 col-xs-12">
+                                            <option value="0">Select Batch</option>
+                                            <option data-ng-repeat="batch in model.batches" value="{{batch.BatchId}}">{{batch.Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+
+                                <div class="col-lg-1">
+                                    <div class="form-group">
                                         <label>From Date</label>
                                     </div>
                                 </div>
@@ -62,19 +78,15 @@
                                         <label>To Date</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
                                     </div>
                                 </div>
-                                <div class="col-lg-1">
-                                    <div class="form-group">
-                                        <label></label>
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchBatchAttendanceByDate(batchId,fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        <input type="button" ng-click="model.searchBatchAttendanceByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
@@ -87,12 +99,6 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            Trainers <small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -104,48 +110,32 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                @*<table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <th ng-click="model.order('LastName')" ng-class="model.orderClass('LastName')">Candidate Name</th>
-                                            <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                            <th ng-click="model.order('Sector.Name')" ng-class="model.orderClass('Sector.Name')">Sector</th>
-                                            <th>Actions</th>
+                                            <th ng-click="model.order('AttendanceDate')" ng-class="model.orderClass('AttendanceDate')">Attendance Date</th>
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('InTime')" ng-class="model.orderClass('InTime')">InTime</th>
+                                            <th ng-click="model.order('OutTime')" ng-class="model.orderClass('OutTime')">OutTime</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="trainer in model.trainers" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewTrainer(trainer.TrainerId)">
+                                        <tr ng-repeat="bachtAttendance in model.batchAttendances" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="trainer.Centre.Name"></span></td>
+                                                <td><span ng-bind="bachtAttendance.CentreName"></span></td>
                                             }
-                                            <td><span ng-bind="trainer.Title"></span> <span ng-bind="trainer.FirstName"></span> <span ng-bind="trainer.MiddleName"></span> <span ng-bind="trainer.LastName"></span></td>
-                                            <td><span ng-bind="trainer.Mobile"></span></td>
-                                            <td><span ng-bind="trainer.Sector.Name"></span></td>
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin"))
-                                                        {
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Trainer/Edit/{{trainer.TrainerId}}">
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </td>
+                                            <td><span ng-bind="bachtAttendance.AttendanceDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="bachtAttendance.CandidateName"></span></td>
+                                            <td><span ng-bind="bachtAttendance.InTime"></span></td>
+                                            <td><span ng-bind="bachtAttendance.OutTime"></span></td>
                                         </tr>
                                     </tbody>
-                                </table>*@
+                                </table>
                             </div>
                         </div>
                         @Html.Partial("Pagination/_pagination")
@@ -160,3 +150,33 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $(function () {
+
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+    </script>
+}
