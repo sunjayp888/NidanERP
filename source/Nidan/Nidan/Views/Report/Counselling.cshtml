@@ -42,46 +42,52 @@
                     </h2>
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
-                    <p class="text-muted font-13 m-b-30">
-                    </p>
-                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="col-lg-1">
-                                    <div class="form-group">
-                                        <label>From Date</label>
+                @using (Html.BeginForm("DownloadCounsellingCSVByDate", "Report", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="x_content">
+                        <p class="text-muted font-13 m-b-30">
+                        </p>
+                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-1">
+                                        <div class="form-group">
+                                            <label>From Date</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <input id="fromDate" name="fromDate" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-1">
-                                    <div class="form-group">
-                                        <label>To Date</label>
+                                    <div class="col-lg-1">
+                                        <div class="form-group">
+                                            <label>To Date</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <input id="toDate" name="toDate" type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-1">
-                                    <div class="form-group">
-                                        <label></label>
+                                    <div class="col-lg-1">
+                                        <div class="form-group">
+                                            <label></label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <input type="button" ng-click="model.searchCounsellingByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <input type="button" ng-click="model.searchCounsellingByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Download CSV" class="btn btn-success">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>
