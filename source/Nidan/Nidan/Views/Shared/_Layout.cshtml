@@ -48,12 +48,12 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            <li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>
+                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
                                         }
 
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("Admin"))
+                                @*@if (User.IsInAnyRoles("Admin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Event <span class="fa fa-chevron-up"></span></a>
@@ -62,7 +62,7 @@
                                             <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                                 @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
@@ -83,7 +83,7 @@
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("Admin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
@@ -94,7 +94,7 @@
                                             }
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
                                             <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
-                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
+                                            @*<li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>*@
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
 
                                             <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
@@ -105,7 +105,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-up"></span></a>
@@ -116,7 +116,7 @@
                                             <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                             </ul>
                         </div>
 

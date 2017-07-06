@@ -13,7 +13,7 @@
         <div class="col-lg-6">
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary">Mobile</button>
+                    <button type="button" class="btn btn-dark">Mobile</button>
                 </span>
                 <input type="text" disabled="disabled" value="@mobile" class="form-control col-lg-4">
             </div>
@@ -21,7 +21,7 @@
         <div class="col-lg-6">
             <div class="input-group">
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary">Email</button>
+                    <button type="button" class="btn btn-dark">Email</button>
                 </span>
                 <input type="text" disabled="disabled" value="@email" class="form-control col-lg-4">
             </div>
@@ -36,7 +36,7 @@
                 @if (Model.FollowUp.FollowUpType == "Enquiry" || Model.FollowUp.FollowUpType == "Mobilization")
                 {
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary">Interested Course(s)</button>
+                        <button type="button" class="btn btn-dark">Interested Course(s)</button>
                     </span>
                     foreach (var course in Model.Courses)
                     {
@@ -46,7 +46,7 @@
                 else
                 {
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary">Course Offered</button>
+                        <button type="button" class="btn btn-dark">Course Offered</button>
                     </span>
                     foreach (var course in Model.Courses)
                     {

@@ -1607,7 +1607,6 @@
     <Content Include="Views\OtherFee\Edit.cshtml" />
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
     <Content Include="Views\OtherFee\_Expenses.cshtml" />
-    <Content Include="Views\OtherFee\AddExpense.cshtml" />
     <Content Include="Views\OtherFeeProject\_OtherFeeProject.cshtml" />
     <Content Include="Views\CentrePettyCash\Index.cshtml" />
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
