@@ -223,8 +223,9 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
             var data = NidanBusinessService.RetrieveCounsellingBySearchKeyword(UserOrganisationId, searchKeyword,
-                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false, orderBy, paging);
+                p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
             return this.JsonNet(data);
         }
 

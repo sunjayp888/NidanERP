@@ -999,6 +999,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
