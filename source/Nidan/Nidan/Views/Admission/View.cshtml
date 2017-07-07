@@ -259,7 +259,7 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-dark">Batch Start Time</button>
                                                             </span>
-                                                            <input id="txtBatchStartTime" value="@Model.Admission.Batch.BatchStartTimeHours" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                            <input id="txtBatchStartTime" value="@Model.Admission.Batch.BatchStartTimeHours : @Model.Admission.Batch.BatchStartTimeMinutes @Model.Admission.Batch.BatchStartTimeSpan" type="text" disabled="disabled" class="form-control col-lg-4">
                                                         </div>
                                                     </div>
 
@@ -268,7 +268,7 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-dark">Batch End Time</button>
                                                             </span>
-                                                            <input id="txtBatchEndTime" value="@Model.Admission.Batch.BatchEndTimeHours" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                            <input id="txtBatchEndTime" value="@Model.Admission.Batch.BatchEndTimeHours : @Model.Admission.Batch.BatchEndTimeMinutes @Model.Admission.Batch.BatchEndTimeSpan" type="text" disabled="disabled" class="form-control col-lg-4">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -281,7 +281,7 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-dark">Batch Start Date</button>
                                                             </span>
-                                                            <input id="txtBatchStartDate" value="@Model.Admission.Batch.BatchStartDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                            <input id="txtBatchStartDate" value="@Model.Admission.Batch.BatchStartDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
                                                         </div>
                                                     </div>
 
@@ -290,7 +290,7 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-dark">Batch End Date</button>
                                                             </span>
-                                                            <input id="txtBatchEndDate" value="@Model.Admission.Batch.BatchEndDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                            <input id="txtBatchEndDate" value="@Model.Admission.Batch.BatchEndDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -303,7 +303,7 @@
                                                             <span class="input-group-btn">
                                                                 <button type="button" class="btn btn-dark">Batch Assessment Date</button>
                                                             </span>
-                                                            <input id="txtBatchAssessmentDate" value="@Model.Admission.Batch.AssessmentDate" type="text" disabled="disabled" class="form-control col-lg-4">
+                                                            <input id="txtBatchAssessmentDate" value="@Model.Admission.Batch.AssessmentDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
                                                         </div>
                                                     </div>
 

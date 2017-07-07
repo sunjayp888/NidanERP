@@ -1169,7 +1169,7 @@ namespace Nidan.Business
             //Send Email
             SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
