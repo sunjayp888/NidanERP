@@ -9,7 +9,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Enquiry.Title, @Model.Enquiry.FirstName, @Model.Enquiry.MiddleName, @Model.Enquiry.LastName)</button>  Enquiry Details<small></small></h2>
+                    <h2><button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Enquiry.Title, @Model.Enquiry.FirstName, @Model.Enquiry.MiddleName, @Model.Enquiry.LastName)</button>  Enquiry Details<small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -64,7 +64,7 @@
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Mobile</button>
+                                                <button type="button" class="btn btn-dark">Mobile</button>
                                             </span>
                                             <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
                                         </div>
@@ -72,7 +72,7 @@
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Email</button>
+                                                <button type="button" class="btn btn-dark">Email</button>
                                             </span>
                                             <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
                                         </div>
@@ -82,7 +82,7 @@
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Interested Scheme</button>
+                                                <button type="button" class="btn btn-dark">Interested Scheme</button>
                                             </span>
                                             <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
                                         </div>
@@ -90,31 +90,35 @@
                                     <div class="col-lg-6">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Interested Sector</button>
+                                                <button type="button" class="btn btn-dark">Interested Sector</button>
                                             </span>
                                             <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-primary">Interested Course(s)</button>
-                                        </span>
-                                        @foreach (var course in Model.EnquiryCourses)
-                                        {
-                                            <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
-                                        }
-                                    </div>
-                                </div>
-                                @if (Model.Enquiry.OtherInterestedCourse!=null)
-                                {
                                     <div class="col-lg-12">
                                         <div class="input-group">
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-primary">Other Interested Course</button>
+                                                <button type="button" class="btn btn-dark">Interested Course(s)</button>
                                             </span>
+                                            @foreach (var course in Model.EnquiryCourses)
+                                            {
+                                                <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.Enquiry.OtherInterestedCourse != null)
+                                {
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Other Interested Course</button>
+                                                </span>
                                                 <input type="text" disabled="disabled" value="@Model.Enquiry.OtherInterestedCourse" class="form-control col-lg-4">
+                                            </div>
                                         </div>
                                     </div>
                                 }
@@ -175,12 +179,12 @@
                                                 </div>
 
                                                 @*<div class="form-group">
-                                                    @Html.LabelFor(model => model.Counselling.RemarkByBranchManager, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                                        @Html.EditorFor(model => model.Counselling.RemarkByBranchManager, new { @class = "form-control col-md-7 col-xs-12" })
-                                                        @Html.ValidationMessageFor(model => model.Counselling.RemarkByBranchManager, "", new { @class = "help-block" })
-                                                    </div>
-                                                </div>*@
+                                                        @Html.LabelFor(model => model.Counselling.RemarkByBranchManager, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            @Html.EditorFor(model => model.Counselling.RemarkByBranchManager, new { @class = "form-control col-md-7 col-xs-12" })
+                                                            @Html.ValidationMessageFor(model => model.Counselling.RemarkByBranchManager, "", new { @class = "help-block" })
+                                                        </div>
+                                                    </div>*@
 
 
                                                 @*@Html.Partial("_Counselling", Model)*@
@@ -188,8 +192,8 @@
                                                 <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                                     <div class="form-group">
                                                         <div class="pull-right">
-                                                            <button type="submit" class="btn btn-success">Submit</button>
                                                             <button type="button" class="btn btn-info" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                                                            <button type="submit" class="btn btn-success">Submit</button>
                                                             @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
                                                                     Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
                                                                 </a>*@
@@ -203,7 +207,7 @@
                             </div>
 
                         </div>
-                                            }
+                    }
                 </div>
             </div>
         </div>
