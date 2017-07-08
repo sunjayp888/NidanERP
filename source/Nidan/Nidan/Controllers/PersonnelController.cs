@@ -74,7 +74,7 @@ namespace Nidan.Controllers
 
 
         // GET: Personnel/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
@@ -100,7 +100,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Personnel/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PersonnelProfileViewModel personnelViewModel)

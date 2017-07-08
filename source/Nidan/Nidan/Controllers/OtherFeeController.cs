@@ -27,7 +27,7 @@ namespace Nidan.Controllers
         }
 
         // GET: OtherFee/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -48,7 +48,7 @@ namespace Nidan.Controllers
         }
 
         // POST: OtherFee/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(OtherFeeViewModel otherFeeViewModel)

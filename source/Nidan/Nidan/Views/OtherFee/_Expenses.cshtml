@@ -57,7 +57,7 @@
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-click="$event.originalEvent.ngClickHandled = true;model.editOtherFee(otherFee.OtherFeeId)">
