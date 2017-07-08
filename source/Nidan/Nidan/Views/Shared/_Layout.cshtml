@@ -53,7 +53,7 @@
 
                                     </ul>
                                 </li>
-                                @*@if (User.IsInAnyRoles("Admin"))
+                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Event <span class="fa fa-chevron-up"></span></a>
@@ -76,6 +76,14 @@
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a><i class="fa fa-cogs"></i> Main <span class="fa fa-chevron-up"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
+                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
+                                            
+                                        </ul>
+                                    </li>
                                 }
                                 <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-up"></span></a>
@@ -88,20 +96,12 @@
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
                                         <ul class="nav child_menu">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-
-                                            }
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
-                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
-                                            @*<li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>*@
+                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
+                                            <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                           
                                         </ul>
                                     </li>
                                 }

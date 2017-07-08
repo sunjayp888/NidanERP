@@ -21,14 +21,14 @@ namespace Nidan.Controllers
             _nidanBusinessService = nidanBusinessService;
         }
         // GET: CourseInstallment
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: CourseInstallment/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -42,7 +42,7 @@ namespace Nidan.Controllers
         }
 
         // POST: CourseInstallment/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseInstallmentViewModel courseInstallmentViewModel)

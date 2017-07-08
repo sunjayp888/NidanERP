@@ -135,13 +135,14 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name; 
             var data =
                 NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate &&
                         p.CreatedDate <= toDate).Items.ToList();
             string csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_MobilizationReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_MobilizationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -149,13 +150,14 @@ namespace Nidan.Controllers
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate >= fromDate &&
                         p.FollowUpDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FollowUpReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FollowUpReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -163,13 +165,14 @@ namespace Nidan.Controllers
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveAdmissionGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
                         p.AdmissionDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -177,13 +180,14 @@ namespace Nidan.Controllers
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveAdmissionGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
                         p.AdmissionDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -191,13 +195,14 @@ namespace Nidan.Controllers
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveCounsellingGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate &&
                         p.CreatedDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_CounsellingReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_CounsellingReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -205,13 +210,14 @@ namespace Nidan.Controllers
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,
                     p =>
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.RegistrationDate >= fromDate &&
                         p.RegistrationDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centre.Name, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
     }
 }

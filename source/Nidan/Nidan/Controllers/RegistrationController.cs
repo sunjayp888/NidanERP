@@ -23,14 +23,14 @@ namespace Nidan.Controllers
         }
 
         // GET: RegistrationPaymentReceipt
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: RegistrationPaymentReceipt/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -59,7 +59,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Registration/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RegistrationViewModel registrationViewModel)

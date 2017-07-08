@@ -31,7 +31,7 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -53,7 +53,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Mobilization/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)

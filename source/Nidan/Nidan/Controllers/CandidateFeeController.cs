@@ -27,7 +27,7 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -53,7 +53,7 @@ namespace Nidan.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult GetFeeCandidate(int id)
         {
             var userOrganisationId = UserOrganisationId;
@@ -149,7 +149,7 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Detail(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -171,7 +171,7 @@ namespace Nidan.Controllers
             return View(candidateFeeModel);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         public ActionResult CandidateFeeList(int? id)
         {

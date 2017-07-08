@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: AreaOfInterest/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var viewModel = new AreaOfInterestViewModel
@@ -39,7 +39,7 @@ namespace Nidan.Controllers
         }
 
         // POST: AreaOfInterest/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AreaOfInterestViewModel areaOfInterestViewModel)
@@ -62,7 +62,7 @@ namespace Nidan.Controllers
         }
 
         // GET: AreaOfInterest/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,7 +102,7 @@ namespace Nidan.Controllers
         }
 
         // POST: AreaOfInterest/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         public ActionResult Delete(int id)
         {

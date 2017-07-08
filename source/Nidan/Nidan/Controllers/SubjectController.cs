@@ -30,7 +30,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Subject/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -52,7 +52,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Subject/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(SubjectViewModel subjectViewModel)

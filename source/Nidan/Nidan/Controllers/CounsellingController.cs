@@ -27,14 +27,14 @@ namespace Nidan.Controllers
             _documentService = documentService;
         }
         // GET: Counselling
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: Counselling/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -69,7 +69,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Counselling/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CounsellingViewModel counsellingViewModel)
