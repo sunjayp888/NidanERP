@@ -222,7 +222,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate || e.GeneratedDate >= fromDate && e.GeneratedDate <= toDate && e.Close == "No", orderBy, paging);
+            var data = NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.GeneratedDate >= fromDate && e.GeneratedDate <= toDate && e.Close == "No", orderBy, paging);
             return this.JsonNet(data);
         }
     }
