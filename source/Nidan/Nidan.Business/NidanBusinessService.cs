@@ -2572,6 +2572,12 @@ namespace Nidan.Business
             return null;
         }
 
+        public PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, string searchKeyword, Expression<Func<MobilizationDataGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveMobilizationDataGrid(organisationId, searchKeyword, predicate,
+                orderBy, paging);
+        }
 
         #endregion
 

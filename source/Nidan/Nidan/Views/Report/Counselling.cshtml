@@ -116,14 +116,14 @@
                                         <tr role="row">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                                <th>Centre</th>
                                             }
-                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Counselling Date</th>
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                            <th ng-click="model.order('CourseName')" ng-class="model.orderClass('CourseName')">Course</th>
+                                            <th>Counselling Date</th>
+                                            <th>Candidate Name</th>
+                                            <th>Course</th>
                                             <th>Remarks</th>
-                                            <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                            <th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Counselling Closed</th>
+                                            <th>Follow-Up Date</th>
+                                            <th>Counselling Closed</th>
                                         </tr>
                                     </thead>
                                     <tbody>

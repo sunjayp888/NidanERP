@@ -2157,7 +2157,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<RegistrationSearchField>("SearchRegistration @SearchKeyword", category).ToList();
 
-                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee);
+                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee).Include(e=>e.CandidateFee.PaymentMode);
 
                 var data = searchData.Join(registrations, e => e.RegistrationId, m => m.RegistrationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -2691,6 +2691,34 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, string searchKeyword, Expression<Func<MobilizationDataGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<MobilizationDataGrid>("SearchMobilization @SearchKeyword", category).ToList();
+
+                //var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e => e.MobilizationType).Include(e => e.Centre);
+
+                var data = searchData.ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Where(predicate)
+                    .Paginate(paging);
+                return data;
             }
         }
 

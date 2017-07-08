@@ -106,15 +106,15 @@
                                     <tr role="row">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                            <th>Centre</th>
                                         }
-                                        <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
-                                        <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                        <th ng-click="model.order('InterestedCourseId')" ng-class="model.orderClass('InterestedCourseId')">Interested Course</th>
-                                        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>
-                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
-                                        <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                        <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile</th>
+                                        <th>Interested Course</th>
+                                        <th>Qualification</th>
+                                        <th>Created Date</th>
+                                        <th>Follow-Up Date</th>
+                                        <th>Student Location</th>
                                     </tr>
                                 </thead>
                                 <tbody>
