@@ -650,7 +650,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "GeneratedDate",
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })

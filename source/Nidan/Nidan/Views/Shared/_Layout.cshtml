@@ -74,14 +74,8 @@
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
                                             <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a><i class="fa fa-cogs"></i> Main <span class="fa fa-chevron-up"></span></a>
-                                        <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                             <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
-                                            
                                         </ul>
                                     </li>
                                 }
@@ -127,7 +121,7 @@
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
-                    <nav class="" role="navigation">
+                    <nav>
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
@@ -143,11 +137,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @*<img src="images/img.jpg" alt="">*@ @User.Identity.Name
+                                    <img src="~/Content/images/Nidan.jpg" alt=""> @User.Identity.Name
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>
+                                    @*<li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>*@
                                     @*<li>
                                             <a href="javascript:;">
                                                 <span class="badge bg-red pull-right">50%</span>
