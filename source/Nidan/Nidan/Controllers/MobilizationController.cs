@@ -207,14 +207,14 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveMobilizations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveMobilizationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
+            var data = NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -222,7 +222,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveMobilizations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.GeneratedDate >= fromDate && e.GeneratedDate <= toDate && e.Close == "No", orderBy, paging);
+            var data = NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate && e.Close == "No", orderBy, paging);
             return this.JsonNet(data);
         }
     }

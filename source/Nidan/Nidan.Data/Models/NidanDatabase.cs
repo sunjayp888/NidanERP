@@ -1730,6 +1730,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.ClosingRemark)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
             modelBuilder.Entity<FollowUpDataGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);

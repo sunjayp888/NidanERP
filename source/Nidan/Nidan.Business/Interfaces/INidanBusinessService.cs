@@ -246,6 +246,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CounsellingDataGrid> RetrieveCounsellingGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseDataGrid> RetrieveExpenseDataGrid(int organisationId, Expression<Func<ExpenseDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<ExpensePettyCashData> RetrieveExpensePettyCashDataByCentre(int organisationId, int centreId, DateTime startDate, DateTime endDate);
+        PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, string searchKeyword, Expression<Func<MobilizationDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

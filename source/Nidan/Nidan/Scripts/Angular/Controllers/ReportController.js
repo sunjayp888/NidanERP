@@ -199,8 +199,8 @@
         }
 
         function pageChanged() {
-            vm.fromDate = $("#txt_FromDate").val();
-            vm.toDate = $("#txt_ToDate").val();
+            vm.fromDate = $("#fromDate").val();
+            vm.toDate = $("#toDate").val();
             var path = window.location.pathname.split('/');
             if (path[2] == "Enquiry") {
                 searchEnquiryByDate(vm.fromDate, vm.toDate);
