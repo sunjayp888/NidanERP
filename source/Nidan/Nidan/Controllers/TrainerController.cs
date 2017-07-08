@@ -52,7 +52,7 @@ namespace Nidan.Controllers
         }
 
         //Get:trainer/create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -75,7 +75,7 @@ namespace Nidan.Controllers
         }
 
         // POST: trainer/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(TrainerViewModel trainerViewModel)

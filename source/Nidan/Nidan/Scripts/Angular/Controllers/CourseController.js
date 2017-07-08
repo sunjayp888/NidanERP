@@ -29,6 +29,7 @@
         vm.retrieveCourseBySectorId = retrieveCourseBySectorId;
         vm.deleteEnquiryCourse = deleteEnquiryCourse;
         vm.deleteSubjectCourse = deleteSubjectCourse;
+        vm.setDefaultSector = setDefaultSector;
         vm.type = "";
 
         initialise();
@@ -38,6 +39,7 @@
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             order("Name");
+
         }
 
         function retrieveCourses() {
@@ -53,6 +55,7 @@
         function retrieveCourseBySectorId() {
             return CourseService.retrieveCourseBySectorId(vm.type).then(function (response) {
                 vm.courses = response.data;
+                $('#Enquiry_SectorId option').eq(vm.type).prop('selected', true);
                 return vm.courses;
             });
         }
@@ -118,6 +121,11 @@
             return CourseService.deleteSubjectCourse(subjectId, $item.CourseId)
                 .then(function () {
                 });
+        }
+
+        function setDefaultSector(id) {
+            vm.type = id;
+            retrieveCourseBySectorId();
         }
     }
 

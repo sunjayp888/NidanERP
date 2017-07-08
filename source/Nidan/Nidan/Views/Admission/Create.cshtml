@@ -9,7 +9,7 @@
 <div class="x_panel">
 <div class="x_title">
     <h2>
-        <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration?.Enquiry?.Title, @Model.Registration?.Enquiry?.FirstName, @Model.Registration?.Enquiry?.MiddleName, @Model.Registration?.Enquiry?.LastName)</button> Create New Admission <small></small>
+        <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration?.Enquiry?.Title, @Model.Registration?.Enquiry?.FirstName, @Model.Registration?.Enquiry?.MiddleName, @Model.Registration?.Enquiry?.LastName)</button> Create Admission <small></small>
     </h2>
     <div class="clearfix"></div>
 </div>
@@ -242,43 +242,43 @@
                                 <thead>
                                 <tr role="row">
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsMonday, new { autocomplete = "off", @disabled = true })
                                             Monday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsTuesday, new { autocomplete = "off", @disabled = true })
                                             Tuesday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsWednesday, new { autocomplete = "off", @disabled = true })
                                             Wednesday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsThursday, new { autocomplete = "off", @disabled = true })
                                             Thursday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsFriday, new { autocomplete = "off", @disabled = true })
                                             Friday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsSaturday, new { autocomplete = "off", @disabled = true })
                                             Saturday
                                         </label>
                                     </th>
                                     <th>
-                                        <label class="btn btn-dark">
+                                        <label class="btn btn-info">
                                             @Html.CheckBoxFor(m => m.BatchDay.IsSunday, new { autocomplete = "off", @disabled = true })
                                             Sunday
                                         </label>

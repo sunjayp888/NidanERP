@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: CentrePettyCash/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -40,7 +40,7 @@ namespace Nidan.Controllers
         }
 
         // POST: CentrePettyCash/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CentrePettyCashViewModel centrePettyCashViewModel)

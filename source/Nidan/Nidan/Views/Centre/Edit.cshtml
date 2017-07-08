@@ -217,7 +217,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -371,7 +371,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -525,7 +525,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -679,7 +679,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
