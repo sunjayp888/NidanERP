@@ -139,7 +139,7 @@
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/FollowUP/Edit/{{followUp.FollowUpId}}">

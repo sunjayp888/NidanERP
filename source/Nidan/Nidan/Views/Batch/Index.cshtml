@@ -21,7 +21,7 @@
         </div>*@
     </div>
 
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -130,7 +130,7 @@
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                    @if (User.IsInAnyRoles("Admin"))
                                                     {
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Batch/Edit/{{batch.BatchId}}">

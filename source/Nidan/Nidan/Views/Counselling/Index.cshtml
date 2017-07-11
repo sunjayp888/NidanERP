@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("Admin"))
     {
         @*<div class="row">
                 <div class="col-xs-12">
@@ -150,13 +150,16 @@
                                                                 View
                                                             </a>
                                                         </li>
+														}
+														@if (User.IsInAnyRoles("Admin"))
+														{
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Edit/{{counselling.CounsellingId}}">
                                                                 Edit
                                                             </a>
                                                         </li>
                                                         <li ng-if="!counselling.Enquiry.IsRegistrationDone">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{counselling.Enquiry.EnquiryId}}">
+                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{counselling.EnquiryId}}">
                                                                 Create Registration
                                                             </a>
                                                         </li>
