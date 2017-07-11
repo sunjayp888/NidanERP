@@ -136,7 +136,9 @@
                                                                     View
                                                                 </a>
                                                             </li>
-
+														}
+														@if (User.IsInAnyRoles("Admin"))
+														{
                                                             <li ng-if="admission.BatchName==null">
                                                                 <a style="cursor: pointer;" ng-href="/Admission/AssignBatch/{{admission.AdmissionId}}">
                                                                     Assign Batch

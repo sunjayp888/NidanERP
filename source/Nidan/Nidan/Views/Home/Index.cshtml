@@ -81,12 +81,12 @@
                         Pie Chart<small>Monthly (@string.Format("{0} - {1}", DateTime.UtcNow.ToString("MMMM"), DateTime.UtcNow.Year))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            <small><b>Centre</b></small>
+                            <!--<small><b>Centre</b></small>-->
                         }
                     </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
-                        <div id="pie" class="form-group">
+                        <!-- <div id="pie" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -96,7 +96,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     }
                     <div class="clearfix"></div>
                 </div>
@@ -119,12 +119,12 @@
                         Bar Chart<small>Weekly (@string.Format("{0} To {1}", startOfWeek, endOfWeek))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            <small><b>Centre</b></small>
+                            <!--<small><b>Centre</b></small>-->
                         }
                     </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
-                        <div id="bar" class="form-group">
+                        <!--<div id="bar" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -133,7 +133,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     }
                     <div class="clearfix"></div>
                 </div>
