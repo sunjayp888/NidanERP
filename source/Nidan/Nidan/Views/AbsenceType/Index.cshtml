@@ -11,7 +11,7 @@
             </h3>
         </div>
     </div>
-    @if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
     {
         @*<div class="row">
             <div class="col-xs-12">
@@ -46,7 +46,7 @@
                                     <thead>
                                     <tr role="row">
                                         <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Title</th>
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -55,7 +55,7 @@
                                     <tbody>
                                     <tr ng-repeat="absenceType in model.absenceTypes" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editAbsenceType(absenceType.AbsenceTypeId)">
                                         <td><span class="square" ng-style="{'background-color' : '#' + absenceType.Colour.Hex }"></span> <span ng-bind="absenceType.Name"></span></td>
-                                        @if (User.IsInAnyRoles("Admin"))
+                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                         {
                                             <td ng-click = "$event.stopPropagation()">
                                                 <div class="btn-group pull-right">

@@ -143,20 +143,23 @@
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Counselling/View/{{counselling.CounsellingId}}">
                                                                 View
                                                             </a>
                                                         </li>
+														}
+														@if (User.IsInAnyRoles("Admin"))
+														{
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Edit/{{counselling.CounsellingId}}">
                                                                 Edit
                                                             </a>
                                                         </li>
                                                         <li ng-if="!counselling.Enquiry.IsRegistrationDone">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{counselling.Enquiry.EnquiryId}}">
+                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{counselling.EnquiryId}}">
                                                                 Create Registration
                                                             </a>
                                                         </li>

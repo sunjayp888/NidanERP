@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: BatchAttendance/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -46,7 +46,7 @@ namespace Nidan.Controllers
         }
 
         // POST: BatchAttendance/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BatchAttendanceViewModel batchAttendanceViewModel)

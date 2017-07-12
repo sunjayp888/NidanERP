@@ -21,14 +21,14 @@ namespace Nidan.Controllers
             _nidanBusinessService = nidanBusinessService;
         }
         // GET: CourseInstallment
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: CourseInstallment/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -36,13 +36,13 @@ namespace Nidan.Controllers
             var viewModel = new CourseInstallmentViewModel()
             {
                 CourseInstallment = new CourseInstallment(),
-                Courses = new SelectList(courses, "CourseId", "Name"),
+                Courses = new SelectList(courses, "CourseId", "Name")
             };
             return View(viewModel);
         }
 
         // POST: CourseInstallment/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseInstallmentViewModel courseInstallmentViewModel)
@@ -50,7 +50,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
-            courseInstallmentViewModel.CourseInstallment.CentreId = centreId;
             courseInstallmentViewModel.CourseInstallment.CreatedDate= DateTime.UtcNow;
             if (ModelState.IsValid)
             {
@@ -71,6 +70,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var courseInstallment = NidanBusinessService.RetrieveCourseInstallment(organisationId, id.Value);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             if (courseInstallment == null)
             {
                 return HttpNotFound();
@@ -79,6 +79,7 @@ namespace Nidan.Controllers
             {
                 CourseInstallment = courseInstallment,
                 Courses = new SelectList(courses, "CourseId", "Name"),
+                Centres = new SelectList(centres, "CentreId", "Name")
             };
             return View(viewModel);
         }

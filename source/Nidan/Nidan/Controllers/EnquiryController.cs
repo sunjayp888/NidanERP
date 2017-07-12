@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Enquiry/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -80,7 +80,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Enquiry/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EnquiryViewModel enquiryViewModel)

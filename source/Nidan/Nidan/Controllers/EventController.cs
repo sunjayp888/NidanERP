@@ -23,14 +23,14 @@ namespace Nidan.Controllers
         }
 
         // GET: Event
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: Event/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var viewModel = new EventViewModel

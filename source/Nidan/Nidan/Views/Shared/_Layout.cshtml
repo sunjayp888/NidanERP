@@ -53,7 +53,7 @@
 
                                     </ul>
                                 </li>
-                                @*@if (User.IsInAnyRoles("Admin"))
+                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Event <span class="fa fa-chevron-up"></span></a>
@@ -77,6 +77,14 @@
                                             
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a><i class="fa fa-cogs"></i> Main <span class="fa fa-chevron-up"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
+                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
+                                            
+                                        </ul>
+                                    </li>
                                 }
                                 <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-up"></span></a>
@@ -90,20 +98,12 @@
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
                                         <ul class="nav child_menu">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-
-                                            }
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
-                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
-                                            @*<li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>*@
+                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
+                                            <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                           
                                         </ul>
                                     </li>
                                 }
@@ -129,7 +129,7 @@
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
-                    <nav class="" role="navigation">
+                    <nav>
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
@@ -145,11 +145,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @*<img src="images/img.jpg" alt="">*@ @User.Identity.Name
+                                    <img src="~/Content/images/Nidan.jpg" alt=""> @User.Identity.Name
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>
+                                    @*<li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>*@
                                     @*<li>
                                             <a href="javascript:;">
                                                 <span class="badge bg-red pull-right">50%</span>

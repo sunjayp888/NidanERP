@@ -26,7 +26,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Room/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -43,7 +43,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Room/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RoomViewModel roomViewModel)

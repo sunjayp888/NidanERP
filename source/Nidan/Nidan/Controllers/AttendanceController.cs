@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Attendance/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
            var viewModel = new AttendanceViewModel
@@ -36,7 +36,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Attendance/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AttendanceViewModel attendanceViewModel)

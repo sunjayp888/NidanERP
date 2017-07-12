@@ -45,7 +45,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Admission/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -90,7 +90,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Admission/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AdmissionViewModel admissionViewModel)

@@ -650,7 +650,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "GeneratedDate",
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
@@ -1625,6 +1625,7 @@ namespace Nidan.Data
                 return context
                     .SubjectCourses
                     .Include(e => e.Subject)
+                    .Include(e => e.Course)
                     .Where(predicate)
                     .AsNoTracking()
                     .ToList();
@@ -1845,6 +1846,7 @@ namespace Nidan.Data
                     .Include(p => p.Registration.Course)
                     .Include(p => p.Registration.CandidateFee)
                     .Include(p => p.Registration.CandidateInstallment)
+                    .Include(p => p.Registration.CandidateInstallment.CandidateFees)
                     .Include(p => p.Registration.CourseInstallment)
                     .Include(p => p.Registration.CourseInstallment.Course)
                     .Include(p => p.Registration.Enquiry)
