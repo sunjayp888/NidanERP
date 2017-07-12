@@ -28,14 +28,16 @@
         vm.sessions = [];
         vm.retrieveSessions = retrieveSessions;
         vm.searchBatchAttendanceByDate = searchBatchAttendanceByDate;
+        vm.retrieveBatchAttendancesByBatchId = retrieveBatchAttendancesByBatchId;
+        vm.retrieveSyncData = retrieveSyncData;
         vm.type = "";
         vm.initialise = initialise;
 
         function initialise() {
-            vm.orderBy.property = "BatchAttendanceId";
+            vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "desc";
-            order("BatchAttendanceId");
+            order("StudentCode");
         }
 
         function retrieveBatchAttendances() {
@@ -48,7 +50,7 @@
                     });
         }
 
-       function searchBatchAttendance(searchKeyword) {
+        function searchBatchAttendance(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return BatchAttendanceService.searchBatchAttendance(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
@@ -75,6 +77,33 @@
                   vm.searchMessage = vm.batchAttendances.length === 0 ? "No Records Found" : "";
                   return vm.batchAttendances;
               });
+        }
+
+        function retrieveBatchAttendancesByBatchId() {
+            vm.orderBy.property = "StudentCode";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
+                    .then(function (response) {
+                        vm.batchAttendances = response.data.Items;
+                        vm.paging.totalPages = response.data.TotalPages;
+                        vm.paging.totalResults = response.data.TotalResults;
+                        return vm.batchAttendances;
+                    });
+        }
+
+        function retrieveSyncData(batchId) {
+            vm.orderBy.property = "StudentCode";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.batchId = $('#BatchAttendance_BatchId').val();
+            return BatchAttendanceService.retrieveSyncData(vm.batchId, vm.paging, vm.orderBy)
+                    .then(function (response) {
+                        vm.batchAttendances = response.data.Items;
+                        vm.paging.totalPages = response.data.TotalPages;
+                        vm.paging.totalResults = response.data.TotalResults;
+                        return vm.batchAttendances;
+                    });
         }
 
         function pageChanged() {
@@ -117,6 +146,6 @@
             });
         }
 
-        }
+    }
 
 })();
