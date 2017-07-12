@@ -142,7 +142,8 @@ namespace Nidan.Controllers
 
         public ActionResult UnassignedCentreCourseInstallments(int centreId)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveUnassignedCentreCourseInstallments(UserOrganisationId, centreId));
+            var data = NidanBusinessService.RetrieveUnassignedCentreCourseInstallments(UserOrganisationId, centreId);
+            return this.JsonNet(data);
         }
 
         public ActionResult CentreCourseInstallments(int centreId)

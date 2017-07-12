@@ -1234,6 +1234,8 @@ namespace Nidan.Business
             var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);
             enquiry.IsRegistrationDone = true;
             enquiry.EnquiryStatus = "Registration";
+            enquiry.Scheme = null;
+            enquiry.Sector = null;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
             var counselling =
                 RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
@@ -2134,17 +2136,13 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBatchTrainers(organisationId, batchId);
         }
 
-        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId,
-            int centreId)
+        public IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId)
         {
-
-            return
-                _nidanDataService.RetrieveCourseInstallments(organisationId,
-                        a =>
-                            !a.CentreCourseInstallments.Any(d => d.CentreId == centreId) &&
-                            a.Course.CentreCourses.Any(e => e.CentreId == centreId)
-                    )
-                    .Items.ToList();
+            var data = _nidanDataService.RetrieveCourseInstallments(organisationId,
+                    a =>!a.CentreCourseInstallments.Any(d=>d.CentreId==centreId)
+                )
+                .Items.ToList();
+            return data;
         }
 
         public PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId,
