@@ -116,6 +116,15 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveAttendances(organisationId, e => true);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult GetSyncData(int batchId)
+        {
+            var organisationId = UserOrganisationId;
+            var admissiondata = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => p.CentreId == UserCentreId && p.BatchId == batchId);
+            var data = NidanBusinessService.RetrieveAttendances(organisationId,e=>true);
+            return this.JsonNet(data);
+        }
     }
 }
 
