@@ -185,9 +185,9 @@
         function searchExpenseByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ExpenseCreatedDate";
             vm.orderBy.class = "asc";
-            order("CreatedDate");
+            order("ExpenseCreatedDate");
             return ReportService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;

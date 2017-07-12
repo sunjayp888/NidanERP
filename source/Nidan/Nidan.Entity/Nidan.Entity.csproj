@@ -189,6 +189,7 @@
     <Compile Include="PaymentMode.cs" />
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
+    <Compile Include="PettyCashExpenseReport.cs" />
     <Compile Include="Planning.cs" />
     <Compile Include="Postevent.cs" />
     <Compile Include="Project.cs" />
