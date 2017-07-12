@@ -2557,6 +2557,7 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Centre)
                     .Include(p => p.Personnel)
+                    .Include(p => p.StudentCode)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

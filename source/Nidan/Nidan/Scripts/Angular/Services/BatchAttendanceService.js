@@ -13,7 +13,8 @@
             searchBatchAttendance: searchBatchAttendance,
             retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId,
             searchBatchAttendanceByDate: searchBatchAttendanceByDate,
-            retrieveBatches: retrieveBatches
+            retrieveBatches: retrieveBatches,
+            retrieveSyncData: retrieveSyncData
         };
 
         return service;
@@ -29,7 +30,7 @@
             return $http.post(url, data);
         }
 
-        function retrieveBatchAttendancesByBatchId( batchId,Paging, OrderBy) {
+        function retrieveBatchAttendancesByBatchId(batchId, Paging, OrderBy) {
 
             var url = "/BatchAttendance/AttendanceList",
                 data = {
@@ -69,6 +70,18 @@
 
             var url = "/BatchAttendance/GetBatches";
             return $http.post(url);
+        }
+
+        function retrieveSyncData(batchId,Paging, OrderBy) {
+
+            var url = "/BatchAttendance/GetSyncData",
+                data = {
+                    batchId :batchId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
         }
     }
 })();
