@@ -175,7 +175,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<SubjectCourse> RetrieveSubjectCourses(int organisationId, Expression<Func<SubjectCourse, bool>> predicate);
         IEnumerable<SubjectTrainer> RetrieveSubjectTrainers(int organisationId, int subjectId);
         IEnumerable<BatchTrainer> RetrieveBatchTrainers(int organisationId, int batchId);
-        IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId, int centreId);
+        IEnumerable<CourseInstallment> RetrieveUnassignedCentreCourseInstallments(int organisationId,int centreId);
         PagedResult<CentreCourseInstallment> RetrieveCentreCourseInstallments(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<Scheme> RetrieveUnassignedCentreSchemes(int organisationId, int centreId);
         PagedResult<CentreScheme> RetrieveCentreSchemes(int organisationId, int centreId, List<OrderBy> orderBy = null, Paging paging = null);

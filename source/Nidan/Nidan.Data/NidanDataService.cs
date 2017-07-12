@@ -847,6 +847,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
@@ -1180,6 +1181,7 @@ namespace Nidan.Data
                     .CourseInstallments
                     .Include(p => p.Organisation)
                     .Include(p => p.Course)
+                    .Include(p => p.CentreCourseInstallments)
                     .Include(p => p.Course.CentreCourses)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1444,6 +1446,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
@@ -2141,6 +2144,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
@@ -2168,6 +2172,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
@@ -2195,6 +2200,7 @@ namespace Nidan.Data
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
+                    .Where(predicate)
                     .Paginate(paging);
                 return data;
             }
