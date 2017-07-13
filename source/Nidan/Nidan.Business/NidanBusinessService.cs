@@ -2577,6 +2577,12 @@ namespace Nidan.Business
                 orderBy, paging);
         }
 
+        public PagedResult<PettyCashExpenseReport> RetrievePettyCashExpenseReports(int organisationId, Expression<Func<PettyCashExpenseReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrievePettyCashExpenseReports(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update

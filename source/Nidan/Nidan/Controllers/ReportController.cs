@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Nidan.Business;
+using Nidan.Business.Dto;
 using Nidan.Business.Helper;
 using Nidan.Business.Interfaces;
+using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
 using Nidan.Models;
+using System.IO;
 
 namespace Nidan.Controllers
 {
@@ -64,7 +68,8 @@ namespace Nidan.Controllers
         public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin|| p.CentreId==UserCentreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -72,7 +77,7 @@ namespace Nidan.Controllers
         public ActionResult SearchMobilizationByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate,orderBy, paging);
+            var data = NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -112,7 +117,7 @@ namespace Nidan.Controllers
         public ActionResult ExpenseReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveExpenseDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrievePettyCashExpenseReports(UserOrganisationId, p => (isSuperAdmin) && p.ExpenseCreatedDate >= fromDate && p.ExpenseCreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

@@ -116,6 +116,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<AttendanceGrid> AttendanceGrids { get; set; }
         public virtual DbSet<CounsellingDataGrid> CounsellingDataGrids { get; set; }
         public virtual DbSet<ExpenseDataGrid> ExpenseDataGrids { get; set; }
+        public virtual DbSet<PettyCashExpenseReport> PettyCashExpenseReports { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -1924,6 +1925,38 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ExpenseDataGrid>()
                 .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.PettyCashForCentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.PettyCashParticulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseParticulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseCashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseVoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpensePaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseCentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseHeader)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

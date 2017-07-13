@@ -7,7 +7,7 @@
 
     ReportController.$inject = ['$window', 'ReportService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal'];
 
-    function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal, $modalInstance) {
+    function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal) {
         /* jshint validthis:true */
         var vm = this;
         vm.reports = [];
@@ -25,6 +25,7 @@
         vm.searchMobilizationByDate = searchMobilizationByDate;
         //vm.retrieveFollowUpReports = retrieveFollowUpReports;
         vm.searchFollowUpByDate = searchFollowUpByDate;
+        vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
@@ -185,9 +186,9 @@
         function searchExpenseByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ExpenseCreatedDate";
             vm.orderBy.class = "asc";
-            order("CreatedDate");
+            order("ExpenseCreatedDate");
             return ReportService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
@@ -256,6 +257,10 @@
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
         }
     }
 

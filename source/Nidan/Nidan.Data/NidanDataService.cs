@@ -2460,8 +2460,8 @@ namespace Nidan.Data
             {
                 return context
                       .FollowUpDataGrids
-                      .Include(p=>p.FollowUp)
-                      .Include(p=>p.FollowUp.Course)
+                      //.Include(p=>p.FollowUp)
+                      //.Include(p=>p.FollowUp.Course)
                       .AsNoTracking()
                       .Where(predicate)
                       .OrderBy(orderBy ?? new List<OrderBy>
@@ -2726,6 +2726,28 @@ namespace Nidan.Data
                     .Where(predicate)
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<PettyCashExpenseReport> RetrievePettyCashExpenseReports(int organisationId, Expression<Func<PettyCashExpenseReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .PettyCashExpenseReports
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ExpenseCreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 

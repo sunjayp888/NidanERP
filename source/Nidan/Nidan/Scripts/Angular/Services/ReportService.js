@@ -111,6 +111,7 @@
             return $http.post(url, data);
         }
 
+
         function searchRegistrationByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchRegistrationByDate",
                 data = {
@@ -131,7 +132,6 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
-
             return $http.post(url, data);
         }
 
