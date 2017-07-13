@@ -69,7 +69,7 @@ namespace Nidan.Controllers
         public ActionResult AttendanceList(int batchId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var admissiondata = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
+            var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
             return this.JsonNet(admissiondata);
         }
 
@@ -104,7 +104,25 @@ namespace Nidan.Controllers
         public ActionResult GetBatches()
         {
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId,null,null);
+            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetSyncData(int batchId)
+        {
+            var organisationId = UserOrganisationId;
+            var admissiondata = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => p.CentreId == UserCentreId && p.BatchId == batchId);
+            var data = NidanBusinessService.RetrieveAttendances(organisationId, e => true);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetSyncData(int batchId)
+        {
+            var organisationId = UserOrganisationId;
+            var admissiondata = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => p.CentreId == UserCentreId && p.BatchId == batchId);
+            var data = NidanBusinessService.RetrieveAttendances(organisationId,e=>true);
             return this.JsonNet(data);
         }
     }
