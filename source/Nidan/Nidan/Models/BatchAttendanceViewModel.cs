@@ -14,6 +14,8 @@ namespace Nidan.Models
         public SelectList Batches { get; set; }
         public SelectList Subjects { get; set; }
         public SelectList Sessions { get; set; }
+        public List<Attendance> AttendanceList { get; set; }
+        public List<BatchAttendance> BatchAttendanceList { get; set; }
 
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }

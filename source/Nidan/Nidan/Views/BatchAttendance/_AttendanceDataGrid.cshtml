@@ -1,4 +1,5 @@
-﻿@using Nidan.Extensions
+﻿@using Nidan.Entity
+@using Nidan.Extensions
 @model Nidan.Models.BatchAttendanceViewModel
 
 
@@ -44,7 +45,8 @@
                                     <tbody>
                                         <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-click="$event.originalEvent.ngClickHandled">
                                             <td>
-                                                    <input type="checkbox" ng-model="batchAttendance.IsPresent">
+                                                @*<input type="checkbox" ng-model="batchAttendance.IsPresent">*@
+                                                @Html.CheckBoxFor(m => m.Attendance.IsPresent.Value, new { autocomplete = "off" ,ng_model= "batchAttendance.IsPresent" })
                                                 </td>
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
@@ -72,3 +74,4 @@
 
 @section scripts{
     <script src="~/Scripts/icheck/icheck.min.js"></script>
+}
