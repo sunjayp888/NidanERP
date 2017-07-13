@@ -986,7 +986,7 @@ namespace Nidan.Business
 
             admission.OrganisationId = organisationId;
             admission.CentreId = centreId;
-            admission.AdmissionDate = DateTime.UtcNow;
+            admission.AdmissionDate = DateTime.UtcNow.Date;
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
 
             // Update Registration IsAdmissionDone
