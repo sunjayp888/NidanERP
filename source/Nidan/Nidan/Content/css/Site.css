@@ -361,3 +361,7 @@
     width: 65%;
   }
 }
+.multi-line-text-area {
+  height: 100px;
+  width: 497px;
+}

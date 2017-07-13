@@ -44,13 +44,16 @@
                                         {
                                             <li><a href='@Url.Action("Mobilization", "Report")'>Mobilization</a></li>
                                             <li><a href='@Url.Action("Enquiry", "Report")'>Enquiry</a></li>
-                                            <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
+                                            <li><a href='@Url.Action("Counselling", "Report")'>Counselling</a></li>
+                                            <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
+                                            <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
+                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
                                         }
 
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("Admin"))
+                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Event <span class="fa fa-chevron-up"></span></a>
@@ -59,7 +62,7 @@
                                             <li><a href='@Url.Action("Index", "Question")'>Question</a></li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                                 @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
@@ -71,6 +74,8 @@
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
                                             <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
+                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
+                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -80,40 +85,21 @@
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
                                         <ul class="nav child_menu">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-
-                                            }
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
-                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
+                                            <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                           
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("SuperAdmin", "Admin", "Trainer"))
-                                {
-                                    <li>
-                                        <a><i class="fa fa-cogs"></i>Candidate<span class="fa fa-chevron-up"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
-                                            <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
-                                            <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Subject</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                                @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-up"></span></a>
@@ -121,9 +107,10 @@
                                             <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                             <li><a href='@Url.Action("Index", "OtherFee")'>Other Fee</a></li>
                                             <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                                            <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                             </ul>
                         </div>
 
@@ -134,7 +121,7 @@
             <!-- top navigation -->
             <div class="top_nav">
                 <div class="nav_menu">
-                    <nav class="" role="navigation">
+                    <nav>
                         <div class="nav toggle">
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
@@ -150,11 +137,11 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @*<img src="images/img.jpg" alt="">*@ @User.Identity.Name
+                                    <img src="~/Content/images/Nidan.jpg" alt=""> @User.Identity.Name
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>
+                                    @*<li>@Html.ActionLink("Profile", "Profile", "Personnel", new { id = Model.PersonnelId }, null)</li>*@
                                     @*<li>
                                             <a href="javascript:;">
                                                 <span class="badge bg-red pull-right">50%</span>

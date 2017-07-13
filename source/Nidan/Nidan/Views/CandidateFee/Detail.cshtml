@@ -1,6 +1,7 @@
 ﻿@using Nidan.Business.Enum
 @using Nidan.Entity
 @using Nidan.Models
+@using ModelBinderAttribute = System.Web.Http.ModelBinding.ModelBinderAttribute
 @model Nidan.Models.CandidateFeeViewModel
 
 @{
@@ -83,7 +84,7 @@
                                             </td>
                                             <td class="col-lg-1">
                                                 <button ng-if="!candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
-                                                <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-warning btn-xs">Done</button>
+                                                <button ng-if="candidateFee.IsPaymentDone" type="button" class="btn btn-round btn-success btn-xs">Done</button>
                                             </td>
                                             <td>
                                                 <button id="btnPayFee" type="button" ng-disabled="!(candidateFee.InstallmentDate==candidateFee.NextInstallmentDate && candidateFee.InstallmentDate )" class="btn btn-success" ng-click="model.openCandidateFeeModalPopUp(candidateFee.CandidateFeeId)" data-toggle="modal" data-target="#candidateFeeModal"><i class="fa fa-credit-card"></i> Pay</button>
@@ -118,35 +119,20 @@
 @section scripts
 {
     <script>
-
-        $("#labelChequeNumber").hide();
-        $("#labelChequeDate").hide();
-        $("#labelBankName").hide();
-        $("#txtChequeNumber").hide();
-        $("#txtChequeDate").hide();
-        $("#txtBankName").hide();
+        $("#chequeDetailDiv").hide();
+        $("#haveReceiptDiv").hide();
         $("#txtChequeDate").val('');
         $("#overrideFeeDiv").hide();
-
         $("#dropDownPaymentMode").change(function () {
+            $('#overrideFeeCheckbox').prop('checked', false);
             if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
-                $("#txtChequeNumber").show();
-                $("#txtChequeDate").show();
-                $("#txtBankName").show();
-                $("#labelChequeNumber").show();
-                $("#labelChequeDate").show();
-                $("#labelBankName").show();
+                $("#chequeDetailDiv").show();
             } else {
+                $('#btnSaveCandidateFee').attr('disabled', false);
                 $("#txtChequeDate").val('');
-                $("#txtChequeNumber").hide();
-                $("#txtChequeDate").hide();
-                $("#txtBankName").hide();
-                $("#labelChequeNumber").hide();
-                $("#labelChequeDate").hide();
-                $("#labelBankName").hide();
+                $("#chequeDetailDiv").hide();
             }
         });
-
         $(function () {
             var daterangepickerOptions = {
                 autoApply: true,
@@ -172,7 +158,6 @@
                 });
             });
         });
-
         function onlyNumbers(evt) {
             var e = event || evt; // For trans-browser compatibility
             var charCode = e.which || e.keyCode;
@@ -181,7 +166,6 @@
                 return false;
             return true;
         }
-
         function NumToWord(inputNumber, outputControl) {
             var str = new String(inputNumber);
             var splt = str.split("");
@@ -309,26 +293,21 @@
             }
             document.getElementById(outputControl).innerHTML = finalOutput + " Only";
         }
-
         //======================================================================on payment mode selection enable submit payment button
-
-
         //
         $('#dropDownPaymentMode')
             .change(function () {
                 var paymentmode = $('#dropDownPaymentMode').val();
                 var paidAmount = $('#txtPaidAmount').val();
-                if (paymentmode == "Select Payment Mode" || paidAmount=="") {
+                if (paymentmode == "Select Payment Mode" || paidAmount == "") {
                     $('#btnSaveCandidateFee').attr('disabled', true);
                 } else {
                     $('#btnSaveCandidateFee').attr('disabled', false);
                 }
-
             });
-
-        $('#checkbox')
+        $('#overrideFeeCheckbox')
             .change(function () {
-                if ($('#checkbox').is(":checked") == true) {
+                if ($('#overrideFeeCheckbox').is(":checked") == true) {
                     $("#overrideFeeDiv").show();
                     $('#btnSaveCandidateFee').attr('disabled', true);
                 } else {
@@ -337,9 +316,17 @@
                 }
             });
 
-
+        $('#haveReceiptCheckbox')
+            .change(function () {
+                if ($('#haveReceiptCheckbox').is(":checked") == true) {
+                    $("#haveReceiptDiv").show();
+                    $('#btnSaveCandidateFee').attr('disabled', true);
+                } else {
+                    $("#haveReceiptDiv").hide();
+                    $('#btnSaveCandidateFee').attr('disabled', false);
+                }
+            });
         //==============================================
-
         $('#btn').click(function () {
             var btn = $(this);
             $.post({ delay: 3 }).complete(function () {
@@ -348,11 +335,7 @@
             btn.prop('disabled', true);
 
         });
-
-       
-
         //========================================================= Paid Amount can not allow 0 as a first digit.
-
         $('#txtPaidAmount').keyup(function () {
             var paidAmount = $('#txtPaidAmount').val();
             if (paidAmount == "") {
@@ -364,7 +347,6 @@
             if (myLength == 1) //To check only when entering first character.
             {
                 if ($(this).val() === '0') {
-                    
                     if ($(this).val('')) {
                         $('#btnSaveCandidateFee').attr('disabled', true);
                     } else {
@@ -376,7 +358,14 @@
             }
         });
 
+        $('#txtReceiptNumber').keyup(function () {
+            var paidAmount = $('#txtReceiptNumber').val();
+            if (paidAmount == "") {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            } else {
+                $('#btnSaveCandidateFee').attr('disabled', false);
+            }
+        });
         //===========================================================================
-
     </script>
 }

@@ -23,14 +23,14 @@ namespace Nidan.Controllers
         }
 
         // GET: RegistrationPaymentReceipt
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: RegistrationPaymentReceipt/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -41,7 +41,7 @@ namespace Nidan.Controllers
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e=>e.CourseInstallment).ToList();
             var counsellingData = NidanBusinessService.RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
             var counsellingCourse = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => e.CourseId == counsellingData?.CourseOfferedId);
             var viewModel = new RegistrationViewModel
@@ -59,7 +59,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Registration/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(RegistrationViewModel registrationViewModel)

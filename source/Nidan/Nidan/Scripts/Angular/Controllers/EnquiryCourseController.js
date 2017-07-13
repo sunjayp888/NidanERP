@@ -12,14 +12,14 @@
         var vm = this;
         vm.enquiryId;
         vm.courses = [];
-        vm.employmentTeams = [];
         vm.initialise = initialise;
         vm.createEnquiryCourse = createEnquiryCourse;
         vm.deleteEnquiryCourse = deleteEnquiryCourse;
 
         function initialise(enquiryId) {
             vm.enquiryId = enquiryId;
-            retrieveTeams();
+            retrieveCourses();
+            retrieveEnquiryCourses();
         }
 
         function retrieveCourses() {
@@ -42,19 +42,5 @@
                     return vm.employmentTeams;
                 });
         }
-
-        function createEmploymentTeam($item) {
-            return EnquiryCourseService.createEmploymentTeam(vm.employmentId, $item.TeamId)
-              .then(function () {
-              });
-        }
-
-        function deleteEmploymentTeam($item) {
-            return EnquiryCourseService.deleteEmploymentTeam(vm.employmentId, $item.TeamId)
-              .then(function () {
-              });
-        }
-
-        
     }
 })();

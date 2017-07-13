@@ -1,0 +1,121 @@
+﻿@model Nidan.Models.MobilizationViewModel
+
+@{
+    ViewBag.Title = string.Format("View Mobilization ({0})", Model.MobilizationDataGrid.CandidateName);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.MobilizationDataGrid.CandidateName</button><small> View Mobilization </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Mobilization Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Event Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.EventName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobilization Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.CreatedDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobile No.</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.Mobile" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Candidate Location</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.StudentLocation" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Interested Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.InterestedCourse" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        @if (Model.MobilizationDataGrid.OtherInterestedCourse != "" || Model.MobilizationDataGrid.OtherInterestedCourse != null)
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Other Interested Course</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.OtherInterestedCourse" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Qualification</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.Qualification" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

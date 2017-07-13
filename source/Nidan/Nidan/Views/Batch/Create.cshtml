@@ -101,14 +101,14 @@
         });
 
         $('#Batch_NumberOfHoursDaily').change(function () {
-            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
             if (checkboxlength != 0) {
                 BatchLogic();
             }
         });
 
         $('input[type="checkbox"]').change(function() {
-            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
             if (checkboxlength != 0) {
                 BatchLogic();
             }
@@ -122,7 +122,7 @@
                 var dailyBatchHours = $('#Batch_NumberOfHoursDaily').val();
                 var courseFee = $('#CourseInstallment_Fee').val();
                 var downPayment = $('#CourseInstallment_DownPayment').val();
-                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1 ;
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length ;
                 var numberOfWeekDays = checkboxlength;
                 var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
                 //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
@@ -616,7 +616,7 @@
 
         $('#btnsubmit')
             .click(function() {
-                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length-1;
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
 
                 if (checkboxlength == 0)
                     alert("Please Select Atleast Any One Day");

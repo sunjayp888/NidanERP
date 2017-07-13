@@ -6,7 +6,7 @@
     var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
     var endOfWeekDate = startOfWeekDate.AddDays(6);
     var startOfWeek = startOfWeekDate.ToShortDateString();
-    var endOfWeek= startOfWeekDate.AddDays(6).ToShortDateString();
+    var endOfWeek = startOfWeekDate.AddDays(6).ToShortDateString();
 }
 
 <div class="row">
@@ -20,7 +20,7 @@
             </div>
             <a href='@Url.Action("Index","Mobilization")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats" style="background: #b3ecff">
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
@@ -32,7 +32,7 @@
             </a>
             <a href='@Url.Action("Index","Enquiry")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats" style="background:#ffdb99">
                         <div class="icon">
                             <i class="fa fa-clipboard"></i>
                         </div>
@@ -44,7 +44,7 @@
             </a>
             <a href='@Url.Action("Index","Registration")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats"style="background:#ffcce7">
                         <div class="icon">
                             <i class="fa fa-check-square-o"></i>
                         </div>
@@ -56,7 +56,7 @@
             </a>
             <a href='@Url.Action("Index","Admission")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats">
+                    <div class="tile-stats"style="background:#ccffb3">
                         <div class="icon">
                             <i class="fa fa-institution"></i>
                         </div>
@@ -81,12 +81,12 @@
                         Pie Chart<small>Monthly (@string.Format("{0} - {1}", DateTime.UtcNow.ToString("MMMM"), DateTime.UtcNow.Year))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            <small><b>Centre</b></small>
+                            <!--<small><b>Centre</b></small>-->
                         }
                     </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
-                        <div id="pie" class="form-group">
+                        <!-- <div id="pie" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -96,7 +96,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     }
                     <div class="clearfix"></div>
                 </div>
@@ -119,12 +119,12 @@
                         Bar Chart<small>Weekly (@string.Format("{0} To {1}", startOfWeek, endOfWeek))</small>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            <small><b>Centre</b></small>
+                            <!--<small><b>Centre</b></small>-->
                         }
                     </h2>
                     @if (User.IsInAnyRoles("SuperAdmin"))
                     {
-                        <div id="bar" class="form-group">
+                        <!--<div id="bar" class="form-group">
                             <div class="row">
                                 @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -133,7 +133,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     }
                     <div class="clearfix"></div>
                 </div>

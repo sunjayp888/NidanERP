@@ -1,5 +1,4 @@
 ﻿@using Nidan.Extensions
-@using Nidan.Extensions
 @{
     ViewBag.Title = "Mobilization";
 }
@@ -25,10 +24,10 @@
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Mobilization")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Mobilization")">
                     <i class="fa fa-user"></i> Create
                 </a>
-                <a class="btn btn-app" href="@Url.Action("Upload", "Mobilization")">
+                <a class="btn btn-warning btn-lg" href="@Url.Action("Upload", "Mobilization")">
                     <i class="fa fa-upload"></i> Upload
                 </a>
             </div>
@@ -111,11 +110,11 @@
                                         {
                                             <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                         }
-                                        <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                         <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                        <th ng-click="model.order('InterestedCourseId')" ng-class="model.orderClass('InterestedCourseId')">Interested Course</th>
-                                        <th ng-click="model.order('Qualification.Name')" ng-class="model.orderClass('Qualification.Name')">Qualification</th>
-                                        <th ng-click="model.order('GeneratedDate')" ng-class="model.orderClass('GeneratedDate')">Mobilized Date</th>
+                                        <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
+                                        <th ng-click="model.order('Qualification')" ng-class="model.orderClass('Qualification')">Qualification</th>
+                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Mobilized Date</th>
                                         <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
                                         <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
                                         <th>Actions</th>
@@ -126,13 +125,13 @@
                                             @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="mobilizer.Centre.Name"></span></td>
+                                                <td><span ng-bind="mobilizer.CentreName"></span></td>
                                             }
-                                            <td><span ng-bind="mobilizer.Title"></span> <span ng-bind="mobilizer.FirstName"></span> <span ng-bind="mobilizer.MiddleName"></span> <span ng-bind="mobilizer.LastName"></span></td>
+                                            <td><span ng-bind="mobilizer.CandidateName"></span></td>
                                             <td><span ng-bind="mobilizer.Mobile"></span></td>
-                                            <td><span ng-bind="mobilizer.Course.Name"></span></td>
-                                            <td><span ng-bind="mobilizer.Qualification.Name"></span></td>
-                                            <td><span ng-bind="mobilizer.GeneratedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="mobilizer.InterestedCourse"></span></td>
+                                            <td><span ng-bind="mobilizer.Qualification"></span></td>
+                                            <td><span ng-bind="mobilizer.CreatedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="mobilizer.FollowUpDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="mobilizer.StudentLocation"></span></td>
                                             <td>
@@ -141,8 +140,18 @@
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                         {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Mobilization/View/{{mobilizer.MobilizationId}}">
+                                                                    View
+                                                                </a>
+                                                            </li>
+															
+															}
+															
+															@if (User.IsInAnyRoles("Admin"))
+                                                            { 
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{mobilizer.MobilizationId}}">
                                                                     Edit
@@ -154,13 +163,13 @@
                                                                     Create Enquiry
                                                                 </a>
                                                             </li>
-
+																}
                                                             @*<li >
                                                                     <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.FirstName}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
                                                                         Archive
                                                                     </a>
                                                                 </li>*@
-                                                        }
+                                                        
                                                     </ul>
                                                 </div>
                                             </td>

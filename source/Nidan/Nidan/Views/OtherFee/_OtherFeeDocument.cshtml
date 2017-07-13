@@ -1,6 +1,6 @@
 ﻿@using Nidan.Extensions
 @{
-    var cashMemo= Model.OtherFee.CashMemo.ToString();
+    var cashMemo= Model.CashMemo.ToString();
 }
 
 <div class="modal fade" id="otherFeeDocumentModal" ng-hide="model.ShowModal">
@@ -102,7 +102,7 @@
                                                             <i class="fa fa-chevron-down"></i>
                                                         </a>
                                                         <ul class="dropdown-menu slidedown">
-                                                            @if (User.IsInAnyRoles("Admin"))
+                                                            @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                             {
                                                                 <li>
                                                                     <a style="cursor: pointer;" ng-href="/Document/Download/{{document.Guid}}">

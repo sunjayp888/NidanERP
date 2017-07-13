@@ -1,0 +1,377 @@
+﻿@using System.Globalization
+@model Nidan.Models.EnquiryViewModel
+
+@{
+    ViewBag.Title = string.Format("View Enquiry ({0})", Model.EnquiryDataGrid.CandidateName);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.EnquiryDataGrid.CandidateName</button><small> View Enquiry </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Type
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Event Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Enquiry_Type" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobilization Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Student_Type" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Personl Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Candidate Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.CandidateName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Gender</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Gender" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobile No.</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Mobile" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Email Id</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.EmailId" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Religion</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Religion" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Caste Category</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Caste_Category" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Address</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0}, {1}, {2}, {3}, Pincode - {4}", Model.EnquiryDataGrid.Address1, Model.EnquiryDataGrid.Taluka, Model.EnquiryDataGrid.District, Model.EnquiryDataGrid.State, Model.EnquiryDataGrid.PinCode)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Type
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Event Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Enquiry_Type" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobilization Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Student_Type" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Academic Information
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Highest Qualification Completed</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Qualification" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Year Of Pass Out</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.YearOfPassOut" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Marks</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Marks" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Appearing Qualification</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.AppearingQualification" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Area Of Interest
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Scheme</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Scheme" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Sector</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Sector" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Interested Course</button>
+                                                </span>
+                                                @foreach (var course in Model.CourseNames)
+                                                {
+                                                    <input type="text" disabled="disabled" value="@course" class="form-control col-lg-4">
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.EnquiryDataGrid.OtherInterestedCourse != "NULL" && Model.EnquiryDataGrid.OtherInterestedCourse != null)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Other Interested Course</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.OtherInterestedCourse" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Batch Time Prefer</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Batch_Time_Prefer" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Preferred Month For Joining</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.EnquiryDataGrid.PreferredMonthForJoining ?? 1)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Placement Needed</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.PlacementNeeded" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Pre-Training Status</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.PreTrainingStatus" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">E-mails / Newsletter / SMS</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.Promotional" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Employment Status</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.EmploymentStatus" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Conversion Prospect (%)</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.ConversionProspect" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">How Did You Know About Us</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.EnquiryDataGrid.How_Did_You_Know_About_Us" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

@@ -27,6 +27,16 @@
         vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
         vm.searchAdmissionByDate = searchAdmissionByDate;
+        vm.searchRegistrationByDate = searchRegistrationByDate;
+        vm.searchCounsellingByDate = searchCounsellingByDate;
+        vm.searchExpenseByDate = searchExpenseByDate;
+        vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
+        vm.downloadMobilizationCSVByDate = downloadMobilizationCSVByDate;
+        vm.downloadFollowUpCSVByDate = downloadFollowUpCSVByDate;
+        vm.downloadAdmissionCSVByDate = downloadAdmissionCSVByDate;
+        vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
+        vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
+        vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -141,19 +151,57 @@
         //      });
         //}
 
-        //function retrieveReport() {
-        //    return ReportService.retrieveReport(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.reports = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.reports;
-        //        });
-        //}
+        function searchRegistrationByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "RegistrationDate";
+            vm.orderBy.class = "asc";
+            order("RegistrationDate");
+            return ReportService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function searchCounsellingByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.class = "asc";
+            order("CreatedDate");
+            return ReportService.searchCounsellingByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        } 
+
+        function searchExpenseByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "ExpenseCreatedDate";
+            vm.orderBy.class = "asc";
+            order("ExpenseCreatedDate");
+            return ReportService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
 
         function pageChanged() {
-            vm.fromDate = $("#txt_FromDate").val();
-            vm.toDate = $("#txt_ToDate").val();
+            vm.fromDate = $("#fromDate").val();
+            vm.toDate = $("#toDate").val();
             var path = window.location.pathname.split('/');
             if (path[2] == "Enquiry") {
                 searchEnquiryByDate(vm.fromDate, vm.toDate);
@@ -167,12 +215,44 @@
             if (path[2] == "Admission") {
                 searchAdmissionByDate(vm.fromDate, vm.toDate);
             }
+            if (path[2] == "Registration") {
+                searchRegistrationByDate(vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "Counselling") {
+                searchCounsellingByDate(vm.fromDate, vm.toDate);
+            }
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
+        }
+
+        function downloadMobilizationCSVByDate(fromDate, toDate) {
+            return ReportService.downloadMobilizationCSVByDate(fromDate, toDate);
+        }
+
+        function downloadFollowUpCSVByDate(fromDate, toDate) {
+            return ReportService.downloadFollowUpCSVByDate(fromDate, toDate);
+        }
+
+        function downloadAdmissionCSVByDate(fromDate, toDate) {
+            return ReportService.downloadAdmissionCSVByDate(fromDate, toDate);
+        }
+
+        function downloadRegistrationCSVByDate(fromDate, toDate) {
+            return ReportService.downloadRegistrationCSVByDate(fromDate, toDate);
+        }
+
+        function downloadCounsellingCSVByDate(fromDate, toDate) {
+            return ReportService.downloadCounsellingCSVByDate(fromDate, toDate);
+        }
+
+        function downloadExpenseCSVByDate(fromDate, toDate) {
+            return ReportService.downloadExpenseCSVByDate(fromDate, toDate);
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            //retrieveReport();
-            //return retrieveReports();
         }
 
         function orderClass(property) {

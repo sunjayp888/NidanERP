@@ -27,14 +27,14 @@ namespace Nidan.Controllers
             _documentService = documentService;
         }
         // GET: Counselling
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: Counselling/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -69,7 +69,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Counselling/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CounsellingViewModel counsellingViewModel)
@@ -146,6 +146,26 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Counselling/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
+            if (mobilizationDataGrid == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new CounsellingViewModel
+            {
+                CounsellingDataGrid = mobilizationDataGrid
+            };
+            return View(viewModel);
+        }
+
         public ActionResult Upload(int id)
         {
 
@@ -203,8 +223,9 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
             var data = NidanBusinessService.RetrieveCounsellingBySearchKeyword(UserOrganisationId, searchKeyword,
-                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false, orderBy, paging);
+                p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
             return this.JsonNet(data);
         }
 

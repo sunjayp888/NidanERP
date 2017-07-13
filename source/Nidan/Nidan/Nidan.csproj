@@ -240,7 +240,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
+    <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="Controllers\EnquiryCourseController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExpenseHeaderController.cs" />
+    <Compile Include="Controllers\ExpenseProjectController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -283,7 +286,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
+    <Compile Include="Models\AttendanceViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
@@ -1106,6 +1111,8 @@
     <None Include="Content\less\Site.less" />
     <Content Include="Installment.html" />
     <Content Include="Registration.html" />
+    <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
+    <Content Include="Scripts\Angular\Controllers\BatchAttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
@@ -1127,6 +1134,7 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
+    <Content Include="Scripts\Angular\Controllers\ExpenseProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
@@ -1146,6 +1154,8 @@
     <Content Include="Scripts\Angular\Controllers\RegistrationController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Services\AttendanceService.js" />
+    <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
@@ -1163,6 +1173,7 @@
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
+    <Content Include="Scripts\Angular\Services\ExpenseProjectService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
@@ -1202,6 +1213,7 @@
     <Content Include="Scripts\getorgchart.css" />
     <Content Include="Scripts\getorgchart.js" />
     <Content Include="Scripts\graphics.png" />
+    <Content Include="Scripts\icheck\icheck.min.js" />
     <Content Include="Scripts\jquery-validate-bootstrap.js" />
     <Content Include="Scripts\ModuleController.js" />
     <Content Include="Scripts\moris\example.js" />
@@ -1595,7 +1607,6 @@
     <Content Include="Views\OtherFee\Edit.cshtml" />
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
     <Content Include="Views\OtherFee\_Expenses.cshtml" />
-    <Content Include="Views\OtherFee\AddExpense.cshtml" />
     <Content Include="Views\OtherFeeProject\_OtherFeeProject.cshtml" />
     <Content Include="Views\CentrePettyCash\Index.cshtml" />
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
@@ -1606,6 +1617,20 @@
     <Content Include="Views\Report\FollowUp.cshtml" />
     <Content Include="Views\Admission\_AdmissionDocument.cshtml" />
     <Content Include="Views\Report\Admission.cshtml" />
+    <Content Include="Views\Report\Registration.cshtml" />
+    <Content Include="Views\Attendance\Index.cshtml" />
+    <Content Include="Views\Attendance\Create.cshtml" />
+    <Content Include="Views\Attendance\_Attendance.cshtml" />
+    <Content Include="Views\BatchAttendance\Index.cshtml" />
+    <Content Include="Views\ExpenseProject\_ExpenseProject.cshtml" />
+    <Content Include="Views\BatchAttendance\Create.cshtml" />
+    <Content Include="Views\BatchAttendance\_AttendanceDataGrid.cshtml" />
+    <Content Include="Views\BatchAttendance\_Attendance.cshtml" />
+    <Content Include="Views\Mobilization\View.cshtml" />
+    <Content Include="Views\Enquiry\View.cshtml" />
+    <Content Include="Views\Report\Counselling.cshtml" />
+    <Content Include="Views\Counselling\View.cshtml" />
+    <Content Include="Views\Report\Expense.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1664,7 +1689,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58519/</IISUrl>
+          <IISUrl>http://localhost:58520/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

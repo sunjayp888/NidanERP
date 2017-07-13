@@ -66,5 +66,8 @@ namespace Nidan.Entity
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
+
+        [StringLength(3580)]
+        public string SearchField { get; set; }
     }
 }

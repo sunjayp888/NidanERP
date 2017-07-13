@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: AbsenceType/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var viewModel = new AbsenceTypeViewModel
@@ -40,7 +40,7 @@ namespace Nidan.Controllers
         }
 
         // POST: AbsenceType/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         //OrganisationId,Name,ReduceEntitlement
@@ -67,7 +67,7 @@ namespace Nidan.Controllers
         }
 
         // GET: AbsenceType/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,7 +86,7 @@ namespace Nidan.Controllers
         }
 
         // POST: AbsenceType/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AbsenceTypeId,Name,ColourId")] AbsenceType absenceType)
@@ -110,7 +110,7 @@ namespace Nidan.Controllers
         }
 
         // POST: AbsenceType/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         public ActionResult Delete(int id)
         {

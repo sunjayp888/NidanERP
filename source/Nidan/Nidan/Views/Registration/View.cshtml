@@ -9,7 +9,7 @@
         <div class="x_panel">
             <div class="x_title">
                 
-                <h2><button type="button" class="btn btn-success btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button> Registration Details<small>View Registration</small>
+                <h2><button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", @Model.Registration.Enquiry.Title, @Model.Registration.Enquiry.FirstName, @Model.Registration.Enquiry.MiddleName, @Model.Registration.Enquiry.LastName)</button><small> View Registration </small>
                 </h2>
                 <div class="clearfix"></div>
             </div>
@@ -69,7 +69,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary">Course</button>
+                                                    <button type="button" class="btn btn-dark">Course</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
                                             </div>
@@ -77,7 +77,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary">Registration Date</button>
+                                                    <button type="button" class="btn btn-dark">Registration Date</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
                                             </div>
@@ -89,7 +89,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary">Course Fee</button>
+                                                    <button type="button" class="btn btn-dark">Course Fee</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.Registration.CandidateInstallment.CourseFee" class="form-control col-lg-4">
                                             </div>
@@ -97,7 +97,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary">Registration Fee Paid</button>
+                                                    <button type="button" class="btn btn-dark">Registration Fee Paid</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
                                             </div>
@@ -109,7 +109,7 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary">Payment Mode</button>
+                                                    <button type="button" class="btn btn-dark">Payment Mode</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.PaymentMode.Name" class="form-control col-lg-4">
                                             </div>
@@ -119,7 +119,7 @@
                                             <div class="col-lg-6">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Bank Name</button>
+                                                        <button type="button" class="btn btn-dark">Bank Name</button>
                                                     </span>
                                                     <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.BankName" class="form-control col-lg-4">
                                                 </div>
@@ -134,7 +134,7 @@
                                             <div class="col-lg-6">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Cheque Number</button>
+                                                        <button type="button" class="btn btn-dark">Cheque Number</button>
                                                     </span>
                                                     <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.ChequeNumber" class="form-control col-lg-4">
                                                 </div>
@@ -142,7 +142,7 @@
                                             <div class="col-lg-6">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-primary">Cheque Date</button>
+                                                        <button type="button" class="btn btn-dark">Cheque Date</button>
                                                     </span>
                                                     <input type="text" disabled="disabled" value="@Model.Registration.CandidateFee.ChequeDate" class="form-control col-lg-4">
                                                 </div>
@@ -162,7 +162,7 @@
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
-    <a href="@Url.Action("Download", "Registration", new {id = Model.Registration.RegistrationId})" class="btn btn-success" role="button">
+    <a href="@Url.Action("Download", "Registration", new {id = Model.Registration.CandidateFeeId})" class="btn btn-success" role="button">
         <i class="fa fa-print"></i> Print Registration Receipt
     </a>
 </div>

@@ -88,7 +88,10 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="Attendance.cs" />
+    <Compile Include="AttendanceGrid.cs" />
     <Compile Include="Batch.cs" />
+    <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />
@@ -107,10 +110,12 @@
     <Compile Include="CentrePettyCash.cs" />
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
+    <Compile Include="CentreVoucherNumber.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
     <Compile Include="Counselling.cs" />
+    <Compile Include="CounsellingDataGrid.cs" />
     <Compile Include="CounsellingSearchField.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="CourseInstallment.cs" />
@@ -134,7 +139,10 @@
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
     <Compile Include="EventQuestion.cs" />
+    <Compile Include="Expense.cs" />
+    <Compile Include="ExpenseDataGrid.cs" />
     <Compile Include="ExpenseHeader.cs" />
+    <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
@@ -181,6 +189,7 @@
     <Compile Include="PaymentMode.cs" />
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
+    <Compile Include="PettyCashExpenseReport.cs" />
     <Compile Include="Planning.cs" />
     <Compile Include="Postevent.cs" />
     <Compile Include="Project.cs" />
@@ -192,6 +201,7 @@
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Registration.cs" />
+    <Compile Include="RegistrationGrid.cs" />
     <Compile Include="RegistrationSearchField.cs" />
     <Compile Include="Religion.cs" />
     <Compile Include="Room.cs" />

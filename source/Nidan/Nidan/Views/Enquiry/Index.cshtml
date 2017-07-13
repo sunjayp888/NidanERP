@@ -26,7 +26,7 @@
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Enquiry")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Enquiry")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
@@ -139,7 +139,7 @@
 
                                             <button ng-if="!enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
                                             <button ng-if="enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="!enquiry.IsRegistrationDone" type="button" class="btn btn-round btn-warning btn-xs">Registration Pending</button>
+                                            <button ng-if="!enquiry.IsRegistrationDone" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
                                         </td>
                                         <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
@@ -150,9 +150,18 @@
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
+                                                            <a style="cursor: pointer;" ng-href="/Enquiry/View/{{enquiry.EnquiryId}}">
+                                                                View
+                                                            </a>
+                                                        </li>
+													}
+
+														 @if (User.IsInAnyRoles("Admin"))
+														 {
+															<li>
                                                             <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
                                                                 Edit
                                                             </a>
@@ -169,7 +178,8 @@
                                                                 Create Registration
                                                             </a>
                                                         </li>
-                                                    }
+														}
+                                                    
                                                 </ul>
                                             </div>
                                         </td>

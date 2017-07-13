@@ -1,14 +1,14 @@
 ﻿@model Nidan.Models.OtherFeeViewModel
 
 @{
-    ViewBag.Title = string.Format("Edit Other Fee ({0})", Model.OtherFee.OtherFeeId);
+    ViewBag.Title = string.Format("Edit Other Fee ({0})", Model.Expense.ExpenseId);
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@Model.OtherFee.OtherFeeId<small>Edit Other Fee</small></h2>
+                <h2>@Model.Expense.ExpenseId<small>Edit Other Fee</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -25,13 +25,22 @@
                             </div>
 
                         }
-                        @Html.HiddenFor(model => Model.OtherFee.OtherFeeId)
-                        @Html.HiddenFor(model => Model.OtherFee.CreatedDate)
+                        @Html.HiddenFor(model => Model.Expense.ExpenseId)
+                        @Html.HiddenFor(model => Model.Expense.VoucherNumber)
+                        @Html.HiddenFor(model => Model.Expense.CreatedDate)
                         @Html.Partial("_OtherFee", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-success">Submit</button>
+                                    @if (Model.CashMemo != null)
+                                    {
+                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
+
+                                        <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
+                                            <i class="fa fa-print"></i> Print
+                                        </a>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -41,6 +50,16 @@
         </div>
     </div>
 </div>
+@if (Model.CashMemo != null)
+{
+    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+        @Html.Partial("_OtherFeeDocument")
+    </div>
+    @*@Html.HiddenFor(m => m.CashMemo)
+        <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
+            @Html.Partial("_Expenses")
+        </div>*@
+}
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
@@ -50,23 +69,8 @@
 @section scripts {
     <script>
        
-        $('#OtherFee_Rate').keyup(function () {
-            var unit = $('#OtherFee_Unit').val();
-            var rate = $('#OtherFee_Rate').val();
-            var amount = unit * rate;
-            $('#OtherFee_DebitAmount').val(amount);
+        $('#Expense_DebitAmount').keyup(function () {
             numberToWords();
-        });
-
-        $('#OtherFee_Unit').keyup(function () {
-            var unit = $('#OtherFee_Unit').val();
-            var rate = $('#OtherFee_Rate').val();
-            if (unit != 0 || rate != 0) {
-                var amount = unit * rate;
-                $('#OtherFee_DebitAmount').val(amount);
-                numberToWords();
-            }
-
         });
 
         function numberToWords() {
@@ -184,16 +188,16 @@
 
         $(document)
             .ready(function() {
-                var cashmemo = $('#OtherFee_CashMemo').val();
-                var paidTo = $('#OtherFee_PaidTo').val();
+                var cashmemo = $('#Expense_CashMemoNumbers').val();
+                var paidTo = $('#Expense_PaidTo').val();
                 
                 if (cashmemo != "" && paidTo != "") {
-                    $('#OtherFee_CashMemo').attr('readonly', true);
-                    $('#OtherFee_PaidTo').attr('readonly', true);
+                    $('#Expense_CashMemoNumbers').attr('readonly', true);
+                    $('#Expense_PaidTo').attr('readonly', true);
 
                 } else {
-                    $('#OtherFee_CashMemo').attr('readonly', false);
-                    $('#OtherFee_PaidTo').attr('readonly', false);
+                    $('#Expense_CashMemoNumbers').attr('readonly', false);
+                    $('#Expense_PaidTo').attr('readonly', false);
 
                 }
 

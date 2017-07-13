@@ -11,5 +11,6 @@ namespace Nidan.Models
     {
         public CourseInstallment CourseInstallment { get; set; }
         public SelectList Courses { get; set; }
+        public SelectList Centres { get; set; }
     }
 }

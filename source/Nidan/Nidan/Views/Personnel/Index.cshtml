@@ -19,11 +19,11 @@
             </div>
         </div>
     </div>
-    @if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Personnel")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Personnel")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
@@ -77,7 +77,7 @@
                                                                     View Profile
                                                                 </a>
                                                             </li>
-                                                            @if (User.IsInAnyRoles("Admin"))
+                                                            @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                             {
                                                                 <li>
                                                                     <a style="cursor: pointer;" ng-href="/Personnel/Edit/{{person.PersonnelId}}">

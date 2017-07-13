@@ -21,6 +21,7 @@ namespace Nidan.Business.Models
         public int Unit { get; set; }
         public decimal Rate { get; set; }
         public string Description { get; set; }
+        public string Particulars { get; set; }
         public decimal TotalDebitAmount { get; set; }
         public string RupeesInWords { get; set; }
         public string PaidTo { get; set; }

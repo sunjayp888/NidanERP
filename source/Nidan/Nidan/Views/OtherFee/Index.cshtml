@@ -21,12 +21,12 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "OtherFee")">
-                    <i class="fa fa-user"></i> Create
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "OtherFee")">
+                    <i class="fa fa-inr"></i> Create
                 </a>
             </div>
         </div>
@@ -68,15 +68,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewOtherFee(otherFee.CashMemo)">
+                                        <tr ng-repeat="otherFee in model.otherFees | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editOtherFee(otherFee.ExpenseId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="otherFee.CentreName"></span></td>
                                             }
                                             <td><span ng-bind="otherFee.CreatedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="otherFee.VoucherNumber"></span></td>
-                                            <td><span ng-bind="otherFee.CashMemo"></span></td>
-                                            <td><span class="fa fa-inr" ng-bind="otherFee.TotalDebitAmount"></span></td>
+                                            <td><span ng-bind="otherFee.CashMemoNumbers"></span></td>
+                                            <td><span class="fa fa-inr" ng-bind="otherFee.DebitAmount"></span></td>
                                             <td><span ng-bind="otherFee.PaidTo"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
@@ -84,16 +84,16 @@
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Create/{{otherFee.CashMemo}}">
+                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Edit/{{otherFee.ExpenseId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
 
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Download/{{otherFee.CashMemo}}">
+                                                                <a style="cursor: pointer;" ng-href="/OtherFee/Download/{{otherFee.ExpenseId}}">
                                                                     Download
                                                                 </a>
                                                             </li>

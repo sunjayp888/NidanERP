@@ -27,7 +27,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Question/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -42,7 +42,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Question/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(QuestionViewModel questionViewModel)
@@ -59,7 +59,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Question/Edit/{id}
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Edit(int? id)
         {
             var organisationId = UserOrganisationId;

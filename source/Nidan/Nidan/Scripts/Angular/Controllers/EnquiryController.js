@@ -105,7 +105,7 @@
         }
 
         function viewEnquiry(enquiryId) {
-            $window.location.href = "/Enquiry/Edit/" + enquiryId;
+            $window.location.href = "/Enquiry/View/" + enquiryId;
         }
 
         //function deleteAEnquiry(id) {

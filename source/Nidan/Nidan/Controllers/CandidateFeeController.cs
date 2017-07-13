@@ -27,7 +27,7 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -53,7 +53,7 @@ namespace Nidan.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult GetFeeCandidate(int id)
         {
             var userOrganisationId = UserOrganisationId;
@@ -77,19 +77,35 @@ namespace Nidan.Controllers
                 candidateFeeData.BankName = candidateFeeViewModel.CandidateFee.BankName;
                 candidateFeeData.ChequeDate = candidateFeeViewModel.CandidateFee.ChequeDate;
                 candidateFeeData.IsPaidAmountOverride = candidateFeeViewModel.CandidateFee.IsPaidAmountOverride;
+                candidateFeeData.PaymentModeId = candidateFeeViewModel.CandidateFee.PaymentModeId;
+                candidateFeeData.ChequeNumber = candidateFeeViewModel.CandidateFee.ChequeNumber;
+                candidateFeeData.HaveReceipt = candidateFeeViewModel.CandidateFee.HaveReceipt;
+                candidateFeeData.ReceiptNumber= candidateFeeViewModel.CandidateFee.ReceiptNumber;
+                candidateFeeData.PersonnelId = UserPersonnelId;
                 if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride && candidateFeeViewModel.CandidateFee.PaidAmount != null)
                 {
                     if (candidateFeeViewModel.CandidateFee.PaidAmount < candidateFeeData.InstallmentAmount)
                     {
                         candidateFeeData.BalanceInstallmentAmount = candidateFeeData.InstallmentAmount - candidateFeeViewModel.CandidateFee.PaidAmount;
                         if (candidateInstallmentData != null)
-                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount + candidateFeeData.BalanceInstallmentAmount;
+                        {
+                            candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
+                            NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
+                            AdjustInstallment(candidateFeeData.CandidateInstallmentId, 0, candidateFeeData.BalanceInstallmentAmount);
+                            return this.JsonNet(true);
+                        }
                     }
                     if (candidateFeeViewModel.CandidateFee.PaidAmount > candidateFeeData.InstallmentAmount)
                     {
                         candidateFeeData.AdvancedAmount = candidateFeeViewModel.CandidateFee.PaidAmount - candidateFeeData.InstallmentAmount;
                         if (candidateInstallmentData != null)
-                            candidateInstallmentData.InstallmentAmount = candidateInstallmentData.InstallmentAmount - candidateFeeData.AdvancedAmount;
+                        {
+                            candidateFeeData.PaidAmount = candidateFeeViewModel.CandidateFee.PaidAmount;
+                            NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
+                            AdjustInstallment(candidateFeeData.CandidateInstallmentId, candidateFeeData.AdvancedAmount, 0);
+                            return this.JsonNet(true);
+                        }
+
                     }
                     if (candidateInstallmentData != null)
                     {
@@ -101,9 +117,6 @@ namespace Nidan.Controllers
                 {
                     candidateFeeData.PaidAmount = candidateFeeData.InstallmentAmount;
                 }
-                candidateFeeData.PaymentModeId = candidateFeeViewModel.CandidateFee.PaymentModeId;
-                candidateFeeData.ChequeNumber = candidateFeeViewModel.CandidateFee.ChequeNumber;
-                candidateFeeData.PersonnelId = UserPersonnelId;
                 candidateFeeViewModel.CandidateFee = NidanBusinessService.UpdateCandidateFee(organisationId, candidateFeeData);
                 return this.JsonNet(true);
             }
@@ -111,6 +124,21 @@ namespace Nidan.Controllers
             {
                 return this.JsonNet(false);
             }
+        }
+
+        public void AdjustInstallment(int? candidateInstallmentId, decimal? advancedAmount, decimal? balanceAmount)
+        {
+            var candidateFees = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, e => e.CandidateInstallmentId == candidateInstallmentId && e.FeeTypeId == (int)FeeType.Installment && !e.IsPaymentDone);
+            //for advancedAmount => we are passing 0 to balanceAmount & for balanceAmount => passing 0 to advancedAmount
+            var amount = advancedAmount != 0 ?
+                (candidateFees.Items.Sum(e => e.InstallmentAmount) - advancedAmount) / candidateFees.Items.Count()
+                : (candidateFees.Items.Sum(e => e.InstallmentAmount) + balanceAmount) / candidateFees.Items.Count();
+            foreach (var candidate in candidateFees.Items)
+            {
+                candidate.InstallmentAmount = amount;
+                NidanBusinessService.UpdateCandidateFee(UserOrganisationId, candidate);
+            }
+
         }
 
         [HttpPost]
@@ -121,7 +149,7 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Detail(int? id)
         {
             var organisationId = UserOrganisationId;
@@ -143,7 +171,7 @@ namespace Nidan.Controllers
             return View(candidateFeeModel);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         public ActionResult CandidateFeeList(int? id)
         {

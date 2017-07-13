@@ -61,8 +61,8 @@
                                         }
                                         <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
                                         <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
-                                        <th ng-click="model.order('PaymentMode.Name')" ng-class="model.orderClass('PaymentMode.Name')">Payment Mode</th>
-                                        <th ng-click="model.order('Fees')" ng-class="model.orderClass('Fees')">Fees</th>
+                                        <th ng-click="model.order('CandidateFee.PaymentModeId')" ng-class="model.orderClass('CandidateFee.PaymentModeId')">Payment Mode</th>
+                                        <th ng-click="model.order('CandidateFee.PaidAmount')" ng-class="model.orderClass('CandidateFee.PaidAmount')">Registration Fees</th>
                                         <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -79,18 +79,31 @@
                                         <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
                                         <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
                                         <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
-                                        <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-warning btn-xs">Admission Pending</button></td>
+                                        <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Registration/View/{{registration.RegistrationId}}">
                                                                 View
+                                                            </a>
+                                                        </li>
+														}
+														@if (User.IsInAnyRoles("Admin"))
+														{
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Registration/Edit/{{registration.RegistrationId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
+                                                                Download
                                                             </a>
                                                         </li>
                                                         <li>

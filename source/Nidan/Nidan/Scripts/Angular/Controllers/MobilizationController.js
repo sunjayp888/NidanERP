@@ -27,10 +27,10 @@
         initialise();
 
         function initialise() {
-            vm.orderBy.property = "GeneratedDate";
+            vm.orderBy.property = "CreatedDate";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "desc";
-            order("GeneratedDate");
+            order("CreatedDate");
         }
 
         function retrieveMobilizations() {
@@ -98,7 +98,7 @@
         };
 
         function viewMobilization(mobilizationId) {
-            $window.location.href = "/Mobilization/Edit/" + mobilizationId;
+            $window.location.href = "/Mobilization/View/" + mobilizationId;
         }
 
     }

@@ -22,12 +22,12 @@
             </div>
         </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Room")">
-                    <i class="fa fa-user"></i> Create
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Room")">
+                    <i class="fa fa-pencil-square-o"></i> Create
                 </a>
             </div>
         </div>
@@ -85,7 +85,7 @@
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    @if (User.IsInAnyRoles("SuperAdmin"))
                                                     {
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Room/Edit/{{room.RoomId}}">

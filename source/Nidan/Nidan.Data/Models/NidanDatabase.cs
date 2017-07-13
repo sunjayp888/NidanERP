@@ -107,6 +107,17 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationDataGrid> MobilizationDataGrids { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
+        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
+        public virtual DbSet<CentreVoucherNumber> CentreVoucherNumbers { get; set; }
+        public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
+        public virtual DbSet<Attendance> Attendances { get; set; }
+        public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
+        public virtual DbSet<AttendanceGrid> AttendanceGrids { get; set; }
+        public virtual DbSet<CounsellingDataGrid> CounsellingDataGrids { get; set; }
+        public virtual DbSet<ExpenseDataGrid> ExpenseDataGrids { get; set; }
+        public virtual DbSet<PettyCashExpenseReport> PettyCashExpenseReports { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1720,6 +1731,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.ClosingRemark)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
             modelBuilder.Entity<FollowUpDataGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
@@ -1770,6 +1785,178 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<VoucherGrid>()
                 .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.CashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.InTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.OutTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.Topic)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.InTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.OutTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+               .Property(e => e.Topic)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.CourseOffered)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.PsychomatricTest)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingDataGrid>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.ExpenseHeader)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.PettyCashForCentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.PettyCashParticulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseParticulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseCashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseVoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpensePaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseCentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PettyCashExpenseReport>()
+                .Property(e => e.ExpenseHeader)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
