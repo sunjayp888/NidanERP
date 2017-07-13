@@ -70,7 +70,7 @@ namespace Nidan.Business.Helper
                 for (var j = 0; j <= propInfosLength; j++)
                 {
                     var property = item.GetType().GetProperty(propInfos[j].Name);
-                    var o = property.GetValue(item, null);
+                    var o = property.GetValue(item,null);
                     var formatString = property.IsDefined(typeof(DisplayFormatAttribute), false)
                         ? property.GetCustomAttributes(typeof(DisplayFormatAttribute), false).Cast<DisplayFormatAttribute>().Single().DataFormatString
                         : string.Empty;

@@ -132,16 +132,15 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @Html.Partial("Pagination/_pagination")
                         </div>
-                        @Html.Partial("Pagination/_pagination")
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label ng-bind="model.searchMessage"></label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label ng-bind="model.searchMessage"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
