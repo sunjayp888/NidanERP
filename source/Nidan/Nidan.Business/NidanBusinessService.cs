@@ -1241,12 +1241,20 @@ namespace Nidan.Business
                 RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
             if (counselling != null)
             {
+                counselling.Centre = null;
+                counselling.Course = null;
+                counselling.Enquiry = null;
+                counselling.Organisation = null;
                 counselling.IsRegistrationDone = true;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, counselling);
             }
             var followUp = RetrieveFollowUps(organisationId, e => e.EnquiryId == data.EnquiryId).Items.FirstOrDefault();
             if (followUp != null)
             {
+                followUp.Centre = null;
+                followUp.Course = null;
+                followUp.Enquiry = null;
+                followUp.Organisation = null;
                 followUp.IntrestedCourseId = data.CourseId;
                 followUp.RegistrationId = data.RegistrationId;
                 followUp.FollowUpType = "Registration";

@@ -213,7 +213,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourseInstallmentByCourseId(int courseId)
         {
-            var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseId == courseId && c.CentreId == UserCentreId);
+            var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseId == courseId);
             return this.JsonNet(data);
         }
 

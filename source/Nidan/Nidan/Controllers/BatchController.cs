@@ -33,7 +33,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => e.CentreId == centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId,centreId).Items.Select(e=>e.CourseInstallment);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == centreId);
             var viewModel = new BatchViewModel()
