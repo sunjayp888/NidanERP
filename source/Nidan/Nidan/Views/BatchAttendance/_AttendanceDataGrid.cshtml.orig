@@ -1,5 +1,4 @@
-﻿@using Nidan.Entity
-@using Nidan.Extensions
+﻿@using Nidan.Extensions
 @model Nidan.Models.BatchAttendanceViewModel
 
 
@@ -19,11 +18,14 @@
                     <div class="row">
                         <div class="col-xs-12">
                             @Html.Partial("Pagination/_pageSize")
+<<<<<<< HEAD
+=======
                             <div class="form-group">
                                 <div class="pull-right">
                                     <button id="btn_sync" class="btn btn-warning" ng-click = "model.retrieveSyncData()">Sync</button>
                                 </div>
                             </div>
+>>>>>>> 66bf16ea72b1011f95243d87cb9d408856de3b57
                         </div>
                     </div>
                     <div class="row">
@@ -45,9 +47,13 @@
                                     <tbody>
                                         <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-click="$event.originalEvent.ngClickHandled">
                                             <td>
-                                                @*<input type="checkbox" ng-model="batchAttendance.IsPresent">*@
-                                                @Html.CheckBoxFor(m => m.Attendance.IsPresent.Value, new { autocomplete = "off" ,ng_model= "batchAttendance.IsPresent" })
+<<<<<<< HEAD
+                                                    <input type="checkbox" ng-model="batchAttendance.IsPresent">
                                                 </td>
+=======
+                                                <input type="checkbox" id="chk" ng-model="batchAttendance.Attendance.IsPresent">
+                                            </td>
+>>>>>>> 66bf16ea72b1011f95243d87cb9d408856de3b57
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="batchAttendance.CentreName"></span></td>
@@ -71,7 +77,10 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
 @section scripts{
     <script src="~/Scripts/icheck/icheck.min.js"></script>
 }
+=======
+>>>>>>> 66bf16ea72b1011f95243d87cb9d408856de3b57

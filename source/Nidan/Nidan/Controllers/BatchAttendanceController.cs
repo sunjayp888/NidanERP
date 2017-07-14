@@ -77,9 +77,9 @@ namespace Nidan.Controllers
         public ActionResult GetSubject(int batchId)
         {
             var organisationId = UserOrganisationId;
-            var batchData = NidanBusinessService.RetrieveBatch(organisationId,batchId);
-            var subjectIds = NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId).Select(e=>e.SubjectId).ToList();
-            var subjectdata = NidanBusinessService.RetrieveSubjects(UserOrganisationId,e=>subjectIds.Contains(e.SubjectId)).ToList();
+            var batchData = NidanBusinessService.RetrieveBatch(organisationId, batchId);
+            var subjectIds = NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId).Select(e => e.SubjectId).ToList();
+            var subjectdata = NidanBusinessService.RetrieveSubjects(UserOrganisationId, e => subjectIds.Contains(e.SubjectId)).ToList();
             return this.JsonNet(subjectdata);
         }
 
@@ -88,7 +88,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var subjectData = NidanBusinessService.RetrieveSubject(organisationId, subjectId);
-            var sessiondata = NidanBusinessService.RetrieveSessions(UserOrganisationId,e=>e.SubjectId==subjectData.SubjectId).Items.ToList();
+            var sessiondata = NidanBusinessService.RetrieveSessions(UserOrganisationId, e => e.SubjectId == subjectData.SubjectId).Items.ToList();
             return this.JsonNet(sessiondata);
         }
 
