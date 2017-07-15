@@ -11,28 +11,7 @@
                 Counsellings <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCounselling(searchField)" class="form-control" placeholder="Search for Counselling...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchCounselling(searchField)" type="button">Go!</button>
-                        </span>
-                    </div>
-                </div>
-            </div>*@
     </div>
-    @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
-        {
-            <div class="row">
-                    <div class="col-xs-12">
-                        <a class="btn btn-app" href="@Url.Action("Create", "Counselling")">
-                            <i class="fa fa-user"></i> Create
-                        </a>
-                    </div>
-                </div>
-        }*@
-    @*Search*@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -77,7 +56,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <input type="button" ng-click="model.searchCounsellingByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                            <button type="button" ng-click="model.searchCounsellingByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" value="Download CSV" class="btn btn-success"><i class="fa fa-download"> </i>  Download CSV</button>

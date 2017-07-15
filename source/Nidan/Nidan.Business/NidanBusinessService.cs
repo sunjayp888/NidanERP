@@ -970,6 +970,7 @@ namespace Nidan.Business
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
             var candidateInstallment = RetrieveCandidateInstallment(organisationId,
                 registrationData.CandidateInstallmentId, e => true);
+            var batchData = RetrieveBatch(organisationId, admission.BatchId.Value);
 
             admission.Registration.StudentCode = registrationData.StudentCode;
             //create fee detail
@@ -988,6 +989,8 @@ namespace Nidan.Business
             admission.CentreId = centreId;
             admission.AdmissionDate = DateTime.UtcNow.Date;
             var admissionData = _nidanDataService.CreateAdmission(organisationId, admission);
+            admissionData.Batch = batchData;
+            admissionData.Registration = registrationData;
 
             // Update Registration IsAdmissionDone
             var registration = RetrieveRegistration(organisationId, centreId, admission.RegistrationId);
@@ -1032,6 +1035,10 @@ namespace Nidan.Business
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
+
+            //Email
+            SendCandidateEnrollmentEmail(organisationId,centreId, admissionData);
+
             return admissionData;
         }
 
@@ -3551,6 +3558,25 @@ namespace Nidan.Business
                 {registration.Enquiry.FirstName + " " +registration.Enquiry.LastName+" Registration Detail.pdf",document}
             };
             _emailService.SendEmail(emailData, registrationReciept);
+        }
+
+        private void SendCandidateEnrollmentEmail(int organisationId, int centreId, Admission admission)
+        {
+            var document = CreateEnrollmentBytes(organisationId, centreId, admission);
+            var emailData = new EmailData()
+            {
+                CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
+                Body = "This is testing on admission",
+                Subject = "Enrollment Detail",
+                IsHtml = true,
+                ToAddressList = new List<string> { admission.Registration.Enquiry.EmailId }
+            };
+
+            var enrollmentReciept = new Dictionary<string, byte[]>
+            {
+                {admission.Registration.Enquiry.FirstName + " " +admission.Registration.Enquiry.LastName+" Enrollment Detail.pdf",document}
+            };
+            _emailService.SendEmail(emailData, enrollmentReciept);
         }
 
         //SMS
