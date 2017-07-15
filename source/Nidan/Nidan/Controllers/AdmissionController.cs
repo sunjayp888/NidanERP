@@ -107,6 +107,8 @@ namespace Nidan.Controllers
                 // Create Personnel
                 var personnel = Personnel(organisationId, enquiryData);
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
+                admissionViewModel.Admission.Batch = null;
+                admissionViewModel.Admission.Registration = null;
                 NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");

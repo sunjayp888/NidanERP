@@ -178,7 +178,7 @@ namespace Nidan.Controllers
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
                         p.AdmissionDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_AdmissionReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -193,7 +193,7 @@ namespace Nidan.Controllers
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
                         p.AdmissionDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_ExpenseReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
