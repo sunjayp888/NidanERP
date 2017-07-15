@@ -1053,6 +1053,7 @@
     <Content Include="Content\css\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\N.png" />
     <Content Include="Content\images\NEST.jpg" />
     <Content Include="Content\images\Nidan.jpg" />
     <Content Include="Content\images\user.png" />

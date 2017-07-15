@@ -160,14 +160,7 @@
                 return true;
             }
 
-        //$(document)
-        //    .ready(function() {
-        //        var paidAmount = $('#Registration_CandidateFee_PaidAmount').val();
-        //        var paidAmountresult = Math.round((paidAmount * 100) / 100);
-        //        $('#Registration_CandidateFee_PaidAmount').val(paidAmountresult);
-        //        NumToWord(paidAmountresult);
-        //    });
-            window.onload = function () {
+            function numToword() {
                 var paidAmount = $('#Registration_CandidateFee_PaidAmount').val();
                 var inputNumber = Math.round(paidAmount);
                 var str = new String(inputNumber);
@@ -296,7 +289,16 @@
                 }
                 $('#divDisplayWords').html(finalOutput + " Only");
 
-         } 
+            }
+
+        $('#Registration_CandidateFee_PaidAmount')
+            .keyup(function() {
+                numToword();
+            });
+
+            window.onload = function () {
+                numToword();
+                } 
 
 
             $('#Registration_CourseId').change(function() {
