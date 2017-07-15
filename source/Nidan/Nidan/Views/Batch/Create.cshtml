@@ -449,35 +449,6 @@
                 });
             });
 
-        //=======================================================================Do not allow decimal
-        $(document)
-            .ready(function() {
-                /* Allow digits only */
-                $(".batchStartTime") &&
-                    $(".Batch_NumberOfHoursDaily")
-                    .keypress(function(e) {
-                        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                            $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
-                            return false;
-                        }
-                    });
-                /* Do not allow paste */
-                $('.batchStartTime')
-                    .bind("paste",
-                        function(e) {
-                            e.preventDefault();
-                        });
-            });
-        //========================================================================= do not allow 0 in numberofhoursdaily
-
-        $("#Batch_NumberOfHoursDaily")
-            .on("keypress keyup",
-                function() {
-                    if ($(this).val() == '0') {
-                        $(this).val('');
-                    }
-                });
-
         //==================================================================== Calculate end Time based on numberofhoursdaily
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
@@ -558,11 +529,16 @@
 
             //=============================================================================== on num of daily hours change month and installment
             $('#Batch_NumberOfHoursDaily')
-                .keyup(function() {
+                .change(function() {
 
                     getendtime();
                     //checkboxes();
                 });
+
+            $('#Batch_BatchStartTimeHours')
+           .change(function() {
+               getendtime();
+            });
             //===================================================== readiobutton AM / PM selection
 
             if (startHours < 12) {
@@ -609,7 +585,7 @@
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
 
-        $("#Batch_BatchStartTimeMinutes").keyup(function() {
+        $("#Batch_BatchStartTimeMinutes").change(function() {
             var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
             $("#Batch_BatchEndTimeMinutes").val(startimeminute);
         });
