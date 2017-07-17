@@ -628,5 +628,10 @@
             }
             document.getElementById(outputControl).innerHTML = finalOutput + " Only";
         }
+
+        $('#submit')
+            .click(function() {
+                $('#submit').attr('disabled', true);
+            });
     </script>
 }
