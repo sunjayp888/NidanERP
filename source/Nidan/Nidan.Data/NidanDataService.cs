@@ -1293,6 +1293,7 @@ namespace Nidan.Data
                     .Batches
                     .AsNoTracking()
                     .Include(p => p.BatchTrainers)
+                    .Include(p => p.BatchTrainers.Select(e=>e.Trainer))
                     .Include(p => p.Room)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.Course)
@@ -1416,6 +1417,10 @@ namespace Nidan.Data
             {
                 return context
                     .Trainers
+                    .Include(e=>e.State)
+                    .Include(e => e.District)
+                    .Include(e => e.Taluka)
+                    .Include(e => e.Sector)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.TrainerId == trainerId);
