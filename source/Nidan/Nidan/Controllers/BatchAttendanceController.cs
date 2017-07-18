@@ -68,8 +68,9 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult AttendanceList(int batchId, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
+            var isSuperAdmin = User.IsSuperAdmin();
+            var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId,
+                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
             return this.JsonNet(admissiondata);
         }
 

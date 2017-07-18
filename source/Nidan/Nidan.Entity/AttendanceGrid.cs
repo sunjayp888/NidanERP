@@ -42,7 +42,7 @@ namespace Nidan.Entity
         public string Topic { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime AttendanceDate { get; set; }
+        public DateTime? AttendanceDate { get; set; }
 
         public bool? IsPresent { get; set; }
     }

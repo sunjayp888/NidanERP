@@ -125,6 +125,7 @@
     <Compile Include="Models\CandidateFeeReceipt.cs" />
     <Compile Include="Models\ExpenseData.cs" />
     <Compile Include="Models\Graph.cs" />
+    <Compile Include="Models\MobilizationCountData.cs" />
     <Compile Include="Models\OtherFeeReceipt.cs" />
     <Compile Include="Models\PettyCashReport.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />

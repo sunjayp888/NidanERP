@@ -325,7 +325,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Batch.NumberOfInstallment, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12 calculate">
-                    @Html.TextBoxFor(model => model.Batch.NumberOfInstallment, new { @class = "form-control col-md-7 col-xs-12", @max = 12, @readonly = true })
+                    @Html.TextBoxFor(model => model.Batch.NumberOfInstallment, new { @class = "form-control col-md-7 col-xs-12", @max = 12 })
                     @Html.ValidationMessageFor(model => model.Batch.NumberOfInstallment, "", new { @class = "help-block" })
                 </div>
                 @*<button id="addbutton" type="button" class="btn btn-warning">Get Installment(s)</button>*@

@@ -32,6 +32,8 @@
         vm.retrieveSyncData = retrieveSyncData;
         vm.type = "";
         vm.initialise = initialise;
+        vm.selectAll = selectAll;
+        vm.allItemsSelected = false;
 
         function initialise() {
             vm.orderBy.property = "StudentCode";
@@ -39,6 +41,13 @@
             vm.orderBy.class = "desc";
             order("StudentCode");
         }
+
+        function selectAll() {
+            retrieveBatchAttendances();
+            for (var i = 0; i < vm.batchAttendances.length; i++) {
+                vm.batchAttendances[i].IsPresent = vm.allItemsSelected;
+            }
+        };
 
         function retrieveBatchAttendances() {
             return BatchAttendanceService.retrieveBatchAttendances(vm.paging, vm.orderBy)

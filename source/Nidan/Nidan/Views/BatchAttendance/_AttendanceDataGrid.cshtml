@@ -21,7 +21,7 @@
                             @Html.Partial("Pagination/_pageSize")
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="btn_sync" class="btn btn-warning" ng-click = "model.retrieveSyncData()">Sync</button>
+                                    <button id="btn_sync" class="btn btn-warning" ng-click="model.retrieveSyncData()">Sync</button>
                                 </div>
                             </div>
                         </div>
@@ -32,9 +32,7 @@
                                 <table class="table table-striped jambo_table bulk_action">
                                     <thead>
                                         <tr class="headings">
-                                            <th>
-                                                <input type="checkbox" id="check-all" />
-                                            </th>
+                                            <th><input type="checkbox" ng-model="model.allItemsSelected" ng-change="model.selectAll()"></th>
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
@@ -43,11 +41,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-click="$event.originalEvent.ngClickHandled">
+                                        <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-class="{selected: batchAttendance.IsPresent}">
                                             <td>
-                                                @*<input type="checkbox" ng-model="batchAttendance.IsPresent">*@
-                                                @Html.CheckBoxFor(m => m.Attendance.IsPresent.Value, new { autocomplete = "off" ,ng_model= "batchAttendance.IsPresent" })
-                                                </td>
+                                                <input type="checkbox" ng-model="batchAttendance.IsPresent" ng-change="selectEntity()">
+                                            </td>
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="batchAttendance.CentreName"></span></td>

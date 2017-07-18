@@ -87,7 +87,7 @@
                                         @*<li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>*@
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin","Admin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
@@ -101,7 +101,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-up"></span></a>
@@ -112,7 +112,7 @@
                                             <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                         </ul>
                                     </li>
-                                }*@
+                                }
                             </ul>
                         </div>
 
