@@ -145,6 +145,14 @@
                                                                 </a>
                                                             </li>
                                                         }
+                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Admission/Download/{{admission.AdmissionId}}">
+                                                                    Download
+                                                                </a>
+                                                            </li>
+                                                        }
                                                     </ul>
                                                 </div>
                                             </td>

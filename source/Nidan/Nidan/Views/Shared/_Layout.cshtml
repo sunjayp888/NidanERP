@@ -37,22 +37,7 @@
                                 @*<li>
                                         <a><i class="fa fa-clock-o"></i> Time-sheets </a>
                                     </li>*@
-                                <li>
-                                    <a><i class="fa fa-cogs"></i> Reports <span class="fa fa-chevron-up"></span></a>
-                                    <ul class="nav child_menu">
-                                        @if (User.IsInAnyRoles("SuperAdmin","Admin"))
-                                        {
-                                            <li><a href='@Url.Action("Mobilization", "Report")'>Mobilization</a></li>
-                                            <li><a href='@Url.Action("Enquiry", "Report")'>Enquiry</a></li>
-                                            <li><a href='@Url.Action("Counselling", "Report")'>Counselling</a></li>
-                                            <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
-                                            <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
-                                            <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
-                                        }
-
-                                    </ul>
-                                </li>
+                                
                                 @*@if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                 {
                                     <li>
@@ -66,7 +51,7 @@
                                 @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
-                                        <a><i class="fa fa-cogs"></i> Mobilization <span class="fa fa-chevron-up"></span></a>
+                                        <a><i class="fa fa-user"></i> Mobilization <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
                                             <li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
@@ -81,16 +66,16 @@
                                     </li>
                                 }
                                 <li>
-                                    <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-up"></span></a>
+                                    <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
                                         @*<li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>*@
                                     </ul>
                                 </li>
-                                @if (User.IsInAnyRoles("SuperAdmin","Admin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
-                                        <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-up"></span></a>
+                                        <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
@@ -101,10 +86,10 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
-                                        <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-up"></span></a>
+                                        <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                             <li><a href='@Url.Action("Index", "OtherFee")'>Other Fee</a></li>
@@ -113,6 +98,22 @@
                                         </ul>
                                     </li>
                                 }
+                                <li>
+                                    <a><i class="fa fa-file-excel-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @if (User.IsInAnyRoles("SuperAdmin", "Admin"))
+                                        {
+                                            <li><a href='@Url.Action("Mobilization", "Report")'>Mobilization</a></li>
+                                            <li><a href='@Url.Action("Enquiry", "Report")'>Enquiry</a></li>
+                                            <li><a href='@Url.Action("Counselling", "Report")'>Counselling</a></li>
+                                            <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
+                                            <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
+                                            <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
+                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
+                                        }
+
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
 
