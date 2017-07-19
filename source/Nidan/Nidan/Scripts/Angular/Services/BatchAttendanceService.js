@@ -52,12 +52,13 @@
             return $http.post(url, data);
         }
 
-        function searchBatchAttendanceByDate(FromDate, ToDate, Paging, OrderBy) {
+        function searchBatchAttendanceByDate(FromDate, ToDate, BatchId, Paging, OrderBy) {
             var url = "/BatchAttendance/SearchByDate",
             data = {
                 //batchId:BatchId,
                 fromDate: FromDate,
                 toDate: ToDate,
+                batchId: BatchId,
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };

@@ -1834,31 +1834,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<BatchAttendance>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.InTime)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.OutTime)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-               .Property(e => e.Topic)
-               .IsUnicode(false);
-
+            
             modelBuilder.Entity<CounsellingDataGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -1957,6 +1933,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<PettyCashExpenseReport>()
                 .Property(e => e.ExpenseHeader)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.InTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.OutTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.Topic)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
