@@ -34,6 +34,7 @@
         vm.initialise = initialise;
         vm.selectAll = selectAll;
         vm.allItemsSelected = false;
+        vm.selectEntity = selectEntity;
 
         function initialise() {
             vm.orderBy.property = "StudentCode";
@@ -43,7 +44,6 @@
         }
 
         function selectAll() {
-            retrieveBatchAttendances();
             for (var i = 0; i < vm.batchAttendances.length; i++) {
                 vm.batchAttendances[i].IsPresent = vm.allItemsSelected;
             }
@@ -181,6 +181,19 @@
                 return vm.batches;
             });
         }
+
+        function selectEntity() {
+	            // If any entity is not checked, then uncheck the "allItemsSelected" checkbox
+            for (var i = 0; i < vm.batchAttendances.length; i++) {
+                if (!vm.batchAttendances[i].IsPresent) {
+	                    vm.allItemsSelected = false;
+	                    return;
+	                }
+	            }
+	
+	            //If not the check the "allItemsSelected" checkbox
+            vm.allItemsSelected = true;
+	        };
 
     }
 
