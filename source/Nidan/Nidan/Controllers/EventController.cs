@@ -98,9 +98,10 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult QuestionList(int eventFunctionId,Paging paging, List<OrderBy> orderBy )
+        public ActionResult BrainstormingList(Paging paging, List<OrderBy> orderBy )
         {
-            return this.JsonNet(_nidanBusinessService.RetrieveQuestions(UserOrganisationId, e => true, orderBy, paging));
+            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]

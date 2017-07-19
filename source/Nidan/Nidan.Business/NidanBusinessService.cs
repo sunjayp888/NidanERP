@@ -1400,6 +1400,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<BatchAttendance>(organisationId, batchAttendance);
         }
 
+        public EventBrainstorming CreateEventBrainstorming(int organisationId, int centreId, EventBrainstorming eventBrainstorming)
+        {
+            return _nidanDataService.CreateEventBrainstorming(organisationId, eventBrainstorming);
+        }
+
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -2597,6 +2602,19 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrievePettyCashExpenseReports(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, int centreId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventBrainstormings(organisationId, predicate, orderBy, paging);
+        }
+
+        public EventBrainstorming RetrieveEventBrainstorming(int organisationId, int centreId, int eventBrainstormingId,
+            Expression<Func<EventBrainstorming, bool>> predicate)
+        {
+            var eventBrainstorming = _nidanDataService.RetrieveEventBrainstorming(organisationId, eventBrainstormingId, p => true);
+            return eventBrainstorming;
         }
 
         #endregion

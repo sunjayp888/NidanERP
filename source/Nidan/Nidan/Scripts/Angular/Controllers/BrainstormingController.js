@@ -20,7 +20,7 @@
         initialise();
 
         function initialise() {
-            order("QuestionId");
+            order("BrainstormingId");
         }
 
         function retrieveBrainstormings() {
