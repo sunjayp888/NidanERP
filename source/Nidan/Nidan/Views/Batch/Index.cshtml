@@ -138,6 +138,14 @@
                                                             </a>
                                                         </li>
                                                     }
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Batch/View/{{batch.BatchId}}">
+                                                                View
+                                                            </a>
+                                                        </li>
+                                                    }
                                                 </ul>
                                             </div>
                                         </td>

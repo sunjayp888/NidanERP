@@ -157,6 +157,27 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Batch/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var batch = NidanBusinessService.RetrieveBatch(organisationId, id.Value);
+            if (batch == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new BatchViewModel
+            {
+                Batch = batch
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {

@@ -45,6 +45,9 @@
         }
 
         function retrieveEnquiries() {
+            vm.orderBy.property = "ConversionProspect";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
             return EnquiryService.retrieveEnquiries(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.enquiries = response.data.Items;

@@ -109,19 +109,12 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        [HttpPost]
-        public ActionResult GetSyncData(int batchId)
-        {
-            var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveAttendances(organisationId, e => true);
-            return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult MarkAttendance(List<Attendance> attendances)
         {
             return null;
-        }
     }
 }
 

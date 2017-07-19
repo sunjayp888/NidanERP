@@ -1038,7 +1038,8 @@ namespace Nidan.Business
 
             //Email
             SendCandidateEnrollmentEmail(organisationId,centreId, admissionData);
-
+            //send SMS
+            SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -3073,7 +3074,37 @@ namespace Nidan.Business
 
         public CandidateFee UpdateCandidateFee(int organisationId, CandidateFee candidateFee)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
+            var data= _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
+
+            //Send Email
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+
+            //Send SMS
+            SendInstallmetnSms(candidateFee);
+            return data;
+        }
+        
+        private void SendCandidateInstallmentEmail(int organisationId, int centreId, CandidateFee candidateFee)
+        {
+            var enquiryData = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFee.StudentCode).FirstOrDefault();
+            var document = CreateRegistrationRecieptBytes(organisationId, centreId, candidateFee.CandidateFeeId);
+            if (enquiryData != null)
+            {
+                var emailData = new EmailData()
+                {
+                    CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
+                    Body = "This is testing on Installment",
+                    Subject = "Installment Detail",
+                    IsHtml = true,
+                    ToAddressList = new List<string> { enquiryData.EmailId }
+                };
+
+                var installmentReciept = new Dictionary<string, byte[]>
+                {
+                    {enquiryData.FirstName + " " +enquiryData.LastName+" Installment Detail.pdf",document}
+                };
+                _emailService.SendEmail(emailData, installmentReciept);
+            }
         }
 
         public Registration UpdateRegistartion(int organisationId, Registration registration)
@@ -3597,6 +3628,35 @@ namespace Nidan.Business
                 {
                     To = registration.Enquiry.Mobile.ToString(),
                     MessageBody = string.Format("Hi {0}, you have been successfully registered.Paid amount on registration is {1}", registration.Enquiry.FirstName, registration.CandidateFee.PaidAmount)
+                };
+                _smsService.SendSMS(smsData);
+            }
+
+        }
+
+        private void SendAdmissionSms(Admission admission)
+        {
+            if (!string.IsNullOrEmpty(admission.Registration.Enquiry.Mobile.ToString()))
+            {
+                var smsData = new SmsData()
+                {
+                    To = admission.Registration.Enquiry.Mobile.ToString(),
+                    MessageBody = string.Format("Hi {0}, you have been successfully Enrolled.Paid amount on admission is {1}", admission.Registration.Enquiry.FirstName, admission.Registration.CandidateFee.PaidAmount)
+                };
+                _smsService.SendSMS(smsData);
+            }
+
+        }
+
+        private void SendInstallmetnSms(CandidateFee candidateFee)
+        {
+            var enquiryData = RetrieveEnquiries(candidateFee.OrganisationId, e => e.StudentCode == candidateFee.StudentCode).FirstOrDefault();
+            if (enquiryData != null && !string.IsNullOrEmpty(enquiryData.Mobile.ToString()))
+            {
+                var smsData = new SmsData()
+                {
+                    To = enquiryData.Mobile.ToString(),
+                    MessageBody = string.Format("Hi {0}, you have been successfully done your Installment.Paid amount on installmetn is {1}", enquiryData.FirstName, candidateFee.PaidAmount)
                 };
                 _smsService.SendSMS(smsData);
             }

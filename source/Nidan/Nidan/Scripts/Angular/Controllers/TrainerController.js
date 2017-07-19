@@ -78,7 +78,7 @@
         }
 
         function viewTrainer(trainerId) {
-            $window.location.href = "/Trainer/Edit/" + trainerId;
+            $window.location.href = "/Trainer/View/" + trainerId;
         }
 
         function retrieveDistricts(stateId) {
