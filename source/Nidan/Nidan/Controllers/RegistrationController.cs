@@ -41,7 +41,7 @@ namespace Nidan.Controllers
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e=>e.CourseInstallment).ToList();
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e => e.CourseInstallment).ToList();
             var counsellingData = NidanBusinessService.RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
             var counsellingCourse = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => e.CourseId == counsellingData?.CourseOfferedId);
             var viewModel = new RegistrationViewModel
@@ -216,7 +216,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,e =>(isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate &&e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
 

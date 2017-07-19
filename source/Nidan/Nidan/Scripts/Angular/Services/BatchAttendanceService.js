@@ -13,8 +13,7 @@
             searchBatchAttendance: searchBatchAttendance,
             retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId,
             searchBatchAttendanceByDate: searchBatchAttendanceByDate,
-            retrieveBatches: retrieveBatches,
-            retrieveSyncData: retrieveSyncData
+            retrieveBatches: retrieveBatches
         };
 
         return service;
@@ -72,16 +71,5 @@
             return $http.post(url);
         }
 
-        function retrieveSyncData(batchId, Paging, OrderBy) {
-
-            var url = "/BatchAttendance/GetSyncData",
-                data = {
-                    batchId: batchId,
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
-                };
-
-            return $http.post(url, data);
-        }
     }
 })();

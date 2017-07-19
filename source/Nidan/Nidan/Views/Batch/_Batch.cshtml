@@ -257,7 +257,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-4 col-sm-3 col-xs-12">End Time</label>
                     <div class="col-md-3 col-sm-6 col-xs-12 add">
-                        @Html.DropDownListFor(model => model.Batch.BatchEndTimeHours, Model.HoursList, "HH", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Batch.BatchEndTimeHours, Model.HoursList, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeHours, "", new { @class = "help-block" })
                     </div>
 

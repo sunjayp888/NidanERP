@@ -85,16 +85,11 @@
                     });
         });
 
-        //$(function () {
-        //    $("#Batch_BatchStartDate").daterangepicker({ dateFormat: "yy-mm-dd" });
-        //    $("#datepicker").on("change", function () {
-        //        var selected = $(this).val();
-        //        alert(selected);
-        //    });
+        
+        //$('#Batch_BatchStartDate').change(function () {
+        //    getendtime();
+        //    BatchLogic();
         //});
-        $('#Batch_BatchStartDate').change(function() {
-            BatchLogic();
-        });
 
         $('#Batch_CourseInstallmentId').change(function() {
             BatchLogic();
@@ -532,13 +527,9 @@
                 .change(function() {
 
                     getendtime();
-                    //checkboxes();
                 });
 
-            $('#Batch_BatchStartTimeHours')
-           .change(function() {
-               getendtime();
-            });
+            
             //===================================================== readiobutton AM / PM selection
 
             if (startHours < 12) {
@@ -555,6 +546,12 @@
             }
 
         }
+
+        $('#Batch_BatchStartTimeHours')
+                 .change(function () {
+                     getendtime();
+                     BatchLogic();
+                 });
 
         //===================================================No Of Installment Do not allow grater than Month
 
