@@ -103,13 +103,10 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, int batchId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId,
-                e =>
-                    (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate &&
-                    e.AttendanceDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate && e.BatchId == batchId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -117,15 +114,16 @@ namespace Nidan.Controllers
         public ActionResult GetBatches()
         {
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId);
+            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId, null);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult MarkAttendance(List<Attendance> attendances)
+        public ActionResult MarkAttendance(List<AttendanceGrid> attendances,int subjectId,int sessionId)
         {
+            //Please make sure we are getting all data if not set in js file.
+            var result = NidanBusinessService.MarkAttendance(attendances, subjectId, sessionId);
             return null;
-
         }
     }
 

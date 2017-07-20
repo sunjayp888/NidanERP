@@ -20,7 +20,7 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <select class="form-control col-md-7 col-xs-12">
+                                        <select class="form-control col-md-7 col-xs-12" ng-model="item">
                                             <option value="0">Select Batch</option>
                                             <option data-ng-repeat="batch in model.batches" value="{{batch.BatchId}}">{{batch.Name}}</option>
                                         </select>
@@ -86,7 +86,7 @@
 
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchBatchAttendanceByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        <input type="button" ng-click="model.searchBatchAttendanceByDate(fromDate,toDate,item)" value="Search" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
