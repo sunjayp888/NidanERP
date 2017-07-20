@@ -316,6 +316,16 @@ namespace Nidan.Data
             }
         }
 
+        public EventBrainstorming CreateEventBrainstorming(int organisationId, EventBrainstorming eventBrainstorming)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                eventBrainstorming = context.EventBrainstormings.Add(eventBrainstorming);
+                context.SaveChanges();
+                return eventBrainstorming;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -2753,6 +2763,44 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .EventBrainstormings
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "EventBrainstormingId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public EventBrainstorming RetrieveEventBrainstorming(int organisationId, int eventBrainstormingId, Expression<Func<EventBrainstorming, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .EventBrainstormings
+                    .Include(e=>e.Brainstorming)
+                    .Include(e => e.Event)
+                    .Include(e => e.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.EventBrainstormingId == eventBrainstormingId);
             }
         }
 

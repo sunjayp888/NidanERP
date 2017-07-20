@@ -117,7 +117,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CounsellingDataGrid> CounsellingDataGrids { get; set; }
         public virtual DbSet<ExpenseDataGrid> ExpenseDataGrids { get; set; }
         public virtual DbSet<PettyCashExpenseReport> PettyCashExpenseReports { get; set; }
-
+        public virtual DbSet<EventBrainstorming> EventBrainstormings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -582,14 +582,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Question>()
                 .Property(e => e.Description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Brainstorming>()
-               .Property(e => e.Completed)
-               .IsUnicode(false);
-
-            modelBuilder.Entity<Brainstorming>()
-                .Property(e => e.Comment)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Eventday>()
@@ -1933,6 +1925,18 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<PettyCashExpenseReport>()
                 .Property(e => e.ExpenseHeader)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Brainstorming>()
+                .Property(e => e.BeforePlanningAnswerDiscussTheseQuestion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainstorming>()
+                .Property(e => e.DisscussionCompletedYesNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainstorming>()
+                .Property(e => e.RefernceDetailDocument)
                 .IsUnicode(false);
 
             modelBuilder.Entity<AttendanceGrid>()

@@ -21,7 +21,6 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
-
             return $http.post(url, data);
         }
     }

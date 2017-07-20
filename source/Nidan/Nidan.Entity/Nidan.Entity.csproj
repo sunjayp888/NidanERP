@@ -135,6 +135,7 @@
     <Compile Include="EnquiryType.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventActivityType.cs" />
+    <Compile Include="EventBrainstorming.cs" />
     <Compile Include="EventBudget.cs" />
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />

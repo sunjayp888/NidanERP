@@ -18,6 +18,7 @@ namespace Nidan.Entity
             Budgets = new HashSet<Budget>();
             Eventdays = new HashSet<Eventday>();
             Postevents = new HashSet<Postevent>();
+            EventBrainstormings = new HashSet<EventBrainstorming>();
         }
         public int EventId { get; set; }
 
@@ -54,6 +55,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Postevent> Postevents { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
 
     }
 }
