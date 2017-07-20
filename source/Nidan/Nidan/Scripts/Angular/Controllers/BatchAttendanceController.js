@@ -74,14 +74,15 @@
               });
         }
 
-        function searchBatchAttendanceByDate(fromDate, toDate) {
+        function searchBatchAttendanceByDate(fromDate, toDate, batchId) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
-            vm.orderBy.property = "StudentCode";
+            vm.batchId = batchId;
+            vm.orderBy.property = "AttendanceDate";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             //vm.batchId = batchId;
-            return BatchAttendanceService.searchBatchAttendanceByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+            return BatchAttendanceService.searchBatchAttendanceByDate(vm.fromDate, vm.toDate, vm.batchId, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.batchAttendances = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;
@@ -117,21 +118,7 @@
                         return vm.batchAttendances;
                     });
         }
-
-        function retrieveBatchAttendancesByBatchId() {
-            vm.orderBy.property = "StudentCode";
-            vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "asc";
-            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
-                    .then(function (response) {
-                        vm.batchAttendances = response.data.Items;
-                        vm.paging.totalPages = response.data.TotalPages;
-                        vm.paging.totalResults = response.data.TotalResults;
-                        return vm.batchAttendances;
-                    });
-        }
-
-
+      
         function pageChanged() {
             return retrieveBatchAttendances();
         }
@@ -196,7 +183,6 @@
                 return vm.batches;
             });
         }
-
     }
 
 })();
