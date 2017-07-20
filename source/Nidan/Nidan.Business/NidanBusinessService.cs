@@ -1405,6 +1405,26 @@ namespace Nidan.Business
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
         //}
 
+        public bool MarkAttendance(List<AttendanceGrid> attendances, int subjectId, int sessionId)
+        {
+            try
+            {
+                foreach (var attendance in attendances)
+                {
+                    //1. for each, Retrieve attendance from attendanceTable where date = attendance.AttendanceDate and studentcode = studentcode
+                    //if record.Any() then update IsPresent true
+                    //else create Attendance Records
+                    //now create BatchAttendance record. 
+                    //And please do not make any new function you have CreateBatchAttendance and CreateAttendance
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region // Retrieve

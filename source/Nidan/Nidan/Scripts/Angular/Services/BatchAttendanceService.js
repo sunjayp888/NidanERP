@@ -13,7 +13,8 @@
             searchBatchAttendance: searchBatchAttendance,
             retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId,
             searchBatchAttendanceByDate: searchBatchAttendanceByDate,
-            retrieveBatches: retrieveBatches
+            retrieveBatches: retrieveBatches,
+            markAttendance: markAttendance
         };
 
         return service;
@@ -70,6 +71,13 @@
 
             var url = "/BatchAttendance/GetBatches";
             return $http.post(url);
+        }
+
+        function markAttendance(subjectId, sessionId,attendances) {
+
+            var url = "/BatchAttendance/MarkAttendance";
+            var data = { attendances: attendances, subjectId: subjectId, sessionId: sessionId }
+            return $http.post(url, data);
         }
 
     }
