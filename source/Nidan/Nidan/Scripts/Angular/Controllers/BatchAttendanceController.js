@@ -34,6 +34,7 @@
         vm.selectAll = selectAll;
         vm.allItemsSelected = false;
         vm.selectEntity = selectEntity;
+        vm.markAttendance = markAttendance;
 
         function initialise() {
             vm.orderBy.property = "StudentCode";
@@ -45,6 +46,9 @@
         function selectAll() {
             for (var i = 0; i < vm.batchAttendances.length; i++) {
                 vm.batchAttendances[i].IsPresent = vm.allItemsSelected;
+                vm.batchAttendances[i].InTime = $("#BatchAttendance_Attendance_InHour").val();
+                vm.batchAttendances[i].OutTime = $("#BatchAttendance_Attendance_OutHour").val();
+                vm.batchAttendances[i].AttendanceDate = $("#BatchAttendance_Attendance_AttendanceDate").val();
             }
         };
 
@@ -68,7 +72,7 @@
                   vm.searchMessage = vm.batchAttendances.length === 0 ? "No Records Found" : "";
                   return vm.batchAttendances;
               });
-       }
+        }
 
         function searchBatchAttendanceByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
@@ -127,7 +131,7 @@
                     });
         }
 
-        
+
         function pageChanged() {
             return retrieveBatchAttendances();
         }
@@ -169,17 +173,29 @@
         }
 
         function selectEntity() {
-	            // If any entity is not checked, then uncheck the "allItemsSelected" checkbox
+            // If any entity is not checked, then uncheck the "allItemsSelected" checkbox
             for (var i = 0; i < vm.batchAttendances.length; i++) {
                 if (!vm.batchAttendances[i].IsPresent) {
-	                    vm.allItemsSelected = false;
-	                    return;
-	                }
-	            }
-	
-	            //If not the check the "allItemsSelected" checkbox
+                    vm.batchAttendances[i].InTime = $("#BatchAttendance_Attendance_InHour").val();
+                    vm.batchAttendances[i].OutTime = $("#BatchAttendance_Attendance_OutHour").val();
+                    vm.batchAttendances[i].AttendanceDate = $("#BatchAttendance_Attendance_AttendanceDate").val();
+                    vm.allItemsSelected = false;
+                    return;
+                }
+            }
+
+            //If not the check the "allItemsSelected" checkbox
             vm.allItemsSelected = true;
-	        };
+        };
+
+        function markAttendance() {
+            var subjectId = $("#BatchAttendance_SubjectId").val();
+            var sessionId = $("#BatchAttendance_SessionId").val();
+            return BatchAttendanceService.markAttendance(subjectId, sessionId,vm.batchAttendances).then(function (response) {
+                vm.batches = response.data.Items;
+                return vm.batches;
+            });
+        }
 
     }
 

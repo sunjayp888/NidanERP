@@ -109,12 +109,13 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        }
-
         [HttpPost]
-        public ActionResult MarkAttendance(List<Attendance> attendances)
+        public ActionResult MarkAttendance(List<AttendanceGrid> attendances,int subjectId,int sessionId)
         {
+            //Please make sure we are getting all data if not set in js file.
+            var result = NidanBusinessService.MarkAttendance(attendances, subjectId, sessionId);
             return null;
+        }
     }
 }
 
