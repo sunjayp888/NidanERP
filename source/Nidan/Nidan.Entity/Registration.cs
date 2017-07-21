@@ -12,6 +12,8 @@ namespace Nidan.Entity
         public Registration()
         {
             FollowUps = new HashSet<FollowUp>();
+            RegistrationDate = DateTime.UtcNow.Date;
+            FollowupDate = DateTime.UtcNow.Date.AddDays(2);
         }
 
         public int RegistrationId { get; set; }

@@ -1303,7 +1303,7 @@ namespace Nidan.Data
                     .Batches
                     .AsNoTracking()
                     .Include(p => p.BatchTrainers)
-                    .Include(p => p.BatchTrainers.Select(e=>e.Trainer))
+                    .Include(p => p.BatchTrainers.Select(e => e.Trainer))
                     .Include(p => p.Room)
                     .Include(p => p.CourseInstallment)
                     .Include(p => p.Course)
@@ -1427,7 +1427,7 @@ namespace Nidan.Data
             {
                 return context
                     .Trainers
-                    .Include(e=>e.State)
+                    .Include(e => e.State)
                     .Include(e => e.District)
                     .Include(e => e.Taluka)
                     .Include(e => e.Sector)
@@ -2176,7 +2176,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<RegistrationSearchField>("SearchRegistration @SearchKeyword", category).ToList();
 
-                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee).Include(e=>e.CandidateFee.PaymentMode);
+                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee).Include(e => e.CandidateFee.PaymentMode);
 
                 var data = searchData.Join(registrations, e => e.RegistrationId, m => m.RegistrationId, (e, m) => m).ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -2403,7 +2403,7 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
             }
         }
-        
+
         public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2569,7 +2569,7 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
         public PagedResult<Attendance> RetrieveAttendances(int organisationId, Expression<Func<Attendance, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2695,7 +2695,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<ExpenseDataGrid> RetrieveExpenseDataGrid(int organisationId, Expression<Func<ExpenseDataGrid, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        public PagedResult<ExpenseDataGrid> RetrieveExpenseDataGrid(int organisationId, Expression<Func<ExpenseDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -2795,12 +2795,55 @@ namespace Nidan.Data
             {
                 return context
                     .EventBrainstormings
-                    .Include(e=>e.Brainstorming)
+                    .Include(e => e.Brainstorming)
                     .Include(e => e.Event)
                     .Include(e => e.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EventBrainstormingId == eventBrainstormingId);
+            }
+        }
+
+        public PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .MobilizationCentreReports
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Date",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId,
+            Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .MobilizationCentreReports
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Date",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 
@@ -2812,7 +2855,7 @@ namespace Nidan.Data
             {
                 return context
                     .Expenses
-                    .Include(e=>e.ExpenseHeader)
+                    .Include(e => e.ExpenseHeader)
                     .Include(e => e.Centre)
                     .Include(e => e.Organisation)
                     .Include(e => e.ExpenseProjects)
@@ -2829,7 +2872,7 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
         public Expense RetrieveExpense(int organisationId, int centreId, int expenseId, Expression<Func<Expense, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -2837,7 +2880,7 @@ namespace Nidan.Data
             {
                 return context
                     .Expenses
-                    .Include(e=>e.ExpenseProjects)
+                    .Include(e => e.ExpenseProjects)
                     .Include(e => e.Centre)
                     .Include(e => e.ExpenseHeader)
                     .AsNoTracking()
@@ -2845,7 +2888,7 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.ExpenseId == expenseId);
             }
         }
-        
+
         public IEnumerable<ExpenseProject> RetrieveExpenseProjects(int organisationId, int centreId, int expenseId)
         {
             using (ReadUncommitedTransactionScope)
@@ -2861,7 +2904,7 @@ namespace Nidan.Data
                     .ToList();
             }
         }
-        
+
         public CentreVoucherNumber RetrieveCentreVoucherNumber(int organisationId, int centreId, Expression<Func<CentreVoucherNumber, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -2949,7 +2992,7 @@ namespace Nidan.Data
             }
         }
 
-       
+
 
         #endregion
 

@@ -35,6 +35,9 @@
         vm.allItemsSelected = false;
         vm.selectEntity = selectEntity;
         vm.markAttendance = markAttendance;
+        vm.fromDate;
+        vm.toDate;
+        vm.batchId;
 
         function initialise() {
             vm.orderBy.property = "StudentCode";
@@ -93,7 +96,7 @@
         }
 
         function retrieveBatchAttendancesByBatchId() {
-            vm.orderBy.property = "AdmissionId";
+            vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
@@ -120,7 +123,17 @@
         }
       
         function pageChanged() {
-            return retrieveBatchAttendances();
+            vm.fromDate = $("#fromDate").val();
+            vm.toDate = $("#toDate").val();
+            var path = window.location.pathname.split('/');
+            if (path[2] == "BatchAttendance") {
+                searchBatchAttendanceByDate(fromDate, toDate, batchId);
+            }
+            if (path[3] == "Create" ) {
+                retrieveBatchAttendancesByBatchId();
+            }
+            
+             
         }
 
         function order(property) {

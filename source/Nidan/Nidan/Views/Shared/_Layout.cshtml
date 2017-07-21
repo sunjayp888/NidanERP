@@ -86,7 +86,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin","Admin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
@@ -109,6 +109,7 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
+                                            <li><a href='@Url.Action("MobilizationStatistics", "Report")'>Mobilization Statistics</a></li>
                                             @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
                                         }
 
@@ -172,7 +173,7 @@
                 <div class="pull-left">
                     <div>
                         <h2><img src="~/Content/images/N.png" alt="" style="width: 29px; height: 29px"> Nidan</h2>
-                        <p>&copy; @DateTime.Today.Year All Rights Reserved. Nidan</p>
+                        <p>&copy; @DateTime.Today.Year All Rights Reserved. Nidan Technologies Pvt. Ltd.</p>
                     </div>
                 </div>
                 <div class="pull-right">

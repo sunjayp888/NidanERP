@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("FollowUp")]
     public partial class FollowUp
     {
+        public FollowUp()
+        {
+            CreatedDateTime= DateTime.UtcNow.Date;
+        }
         public int FollowUpId { get; set; }
 
         public DateTime FollowUpDateTime { get; set; }

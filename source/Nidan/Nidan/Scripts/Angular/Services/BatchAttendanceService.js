@@ -73,7 +73,7 @@
             return $http.post(url);
         }
 
-        function markAttendance(subjectId, sessionId,attendances) {
+        function markAttendance(subjectId, sessionId, attendances) {
 
             var url = "/BatchAttendance/MarkAttendance";
             var data = { attendances: attendances, subjectId: subjectId, sessionId: sessionId }

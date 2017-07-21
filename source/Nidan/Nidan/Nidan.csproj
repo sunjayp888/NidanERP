@@ -1634,6 +1634,7 @@
     <Content Include="Views\Report\Expense.cshtml" />
     <Content Include="Views\Batch\View.cshtml" />
     <Content Include="Views\Trainer\View.cshtml" />
+    <Content Include="Views\Report\MobilizationStatistics.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

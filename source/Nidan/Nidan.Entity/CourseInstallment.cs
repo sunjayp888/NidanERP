@@ -14,6 +14,7 @@ namespace Nidan.Entity
             Batches=new HashSet<Batch>();
             CentreCourseInstallments=new HashSet<CentreCourseInstallment>();
             Registrations=new HashSet<Registration>();
+            CreatedDate=DateTime.UtcNow.Date;
         }
 
         public int CourseInstallmentId { get; set; }

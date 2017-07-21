@@ -17,6 +17,7 @@ namespace Nidan.Entity
             RoomAvailables=new HashSet<RoomAvailable>();
             TrainerAvailables=new HashSet<TrainerAvailable>();
             BatchAttendances = new HashSet<BatchAttendance>();
+            CreatedDate=DateTime.UtcNow.Date;
         }
 
         public int BatchId { get; set; }

@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public CandidateFee()
         {
             Registrations = new HashSet<Registration>();
+            PaymentDate=DateTime.UtcNow.Date;
         }
         public int CandidateFeeId { get; set; }
 

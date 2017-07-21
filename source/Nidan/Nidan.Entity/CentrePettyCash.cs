@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("CentrePettyCash")]
     public partial class CentrePettyCash
     {
+        public CentrePettyCash()
+        {
+            CreatedDate=DateTime.UtcNow.Date;
+        }
         public int CentrePettyCashId { get; set; }
 
         public int CentreId { get; set; }

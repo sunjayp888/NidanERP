@@ -55,7 +55,6 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            batchAttendanceViewModel.Attendance.AttendanceDate = _todayUTC;
             if (ModelState.IsValid)
             {
                 batchAttendanceViewModel.BatchAttendance.OrganisationId = UserOrganisationId;
@@ -119,10 +118,10 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult MarkAttendance(List<AttendanceGrid> attendances,int subjectId,int sessionId)
+        public ActionResult MarkAttendance(List<AttendanceGrid> attendances, int subjectId, int sessionId)
         {
             //Please make sure we are getting all data if not set in js file.
-            var result = NidanBusinessService.MarkAttendance(attendances, subjectId, sessionId);
+            var result = NidanBusinessService.MarkAttendance(UserOrganisationId, UserCentreId, UserPersonnelId, attendances, subjectId, sessionId);
             return null;
         }
     }

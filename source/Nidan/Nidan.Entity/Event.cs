@@ -19,6 +19,7 @@ namespace Nidan.Entity
             Eventdays = new HashSet<Eventday>();
             Postevents = new HashSet<Postevent>();
             EventBrainstormings = new HashSet<EventBrainstorming>();
+            CreatedDateTime=DateTime.UtcNow.Date;
         }
         public int EventId { get; set; }
 

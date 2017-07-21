@@ -43,7 +43,6 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            attendanceViewModel.Attendance.AttendanceDate = _todayUTC;
             if (ModelState.IsValid)
             {
                 attendanceViewModel.Attendance.OrganisationId = UserOrganisationId;

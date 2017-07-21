@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("Admission")]
     public partial class Admission
     {
+        public Admission()
+        {
+            AdmissionDate = DateTime.UtcNow.Date;
+        }
         public int AdmissionId { get; set; }
 
         public int RegistrationId { get; set; }
