@@ -314,6 +314,7 @@
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\RoomViewModel.cs" />
     <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\TrainerViewModel.cs" />
@@ -1638,6 +1639,7 @@
     <Content Include="Views\Batch\View.cshtml" />
     <Content Include="Views\Trainer\View.cshtml" />
     <Content Include="Views\Report\MobilizationStatistics.cshtml" />
+    <Content Include="Views\Report\MobilizationProcessReportByByDate.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

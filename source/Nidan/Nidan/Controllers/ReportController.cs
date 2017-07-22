@@ -66,7 +66,41 @@ namespace Nidan.Controllers
 
         public ActionResult MobilizationStatistics()
         {
-            return View(new BaseViewModel());
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
+        }
+
+        public ActionResult MobilizationProcessReportByMonth()
+        {
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
+        }
+
+        public ActionResult MobilizationProcessReportByByDate()
+        {
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -127,18 +161,16 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
+        public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear,int toYear, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Date.Month == month && p.Date.Year == year, orderBy, paging);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month >= fromMonth && p.Date.Month <= toMonth && p.Date.Year >= fromYear && p.Date.Year <= toYear, orderBy, paging);
             return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult MobilizationCountReportBydate(int centreId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Date >= fromDate && p.Date <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date >= fromDate && p.Date <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
