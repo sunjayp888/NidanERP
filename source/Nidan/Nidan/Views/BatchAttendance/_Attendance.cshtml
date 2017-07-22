@@ -7,6 +7,15 @@
 </div>
 
 <div class="form-group">
+    @Html.LabelFor(model => model.BatchAttendance.Attendance.AttendanceDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.BatchAttendance.Attendance.AttendanceDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" , ng_model = "model.MarkDate" })
+        <span class="form-control-feedback" aria-hidden="true"></span>
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.AttendanceDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
     @Html.LabelFor(model => model.BatchAttendance.BatchId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.BatchAttendance.BatchId, Model.Batches, "Select Batch", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveBatchAttendancesByBatchId()" })
@@ -80,16 +89,6 @@
             @Html.RadioButtonFor(model => model.BatchAttendance.Attendance.OutTimeSpan, "PM", new { id = "rbBatchAttendanceOutTimeSpanPM" })
             PM
         </label>
-    </div>
-</div>
-
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BatchAttendance.Attendance.AttendanceDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.BatchAttendance.Attendance.AttendanceDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-        <span class="form-control-feedback" aria-hidden="true"></span>
-        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.AttendanceDate, "", new { @class = "help-block" })
     </div>
 </div>
 

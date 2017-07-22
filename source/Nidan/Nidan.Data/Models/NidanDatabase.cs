@@ -1812,14 +1812,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Attendance>()
-                .Property(e => e.InTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Attendance>()
-                .Property(e => e.OutTimeSpan)
-                .IsUnicode(false);
-
             modelBuilder.Entity<BatchAttendance>()
                 .Property(e => e.Topic)
                 .IsUnicode(false);
@@ -1948,18 +1940,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.BatchName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.InTime)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.OutTime)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<AttendanceGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);

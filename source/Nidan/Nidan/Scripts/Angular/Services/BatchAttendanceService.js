@@ -30,11 +30,12 @@
             return $http.post(url, data);
         }
 
-        function retrieveBatchAttendancesByBatchId(batchId, Paging, OrderBy) {
+        function retrieveBatchAttendancesByBatchId(batchId,date, Paging, OrderBy) {
 
             var url = "/BatchAttendance/AttendanceList",
                 data = {
                     batchId: batchId,
+                    date:date,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -59,19 +60,17 @@ namespace Nidan.Controllers
             {
                 batchAttendanceViewModel.BatchAttendance.OrganisationId = UserOrganisationId;
                 batchAttendanceViewModel.BatchAttendance.CentreId = UserCentreId;
-                batchAttendanceViewModel.BatchAttendance.PersonnelId = UserPersonnelId;
-                //attendanceViewModel.Attendance = NidanBusinessService.CreateAttendance(organisationId, centreId, attendanceViewModel.Attendance.PersonnelId, attendanceViewModel.Attendance);
                 return RedirectToAction("Index");
             }
             return View(batchAttendanceViewModel);
         }
 
         [HttpPost]
-        public ActionResult AttendanceList(int batchId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult AttendanceList(int batchId, DateTime date, Paging paging, List<OrderBy> orderBy)
         {
             var isSuperAdmin = User.IsSuperAdmin();
             var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId,
-                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
+                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId && (DbFunctions.TruncateTime(p.AttendanceDate) == date || !p.AttendanceDate.HasValue), orderBy, paging);
             return this.JsonNet(admissiondata);
         }
 
