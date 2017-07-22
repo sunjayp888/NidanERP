@@ -254,6 +254,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EnquiryCourseController.cs" />
+    <Compile Include="Controllers\EventBrainstormingController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExpenseHeaderController.cs" />
     <Compile Include="Controllers\ExpenseProjectController.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
+    <Compile Include="Models\EventBrainstormingViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ExpenseHeaderViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
@@ -1261,6 +1263,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
+    <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>

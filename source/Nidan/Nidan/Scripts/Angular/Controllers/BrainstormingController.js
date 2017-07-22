@@ -11,12 +11,15 @@
         /* jshint validthis:true */
         var vm = this;
         vm.brainstormings = [];
+        vm.DisscussionCompletedYesNo = [];
+        vm.RefernceDetailDocument = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
         vm.editBrainstorming = editBrainstorming;
+        vm.createEventBrainstorming = createEventBrainstorming;
         initialise();
 
         function initialise() {
@@ -48,6 +51,14 @@
 
         function editBrainstorming(id) {
             $window.location.href = "/Brainstorming/Edit/" + id;
+        }
+
+        function createEventBrainstorming() {
+            var eventId = $("#Event_EventId").val();
+            return BrainstormingService.createEventBrainstorming(eventId, vm.eventBrainstormings).then(function (response) {
+                vm.eventBrainstormings = response.data.Items;
+                return vm.eventBrainstormings;
+            });
         }
     }
 
