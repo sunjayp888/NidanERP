@@ -156,6 +156,7 @@
     <Compile Include="Interfaces\IOrganisationFilterable.cs" />
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
+    <Compile Include="MobilizationCentreReport.cs" />
     <Compile Include="MobilizationDataGrid.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />

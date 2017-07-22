@@ -67,7 +67,6 @@ namespace Nidan.Controllers
         public ActionResult Create(BatchViewModel batchViewModel)
         {
             var organisationId = UserOrganisationId;
-            batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
             batchViewModel.CourseInstallment.Name = "Test";
             batchViewModel.Course.Name = "Test";
             ModelStateErrors(ModelState);

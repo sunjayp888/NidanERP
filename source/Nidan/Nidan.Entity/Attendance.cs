@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("Attendance")]
     public partial class Attendance
     {
+        public Attendance()
+        {
+            AttendanceDate=DateTime.UtcNow.Date;
+        }
         public int AttendanceId { get; set; }
 
         public int PersonnelId { get; set; }

@@ -104,8 +104,6 @@ namespace Nidan.Controllers
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
-                enquiryViewModel.Enquiry.EnquiryDate = DateTime.UtcNow;
-                enquiryViewModel.Enquiry.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();

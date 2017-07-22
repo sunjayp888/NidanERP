@@ -68,7 +68,6 @@ namespace Nidan.Controllers
                 otherFeeViewModel.Expense.OrganisationId = organisationId;
                 otherFeeViewModel.Expense.CentreId = centreId;
                 otherFeeViewModel.Expense.PersonnelId = personnelId;
-                otherFeeViewModel.Expense.CreatedDate = DateTime.UtcNow;
                 otherFeeViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
                 otherFeeViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, otherFeeViewModel.Expense, otherFeeViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");

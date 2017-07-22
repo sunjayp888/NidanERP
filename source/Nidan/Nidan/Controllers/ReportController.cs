@@ -64,6 +64,11 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        public ActionResult MobilizationStatistics()
+        {
+            return View(new BaseViewModel());
+        }
+
         [HttpPost]
         public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
@@ -101,7 +106,7 @@ namespace Nidan.Controllers
         public ActionResult SearchRegistrationByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,p =>(isSuperAdmin || p.CentreId == UserCentreId) && p.RegistrationDate >= fromDate && p.RegistrationDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.RegistrationDate >= fromDate && p.RegistrationDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -122,6 +127,22 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Date.Month == month && p.Date.Year == year, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult MobilizationCountReportBydate(int centreId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Date >= fromDate && p.Date <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
         public ActionResult DownloadEnquiryCSVByDate(DateTime fromDate, DateTime toDate)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
@@ -133,7 +154,7 @@ namespace Nidan.Controllers
                         (isSuperAdmin || p.CentreId == UserCentreId) && p.EnquiryDate >= fromDate &&
                         p.EnquiryDate <= toDate).Items.ToList();
             string csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_EnquiryReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"),toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_EnquiryReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
 
         [HttpPost]
@@ -141,7 +162,7 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
-            var centreName = isSuperAdmin ? string.Empty : centre.Name; 
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
                 NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId,
                     p =>

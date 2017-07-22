@@ -70,8 +70,6 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
-                registrationViewModel.Registration.FollowupDate = DateTime.UtcNow.AddDays(2);
-                registrationViewModel.Registration.RegistrationDate = DateTime.UtcNow.Date;
                 registrationViewModel.Registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, personnelId, registrationViewModel.StudentCode, registrationViewModel.Registration);
                 // return RedirectToAction("Edit", new { id = registration.RegistrationId });
                 return RedirectToAction("Index");

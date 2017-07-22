@@ -1,0 +1,106 @@
+﻿@using Nidan.Extensions
+@{
+    ViewBag.Title = "MobilizationStatistics";
+}
+
+<div ng-controller="ReportController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Mobilization Statistics <small></small>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Select Report Type<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button id="btnMonth" type="submit" value="Report By Month" class="btn btn-success"><i class="fa fa-line-chart"> </i>  Report By Month</button>
+                        <button id="btnDate" type="submit" value="Report By Date" class="btn btn-success"><i class="fa fa-line-chart"> </i>  Report By Date</button>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reportByMonth" class="row">
+        <div class="col-lg-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Report By Month<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="reportByDate" class="row">
+        <div class="col-lg-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Report By Date<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+
+        $("#reportByMonth").hide();
+        $("#reportByDate").hide();
+
+        $('#btnMonth').click(function () {
+            $("#reportByMonth").show();
+            $("#reportByDate").hide();
+        });
+
+        $('#btnDate').click(function () {
+            $("#reportByMonth").hide();
+            $("#reportByDate").show();
+        });
+    </script>
+}
