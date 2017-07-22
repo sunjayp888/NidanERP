@@ -2663,6 +2663,17 @@ namespace Nidan.Business
             return data;
         }
 
+        public Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate)
+        {
+            var gst = _nidanDataService.RetrieveGst(organisationId, predicate);
+            return gst;
+        }
+
+        public PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveGsts(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -3433,6 +3444,7 @@ namespace Nidan.Business
             var totalInstallment = RetrieveCandidateInstallment(organisationId, candidateFeeData.CandidateInstallmentId ?? 0, e => true).NumberOfInstallment.ToString();
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
             var centre = RetrieveCentre(organisationId, centreId);
+            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
             int value = candidateFeeData.FeeTypeId;
             FeeType feeType = (FeeType)value;
             var candidateFeeReceipt = new CandidateFeeReceipt()
@@ -3453,7 +3465,9 @@ namespace Nidan.Business
                 MobileNumber = enquiry.Mobile.ToString(),
                 TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
                 TotalInstallment = totalInstallment,
-                InstallmentNumber = candidateFeeData.InstallmentNumber.ToString()
+                InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
+                State = candidateFeeData.Centre.State.Name,
+                Gstin = gstnumber.GstNumber
             };
             if (value == 1)
             {
@@ -3506,9 +3520,10 @@ namespace Nidan.Business
                     AmountPaid = item.PaidAmount.ToString()
                 });
             }
-
+            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
             var enrollmentData = new CandidateEnrollment
             {
+
                 BatchEndDate = admission.Batch?.BatchStartDate.ToShortDateString(),
                 BatchStartDate = admission.Batch?.BatchEndDate.ToShortDateString(),
                 CandidateAddress =
@@ -3531,7 +3546,9 @@ namespace Nidan.Business
                 FeeDetails = feeDetailList,
                 TotalCourseFee = admission.Registration.CandidateInstallment.CourseFee.ToString(),
                 TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
-                BalanceFee = (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
+                BalanceFee = (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString(),
+                State = admission.Centre.State.Name,
+                Gstin = gstnumber.GstNumber
             };
             return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(enrollmentData), "Enrollment");
 

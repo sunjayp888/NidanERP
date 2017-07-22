@@ -119,6 +119,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<PettyCashExpenseReport> PettyCashExpenseReports { get; set; }
         public virtual DbSet<EventBrainstorming> EventBrainstormings { get; set; }
         public virtual DbSet<MobilizationCentreReport> MobilizationCentreReports { get; set; }
+        public virtual DbSet<Gst> Gsts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1979,6 +1980,14 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<MobilizationCentreReport>()
                 .Property(e => e.FeeCollected)
                 .HasPrecision(38, 2);
+
+            modelBuilder.Entity<Gst>()
+                .Property(e => e.GstNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Gst>()
+                .Property(e => e.Type)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }
