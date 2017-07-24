@@ -157,6 +157,7 @@
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationCentreReport.cs" />
+    <Compile Include="MobilizationCentreReportMonthWise.cs" />
     <Compile Include="MobilizationDataGrid.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />

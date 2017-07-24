@@ -1839,6 +1839,7 @@ namespace Nidan.Data
                     .Include(p => p.Registration.CandidateInstallment.CandidateFees)
                     .Include(p => p.Registration.Course)
                     .Include(p => p.Registration.CourseInstallment)
+                    .Include(p => p.Registration.CourseInstallment.Course)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -2804,13 +2805,13 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<MobilizationCentreReportMonthWise> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .MobilizationCentreReports
+                    .MobilizationCentreReportMonthWises
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>

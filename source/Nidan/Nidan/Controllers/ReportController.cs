@@ -90,7 +90,7 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        public ActionResult MobilizationProcessReportByByDate()
+        public ActionResult MobilizationProcessReportByDate()
         {
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
@@ -163,7 +163,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear,int toYear, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month >= fromMonth && p.Date.Month <= toMonth && p.Date.Year >= fromYear && p.Date.Year <= toYear, orderBy, paging);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear, orderBy, paging);
             return this.JsonNet(data);
         }
 

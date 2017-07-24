@@ -150,7 +150,7 @@
         }
 
         function searchMobilizationCountReportBydate(centreId, FromDate, ToDate, Paging, OrderBy) {
-            var url = "/Report/MobilizationProcessReportByByDate",
+            var url = "/Report/MobilizationCountReportBydate",
                 data = {
                     centreId: centreId,
                     fromDate: FromDate,
@@ -163,7 +163,7 @@
         }
 
         function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, Paging, OrderBy) {
-            var url = "/Report/MobilizationProcessReportByMonth",
+            var url = "/Report/MobilizationCountReportByMonthAndYear",
                 data = {
                     centreId: centreId,
                     fromMonth: fromMonth,
