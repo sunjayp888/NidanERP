@@ -29,7 +29,9 @@
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
-        vm.searchExpenseByDate = searchExpenseByDate;
+        vm.searchExpenseByDate = searchExpenseByDate; 
+        vm.searchMobilizationCountReportBydate = searchMobilizationCountReportBydate;
+        vm.searchMobilizationCountReportByMonthAndYear = searchMobilizationCountReportByMonthAndYear;
         vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
         vm.downloadMobilizationCSVByDate = downloadMobilizationCSVByDate;
         vm.downloadFollowUpCSVByDate = downloadFollowUpCSVByDate;
@@ -199,8 +201,45 @@
                 });
         }
 
+        function searchMobilizationCountReportBydate(centreId, fromDate, toDate) {
+            vm.centreId = centreId;
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "Date";
+            vm.orderBy.class = "asc";
+            //order("Date");
+            return ReportService.searchMobilizationCountReportBydate(vm.centreId,vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
+            vm.centreId = centreId;
+            vm.fromMonth = fromMonth;
+            vm.toMonth = toMonth;
+            vm.fromYear = fromYear;
+            vm.toYear = toYear;
+            vm.orderBy.property = "Date";
+            vm.orderBy.class = "asc";
+            order("Date");
+            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, year, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
         function pageChanged() {
-            vm.fromDate = $("#fromDate").val();
+            vm.centreId = $("#CentreId").val();
+            vm.fromDate = $("#fromDate").val(); 
             vm.toDate = $("#toDate").val();
             var path = window.location.pathname.split('/');
             if (path[2] == "Enquiry") {
@@ -220,6 +259,12 @@
             }
             if (path[2] == "Counselling") {
                 searchCounsellingByDate(vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "MobilizationProcessReportByByDate") {
+                searchMobilizationCountReportBydate(vm.centreId, vm.fromDate, vm.toDate);
+            }
+            if (path[2] == "MobilizationProcessReportByMonth") {
+                searchMobilizationCountReportByMonthAndYear(vm.centreId, vm.fromDate, vm.toDate);
             }
         }
 
@@ -257,10 +302,6 @@
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
-        }
-
-        function downloadEnquiryCSVByDate(fromDate, toDate) {
-            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
         }
     }
 
