@@ -50,7 +50,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             courseInstallmentViewModel.CourseInstallment.OrganisationId = organisationId;
-            courseInstallmentViewModel.CourseInstallment.CreatedDate= DateTime.UtcNow;
             if (ModelState.IsValid)
             {
                 courseInstallmentViewModel.CourseInstallment = NidanBusinessService.CreateCourseInstallment(organisationId, courseInstallmentViewModel.CourseInstallment);

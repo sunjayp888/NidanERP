@@ -85,16 +85,11 @@
                     });
         });
 
-        //$(function () {
-        //    $("#Batch_BatchStartDate").daterangepicker({ dateFormat: "yy-mm-dd" });
-        //    $("#datepicker").on("change", function () {
-        //        var selected = $(this).val();
-        //        alert(selected);
-        //    });
+        
+        //$('#Batch_BatchStartDate').change(function () {
+        //    getendtime();
+        //    BatchLogic();
         //});
-        $('#Batch_BatchStartDate').change(function() {
-            BatchLogic();
-        });
 
         $('#Batch_CourseInstallmentId').change(function() {
             BatchLogic();
@@ -449,35 +444,6 @@
                 });
             });
 
-        //=======================================================================Do not allow decimal
-        $(document)
-            .ready(function() {
-                /* Allow digits only */
-                $(".batchStartTime") &&
-                    $(".Batch_NumberOfHoursDaily")
-                    .keypress(function(e) {
-                        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                            $("#wdm_errmsg").html("Please Enter Digits Only").show().fadeOut("slow");
-                            return false;
-                        }
-                    });
-                /* Do not allow paste */
-                $('.batchStartTime')
-                    .bind("paste",
-                        function(e) {
-                            e.preventDefault();
-                        });
-            });
-        //========================================================================= do not allow 0 in numberofhoursdaily
-
-        $("#Batch_NumberOfHoursDaily")
-            .on("keypress keyup",
-                function() {
-                    if ($(this).val() == '0') {
-                        $(this).val('');
-                    }
-                });
-
         //==================================================================== Calculate end Time based on numberofhoursdaily
         function getendtime() {
             var startHours = $("#Batch_BatchStartTimeHours").val();
@@ -558,11 +524,12 @@
 
             //=============================================================================== on num of daily hours change month and installment
             $('#Batch_NumberOfHoursDaily')
-                .keyup(function() {
+                .change(function() {
 
                     getendtime();
-                    //checkboxes();
                 });
+
+            
             //===================================================== readiobutton AM / PM selection
 
             if (startHours < 12) {
@@ -579,6 +546,12 @@
             }
 
         }
+
+        $('#Batch_BatchStartTimeHours')
+                 .change(function () {
+                     getendtime();
+                     BatchLogic();
+                 });
 
         //===================================================No Of Installment Do not allow grater than Month
 
@@ -609,7 +582,7 @@
         $('.eleventh-installment-textbox').hide();
         $('.twelveth-installment-textbox').hide();
 
-        $("#Batch_BatchStartTimeMinutes").keyup(function() {
+        $("#Batch_BatchStartTimeMinutes").change(function() {
             var startimeminute = $("#Batch_BatchStartTimeMinutes").val();
             $("#Batch_BatchEndTimeMinutes").val(startimeminute);
         });
@@ -624,43 +597,4 @@
 
 
     </script>}
-
-
-
-@*Create view [dbo].[AdmissionGrid]
-    AS
-    Select
-    CandidateName = E.FirstName+' '+E.MiddleName+' '+E.Lastname,
-    BatchName=B.Name,
-    TotalFee=CI.CourseFee,
-    PaidAmount=sum(CF.PaidAmount),
-    PendingAmount = CI.CourseFee - sum(CF.PaidAmount),
-    A.AdmissionDate,
-    A.AdmissionId,
-    CentreName=C.Name,
-    C.CentreId
-    from Admission A
-    INNER JOIN REGISTRATION R ON R.RegistrationId =  A.RegistrationId
-    INNER JOIN ENQUIRY E ON E.EnquiryId = R.EnquiryId
-    INNER JOIN BATCH B ON B.BatchId = A.BatchId
-    INNER JOIN CandidateInstallment CI on CI.StudentCode = E.StudentCode
-    INNER JOIN CandidateFee CF on CF.CandidateInstallmentId = CI.CandidateInstallmentId
-    INNER JOIN Centre C on C.CentreId = A.CentreId
-    group by
-    E.MiddleName,
-    E.FirstName,
-    E.Lastname,
-    B.Name,
-    CI.CourseFee,
-    A.AdmissionDate,
-    C.CentreId,
-    C.Name,
-    A.AdmissionId
-
-    GO*@
-
-
-
-
-
 

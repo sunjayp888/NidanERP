@@ -11,36 +11,77 @@
             </h3>
         </div>
         <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchRegistration(searchField)" class="form-control" placeholder="Search for Registration...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="model.searchRegistration(searchField)" type="button">Go!</button>
-                        </span>
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchRegistration(searchField)" class="form-control" placeholder="Search for Registration...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchRegistration(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" ng-click="model.searchRegistrationByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-    </div>
-    @*@if (User.IsInAnyRoles("Admin"))
-    {
-        <div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-app" href="@Url.Action("Create", "Registration")">
-                    <i class="fa fa-user"></i> Create
-                </a>
-            </div>
         </div>
-    }*@
-    @*Search*@
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 @*<div class="x_title">*@
-                        @*<h2>
-                            Centres <small></small>
-                        </h2>*@
-                        <div class="clearfix"></div>
-                    @*</div>*@
+                @*<h2>
+                        Centres <small></small>
+                    </h2>*@
+                <div class="clearfix"></div>
+                @*</div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -54,68 +95,68 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                        }
-                                        <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
-                                        <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
-                                        <th ng-click="model.order('CandidateFee.PaymentModeId')" ng-class="model.orderClass('CandidateFee.PaymentModeId')">Payment Mode</th>
-                                        <th ng-click="model.order('CandidateFee.PaidAmount')" ng-class="model.orderClass('CandidateFee.PaidAmount')">Registration Fees</th>
-                                        <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr role="row">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                            }
+                                            <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
+                                            <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
+                                            <th ng-click="model.order('CandidateFee.PaymentModeId')" ng-class="model.orderClass('CandidateFee.PaymentModeId')">Payment Mode</th>
+                                            <th ng-click="model.order('CandidateFee.PaidAmount')" ng-class="model.orderClass('CandidateFee.PaidAmount')">Registration Fees</th>
+                                            <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <td><span ng-bind="registration.Centre.Name"></span></td>
-                                        }
-                                        <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
-                                        <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
-                                        <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
-                                        <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
-                                        <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
-                                        <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
-                                                    {
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Registration/View/{{registration.RegistrationId}}">
-                                                                View
-                                                            </a>
-                                                        </li>
-														}
-														@if (User.IsInAnyRoles("Admin"))
-														{
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Edit/{{registration.RegistrationId}}">
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
-                                                                Download
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Admission/Create/{{registration.RegistrationId}}">
-                                                                Create Admission
-                                                            </a>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="registration.Centre.Name"></span></td>
+                                            }
+                                            <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
+                                            <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
+                                            <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
+                                            <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
+                                            <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
+                                            <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Registration/View/{{registration.RegistrationId}}">
+                                                                    View
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Edit/{{registration.RegistrationId}}">
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
+                                                                    Download
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Admission/Create/{{registration.RegistrationId}}">
+                                                                    Create Admission
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -132,4 +173,33 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $(function () {
 
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+    </script>
+}

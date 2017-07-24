@@ -41,7 +41,7 @@ namespace Nidan.Controllers
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e=>e.CourseInstallment).ToList();
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e => e.CourseInstallment).ToList();
             var counsellingData = NidanBusinessService.RetrieveCounsellings(organisationId, e => e.EnquiryId == enquiry.EnquiryId).Items.FirstOrDefault();
             var counsellingCourse = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => e.CourseId == counsellingData?.CourseOfferedId);
             var viewModel = new RegistrationViewModel
@@ -70,8 +70,6 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 registrationViewModel.Registration.EnquiryId = registrationViewModel.EnquiryId;
-                registrationViewModel.Registration.FollowupDate = DateTime.UtcNow.AddDays(2);
-                registrationViewModel.Registration.RegistrationDate = DateTime.UtcNow;
                 registrationViewModel.Registration = _nidanBusinessService.CreateCandidateRegistration(organisationId, centreId, personnelId, registrationViewModel.StudentCode, registrationViewModel.Registration);
                 // return RedirectToAction("Edit", new { id = registration.RegistrationId });
                 return RedirectToAction("Index");
@@ -175,7 +173,9 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveRegistrations(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging));
+            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,
+                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
@@ -211,9 +211,17 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
         public ActionResult GetCourseInstallmentByCourseId(int courseId)
         {
-            var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseId == courseId && c.CentreId == UserCentreId);
+            var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, c => c.CourseId == courseId);
             return this.JsonNet(data);
         }
 

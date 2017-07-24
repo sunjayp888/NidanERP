@@ -1,0 +1,170 @@
+﻿@model Nidan.Models.BatchViewModel
+
+@{
+    ViewBag.Title = string.Format("View Batch ({0})", Model.Batch.Name);
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel" style="height: auto">
+        <div class="x_title">
+            <h2>
+                <i class="fa fa-bars"></i>Batch Details
+            </h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-lg-12">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Batch</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Batch.Name" class="form-control col-lg-4">
+            </div>
+        </div>
+
+        <div id="divBatchDetails">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                <tr role="row">
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsMonday, new {autocomplete = "off", @disabled = true})
+                                            Monday
+                                        </label>
+                                    </th>
+
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsTuesday, new {autocomplete = "off", @disabled = true})
+                                            Monday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsWednesday, new {autocomplete = "off", @disabled = true})
+                                            Wednesday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsThursday, new {autocomplete = "off", @disabled = true})
+                                            Thursday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsFriday, new {autocomplete = "off", @disabled = true})
+                                            Friday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsSaturday, new {autocomplete = "off", @disabled = true})
+                                            Saturday
+                                        </label>
+                                    </th>
+                                    <th>
+                                        <label class="btn btn-info">
+                                            @Html.CheckBoxFor(m => m.Batch.BatchDays.FirstOrDefault().IsSunday, new {autocomplete = "off", @disabled = true})
+                                            Sunday
+                                        </label>
+
+                                    </th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Batch Start Time</button>
+                                </span>
+                                <input id="txtBatchStartTime" value="@Model.Batch.BatchStartTimeHours : @Model.Batch.BatchStartTimeMinutes @Model.Batch.BatchStartTimeSpan" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Batch End Time</button>
+                                </span>
+                                <input id="txtBatchEndTime" value="@Model.Batch.BatchEndTimeHours : @Model.Batch.BatchEndTimeMinutes @Model.Batch.BatchEndTimeSpan" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Batch Start Date</button>
+                                </span>
+                                <input id="txtBatchStartDate" value="@Model.Batch.BatchStartDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Batch End Date</button>
+                                </span>
+                                <input id="txtBatchEndDate" value="@Model.Batch.BatchEndDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Batch Assessment Date</button>
+                                </span>
+                                <input id="txtBatchAssessmentDate" value="@Model.Batch.AssessmentDate.ToShortDateString()" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-dark">Duration In Month</button>
+                                </span>
+                                <input id="txtBatchMonth" value="@Model.Batch.Month" type="text" disabled="disabled" class="form-control col-lg-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="input-group">
+
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-dark">Trainer(s)</button>
+                        </span>
+
+                        @foreach (var trainer in Model.Batch.BatchTrainers)
+                        {
+
+                            <input type="text" disabled="disabled" value="@string.Format("{0} {1}", trainer.Trainer.FirstName, trainer.Trainer.LastName)" class="form-control col-lg-4">
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

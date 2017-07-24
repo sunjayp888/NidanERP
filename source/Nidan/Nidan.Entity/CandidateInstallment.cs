@@ -14,6 +14,7 @@ namespace Nidan.Entity
         {
             CandidateFees = new HashSet<CandidateFee>();
             Registrations=new HashSet<Registration>();
+            CreatedDate = DateTime.Now.Date;
         }
 
         public int CandidateInstallmentId { get; set; }
@@ -47,6 +48,8 @@ namespace Nidan.Entity
         public string PaymentMethod { get; set; }
 
         public bool IsTotalAmountDiscount { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateFee> CandidateFees { get; set; }

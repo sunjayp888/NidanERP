@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public Expense()
         {
             ExpenseProjects=new HashSet<ExpenseProject>();
+            CreatedDate=DateTime.UtcNow.Date;
         }
         public int ExpenseId { get; set; }
 

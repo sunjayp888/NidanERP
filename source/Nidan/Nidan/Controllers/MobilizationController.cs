@@ -59,12 +59,10 @@ namespace Nidan.Controllers
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
             var organisationId = UserOrganisationId;
-            mobilizationViewModel.GeneratedDate = _todayUTC;
             if (ModelState.IsValid)
             {
                 mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
                 mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
@@ -117,7 +115,6 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.CentreId = UserCentreId;
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
-                mobilizationViewModel.Mobilization.FollowUpDate = _todayUTC.AddDays(2);
                 mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");

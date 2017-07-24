@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Mobilization")]
     public partial class Mobilization
     {
+        public Mobilization()
+        {
+            CreatedDate = DateTime.UtcNow.Date;
+            FollowUpDate= DateTime.UtcNow.Date.AddDays(2);
+        }
         public int MobilizationId { get; set; }
 
         public int EventId { get; set; }

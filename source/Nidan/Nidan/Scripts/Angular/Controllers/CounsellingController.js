@@ -36,6 +36,9 @@
         }
 
         function retrieveCounsellings() {
+            vm.orderBy.property = "ConversionProspect";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
             return CounsellingService.retrieveCounsellings(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.counsellings = response.data.Items;

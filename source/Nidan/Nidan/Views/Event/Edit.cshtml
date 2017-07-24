@@ -83,9 +83,18 @@
                                     </li>
                                 </ul>
                                 <div id="myTabContent2" class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade active in" id="BrainStorm" aria-labelledby="home-tab">
-                                        @Html.Partial("_BrainStorming")
+                                    <div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
+                                        @using (Html.BeginForm("Create", "EventBrainstorming", FormMethod.Post, new { encType = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div role="tabpanel" class="tab-pane fade active in" id="BrainStorm" aria-labelledby="home-tab">
+                                                @Html.Partial("_BrainStorming")
+                                            </div>
+                                        }
                                     </div>
+                                    @*<div role="tabpanel" class="tab-pane fade active in" id="BrainStorm" aria-labelledby="home-tab">
+                                        @Html.Partial("_BrainStorming")
+                                    </div>*@
                                     <div role="tabpanel" class="tab-pane fade active in" id="tab_content_planning" aria-labelledby="home-tab">
                                         @Html.Partial("_Planning")
                                     </div>
@@ -108,9 +117,6 @@
         </div>
     </div>
 </div>
-@*Test*@
-
-@*Test*@
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list

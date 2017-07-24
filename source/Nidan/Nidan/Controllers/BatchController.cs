@@ -33,7 +33,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => e.CentreId == centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId,centreId).Items.Select(e=>e.CourseInstallment);
             var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == centreId);
             var viewModel = new BatchViewModel()
@@ -67,7 +67,6 @@ namespace Nidan.Controllers
         public ActionResult Create(BatchViewModel batchViewModel)
         {
             var organisationId = UserOrganisationId;
-            batchViewModel.Batch.CreatedDate = DateTime.UtcNow;
             batchViewModel.CourseInstallment.Name = "Test";
             batchViewModel.Course.Name = "Test";
             ModelStateErrors(ModelState);
@@ -153,6 +152,27 @@ namespace Nidan.Controllers
             var viewModel = new BatchViewModel
             {
                 Batch = batchViewModel.Batch
+            };
+            return View(viewModel);
+        }
+
+        // GET: Batch/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var batch = NidanBusinessService.RetrieveBatch(organisationId, id.Value);
+            if (batch == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new BatchViewModel
+            {
+                Batch = batch
             };
             return View(viewModel);
         }

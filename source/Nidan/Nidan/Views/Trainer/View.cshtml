@@ -1,0 +1,133 @@
+﻿@model Nidan.Models.TrainerViewModel
+
+@{
+    ViewBag.Title = string.Format("View Trainer ({0} {1})", Model.Trainer.FirstName, Model.Trainer.LastName);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.Trainer.Title @Model.Trainer.FirstName @Model.Trainer.LastName</button><small> View Trainer </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Trainer Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Gender</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.Gender" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Aadhar Number</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.AadharNo" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobile No.</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.Mobile" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Email Id</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.EmailId" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Address</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0}, {1}, {2}, {3}, Pincode - {4}", Model.Trainer.Address1, Model.Trainer.Taluka, Model.Trainer.District, Model.Trainer.State, Model.Trainer.PinCode)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Sector</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.Sector.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Certified</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.Trainer.Certified" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        @if (Model.Trainer.Certified != "No")
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Certification Number</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.Trainer.CertificationNo" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

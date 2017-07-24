@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchBatchByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        <button type="button" ng-click="model.searchBatchByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -135,6 +135,14 @@
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Batch/Edit/{{batch.BatchId}}">
                                                                 Edit
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Batch/View/{{batch.BatchId}}">
+                                                                View
                                                             </a>
                                                         </li>
                                                     }

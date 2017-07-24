@@ -9,7 +9,8 @@
 
     function BrainstormingService($http) {
         var service = {
-            retrieveBrainstormings: retrieveBrainstormings
+            retrieveBrainstormings: retrieveBrainstormings,
+            createEventBrainstorming: createEventBrainstorming
         };
 
         return service;
@@ -21,7 +22,13 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+            return $http.post(url, data);
+        }
 
+        function createEventBrainstorming(eventId, eventBrainstormings) {
+
+            var url = "/EventBrainstorming/Create";
+            var data = { eventBrainstormings: eventBrainstormings, eventId: eventId}
             return $http.post(url, data);
         }
     }

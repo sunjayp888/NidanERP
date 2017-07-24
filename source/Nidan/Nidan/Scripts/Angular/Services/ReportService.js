@@ -19,13 +19,15 @@
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
             searchExpenseByDate: searchExpenseByDate,
-            downloadEnquiryCSVByDate : downloadEnquiryCSVByDate,
-            downloadMobilizationCSVByDate : downloadMobilizationCSVByDate,
-            downloadFollowUpCSVByDate : downloadFollowUpCSVByDate,
-            downloadAdmissionCSVByDate : downloadAdmissionCSVByDate,
-            downloadRegistrationCSVByDate : downloadRegistrationCSVByDate,
-            downloadCounsellingCSVByDate : downloadCounsellingCSVByDate,
-            downloadExpenseCSVByDate : downloadExpenseCSVByDate
+            searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
+            searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
+            downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
+            downloadMobilizationCSVByDate: downloadMobilizationCSVByDate,
+            downloadFollowUpCSVByDate: downloadFollowUpCSVByDate,
+            downloadAdmissionCSVByDate: downloadAdmissionCSVByDate,
+            downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
+            downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
+            downloadExpenseCSVByDate: downloadExpenseCSVByDate
         };
 
         return service;
@@ -140,6 +142,34 @@
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchMobilizationCountReportBydate(centreId, FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/MobilizationProcessReportByByDate",
+                data = {
+                    centreId: centreId,
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, Paging, OrderBy) {
+            var url = "/Report/MobilizationProcessReportByMonth",
+                data = {
+                    centreId: centreId,
+                    fromMonth: fromMonth,
+                    toMonth: toMonth,
+                    fromYear: fromYear,
+                    toYear: toYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

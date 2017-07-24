@@ -141,7 +141,7 @@
         };
 
         function viewBatch(batchId) {
-            $window.location.href = "/Batch/Edit/" + batchId;
+            $window.location.href = "/Batch/View/" + batchId;
         }
 
     }

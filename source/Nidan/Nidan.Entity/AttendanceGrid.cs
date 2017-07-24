@@ -22,6 +22,11 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BatchId { get; set; }
 
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(500)]
+        public string BatchName { get; set; }
+
         [StringLength(114)]
         public string InTime { get; set; }
 
@@ -29,12 +34,12 @@ namespace Nidan.Entity
         public string OutTime { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 3)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
@@ -42,7 +47,7 @@ namespace Nidan.Entity
         public string Topic { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime AttendanceDate { get; set; }
+        public DateTime? AttendanceDate { get; set; }
 
         public bool? IsPresent { get; set; }
     }

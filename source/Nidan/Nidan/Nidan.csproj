@@ -254,6 +254,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\EnquiryCourseController.cs" />
+    <Compile Include="Controllers\EventBrainstormingController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExpenseHeaderController.cs" />
     <Compile Include="Controllers\ExpenseProjectController.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Models\CourseViewModel.cs" />
     <Compile Include="Models\DocumentViewModel.cs" />
     <Compile Include="Models\EnquiryViewModel.cs" />
+    <Compile Include="Models\EventBrainstormingViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ExpenseHeaderViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
@@ -312,6 +314,7 @@
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\RoomViewModel.cs" />
     <Compile Include="Models\SubjectViewModel.cs" />
     <Compile Include="Models\TrainerViewModel.cs" />
@@ -1053,6 +1056,7 @@
     <Content Include="Content\css\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\N.png" />
     <Content Include="Content\images\NEST.jpg" />
     <Content Include="Content\images\Nidan.jpg" />
     <Content Include="Content\images\user.png" />
@@ -1260,6 +1264,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
+    <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>
@@ -1631,6 +1636,10 @@
     <Content Include="Views\Report\Counselling.cshtml" />
     <Content Include="Views\Counselling\View.cshtml" />
     <Content Include="Views\Report\Expense.cshtml" />
+    <Content Include="Views\Batch\View.cshtml" />
+    <Content Include="Views\Trainer\View.cshtml" />
+    <Content Include="Views\Report\MobilizationStatistics.cshtml" />
+    <Content Include="Views\Report\MobilizationProcessReportByByDate.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

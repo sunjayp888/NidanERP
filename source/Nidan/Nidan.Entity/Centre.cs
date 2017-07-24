@@ -22,36 +22,37 @@ namespace Nidan.Entity
             Eventdays = new HashSet<Eventday>();
             Postevents = new HashSet<Postevent>();
             CourseInstallments = new HashSet<CourseInstallment>();
-            Rooms=new HashSet<Room>();
+            Rooms = new HashSet<Room>();
             Batches = new HashSet<Batch>();
             BatchDays = new HashSet<BatchDay>();
-            EnquiryCourses=new HashSet<EnquiryCourse>();
+            EnquiryCourses = new HashSet<EnquiryCourse>();
             BatchTrainers = new HashSet<BatchTrainer>();
-            CentreCourseInstallments=new HashSet<CentreCourseInstallment>();
-            CentreSchemes=new HashSet<CentreScheme>();
-            CentreSectors= new HashSet<CentreSector>();
-            CandidateInstallments=new HashSet<CandidateInstallment>();
+            CentreCourseInstallments = new HashSet<CentreCourseInstallment>();
+            CentreSchemes = new HashSet<CentreScheme>();
+            CentreSectors = new HashSet<CentreSector>();
+            CandidateInstallments = new HashSet<CandidateInstallment>();
             CandidateFees = new HashSet<CandidateFee>();
             Registrations = new HashSet<Registration>();
-            Admissions=new HashSet<Admission>();
+            Admissions = new HashSet<Admission>();
             Mobilizations = new HashSet<Mobilization>();
-            FollowUpHistories=new HashSet<FollowUpHistory>();
+            FollowUpHistories = new HashSet<FollowUpHistory>();
             FollowUps = new HashSet<FollowUp>();
-            RoomAvailables=new HashSet<RoomAvailable>();
-            TrainerAvailables=new HashSet<TrainerAvailable>();
-            Holidays=new HashSet<Holiday>();
-            OtherFees=new HashSet<OtherFee>();
-            CentrePettyCashs=new HashSet<CentrePettyCash>();
-            Vouchers=new HashSet<Voucher>();
-            CentreVoucherNumbers=new HashSet<CentreVoucherNumber>();
-            ExpenseProjects=new HashSet<ExpenseProject>();
-            Expenses=new HashSet<Expense>();
+            RoomAvailables = new HashSet<RoomAvailable>();
+            TrainerAvailables = new HashSet<TrainerAvailable>();
+            Holidays = new HashSet<Holiday>();
+            OtherFees = new HashSet<OtherFee>();
+            CentrePettyCashs = new HashSet<CentrePettyCash>();
+            Vouchers = new HashSet<Voucher>();
+            CentreVoucherNumbers = new HashSet<CentreVoucherNumber>();
+            ExpenseProjects = new HashSet<ExpenseProject>();
+            Expenses = new HashSet<Expense>();
             Attendances = new HashSet<Attendance>();
             BatchAttendances = new HashSet<BatchAttendance>();
+            EventBrainstormings = new HashSet<EventBrainstorming>();
         }
 
         public int CentreId { get; set; }
-        
+
         [StringLength(100)]
         public string CentreCode { get; set; }
 
@@ -95,7 +96,7 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Batch> Batches { get; set; }
 
@@ -131,7 +132,7 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchTrainer> BatchTrainers { get; set; }
-      
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreCourseInstallment> CentreCourseInstallments { get; set; }
 
@@ -188,11 +189,15 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Expense> Expenses { get; set; }
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
+
     }
 }

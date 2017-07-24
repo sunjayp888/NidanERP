@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("Trainer")]
     public partial class Trainer
     {
+        public Trainer()
+        {
+            CreatedDate=DateTime.UtcNow.Date;
+        }
         public int TrainerId { get; set; }
 
         [Required]

@@ -48,6 +48,7 @@ namespace Nidan.Data.Interfaces
         Module CreateModule(int organisationId, Module module);
         Attendance CreateAttendance(int organisationId, Attendance attendance);
         BatchAttendance CreateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
+        EventBrainstorming CreateEventBrainstorming(int organisationId, EventBrainstorming eventBrainstorming);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -177,6 +178,10 @@ namespace Nidan.Data.Interfaces
         PagedResult<ExpenseDataGrid> RetrieveExpenseDataGrid(int organisationId, Expression<Func<ExpenseDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, string searchKeyword, Expression<Func<MobilizationDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<PettyCashExpenseReport> RetrievePettyCashExpenseReports(int organisationId, Expression<Func<PettyCashExpenseReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventBrainstorming RetrieveEventBrainstorming(int organisationId, int eventBrainstormingId, Expression<Func<EventBrainstorming, bool>> predicate);
+        PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
 

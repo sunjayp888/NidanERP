@@ -14,6 +14,8 @@ namespace Nidan.Entity
             Counsellings = new HashSet<Counselling>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
             Registrations = new HashSet<Registration>();
+            EnquiryDate=DateTime.UtcNow.Date;
+            FollowUpDate = DateTime.UtcNow.AddDays(2);
         }
 
         public int EnquiryId { get; set; }

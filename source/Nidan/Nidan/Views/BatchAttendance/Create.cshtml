@@ -32,7 +32,7 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success" ng-click="check(batchAttendances)">Mark Attendance</button>
+                                    <button type="button" class="btn btn-success" ng-click="model.markAttendance()">Mark Attendance</button>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                 }
             </div>
         </div>
-        
+
 
     </div>
 </div>
@@ -117,5 +117,8 @@
                 processData: false
             });
         });
-        </script>
-    }
+
+       
+
+    </script>
+}

@@ -123,16 +123,68 @@
         $("#haveReceiptDiv").hide();
         $("#txtChequeDate").val('');
         $("#overrideFeeDiv").hide();
+        $('#haveReceiptCheckbox').attr('checked', false);
+        $('#overrideFeeCheckbox').attr('checked', false);
+
+        if ($('#dropDownPaymentMode :selected').text() == "Select Payment Mode") {
+            $('#btnSaveCandidateFee').attr('disabled', true);
+        }
+
         $("#dropDownPaymentMode").change(function () {
-            $('#overrideFeeCheckbox').prop('checked', false);
-            if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
-                $("#chequeDetailDiv").show();
-            } else {
+            if ($('#dropDownPaymentMode :selected').text() == "Select Payment Mode") {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            }
+            if ($('#dropDownPaymentMode :selected').text() == "Cash") {
+
                 $('#btnSaveCandidateFee').attr('disabled', false);
-                $("#txtChequeDate").val('');
                 $("#chequeDetailDiv").hide();
             }
+            if ($('#dropDownPaymentMode :selected').text() == "Cheque") {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+                $("#chequeDetailDiv").show();
+                $("#txtChequeDate").val('');
+                var chequeDate = $("#txtChequeDate").val();
+                var bankName = $("#txtBankName").val();
+                var chequeNumber = $("#txtChequeNumber").val();
+                if (chequeDate != "" && bankName != "" && chequeNumber != "") {
+                    $('#btnSaveCandidateFee').attr('disabled', false);
+                }
+            }
         });
+
+        $('#txtChequeDate').keyup(function () {
+            var chequeDate = $("#txtChequeDate").val();
+            var bankName = $("#txtBankName").val();
+            var chequeNumber = $("#txtChequeNumber").val();
+            if (chequeDate != "" && bankName != "" && chequeNumber != "") {
+                $('#btnSaveCandidateFee').attr('disabled', false);
+            } else {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            }
+        });
+
+        $('#txtBankName').keyup(function () {
+            var chequeDate = $("#txtChequeDate").val();
+            var bankName = $("#txtBankName").val();
+            var chequeNumber = $("#txtChequeNumber").val();
+            if (chequeDate != "" && bankName != "" && chequeNumber != "") {
+                $('#btnSaveCandidateFee').attr('disabled', false);
+            } else {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            }
+        });
+
+        $('#txtChequeNumber').keyup(function () {
+            var chequeDate = $("#txtChequeDate").val();
+            var bankName = $("#txtBankName").val();
+            var chequeNumber = $("#txtChequeNumber").val();
+            if (chequeDate != "" && bankName != "" && chequeNumber != "") {
+                $('#btnSaveCandidateFee').attr('disabled', false);
+            } else {
+                $('#btnSaveCandidateFee').attr('disabled', true);
+            }
+        });
+
         $(function () {
             var daterangepickerOptions = {
                 autoApply: true,
@@ -161,7 +213,6 @@
         function onlyNumbers(evt) {
             var e = event || evt; // For trans-browser compatibility
             var charCode = e.which || e.keyCode;
-
             if (charCode > 31 && (charCode < 48 || charCode > 57))
                 return false;
             return true;
@@ -256,25 +307,6 @@
                     case 8:
                         aboveTens();
                         break;
-
-                        //            This is optional.
-
-                        //            case 9:
-                        //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        //                    word[j] = '';
-                        //                }
-                        //                else {
-                        //                    word[j] = once[rev[i]];
-                        //                }
-                        //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        //                    word[j] = word[j] + " Arab";
-                        //                }
-                        //                break;
-
-                        //            case 10:
-                        //                aboveTens();
-                        //                break;
-
                     default: break;
                 }
                 j++;
@@ -295,24 +327,18 @@
         }
         //======================================================================on payment mode selection enable submit payment button
         //
-        $('#dropDownPaymentMode')
-            .change(function () {
-                var paymentmode = $('#dropDownPaymentMode').val();
-                var paidAmount = $('#txtPaidAmount').val();
-                if (paymentmode == "Select Payment Mode" || paidAmount == "") {
-                    $('#btnSaveCandidateFee').attr('disabled', true);
-                } else {
-                    $('#btnSaveCandidateFee').attr('disabled', false);
-                }
-            });
+
         $('#overrideFeeCheckbox')
             .change(function () {
                 if ($('#overrideFeeCheckbox').is(":checked") == true) {
                     $("#overrideFeeDiv").show();
                     $('#btnSaveCandidateFee').attr('disabled', true);
                 } else {
+                    if ($('#dropDownPaymentMode :selected').text() == "Cash") {
+
+                        $('#btnSaveCandidateFee').attr('disabled', false);
+                    }
                     $("#overrideFeeDiv").hide();
-                    $('#btnSaveCandidateFee').attr('disabled', false);
                 }
             });
 
@@ -320,10 +346,19 @@
             .change(function () {
                 if ($('#haveReceiptCheckbox').is(":checked") == true) {
                     $("#haveReceiptDiv").show();
-                    $('#btnSaveCandidateFee').attr('disabled', true);
+                    var receipttext = $("#txtReceiptNumber").val();
+                    if ($('#dropDownPaymentMode :selected').text() == "Select Payment Mode") {
+                        $('#btnSaveCandidateFee').attr('disabled', true);
+                    }
+                    if (receipttext == "") {
+                        $('#btnSaveCandidateFee').attr('disabled', true);
+                    }
+                    else {
+                        $('#btnSaveCandidateFee').attr('disabled', false);
+                    }
                 } else {
                     $("#haveReceiptDiv").hide();
-                    $('#btnSaveCandidateFee').attr('disabled', false);
+                    $('#btnSaveCandidateFee').attr('disabled', true);
                 }
             });
         //==============================================
@@ -360,12 +395,24 @@
 
         $('#txtReceiptNumber').keyup(function () {
             var paidAmount = $('#txtReceiptNumber').val();
+            var paymentmodeDropdown = $('#dropDownPaymentMode :selected').text();
+            //$('#btnSaveCandidateFee').attr('disabled', true);
             if (paidAmount == "") {
                 $('#btnSaveCandidateFee').attr('disabled', true);
             } else {
-                $('#btnSaveCandidateFee').attr('disabled', false);
+                if (paymentmodeDropdown == "Select Payment Mode") {
+                    $('#btnSaveCandidateFee').attr('disabled', true);
+                } else {
+                    $('#btnSaveCandidateFee').attr('disabled', false);
+                }
+
             }
         });
+
+        $('#btnCancel').click(function () {
+            window.location.reload(true);
+        });
+
         //===========================================================================
     </script>
 }

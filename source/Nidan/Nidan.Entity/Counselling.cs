@@ -9,6 +9,11 @@ namespace Nidan.Entity
     [Table("Counselling")]
     public partial class Counselling
     {
+        public Counselling()
+        {
+            CreatedDate=DateTime.UtcNow.Date;
+            FollowUpDate= DateTime.UtcNow.AddDays(2);
+        }
         public int CounsellingId { get; set; }
 
         public int EnquiryId { get; set; }

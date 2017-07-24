@@ -24,9 +24,8 @@
         vm.searchRegistration = searchRegistration;
         vm.viewRegistration = viewRegistration;
         vm.createRegistration = createRegistration;
-        //vm.retrieveCandidateFeeList = retrieveCandidateFeeList;
+        vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.retrieveEnquiries = retrieveEnquiries;
-        //vm.viewCandidateFee = viewCandidateFee;
         vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
@@ -56,15 +55,18 @@
                 });
         }
 
-        //function retrieveCandidateFeeList() {
-        //    return RegistrationService.retrieveCandidateFeeList(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.candidateFees = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.candidateFees;
-        //        });
-        //}
+        function searchRegistrationByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return RegistrationService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+              .then(function (response) {
+                  vm.Registrations = response.data.Items;
+                  vm.paging.totalPages = response.data.TotalPages;
+                  vm.paging.totalResults = response.data.TotalResults;
+                  vm.searchMessage = vm.Registrations.length === 0 ? "No Records Found" : "";
+                  return vm.Registrations;
+              });
+        }
 
         function searchRegistration(searchKeyword) {
             vm.searchKeyword = searchKeyword;

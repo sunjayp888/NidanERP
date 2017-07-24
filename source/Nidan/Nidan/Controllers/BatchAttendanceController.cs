@@ -13,7 +13,9 @@ namespace Nidan.Controllers
 {
     public class BatchAttendanceController : BaseController
     {
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
+        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month,
+            DateTime.UtcNow.Day, 0, 0, 0);
+
         public BatchAttendanceController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
@@ -53,7 +55,6 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            batchAttendanceViewModel.Attendance.AttendanceDate = _todayUTC;
             if (ModelState.IsValid)
             {
                 batchAttendanceViewModel.BatchAttendance.OrganisationId = UserOrganisationId;
@@ -68,8 +69,9 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult AttendanceList(int batchId, Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var admissiondata = NidanBusinessService.RetrieveAdmissions(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
+            var isSuperAdmin = User.IsSuperAdmin();
+            var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId,
+                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId, orderBy, paging);
             return this.JsonNet(admissiondata);
         }
 
@@ -77,9 +79,14 @@ namespace Nidan.Controllers
         public ActionResult GetSubject(int batchId)
         {
             var organisationId = UserOrganisationId;
-            var batchData = NidanBusinessService.RetrieveBatch(organisationId,batchId);
-            var subjectIds = NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId).Select(e=>e.SubjectId).ToList();
-            var subjectdata = NidanBusinessService.RetrieveSubjects(UserOrganisationId,e=>subjectIds.Contains(e.SubjectId)).ToList();
+            var batchData = NidanBusinessService.RetrieveBatch(organisationId, batchId);
+            var subjectIds =
+                NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId)
+                    .Select(e => e.SubjectId)
+                    .ToList();
+            var subjectdata =
+                NidanBusinessService.RetrieveSubjects(UserOrganisationId, e => subjectIds.Contains(e.SubjectId))
+                    .ToList();
             return this.JsonNet(subjectdata);
         }
 
@@ -88,15 +95,17 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var subjectData = NidanBusinessService.RetrieveSubject(organisationId, subjectId);
-            var sessiondata = NidanBusinessService.RetrieveSessions(UserOrganisationId,e=>e.SubjectId==subjectData.SubjectId).Items.ToList();
+            var sessiondata =
+                NidanBusinessService.RetrieveSessions(UserOrganisationId, e => e.SubjectId == subjectData.SubjectId)
+                    .Items.ToList();
             return this.JsonNet(sessiondata);
         }
 
         [HttpPost]
-        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, int batchId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.AttendanceDate >= fromDate && e.AttendanceDate <= toDate && e.BatchId == batchId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -104,9 +113,21 @@ namespace Nidan.Controllers
         public ActionResult GetBatches()
         {
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId,null,null);
+            var data = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId, null);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult MarkAttendance(List<AttendanceGrid> attendances, int subjectId, int sessionId)
+        {
+            //Please make sure we are getting all data if not set in js file.
+            var result = NidanBusinessService.MarkAttendance(UserOrganisationId, UserCentreId, UserPersonnelId, attendances, subjectId, sessionId);
+            return null;
+        }
     }
+
 }
+
+
+
 

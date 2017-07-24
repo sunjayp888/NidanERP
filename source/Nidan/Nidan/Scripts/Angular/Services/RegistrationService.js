@@ -10,7 +10,7 @@
     function RegistrationService($http) {
         var service = {
             retrieveRegistrations: retrieveRegistrations,
-            //retrieveCandidateFeeList: retrieveCandidateFeeList,
+            searchRegistrationByDate: searchRegistrationByDate,
             //viewCandidateFee: viewCandidateFee,
             retrieveEnquiries: retrieveEnquiries,
             canDeleteRegistration: canDeleteRegistration,
@@ -32,16 +32,17 @@
             return $http.post(url, data);
         }
 
-        //function retrieveCandidateFeeList(Paging, OrderBy) {
+        function searchRegistrationByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Registration/SearchByDate",
+            data = {
+                fromDate: FromDate,
+                toDate: ToDate,
+                paging: Paging,
+                orderBy: new Array(OrderBy)
+            };
 
-        //    var url = "/Registration/CandidateFeeList",
-        //        data = {
-        //            paging: Paging,
-        //            orderBy: new Array(OrderBy)
-        //        };
-
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         //function viewCandidateFee(candidateInstallmentId) {
 
