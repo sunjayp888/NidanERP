@@ -60,14 +60,17 @@ namespace Nidan.Controllers
         // GET: Event/Edit
         public ActionResult Edit(int? id)
         {
+            var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var eventData = NidanBusinessService.RetrieveEvent(UserOrganisationId, id.Value, e => true);
+            var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
+            var brainstorming = NidanBusinessService.RetrieveBrainstormings(organisationId, e => true).Items.ToList();
             var viewModel = new EventViewModel()
             {
-                Event = eventData
+                Event = eventData,
+                //Brainstorming = brainstorming
             };
             return View(viewModel);
         }

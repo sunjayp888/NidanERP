@@ -27,6 +27,8 @@ namespace Nidan.Business.Models
         public List<ModuleDetail> Modules { get; set; }
         public string TotalAmountPaid { get; set; }
         public string BalanceFee { get; set; }
+        public string State { get; set; }
+        public string Gstin { get; set; }
     }
 
     public class FeeDetail

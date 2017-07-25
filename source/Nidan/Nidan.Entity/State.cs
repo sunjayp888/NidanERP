@@ -16,6 +16,7 @@ namespace Nidan.Entity
             Talukas = new HashSet<Taluka>();
             Enquiries = new HashSet<Enquiry>();
             Trainers = new HashSet<Trainer>();
+            Gsts = new HashSet<Gst>();
         }
 
         public int StateId { get; set; }
@@ -39,5 +40,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Gst> Gsts { get; set; }
     }
 }

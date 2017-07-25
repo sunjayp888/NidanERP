@@ -149,6 +149,7 @@
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
     <Compile Include="FollowUpSearchField.cs" />
+    <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HowDidYouKnowAbout.cs" />

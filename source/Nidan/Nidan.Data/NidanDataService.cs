@@ -871,6 +871,7 @@ namespace Nidan.Data
             {
                 return context
                     .Centres
+                    .Include(p => p.State)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CentreId == centreId);
@@ -1328,6 +1329,7 @@ namespace Nidan.Data
                     .Include(p => p.Registrations)
                     .Include(p => p.Admissions)
                     .Include(p => p.Counsellings)
+                    .Include(p => p.State)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1873,6 +1875,8 @@ namespace Nidan.Data
                     .Include(p => p.Batch.BatchTrainers)
                     .Include(p => p.Batch.BatchTrainers.Select(e => e.Trainer))
                     .Include(p => p.Batch.BatchDays)
+                    .Include(p => p.Centre)
+                    .Include(p => p.Centre.State)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.AdmissionId == admissionId);
@@ -2060,6 +2064,7 @@ namespace Nidan.Data
                     .Include(p => p.CandidateInstallment)
                     .Include(p => p.CandidateInstallment.CourseInstallment)
                     .Include(p => p.CandidateInstallment.CourseInstallment.Course)
+                    .Include(p => p.Centre.State)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);
@@ -2841,6 +2846,43 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "Date",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Gsts
+                    .Include(c => c.State)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
+
+            }
+        }
+
+        public PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Gsts
+                    .Include(p => p.State)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "GstId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
