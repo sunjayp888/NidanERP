@@ -120,6 +120,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventBrainstorming> EventBrainstormings { get; set; }
         public virtual DbSet<MobilizationCentreReport> MobilizationCentreReports { get; set; }
         public virtual DbSet<Gst> Gsts { get; set; }
+        public virtual DbSet<MobilizationCentreReportMonthWise> MobilizationCentreReportMonthWises { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1813,14 +1814,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Attendance>()
-                .Property(e => e.InTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Attendance>()
-                .Property(e => e.OutTimeSpan)
-                .IsUnicode(false);
-
             modelBuilder.Entity<BatchAttendance>()
                 .Property(e => e.Topic)
                 .IsUnicode(false);
@@ -1949,18 +1942,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.BatchName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.InTime)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.OutTime)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<AttendanceGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
@@ -1988,6 +1970,18 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Gst>()
                 .Property(e => e.Type)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationCentreReportMonthWise>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationCentreReportMonthWise>()
+                .Property(e => e.CourseBooking)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<MobilizationCentreReportMonthWise>()
+                .Property(e => e.FeeCollected)
+                .HasPrecision(38, 2);
 
             base.OnModelCreating(modelBuilder);
         }

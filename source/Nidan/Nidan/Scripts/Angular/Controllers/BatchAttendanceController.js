@@ -35,6 +35,7 @@
         vm.allItemsSelected = false;
         vm.selectEntity = selectEntity;
         vm.markAttendance = markAttendance;
+        vm.MarkDate;
         vm.fromDate;
         vm.toDate;
         vm.batchId;
@@ -99,7 +100,7 @@
             vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.paging, vm.orderBy)
+            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type,vm.MarkDate, vm.paging, vm.orderBy)
                     .then(function (response) {
                         vm.batchAttendances = response.data.Items;
                         vm.paging.totalPages = response.data.TotalPages;

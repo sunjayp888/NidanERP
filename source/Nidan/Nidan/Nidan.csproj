@@ -1639,7 +1639,8 @@
     <Content Include="Views\Batch\View.cshtml" />
     <Content Include="Views\Trainer\View.cshtml" />
     <Content Include="Views\Report\MobilizationStatistics.cshtml" />
-    <Content Include="Views\Report\MobilizationProcessReportByByDate.cshtml" />
+    <Content Include="Views\Report\MobilizationProcessReportByDate.cshtml" />
+    <Content Include="Views\Report\MobilizationProcessReportByMonth.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
