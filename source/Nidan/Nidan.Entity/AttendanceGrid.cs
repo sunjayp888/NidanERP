@@ -12,6 +12,8 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string StudentCode { get; set; }
 
+        public int? PersonnelId { get; set; }
+
         [Key]
         [Column(Order = 0)]
         [StringLength(353)]
@@ -22,33 +24,28 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BatchId { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [StringLength(500)]
-        public string BatchName { get; set; }
-
-        [StringLength(114)]
-        public string InTime { get; set; }
-
-        [StringLength(114)]
-        public string OutTime { get; set; }
-
-        [Key]
-        [Column(Order = 3)]
-        [StringLength(500)]
-        public string CentreName { get; set; }
-
-        [Key]
-        [Column(Order = 4)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
-
-        [StringLength(500)]
-        public string Topic { get; set; }
+        [StringLength(50)]
+        public string BioMetricLogTime { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? AttendanceDate { get; set; }
 
         public bool? IsPresent { get; set; }
+
+        [StringLength(2)]
+        public string Direction { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreId { get; set; }
+
+        [StringLength(500)]
+        public string Topic { get; set; }
     }
 }

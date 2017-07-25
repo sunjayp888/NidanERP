@@ -9,9 +9,11 @@ namespace Nidan.Models
     public class ReportViewModel : BaseViewModel
     {
         public SelectList Centres { get; set; }
-        public string Month { get; set; }
+        public string FromMonth { get; set; }
+        public string ToMonth { get; set; }
         public IEnumerable<SelectListItem> MonthList { get; set; }
-        public string Year { get; set; }
+        public string FromYear { get; set; }
+        public string ToYear { get; set; }
         public IEnumerable<SelectListItem> YearList { get; set; }
         public List<MonthType> MonthType => new List<MonthType>()
         {
