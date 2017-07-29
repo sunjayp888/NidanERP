@@ -234,6 +234,7 @@ namespace Nidan.Controllers
         //  [HttpPost]
         public ActionResult Download(int? id)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);
             return File(data, ".pdf", "Registration Reciept.pdf");
         }

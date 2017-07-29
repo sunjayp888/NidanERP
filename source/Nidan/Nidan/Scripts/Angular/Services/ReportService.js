@@ -27,7 +27,8 @@
             downloadAdmissionCSVByDate: downloadAdmissionCSVByDate,
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
-            downloadExpenseCSVByDate: downloadExpenseCSVByDate
+            downloadExpenseCSVByDate: downloadExpenseCSVByDate,
+            totalSumOfCount: totalSumOfCount
         };
 
         return service;
@@ -237,6 +238,19 @@
                     fromDate: fromDate,
                     toDate: toDate
                 };
+            return $http.post(url, data);
+        }
+
+        function totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear) {
+            var url = "/Report/TotalSumOfCountReportByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    fromMonth: fromMonth,
+                    toMonth: toMonth,
+                    fromYear: fromYear,
+                    toYear: toYear
+                };
+
             return $http.post(url, data);
         }
     }

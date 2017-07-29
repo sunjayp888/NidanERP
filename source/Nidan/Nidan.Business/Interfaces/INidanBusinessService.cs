@@ -61,6 +61,7 @@ namespace Nidan.Business.Interfaces
         BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance);
         EventBrainstorming CreateEventBrainstorming(int organisationId, int centreId, EventBrainstorming eventBrainstorming);
         bool MarkAttendance(int organisationId, int centreId, int personnelId, List<AttendanceGrid> attendances, int subjectId, int sessionId);
+        CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -256,6 +257,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate);
         PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate);
+        PagedResult<CentreReceiptSetting> RetrieveCentreReceiptSettings(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -289,6 +292,7 @@ namespace Nidan.Business.Interfaces
         Attendance UpdateAttendance(int organisationId, Attendance attendance);
         BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
         CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber);
+        CentreReceiptSetting UpdateCentreReceiptSetting(int organisationId, int centreId, CentreReceiptSetting centreReceiptSetting);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
@@ -315,7 +319,7 @@ namespace Nidan.Business.Interfaces
 
         //Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
-        byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission);
+        byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission, bool isCandidateAndCentre = true);
         byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees);
         byte[] CreateExpenseBytes(int organisationId, int centreId, Expense expense);
     }

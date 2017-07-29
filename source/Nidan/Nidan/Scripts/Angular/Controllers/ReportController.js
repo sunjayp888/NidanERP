@@ -10,6 +10,7 @@
     function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal) {
         /* jshint validthis:true */
         var vm = this;
+        vm.totalSumOfCountReports = [];
         vm.reports = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
@@ -39,6 +40,7 @@
         vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
         vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
         vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
+        vm.totalCount = totalSumOfCount;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -233,6 +235,7 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear);
                     return vm.reports;
                 });
         }
@@ -306,6 +309,13 @@
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
+        }
+
+        function totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear) {
+            return ReportService.totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear).then(function() {
+                vm.totalSumOfCountReports = response;
+                return vm.totalSumOfCountReports;
+            });
         }
     }
 

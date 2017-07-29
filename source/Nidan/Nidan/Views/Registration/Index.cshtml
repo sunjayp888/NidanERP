@@ -98,7 +98,7 @@
                                         <tr role="row">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                                <th>Centre</th>
                                             }
                                             <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
                                             <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
@@ -134,6 +134,11 @@
                                                                     View
                                                                 </a>
                                                             </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
+                                                                    Download
+                                                                </a>
+                                                            </li>
                                                         }
                                                         @if (User.IsInAnyRoles("Admin"))
                                                         {
@@ -142,11 +147,7 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
-                                                                    Download
-                                                                </a>
-                                                            </li>
+                                                           
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Admission/Create/{{registration.RegistrationId}}">
                                                                     Create Admission

@@ -175,6 +175,23 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult TotalSumOfCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear, int toYear)
+        {
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear);
+            var totalSumOfCount = new MobilizationCentreReportMonthWise()
+            {
+                MobilizationCount = data.Items.Sum(e=>e.MobilizationCount),
+                EnquiryCount = data.Items.Sum(e=>e.EnquiryCount),
+                CounsellingCount = data.Items.Sum(e=>e.CounsellingCount),
+                RegistrationCount = data.Items.Sum(e=>e.RegistrationCount),
+                AdmissionCount = data.Items.Sum(e=>e.AdmissionCount),
+                CourseBooking = data.Items.Sum(e=>e.CourseBooking),
+                FeeCollected = data.Items.Sum(e=>e.FeeCollected)
+            };
+            return this.JsonNet(totalSumOfCount);
+        }
+
+        [HttpPost]
         public ActionResult DownloadEnquiryCSVByDate(DateTime fromDate, DateTime toDate)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
