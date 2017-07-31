@@ -49,6 +49,7 @@ namespace Nidan.Entity
             Attendances = new HashSet<Attendance>();
             BatchAttendances = new HashSet<BatchAttendance>();
             EventBrainstormings = new HashSet<EventBrainstorming>();
+            CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
         }
 
         public int CentreId { get; set; }
@@ -200,6 +201,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
     }
 }

@@ -112,16 +112,22 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isAdmin = User.IsInAnyRoles("Admin");
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isAdmin, orderBy, paging);
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreCourseIds = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId).Items.Select(e=>e.CourseId);
+            var data = NidanBusinessService.RetrieveCourses(organisationId, p => isSuperAdmin || centreCourseIds.Contains(p.CourseId), orderBy, paging);
             return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult SubjectCourseList(Paging paging, List<OrderBy> orderBy)
         {
-            bool isAdmin = User.IsInAnyRoles("Admin");
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isAdmin);
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreCourseIds = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId).Items.Select(e => e.CourseId);
+            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, p => isSuperAdmin || centreCourseIds.Contains(p.CourseId));
             return this.JsonNet(data);
         }
 
@@ -135,8 +141,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult CourseInstallmentList(Paging paging, List<OrderBy> orderBy)
         {
-            bool isAdmin = User.IsInAnyRoles("Admin");
-            return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isAdmin), orderBy, paging));
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
         }
 
         [HttpPost]

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <style type="text/css">
@@ -28,8 +28,8 @@
             border-bottom: 1px solid black;
             width: 25%;
         }
-		
-		.PayslipBox {
+
+        .PayslipBox {
             margin-top: 20px;
             border: solid 2px gray;
             padding: 10px;
@@ -48,8 +48,8 @@
     </style>
 </head>
 <body style="padding-left:50px">
-<br/>
-<br/>
+    <br />
+    <br />
     <!-- Pay Statement Header -->
     <table border="0" width="100%">
         <tr>
@@ -57,45 +57,20 @@
                 <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
             </td>
             <td class="CenterText TopText" width="60%">
-				<h2>NIDAN TECHNOLOGIES PVT.LTD.</h2>
-				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11,<br/> CBD Belapur, Navi Mumbai - 400614.</h5>
+                <h2>NIDAN TECHNOLOGIES PVT.LTD.</h2>
+				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11, CBD Belapur, Navi Mumbai - 400614.</h5>
 				<h5>Branch Office: @Model.CentreAddress</h5>
                 <br />
                 <b>TAX INVOICE</b>
             </td>
-            <td class="TopText RightText" width="20%">     
-				<img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\Nidan.jpg" style="height: 172px; width: 292px;" />			
-            </td>
+            <td class="TopText RightText" width="20%">
+				<img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\Nidan.jpg" style="height: 172px; width: 292px;" />
+			</td>
         </tr>
     </table>
     <br />
-		<table border="0" width="100%">
-		<tr>
-			<td style="float : left">
-                <b>Receipt Date : @Model.PaymentDate</b>
-            </td>
-			<td></td>
-            <td style="float : right">
-                <b>Receipt No. : @Model.InvoiceNumber</b>
-            </td>
-            
-		</tr>
-		<tr>
-			<td style="float : left">
-                <b>State : @Model.State</b>
-            </td>
-			<td align="center">
-                <b>State Code : @Model.GstStateCode</b>
-            </td>
-            <td style="float : right">
-                <b>GSTIN : @Model.Gstin</b>
-            </td>
-            
-		</tr>
-	</table>
-	
     <!-- Address & Date -->
-
+    <h1 style="text-align: center">Enrollment Notification</h1>
     <div class="PayslipBox">
         <table border="0">
             <tr>
@@ -107,7 +82,7 @@
                         <tr>
                             <td>Candidate Name :</td>
                             <td>@Model.CandidateName</td>
-                            <td>S/O D/O :</td>
+							<td>S/O D/O :</td>
                             <td>@Model.FatherName</td>
                         </tr>
                         <tr>
@@ -128,7 +103,7 @@
     <div class="PayslipBox">
         <table border="0">
             <tr>
-                 <td><b>Fee Type :</b></td>
+                <td><b>COURSE DETAILS :</b></td>
                 <td>@Model.FeeTypeName</td>
                 <td></td>
             </tr>
@@ -140,18 +115,24 @@
                 <td>Course Duration :</td>
                 <td>@Model.CourseDuration Hours.</td>
             </tr>
+        </table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
             <tr>
-                <!-- <td> -->
-                    <!-- Total Course Fees : @Model.TotalCourseFee -->
-                <!-- </td> -->
-				
+                <td><b>ADMISSION AND FEE DETAILS :</b></td>
+            </tr>
+            <tr>
                 <td>
-                    Recieved Amount : @Model.RecievedAmount
+                    Total Course Fees : @Model.TotalCourseFee
                 </td>
+                
+                <td>
+					Recieved Amount : @Model.RecievedAmount
+				</td>
 				<td>
 					Payment Mode : @Model.PaymentMode
 				</td>
-                <td></td>
             </tr>
 			@if(Model.PaymentMode=="Cheque")
 			{
@@ -168,15 +149,67 @@
 					</td>
 				</tr>
 			}
-            <!-- <tr> -->
-                <!-- <td> -->
-                    <!-- Receipt Date : @Model.PaymentDate -->
-                <!-- </td> -->
-                <!-- <td> -->
-                    <!-- Receipt No. : @Model.InvoiceNumber -->
-                <!-- </td> -->
-                <!-- <td></td> -->
-            <!-- </tr> -->
+
+			</table>
+        <br />
+        <table border="1">
+            <tr>
+				<th>Fee Type</th>
+				<th>Installment Amount</th>
+                <th>Installment Date</th>
+				<th>Amount Paid</th>
+                <th>Payment Date</th>
+				<th>Payment Status</th>
+				
+            </tr>
+            @foreach(var item in Model.FeeDetails)
+            {
+            <tr>
+                <td>@item.Type</td>
+				<td>@item.InstallmentAmount</td>
+				<td>@item.InstallmentDate</td>
+				<td>@item.AmountPaid</td>
+				<td>@item.Paymentdate</td>
+                <td>@item.Status</td>
+            </tr>
+            }
+        </table>
+		<br/>
+		<table border="1">
+            
+            <tr>
+                <td>
+                   <b> Total Course Fees : @Model.TotalCourseFee</b>
+                </td>
+				 <td>
+                   <b> Total Paid Amount : @Model.TotalAmountPaid </b>
+                </td>
+				<td>
+                   <b> Balance : @Model.BalanceFee </b>
+                </td>
+              
+            </tr>
+
+			</table>
+    </div>
+    <div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td><b>MODULE DETAILS :</b></td>
+            </tr>
+        </table>
+        <table border="1">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Module Name</th>
+            </tr>
+            @foreach(var item in Model.Modules)
+            {
+            <tr>
+                <td style="text-align: center">@item.Number</td>
+                <td>&nbsp;@item.Name</td>			
+            </tr>
+            }
         </table>
     </div>
 	<!-- Tax Invoice -->
@@ -191,55 +224,40 @@
 			</tr>
 			<tr>
 			<td>1</td>
-			<td>Commeracial Training & Coaching Services</td>
-			<td>999293</td>
+			<td>Commeracial Training & Coaching</td>
+			<td></td>
 			<td>1</td>
 			<td>@Model.RecievedAmount</td>
 			</tr>
         </table>
-		<p>Exempted services as per Notification No. 12/2017 Sr.No.69.</p>
     </div>
-	<div class="PayslipBox">
+	
+    <div class="PayslipBox">
+
         <table border="0">
             <tr>
-                <td style="border:none"><b>Total Invoice Amount In Words :</b></td>
-				<td></td>
-				<td style="border-bottom:1pt solid black;border-left:1pt solid black;border-top:1pt solid black;border-right:1pt solid black;">Total Amount Before Tax : @Model.RecievedAmount</td>
-			</tr>
-			<tr>
-			<td>@Model.RupeesInWords</td>
-			<td></td>
-			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : CGST :</td>
-			</tr>
-			<tr>
-			<td></td>
-			<td></td>
-			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : SGST :</td>
-			</tr>
-			<tr>
-			<td></td>
-			<td></td>
-			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : IGST :</td>
-			</tr>
-			<tr>
-			<td></td>
-			<td></td>
-			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Tax Amount : GST :</td>
-			</tr>
-			<tr>
-			<td></td>
-			<td></td>
-			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Total Amount After Tax : @Model.RecievedAmount</td>
-			</tr>
+                <td><b>STUDENT UNDERTAKING</b></td>
+            </tr>
+            <tr>
+                <td><b>I @Model.CandidateName S/o @Model.FatherName
+hereby declare that the information provided above
+are true to the best of my knowledge and belief and I
+have not attempted to suppress or exaggerate any
+information pertaining to me towards the above
+institution. I have read the rules and regulations
+(CODE OF CONDUCT mention in back side) of the
+Nidan Education & Skill Training.</b></td>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                </td>
+                <td style="text-align: center">
+                </td>
+            </tr>
         </table>
     </div>
     <div class="PayslipBox">
-        <p>
-			<b>
-				Please Note: <br>1) Registration is valid upto 30 days and registration amount is not refundable in any circumstances
-							 <br>2) Admission will be confirmed after getting enrollment form & payment of downpayment or lumpsum amount.
-			</b>
-		</p>
+
         <table border="0">
             <tr>
                 <td>&nbsp;</td>
@@ -250,13 +268,13 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>
+                <td style="text-align: center">
                     <b>Candidate Sign.</b>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <b>Authorized Sign.</b>
                 </td>
-                <td>
+                <td style="text-align: center">
                     <b>Branch Manager Sign.</b>
                 </td>
             </tr>
