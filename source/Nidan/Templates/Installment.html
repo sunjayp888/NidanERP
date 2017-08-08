@@ -71,6 +71,7 @@
 			<td style="float : left">
                 <b>Receipt Date : @Model.PaymentDate</b>
             </td>
+			<td></td>
             <td style="float : right">
 				<b>Receipt No. : @Model.InvoiceNumber</b>
 			</td>
@@ -79,14 +80,12 @@
 			<td style="float : left">
                 <b>State : @Model.State</b>
             </td>
+			<td align="center">
+                <b>State Code : @Model.GstStateCode</b>
+            </td>
             <td style="float : right">
                 <b>GSTIN : @Model.Gstin</b>
             </td>
-            
-		</tr>
-	
-			<td></td>
-		</tr>
 	</table>
     <!-- Address & Date -->
 
@@ -155,6 +154,24 @@
         </table>
     </div>
 	<div class="PayslipBox">
+        <table border="1">
+            <tr>
+                <th>Sr No.</th>
+				<th>Name Of Product/Service</th>
+				<th>HSN/ACS</th>
+				<th>QTY</th>
+				<th>Amount</th>
+			</tr>
+			<tr>
+			<td>1</td>
+			<td>Commercial Training & Coaching</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+        </table>
+    </div>
+	<div class="PayslipBox">
         <table border="0">
             <tr>
                 <td style="font-weight: bold,border:none">Total Invoice Amount In Words</td>
@@ -212,5 +229,6 @@
             </tr>
         </table>
     </div>
+	<p style=" margin-top:0%">This is computer generated receipt.</p>
 </body>
 </html>

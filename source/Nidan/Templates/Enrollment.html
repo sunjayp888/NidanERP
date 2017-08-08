@@ -68,15 +68,17 @@
     <br />
     <!-- Address & Date -->
     <h1 style="text-align: center">Enrollment Notification</h1>
-	<table border="0" width="100%">
+	<table width="100%">
 				<tr>
-			<td style="float : left">
+			<td  style="float : left">
                 <b>State : @Model.State</b>
             </td>
-            <td style="float : right">
+			<td align="center">
+                <b>State Code : @Model.GstStateCode</b>
+            </td>
+            <td  style="float : right">
                 <b>GSTIN : @Model.Gstin</b>
             </td>
-            <td></td>
 		</tr>
 	</table>
     <div class="PayslipBox">
@@ -120,11 +122,6 @@
             <tr>
                 <td>Course Duration :</td>
                 <td>@Model.CourseDuration Hours.</td>
-            </tr>
-            <tr>
-                <td>Course Duration Validity:</td>
-                <td>@Model.BatchStartDate &nbsp; upto &nbsp;@Model.BatchEndDate</td>
-                <td></td>
             </tr>
         </table>
     </div>
@@ -193,20 +190,33 @@
             <tr>
                 <th>Sr. No.</th>
                 <th>Module Name</th>
-				<th>Total Marks</th>
-				<th>Passing Marks</th>
-				<th>Number of attempts allowed</th>
             </tr>
             @foreach(var item in Model.Modules)
             {
             <tr>
                 <td style="text-align: center">@item.Number</td>
-                <td>&nbsp;@item.Name</td>
-				<td>&nbsp;@item.TotalMarks</td>
-				<td>&nbsp;@item.PassingMarks</td>
-				<td>&nbsp;@item.AttemptAllowed</td>				
+                <td>&nbsp;@item.Name</td>			
             </tr>
             }
+        </table>
+    </div>
+	<!-- Tax Invoice -->
+	<div class="PayslipBox">
+        <table border="1">
+            <tr>
+                <th>Sr No.</th>
+				<th>Name Of Product/Service</th>
+				<th>HSN/ACS</th>
+				<th>QTY</th>
+				<th>Amount</th>
+			</tr>
+			<tr>
+			<td>1</td>
+			<td>Commercial Training & Coaching</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
         </table>
     </div>
 	<div class="PayslipBox">
@@ -262,9 +272,6 @@ Nidan Education & Skill Training.</b></td>
             </tr>
             <tr>
                 <td style="text-align: center">
-                    <b><br/>candidate Sign.</b>
-                </td>
-                <td style="text-align: center">
                 </td>
                 <td style="text-align: center">
                 </td>
@@ -295,5 +302,6 @@ Nidan Education & Skill Training.</b></td>
             </tr>
         </table>
     </div>
+	<p style=" margin-top:0%">This is computer generated receipt.</p>
 </body>
 </html>

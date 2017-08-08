@@ -35,6 +35,6 @@ namespace Nidan.Entity
         public virtual ICollection<Eventday> Eventdays { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Postevent> Postevents { get; set; }
+        public virtual ICollection<PostEvent> PostEvents { get; set; }
     }
 }

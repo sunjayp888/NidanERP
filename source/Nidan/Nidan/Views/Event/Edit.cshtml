@@ -83,7 +83,7 @@
                                     </li>
                                 </ul>
                                 <div id="myTabContent2" class="tab-content">
-                                    <div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
+                                    @*<div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
                                         @using (Html.BeginForm("Create", "EventBrainstorming", FormMethod.Post, new { encType = "multipart/form-data" }))
                                         {
                                             @Html.AntiForgeryToken()
@@ -91,10 +91,10 @@
                                                 @Html.Partial("_BrainStorming")
                                             </div>
                                         }
-                                    </div>
-                                    @*<div role="tabpanel" class="tab-pane fade active in" id="BrainStorm" aria-labelledby="home-tab">
-                                        @Html.Partial("_BrainStorming")
                                     </div>*@
+                                    <div role="tabpanel" class="tab-pane fade active in" id="BrainStorm" aria-labelledby="home-tab">
+                                        @Html.Partial("_BrainStorming")
+                                    </div>
                                     <div role="tabpanel" class="tab-pane fade active in" id="tab_content_planning" aria-labelledby="home-tab">
                                         @Html.Partial("_Planning")
                                     </div>
