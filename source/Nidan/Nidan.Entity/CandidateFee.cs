@@ -62,13 +62,15 @@ namespace Nidan.Entity
 
         public string Particulars { get; set; }
 
-        public string ReceiptNumber { get; set; }
+        public string ReferenceReceiptNumber { get; set; }
 
         public bool IsPaidAmountOverride { get; set; }
 
         public bool HaveReceipt { get; set; }
 
         public decimal? AdvancedAmount { get; set; }
+
+        public string ReceiptNumber { get; set; }
 
         public virtual CandidateInstallment CandidateInstallment { get; set; }
 

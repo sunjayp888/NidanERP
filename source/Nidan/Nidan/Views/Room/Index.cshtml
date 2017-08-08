@@ -58,7 +58,7 @@
                                     <tr role="row">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                            <th>Centre</th>
                                         }
                                         <th ng-click="model.order('Centre')" ng-class="model.orderClass('Centre')">Centre</th>
                                         <th ng-click="model.order('Description')" ng-class="model.orderClass('Description')">Description</th>
@@ -72,7 +72,7 @@
                                     <tr ng-repeat="room in model.rooms | orderBy:'RoomId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRoom(room.RoomId)">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <td><span ng-bind="enquiry.Centre.Name"></span></td>
+                                            <td><span ng-bind="room.Centre.Name"></span></td>
                                         }
                                         <td><span ng-bind="room.Centre.Name"></span></td>
                                         <td><span ng-bind="room.Description"></span></td>

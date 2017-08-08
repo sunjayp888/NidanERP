@@ -45,7 +45,7 @@ namespace Nidan.Business
             var smsUserId = ConfigurationManager.AppSettings["SMSUserId"];
             var smsPassword = ConfigurationManager.AppSettings["SMSPassword"];
             var smsSenderId = ConfigurationManager.AppSettings["SMSSenderId"];
-            string url = smsBaseUrl + smsUserId + "&password=" + smsPassword + "&msisdn=91" + smsData.To + "&sid=" + smsSenderId + "&msg=" + smsData.MessageBody + "&fl=0";
+            string url = smsBaseUrl + smsUserId + "&password=" + smsPassword + "&msisdn=91" + smsData.To + "&sid=" + smsSenderId + "&msg=" + smsData.MessageBody + "&fl=0&gwid=2";
             return url;
         }
     }

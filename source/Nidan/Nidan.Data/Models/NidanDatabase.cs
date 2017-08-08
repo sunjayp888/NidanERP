@@ -123,6 +123,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventBudget> EventBudgets { get; set; }
         public virtual DbSet<EventPlanning> EventPlannings { get; set; }
         public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
+        public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2010,6 +2011,10 @@ namespace Nidan.Data.Models
                 .HasMany(e => e.EventPostEvents)
                 .WithRequired(e => e.PostEvent)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CentreReceiptSetting>()
+                .Property(e => e.TaxYear)
+                .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
         }

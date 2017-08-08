@@ -2132,6 +2132,7 @@ namespace Nidan.Data
                     .Include(p => p.CandidateInstallment.CourseInstallment)
                     .Include(p => p.CandidateInstallment.CourseInstallment.Course)
                     .Include(p => p.Centre.State)
+                    .Include(p=>p.PaymentMode)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);
@@ -2974,6 +2975,20 @@ namespace Nidan.Data
             }
         }
 
+        public CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreReceiptSettings
+                    .Include(c => c.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
+            }
+        }
+
         public PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3062,10 +3077,9 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
         {
-            using (ReadUncommitedTransactionScope)
+           using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
@@ -3082,6 +3096,29 @@ namespace Nidan.Data
                         {
                             Property = "EventPostEventId",
                             Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreReceiptSetting> RetrieveCentreReceiptSettings(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreReceiptSettings
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreReceiptSettingId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
                     .Paginate(paging);

@@ -180,15 +180,15 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             var courseId = Convert.ToInt32(TempData["CourseId"]);
-            bool isAdmin = User.IsInAnyRoles("Admin");
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             if (courseId != 0)
             {
-                var data = NidanBusinessService.RetrieveSubjects(UserOrganisationId,p => (isAdmin) && p.SubjectCourses.Select(e=>e.CourseId).Contains(courseId), orderBy, paging);
+                var data = NidanBusinessService.RetrieveSubjects(UserOrganisationId,p => (isSuperAdmin) && p.SubjectCourses.Select(e=>e.CourseId).Contains(courseId), orderBy, paging);
                 return this.JsonNet(data);
             }
             else
             {
-                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isAdmin), orderBy, paging));
+                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
             }
         }
 

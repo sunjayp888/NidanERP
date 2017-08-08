@@ -39,14 +39,14 @@ namespace Nidan.Controllers
         }
 
         // GET: Personnel
-        [AuthorizePersonnel(Roles = "Admin,User")]
+        [AuthorizePersonnel(Roles = "Admin,User,SuperAdmin")]
         public ActionResult Index()
         {
             return View(new BaseViewModel());
         }
 
         // GET: Personnel/Profile/{id}
-        [AuthorizePersonnel(Roles = "Admin,User")]
+        [AuthorizePersonnel(Roles = "Admin,User,SuperAdmin")]
         public new ActionResult Profile(int id)
         {
             var organisationId = UserOrganisationId;
@@ -198,7 +198,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Personnels/Edit/{id}
-        [AuthorizePersonnel(Roles = "Admin,User")]
+        [AuthorizePersonnel(Roles = "Admin,User,SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PersonnelProfileViewModel personnelViewModel)
