@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using iTextSharp.text;
 
 namespace Nidan.Business.Models
@@ -31,6 +32,7 @@ namespace Nidan.Business.Models
         public string Gstin { get; set; }
         public string GstStateCode { get; set; }
         public string FatherName { get; set; }
+        public string EnrollmentDate { get; set; }
     }
 
     public class FeeDetail
@@ -48,8 +50,7 @@ namespace Nidan.Business.Models
         public string RupeesInWords { get; set; }
         public string PaymentDetail => PaymentMode == "Cheque"
             ? string.Format("Cheque \n Cheque No : {0} \n ChequeDate : {1} \n Bank Name : {2}", ChequeNumber,
-                ChequeDate, BankName)
-            : "Cash";
+                ChequeDate, BankName) : Paymentdate != String.Empty ? "Cash" : String.Empty;
     }
 
     public class ModuleDetail

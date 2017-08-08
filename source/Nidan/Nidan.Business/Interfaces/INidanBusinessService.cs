@@ -259,6 +259,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate);
         PagedResult<CentreReceiptSetting> RetrieveCentreReceiptSettings(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CentreEnrollmentReceiptSetting> RetrieveCentreEnrollmentReceiptSettings(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreEnrollmentReceiptSetting RetrieveCentreEnrollmentReceiptSetting(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -293,6 +295,7 @@ namespace Nidan.Business.Interfaces
         BatchAttendance UpdateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
         CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber);
         CentreReceiptSetting UpdateCentreReceiptSetting(int organisationId, int centreId, CentreReceiptSetting centreReceiptSetting);
+        CentreEnrollmentReceiptSetting UpdateCentreEnrollmentReceiptSetting(int organisationId, int centreId, CentreEnrollmentReceiptSetting centreEnrollmentReceiptSetting);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

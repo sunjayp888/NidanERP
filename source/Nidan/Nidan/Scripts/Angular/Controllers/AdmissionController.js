@@ -26,6 +26,8 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.searchAdmissionByDate = searchAdmissionByDate;
+        vm.isDisabled = false;
+        vm.disableButton = disableButton;
         initialise();
 
         function initialise() {
@@ -109,6 +111,9 @@
             });
         };
 
+        function disableButton() {
+            vm.isDisabled = true;
+        }
     }
 
 })();

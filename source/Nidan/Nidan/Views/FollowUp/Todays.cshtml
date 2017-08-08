@@ -1,12 +1,13 @@
 ﻿@using Nidan.Extensions
 @{
-    ViewBag.Title = "Follow-Up";
+    ViewBag.Title = "Today's Follow-Up";
 }
-<div ng-controller="FollowUpController as model" ng-init="model.initialise()">
+
+<div ng-controller="FollowUpController as model" ng-init="model.todaysFollowUp()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Follow Ups <small></small>
+                Today's Follow Ups <small></small>
             </h3>
         </div>
         <div class="title_right">

@@ -28,7 +28,8 @@
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
             downloadExpenseCSVByDate: downloadExpenseCSVByDate,
-            totalSumOfCount: totalSumOfCount
+            totalSumOfCountByMonth: totalSumOfCountByMonth,
+            totalSumOfCountByDate: totalSumOfCountByDate
         };
 
         return service;
@@ -150,12 +151,12 @@
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportBydate(centreId, FromDate, ToDate, Paging, OrderBy) {
+        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear, Paging, OrderBy) {
             var url = "/Report/MobilizationCountReportBydate",
                 data = {
                     centreId: centreId,
-                    fromDate: FromDate,
-                    toDate: ToDate,
+                    month: fromMonth,
+                    year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -241,7 +242,7 @@
             return $http.post(url, data);
         }
 
-        function totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear) {
+        function totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear) {
             var url = "/Report/TotalSumOfCountReportByMonthAndYear",
                 data = {
                     centreId: centreId,
@@ -249,6 +250,17 @@
                     toMonth: toMonth,
                     fromYear: fromYear,
                     toYear: toYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function totalSumOfCountByDate(centreId, fromMonth, fromYear) {
+            var url = "/Report/TotalMobilizationCountReportBydate",
+                data = {
+                    centreId: centreId,
+                    month: fromMonth,
+                    year: fromYear
                 };
 
             return $http.post(url, data);

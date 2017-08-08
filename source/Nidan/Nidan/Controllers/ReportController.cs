@@ -32,38 +32,43 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        // GET: Report
+        // GET: Report/Mobilization
         public ActionResult Mobilization()
         {
             return View(new BaseViewModel());
         }
 
-        // GET: Report
+        // GET: Report/FollowUp
         public ActionResult FollowUp()
         {
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Admission
         public ActionResult Admission()
         {
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Registration
         public ActionResult Registration()
         {
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Counselling
         public ActionResult Counselling()
         {
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Expense
         public ActionResult Expense()
         {
             return View(new BaseViewModel());
         }
 
+        // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
             var organisationId = UserOrganisationId;
@@ -77,6 +82,7 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Report/MobilizationProcessReportByMonth
         public ActionResult MobilizationProcessReportByMonth()
         {
             var organisationId = UserOrganisationId;
@@ -90,6 +96,7 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Report/MobilizationProcessReportByDate
         public ActionResult MobilizationProcessReportByDate()
         {
             var organisationId = UserOrganisationId;
@@ -163,14 +170,14 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear,int toYear, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear, orderBy, paging);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear, orderBy);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult MobilizationCountReportBydate(int centreId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult MobilizationCountReportBydate(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date >= fromDate && p.Date <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month == month && p.Date.Year == year, orderBy);
             return this.JsonNet(data);
         }
 
@@ -187,6 +194,23 @@ namespace Nidan.Controllers
                 AdmissionCount = data.Items.Sum(e=>e.AdmissionCount),
                 CourseBooking = data.Items.Sum(e=>e.CourseBooking),
                 FeeCollected = data.Items.Sum(e=>e.FeeCollected)
+            };
+            return this.JsonNet(totalSumOfCount);
+        }
+
+        [HttpPost]
+        public ActionResult TotalMobilizationCountReportBydate(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month == month && p.Date.Year == year, orderBy);
+            var totalSumOfCount = new MobilizationCentreReport()
+            {
+                MobilizationCount = data.Items.Sum(e => e.MobilizationCount),
+                EnquiryCount = data.Items.Sum(e => e.EnquiryCount),
+                CounsellingCount = data.Items.Sum(e => e.CounsellingCount),
+                RegistrationCount = data.Items.Sum(e => e.RegistrationCount),
+                AdmissionCount = data.Items.Sum(e => e.AdmissionCount),
+                CourseBooking = data.Items.Sum(e => e.CourseBooking),
+                FeeCollected = data.Items.Sum(e => e.FeeCollected)
             };
             return this.JsonNet(totalSumOfCount);
         }

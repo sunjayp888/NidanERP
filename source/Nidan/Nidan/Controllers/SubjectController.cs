@@ -30,7 +30,7 @@ namespace Nidan.Controllers
         }
 
         // GET: Subject/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -52,7 +52,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Subject/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(SubjectViewModel subjectViewModel)
@@ -61,13 +61,13 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 subjectViewModel.Subject.OrganisationId = UserOrganisationId;
-                subjectViewModel.Subject = NidanBusinessService.CreateSubject(UserOrganisationId, subjectViewModel.Subject, subjectViewModel.SelectedCourseIds,subjectViewModel.SelectedTrainerIds);
+                subjectViewModel.Subject = NidanBusinessService.CreateSubject(UserOrganisationId, subjectViewModel.Subject, subjectViewModel.SelectedCourseIds, subjectViewModel.SelectedTrainerIds);
                 return RedirectToAction("Edit", new { id = subjectViewModel.Subject.SubjectId });
             }
             subjectViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList());
             subjectViewModel.Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(organisationId, e => true).ToList());
             subjectViewModel.CourseTypes = new SelectList(NidanBusinessService.RetrieveCourseTypes(organisationId, e => true).ToList());
-            
+
             return View(subjectViewModel);
         }
 
@@ -84,7 +84,7 @@ namespace Nidan.Controllers
             var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
             var courseTypes = NidanBusinessService.RetrieveCourseTypes(organisationId, e => true);
             var subject = NidanBusinessService.RetrieveSubject(UserOrganisationId, id.Value);
-            var selectedCourseIds = NidanBusinessService.RetrieveSubjectCourses(organisationId,s=>s.SubjectId== id.Value);
+            var selectedCourseIds = NidanBusinessService.RetrieveSubjectCourses(organisationId, s => s.SubjectId == id.Value);
 
             if (subject == null)
             {
@@ -96,9 +96,9 @@ namespace Nidan.Controllers
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 Trainers = new SelectList(trainers, "TrainerId", "Name"),
                 CourseTypes = new SelectList(courseTypes, "CourseTypeId", "Name"),
-                SelectedCourseIds = subject?.SubjectCourses.Select(e=>e.CourseId).ToList(),
+                SelectedCourseIds = subject?.SubjectCourses.Select(e => e.CourseId).ToList(),
                 //SelectedCourseIds = subject?.SubjectCourses..ToList(),
-                SelectedTrainerIds = subject?.SubjectTrainers.Select(e=>e.TrainerId).ToList()
+                SelectedTrainerIds = subject?.SubjectTrainers.Select(e => e.TrainerId).ToList()
             };
             return View(viewModel);
         }
@@ -111,7 +111,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 subjectViewModel.Subject.OrganisationId = UserOrganisationId;
-                subjectViewModel.Subject = NidanBusinessService.UpdateSubject(UserOrganisationId, subjectViewModel.Subject,subjectViewModel.SelectedCourseIds,subjectViewModel.SelectedTrainerIds);
+                subjectViewModel.Subject = NidanBusinessService.UpdateSubject(UserOrganisationId, subjectViewModel.Subject, subjectViewModel.SelectedCourseIds, subjectViewModel.SelectedTrainerIds);
                 return RedirectToAction("Edit", new { id = subjectViewModel.Subject.SubjectId });
             }
             var viewModel = new SubjectViewModel
@@ -181,14 +181,18 @@ namespace Nidan.Controllers
         {
             var courseId = Convert.ToInt32(TempData["CourseId"]);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
+            var organisationId = UserOrganisationId;
+            var centreCourseIds = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId).Items.Select(e => e.CourseId).ToList();
             if (courseId != 0)
             {
-                var data = NidanBusinessService.RetrieveSubjects(UserOrganisationId,p => (isSuperAdmin) && p.SubjectCourses.Select(e=>e.CourseId).Contains(courseId), orderBy, paging);
+                var data = NidanBusinessService.RetrieveSubjects(organisationId, p => (isSuperAdmin) || p.SubjectCourses.Select(e => e.CourseId).Contains(courseId), orderBy, paging);
                 return this.JsonNet(data);
             }
             else
             {
-                return this.JsonNet(NidanBusinessService.RetrieveSubjects(UserOrganisationId, p => (isSuperAdmin), orderBy, paging));
+                var data = NidanBusinessService.RetrieveSubjects(organisationId, p => (isSuperAdmin) || p.SubjectCourses.Any(e => centreCourseIds.Contains(e.CourseId)), orderBy, paging);
+                return this.JsonNet(data);
             }
         }
 

@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -35,11 +35,11 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 @*<div class="x_title">
-                    <h2>
-                        Courses <small></small>
-                    </h2>
-                    <div class="clearfix"></div>
-                </div>*@
+                        <h2>
+                            Courses <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -57,7 +57,10 @@
                                             <th ng-click="model.order('Scheme.Name')" ng-class="model.orderClass('Scheme.Name')">Scheme</th>
                                             <th ng-click="model.order('Sector.Name')" ng-class="model.orderClass('Sector.Name')">Sector</th>
                                             <th ng-click="model.order('CourseId')" ng-class="model.orderClass('CourseId')">Course Name</th>
-                                            <th>Actions</th>
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <th>Actions</th>
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,23 +68,25 @@
                                             <td><span ng-bind="course.Scheme.Name"></span></td>
                                             <td><span ng-bind="course.Sector.Name"></span></td>
                                             <td><span ng-bind="course.Name"></span></td>
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
-                                                        {
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td>
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                            <i class="fa fa-chevron-down"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu slidedown">
+
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Course/Edit/{{course.CourseId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </td>
+
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            }
                                         </tr>
                                     </tbody>
                                 </table>
