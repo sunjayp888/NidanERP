@@ -11,22 +11,32 @@ namespace Nidan.Entity
     {
         public int EventBudgetId { get; set; }
 
-        public decimal? NumberOfAttendees { get; set; }
-
-        public decimal? EventCost { get; set; }
-
-        public decimal? EventPricePerPerson { get; set; }
-
-        public decimal? EstimatedMarketingGrandTotal { get; set; }
-
-        public decimal? SubTotal { get; set; }
-
-        public decimal? Total { get; set; }
-
         public int EventId { get; set; }
+
+        public int BudgetId { get; set; }
+
+        [StringLength(500)]
+        public string SpecificHead { get; set; }
+
+        public decimal? EstimatedQuantity { get; set; }
+
+        public decimal? EstimatedCostPerUnit { get; set; }
+
+        [StringLength(10)]
+        public string EstimatedSubtotal { get; set; }
+
+        public string Notes { get; set; }
+
+        public int CentreId { get; set; }
+
+        public int OrganisationId { get; set; }
+
+        public virtual Budget Budget { get; set; }
 
         public virtual Event Event { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Centre Centre { get; set; }
     }
 }

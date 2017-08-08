@@ -20,7 +20,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<Personnel> Personnels { get; set; }
         public virtual DbSet<UserAuthorisationFilter> UserAuthorisationFilters { get; set; }
-        public virtual DbSet<EventBudget> EventBudgets { get; set; }
         public virtual DbSet<Enquiry> Enquiries { get; set; }
         public virtual DbSet<Centre> Centres { get; set; }
         public virtual DbSet<Event> Events { get; set; }
@@ -56,8 +55,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Brainstorming> Brainstormings { get; set; }
         public virtual DbSet<Eventday> Eventdays { get; set; }
         public virtual DbSet<Planning> Plannings { get; set; }
-        public virtual DbSet<Postevent> Postevents { get; set; }
-        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<PostEvent> PostEvents { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<Trainer> Trainers { get; set; }
         public virtual DbSet<TrainerSearchField> TrainerSearchFields { get; set; }
@@ -121,6 +119,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationCentreReport> MobilizationCentreReports { get; set; }
         public virtual DbSet<Gst> Gsts { get; set; }
         public virtual DbSet<MobilizationCentreReportMonthWise> MobilizationCentreReportMonthWises { get; set; }
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<EventBudget> EventBudgets { get; set; }
+        public virtual DbSet<EventPlanning> EventPlannings { get; set; }
+        public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -593,30 +595,6 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Eventday>()
-                .Property(e => e.Comment)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Planning>()
-                .Property(e => e.Completed)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Planning>()
-                .Property(e => e.Comment)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Postevent>()
-                .Property(e => e.Completed)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Postevent>()
-                .Property(e => e.Comment)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Budget>()
-                .Property(e => e.Completed)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Budget>()
                 .Property(e => e.Comment)
                 .IsUnicode(false);
 
@@ -1983,6 +1961,56 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<MobilizationCentreReportMonthWise>()
                 .Property(e => e.FeeCollected)
                 .HasPrecision(38, 2);
+
+            modelBuilder.Entity<Budget>()
+                .Property(e => e.MajorGroup)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Budget>()
+                .HasMany(e => e.EventBudgets)
+                .WithRequired(e => e.Budget)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<EventBudget>()
+                .Property(e => e.SpecificHead)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBudget>()
+                .Property(e => e.EstimatedSubtotal)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.MajorPoint)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Planning>()
+                .Property(e => e.Point)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventPlanning>()
+                .Property(e => e.Input)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventPlanning>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventPostEvent>()
+                .Property(e => e.Completed)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventPostEvent>()
+                .Property(e => e.RefernceDetail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PostEvent>()
+                .Property(e => e.Activity)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PostEvent>()
+                .HasMany(e => e.EventPostEvents)
+                .WithRequired(e => e.PostEvent)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<CentreReceiptSetting>()
                 .Property(e => e.TaxYear)

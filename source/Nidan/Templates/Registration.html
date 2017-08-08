@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <style type="text/css">
@@ -58,7 +58,7 @@
             </td>
             <td class="CenterText TopText" width="60%">
 				<h2>NIDAN TECHNOLOGIES PVT.LTD.</h2>
-				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11,<br/> CBD Belapur, Navi Mumbai - 400614.</h5>
+				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11, CBD Belapur, Navi Mumbai - 400614.</h5>
 				<h5>Branch Office: @Model.CentreAddress</h5>
                 <br />
                 <b>TAX INVOICE</b>
@@ -70,29 +70,29 @@
     </table>
     <br />
 		<table border="0" width="100%">
-		<tr>
-			<td style="float : left">
-                <b>Receipt Date : @Model.PaymentDate</b>
-            </td>
-			<td></td>
-            <td style="float : right">
-                <b>Receipt No. : @Model.InvoiceNumber</b>
-            </td>
-            
-		</tr>
-		<tr>
-			<td style="float : left">
-                <b>State : @Model.State</b>
-            </td>
-			<td align="center">
-                <b>State Code : @Model.GstStateCode</b>
-            </td>
-            <td style="float : right">
-                <b>GSTIN : @Model.Gstin</b>
-            </td>
-            
-		</tr>
-	</table>
+			<tr>
+				<td style="float : left">
+					<b>Invoice Date : @Model.PaymentDate</b>
+				</td>
+				<td></td>
+				<td style="float : right">
+					<b>Invoice No. : @Model.InvoiceNumber</b>
+				</td>
+				
+			</tr>
+			<tr>
+				<td style="float : left">
+					<b>State : @Model.State</b>
+				</td>
+				<td align="center">
+					<b>State Code : @Model.GstStateCode</b>
+				</td>
+				<td style="float : right">
+					<b>GSTIN : @Model.Gstin</b>
+				</td>
+				
+			</tr>
+		</table>
 	
     <!-- Address & Date -->
 
@@ -113,12 +113,12 @@
                         <tr>
                             <td>Address :</td>
                             <td>@Model.CandidateAddress</td>
-							<td>EmailId :</td>
-                            <td>@Model.EmailId</td>
                         </tr>
                         <tr>
                             <td>Contact No :</td>
                             <td>@Model.MobileNumber</td>
+							<td>EmailId :</td>
+                            <td>@Model.EmailId</td>
                         </tr>
                     </table>
                 </td>
@@ -197,7 +197,7 @@
 			<td>@Model.RecievedAmount</td>
 			</tr>
         </table>
-		<p>Exempted services as per Notification No. 12/2017 Sr.No.69.</p>
+		<p style=" margin-top:0%">Exempted services as per Notification No. 12/2017 Sr.No.69.</p>
     </div>
 	<div class="PayslipBox">
         <table border="0">
@@ -240,23 +240,25 @@
 							 <br>2) Admission will be confirmed after getting enrollment form & payment of downpayment or lumpsum amount.
 			</b>
 		</p>
-        <table border="0">
+        <table style="width:100%">
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
             <tr>
-                <td>
+                <td align="center">
                     <b>Candidate Sign.</b>
                 </td>
-                <td>
+                <td align="center">
                     <b>Authorized Sign.</b>
                 </td>
-                <td>
+                <td align="center">
                     <b>Branch Manager Sign.</b>
                 </td>
             </tr>

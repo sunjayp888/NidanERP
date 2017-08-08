@@ -799,9 +799,9 @@ namespace Nidan.Business
             return _nidanDataService.CreateEventday(organisationId, eventday);
         }
 
-        public Postevent CreatePostevent(int organisationId, Postevent postevent)
+        public PostEvent CreatePostEvent(int organisationId, PostEvent postEvent)
         {
-            return _nidanDataService.CreatePostevent(organisationId, postevent);
+            return _nidanDataService.CreatePostEvent(organisationId, postEvent);
         }
 
         public Trainer CreatetTrainer(int organisationId, Trainer trainer)
@@ -1461,6 +1461,16 @@ namespace Nidan.Business
             }
         }
 
+        public EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget)
+        {
+            return _nidanDataService.CreateEventBudget(organisationId, eventBudget);
+        }
+
+        public EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning)
+        {
+            return _nidanDataService.CreateEventPlanning(organisationId, eventPlanning);
+        }
+        
         public CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting)
         {
             var data = _nidanDataService.Create<CentreReceiptSetting>(organisationId, centreReceiptSetting);
@@ -1984,23 +1994,17 @@ namespace Nidan.Business
             return null;
         }
 
-        public Postevent RetrievePostevent(int organisationId, int id)
+        public PostEvent RetrievePostEvent(int organisationId, int postEventId,
+            Expression<Func<PostEvent, bool>> predicate)
         {
-            return _nidanDataService.RetrievePostevent(organisationId, id, p => true);
-        }
-
-        public Postevent RetrievePostevent(int organisationId, int posteventId,
-            Expression<Func<Postevent, bool>> predicate)
-        {
-            var postevent = _nidanDataService.RetrievePostevent(organisationId, posteventId, p => true);
+            var postevent = _nidanDataService.RetrievePostEvent(organisationId, postEventId, p => true);
             return postevent;
         }
 
-        public PagedResult<Postevent> RetrievePostevents(int organisationId, List<OrderBy> orderBy = null,
+        public PagedResult<PostEvent> RetrievePostEvents(int organisationId, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            // return _nidanDataService.RetrievePostevents(organisationId, p => true, orderBy, paging);
-            return null;
+            return _nidanDataService.RetrievePostEvents(organisationId, p => true, orderBy, paging);
         }
 
         public PagedResult<Registration> RetrieveRegistrations(int organisationId,
@@ -2698,6 +2702,30 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveGsts(organisationId, predicate, orderBy, paging);
         }
 
+        public EventBudget RetrieveEventBudget(int organisationId, int centreId, int eventBudgetId, Expression<Func<EventBudget, bool>> predicate)
+        {
+            var eventBudget = _nidanDataService.RetrieveEventBudget(organisationId, centreId, eventBudgetId, predicate);
+            return eventBudget;
+        }
+
+        public PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventBudgets(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public EventPlanning RetrieveEventPlanning(int organisationId, int centreId, int eventPlanningId, Expression<Func<EventPlanning, bool>> predicate)
+        {
+            var eventPlanning = _nidanDataService.RetrieveEventPlanning(organisationId, centreId, eventPlanningId, predicate);
+            return eventPlanning;
+        }
+
+        public PagedResult<EventPlanning> RetrieveEventPlannings(int organisationId, int centreId, Expression<Func<EventPlanning, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventPlannings(organisationId, centreId, predicate, orderBy, paging);
+        }
+        
         public CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate)
         {
             var centreReceiptSetting = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, predicate);

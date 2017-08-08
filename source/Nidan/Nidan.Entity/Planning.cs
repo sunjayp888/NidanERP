@@ -9,29 +9,30 @@ namespace Nidan.Entity
     [Table("Planning")]
     public partial class Planning
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Planning()
+        {
+            EventPlannings = new HashSet<EventPlanning>();
+        }
+
         public int PlanningId { get; set; }
 
-        public int QuestionId { get; set; }
-
-        public int EventId { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string MajorPoint { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Completed { get; set; }
-
-        [Required]
-        public string Comment { get; set; }
+        public string Point { get; set; }
 
         public int OrganisationId { get; set; }
 
-        public int CentreId { get; set; }
+        public int? CentreId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }
 
-        public virtual Event Event { get; set; }
-
-        public virtual Question Question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventPlanning> EventPlannings { get; set; }
     }
 }
