@@ -9,7 +9,7 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Mobilization Statistics <small></small>
+                Statistics <small></small>
             </h3>
         </div>
     </div>
@@ -84,12 +84,6 @@
                             <p class="text-muted font-13 m-b-30">
                             </p>
                             <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        @Html.Partial("Pagination/_pageSize")
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
@@ -124,15 +118,15 @@
                                                 <td><span ng-bind="report.CourseBooking"></span></td>
                                                 <td><span ng-bind="report.FeeCollected"></span></td>
                                             </tr>
-                                            <tr role="row">
+                                            <tr role="row" style="background: rgba(52, 73, 94, 0.94);color: #ECF0F1">
                                                 <td colspan="2">Total</td>
-                                                <td></td>
-                                                <td>50</td>
-                                                <td>40</td>
-                                                <td>30</td>
-                                                <td>20</td>
-                                                <td>1000000</td>
-                                                <td>1000000</td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.MobilizationCount"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.EnquiryCount"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.CounsellingCount"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.RegistrationCount"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.AdmissionCount"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.CourseBooking"></span></td>
+                                                <td><span ng-bind="model.totalSumOfCountReportsByMonth.FeeCollected"></span></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -143,7 +137,6 @@
                                         </table>*@
                                     </div>
                                 </div>
-                                @Html.Partial("Pagination/_pagination")
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">

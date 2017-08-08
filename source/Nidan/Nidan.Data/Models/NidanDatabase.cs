@@ -124,6 +124,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventPlanning> EventPlannings { get; set; }
         public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
+        public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2013,6 +2014,10 @@ namespace Nidan.Data.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<CentreReceiptSetting>()
+                .Property(e => e.TaxYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CentreEnrollmentReceiptSetting>()
                 .Property(e => e.TaxYear)
                 .IsUnicode(false);
 

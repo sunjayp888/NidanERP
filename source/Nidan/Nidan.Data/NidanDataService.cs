@@ -1331,6 +1331,7 @@ namespace Nidan.Data
                     .Include(p => p.Course)
                     .Include(p => p.CourseType)
                     .Include(p => p.SubjectCourses)
+                    .Include(p => p.SubjectCourses.Select(e=>e.Course))
                     .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
@@ -2891,7 +2892,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "Date",
+                            Property = "Month",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -3122,6 +3123,43 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreEnrollmentReceiptSetting> RetrieveCentreEnrollmentReceiptSettings(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreEnrollmentReceiptSettings
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreEnrollmentReceiptSettingId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CentreEnrollmentReceiptSetting RetrieveCentreEnrollmentReceiptSetting(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreEnrollmentReceiptSettings
+                    .Include(c => c.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
             }
         }
 

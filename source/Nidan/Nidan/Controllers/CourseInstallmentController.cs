@@ -28,7 +28,7 @@ namespace Nidan.Controllers
         }
 
         // GET: CourseInstallment/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -42,7 +42,7 @@ namespace Nidan.Controllers
         }
 
         // POST: CourseInstallment/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseInstallmentViewModel courseInstallmentViewModel)
@@ -112,14 +112,13 @@ namespace Nidan.Controllers
             TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
-                return
-                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId,
-                        orderBy, paging));
+                var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId, orderBy, paging);
+                return this.JsonNet(data);
             }
             else
             {
                 return
-                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId==UserCentreId),
+                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId),
                         orderBy, paging));
             }
         }

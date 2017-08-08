@@ -1641,6 +1641,10 @@
     <Content Include="Views\Report\MobilizationStatistics.cshtml" />
     <Content Include="Views\Report\MobilizationProcessReportByDate.cshtml" />
     <Content Include="Views\Report\MobilizationProcessReportByMonth.cshtml" />
+    <Content Include="Views\FollowUp\Pending.cshtml" />
+    <Content Include="Views\FollowUp\Todays.cshtml" />
+    <Content Include="Views\FollowUp\Tomorrows.cshtml" />
+    <Content Include="Views\FollowUp\Upcoming.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

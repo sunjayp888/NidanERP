@@ -10,7 +10,8 @@
     function ReportController($window, ReportService, Paging, OrderService, OrderBy, Order, $uibModal) {
         /* jshint validthis:true */
         var vm = this;
-        vm.totalSumOfCountReports = [];
+        vm.totalSumOfCountReportsByMonth = [];
+        vm.totalSumOfCountReportsByDate = [];
         vm.reports = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
@@ -40,7 +41,8 @@
         vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
         vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
         vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
-        vm.totalCount = totalSumOfCount;
+        vm.totalSumOfCountByMonth = totalSumOfCountByMonth;
+        vm.totalSumOfCountByDate = totalSumOfCountByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -203,19 +205,20 @@
                 });
         }
 
-        function searchMobilizationCountReportBydate(centreId, fromDate, toDate) {
+        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
             vm.centreId = centreId;
-            vm.fromDate = fromDate;
-            vm.toDate = toDate;
+            vm.fromMonth = fromMonth;
+            vm.fromYear = fromYear;
             vm.orderBy.property = "Date";
             vm.orderBy.class = "asc";
             //order("Date");
-            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    totalSumOfCountByDate(centreId, fromMonth, fromYear);
                     return vm.reports;
                 });
         }
@@ -235,7 +238,7 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear);
+                    totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear);
                     return vm.reports;
                 });
         }
@@ -268,7 +271,7 @@
                 searchCounsellingByDate(vm.fromDate, vm.toDate);
             }
             if (path[2] == "MobilizationProcessReportByDate") {
-                searchMobilizationCountReportBydate(vm.centreId, vm.fromDate, vm.toDate);
+                searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear);
             }
             if (path[2] == "MobilizationProcessReportByMonth") {
                 searchMobilizationCountReportByMonthAndYear(vm.centreId, vm.fromMonth, vm.toMonth, vm.fromYear, vm.toYear);
@@ -311,10 +314,17 @@
             return OrderService.orderClass(vm.orderBy, property);
         }
 
-        function totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear) {
-            return ReportService.totalSumOfCount(centreId, fromMonth, toMonth, fromYear, toYear).then(function() {
-                vm.totalSumOfCountReports = response;
-                return vm.totalSumOfCountReports;
+        function totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear) {
+            return ReportService.totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear).then(function (response) {
+                vm.totalSumOfCountReportsByMonth = response.data;
+                return vm.totalSumOfCountReportsByMonth;
+            });
+        }
+
+        function totalSumOfCountByDate(centreId, fromMonth, fromYear) {
+            return ReportService.totalSumOfCountByDate(centreId, fromMonth, fromYear).then(function (response) {
+                vm.totalSumOfCountReportsByDate = response.data;
+                return vm.totalSumOfCountReportsByDate;
             });
         }
     }
