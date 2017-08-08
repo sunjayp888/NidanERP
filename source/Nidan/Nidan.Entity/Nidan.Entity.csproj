@@ -141,6 +141,8 @@
     <Compile Include="EventBudget.cs" />
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
+    <Compile Include="EventPlanning.cs" />
+    <Compile Include="EventPostEvent.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseDataGrid.cs" />
