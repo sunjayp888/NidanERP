@@ -9,45 +9,26 @@ namespace Nidan.Entity
     [Table("Budget")]
     public partial class Budget
     {
-        [Key]
-        [Column(Order = 0)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Budget()
+        {
+            EventBudgets = new HashSet<EventBudget>();
+        }
+
         public int BudgetId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int QuestionId { get; set; }
+        [Required]
+        public string MajorGroup { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int EventId { get; set; }
-
-        [Key]
-        [Column(Order = 3)]
-        [StringLength(10)]
-        public string Completed { get; set; }
-
-        [Key]
-        [Column(Order = 4)]
-        public string Comment { get; set; }
-
-        [Key]
-        [Column(Order = 5)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        public int? CentreId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }
 
-        public virtual Event Event { get; set; }
-
-        public virtual Question Question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventBudget> EventBudgets { get; set; }
     }
 }
