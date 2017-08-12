@@ -321,7 +321,9 @@ namespace Nidan.Business.Interfaces
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);
         PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Document RetrieveDocument(int organisationId, Guid documentGuid);
+        IEnumerable<StudentDocument> RetrieveAdmissionDocuments(int organisationId, int centreId, string studentCode);
         //Document CreateDocument(int organisationId, int centreId, int documentTypeId, string filePath,
         //    string studentCode, string studentName, string description, string fileName);
 

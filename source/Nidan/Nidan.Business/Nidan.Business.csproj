@@ -129,6 +129,7 @@
     <Compile Include="Models\OtherFeeReceipt.cs" />
     <Compile Include="Models\PettyCashReport.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />
+    <Compile Include="Models\StudentDocument.cs" />
     <Compile Include="NidanBusinessService.cs" />
     <Compile Include="Interfaces\IAuthorisation.cs" />
     <Compile Include="Interfaces\ICacheProvider.cs" />

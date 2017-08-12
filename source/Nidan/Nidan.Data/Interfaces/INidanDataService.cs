@@ -210,6 +210,7 @@ namespace Nidan.Data.Interfaces
         IEnumerable<DocumentType> RetrieveDocumentTypes(int organisationId);
         IEnumerable<Document> RetrieveDocuments(int organisationId, int centreId, string category, string studentCode);
         PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Document RetrieveDocument(int organisationId, Guid documentGuid);
 
     }

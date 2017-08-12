@@ -3528,9 +3528,34 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveDocuments(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveDocumentTypes(organisationId, predicate, orderBy, paging);
+        }
+
         public Document RetrieveDocument(int organisationId, Guid documentGuid)
         {
             return _nidanDataService.RetrieveDocument(organisationId, documentGuid);
+        }
+
+        public IEnumerable<StudentDocument> RetrieveAdmissionDocuments(int organisationId, int centreId, string studentCode)
+        {
+            var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
+            var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsAdmission);
+            var studentDocumentTypeList=new List<StudentDocument>();
+            foreach (var item in documentTypes)
+            {
+                var result = studentDocuments.FirstOrDefault(e => e.DocumentTypeId == item.DocumentTypeId);
+                studentDocumentTypeList.Add(new StudentDocument()
+                {
+                    DocumentTypeId = item.DocumentTypeId,
+                    Guid = result?.Guid,
+                    StudentCode = studentCode,
+                    IsPending = result==null,
+                    Name = item.Name
+                });
+            }
+            return studentDocumentTypeList;
         }
 
         #endregion

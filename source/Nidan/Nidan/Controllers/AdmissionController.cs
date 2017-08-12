@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Nidan.Business.Enum;
 using Nidan.Business.Interfaces;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -21,6 +22,7 @@ namespace Nidan.Controllers
 {
     public class AdmissionController : BaseController
     {
+        private readonly IDocumentService _documentService;
         private ApplicationRoleManager _roleManager;
         public ApplicationRoleManager RoleManager
         {
@@ -34,8 +36,9 @@ namespace Nidan.Controllers
             }
         }
 
-        public AdmissionController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        public AdmissionController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
+            _documentService = documentService;
         }
 
         // GET: Admission
@@ -344,6 +347,15 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveAdmissionDocuments(organisationId, centreId, studentCode);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
         public ActionResult GetBatchDetails(int batchId)
         {
             var data = NidanBusinessService.RetrieveBatch(UserOrganisationId, batchId);
@@ -393,6 +405,25 @@ namespace Nidan.Controllers
                 NidanBusinessService.RetrieveAdmission(organisationId, id.Value, e => true);
             var data = NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} Enrollment.pdf", admission.Registration.Enquiry.FirstName, admission.Registration.Enquiry.LastName));
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           studentData?.FirstName, "Admission Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
     }
 }
