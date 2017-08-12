@@ -27,7 +27,7 @@
                                             <th>Sr No.</th>
                                             <th>Before Planning Answer/Discuss These Question</th>
                                             <th>Disscussion Completed Y/N</th>
-                                            <th>Refernce Detail</th>
+                                            <th>Reference Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -35,8 +35,12 @@
                                             <td><span ng-bind="brainstorming.BrainstormingId"></span></td>
                                             <td><span ng-bind="brainstorming.BeforePlanningAnswerDiscussTheseQuestion"></span></td>
                                             <td>
-                                               @Html.RadioButtonFor(model => model.EventBrainstorming.DisscussionCompletedYesNo, "Yes")&nbsp; Yes &nbsp;
-                                                @Html.RadioButtonFor(model => model.EventBrainstorming.DisscussionCompletedYesNo, "No") No
+                                                @*@Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "Yes")&nbsp; Yes &nbsp;
+                                                  @Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "No") No*@
+
+                                                <input type="radio" id="{{brainstorming.BrainstormingId}}" name="{{brainstorming.BrainstormingId}}" />Yes
+                                                <input type="radio" id="{{brainstorming.BrainstormingId}}" name="{{brainstorming.BrainstormingId}}">No
+
                                             </td>
                                             <td>
                                                 @Html.EditorFor(model => model.EventBrainstorming.RefernceDetailDocument)

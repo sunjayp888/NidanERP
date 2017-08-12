@@ -43,6 +43,10 @@
         vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
         vm.totalSumOfCountByMonth = totalSumOfCountByMonth;
         vm.totalSumOfCountByDate = totalSumOfCountByDate;
+        vm.downloadMobilizationCountReportCSVByMonthAndYear = downloadMobilizationCountReportCSVByMonthAndYear;
+        vm.downloadMobilizationCountReportCSVByDate = downloadMobilizationCountReportCSVByDate;
+        vm.viewMobilizationReportByDate = viewMobilizationReportByDate;
+
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -206,19 +210,18 @@
         }
 
         function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
-            vm.centreId = centreId;
-            vm.fromMonth = fromMonth;
-            vm.fromYear = fromYear;
-            vm.orderBy.property = "Date";
-            vm.orderBy.class = "asc";
-            //order("Date");
-            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear, vm.paging, vm.orderBy)
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.fromMonth = fromMonth == undefined ? getUrlParameter("month") : fromMonth;
+            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
+
+            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear)
                 .then(function (response) {
-                    vm.reports = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    totalSumOfCountByDate(centreId, fromMonth, fromYear);
+                    // totalSumOfCountByDate(centreId, fromMonth, fromYear);
+                    $('#CentreId').val(vm.centreId);
+                    $('#FromMonth').val(vm.fromMonth);
+                    $('#FromYear').val(vm.fromYear);
                     return vm.reports;
                 });
         }
@@ -232,11 +235,10 @@
             vm.orderBy.property = "Month";
             vm.orderBy.class = "asc";
             order("Month");
-            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, vm.paging, vm.orderBy)
+            
+            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId,fromYear, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.reports = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
                     totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear);
                     return vm.reports;
@@ -306,6 +308,14 @@
             return ReportService.downloadExpenseCSVByDate(fromDate, toDate);
         }
 
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
+            return ReportService.downloadMobilizationCountReportCSVByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear);
+        }
+
+        function downloadMobilizationCountReportCSVByDate(centreId, month, year) {
+            return ReportService.downloadMobilizationCountReportCSVByDate(centreId, month, year);
+        }
+
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
         }
@@ -326,6 +336,25 @@
                 vm.totalSumOfCountReportsByDate = response.data;
                 return vm.totalSumOfCountReportsByDate;
             });
+        }
+
+        function viewMobilizationReportByDate(centreId, fromMonth, fromYear) {
+            window.location.href = "/Report/MobilizationProcessReportByDate?centreId=" +centreId + "&month=" + fromMonth + "&year=" + fromYear;
+        }
+
+       function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
         }
     }
 

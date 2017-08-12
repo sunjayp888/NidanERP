@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -1044,9 +1045,9 @@ namespace Nidan.Business
             }
 
             //Email
-            //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
-            //SendAdmissionSms(admissionData);
+            SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -1493,7 +1494,7 @@ namespace Nidan.Business
         {
             return _nidanDataService.CreateEventPlanning(organisationId, eventPlanning);
         }
-        
+
         public CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting)
         {
             var data = _nidanDataService.Create<CentreReceiptSetting>(organisationId, centreReceiptSetting);
@@ -2701,17 +2702,85 @@ namespace Nidan.Business
             return eventBrainstorming;
         }
 
-        public PagedResult<MobilizationCentreReportMonthWise> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, predicate, orderBy, paging);
-            return data;
+            var startFiscalDate = new DateTime(year, 04, 01);
+            var endFiscalDate = new DateTime(startFiscalDate.AddYears(1).Year, 03, 31);
+            var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
+            var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId).Items.ToList();
+            var months = DateTimeExtensions.EachMonth(startFiscalDate, endFiscalDate);
+            foreach (var item in months)
+            {
+                var result = data.FirstOrDefault(e => e.Month == item.Month && e.Year == item.Year);
+                mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? 0,
+                    MobilizationCount = result?.MobilizationCount ?? 0,
+                    CentreName = result?.CentreName ?? String.Empty,
+                    AdmissionCount = result?.AdmissionCount ?? 0,
+                    EnquiryCount = result?.EnquiryCount ?? 0,
+                    RegistrationCount = result?.RegistrationCount ?? 0,
+                    CounsellingCount = result?.CounsellingCount ?? 0,
+                    CourseBooking = result?.CourseBooking ?? 0,
+                    FeeCollected = result?.FeeCollected ?? 0,
+                    MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month),
+                    Year = item.Year,
+                    Month = item.Month
+                });
+            }
+            mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+            {
+                MonthName = "Total",
+                CounsellingCount = mobilizationSummaryReports.Sum(e => e.CounsellingCount),
+                CourseBooking = mobilizationSummaryReports.Sum(e => e.CourseBooking),
+                EnquiryCount = mobilizationSummaryReports.Sum(e => e.EnquiryCount),
+                FeeCollected = mobilizationSummaryReports.Sum(e => e.FeeCollected),
+                RegistrationCount = mobilizationSummaryReports.Sum(e => e.RegistrationCount),
+                AdmissionCount = mobilizationSummaryReports.Sum(e => e.AdmissionCount),
+                MobilizationCount = mobilizationSummaryReports.Sum(e => e.MobilizationCount)
+            });
+            return mobilizationSummaryReports;
         }
 
-        public PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId,
-            Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId, int year, int month, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var data = _nidanDataService.RetriveMobilizationCountReportByDate(organisationId, centreId, predicate, orderBy, paging);
-            return data;
+            var firstDayOfMonth = new DateTime(year, month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
+            var days = DateTimeExtensions.EachDay(firstDayOfMonth, lastDayOfMonth);
+            var data = _nidanDataService.RetriveMobilizationCountReportByDate(organisationId, centreId, e => e.Date >= firstDayOfMonth && e.Date <= lastDayOfMonth, orderBy, paging).Items.ToList();
+            foreach (var item in days)
+            {
+                var result = data.FirstOrDefault(e => e.Date.Month == item.Month && e.Date.Day == item.Day && e.Date.Year == item.Year);
+                mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? 0,
+                    MobilizationCount = result?.MobilizationCount ?? 0,
+                    CentreName = result?.CentreName ?? String.Empty,
+                    AdmissionCount = result?.AdmissionCount ?? 0,
+                    EnquiryCount = result?.EnquiryCount ?? 0,
+                    RegistrationCount = result?.RegistrationCount ?? 0,
+                    CounsellingCount = result?.CounsellingCount ?? 0,
+                    CourseBooking = result?.CourseBooking ?? 0,
+                    FeeCollected = result?.FeeCollected ?? 0,
+                    MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month),
+                    Year = item.Year,
+                    Month = item.Month,
+                    Date = item.ToShortDateString()
+                });
+            }
+            mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+            {
+                Date = "Total",
+                CounsellingCount = mobilizationSummaryReports.Sum(e => e.CounsellingCount),
+                CourseBooking = mobilizationSummaryReports.Sum(e => e.CourseBooking),
+                EnquiryCount = mobilizationSummaryReports.Sum(e => e.EnquiryCount),
+                FeeCollected = mobilizationSummaryReports.Sum(e => e.FeeCollected),
+                RegistrationCount = mobilizationSummaryReports.Sum(e => e.RegistrationCount),
+                AdmissionCount = mobilizationSummaryReports.Sum(e => e.AdmissionCount),
+                MobilizationCount = mobilizationSummaryReports.Sum(e => e.MobilizationCount)
+            });
+            return mobilizationSummaryReports;
         }
 
         public Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate)
@@ -2748,7 +2817,7 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveEventPlannings(organisationId, centreId, predicate, orderBy, paging);
         }
-        
+
         public CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate)
         {
             var centreReceiptSetting = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, predicate);
@@ -3261,7 +3330,7 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            // SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
             //SendInstallmetnSms(candidateFee);
@@ -3793,7 +3862,7 @@ namespace Nidan.Business
             var document = CreateRegistrationRecieptBytes(organisationId, centreId, registration.CandidateFeeId);
             var emailData = new EmailData()
             {
-                CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
+                BCCAddressList = new List<string> { "accounts@nidantech.com" },
                 Body = String.Format("Dear {0}, Welcome to NEST.For your information and reference, you have registered for {1}.We have received your payment of Rs {2} towards the same and we thank you for it. Please find attached the receipt for the like amount. ", registration.Enquiry.FirstName, registration.Course.Name, registration.CandidateFee.PaidAmount),
                 Subject = "Welcome To Nidan Education & Skill Training (NEST)",
                 IsHtml = true,
@@ -3813,7 +3882,7 @@ namespace Nidan.Business
             var document = CreateEnrollmentBytes(organisationId, centreId, admission);
             var emailData = new EmailData()
             {
-                CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
+                BCCAddressList = new List<string> { "accounts@nidantech.com" },
                 Body = String.Format("Dear {0}, We are in receipt of your payment of Rs.{1} towards your enrolment for the {2} and we thank you for the same. Please also find attached the receipt for the same.", admission.Registration.Enquiry.FirstName, candidateFee?.PaidAmount, admission.Registration.Course.Name),
                 Subject = "Greetings From NEST",
                 IsHtml = true,
@@ -3838,7 +3907,7 @@ namespace Nidan.Business
                 {
                     var emailData = new EmailData()
                     {
-                        CCAddressList = new List<string> { "vijayraut33@gmail.com", "paradkarsh24@gmail.com" },
+                        BCCAddressList = new List<string> { "accounts@nidantech.com" },
                         Body = String.Format("Dear {0}, We are in receipt of your payment of Rs.{1}, towards your instalment number-{2} and for the month of {3}.Please find attached your receipt for the like amount. ", enquiryData.FirstName, candidateFee.PaidAmount, candidateFee.InstallmentNumber, candidateFee.PaymentDate.Value.ToString("MMMM")),
                         //"For your information, your next instalment date is {4} and the amount is {5}.Your pending balance is {6}.We trust you find the same in order."
                         Subject = "Greetings From NEST",
