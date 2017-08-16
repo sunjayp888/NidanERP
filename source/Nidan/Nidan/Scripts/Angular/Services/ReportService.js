@@ -29,7 +29,9 @@
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
             downloadExpenseCSVByDate: downloadExpenseCSVByDate,
             totalSumOfCountByMonth: totalSumOfCountByMonth,
-            totalSumOfCountByDate: totalSumOfCountByDate
+            totalSumOfCountByDate: totalSumOfCountByDate,
+            downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
+            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate
         };
 
         return service;
@@ -151,27 +153,22 @@
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear, Paging, OrderBy) {
+        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
             var url = "/Report/MobilizationCountReportBydate",
                 data = {
                     centreId: centreId,
                     month: fromMonth,
-                    year: fromYear,
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
+                    year: fromYear
                 };
 
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, Paging, OrderBy) {
+        function searchMobilizationCountReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
             var url = "/Report/MobilizationCountReportByMonthAndYear",
                 data = {
                     centreId: centreId,
-                    fromMonth: fromMonth,
-                    toMonth: toMonth,
-                    fromYear: fromYear,
-                    toYear: toYear,
+                    year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -238,6 +235,25 @@
                 data = {
                     fromDate: fromDate,
                     toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear) {
+            var url = "/Report/DownloadMobilizationCountReportCSVByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    fromYear: fromYear,
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadMobilizationCountReportCSVByDate(centreId, month, year) {
+            var url = "/Report/DownloadMobilizationCountReportCSVByDate",
+                data = {
+                    centreId: centreId,
+                    month: month,
+                    year: year
                 };
             return $http.post(url, data);
         }

@@ -47,25 +47,38 @@
 @section scripts
 {
     <script>
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
         $('#CourseInstallment_Fee').val("");
         $('#CourseInstallment_DownPayment').val("");
         $('#CourseInstallment_LumpsumAmount').val("");
 
        
-           function greaternum() {
-               var coursetotalfee = $('#CourseInstallment_Fee').val();
-               var downpayment=$('#CourseInstallment_DownPayment').val();
-                var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
-                if (parseInt(downpayment) > parseInt(coursetotalfee)) {
-                    alert("DownPayment Amount Should Not Be GreaterThan Course Fee.");
-                    $('#CourseInstallment_DownPayment').val("");
-                }
-
-                if (parseInt(lumpsum) > parseInt(coursetotalfee)) {
-                    alert("Lumpsum Amount Should Not Be GreaterThan Course Fee.");
-                    $('#CourseInstallment_LumpsumAmount').val("");
-                }
+        function greaternum() {
+            var coursetotalfee = $('#CourseInstallment_Fee').val();
+            var downpayment=$('#CourseInstallment_DownPayment').val();
+            var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
+            if (parseInt(downpayment) > parseInt(coursetotalfee)) {
+                alert("DownPayment Amount Should Not Be GreaterThan Course Fee.");
+                $('#CourseInstallment_DownPayment').val("");
             }
+
+            if (parseInt(lumpsum) > parseInt(coursetotalfee)) {
+                alert("Lumpsum Amount Should Not Be GreaterThan Course Fee.");
+                $('#CourseInstallment_LumpsumAmount').val("");
+            }
+        }
         //var coursetotalfee = $('#CourseInstallment_Fee').val();
         //var lumpsum = $('#CourseInstallment_LumpsumAmount').val();
 

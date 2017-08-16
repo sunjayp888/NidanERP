@@ -34,6 +34,14 @@
       <HintPath>..\packages\DocumentService.API.RESTClient.1.0.0.22\lib\net452\DocumentService.API.RESTClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +134,7 @@
     <Compile Include="Models\ExpenseData.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\MobilizationCountData.cs" />
+    <Compile Include="Models\MobilizationSummaryReport.cs" />
     <Compile Include="Models\OtherFeeReceipt.cs" />
     <Compile Include="Models\PettyCashReport.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />
