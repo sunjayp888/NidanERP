@@ -34,17 +34,11 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList();
-            var subjects = NidanBusinessService.RetrieveSubjects(organisationId, e => true).ToList();
-            var sessions = NidanBusinessService.RetrieveSessions(organisationId, e => true).Items.ToList();
             var viewModel = new BatchAttendanceViewModel
             {
                 BatchAttendance = new BatchAttendance(),
                 Batches = new SelectList(batches, "BatchId", "Name"),
-                Subjects = new SelectList(subjects, "SubjectId", "Name"),
-                Sessions = new SelectList(sessions, "SessionId", "Name")
             };
-            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
-            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -58,8 +52,8 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
-                batchAttendanceViewModel.BatchAttendance.OrganisationId = UserOrganisationId;
-                batchAttendanceViewModel.BatchAttendance.CentreId = UserCentreId;
+                batchAttendanceViewModel.BatchAttendance.OrganisationId = organisationId;
+                batchAttendanceViewModel.BatchAttendance.CentreId = centreId;
                 return RedirectToAction("Index");
             }
             return View(batchAttendanceViewModel);
@@ -72,32 +66,6 @@ namespace Nidan.Controllers
             var admissiondata = NidanBusinessService.RetrieveAttendanceGrid(UserOrganisationId,
                 p => (isSuperAdmin || p.CentreId == UserCentreId) && p.BatchId == batchId && (DbFunctions.TruncateTime(p.AttendanceDate) == date || !p.AttendanceDate.HasValue), orderBy, paging);
             return this.JsonNet(admissiondata);
-        }
-
-        [HttpPost]
-        public ActionResult GetSubject(int batchId)
-        {
-            var organisationId = UserOrganisationId;
-            var batchData = NidanBusinessService.RetrieveBatch(organisationId, batchId);
-            var subjectIds =
-                NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId)
-                    .Select(e => e.SubjectId)
-                    .ToList();
-            var subjectdata =
-                NidanBusinessService.RetrieveSubjects(UserOrganisationId, e => subjectIds.Contains(e.SubjectId))
-                    .ToList();
-            return this.JsonNet(subjectdata);
-        }
-
-        [HttpPost]
-        public ActionResult GetSession(int subjectId)
-        {
-            var organisationId = UserOrganisationId;
-            var subjectData = NidanBusinessService.RetrieveSubject(organisationId, subjectId);
-            var sessiondata =
-                NidanBusinessService.RetrieveSessions(UserOrganisationId, e => e.SubjectId == subjectData.SubjectId)
-                    .Items.ToList();
-            return this.JsonNet(sessiondata);
         }
 
         [HttpPost]
@@ -122,6 +90,14 @@ namespace Nidan.Controllers
             //Please make sure we are getting all data if not set in js file.
             var result = NidanBusinessService.MarkAttendance(UserOrganisationId, UserCentreId, UserPersonnelId, attendances, subjectId, sessionId);
             return null;
+        }
+
+        [HttpPost]
+        public ActionResult GetBiometricDataList(DateTime toDate, int batchId, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveAdmissions(organisationId, e => e.BatchId == batchId);
+            return this.JsonNet(data);
         }
     }
 

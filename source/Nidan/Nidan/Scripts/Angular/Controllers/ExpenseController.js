@@ -3,28 +3,28 @@
 
     angular
         .module('Nidan')
-        .controller('OtherFeeController', OtherFeeController);
+        .controller('ExpenseController', ExpenseController);
 
-    OtherFeeController.$inject = ['$window', 'OtherFeeService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal'];
+    ExpenseController.$inject = ['$window', 'ExpenseService', 'Paging', 'OrderService', 'OrderBy', 'Order', '$uibModal'];
 
-    function OtherFeeController($window, OtherFeeService, Paging, OrderService, OrderBy, Order, $uibModal, $modalInstance) {
+    function ExpenseController($window, ExpenseService, Paging, OrderService, OrderBy, Order, $uibModal, $modalInstance) {
         /* jshint validthis:true */
         var vm = this;
-        vm.otherFees = [];
+        vm.expenses = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
-        vm.editOtherFee = editOtherFee;
-        //vm.canDeleteOtherFee = canDeleteOtherFee;
-        vm.deleteOtherFee = deleteOtherFee;
-        vm.searchOtherFee = searchOtherFee;
-        vm.viewOtherFee = viewOtherFee;
+        vm.editExpense = editExpense;
+        //vm.canDeleteExpense = canDeleteExpense;
+        vm.deleteExpense = deleteExpense;
+        vm.searchExpense = searchExpense;
+        vm.viewExpense = viewExpense;
         //vm.addExpense = addExpense;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        vm.retrieveOtherFeesByCashMemo = retrieveOtherFeesByCashMemo;
+        vm.retrieveExpensesByCashMemo = retrieveExpensesByCashMemo;
         vm.initialise = initialise;
         vm.cashMemo = "";
 
@@ -35,57 +35,57 @@
             order("CreatedDate");
         }
 
-        function retrieveOtherFees() {
-            return OtherFeeService.retrieveOtherFees(vm.paging, vm.orderBy)
+        function retrieveExpenses() {
+            return ExpenseService.retrieveExpenses(vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.otherFees = response.data.Items;
+                    vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    return vm.otherFees;
+                    return vm.expenses;
                 });
         }
 
-        function retrieveOtherFeesByCashMemo(cashMemo) {
+        function retrieveExpensesByCashMemo(cashMemo) {
             vm.orderBy.property = "CreatedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
             vm.cashMemo = cashMemo == undefined ? $("#Expense_CashMemoNumbers").val() : cashMemo;
-            return OtherFeeService.retrieveOtherFeesByCashMemo(vm.cashMemo, vm.paging, vm.orderBy)
+            return ExpenseService.retrieveExpensesByCashMemo(vm.cashMemo, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.otherFees = response.data.Items;
+                    vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    return vm.otherFees;
+                    return vm.expenses;
                 });
         }
 
-        function searchOtherFee(searchKeyword) {
+        function searchExpense(searchKeyword) {
             vm.searchKeyword = searchKeyword;
-            return OtherFeeService.searchOtherFee(vm.searchKeyword, vm.paging, vm.orderBy)
+            return ExpenseService.searchExpense(vm.searchKeyword, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.otherFees = response.data.Items;
+                    vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.otherFees.length === 0 ? "No Records Found" : "";
-                    return vm.otherFees;
+                    vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
+                    return vm.expenses;
                 });
         }
 
         function pageChanged() {
-            return retrieveOtherFees();
+            return retrieveExpenses();
         }
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            return retrieveOtherFees();
+            return retrieveExpenses();
         }
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
         }
 
-        function editOtherFee(id) {
-            $window.location.href = "/OtherFee/Edit/" + id;
+        function editExpense(id) {
+            $window.location.href = "/Expense/Edit/" + id;
         }
 
         //function canDeleteOtherFee(id) {
@@ -96,22 +96,16 @@
         //    OtherFeeService.canDeleteOtherFee(id).then(function (response) { vm.CanDeleteOtherFee = response.data, vm.loadingActions = false });
         //}
 
-        function viewOtherFee(cashMemo) {
-            $window.location.href = "/OtherFee/Create/" + cashMemo;
+        function viewExpense(cashMemo) {
+            $window.location.href = "/Expense/Create/" + cashMemo;
         }
 
-        function deleteOtherFee(centreId, otherfeeId, cashMemo) {
-            return OtherFeeService.deleteOtherFee(centreId, otherfeeId).then(function () {
-                retrieveOtherFeesByCashMemo(cashMemo);
+        function deleteExpense(centreId, expenseId, cashMemo) {
+            return ExpenseService.deleteExpense(centreId, expenseId).then(function () {
+                retrieveExpensesByCashMemo(cashMemo);
             });
 
         }
-
-        //function addExpense() {
-        //    return OtherFeeService.addExpense.then(function() {
-
-        //    });
-        //}
     }
 
 })();

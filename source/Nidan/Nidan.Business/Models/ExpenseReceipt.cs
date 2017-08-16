@@ -7,9 +7,9 @@ using Nidan.Entity;
 
 namespace Nidan.Business.Models
 {
-    class OtherFeeReceipt
+    class ExpenseReceipt
     {
-        public List<OtherFeeReceipt> OtherFeeReceipts { get; set; }
+        public List<ExpenseReceipt> OtherFeeReceipts { get; set; }
         public string OrganisationName { get; set; }
         public string CentreAddress { get; set; }
         public string CentreName { get; set; }

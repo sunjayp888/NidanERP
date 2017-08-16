@@ -8,7 +8,7 @@ using Nidan.Entity;
 
 namespace Nidan.Models
 {
-    public class OtherFeeViewModel:BaseViewModel
+    public class ExpenseViewModel:BaseViewModel
     {
         public Expense Expense { get; set; }
         public string CashMemo { get; set; }

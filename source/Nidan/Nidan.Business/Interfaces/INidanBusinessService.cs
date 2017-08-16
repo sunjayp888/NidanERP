@@ -330,7 +330,7 @@ namespace Nidan.Business.Interfaces
         //Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
         byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission, bool isCandidateAndCentre = true);
-        byte[] CreateOtherFeeBytes(int organisationId, int centreId, List<OtherFee> otherFees);
+        byte[] CreateOtherFeeBytes(int organisationId, int centreId, Expense expense);
         byte[] CreateExpenseBytes(int organisationId, int centreId, Expense expense);
     }
 }

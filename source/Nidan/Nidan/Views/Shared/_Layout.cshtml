@@ -85,18 +85,18 @@
                                         </ul>
                                     </li>
                                 }
-                                @*@if (User.IsInAnyRoles("SuperAdmin","Admin"))
+                                @if (User.IsInAnyRoles("SuperAdmin","Admin"))
                                     {
                                         <li>
-                                            <a><i class="fa fa-cogs"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                            <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
-                                                <li><a href='@Url.Action("Index", "OtherFee")'>Other Fee</a></li>
+                                                <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
                                                 <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                             </ul>
                                         </li>
-                                    }*@
+                                    }
                                 <li>
                                     <a><i class="fa fa-file-excel-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">

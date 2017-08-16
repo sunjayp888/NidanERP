@@ -2694,11 +2694,9 @@ namespace Nidan.Data
                     .BatchAttendances
                     .Include(p => p.Organisation)
                     .Include(p => p.Centre)
-                    .Include(p => p.Personnel)
+                    .Include(p => p.Attendance.Personnel)
                     .Include(p => p.Batch)
                     .Include(p => p.Attendance)
-                    .Include(p => p.Subject)
-                    .Include(p => p.Session)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -2720,7 +2718,7 @@ namespace Nidan.Data
             {
                 return context
                     .BatchAttendances
-                    .Include(c => c.Personnel)
+                    .Include(c => c.Attendance.Personnel)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchAttendanceId == batchattendanceId);

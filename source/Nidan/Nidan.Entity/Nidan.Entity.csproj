@@ -95,6 +95,7 @@
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />
+    <Compile Include="BiometricAttendance.cs" />
     <Compile Include="Brainstorming.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="CandidateFee.cs" />

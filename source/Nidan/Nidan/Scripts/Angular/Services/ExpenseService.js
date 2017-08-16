@@ -3,24 +3,24 @@
 
     angular
         .module('Nidan')
-        .factory('OtherFeeService', OtherFeeService);
+        .factory('ExpenseService', ExpenseService);
 
-    OtherFeeService.$inject = ['$http'];
+    ExpenseService.$inject = ['$http'];
 
-    function OtherFeeService($http) {
+    function ExpenseService($http) {
         var service = {
-            retrieveOtherFees: retrieveOtherFees,
+            retrieveExpenses: retrieveExpenses,
             //canDeleteOtherFee: canDeleteOtherFee,
-            deleteOtherFee: deleteOtherFee,
-            searchOtherFee: searchOtherFee,
-            retrieveOtherFeesByCashMemo: retrieveOtherFeesByCashMemo
+            deleteExpense: deleteExpense,
+            searchExpense: searchExpense,
+            retrieveExpensesByCashMemo: retrieveExpensesByCashMemo
         };
 
         return service;
 
-        function retrieveOtherFees(Paging, OrderBy) {
+        function retrieveExpenses(Paging, OrderBy) {
 
-            var url = "/OtherFee/List",
+            var url = "/Expense/List",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
@@ -29,8 +29,8 @@
             return $http.post(url, data);
         }
 
-        function searchOtherFee(SearchKeyword, Paging, OrderBy) {
-            var url = "/OtherFee/Search",
+        function searchExpense(SearchKeyword, Paging, OrderBy) {
+            var url = "/Expense/Search",
                 data = {
                     searchKeyword: SearchKeyword,
                     paging: Paging,
@@ -47,19 +47,19 @@
         //    return $http.post(url, data);
         //}
 
-        function deleteOtherFee(centreId, otherfeeId, cashMemo) {
-            var url = "/OtherFee/Delete",
+        function deleteExpense(centreId, expenseId, cashMemo) {
+            var url = "/Expense/Delete",
                 data = {
                     centreId: centreId,
-                    otherfeeId: otherfeeId,
+                    expenseId: expenseId,
                     cashMemo: cashMemo
                 };
 
             return $http.post(url, data);
         }
 
-        function retrieveOtherFeesByCashMemo(cashMemo, Paging, OrderBy) {
-            var url = "/OtherFee/ListByCashMemo",
+        function retrieveExpensesByCashMemo(cashMemo, Paging, OrderBy) {
+            var url = "/Expense/ListByCashMemo",
                 data = {
                     cashMemo: cashMemo,
                     paging: Paging,

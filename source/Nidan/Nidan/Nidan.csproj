@@ -263,7 +263,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
-    <Compile Include="Controllers\OtherFeeController.cs" />
+    <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -310,7 +310,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MobilizationViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
-    <Compile Include="Models\OtherFeeViewModel.cs" />
+    <Compile Include="Models\ExpenseViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1144,7 +1144,7 @@
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
-    <Content Include="Scripts\Angular\Controllers\OtherFeeController.js" />
+    <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
@@ -1185,7 +1185,7 @@
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
-    <Content Include="Scripts\Angular\Services\OtherFeeService.js" />
+    <Content Include="Scripts\Angular\Services\ExpenseService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
@@ -1609,16 +1609,15 @@
     <Content Include="Views\ExpenseHeader\Index.cshtml" />
     <Content Include="Views\ExpenseHeader\Create.cshtml" />
     <Content Include="Views\ExpenseHeader\Edit.cshtml" />
-    <Content Include="Views\OtherFee\Index.cshtml" />
-    <Content Include="Views\OtherFee\Create.cshtml" />
-    <Content Include="Views\OtherFee\Edit.cshtml" />
-    <Content Include="Views\OtherFee\_OtherFee.cshtml" />
-    <Content Include="Views\OtherFee\_Expenses.cshtml" />
+    <Content Include="Views\Expense\Index.cshtml" />
+    <Content Include="Views\Expense\Create.cshtml" />
+    <Content Include="Views\Expense\Edit.cshtml" />
+    <Content Include="Views\Expense\_Expense.cshtml" />
     <Content Include="Views\OtherFeeProject\_OtherFeeProject.cshtml" />
     <Content Include="Views\CentrePettyCash\Index.cshtml" />
     <Content Include="Views\CentrePettyCash\Create.cshtml" />
     <Content Include="Views\CentrePettyCash\Edit.cshtml" />
-    <Content Include="Views\OtherFee\_OtherFeeDocument.cshtml" />
+    <Content Include="Views\Expense\_ExpenseDocument.cshtml" />
     <Content Include="Views\Report\Enquiry.cshtml" />
     <Content Include="Views\Report\Mobilization.cshtml" />
     <Content Include="Views\Report\FollowUp.cshtml" />
