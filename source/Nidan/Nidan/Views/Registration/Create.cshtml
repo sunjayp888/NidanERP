@@ -148,6 +148,31 @@
 @section scripts
 {
     <script>
+        $('#btn_submit').attr('disabled', true);
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
+
+        //Registration Amount Validation
+        $("#Registration_CandidateFee_PaidAmount").keyup(function() {
+            var registrationFee = $("#Registration_CandidateFee_PaidAmount").val();
+            if (registrationFee < 1000) {
+                $('#btn_submit').attr('disabled', true);
+            } else {
+                $('#btn_submit').attr('disabled', false);
+            }
+        });
+
         $("#RegistrationPaymentReceipt_Fees").val("");
 
         $('.bank-details-textbox').hide();
@@ -237,101 +262,101 @@
                 for (i = 0; i < numLength; i++) {
                     switch (i) {
 
-                        case 0:
-                            if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                                word[j] = '';
-                            }
-                            else {
-                                word[j] = '' + once[rev[i]];
-                            }
-                            word[j] = word[j];
-                            break;
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
 
-                        case 1:
-                            aboveTens();
-                            break;
+                    case 1:
+                        aboveTens();
+                        break;
 
-                        case 2:
-                            if (rev[i] == 0) {
-                                word[j] = '';
-                            }
-                            else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                                word[j] = once[rev[i]] + " Hundred ";
-                            }
-                            else {
-                                word[j] = once[rev[i]] + " Hundred and";
-                            }
-                            break;
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
 
-                        case 3:
-                            if (rev[i] == 0 || rev[i + 1] == 1) {
-                                word[j] = '';
-                            }
-                            else {
-                                word[j] = once[rev[i]];
-                            }
-                            if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                                word[j] = word[j] + " Thousand";
-                            }
-                            break;
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
 
 
-                        case 4:
-                            aboveTens();
-                            break;
+                    case 4:
+                        aboveTens();
+                        break;
 
-                        case 5:
-                            if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                                word[j] = '';
-                            }
-                            else {
-                                word[j] = once[rev[i]];
-                            }
-                            if (rev[i + 1] !== '0' || rev[i] > '0') {
-                                word[j] = word[j] + " Lakh";
-                            }
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
 
-                            break;
+                        break;
 
-                        case 6:
-                            aboveTens();
-                            break;
+                    case 6:
+                        aboveTens();
+                        break;
 
-                        case 7:
-                            if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                                word[j] = '';
-                            }
-                            else {
-                                word[j] = once[rev[i]];
-                            }
-                            if (rev[i + 1] !== '0' || rev[i] > '0') {
-                                word[j] = word[j] + " Crore";
-                            }
-                            break;
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
 
-                        case 8:
-                            aboveTens();
-                            break;
+                    case 8:
+                        aboveTens();
+                        break;
 
-                            //            This is optional.
+                    //            This is optional.
 
-                            //            case 9:
-                            //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            //                    word[j] = '';
-                            //                }
-                            //                else {
-                            //                    word[j] = once[rev[i]];
-                            //                }
-                            //                if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            //                    word[j] = word[j] + " Arab";
-                            //                }
-                            //                break;
+                    //            case 9:
+                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                    //                    word[j] = '';
+                    //                }
+                    //                else {
+                    //                    word[j] = once[rev[i]];
+                    //                }
+                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                    //                    word[j] = word[j] + " Arab";
+                    //                }
+                    //                break;
 
-                            //            case 10:
-                            //                aboveTens();
-                            //                break;
+                    //            case 10:
+                    //                aboveTens();
+                    //                break;
 
-                        default: break;
+                    default: break;
                     }
                     j++;
                 }
@@ -441,10 +466,5 @@
                 processData: false
             });
         }
-
-        //$('#btn_submit')
-        //    .click(function() {
-        //        $.block({ message: '<h1>Sumitting your request..</h1>' });
-        //    });
     </script>
 }

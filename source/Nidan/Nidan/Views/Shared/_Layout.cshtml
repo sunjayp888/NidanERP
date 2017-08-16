@@ -108,10 +108,12 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            <li><a href='@Url.Action("MobilizationStatistics", "Report")'>Mobilization Statistics</a></li>
                                             @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
                                         }
-
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <li><a href='@Url.Action("MobilizationStatistics", "Report")'>Mobilization Statistics</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <li>

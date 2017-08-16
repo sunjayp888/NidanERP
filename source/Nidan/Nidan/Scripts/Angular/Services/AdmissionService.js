@@ -13,6 +13,7 @@
             canDeleteAdmission: canDeleteAdmission,
             deleteAdmission: deleteAdmission,
             searchAdmission: searchAdmission,
+            retrieveDocumentsType: retrieveDocumentsType,
             searchAdmissionByDate: searchAdmissionByDate
         };
 
@@ -48,6 +49,16 @@
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveDocumentsType(studentCode) {
+
+            var url = "/Admission/DocumentList",
+                data = {
+                    studentCode: studentCode
+                };
 
             return $http.post(url, data);
         }

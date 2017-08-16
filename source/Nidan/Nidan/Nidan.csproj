@@ -1151,6 +1151,7 @@
     <Content Include="Scripts\Angular\Controllers\ReportController.js" />
     <Content Include="Scripts\Angular\Controllers\RoomController.js" />
     <Content Include="Scripts\Angular\Controllers\SessionController.js" />
+    <Content Include="Scripts\Angular\Controllers\StudentAdmissionDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectTrainerController.js" />
@@ -1192,6 +1193,7 @@
     <Content Include="Scripts\Angular\Services\ReportService.js" />
     <Content Include="Scripts\Angular\Services\RoomService.js" />
     <Content Include="Scripts\Angular\Services\SessionService.js" />
+    <Content Include="Scripts\Angular\Services\StudentAdmissionDocumentService.js" />
     <Content Include="Scripts\Angular\Services\SubjectCourseService.js" />
     <Content Include="Scripts\Angular\Services\SubjectService.js" />
     <Content Include="Scripts\Angular\Services\SubjectTrainerService.js" />
@@ -1644,6 +1646,7 @@
     <Content Include="Views\FollowUp\Todays.cshtml" />
     <Content Include="Views\FollowUp\Tomorrows.cshtml" />
     <Content Include="Views\FollowUp\Upcoming.cshtml" />
+    <Content Include="Views\Admission\_AdmissionDocumentType.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

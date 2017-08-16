@@ -78,6 +78,19 @@
 </div>
 @section scripts {
     <script>
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
         var mobile = $("#Enquiry_Mobile");
 
         if (mobile.val() == "0") {
@@ -285,6 +298,6 @@
                 processData: false
             });
         });
-        
+
     </script>
 }
