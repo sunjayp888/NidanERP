@@ -107,7 +107,9 @@
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
     <Compile Include="CentreCourseInstallment.cs" />
+    <Compile Include="CentreEnrollmentReceiptSetting.cs" />
     <Compile Include="CentrePettyCash.cs" />
+    <Compile Include="CentreReceiptSetting.cs" />
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
     <Compile Include="CentreVoucherNumber.cs" />
@@ -139,6 +141,8 @@
     <Compile Include="EventBudget.cs" />
     <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
+    <Compile Include="EventPlanning.cs" />
+    <Compile Include="EventPostEvent.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseDataGrid.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
     <Compile Include="FollowUpSearchField.cs" />
+    <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
     <Compile Include="HowDidYouKnowAbout.cs" />
@@ -157,6 +162,7 @@
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationCentreReport.cs" />
+    <Compile Include="MobilizationCentreReportMonthWise.cs" />
     <Compile Include="MobilizationDataGrid.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />

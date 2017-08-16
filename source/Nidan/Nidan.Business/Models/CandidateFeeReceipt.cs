@@ -24,5 +24,14 @@ namespace Nidan.Business.Models
         public string InvoiceNumber { get; set; }
         public string TotalInstallment { get; set; }
         public string InstallmentNumber { get; set; }
+        public string State { get; set; }
+        public string Gstin { get; set; }
+        public string GstStateCode { get; set; }
+        public string FatherName { get; set; }
+        public string PaymentMode { get; set; }
+        public string BankName { get; set; }
+        public string ChequeDate { get; set; }
+        public string ChequeNumber { get; set; }
+        public string RupeesInWords { get; set; }
     }
 }

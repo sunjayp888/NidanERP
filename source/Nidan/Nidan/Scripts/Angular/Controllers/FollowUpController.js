@@ -22,11 +22,18 @@
         vm.searchFollowUpByDate = searchFollowUpByDate;
         vm.deleteFollowUp = deleteFollowUp;
         vm.viewFollowUp = viewFollowUp;
+        vm.pendingFollowUp = pendingFollowUp;
+        vm.todaysFollowUp = todaysFollowUp;
+        vm.tomorrowsFollowUp = tomorrowsFollowUp;
+        vm.upcomingFollowUp = upcomingFollowUp;
         vm.markAsReadFollowUp = markAsReadFollowUp;
-        initialise();
+        vm.initialise = initialise;
 
         function initialise() {
-            order("FirstName");
+            vm.orderBy.property = "FollowUpDateTime";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            order("FollowUpDateTime");
         }
 
         function retrieveFollowUps() {
@@ -40,7 +47,22 @@
         }
 
         function pageChanged() {
-            return retrieveFollowUps();
+            var path = window.location.pathname.split('/');
+            if (path[2] == "Pending") {
+                pendingFollowUp();
+            }
+            else if (path[2] == "Todays") {
+                todaysFollowUp();
+            }
+            else if (path[2] == "Tomorrows") {
+                tomorrowsFollowUp();
+            }
+            else if (path[2] == "Upcoming") {
+                upcomingFollowUp();
+            }
+            else {
+                retrieveFollowUps();
+            }
         }
 
         function order(property) {
@@ -88,7 +110,7 @@
                   return vm.followUps;
               });
         }
-       
+
         function deleteFollowUp(id) {
             return FollowUpService.deleteFollowUp(id).then(function () { initialise(); });
         };
@@ -99,6 +121,62 @@
 
         function viewFollowUp(followUpId) {
             $window.location.href = "/FollowUp/Edit/" + followUpId;
+        }
+
+        function pendingFollowUp() {
+            vm.orderBy.property = "FollowUpDateTime";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return FollowUpService.pendingFollowUp(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.followUps = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    return vm.followUps;
+                });
+        }
+
+        function todaysFollowUp() {
+            vm.orderBy.property = "FollowUpDateTime";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return FollowUpService.todaysFollowUp(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.followUps = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    return vm.followUps;
+                });
+        }
+
+        function tomorrowsFollowUp() {
+            vm.orderBy.property = "FollowUpDateTime";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return FollowUpService.tomorrowsFollowUp(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.followUps = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    return vm.followUps;
+                });
+        }
+
+        function upcomingFollowUp() {
+            vm.orderBy.property = "FollowUpDateTime";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return FollowUpService.upcomingFollowUp(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.followUps = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    return vm.followUps;
+                });
         }
     }
 

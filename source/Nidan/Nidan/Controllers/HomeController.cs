@@ -20,6 +20,7 @@ namespace Nidan.Controllers
         }
 
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day);
+        private readonly DateTime _tomorrow = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day).AddDays(1);
         public ActionResult Index()
 
         {
@@ -27,23 +28,27 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsSuperAdmin();
-           // var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
+            // var data = NidanBusinessService.RetrievePieGraphStatistics(organisationId);
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
-            var enquiryCount = NidanBusinessService.RetrieveEnquiries(UserOrganisationId,
-               e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && e.EnquiryStatus=="Enquiry").Count();
+            var enquiryCount = NidanBusinessService.RetrieveEnquiries(organisationId,
+               e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && e.EnquiryStatus == "Enquiry").Count();
 
             var mobilizationCount =
-                NidanBusinessService.RetrieveMobilizations(UserOrganisationId,
+                NidanBusinessService.RetrieveMobilizations(organisationId,
                e => (isSuperAdmin || e.CentreId == centreId) && e.CreatedDate == _today && e.Close == "No").Items.Count();
 
-            var registraionCount = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,
+            var registraionCount = NidanBusinessService.RetrieveRegistrations(organisationId,
                e => (isSuperAdmin || e.CentreId == centreId) && e.RegistrationDate == _today && e.IsAdmissionDone == false).Items.Count();
 
             var admissionCount =
-                NidanBusinessService.RetrieveAdmissions(UserOrganisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionDate== _today)
+                NidanBusinessService.RetrieveAdmissions(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionDate == _today)
                     .Items.Count();
 
+            var pendingFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime < _today).Items.Count();
+            var todaysFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _today).Items.Count();
+            var tomorrowFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _tomorrow).Items.Count();
+            var upcomingFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime > _tomorrow).Items.Count();
 
             if (User.IsInRole("User") && !permissions.IsManager)
                 return RedirectToAction("Profile", "Personnel", new { id = personnelId });
@@ -54,7 +59,11 @@ namespace Nidan.Controllers
                 EnquiryCount = enquiryCount,
                 RegistraionCount = registraionCount,
                 MobilizationCount = mobilizationCount,
-                AdmissionCount = admissionCount
+                AdmissionCount = admissionCount,
+                PendingFollowUpCount = pendingFollowUpCount,
+                TodaysFollowUpCount = todaysFollowUpCount,
+                TomorrowsFollowUpCount = tomorrowFollowUpCount,
+                UpcomingFollowUpCount = upcomingFollowUpCount
                 //Divisions = initialDivisions,
                 //SelectedDivisionIds = permissions.IsAdmin ? null : initialDivisions.Select(c => c.DivisionId).ToList()
             };
@@ -82,7 +91,7 @@ namespace Nidan.Controllers
         public ActionResult Statistics()
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId,e=>(isSuperAdmin || e.CentreId==UserCentreId));
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId));
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
@@ -116,13 +125,13 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-           // var centre = NidanBusinessService.RetrieveCentres(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
+            // var centre = NidanBusinessService.RetrieveCentres(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
             var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             var graphData = new List<Graph>();
             var enquiries =
                 NidanBusinessService.RetrieveEnquiries(organisationId,
-                        e =>(isSuperAdmin||e.CentreId== centreId) && e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate)
+                        e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate >= startOfWeekDate && e.EnquiryDate <= endOfWeekDate)
                     .ToList();
             var mobilizations =
                 NidanBusinessService.RetrieveMobilizations(organisationId,

@@ -11,6 +11,10 @@ namespace Nidan.Models
         public int RegistraionCount { get; set; }
         public int MobilizationCount { get; set; }
         public int AdmissionCount { get; set; }
+        public int PendingFollowUpCount { get; set; }
+        public int TodaysFollowUpCount { get; set; }
+        public int TomorrowsFollowUpCount { get; set; }
+        public int UpcomingFollowUpCount { get; set; }
 
         public IEnumerable<int> SelectedCompanyIds { get; set; }
         public string CompanyIdsArray => SelectedCompanyIds != null ? string.Format("[{0}]", string.Join(",", SelectedCompanyIds)) : "null";

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Nidan.Business.Enum;
 using Nidan.Business.Interfaces;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -21,6 +22,7 @@ namespace Nidan.Controllers
 {
     public class AdmissionController : BaseController
     {
+        private readonly IDocumentService _documentService;
         private ApplicationRoleManager _roleManager;
         public ApplicationRoleManager RoleManager
         {
@@ -34,8 +36,9 @@ namespace Nidan.Controllers
             }
         }
 
-        public AdmissionController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        public AdmissionController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
+            _documentService = documentService;
         }
 
         // GET: Admission
@@ -279,7 +282,7 @@ namespace Nidan.Controllers
                 Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList(), "SchemeId", "Name"),
                 Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
                 BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList(), "BatchTimePreferId", "Name"),
-                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => true).ToList(), "BatchId", "Name"),
+                Batches = new SelectList(NidanBusinessService.RetrieveBatches(organisationId, e => e.CourseId == admission.Registration.CourseId).ToList(), "BatchId", "Name"),
                 Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
                 CourseInstallments = new SelectList(NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true).ToList(), "CourseInstallmentId", "Name")
             };
@@ -314,13 +317,15 @@ namespace Nidan.Controllers
         // GET: Admission/View/{id}
         public ActionResult View(int? id)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var admission = NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
+            var admission = !isSuperAdmin ? NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value) :
+                             NidanBusinessService.RetrieveAdmission(organisationId, id.Value, e => true);
             if (admission == null)
             {
                 return HttpNotFound();
@@ -338,6 +343,15 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissionGrid(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveAdmissionDocuments(organisationId, centreId, studentCode);
             return this.JsonNet(data);
         }
 
@@ -384,9 +398,32 @@ namespace Nidan.Controllers
 
         public ActionResult Download(int? id)
         {
-            var admission = NidanBusinessService.RetrieveAdmission(UserOrganisationId, UserCentreId, id.Value);
-            var data = NidanBusinessService.CreateEnrollmentBytes(UserOrganisationId, UserCentreId, admission);
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var admission = !isSuperAdmin ? NidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value) :
+                NidanBusinessService.RetrieveAdmission(organisationId, id.Value, e => true);
+            var data = NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} Enrollment.pdf", admission.Registration.Enquiry.FirstName, admission.Registration.Enquiry.LastName));
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                           documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                           studentData?.FirstName, "Admission Document", documentViewModel.Attachment.FileName,
+                           documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
     }
 }

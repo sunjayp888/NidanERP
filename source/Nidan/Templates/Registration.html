@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <style type="text/css">
@@ -7,7 +7,7 @@
             font-family: "Calibri";
         }
 
-        h1,h3 {
+        h1,h2,h3,h5 {
             margin-top: 0;
             margin-bottom: 0;
         }
@@ -28,8 +28,8 @@
             border-bottom: 1px solid black;
             width: 25%;
         }
-
-        .PayslipBox {
+		
+		.PayslipBox {
             margin-top: 20px;
             border: solid 2px gray;
             padding: 10px;
@@ -47,37 +47,53 @@
                 }
     </style>
 </head>
-<body>
+<body style="padding-left:50px">
 <br/>
 <br/>
     <!-- Pay Statement Header -->
     <table border="0" width="100%">
         <tr>
-            <td class="TopText" width="25%">
+            <td class="TopText" width="20%">
                 <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
             </td>
-            <td class="CenterText TopText" width="50%">
-				<h1>@Model.OrganisationName</h1>
-				<h3>@Model.CentreAddress</h3>
+            <td class="CenterText TopText" width="60%">
+				<h2>NIDAN TECHNOLOGIES PVT.LTD.</h2>
+				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11, CBD Belapur, Navi Mumbai - 400614.</h5>
+				<h5>Branch Office: @Model.CentreAddress</h5>
                 <br />
-                <b>Receipt by @Model.CentreName</b>
+                <b>TAX INVOICE</b>
             </td>
-            <td class="TopText RightText" width="25%">                
+            <td class="TopText RightText" width="20%">     
+				<img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\Nidan.jpg" style="height: 172px; width: 292px;" />			
             </td>
         </tr>
     </table>
     <br />
-	<table border="0" width="100%">
-		<tr>
-			<td style="float : left">
-                <b>Receipt Date : @Model.PaymentDate</b>
-            </td>
-            <td style="float : right">
-                <b>Receipt No. : @Model.InvoiceNumber</b>
-            </td>
-            <td></td>
-		</tr>
-	</table>
+		<table border="0" width="100%">
+			<tr>
+				<td style="float : left">
+					<b>Invoice Date : @Model.PaymentDate</b>
+				</td>
+				<td></td>
+				<td style="float : right">
+					<b>Invoice No. : @Model.InvoiceNumber</b>
+				</td>
+				
+			</tr>
+			<tr>
+				<td style="float : left">
+					<b>State : @Model.State</b>
+				</td>
+				<td align="center">
+					<b>State Code : @Model.GstStateCode</b>
+				</td>
+				<td style="float : right">
+					<b>GSTIN : @Model.Gstin</b>
+				</td>
+				
+			</tr>
+		</table>
+	
     <!-- Address & Date -->
 
     <div class="PayslipBox">
@@ -91,8 +107,8 @@
                         <tr>
                             <td>Candidate Name :</td>
                             <td>@Model.CandidateName</td>
-                            <td>EmailId :</td>
-                            <td>@Model.EmailId</td>
+                            <td>S/O D/O :</td>
+                            <td>@Model.FatherName</td>
                         </tr>
                         <tr>
                             <td>Address :</td>
@@ -101,6 +117,8 @@
                         <tr>
                             <td>Contact No :</td>
                             <td>@Model.MobileNumber</td>
+							<td>EmailId :</td>
+                            <td>@Model.EmailId</td>
                         </tr>
                     </table>
                 </td>
@@ -123,14 +141,33 @@
                 <td>@Model.CourseDuration Hours.</td>
             </tr>
             <tr>
-                <td>
-                    Total Course Fees : @Model.TotalCourseFee
-                </td>
+                <!-- <td> -->
+                    <!-- Total Course Fees : @Model.TotalCourseFee -->
+                <!-- </td> -->
+				
                 <td>
                     Recieved Amount : @Model.RecievedAmount
                 </td>
+				<td>
+					Payment Mode : @Model.PaymentMode
+				</td>
                 <td></td>
             </tr>
+			@if(Model.PaymentMode=="Cheque")
+			{
+				<tr>
+					<td>
+						Bank Name : @Model.BankName
+					</td>
+					
+					<td>
+						Cheque Date : @Model.ChequeDate
+					</td>
+					<td>
+						Cheque Number : @Model.ChequeNumber
+					</td>
+				</tr>
+			}
             <!-- <tr> -->
                 <!-- <td> -->
                     <!-- Receipt Date : @Model.PaymentDate -->
@@ -142,6 +179,60 @@
             <!-- </tr> -->
         </table>
     </div>
+	<!-- Tax Invoice -->
+	<div class="PayslipBox">
+        <table border="1">
+            <tr>
+                <th>Sr No.</th>
+				<th>Name Of Product/Service</th>
+				<th>HSN/ACS</th>
+				<th>QTY</th>
+				<th>Amount</th>
+			</tr>
+			<tr>
+			<td>1</td>
+			<td>Commeracial Training & Coaching Services</td>
+			<td>999293</td>
+			<td>1</td>
+			<td>@Model.RecievedAmount</td>
+			</tr>
+        </table>
+		<p style=" margin-top:0%">Exempted services as per Notification No. 12/2017 Sr.No.69.</p>
+    </div>
+	<div class="PayslipBox">
+        <table border="0">
+            <tr>
+                <td style="border:none"><b>Total Invoice Amount In Words :</b></td>
+				<td></td>
+				<td style="border-bottom:1pt solid black;border-left:1pt solid black;border-top:1pt solid black;border-right:1pt solid black;">Total Amount Before Tax : @Model.RecievedAmount</td>
+			</tr>
+			<tr>
+			<td>@Model.RupeesInWords</td>
+			<td></td>
+			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : CGST :</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td></td>
+			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : SGST :</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td></td>
+			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Add : IGST :</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td></td>
+			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Tax Amount : GST :</td>
+			</tr>
+			<tr>
+			<td></td>
+			<td></td>
+			<td  style="border-bottom:1pt solid black;border-left:1pt solid black;border-right:1pt solid black;">Total Amount After Tax : @Model.RecievedAmount</td>
+			</tr>
+        </table>
+    </div>
     <div class="PayslipBox">
         <p>
 			<b>
@@ -149,27 +240,30 @@
 							 <br>2) Admission will be confirmed after getting enrollment form & payment of downpayment or lumpsum amount.
 			</b>
 		</p>
-        <table border="0">
+        <table style="width:100%">
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+				<td>&nbsp;</td>
             </tr>
             <tr>
-                <td>
+                <td align="center">
                     <b>Candidate Sign.</b>
                 </td>
-                <td>
+                <td align="center">
                     <b>Authorized Sign.</b>
                 </td>
-                <td>
+                <td align="center">
                     <b>Branch Manager Sign.</b>
                 </td>
             </tr>
         </table>
     </div>
+	<p style=" margin-top:0%">This is computer generated receipt.</p>
 </body>
 </html>

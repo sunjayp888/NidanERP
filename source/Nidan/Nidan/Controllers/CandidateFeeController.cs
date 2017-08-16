@@ -79,7 +79,7 @@ namespace Nidan.Controllers
                 candidateFeeData.PaymentModeId = candidateFeeViewModel.CandidateFee.PaymentModeId;
                 candidateFeeData.ChequeNumber = candidateFeeViewModel.CandidateFee.ChequeNumber;
                 candidateFeeData.HaveReceipt = candidateFeeViewModel.CandidateFee.HaveReceipt;
-                candidateFeeData.ReceiptNumber= candidateFeeViewModel.CandidateFee.ReceiptNumber;
+                candidateFeeData.ReferenceReceiptNumber = candidateFeeViewModel.CandidateFee.ReferenceReceiptNumber;
                 candidateFeeData.PersonnelId = UserPersonnelId;
                 if (candidateFeeViewModel.CandidateFee.IsPaidAmountOverride && candidateFeeViewModel.CandidateFee.PaidAmount != null)
                 {
@@ -199,10 +199,25 @@ namespace Nidan.Controllers
         public ActionResult Download(int? id)
         {
             var organisationId = UserOrganisationId;
-            var feeTypeId = NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value).FeeTypeId;
+            var centreId = UserCentreId;
+            var admission = new Admission();
+            var candidateFee = NidanBusinessService.RetrieveCandidateFee(organisationId, id.Value);
+            var feeTypeId = candidateFee.FeeTypeId;
+            string firstName = "";
+            string lastName = "";
             FeeType feeType = (FeeType)feeTypeId;
-            var data = NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, UserCentreId, id.Value);
-            return File(data, ".pdf", feeType.ToString() + ".pdf");
+            if (feeTypeId == 2)
+            {
+                var registration = NidanBusinessService.RetrieveRegistrations(organisationId, e => e.StudentCode == candidateFee.StudentCode).Items.FirstOrDefault();
+                var admissionData = NidanBusinessService.RetrieveAdmissions(organisationId, e => e.RegistrationId == registration.RegistrationId).Items.FirstOrDefault();
+                firstName = admissionData?.Registration.Enquiry.FirstName;
+                lastName = admissionData?.Registration.Enquiry.LastName;
+                admission = admissionData;
+            }
+            var data = feeTypeId == 1 || feeTypeId == 3 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
+                : NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
+            return File(data, ".pdf", string.Format("{0} {1} {2}.pdf", firstName, lastName, feeType.ToString()));
+
         }
     }
 }

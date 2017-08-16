@@ -48,7 +48,7 @@ namespace Nidan.Controllers
                 attendanceViewModel.Attendance.OrganisationId = UserOrganisationId;
                 attendanceViewModel.Attendance.CentreId = UserCentreId;
                 attendanceViewModel.Attendance.PersonnelId = UserPersonnelId;
-                attendanceViewModel.Attendance = NidanBusinessService.CreateAttendance(organisationId,centreId, attendanceViewModel.Attendance.PersonnelId, attendanceViewModel.Attendance);
+                attendanceViewModel.Attendance = NidanBusinessService.CreateAttendance(organisationId,centreId, attendanceViewModel.Attendance.PersonnelId.Value, attendanceViewModel.Attendance);
                 return RedirectToAction("Index");
             }
             return View(attendanceViewModel);
@@ -63,7 +63,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var attendance = NidanBusinessService.RetrieveAttendance(UserOrganisationId, id.Value);
+            var attendance = NidanBusinessService.RetrieveAttendance(organisationId, id.Value);
             if (attendance == null)
             {
                 return HttpNotFound();

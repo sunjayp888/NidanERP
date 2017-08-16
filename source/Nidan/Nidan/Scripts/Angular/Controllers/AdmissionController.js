@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.admissions = [];
+        vm.documentsTypes = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -23,10 +24,13 @@
         vm.viewAdmission = viewAdmission;
         vm.batches = [];
         vm.retrieveBatches = retrieveBatches;
+         vm.retrieveDocumentsType = retrieveDocumentsType;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.searchAdmissionByDate = searchAdmissionByDate;
-        initialise();
+        vm.isDisabled = false;
+        vm.disableButton = disableButton;
+        vm.initialise = initialise;
 
         function initialise() {
             vm.orderBy.property = "AdmissionId";
@@ -70,6 +74,14 @@
               });
         }
 
+        function retrieveDocumentsType(studentCode) {
+            return AdmissionService.retrieveDocumentsType(studentCode)
+                .then(function (response) {
+                    vm.documentsTypes = response.data;
+                    return vm.documentsTypes;
+                });
+        }
+
         function pageChanged() {
             return retrieveAdmissions();
         }
@@ -109,6 +121,9 @@
             });
         };
 
+        function disableButton() {
+            vm.isDisabled = true;
+        }
     }
 
 })();

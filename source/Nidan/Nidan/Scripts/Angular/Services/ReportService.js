@@ -27,7 +27,9 @@
             downloadAdmissionCSVByDate: downloadAdmissionCSVByDate,
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
-            downloadExpenseCSVByDate: downloadExpenseCSVByDate
+            downloadExpenseCSVByDate: downloadExpenseCSVByDate,
+            totalSumOfCountByMonth: totalSumOfCountByMonth,
+            totalSumOfCountByDate: totalSumOfCountByDate
         };
 
         return service;
@@ -149,12 +151,12 @@
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportBydate(centreId, FromDate, ToDate, Paging, OrderBy) {
-            var url = "/Report/MobilizationProcessReportByByDate",
+        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear, Paging, OrderBy) {
+            var url = "/Report/MobilizationCountReportBydate",
                 data = {
                     centreId: centreId,
-                    fromDate: FromDate,
-                    toDate: ToDate,
+                    month: fromMonth,
+                    year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -163,7 +165,7 @@
         }
 
         function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, Paging, OrderBy) {
-            var url = "/Report/MobilizationProcessReportByMonth",
+            var url = "/Report/MobilizationCountReportByMonthAndYear",
                 data = {
                     centreId: centreId,
                     fromMonth: fromMonth,
@@ -237,6 +239,30 @@
                     fromDate: fromDate,
                     toDate: toDate
                 };
+            return $http.post(url, data);
+        }
+
+        function totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear) {
+            var url = "/Report/TotalSumOfCountReportByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    fromMonth: fromMonth,
+                    toMonth: toMonth,
+                    fromYear: fromYear,
+                    toYear: toYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function totalSumOfCountByDate(centreId, fromMonth, fromYear) {
+            var url = "/Report/TotalMobilizationCountReportBydate",
+                data = {
+                    centreId: centreId,
+                    month: fromMonth,
+                    year: fromYear
+                };
+
             return $http.post(url, data);
         }
     }

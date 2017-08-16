@@ -32,7 +32,7 @@
             </a>
             <a href='@Url.Action("Index","Enquiry")'>
                 <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background:#ffdb99">
+                    <div class="tile-stats" style="background:#ffe4b3">
                         <div class="icon">
                             <i class="fa fa-clipboard"></i>
                         </div>
@@ -66,9 +66,73 @@
                     </div>
                 </div>
             </a>
+          
         </div>
     </div>
 </div>
+
+@*Follow-Up*@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    Follow-Up Count<small></small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <a href='@Url.Action("Pending","FollowUp")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats" style="background: #ffb3b3">
+                        <div class="icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <div class="count">@Model.PendingFollowUpCount</div>
+                        <h3>Pending</h3>
+                        <p>Pending Follow-Up Count</p>
+                    </div>
+                </div>
+            </a>
+            <a href='@Url.Action("Todays","FollowUp")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats" style="background:#c6ecd9">
+                        <div class="icon">
+                            <i class="fa fa-clipboard"></i>
+                        </div>
+                        <div class="count">@Model.TodaysFollowUpCount</div>
+                        <h3>Today's</h3>
+                        <p>Today's Follow-Up Count</p>
+                    </div>
+                </div>
+            </a>
+            <a href='@Url.Action("Tomorrows","FollowUp")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats" style="background:#ffd1b3">
+                        <div class="icon">
+                            <i class="fa fa-check-square-o"></i>
+                        </div>
+                        <div class="count">@Model.TomorrowsFollowUpCount</div>
+                        <h3>Tomorrow's</h3>
+                        <p>Tomorrow's Follow-Up Count</p>
+                    </div>
+                </div>
+            </a>
+            <a href='@Url.Action("Upcoming","FollowUp")'>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats" style="background:#d1d1e0">
+                        <div class="icon">
+                            <i class="fa fa-institution"></i>
+                        </div>
+                        <div class="count">@Model.UpcomingFollowUpCount</div>
+                        <h3>Upcoming</h3>
+                        <p>Upcoming Follow-Up Count</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
 
 @*</div>*@
 <!-- pie chart -->

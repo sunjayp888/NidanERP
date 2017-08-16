@@ -33,9 +33,10 @@ namespace Nidan.Data.Interfaces
         Planning CreatePlanning(int organisationId, Planning planning);
         Budget CreateBudget(int organisationId, Budget budget);
         Eventday CreateEventday(int organisationId, Eventday eventday);
-        Postevent CreatePostevent(int organisationId, Postevent postevent);
+        PostEvent CreatePostEvent(int organisationId, PostEvent postevent);
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
+        EventPostEvent CreateEventPostEvent(int organisationId, EventPostEvent eventPostEvent);
 
         FollowUp CreateFollowUp(int organisationId, FollowUp followUp);
         Subject CreateSubject(int organisationId, Subject subject);
@@ -49,6 +50,8 @@ namespace Nidan.Data.Interfaces
         Attendance CreateAttendance(int organisationId, Attendance attendance);
         BatchAttendance CreateBatchAttendance(int organisationId, BatchAttendance batchAttendance);
         EventBrainstorming CreateEventBrainstorming(int organisationId, EventBrainstorming eventBrainstorming);
+        EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
+        EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -94,9 +97,9 @@ namespace Nidan.Data.Interfaces
         Budget RetrieveBudget(int organisationId, int budgetId, Expression<Func<Budget, bool>> predicate);
         PagedResult<Budget> RetrieveBudgets(int organisationId, Expression<Func<Budget, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Eventday RetrieveEventday(int organisationId, int eventdayId, Expression<Func<Eventday, bool>> predicate);
-        //  PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        Postevent RetrievePostevent(int organisationId, int posteventId, Expression<Func<Postevent, bool>> predicate);
-        // PagedResult<Postevent> RetrievePostevents(int organisationId, Expression<Func<Postevent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PostEvent RetrievePostEvent(int organisationId, int postEventId, Expression<Func<PostEvent, bool>> predicate);
+        PagedResult<PostEvent> RetrievePostEvents(int organisationId, Expression<Func<PostEvent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Template RetrieveTemplateDetails(int organisationId, string name);
         PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
@@ -180,8 +183,20 @@ namespace Nidan.Data.Interfaces
         PagedResult<PettyCashExpenseReport> RetrievePettyCashExpenseReports(int organisationId, Expression<Func<PettyCashExpenseReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventBrainstorming RetrieveEventBrainstorming(int organisationId, int eventBrainstormingId, Expression<Func<EventBrainstorming, bool>> predicate);
-        PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<MobilizationCentreReportMonthWise> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId, Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate);
+        PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventBudget RetrieveEventBudget(int organisationId, int centreId, int eventBudgetId, Expression<Func<EventBudget, bool>> predicate);
+        PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventPlanning RetrieveEventPlanning(int organisationId, int centreId, int eventPlanningId, Expression<Func<EventPlanning, bool>> predicate);
+        PagedResult<EventPlanning> RetrieveEventPlannings(int organisationId, int centreId, Expression<Func<EventPlanning, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventPostEvent RetrieveEventPostEvent(int organisationId, int centreId, int eventPostEventId, Expression<Func<EventPostEvent, bool>> predicate);
+        PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate);
+        PagedResult<CentreReceiptSetting> RetrieveCentreReceiptSettings(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CentreEnrollmentReceiptSetting> RetrieveCentreEnrollmentReceiptSettings(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreEnrollmentReceiptSetting RetrieveCentreEnrollmentReceiptSetting(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate);
 
         // Update
 
@@ -195,6 +210,7 @@ namespace Nidan.Data.Interfaces
         IEnumerable<DocumentType> RetrieveDocumentTypes(int organisationId);
         IEnumerable<Document> RetrieveDocuments(int organisationId, int centreId, string category, string studentCode);
         PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Document RetrieveDocument(int organisationId, Guid documentGuid);
 
     }

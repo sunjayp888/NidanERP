@@ -11,26 +11,40 @@ namespace Nidan.Entity
     {
         public int BatchAttendanceId { get; set; }
 
-        public int? BatchId { get; set; }
+        [Required]
+        public int BatchId { get; set; }
 
-        public int? AttendanceId { get; set; }
+        [Required]
+        public int AttendanceId { get; set; }
 
-        public int? SubjectId { get; set; }
+        [Required]
+        public int SubjectId { get; set; }
 
-        public int? SessionId { get; set; }
+        [Required]
+        public int SessionId { get; set; }
 
+        [Required]
         [StringLength(500)]
         public string Topic { get; set; }
 
-        public int? BatchTrainerId { get; set; }
+        [Required]
+        public int BatchTrainerId { get; set; }
 
-        public int? PersonnelId { get; set; }
-
+        [Required]
         [StringLength(100)]
         public string StudentCode { get; set; }
 
+        [Required]
+        public DateTime CreatedDate { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string CreatedBy { get; set; }
+
+        [Required]
         public int CentreId { get; set; }
 
+        [Required]
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }

@@ -16,7 +16,7 @@ namespace Nidan.Controllers
     public class EventController : BaseController
     {
         private readonly INidanBusinessService _nidanBusinessService;
-
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public EventController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
@@ -51,6 +51,7 @@ namespace Nidan.Controllers
             {
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
                 eventViewModel.Event.CentreId = UserCentreId;
+                eventViewModel.Event.CreatedDateTime = _today;
                 eventViewModel.Event= NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
@@ -60,14 +61,17 @@ namespace Nidan.Controllers
         // GET: Event/Edit
         public ActionResult Edit(int? id)
         {
+            var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var eventData = NidanBusinessService.RetrieveEvent(UserOrganisationId, id.Value, e => true);
+            var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
+            var brainstorming = NidanBusinessService.RetrieveBrainstormings(organisationId, e => true).Items.ToList();
             var viewModel = new EventViewModel()
             {
-                Event = eventData
+                Event = eventData,
+                //Brainstorming = brainstorming
             };
             return View(viewModel);
         }

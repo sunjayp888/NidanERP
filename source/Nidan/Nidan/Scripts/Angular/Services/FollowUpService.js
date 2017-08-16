@@ -14,7 +14,11 @@
             deleteFollowUp: deleteFollowUp,
             markAsReadFollowUp: markAsReadFollowUp,
             searchFollowUpByDate: searchFollowUpByDate,
-            searchFollowUp: searchFollowUp
+            searchFollowUp: searchFollowUp,
+            pendingFollowUp: pendingFollowUp,
+            todaysFollowUp: todaysFollowUp,
+            tomorrowsFollowUp: tomorrowsFollowUp,
+            upcomingFollowUp: upcomingFollowUp
         };
 
         return service;
@@ -70,6 +74,50 @@
         function markAsReadFollowUp(id) {
             var url = "/FollowUp/MarkAsRead",
                 data = { id: id };
+
+            return $http.post(url, data);
+        }
+
+        function pendingFollowUp(Paging, OrderBy) {
+
+            var url = "/FollowUp/PendingList",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function todaysFollowUp(Paging, OrderBy) {
+
+            var url = "/FollowUp/TodaysList",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function tomorrowsFollowUp(Paging, OrderBy) {
+
+            var url = "/FollowUp/TomorrowsList",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function upcomingFollowUp(Paging, OrderBy) {
+
+            var url = "/FollowUp/UpcomingList",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
             return $http.post(url, data);
         }

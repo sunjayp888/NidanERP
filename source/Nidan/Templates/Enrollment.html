@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <style type="text/css">
@@ -7,7 +7,7 @@
             font-family: "Calibri";
         }
 
-        h1,h3 {
+        h1,h2,h3,h5 {
             margin-top: 0;
             margin-bottom: 0;
         }
@@ -47,27 +47,40 @@
                 }
     </style>
 </head>
-<body>
+<body style="padding-left:50px">
     <br />
     <br />
     <!-- Pay Statement Header -->
     <table border="0" width="100%">
         <tr>
-            <td class="TopText" width="25%">
+            <td class="TopText" width="20%">
                 <img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\NEST.jpg" style="height: 172px; width: 250px;" />
             </td>
-            <td class="CenterText TopText" width="50%">
-                <h1>@Model.OrganisationName</h1>
-                <h3>@Model.CentreAddress</h3>
-                <br />
-                <b>Receipt by @Model.CentreName</b>
+            <td class="CenterText TopText" width="60%">
+                <h2>NIDAN TECHNOLOGIES PVT.LTD.</h2>
+				<h5>Corporate Office: B 213-214, Shree Nanddhaam, Plot No.59, Sec.11, CBD Belapur, Navi Mumbai - 400614.</h5>
+				<h5>Branch Office: @Model.CentreAddress</h5>
             </td>
-            <td class="TopText RightText" width="25%"></td>
+            <td class="TopText RightText" width="20%">
+				<img src="E:\NidanWorkArea\NidanERP\source\Nidan\Nidan\Content\images\Nidan.jpg" style="height: 172px; width: 292px;" />
+			</td>
         </tr>
     </table>
     <br />
     <!-- Address & Date -->
     <h1 style="text-align: center">Enrollment Notification</h1>
+		<table border="0" width="100%">
+			<tr>
+				<td style="float : left">
+					<b>Enrollment Date : @Model.EnrollmentDate</b>
+				</td>
+				<td></td>
+				<td style="float : right">
+					<b>Enrollment No. : @Model.InvoiceNumber</b>
+				</td>
+				
+			</tr>
+		</table>
     <div class="PayslipBox">
         <table border="0">
             <tr>
@@ -79,16 +92,19 @@
                         <tr>
                             <td>Candidate Name :</td>
                             <td>@Model.CandidateName</td>
-                            <td>EmailId :</td>
-                            <td>@Model.EmailId</td>
+							<td>S/O D/O :</td>
+                            <td>@Model.FatherName</td>
                         </tr>
                         <tr>
                             <td>Address :</td>
                             <td>@Model.CandidateAddress</td>
+							
                         </tr>
                         <tr>
                             <td>Contact No :</td>
                             <td>@Model.MobileNumber</td>
+							<td>EmailId :</td>
+                            <td>@Model.EmailId</td>
                         </tr>
                     </table>
                 </td>
@@ -110,11 +126,6 @@
                 <td>Course Duration :</td>
                 <td>@Model.CourseDuration Hours.</td>
             </tr>
-            <tr>
-                <td>Course Duration Validity:</td>
-                <td>@Model.BatchStartDate &nbsp; upto &nbsp;@Model.BatchEndDate</td>
-                <td></td>
-            </tr>
         </table>
     </div>
     <div class="PayslipBox">
@@ -126,10 +137,7 @@
                 <td>
                     Total Course Fees : @Model.TotalCourseFee
                 </td>
-                
-                <td></td>
             </tr>
-
 			</table>
         <br />
         <table border="1">
@@ -139,6 +147,7 @@
                 <th>Installment Date</th>
 				<th>Amount Paid</th>
                 <th>Payment Date</th>
+				<th>Payment Details</th>
 				<th>Payment Status</th>
 				
             </tr>
@@ -150,7 +159,8 @@
 				<td>@item.InstallmentDate</td>
 				<td>@item.AmountPaid</td>
 				<td>@item.Paymentdate</td>
-                <td>@item.Status</td>
+				<td>@item.PaymentDetail</td>
+				<td>@item.Status</td>
             </tr>
             }
         </table>
@@ -182,18 +192,12 @@
             <tr>
                 <th>Sr. No.</th>
                 <th>Module Name</th>
-				<th>Total Marks</th>
-				<th>Passing Marks</th>
-				<th>Number of attempts allowed</th>
             </tr>
             @foreach(var item in Model.Modules)
             {
             <tr>
                 <td style="text-align: center">@item.Number</td>
-                <td>&nbsp;@item.Name</td>
-				<td>&nbsp;@item.TotalMarks</td>
-				<td>&nbsp;@item.PassingMarks</td>
-				<td>&nbsp;@item.AttemptAllowed</td>				
+                <td>&nbsp;@item.Name</td>			
             </tr>
             }
         </table>
@@ -205,8 +209,7 @@
                 <td><b>STUDENT UNDERTAKING</b></td>
             </tr>
             <tr>
-                <td><b>I...........................................S/o....................................
-R/o………………….......................................................
+                <td><b>I @Model.CandidateName S/O D/O @Model.FatherName
 hereby declare that the information provided above
 are true to the best of my knowledge and belief and I
 have not attempted to suppress or exaggerate any
@@ -216,9 +219,6 @@ institution. I have read the rules and regulations
 Nidan Education & Skill Training.</b></td>
             </tr>
             <tr>
-                <td style="text-align: center">
-                    <b><br/>candidate Sign.</b>
-                </td>
                 <td style="text-align: center">
                 </td>
                 <td style="text-align: center">
@@ -250,5 +250,6 @@ Nidan Education & Skill Training.</b></td>
             </tr>
         </table>
     </div>
+	<p style=" margin-top:0%">This is computer generated receipt.</p>
 </body>
 </html>
