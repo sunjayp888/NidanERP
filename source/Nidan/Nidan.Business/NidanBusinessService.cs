@@ -1202,9 +1202,9 @@ namespace Nidan.Business
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -3330,10 +3330,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            //SendInstallmetnSms(candidateFee);
+            SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -3891,7 +3891,7 @@ namespace Nidan.Business
 
             var enrollmentReciept = new Dictionary<string, byte[]>
             {
-                {admission.Registration.Enquiry.FirstName + " " +admission.Registration.Enquiry.LastName+" Enrollment Detail.pdf",document}
+                //{admission.Registration.Enquiry.FirstName + " " +admission.Registration.Enquiry.LastName+" Enrollment Detail.pdf",document}
             };
             _emailService.SendEmail(emailData, enrollmentReciept);
         }

@@ -321,12 +321,12 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult DownloadMobilizationCountReportCSVByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear, int toYear)
+        public ActionResult DownloadMobilizationCountReportCSVByMonthAndYear(int centreId, int fromYear)
         {
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
             var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fromYear).ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByMonth-(from {1}-{2} To {3}-{4}).csv", centre.Name, fromMonth, fromYear, toMonth, toYear));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByMonthWise-({1}).csv", centre.Name, fromYear));
         }
 
         [HttpPost]
@@ -334,9 +334,8 @@ namespace Nidan.Controllers
         {
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
             var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId,fromYear,fromMonth).ToList();
-            var monthName = data.FirstOrDefault()?.Date;
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByDate-({1}-{2}).csv", centre.Name, monthName, fromYear));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByDate-({1}-{2}).csv", centre.Name, fromMonth, fromYear));
         }
     }
 }

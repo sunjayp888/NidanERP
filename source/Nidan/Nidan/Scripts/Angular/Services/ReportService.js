@@ -239,14 +239,11 @@
             return $http.post(url, data);
         }
 
-        function downloadMobilizationCountReportCSVByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear) {
             var url = "/Report/DownloadMobilizationCountReportCSVByMonthAndYear",
                 data = {
                     centreId: centreId,
-                    fromMonth: fromMonth,
-                    toMonth: toMonth,
                     fromYear: fromYear,
-                    toYear: toYear
                 };
             return $http.post(url, data);
         }

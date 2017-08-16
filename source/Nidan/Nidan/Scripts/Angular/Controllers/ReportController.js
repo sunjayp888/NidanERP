@@ -226,16 +226,12 @@
                 });
         }
 
-        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
+        function searchMobilizationCountReportByMonthAndYear(centreId,fromYear) {
             vm.centreId = centreId;
-            vm.fromMonth = fromMonth;
-            vm.toMonth = toMonth;
             vm.fromYear = fromYear;
-            vm.toYear = toYear;
             vm.orderBy.property = "Month";
             vm.orderBy.class = "asc";
             order("Month");
-            
             return ReportService.searchMobilizationCountReportByMonthAndYear(centreId,fromYear, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data;
@@ -308,8 +304,8 @@
             return ReportService.downloadExpenseCSVByDate(fromDate, toDate);
         }
 
-        function downloadMobilizationCountReportCSVByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
-            return ReportService.downloadMobilizationCountReportCSVByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear);
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear) {
+            return ReportService.downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear);
         }
 
         function downloadMobilizationCountReportCSVByDate(centreId, month, year) {
