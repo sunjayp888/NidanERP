@@ -23,10 +23,6 @@
         vm.searchMessage = "";
         vm.batches = [];
         vm.retrieveBatches = retrieveBatches;
-        vm.subjects = [];
-        vm.retrieveSubjects = retrieveSubjects;
-        vm.sessions = [];
-        vm.retrieveSessions = retrieveSessions;
         vm.searchBatchAttendanceByDate = searchBatchAttendanceByDate;
         vm.retrieveBatchAttendancesByBatchId = retrieveBatchAttendancesByBatchId;
         vm.type = "";
@@ -35,6 +31,7 @@
         vm.allItemsSelected = false;
         vm.selectEntity = selectEntity;
         vm.markAttendance = markAttendance;
+        vm.getBiometricData = getBiometricData;
         vm.MarkDate;
         vm.fromDate;
         vm.toDate;
@@ -109,12 +106,13 @@
                     });
         }
 
-        function retrieveSyncData(batchId) {
+        function getBiometricData(batchId,attendanceDate) {
             vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.batchId = $('#BatchAttendance_BatchId').val();
-            return BatchAttendanceService.retrieveSyncData(vm.batchId, vm.paging, vm.orderBy)
+            vm.attendanceDate = $('#BatchAttendance_Attendance_AttendanceDate').val();
+            return BatchAttendanceService.getBiometricData(vm.batchId, vm.attendanceDate, vm.paging, vm.orderBy)
                     .then(function (response) {
                         vm.batchAttendances = response.data.Items;
                         vm.paging.totalPages = response.data.TotalPages;
@@ -154,18 +152,6 @@
             $window.location.href = "/BatchAttendance/AttendanceList/" + batchId;
         }
 
-        function retrieveSessions(subjectId) {
-            return BatchAttendanceService.retrieveSessions(subjectId).then(function () {
-                vm.sessions = response.data;
-            });
-        };
-
-        function retrieveSubjects(batchId) {
-            return BatchAttendanceService.retrieveSubjects(batchId).then(function () {
-                vm.subjects = response.data;
-            });
-        };
-
         function retrieveBatches() {
             return BatchAttendanceService.retrieveBatches().then(function (response) {
                 vm.batches = response.data.Items;
@@ -197,6 +183,7 @@
                 return vm.batches;
             });
         }
-    }
+
+        }
 
 })();

@@ -57,7 +57,7 @@ namespace Nidan.Controllers
 
             var trainerData =NidanBusinessService.RetrieveTrainers(organisationId,e => e.CentreId == centreId && e.TrainerId.ToString() == documentViewModel.StudentCode).ToList().FirstOrDefault();
 
-            var expenseData = NidanBusinessService.RetrieveOtherFees(organisationId,e => e.CentreId == centreId && e.CashMemo == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            var expenseData = NidanBusinessService.RetrieveExpenses(organisationId,centreId,e => e.CentreId == centreId && e.CashMemoNumbers == documentViewModel.StudentCode).Items.ToList().FirstOrDefault();
 
             if (documentViewModel.DocumentTypeId == 2)
             {
@@ -87,7 +87,7 @@ namespace Nidan.Controllers
             {
                 _documentService.Create(organisationId, centreId,
                            documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
-                           expenseData?.CashMemo, "Expense Document", documentViewModel.Attachment.FileName,
+                           expenseData?.CashMemoNumbers, "Expense Document", documentViewModel.Attachment.FileName,
                            documentViewModel.Attachment.InputStream.ToBytes());
             }
 

@@ -28,7 +28,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string FirstName { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string MiddleName { get; set; }
 

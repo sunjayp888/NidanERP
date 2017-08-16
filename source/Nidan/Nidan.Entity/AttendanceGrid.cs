@@ -14,13 +14,11 @@ namespace Nidan.Entity
 
         public int? PersonnelId { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
         [StringLength(353)]
         public string CandidateName { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BatchId { get; set; }
 
@@ -36,16 +34,13 @@ namespace Nidan.Entity
         public string Direction { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
-
-        [StringLength(500)]
-        public string Topic { get; set; }
     }
 }

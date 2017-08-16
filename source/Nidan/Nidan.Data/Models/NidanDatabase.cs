@@ -125,6 +125,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
+        public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1794,14 +1795,14 @@ namespace Nidan.Data.Models
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchAttendance>()
-                .Property(e => e.Topic)
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.BioMetricLogTime)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchAttendance>()
-                .Property(e => e.StudentCode)
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.Direction)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<CounsellingDataGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -1913,24 +1914,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<EventBrainstorming>()
                 .Property(e => e.RefernceDetailDocument)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
             
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.Topic)
-                .IsUnicode(false);
-
             modelBuilder.Entity<MobilizationCentreReport>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
@@ -2019,6 +2003,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CentreEnrollmentReceiptSetting>()
                 .Property(e => e.TaxYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.BioMetricLogTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.Direction)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

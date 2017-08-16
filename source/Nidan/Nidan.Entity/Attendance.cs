@@ -18,9 +18,14 @@ namespace Nidan.Entity
 
         public bool? IsPresent { get; set; }
 
-        [Required]
         [Column(TypeName = "date")]
         public DateTime? AttendanceDate { get; set; }
+
+        public DateTime? AttendanceDateTime { get; set; }
+
+        public int? CentreId { get; set; }
+
+        public int? OrganisationId { get; set; }
 
         [StringLength(50)]
         public string BioMetricLogTime { get; set; }
@@ -28,33 +33,9 @@ namespace Nidan.Entity
         [StringLength(2)]
         public string Direction { get; set; }
 
-        public int? CentreId { get; set; }
-
-        public int? OrganisationId { get; set; }
-
-        [Required]
-        public int? InHour { get; set; }
-
-        [Required]
-        public int? InMinute { get; set; }
-
-        [Required]
-        public int? OutHour { get; set; }
-
-        [Required]
-        public int? OutMinute { get; set; }
-
-        [Required]
-        [StringLength(5)]
-        public string InTimeSpan { get; set; }
-
-        [Required]
-        [StringLength(5)]
-        public string OutTimeSpan { get; set; }
+        public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        public virtual Centre Centre { get; set; }
 
         public virtual Personnel Personnel { get; set; }
     }

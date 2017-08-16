@@ -14,9 +14,9 @@ using PaymentMode = Nidan.Business.Enum.PaymentMode;
 
 namespace Nidan.Controllers
 {
-    public class OtherFeeController : BaseController
+    public class ExpenseController : BaseController
     {
-        public OtherFeeController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        public ExpenseController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
 
@@ -35,8 +35,8 @@ namespace Nidan.Controllers
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
             var project = NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList();
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.FirstOrDefault()?.Amount ?? 0;
-            var totalDebitAmount = NidanBusinessService.RetrieveOtherFees(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
-            var viewModel = new OtherFeeViewModel()
+            var totalDebitAmount = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
+            var viewModel = new ExpenseViewModel()
             {
                 Expense = new Expense(),
                 AvailablePettyCash = totalPettyCash - totalDebitAmount,
@@ -51,30 +51,30 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(OtherFeeViewModel otherFeeViewModel)
+        public ActionResult Create(ExpenseViewModel expenseViewModel)
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var personnelId = UserPersonnelId;
-            var isCashAvailable = otherFeeViewModel.AvailablePettyCash > otherFeeViewModel.Expense.DebitAmount;
-            otherFeeViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
+            var isCashAvailable = expenseViewModel.AvailablePettyCash > expenseViewModel.Expense.DebitAmount;
+            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
             if (!isCashAvailable)
             {
-                ModelState.AddModelError("", String.Format("Insufficient cash, available petty cash is {0}", otherFeeViewModel.AvailablePettyCash));
-                return View(otherFeeViewModel);
+                ModelState.AddModelError("", String.Format("Insufficient cash, available petty cash is {0}", expenseViewModel.AvailablePettyCash));
+                return View(expenseViewModel);
             }
             if (ModelState.IsValid)
             {
-                otherFeeViewModel.Expense.OrganisationId = organisationId;
-                otherFeeViewModel.Expense.CentreId = centreId;
-                otherFeeViewModel.Expense.PersonnelId = personnelId;
-                otherFeeViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, otherFeeViewModel.Expense, otherFeeViewModel.SelectedProjectIds);
+                expenseViewModel.Expense.OrganisationId = organisationId;
+                expenseViewModel.Expense.CentreId = centreId;
+                expenseViewModel.Expense.PersonnelId = personnelId;
+                expenseViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
+                expenseViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
-            otherFeeViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
-            otherFeeViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList());
-            return View(otherFeeViewModel);
+            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
+            expenseViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList());
+            return View(expenseViewModel);
         }
 
         // GET: OtherFee/Edit/{id}
@@ -94,7 +94,7 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new OtherFeeViewModel
+            var viewModel = new ExpenseViewModel
             {
                 Expense = expense,
                 CashMemo = expense.CashMemoNumbers,
@@ -108,23 +108,23 @@ namespace Nidan.Controllers
         // POST: OtherFee/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(OtherFeeViewModel otherFeeViewModel)
+        public ActionResult Edit(ExpenseViewModel expenseViewModel)
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                otherFeeViewModel.Expense.OrganisationId = organisationId;
-                otherFeeViewModel.Expense.CentreId = centreId;
-                otherFeeViewModel.Expense.PersonnelId = personnelId;
-                otherFeeViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
-                otherFeeViewModel.Expense = NidanBusinessService.UpdateExpense(organisationId, centreId, otherFeeViewModel.Expense, otherFeeViewModel.SelectedProjectIds);
+                expenseViewModel.Expense.OrganisationId = organisationId;
+                expenseViewModel.Expense.CentreId = centreId;
+                expenseViewModel.Expense.PersonnelId = personnelId;
+                expenseViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
+                expenseViewModel.Expense = NidanBusinessService.UpdateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
-            var viewModel = new OtherFeeViewModel
+            var viewModel = new ExpenseViewModel
             {
-                Expense = otherFeeViewModel.Expense
+                Expense = expenseViewModel.Expense
             };
             return View(viewModel);
         }
