@@ -126,6 +126,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
         public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
+        public virtual DbSet<BiometricAttendanceGrid> BiometricAttendanceGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2027,6 +2028,14 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<AttendanceGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BiometricAttendanceGrid>()
+               .Property(e => e.StudentCode)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<BiometricAttendanceGrid>()
+                .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

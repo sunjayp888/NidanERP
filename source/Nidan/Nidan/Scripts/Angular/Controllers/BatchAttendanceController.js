@@ -106,12 +106,12 @@
                     });
         }
 
-        function getBiometricData(batchId,attendanceDate) {
+        function getBiometricData() {
             vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            vm.batchId = $('#BatchAttendance_BatchId').val();
-            vm.attendanceDate = $('#BatchAttendance_Attendance_AttendanceDate').val();
+            vm.batchId = $("#BatchAttendance_BatchId").val();
+            vm.attendanceDate = $("#BatchAttendance_Attendance_AttendanceDate").val();
             return BatchAttendanceService.getBiometricData(vm.batchId, vm.attendanceDate, vm.paging, vm.orderBy)
                     .then(function (response) {
                         vm.batchAttendances = response.data.Items;

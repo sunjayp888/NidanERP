@@ -2842,6 +2842,12 @@ namespace Nidan.Business
             return centreEnrollmentReceiptSetting;
         }
 
+        public PagedResult<BiometricAttendanceGrid> RetrieveBiometricAttendanceGrid(int organisationId, Expression<Func<BiometricAttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBiometricAttendanceGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
