@@ -1137,6 +1137,7 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
     <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
+    <Content Include="Scripts\Angular\Controllers\ExpenseDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
@@ -1152,11 +1153,13 @@
     <Content Include="Scripts\Angular\Controllers\RoomController.js" />
     <Content Include="Scripts\Angular\Controllers\SessionController.js" />
     <Content Include="Scripts\Angular\Controllers\StudentAdmissionDocumentController.js" />
+    <Content Include="Scripts\Angular\Controllers\StudentCounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\SubjectTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\TrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\RegistrationController.js" />
+    <Content Include="Scripts\Angular\Controllers\TrainerDocumentController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
@@ -1177,6 +1180,7 @@
     <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
+    <Content Include="Scripts\Angular\Services\ExpenseDocumentService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseProjectService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
@@ -1194,9 +1198,11 @@
     <Content Include="Scripts\Angular\Services\RoomService.js" />
     <Content Include="Scripts\Angular\Services\SessionService.js" />
     <Content Include="Scripts\Angular\Services\StudentAdmissionDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\StudentCounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\SubjectCourseService.js" />
     <Content Include="Scripts\Angular\Services\SubjectService.js" />
     <Content Include="Scripts\Angular\Services\SubjectTrainerService.js" />
+    <Content Include="Scripts\Angular\Services\TrainerDocumentService.js" />
     <Content Include="Scripts\Angular\Services\TrainerService.js" />
     <Content Include="Scripts\Angular\Services\RegistrationService.js" />
     <Content Include="Scripts\App\EmploymentWorkingPattern.js" />

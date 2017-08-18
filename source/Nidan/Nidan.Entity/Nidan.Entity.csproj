@@ -167,6 +167,7 @@
     <Compile Include="MobilizationDataGrid.cs" />
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
+    <Compile Include="Model1.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />

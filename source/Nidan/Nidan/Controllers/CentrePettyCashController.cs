@@ -46,7 +46,7 @@ namespace Nidan.Controllers
         public ActionResult Create(CentrePettyCashViewModel centrePettyCashViewModel)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
+            var centreId = centrePettyCashViewModel.CentrePettyCash.CentreId;
             if (ModelState.IsValid)
             {
                 centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.CreateCentrePettyCash(organisationId, centreId, UserPersonnelId, centrePettyCashViewModel.CentrePettyCash);

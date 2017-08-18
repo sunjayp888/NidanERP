@@ -147,7 +147,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychomatric Test Done</label>
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychometric Test Done</label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
                                                             <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
@@ -239,7 +239,7 @@
             </div>*@
     </div>
 
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+    <div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>
 </div>

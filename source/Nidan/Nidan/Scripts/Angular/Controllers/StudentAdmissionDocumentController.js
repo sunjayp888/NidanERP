@@ -17,7 +17,6 @@
         vm.StudentCode;
         vm.Errors = [];
         vm.retrieveStudentAdmissionDocuments = retrieveStudentAdmissionDocuments;
-        //vm.retrieveStudentAdmissionDocumentsType = retrieveStudentAdmissionDocumentsType;
         vm.createStudentAdmissionDocument = createStudentAdmissionDocument;
         vm.downloadStudentAdmissionDocument = downloadStudentAdmissionDocument;
         vm.removeError = removeError;
@@ -25,17 +24,8 @@
 
         function initialise(studentCode) {
             vm.StudentCode = studentCode;
-            //retrieveStudentAdmissionDocumentsType();
             retrieveStudentAdmissionDocuments(vm.StudentCode);
         }
-
-        //function retrieveStudentAdmissionDocumentsType() {
-        //    return StudentAdmissionDocumentService.retrieveStudentAdmissionDocumentsType(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.studentAdmissionDocumentsTypes = response.data;
-        //            return vm.studentAdmissionDocumentsTypes;
-        //        });
-        //}
 
         function retrieveStudentAdmissionDocuments(studentCode) {
             vm.StudentCode = studentCode;

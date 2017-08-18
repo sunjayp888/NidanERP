@@ -56,10 +56,6 @@
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                         <tr role="row">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                            }
                                             <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
                                             <th ng-click="model.order('Amount')" ng-class="model.orderClass('Amount')">Amount</th>
                                             <th ng-click="model.order('Particulars')" ng-class="model.orderClass('Particulars')">Particulars</th>
@@ -68,10 +64,6 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="centrePettyCash in model.centrePettyCashs" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentrePettyCash(centrePettyCash.CentrePettyCashId)">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <td><span ng-bind="enquiry.Centre.Name"></span></td>
-                                            }
                                             <td><span ng-bind="centrePettyCash.Centre.Name"></span></td>
                                             <td><span class="fa fa-inr" ng-bind="centrePettyCash.Amount"></span></td>
                                             <td><span ng-bind="centrePettyCash.Particulars"></span></td>

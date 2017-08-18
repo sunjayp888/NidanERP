@@ -366,7 +366,6 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#admissionDocumentModal">Upload Document</button>
                                         <button id="admissionSubmit" type="submit" class="btn btn-success" ng-disabled="isDisabled" ng-click="model.disableButton()">Submit</button>
                                     </div>
                                 </div>
@@ -379,7 +378,7 @@
     </div>
 </div>
 
-<div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Admission.Registration.StudentCode)">
+<div ng-controller="StudentAdmissionDocumentController as model" ng-init="model.initialise(@Model.Admission.Registration.StudentCode)">
     @Html.Partial("_AdmissionDocument")
 </div>
 
