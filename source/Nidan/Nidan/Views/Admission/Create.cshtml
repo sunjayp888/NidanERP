@@ -39,6 +39,7 @@
                             @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
+                            @Html.HiddenFor(m => m.Registration.Enquiry.GuardianName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.Mobile)
                             @Html.HiddenFor(m => m.Registration.Enquiry.Title)
                             @Html.HiddenFor(m => m.Registration.Enquiry.EmailId)
@@ -585,82 +586,82 @@
             for (i = 0; i < numLength; i++) {
                 switch (i) {
 
-                case 0:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = '' + once[rev[i]];
-                    }
-                    word[j] = word[j];
-                    break;
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
 
-                case 1:
-                    aboveTens();
-                    break;
+                    case 1:
+                        aboveTens();
+                        break;
 
-                case 2:
-                    if (rev[i] == 0) {
-                        word[j] = '';
-                    }
-                    else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                        word[j] = once[rev[i]] + " Hundred ";
-                    }
-                    else {
-                        word[j] = once[rev[i]] + " Hundred and";
-                    }
-                    break;
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
 
-                case 3:
-                    if (rev[i] == 0 || rev[i + 1] == 1) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                        word[j] = word[j] + " Thousand";
-                    }
-                    break;
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
 
 
-                case 4:
-                    aboveTens();
-                    break;
+                    case 4:
+                        aboveTens();
+                        break;
 
-                case 5:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Lakh";
-                    }
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
 
-                    break;
+                        break;
 
-                case 6:
-                    aboveTens();
-                    break;
+                    case 6:
+                        aboveTens();
+                        break;
 
-                case 7:
-                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                        word[j] = '';
-                    }
-                    else {
-                        word[j] = once[rev[i]];
-                    }
-                    if (rev[i + 1] !== '0' || rev[i] > '0') {
-                        word[j] = word[j] + " Crore";
-                    }
-                    break;
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
 
-                case 8:
-                    aboveTens();
-                    break;
-                default: break;
+                    case 8:
+                        aboveTens();
+                        break;
+                    default: break;
                 }
                 j++;
             }

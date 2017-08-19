@@ -72,6 +72,7 @@ namespace Nidan.Entity
 
         public int PinCode { get; set; }
 
+		[Required]
         [StringLength(500)]
         public string GuardianName { get; set; }
 
