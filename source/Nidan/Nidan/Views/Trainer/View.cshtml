@@ -131,3 +131,6 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+<div ng-controller="TrainerDocumentController as model" ng-init="model.initialise(@Model.Trainer.TrainerId.ToString())">
+    @Html.Partial("_TrainerDocument")
+</div>

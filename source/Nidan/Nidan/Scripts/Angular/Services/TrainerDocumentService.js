@@ -3,30 +3,30 @@
 
     angular
         .module('Nidan')
-        .factory('StudentAdmissionDocumentService', StudentAdmissionDocumentService);
+        .factory('TrainerDocumentService', TrainerDocumentService);
 
-    StudentAdmissionDocumentService.$inject = ['$http'];
+    TrainerDocumentService.$inject = ['$http'];
 
-    function StudentAdmissionDocumentService($http) {
+    function TrainerDocumentService($http) {
         var service = {
-            retrieveStudentAdmissionDocuments: retrieveStudentAdmissionDocuments,
-            createStudentAdmissionDocument: createStudentAdmissionDocument,
-            downloadStudentAdmissionDocument: downloadStudentAdmissionDocument
+            retrieveTrainerDocuments: retrieveTrainerDocuments,
+            createTrainerDocument: createTrainerDocument,
+            downloadTrainerDocument: downloadTrainerDocument
         };
 
         return service;
-       
-        function retrieveStudentAdmissionDocuments(StudentCode) {
-            var url = "/Admission/DocumentList",
+
+        function retrieveTrainerDocuments(StudentCode) {
+            var url = "/Trainer/DocumentList",
                 data = {
                     studentCode: StudentCode
                 };
             return $http.post(url, data);
         }
 
-        function createStudentAdmissionDocument(studentCode, documentTypeId, attachment) {
+        function createTrainerDocument(studentCode, documentTypeId, attachment) {
 
-            var url = "/Admission/CreateDocument",
+            var url = "/Trainer/CreateDocument",
                 data = {
                     documentTypeId: documentTypeId,
                     Attachment: attachment,
@@ -52,8 +52,8 @@
             });
         }
 
-        function downloadStudentAdmissionDocument(guid) {
-            var url = "/Admission/DownloadDocument",
+        function downloadTrainerDocument(guid) {
+            var url = "/Trainer/DownloadDocument",
                 data = {
                     id: guid
                 };

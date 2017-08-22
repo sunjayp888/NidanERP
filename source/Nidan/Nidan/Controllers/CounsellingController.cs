@@ -151,14 +151,15 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
-            if (mobilizationDataGrid == null)
+            //var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
+            var counselling = NidanBusinessService.RetrieveCounselling(organisationId, id.Value);
+            if (counselling == null)
             {
                 return HttpNotFound();
             }
             var viewModel = new CounsellingViewModel
             {
-                CounsellingDataGrid = mobilizationDataGrid
+                Counselling = counselling
             };
             return View(viewModel);
         }
@@ -239,6 +240,33 @@ namespace Nidan.Controllers
         {
             var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
             return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveCounsellingDocuments(organisationId, centreId, studentCode);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                studentData?.FirstName, "Counselling Document", documentViewModel.Attachment.FileName,
+                documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -16,8 +17,10 @@ namespace Nidan.Controllers
 {
     public class ExpenseController : BaseController
     {
-        public ExpenseController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        private readonly IDocumentService _documentService;
+        public ExpenseController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
+            _documentService = documentService;
         }
 
         // GET: OtherFee
@@ -148,10 +151,38 @@ namespace Nidan.Controllers
 
         public ActionResult Download(int? id)
         {
-            var expense = NidanBusinessService.RetrieveExpense(UserOrganisationId, UserCentreId, id.Value, e => true);
-            var data = NidanBusinessService.CreateExpenseBytes(UserOrganisationId, UserCentreId, expense);
+            var centreId = UserCentreId;
+            var expense = NidanBusinessService.RetrieveExpense(UserOrganisationId, centreId, id.Value, e => true);
+            var data = NidanBusinessService.CreateExpenseBytes(UserOrganisationId, centreId, expense);
             var voucherNumber = expense.VoucherNumber;
             return File(data, ".pdf", string.Format("{0} Other Fee.pdf", voucherNumber));
+        }
+
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveExpenseDocuments(organisationId, centreId, studentCode);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var expenseData = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.CashMemoNumbers == documentViewModel.StudentCode).Items.ToList().FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                expenseData?.CashMemoNumbers, "Expense Document", documentViewModel.Attachment.FileName,
+                documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
     }
 }

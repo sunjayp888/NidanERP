@@ -325,9 +325,12 @@ namespace Nidan.Business.Interfaces
         PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Document RetrieveDocument(int organisationId, Guid documentGuid);
         IEnumerable<StudentDocument> RetrieveAdmissionDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrieveCounsellingDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrieveTrainerDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrieveExpenseDocuments(int organisationId, int centreId, string studentCode);
         //Document CreateDocument(int organisationId, int centreId, int documentTypeId, string filePath,
         //    string studentCode, string studentName, string description, string fileName);
-            
+
         //Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
         byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission, bool isCandidateAndCentre = true);

@@ -3,30 +3,30 @@
 
     angular
         .module('Nidan')
-        .factory('StudentAdmissionDocumentService', StudentAdmissionDocumentService);
+        .factory('StudentCounsellingDocumentService', StudentCounsellingDocumentService);
 
-    StudentAdmissionDocumentService.$inject = ['$http'];
+    StudentCounsellingDocumentService.$inject = ['$http'];
 
-    function StudentAdmissionDocumentService($http) {
+    function StudentCounsellingDocumentService($http) {
         var service = {
-            retrieveStudentAdmissionDocuments: retrieveStudentAdmissionDocuments,
-            createStudentAdmissionDocument: createStudentAdmissionDocument,
-            downloadStudentAdmissionDocument: downloadStudentAdmissionDocument
+            retrieveStudentCounsellingDocuments: retrieveStudentCounsellingDocuments,
+            createStudentCounsellingDocument: createStudentCounsellingDocument,
+            downloadStudentCounsellingDocument: downloadStudentCounsellingDocument
         };
 
         return service;
        
-        function retrieveStudentAdmissionDocuments(StudentCode) {
-            var url = "/Admission/DocumentList",
+        function retrieveStudentCounsellingDocuments(StudentCode) {
+            var url = "/Counselling/DocumentList",
                 data = {
                     studentCode: StudentCode
                 };
             return $http.post(url, data);
         }
 
-        function createStudentAdmissionDocument(studentCode, documentTypeId, attachment) {
+        function createStudentCounsellingDocument(studentCode, documentTypeId, attachment) {
 
-            var url = "/Admission/CreateDocument",
+            var url = "/Counselling/CreateDocument",
                 data = {
                     documentTypeId: documentTypeId,
                     Attachment: attachment,
@@ -52,8 +52,8 @@
             });
         }
 
-        function downloadStudentAdmissionDocument(guid) {
-            var url = "/Admission/DownloadDocument",
+        function downloadStudentCounsellingDocument(guid) {
+            var url = "/Counselling/DownloadDocument",
                 data = {
                     id: guid
                 };

@@ -60,7 +60,7 @@
 
 @if (Model.CashMemo != null)
 {
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
         @Html.Partial("_ExpenseDocument")
     </div>
     @*@Html.HiddenFor(m => m.CashMemo)

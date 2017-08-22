@@ -35,8 +35,6 @@
                                     <button type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
-                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
-
                                         <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
@@ -52,7 +50,7 @@
 </div>
 @if (Model.CashMemo != null)
 {
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(Model.CashMemo)">
+    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
         @Html.Partial("_ExpenseDocument")
     </div>
     @*@Html.HiddenFor(m => m.CashMemo)
@@ -68,7 +66,7 @@
 
 @section scripts {
     <script>
-       
+
         $('#Expense_DebitAmount').keyup(function () {
             numberToWords();
         });
@@ -187,10 +185,10 @@
         };
 
         $(document)
-            .ready(function() {
+            .ready(function () {
                 var cashmemo = $('#Expense_CashMemoNumbers').val();
                 var paidTo = $('#Expense_PaidTo').val();
-                
+
                 if (cashmemo != "" && paidTo != "") {
                     $('#Expense_CashMemoNumbers').attr('readonly', true);
                     $('#Expense_PaidTo').attr('readonly', true);

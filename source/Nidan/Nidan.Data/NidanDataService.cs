@@ -1012,6 +1012,8 @@ namespace Nidan.Data
                 return context
                     .Counsellings
                     .Include(e => e.Enquiry)
+                    .Include(e => e.Course)
+                    .Include(e => e.Personnel)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CounsellingId == counsellingId);

@@ -35,6 +35,7 @@
                             }
                             @Html.HiddenFor(model => model.Counselling.Enquiry.Title)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.Address1)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.GuardianName)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.HowDidYouKnowAboutId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.BatchTimePreferId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.CasteCategoryId)
@@ -192,7 +193,6 @@
                                                 <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                                     <div class="form-group">
                                                         <div class="pull-right">
-                                                            <button type="button" class="btn btn-info" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                                             <button type="submit" class="btn btn-success">Submit</button>
                                                             @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
                                                                     Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
@@ -239,7 +239,7 @@
             </div>*@
     </div>
 
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+    <div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>
 </div>

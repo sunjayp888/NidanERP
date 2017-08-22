@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="row">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Document Type</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -28,7 +28,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
 
                 <div class="form-group">
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <div class="pull-right col-md-7">
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-success" ng-click="model.createDocument(@Model.Counselling.Enquiry.StudentCode)">Save</button>
+                                <button type="button" class="btn btn-success" ng-click="model.createStudentCounsellingDocument(@Model.Counselling.Enquiry.StudentCode)">Save</button>
                             </div>
                             <div class="pull-right col-md-6">
                                 <button type="button" id="btnCancel" class="btn btn-info" data-dismiss="modal">Cancel</button>
@@ -65,7 +65,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>
-                            Documents<small></small>
+                            Counselling Documents<small></small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>
@@ -73,49 +73,34 @@
                         <p class="text-muted font-13 m-b-30">
                         </p>
                         <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    @Html.Partial("Pagination/_pageSize")
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                         <thead>
-                                            <tr role="row">
-                                                <th ng-click="model.order('DocumentType')" ng-class="model.orderClass('DocumentType')">Document Type</th>
-                                                <th ng-click="model.order('FileName')" ng-class="model.orderClass('FileName')">FileName</th>
-                                                <th>Actions</th>
-                                            </tr>
+                                        <tr role="row">
+                                            <th ng-click="model.order('DocumentType')" ng-class="model.orderClass('DocumentType')">Document Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="document in model.documents" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
-                                                <td><span ng-bind="document.DocumentType.Name"></span></td>
-                                                <td><span ng-bind="document.FileName"></span></td>
-                                                <td>
-                                                    <div class="btn-group pull-right">
-                                                        <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                            <i class="fa fa-chevron-down"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu slidedown">
-                                                            @if (User.IsInAnyRoles("Admin","SuperAdmin"))
-                                                            {
-                                                                <li>
-                                                                    <a style="cursor: pointer;" ng-href="/Document/Download/{{document.Guid}}">
-                                                                        Download
-                                                                    </a>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        <tr ng-repeat="documentsType in model.studentCounsellingDocuments" class="odd gradeX">
+                                            <td><span ng-bind="documentsType.Name"></span></td>
+                                            <td>
+                                                <button ng-if="!documentsType.IsPending" type="button" class="btn btn-round btn-success btn-xs">Uploaded</button>
+                                                <button ng-if="documentsType.IsPending" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-xs" ng-click="model.removeError(documentsType.DocumentTypeId)" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                                                <a style="cursor: pointer;" ng-if="!documentsType.IsPending" ng-href="/Counselling/DownloadDocument/{{documentsType.Guid}}" class="btn btn-success btn-xs">
+                                                    Download
+                                                </a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            @Html.Partial("Pagination/_pagination")
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
