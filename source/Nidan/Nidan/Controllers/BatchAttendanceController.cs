@@ -93,16 +93,14 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetBiometricDataList(DateTime toDate, int batchId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult GetBiometricDataList(DateTime attendanceDate, int batchId, Paging paging, List<OrderBy> orderBy)
         {
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveAdmissions(organisationId, e => e.BatchId == batchId);
+            var admissionData = NidanBusinessService.RetrieveAdmissions(organisationId, e => e.BatchId == batchId);
+            var studentCodes = admissionData.Items.Select(e => e.Registration.StudentCode);
+            var data = NidanBusinessService.RetrieveBiometricAttendanceGrid(organisationId, e => studentCodes.Contains(e.StudentCode) && e.LogDateTime == attendanceDate && e.Direction=="I");
             return this.JsonNet(data);
         }
     }
 
 }
-
-
-
-

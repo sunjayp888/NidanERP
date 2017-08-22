@@ -82,7 +82,7 @@
             return $http.post(url, data);
         }
 
-        function getBiomatricData(batchId, attendanceDate,Paging, OrderBy) {
+        function getBiometricData(batchId, attendanceDate, Paging, OrderBy) {
 
             var url = "/BatchAttendance/GetBiometricDataList",
                 data = {
