@@ -105,7 +105,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationDataGrid> MobilizationDataGrids { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
-        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<CentreVoucherNumber> CentreVoucherNumbers { get; set; }
         public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
@@ -127,6 +126,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
         public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
         public virtual DbSet<BiometricAttendanceGrid> BiometricAttendanceGrids { get; set; }
+        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1435,6 +1435,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -1764,18 +1768,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.PaidTo)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.PaymentMode)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Expense>()
                 .Property(e => e.VoucherNumber)
                 .IsUnicode(false);
@@ -2036,6 +2028,22 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<BiometricAttendanceGrid>()
                 .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

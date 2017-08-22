@@ -69,7 +69,11 @@
         }
 
         function pageChanged() {
-            return retrieveMobilizations();
+            if (vm.searchKeyword) {
+                searchMobilization(vm.searchKeyword);
+            } else {
+                return retrieveMobilizations();
+            }
         }
 
         function order(property) {

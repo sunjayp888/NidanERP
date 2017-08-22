@@ -878,7 +878,7 @@ namespace Nidan.Data
                 //.Include(e => e.State).Include(e => e.District).Include(e => e.CasteCategory).Include(e => e.HowDidYouKnowAbout)
                 //.Include(e => e.Qualification).Include(e => e.Taluka);
 
-                var data = searchData.Join(enquiries, e => e.EnquiryId, m => m.EnquiryId, (e, m) => m).ToList().AsQueryable().
+                var data = searchData.AsQueryable().
 
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
@@ -2242,20 +2242,12 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Registration, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<RegistrationGrid> RetrieveRegistrationBySearchKeyword(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-                var category = new SqlParameter("@SearchKeyword", searchKeyword);
-
-                var searchData = context.Database
-                    .SqlQuery<RegistrationSearchField>("SearchRegistration @SearchKeyword", category).ToList();
-
-                var registrations = context.Registrations.Include(e => e.Course).Include(e => e.Enquiry).Include(e => e.CandidateFee).Include(e => e.CandidateFee.PaymentMode);
-
-                var data = searchData.Join(registrations, e => e.RegistrationId, m => m.RegistrationId, (e, m) => m).ToList().AsQueryable().
+                var data = context.RegistrationGrids.AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -2270,8 +2262,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<AdmissionSearchField, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<AdmissionGrid> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -2279,11 +2270,9 @@ namespace Nidan.Data
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
                 var searchData = context.Database
-                    .SqlQuery<AdmissionSearchField>("SearchAdmission @SearchKeyword", category).ToList();
+                    .SqlQuery<AdmissionGrid>("SearchAdmission @SearchKeyword", category).ToList();
 
-                var admissions = context.AdmissionSearchFields;
-
-                var data = searchData.Join(admissions, e => e.AdmissionId, m => m.AdmissionId, (e, m) => m).ToList().AsQueryable().
+                var data = searchData.AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy

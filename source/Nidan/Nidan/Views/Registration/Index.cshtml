@@ -100,10 +100,10 @@
                                             {
                                                 <th>Centre</th>
                                             }
-                                            <th ng-click="model.order('Enquiry.FirstName')" ng-class="model.orderClass('Enquiry.FirstName')">Candidate Name</th>
-                                            <th ng-click="model.order('Enquiry.Mobile')" ng-class="model.orderClass('Enquiry.Mobile')">Mobile</th>
-                                            <th ng-click="model.order('CandidateFee.PaymentModeId')" ng-class="model.orderClass('CandidateFee.PaymentModeId')">Payment Mode</th>
-                                            <th ng-click="model.order('CandidateFee.PaidAmount')" ng-class="model.orderClass('CandidateFee.PaidAmount')">Registration Fees</th>
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
+                                            <th ng-click="model.order('PaymentMode')" ng-class="model.orderClass('PaymentMode')">Payment Mode</th>
+                                            <th ng-click="model.order('RegistrationAmount')" ng-class="model.orderClass('RegistrationAmount')">Registration Fees</th>
                                             <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -115,10 +115,10 @@
                                             {
                                                 <td><span ng-bind="registration.Centre.Name"></span></td>
                                             }
-                                            <td><span ng-bind="registration.Enquiry.Title"></span> <span ng-bind="registration.Enquiry.FirstName"></span> <span ng-bind="registration.Enquiry.MiddleName"></span> <span ng-bind="registration.Enquiry.LastName"></span></td>
-                                            <td><span ng-bind="registration.Enquiry.Mobile"></span></td>
-                                            <td><span ng-bind="registration.CandidateFee.PaymentMode.Name"></span></td>
-                                            <td><i class="fa fa-inr"></i> <span ng-bind="registration.CandidateFee.PaidAmount"></span>.00</td>
+                                            <td><span ng-bind="registration.CandidateName"></span></td>
+                                            <td><span ng-bind="registration.Mobile"></span></td>
+                                            <td><span ng-bind="registration.PaymentMode"></span></td>
+                                            <td><i class="fa fa-inr"></i> <span ng-bind="registration.RegistrationAmount"></span>.00</td>
                                             <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
                                             <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
                                             <td>
