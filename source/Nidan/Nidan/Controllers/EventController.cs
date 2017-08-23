@@ -52,7 +52,7 @@ namespace Nidan.Controllers
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
                 eventViewModel.Event.CentreId = UserCentreId;
                 eventViewModel.Event.CreatedDateTime = _today;
-                eventViewModel.Event= NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
+                eventViewModel.Event = NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
             return View(eventViewModel);
@@ -102,16 +102,25 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult BrainstormingList(Paging paging, List<OrderBy> orderBy )
+        public ActionResult BrainstormingList(int eventId, Paging paging, List<OrderBy> orderBy)
         {
+            var organisationId = UserOrganisationId;
+            var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
+            var brainStormingList = _nidanBusinessService.RetrieveEventBrainStormingGrid(UserOrganisationId, e => e.CentreId == eventResult.CentreId && e.EventId == eventId);
+            if (brainStormingList.Items.Any())
+                return this.JsonNet(brainStormingList);
             var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true, orderBy, paging);
             return this.JsonNet(data);
         }
 
-        [HttpPost]
-        public ActionResult BrainStorm()
+        //public ActionResult BrainStorm()
+        //{
+        //    return null;
+        //}
+
+        public PartialViewResult BrainStorm()
         {
-            return null;
+            return PartialView("_BrainStorming");
         }
     }
 }

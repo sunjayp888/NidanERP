@@ -2848,6 +2848,11 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBiometricAttendanceGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventBrainStormingGrid(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update

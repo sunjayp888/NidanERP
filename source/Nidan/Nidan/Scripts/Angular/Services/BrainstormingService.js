@@ -15,10 +15,11 @@
 
         return service;
 
-        function retrieveBrainstormings(Paging, OrderBy) {
+        function retrieveBrainstormings(eventId, Paging, OrderBy) {
 
             var url = "/Event/BrainstormingList",
                 data = {
+                    eventId: eventId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -28,7 +29,7 @@
         function createEventBrainstorming(eventId, eventBrainstormings) {
 
             var url = "/EventBrainstorming/Create";
-            var data = { eventBrainstormings: eventBrainstormings, eventId: eventId}
+            var data = { eventBrainstormings: eventBrainstormings, eventId: eventId }
             return $http.post(url, data);
         }
     }

@@ -278,6 +278,7 @@
 
         $('#Enquiry_SchemeId').change(function () {
             var schemeId = $('#Enquiry_SchemeId :selected').val();
+            if (schemeId === "") return;
             $.ajax({
                 url: '/Enquiry/GetSector',
                 type: 'POST',
