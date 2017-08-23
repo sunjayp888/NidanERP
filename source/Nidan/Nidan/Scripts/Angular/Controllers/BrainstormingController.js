@@ -20,14 +20,17 @@
         vm.orderClass = orderClass;
         vm.editBrainstorming = editBrainstorming;
         vm.createEventBrainstorming = createEventBrainstorming;
-        initialise();
+        vm.eventId;
+        vm.saveEventBrainStorming = saveEventBrainStorming;
+        vm.initialise = initialise;
 
-        function initialise() {
+        function initialise(eventId) {
+            vm.eventId = eventId;
             order("BrainstormingId");
         }
 
         function retrieveBrainstormings() {
-            return BrainstormingService.retrieveBrainstormings(vm.paging, vm.orderBy)
+            return BrainstormingService.retrieveBrainstormings(vm.eventId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.brainstormings = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -60,6 +63,21 @@
                 return vm.eventBrainstormings;
             });
         }
+
+        function saveEventBrainStorming() {
+            var brainStormingId1Disscussion = $(":radio[name='brainStormingDisscussion1']:checked").val();
+            alert(brainStormingId1Disscussion);
+
+            var blank = false;
+            $("input:radio").each(function () {
+                var val = $('input:radio[name=' + this.name + ']:checked').val();
+                if (val === undefined) {
+                    blank = true;
+                    return false;
+                }
+            });
+            alert(blank ? "At least one group is blank" : "All groups are checked");
+        };
     }
 
 })();

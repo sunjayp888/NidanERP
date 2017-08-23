@@ -126,6 +126,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
         public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
         public virtual DbSet<BiometricAttendanceGrid> BiometricAttendanceGrids { get; set; }
+        public virtual DbSet<EventBrainStormingGrid> EventBrainStormingGrids { get; set; }
         public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -2030,6 +2031,18 @@ namespace Nidan.Data.Models
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.BeforePlanningAnswerDiscussTheseQuestion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.DisscussionCompletedYesNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.ReferenceDetailDocument)
+                .IsUnicode(false);
+                
             modelBuilder.Entity<RegistrationGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
