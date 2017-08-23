@@ -2400,18 +2400,14 @@ namespace Nidan.Business
                 paging);
         }
 
-        public PagedResult<Registration> RetrieveRegistrationBySearchKeyword(int organisationId, string searchKeyword,
-            Expression<Func<Registration, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<RegistrationGrid> RetrieveRegistrationBySearchKeyword(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveRegistrationBySearchKeyword(organisationId, searchKeyword, predicate,
+            return _nidanDataService.RetrieveRegistrationBySearchKeyword(organisationId, predicate,
                 orderBy,
                 paging);
         }
 
-        public PagedResult<AdmissionSearchField> RetrieveAdmissionBySearchKeyword(int organisationId,
-            string searchKeyword, Expression<Func<AdmissionSearchField, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<AdmissionGrid> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveAdmissionBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
                 paging);
@@ -3108,6 +3104,7 @@ namespace Nidan.Business
                 enquiryFollowUp.LastName = enquiry.LastName;
                 enquiryFollowUp.Mobile = enquiry.Mobile;
                 enquiryFollowUp.AlternateMobile = enquiry.AlternateMobile;
+                enquiryFollowUp.Course = null;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryFollowUp);
             }
             if (counselling != null)
@@ -3122,6 +3119,7 @@ namespace Nidan.Business
                 enquiryCounselling.FirstName = enquiry.FirstName;
                 enquiryCounselling.MiddleName = enquiry.MiddleName;
                 enquiryCounselling.LastName = enquiry.LastName;
+                enquiryCounselling.Course = null;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryCounselling);
             }
 

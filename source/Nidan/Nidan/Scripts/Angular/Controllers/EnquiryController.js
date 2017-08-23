@@ -83,7 +83,11 @@
         }
 
         function pageChanged() {
-            return retrieveEnquiries();
+            if (vm.searchKeyword) {
+                searchEnquiry(vm.searchKeyword);
+            } else {
+                return retrieveEnquiries();
+            }
         }
 
         function order(property) {

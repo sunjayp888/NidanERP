@@ -24,7 +24,7 @@
         vm.viewAdmission = viewAdmission;
         vm.batches = [];
         vm.retrieveBatches = retrieveBatches;
-         vm.retrieveDocumentsType = retrieveDocumentsType;
+        vm.retrieveDocumentsType = retrieveDocumentsType;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.searchAdmissionByDate = searchAdmissionByDate;
@@ -83,7 +83,11 @@
         }
 
         function pageChanged() {
-            return retrieveAdmissions();
+            if (vm.searchKeyword) {
+                searchAdmission(vm.searchKeyword);
+            } else {
+                return retrieveAdmissions();
+            }
         }
 
         function order(property) {

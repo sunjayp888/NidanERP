@@ -74,7 +74,11 @@
         }
 
         function pageChanged() {
-            return retrieveCounsellings();
+            if (vm.searchKeyword) {
+                searchCounselling(vm.searchKeyword);
+            } else {
+                return retrieveCounsellings();
+            }
         }
 
         function order(property) {

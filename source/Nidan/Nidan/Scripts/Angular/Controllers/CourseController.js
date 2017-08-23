@@ -74,7 +74,11 @@
         }
 
         function pageChanged() {
-            return retrieveCourses();
+            if (vm.searchKeyword) {
+                searchCourse(vm.searchKeyword);
+            } else {
+                return retrieveCourses();
+            }
         }
 
         function order(property) {
