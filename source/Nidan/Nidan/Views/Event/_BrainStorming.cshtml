@@ -38,18 +38,16 @@
                                                 @*@Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "Yes")&nbsp; Yes &nbsp;
                                                     @Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "No") No*@
 
-                                                <input type="radio" id="brainStormingDisscussion{{brainstorming.BrainstormingId}}" value="Yes" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}" >Yes
-                                                <input type="radio" id="brainStormingDisscussion_{{brainstorming.BrainstormingId}}" value="No" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}">No
-                                                <input type="hidden" id="brainStormingDisscussionHidden{{brainstorming.BrainstormingId}}">
+                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion{{brainstorming.BrainstormingId}}" value="Yes" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}" >Yes
+                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion_{{brainstorming.BrainstormingId}}" value="No" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}">No
                                             </td>
                                             <td>
                                                 @*@Html.EditorFor(model => model.EventBrainstorming.RefernceDetailDocument)*@
-                                                <textarea id="{{brainstorming.BrainstormingId}}" name="{{brainstorming.BrainstormingId}}"></textarea>
+                                                <textarea ng-model='brainstorming.ReferenceDetailDocument' id="referenceDetailTextBox{{brainstorming.BrainstormingId}}" name="referenceDetailTextBox{{brainstorming.BrainstormingId}}"></textarea>
                                             </td>
                                     </tbody>
                                 </table>
-
-                                @Html.Partial("Pagination/_pagination")
+                                @*@Html.Partial("Pagination/_pagination")*@
                             </div>
                         </div>
                         <div class="pull-right">

@@ -10,24 +10,26 @@
     function BrainstormingService($http) {
         var service = {
             retrieveBrainstormings: retrieveBrainstormings,
-            createEventBrainstorming: createEventBrainstorming
+            createEventBrainstorming: createEventBrainstorming,
+            retrieveBrainstormingQuestions: retrieveBrainstormingQuestions,
         };
 
         return service;
 
-        function retrieveBrainstormings(eventId, Paging, OrderBy) {
+        function retrieveBrainstormingQuestions() {
+            var url = "/Event/BrainStormingQuestion";
+            return $http.post(url);
+        }
 
-            var url = "/Event/BrainstormingList",
+        function retrieveBrainstormings(eventId) {
+            var url = "/Event/EventBrainstormingList",
                 data = {
-                    eventId: eventId,
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
+                    eventId: eventId
                 };
             return $http.post(url, data);
         }
 
         function createEventBrainstorming(eventId, eventBrainstormings) {
-
             var url = "/EventBrainstorming/Create";
             var data = { eventBrainstormings: eventBrainstormings, eventId: eventId }
             return $http.post(url, data);

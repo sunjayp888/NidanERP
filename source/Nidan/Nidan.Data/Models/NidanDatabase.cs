@@ -128,6 +128,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<BiometricAttendanceGrid> BiometricAttendanceGrids { get; set; }
         public virtual DbSet<EventBrainStormingGrid> EventBrainStormingGrids { get; set; }
         public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
+        public virtual DbSet<BatchPlanner> BatchPlanners { get; set; }
+        public virtual DbSet<BatchPlannerDay> BatchPlannerDays { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1906,7 +1908,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventBrainstorming>()
-                .Property(e => e.RefernceDetailDocument)
+                .Property(e => e.ReferenceDetailDocument)
                 .IsUnicode(false);
             
             modelBuilder.Entity<MobilizationCentreReport>()
@@ -2057,6 +2059,14 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<RegistrationGrid>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.CourseType)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

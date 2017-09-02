@@ -1045,9 +1045,9 @@ namespace Nidan.Business
             }
 
             //Email
-            //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
-            //SendAdmissionSms(admissionData);
+            SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -1202,9 +1202,9 @@ namespace Nidan.Business
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1436,9 +1436,25 @@ namespace Nidan.Business
             return _nidanDataService.Create<BatchAttendance>(organisationId, batchAttendance);
         }
 
-        public EventBrainstorming CreateEventBrainstorming(int organisationId, int centreId, EventBrainstorming eventBrainstorming)
+        public bool CreateEventBrainstorming(int organisationId, int centreId, int eventId, List<EventBrainstorming> eventBrainstorming)
         {
-            return _nidanDataService.CreateEventBrainstorming(organisationId, eventBrainstorming);
+            try
+            {
+                //Get EventBrainStroming
+                var eventBrainStorming = _nidanDataService.Retrieve<EventBrainstorming>(organisationId, e => e.CentreId == centreId && e.EventId == eventId);
+                if (eventBrainStorming.Any())
+                {
+                    //Delete EventBrainStroming    
+                    _nidanDataService.DeleteList<EventBrainstorming>(organisationId, e => e.EventId == eventId);
+                }
+                //Create EventBrainStroming
+                return _nidanDataService.CreateEventBrainstorming(organisationId, eventBrainstorming);
+
+            }
+            catch (Exception Ex)
+            {
+                return false;
+            }
         }
 
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
@@ -1498,6 +1514,17 @@ namespace Nidan.Business
         public CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting)
         {
             var data = _nidanDataService.Create<CentreReceiptSetting>(organisationId, centreReceiptSetting);
+            return data;
+        }
+
+        public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner)
+        {
+            return _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
+        }
+
+        public BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay)
+        {
+            var data = _nidanDataService.Create<BatchPlannerDay>(organisationId, batchPlannerDay);
             return data;
         }
 
@@ -2844,9 +2871,30 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBiometricAttendanceGrid(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        public PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveEventBrainStormingGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<BatchPlanner> RetrieveBatchPlanners(int organisationId, Expression<Func<BatchPlanner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPlanners(organisationId, predicate, orderBy, paging);
+        }
+
+        public BatchPlanner RetrieveBatchPlanner(int organisationId, int batchPlannerId, Expression<Func<BatchPlanner, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveBatchPlanner(organisationId, batchPlannerId, predicate);
+        }
+
+        public PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPlannerDays(organisationId, predicate, orderBy, paging);
+        }
+
+        public BatchPlannerDay RetrieveBatchPlannerDay(int organisationId, int batchPlannerDayId, Expression<Func<BatchPlannerDay, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveBatchPlannerDay(organisationId, batchPlannerDayId, predicate);
         }
 
         #endregion
@@ -3339,10 +3387,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            //SendInstallmetnSms(candidateFee);
+            SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -3418,6 +3466,11 @@ namespace Nidan.Business
             CentreEnrollmentReceiptSetting centreEnrollmentReceiptSetting)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreEnrollmentReceiptSetting);
+        }
+
+        public BatchPlanner UpdateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchPlanner);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
@@ -3620,7 +3673,7 @@ namespace Nidan.Business
         {
             var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
             var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsAdmission);
-            var studentDocumentTypeList=new List<StudentDocument>();
+            var studentDocumentTypeList = new List<StudentDocument>();
             foreach (var item in documentTypes)
             {
                 var result = studentDocuments.FirstOrDefault(e => e.DocumentTypeId == item.DocumentTypeId);
@@ -3629,7 +3682,7 @@ namespace Nidan.Business
                     DocumentTypeId = item.DocumentTypeId,
                     Guid = result?.Guid,
                     StudentCode = studentCode,
-                    IsPending = result==null,
+                    IsPending = result == null,
                     Name = item.Name
                 });
             }

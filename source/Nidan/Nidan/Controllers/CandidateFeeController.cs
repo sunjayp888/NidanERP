@@ -217,7 +217,25 @@ namespace Nidan.Controllers
             var data = feeTypeId == 1 || feeTypeId == 3 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
                 : NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} {2}.pdf", firstName, lastName, feeType.ToString()));
-
         }
+
+        [HttpPost]
+        public ActionResult TotalFee(int? id)
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
+            var candidateFeeData = NidanBusinessService.RetrieveCandidateFeeGrid(organisationId, e => e.CandidateInstallmentId == id.Value);
+            var totalPaid = candidateFeeData.Items.Sum(e => e.PaidAmount);
+            var courseFee = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee : data.LumpsumAmount;
+            var balanceAmount = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee - totalPaid : data.LumpsumAmount - totalPaid;
+            var candidateFeeModel = new CandidateFeeViewModel
+            {
+                TotalPaidFee = totalPaid,
+                BalanceFee = balanceAmount,
+                CourseFee = courseFee
+            };
+            return this.JsonNet(candidateFeeModel);
+        }
+
     }
 }
