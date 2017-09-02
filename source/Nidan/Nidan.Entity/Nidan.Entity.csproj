@@ -93,6 +93,8 @@
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchDay.cs" />
+    <Compile Include="BatchPlanner.cs" />
+    <Compile Include="BatchPlannerDay.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />
     <Compile Include="BiometricAttendance.cs" />

@@ -327,13 +327,20 @@ namespace Nidan.Data
             }
         }
 
-        public EventBrainstorming CreateEventBrainstorming(int organisationId, EventBrainstorming eventBrainstorming)
+        public bool CreateEventBrainstorming(int organisationId, List<EventBrainstorming> eventBrainstorming)
         {
-            using (var context = _databaseFactory.Create(organisationId))
+            try
             {
-                eventBrainstorming = context.EventBrainstormings.Add(eventBrainstorming);
-                context.SaveChanges();
-                return eventBrainstorming;
+                using (var context = _databaseFactory.Create(organisationId))
+                {
+                    context.EventBrainstormings.AddRange(eventBrainstorming);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -354,6 +361,17 @@ namespace Nidan.Data
                 eventPlanning = context.EventPlannings.Add(eventPlanning);
                 context.SaveChanges();
                 return eventPlanning;
+            }
+        }
+
+        public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                batchPlanner = context.BatchPlanners.Add(batchPlanner);
+                context.SaveChanges();
+
+                return batchPlanner;
             }
         }
 
@@ -1333,7 +1351,7 @@ namespace Nidan.Data
                     .Include(p => p.Course)
                     .Include(p => p.CourseType)
                     .Include(p => p.SubjectCourses)
-                    .Include(p => p.SubjectCourses.Select(e=>e.Course))
+                    .Include(p => p.SubjectCourses.Select(e => e.Course))
                     .Include(p => p.SubjectTrainers)
                     .AsNoTracking()
                     .Where(predicate)
@@ -2135,7 +2153,7 @@ namespace Nidan.Data
                     .Include(p => p.CandidateInstallment.CourseInstallment)
                     .Include(p => p.CandidateInstallment.CourseInstallment.Course)
                     .Include(p => p.Centre.State)
-                    .Include(p=>p.PaymentMode)
+                    .Include(p => p.PaymentMode)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateFeeId == candidateFeeId);
@@ -3067,9 +3085,9 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        public PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-           using (ReadUncommitedTransactionScope)
+            using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
@@ -3333,7 +3351,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "BrainStormingId",
+                            Property = "BrainstormingId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -3341,7 +3359,74 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<BatchPlanner> RetrieveBatchPlanners(int organisationId, Expression<Func<BatchPlanner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPlanners
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchPlannerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
 
+        public BatchPlanner RetrieveBatchPlanner(int organisationId, int batchPlannerId, Expression<Func<BatchPlanner, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPlanners
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.BatchPlannerId == batchPlannerId);
+            }
+        }
+
+        public BatchPlannerDay RetrieveBatchPlannerDay(int organisationId, int batchPlannerDayId, Expression<Func<BatchPlannerDay, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPlannerDays
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.BatchPlannerDayId == batchPlannerDayId);
+            }
+        }
+
+        public PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPlannerDays
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchPlannerDayId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
 
         #endregion
 
@@ -3380,6 +3465,16 @@ namespace Nidan.Data
             {
                 var items = context.Set<T>().Where(predicate).FirstOrDefault();
                 if (items != null) context.Set<T>().Remove(items);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteList<T>(int organisationId, Expression<Func<T, bool>> predicate) where T : class
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var items = context.Set<T>().Where(predicate);
+                if (items != null) context.Set<T>().RemoveRange(items);
                 context.SaveChanges();
             }
         }

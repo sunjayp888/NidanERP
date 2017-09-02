@@ -657,6 +657,7 @@
     <Content Include="bower_components\jquery-validation\src\localization\methods_pt.js" />
     <Content Include="bower_components\jquery\AUTHORS.txt" />
     <Content Include="bower_components\jquery\dist\core.js" />
+    <Content Include="bower_components\jquery\dist\jquery.ui.min.js" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
     <Content Include="bower_components\jquery\dist\jquery.slim.js" />
@@ -1052,6 +1053,9 @@
     <Content Include="bower_components\ngBootbox\examples\index.html" />
     <Content Include="bower_components\ngBootbox\gulpfile.js" />
     <Content Include="bower_components\ngBootbox\ngBootbox.js" />
+    <Content Include="bower_components\notify\pnotify.buttons.js" />
+    <Content Include="bower_components\notify\pnotify.core.js" />
+    <Content Include="bower_components\notify\pnotify.nonblock.js" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\css\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
@@ -1271,6 +1275,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bower_components\gentelella\vendors\" />
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
@@ -1711,7 +1716,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58520/</IISUrl>
+          <IISUrl>http://localhost:58521/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

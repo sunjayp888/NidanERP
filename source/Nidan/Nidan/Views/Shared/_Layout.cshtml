@@ -206,23 +206,26 @@
     {
         @Html.AntiForgeryToken()
     }
+
     @Scripts.Render("~/Scripts/bower")
     @Scripts.Render("~/Scripts/bower/gentelella")
     @Scripts.Render("~/Scripts/Application")
     @RenderSection("scripts", required: false)
-    <script>
-        $(document).ready(function () {
-            $(".btn-primary").mouseover(function () {
-                if ($(".btn-primary").text().trim() == "Back to list") {
-                    $('input[type="text"]').rules('remove', 'required');
-                }
-            });
-            $(".btn-primary").mouseout(function () {
-                if ($(".btn-primary").text().trim() == "Back to list") {
-                    $('input[type="text"]').rules('add', 'required');
-                }
-            });
+
+<script>
+    $(document).ready(function () {
+        $(".btn-primary").mouseover(function () {
+            if ($(".btn-primary").text().trim() == "Back to list") {
+                $('input[type="text"]').rules('remove', 'required');
+            }
         });
-    </script>
+        $(".btn-primary").mouseout(function () {
+            if ($(".btn-primary").text().trim() == "Back to list") {
+                $('input[type="text"]').rules('add', 'required');
+            }
+        });
+        $("#tabs").tabs();
+    });
+</script>   
 </body>
 </html>

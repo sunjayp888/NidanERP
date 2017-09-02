@@ -54,6 +54,8 @@ namespace Nidan.Entity
             EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
+            BatchPlanners=new HashSet<BatchPlanner>();
+            BatchPlannerDays=new HashSet<BatchPlannerDay>();
         }
 
         public int CentreId { get; set; }
@@ -222,5 +224,11 @@ namespace Nidan.Entity
       
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlannerDay> BatchPlannerDays { get; set; }
     }
 }

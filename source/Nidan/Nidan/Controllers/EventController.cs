@@ -102,16 +102,25 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult BrainstormingList(int eventId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult EventBrainStormingList(int eventId)
         {
             var organisationId = UserOrganisationId;
             var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
             var brainStormingList = _nidanBusinessService.RetrieveEventBrainStormingGrid(UserOrganisationId, e => e.CentreId == eventResult.CentreId && e.EventId == eventId);
             if (brainStormingList.Items.Any())
                 return this.JsonNet(brainStormingList);
-            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult BrainStormingQuestion()
+        {
+            var organisationId = UserOrganisationId;
+            var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
+            return this.JsonNet(data);
+        }
+
 
         //public ActionResult BrainStorm()
         //{
@@ -122,5 +131,7 @@ namespace Nidan.Controllers
         {
             return PartialView("_BrainStorming");
         }
+
+
     }
 }

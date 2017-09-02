@@ -277,5 +277,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
     }
 }
