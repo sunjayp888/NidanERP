@@ -8,6 +8,8 @@ namespace Nidan.Entity
     [MetadataType(typeof(TrainerMetadata))]
     public partial class Trainer : IOrganisationFilterable
     {
+        [NotMapped]
+        public string Fullname => string.Join(" ", new string[] { Title.Trim(), FirstName.Trim(), MiddleName.Trim(), LastName.Trim() }).Trim();
         private class TrainerMetadata
         {
             [Display(Name = "Aadhar Number")]

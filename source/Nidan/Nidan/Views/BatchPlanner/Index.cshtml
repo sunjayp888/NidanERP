@@ -1,0 +1,34 @@
+﻿@using Nidan.Extensions
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>
+            Batch Planner <small></small>
+        </h3>
+    </div>
+    @*<div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+</div>
+
+@if (User.IsInAnyRoles("SuperAdmin"))
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-success btn-lg" href="@Url.Action("Create", "BatchPlanner")">
+                <i class="fa fa-group"></i> Create
+            </a>
+        </div>
+    </div>
+}

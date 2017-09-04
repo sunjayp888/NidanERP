@@ -64,7 +64,7 @@ namespace Nidan.Business.Interfaces
         EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
         EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
         CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting);
-        BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner);
+        BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay);
         BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay);
 
         // Retrieve

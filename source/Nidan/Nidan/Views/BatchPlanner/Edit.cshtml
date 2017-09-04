@@ -1,0 +1,53 @@
+﻿@model Nidan.Models.BatchPlannerViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Batch ({0})", Model.BatchPlanner.BatchPlannerId);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.BatchPlanner.BatchPlannerId)
+                        @Html.HiddenFor(model => model.BatchPlannerDay.BatchPlannerDayId)
+                        @Html.Partial("_BatchPlanner", Model)
+                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+
+    </script>
+}

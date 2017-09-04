@@ -244,6 +244,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
+    <Compile Include="Controllers\BatchPlannerController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Models\AttendanceViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
+    <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
@@ -1658,6 +1660,10 @@
     <Content Include="Views\FollowUp\Tomorrows.cshtml" />
     <Content Include="Views\FollowUp\Upcoming.cshtml" />
     <Content Include="Views\Admission\_AdmissionDocumentType.cshtml" />
+    <Content Include="Views\BatchPlanner\Index.cshtml" />
+    <Content Include="Views\BatchPlanner\Create.cshtml" />
+    <Content Include="Views\BatchPlanner\Edit.cshtml" />
+    <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

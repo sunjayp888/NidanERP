@@ -1517,9 +1517,30 @@ namespace Nidan.Business
             return data;
         }
 
-        public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner)
+        public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
-            return _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
+            var data= _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
+            CreateBatchPlannerDay(organisationId, batchPlanner.BatchPlannerId, batchPlanner.CentreId, batchPlannerDay);
+            return data;
+        }
+
+        private BatchPlannerDay CreateBatchPlannerDay(int organisationId, int batchPlannerId, int centreId, BatchPlannerDay batchPlannerDay)
+        {
+            var batchPlannerDayData = new BatchPlannerDay()
+            {
+                BatchPlannerId = batchPlannerId,
+                IsMonday = batchPlannerDay.IsMonday,
+                IsTuesday = batchPlannerDay.IsTuesday,
+                IsWednesday = batchPlannerDay.IsWednesday,
+                IsThursday = batchPlannerDay.IsThursday,
+                IsFriday = batchPlannerDay.IsFriday,
+                IsSaturday = batchPlannerDay.IsSaturday,
+                IsSunday = batchPlannerDay.IsSunday,
+                OrganisationId = organisationId,
+                CentreId = centreId
+            };
+            _nidanDataService.Create(organisationId, batchPlannerDayData);
+            return batchPlannerDayData;
         }
 
         public BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay)

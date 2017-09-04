@@ -13,9 +13,13 @@ namespace Nidan.Entity
 
         public int RoomId { get; set; }
 
-        public int StartTime { get; set; }
+        public int StartTimeHours { get; set; }
 
-        public int EndTime { get; set; }
+        public int StartTimeMinutes { get; set; }
+
+        public int EndTimeHours { get; set; }
+
+        public int EndTimeMinutes { get; set; }
 
         [Required]
         [StringLength(50)]
