@@ -2792,7 +2792,7 @@ namespace Nidan.Business
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
             var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
             var days = DateTimeExtensions.EachDay(firstDayOfMonth, lastDayOfMonth);
-            var data = _nidanDataService.RetriveMobilizationCountReportByDate(organisationId, centreId, e => e.Date >= firstDayOfMonth && e.Date <= lastDayOfMonth, orderBy, paging).Items.ToList();
+            var data = _nidanDataService.RetriveMobilizationCountReportByDate(organisationId, centreId, e => e.Date >= firstDayOfMonth && e.Date <= lastDayOfMonth && e.CentreId == centreId, orderBy, paging).Items.ToList();
             foreach (var item in days)
             {
                 var result = data.FirstOrDefault(e => e.Date.Month == item.Month && e.Date.Day == item.Day && e.Date.Year == item.Year);
