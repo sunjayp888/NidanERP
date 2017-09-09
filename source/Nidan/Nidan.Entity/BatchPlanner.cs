@@ -17,9 +17,17 @@ namespace Nidan.Entity
 
         public int StartTimeMinutes { get; set; }
 
+        [Required]
+        [StringLength(10)]
+        public string StartTimeSpan { get; set; } = "AM";
+
         public int EndTimeHours { get; set; }
 
         public int EndTimeMinutes { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string EndTimeSpan { get; set; } = "AM";
 
         [Required]
         [StringLength(50)]

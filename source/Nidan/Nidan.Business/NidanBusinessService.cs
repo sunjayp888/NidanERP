@@ -3130,11 +3130,11 @@ namespace Nidan.Business
             return roomAvailable;
         }
 
-        public List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate)
+        public List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<Trainer, bool>> predicate)
         {
             var trainers =
-                _nidanDataService.RetrieveTrainerAvailables(organisationId, centreId, predicate).Select(e => e.Trainer);
-            return trainers.ToList();
+                _nidanDataService.RetrieveTrainers(organisationId, predicate).Items.ToList();
+            return trainers;
         }
 
         public Registration RetrieveRegistration(int organisationId, int id)
