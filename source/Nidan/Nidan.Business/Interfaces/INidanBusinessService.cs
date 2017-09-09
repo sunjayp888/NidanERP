@@ -202,7 +202,7 @@ namespace Nidan.Business.Interfaces
         List<Sector> RetrieveCentreSectors(int organisationId, int centreId, Expression<Func<CentreSector, bool>> predicate);
         List<Room> RetrieveRooms(int organisationId, int centreId, Expression<Func<Room, bool>> predicate);
         List<RoomAvailable> RetrieveRoomAvailables(int organisationId, int centreId, Expression<Func<RoomAvailable, bool>> predicate);
-        List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<TrainerAvailable, bool>> predicate);
+        List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<Trainer, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId);
         List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);

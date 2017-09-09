@@ -20,7 +20,7 @@ namespace Nidan.Entity
             public int SchemeId { get; set; }
 
             [Display(Name = "Course Type")]
-            public int? CourseTypeId { get; set; }
+            public string CourseType { get; set; }
         }
     }
 }

@@ -73,8 +73,8 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var batchPlanner = NidanBusinessService.RetrieveBatchPlanner(organisationId, id.Value,e=>true);
-            var batchPlannerDay = NidanBusinessService.RetrieveBatchPlannerDays(organisationId,e=>e.BatchPlannerId==batchPlanner.BatchPlannerId).Items.FirstOrDefault();
+            var batchPlanner = NidanBusinessService.RetrieveBatchPlanner(organisationId, id.Value, e => true);
+            var batchPlannerDay = NidanBusinessService.RetrieveBatchPlannerDays(organisationId, e => e.BatchPlannerId == batchPlanner.BatchPlannerId).Items.FirstOrDefault();
             if (batchPlanner == null)
             {
                 return HttpNotFound();
@@ -116,6 +116,34 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsSuperAdmin();
             var centreId = UserCentreId;
             return this.JsonNet(NidanBusinessService.RetrieveBatchPlanners(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult GetClassRoom(int centreId)
+        {
+            var data = NidanBusinessService.RetrieveRooms(UserOrganisationId, centreId, e => e.CentreId == centreId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCourse(int centreId)
+        {
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, centreId, e => e.CentreId == centreId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetTrainer(int centreId)
+        {
+            var data = NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => e.CentreId == centreId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCourseData(int courseId)
+        {
+            var data = NidanBusinessService.RetrieveCourse(UserOrganisationId, courseId);
+            return this.JsonNet(data);
         }
     }
 }

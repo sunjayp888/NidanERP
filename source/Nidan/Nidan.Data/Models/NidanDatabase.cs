@@ -154,6 +154,10 @@ namespace Nidan.Data.Models
                .IsUnicode(false);
 
             modelBuilder.Entity<Course>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
                 .HasMany(e => e.FollowUps)
                 .WithRequired(e => e.Course)
                 .HasForeignKey(e => e.IntrestedCourseId)
@@ -1176,6 +1180,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CourseSearchField>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.CourseType)
                 .IsUnicode(false);
 
             modelBuilder.Entity<TrainerSearchField>()
