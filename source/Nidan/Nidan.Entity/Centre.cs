@@ -54,6 +54,9 @@ namespace Nidan.Entity
             EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
+            StockIssues=new HashSet<StockIssue>();
+            StockPurchases=new HashSet<StockPurchase>();
+            FixAssets=new HashSet<FixAsset>();
         }
 
         public int CentreId { get; set; }
@@ -222,5 +225,14 @@ namespace Nidan.Entity
       
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockIssue> StockIssues { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockPurchase> StockPurchases { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FixAsset> FixAssets { get; set; }
     }
 }

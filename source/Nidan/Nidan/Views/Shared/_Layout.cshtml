@@ -82,6 +82,8 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
+                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
+                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -108,7 +110,7 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
+                                            <li><a href='@Url.Action("FixAsset", "Report")'>Fix Assets</a></li>
                                         }
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
@@ -126,7 +128,8 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            @*<li><a href='@Url.Action("Expense", "Report")'>Petty Cash</a></li>*@
+                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
+                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
                                         </ul>
                                     }
                                 </li>

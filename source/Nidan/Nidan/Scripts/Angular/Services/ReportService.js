@@ -19,6 +19,8 @@
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
             searchExpenseByDate: searchExpenseByDate,
+            searchFixAssetByDate: searchFixAssetByDate,
+            searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
             downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
@@ -28,6 +30,8 @@
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
             downloadExpenseCSVByDate: downloadExpenseCSVByDate,
+            downloadFixAssetCSVByDate: downloadFixAssetCSVByDate,
+            downloadStockCSVByDate: downloadStockCSVByDate,
             totalSumOfCountByMonth: totalSumOfCountByMonth,
             totalSumOfCountByDate: totalSumOfCountByDate,
             downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
@@ -59,16 +63,17 @@
             return $http.post(url, data);
         }
 
-        //function retrieveMobilizationReports(Paging, OrderBy) {
+        function searchStockByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/searchStockByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
-        //    var url = "/Report/MobilizationList",
-        //        data = {
-        //            paging: Paging,
-        //            orderBy: new Array(OrderBy)
-        //        };
-
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         function searchMobilizationByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchMobilizationByDate",
@@ -82,16 +87,17 @@
             return $http.post(url, data);
         }
 
-        //function retrieveFollowUpReports(Paging, OrderBy) {
+        function searchFixAssetByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchFixAssetByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
-        //    var url = "/Report/FollowUpList",
-        //        data = {
-        //            paging: Paging,
-        //            orderBy: new Array(OrderBy)
-        //        };
-
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         function searchFollowUpByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchFollowUpByDate",
@@ -232,6 +238,24 @@
 
         function downloadExpenseCSVByDate(fromDate, toDate) {
             var url = "/Report/DownloadExpenseCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadFixAssetCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadFixAssetCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadStockCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadStockCSVByDate",
                 data = {
                     fromDate: fromDate,
                     toDate: toDate

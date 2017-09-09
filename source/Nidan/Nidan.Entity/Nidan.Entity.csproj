@@ -152,6 +152,9 @@
     <Compile Include="ExpenseHeader.cs" />
     <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="FixAsset.cs" />
+    <Compile Include="FixAssetDataGrid.cs" />
+    <Compile Include="FixAssetSearchGrid.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
@@ -186,6 +189,7 @@
     <Compile Include="Partials\CourseInstallment.cs" />
     <Compile Include="Partials\Event.cs" />
     <Compile Include="Partials\Enquiry.cs" />
+    <Compile Include="Partials\FixAsset.cs" />
     <Compile Include="Partials\FollowUp.cs" />
     <Compile Include="Partials\Mobilization.cs" />
     <Compile Include="Partials\Organisation.cs" />
@@ -194,6 +198,7 @@
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />
+    <Compile Include="Partials\StockPurchase.cs" />
     <Compile Include="Partials\Subject.cs" />
     <Compile Include="Partials\Template.cs" />
     <Compile Include="Partials\Trainer.cs" />
@@ -223,6 +228,11 @@
     <Compile Include="Session.cs" />
     <Compile Include="Site.cs" />
     <Compile Include="State.cs" />
+    <Compile Include="StockDataGrid.cs" />
+    <Compile Include="StockIssue.cs" />
+    <Compile Include="StockPurchase.cs" />
+    <Compile Include="StockReportDataGrid.cs" />
+    <Compile Include="StockType.cs" />
     <Compile Include="StudentType.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="SubjectCourse.cs" />

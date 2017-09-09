@@ -3341,7 +3341,244 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .StockPurchases
+                    .Include(e => e.Centre)
+                    .Include(e => e.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "StockPurchaseId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
 
+        public StockPurchase RetrieveStockPurchase(int organisationId, int stockPurchaseId, Expression<Func<StockPurchase, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .StockPurchases
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(e=>e.StockPurchaseId==stockPurchaseId);
+                }
+        }
+
+        public PagedResult<StockIssue> RetrieveStockIssues(int organisationId, int centreId, Expression<Func<StockIssue, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .StockIssues
+                    .Include(e => e.Centre)
+                    .Include(e => e.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "StockIssuedId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public StockIssue RetrieveStockIssue(int organisationId, int centreId, int stockIssueId, Expression<Func<StockIssue, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .StockIssues
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
+            }
+        }
+
+        public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .StockDataGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "StockPurchaseDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, string searchKeyword, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<StockDataGrid>("SearchStock @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable().
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "StockPurchaseDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Where(predicate)
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                      .FixAssets
+                      .Include(p => p.Organisation)
+                      .Include(p => p.Room)
+                      .Include(p => p.Centre)
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "RoomId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                        }
+                      ).Paginate(paging);
+            }
+        }
+
+        public FixAsset RetrieveFixAsset(int organisationId, Expression<Func<FixAsset, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FixAssets
+                    .Include(c => c.Room)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
+
+            }
+        }
+
+
+        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<FixAssetSearchGrid>("SearchFixAsset @SearchKeyword", category).ToList();
+
+                var fixAssets = context.FixAssets.Include(e => e.Room);
+
+                var data = searchData.Join(fixAssets, e => e.FixAssetId, m => m.FixAssetId, (e, m) => m).ToList().AsQueryable().
+                     OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "DateofPurchase",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Where(predicate)
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                      .FixAssetDataGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "FixAssetId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                        }
+                      ).Paginate(paging);
+            }
+        }
+
+        public PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                      .StockReportDataGrids
+                      .AsNoTracking()
+                      .Where(predicate)
+                      .OrderBy(orderBy ?? new List<OrderBy>
+                      {
+                        new OrderBy
+                        {
+                            Property = "StockPurchaseDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                        }
+                      ).Paginate(paging);
+            }
+        }
 
         #endregion
 

@@ -68,6 +68,18 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/FixAsset
+        public ActionResult FixAsset()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report/Stock
+        public ActionResult Stock()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
@@ -178,6 +190,14 @@ namespace Nidan.Controllers
         public ActionResult MobilizationCountReportBydate(int centreId, int month, int year)
         {
             var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, year, month);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchStockByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -333,9 +353,40 @@ namespace Nidan.Controllers
         public ActionResult DownloadMobilizationCountReportCSVByDate(int centreId, int fromMonth, int fromYear)
         {
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
-            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId,fromYear,fromMonth).ToList();
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, fromYear, fromMonth).ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByDate-({1}-{2}).csv", centre.Name, fromMonth, fromYear));
+        }
+
+        [HttpPost]
+        public ActionResult SearchFixAssetByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DownloadFixAssetCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data = NidanBusinessService.RetrieveFixAssetDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FixAssetReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadStockCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StockReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
     }
 }

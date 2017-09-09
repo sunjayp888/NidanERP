@@ -64,6 +64,9 @@ namespace Nidan.Business.Interfaces
         EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
         EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
         CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting);
+        StockPurchase CreateStockPurchase(int organisationId, StockPurchase stockPurchase);
+        StockIssue CreateStockIssue(int organisationId, StockIssue stockIssue);
+        FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -268,6 +271,19 @@ namespace Nidan.Business.Interfaces
         CentreEnrollmentReceiptSetting RetrieveCentreEnrollmentReceiptSetting(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate);
         PagedResult<BiometricAttendanceGrid> RetrieveBiometricAttendanceGrid(int organisationId, Expression<Func<BiometricAttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        StockPurchase RetrieveStockPurchase(int organisationId, int centreId, int stockPurchaseId, Expression<Func<StockPurchase, bool>> predicate);
+        PagedResult<StockIssue> RetrieveStockIssues(int organisationId, int centreId, Expression<Func<StockIssue, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        StockIssue RetrieveStockIssue(int organisationId, int centreId, int stockIssueId, Expression<Func<StockIssue, bool>> predicate);
+        StockPurchase RetrieveStockPurchase(int organisationId, int id);
+        PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, string searchKeyword, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        FixAsset RetrieveFixAsset(int organisationId, Expression<Func<FixAsset, bool>> predicate);
+        PagedResult<FixAsset> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<StockType> RetrieveStockTypes(int organisationId, Expression<Func<StockType, bool>> predicate);
+        PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -303,6 +319,10 @@ namespace Nidan.Business.Interfaces
         CentreVoucherNumber UpdateCentreVoucherNumber(int organisationId, int centreId, CentreVoucherNumber centreVoucherNumber);
         CentreReceiptSetting UpdateCentreReceiptSetting(int organisationId, int centreId, CentreReceiptSetting centreReceiptSetting);
         CentreEnrollmentReceiptSetting UpdateCentreEnrollmentReceiptSetting(int organisationId, int centreId, CentreEnrollmentReceiptSetting centreEnrollmentReceiptSetting);
+        StockIssue UpdateStockIssue(int organisationId, int centreId, StockIssue stockIssue);
+        StockPurchase UpdateStockPurchase(int organisationId, int centreId, StockPurchase stockPurchase);
+        FixAsset UpdateFixAsset(int organisationId, FixAsset fixAsset);
+        
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

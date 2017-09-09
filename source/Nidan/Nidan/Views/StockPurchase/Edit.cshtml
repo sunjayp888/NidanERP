@@ -1,0 +1,47 @@
+﻿@model Nidan.Models.StockPurchaseViewModel
+@{
+    ViewBag.Title = string.Format("Edit Stock ({0})", Model.StockPurchase.InventoryItem);
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div ng-controller="StockPurchaseController as model">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
+                                </div>
+
+                            }
+                            @Html.HiddenFor(model => Model.StockIssue.StockIssuedId)
+                            @Html.Partial("_StockPurchase")
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+
