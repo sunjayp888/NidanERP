@@ -1517,6 +1517,24 @@ namespace Nidan.Business
             return data;
         }
 
+        public StockPurchase CreateStockPurchase(int organisationId, StockPurchase stockPurchase)
+        {
+            var data = _nidanDataService.Create<StockPurchase>(organisationId, stockPurchase);
+            return data;
+        }
+
+        public StockIssue CreateStockIssue(int organisationId, StockIssue stockIssue)
+        {
+            var data = _nidanDataService.Create<StockIssue>(organisationId, stockIssue);
+            return data;
+        }
+
+        public FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset)
+        {
+            var data = _nidanDataService.Create<FixAsset>(organisationId, fixAsset);
+            return data;
+        }
+
         public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
             var data = _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
@@ -2930,6 +2948,79 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEventBrainStormingGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveStockPurchases(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public StockPurchase RetrieveStockPurchase(int organisationId, int centreId, int stockPurchaseId, Expression<Func<StockPurchase, bool>> predicate)
+        {
+            var stockPurchase = _nidanDataService.RetrieveStockPurchase(organisationId, stockPurchaseId, predicate);
+            return stockPurchase;
+        }
+
+        public PagedResult<StockIssue> RetrieveStockIssues(int organisationId, int centreId, Expression<Func<StockIssue, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveStockIssues(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public StockIssue RetrieveStockIssue(int organisationId, int centreId, int stockIssueId, Expression<Func<StockIssue, bool>> predicate)
+        {
+            var stockIssue = _nidanDataService.RetrieveStockIssue(organisationId, centreId, stockIssueId, predicate);
+            return stockIssue;
+        }
+
+        public StockPurchase RetrieveStockPurchase(int organisationId, int id)
+        {
+            return _nidanDataService.RetrieveStockPurchase(organisationId,id, p => true);
+        }
+
+        public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveStockDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, string searchKeyword, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveStockDataGrid(organisationId, searchKeyword, predicate,orderBy, paging);
+        }
+
+        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssets(organisationId, predicate,orderBy, paging);
+        }
+
+        public FixAsset RetrieveFixAsset(int organisationId, Expression<Func<FixAsset, bool>> predicate)
+        {
+            var fixAsset = _nidanDataService.RetrieveFixAsset(organisationId, predicate);
+            return fixAsset;
+        }
+
+        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssets(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public List<StockType> RetrieveStockTypes(int organisationId, Expression<Func<StockType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<StockType>(organisationId, predicate);
+        }
+
+        public PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveStockReportDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
         public PagedResult<BatchPlanner> RetrieveBatchPlanners(int organisationId, Expression<Func<BatchPlanner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveBatchPlanners(organisationId, predicate, orderBy, paging);
@@ -3522,6 +3613,43 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreEnrollmentReceiptSetting);
         }
 
+        public StockIssue UpdateStockIssue(int organisationId, int centreId, StockIssue stockIssue)
+        {
+            var stockPurchaseData =RetrieveStockPurchases(organisationId, centreId, e => e.StockPurchaseId == stockIssue.StockPurchaseId).Items.FirstOrDefault();
+            if (stockPurchaseData != null)
+            {
+                var stockIssueData = new StockIssue()
+                {
+                    IssuedDate = stockIssue.IssuedDate,
+                    IssuedQuantity = stockIssue.IssuedQuantity,
+                    IssuedToPerson = stockIssue.IssuedToPerson,
+                    BalanceQuantity = (stockPurchaseData.Quantity-stockIssue.IssuedQuantity)
+                };
+            }
+            var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockIssue);
+            _nidanDataService.Create<StockIssue>(organisationId, stockIssue);
+            return data;
+        }
+
+        public StockPurchase UpdateStockPurchase(int organisationId, int centreId, StockPurchase stockPurchase)
+        {
+            var stockIssueData = new StockIssue()
+            {
+                //IssuedDate = stockIssue.IssuedDate,
+                //IssuedQuantity = stockIssue.IssuedQuantity,
+                //IssuedToPerson = stockIssue.IssuedToPerson,
+                //BalanceQuantity = (stockPurchaseData.Quantity - stockIssue.IssuedQuantity)
+            };
+            var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockPurchase);
+            return data;
+        }
+
+        public FixAsset UpdateFixAsset(int organisationId, FixAsset fixAsset)
+        {
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, fixAsset);
+            return data;
+        }
+        
         public BatchPlanner UpdateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchPlanner);

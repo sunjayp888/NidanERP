@@ -53,6 +53,10 @@ namespace Nidan.Entity
         public virtual ICollection<RoomAvailable> RoomAvailables { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FixAsset> FixAssets { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
+
     }
 }

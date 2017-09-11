@@ -54,6 +54,9 @@ namespace Nidan.Entity
             EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
+            StockIssues=new HashSet<StockIssue>();
+            StockPurchases=new HashSet<StockPurchase>();
+            FixAssets=new HashSet<FixAsset>();
             BatchPlanners=new HashSet<BatchPlanner>();
             BatchPlannerDays=new HashSet<BatchPlannerDay>();
         }
@@ -224,6 +227,15 @@ namespace Nidan.Entity
       
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockIssue> StockIssues { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockPurchase> StockPurchases { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FixAsset> FixAssets { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
