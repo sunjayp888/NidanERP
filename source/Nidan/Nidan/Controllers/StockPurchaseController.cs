@@ -105,5 +105,15 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.StockPurchaseDate >= fromDate && e.StockPurchaseDate <= toDate, orderBy, paging));
         }
+
+        [HttpPost]
+        public ActionResult StockPurchaseByStationary(Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId==1, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

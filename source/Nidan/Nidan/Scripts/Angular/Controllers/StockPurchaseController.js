@@ -25,6 +25,7 @@
         vm.searchStockPurchaseByDate = searchStockPurchaseByDate;
         vm.viewStockPurchase = viewStockPurchase;
         vm.retrieveStockIssuesByStockPurchaseId = retrieveStockIssuesByStockPurchaseId;
+        vm.retrieveStockPurchaseByStationary = retrieveStockPurchaseByStationary;
         vm.initialise = initialise;
 
         function initialise() {
@@ -57,6 +58,17 @@
                 return vm.stockIssues;
             });
         }
+
+        function retrieveStockPurchaseByStationary() {
+            return StockPurchaseService.retrieveStockPurchaseByStationary(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.stockPurchases = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.stockPurchases;
+                });
+        }
+
 
         function pageChanged() {
             retrieveStockPurchases();
