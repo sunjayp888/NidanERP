@@ -1,14 +1,14 @@
 ﻿@model Nidan.Models.BatchPlannerViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Batch Planner";
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create new Batch <small></small></h2>
+                <h2>Create new Batch Planner <small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -44,7 +44,9 @@
     </a>
 </div>
 @section scripts {
-    <script >
+    <script>
+        var courseDuration = 0;
+        var courseFee = 0.00;
         $(function () {
             var daterangepickerOptions = {
                 autoApply: true,
@@ -148,6 +150,7 @@
                         alert('Error: ' + xhr.statusText);
                     },
                     success: function (result) {
+                        courseDuration = result.Duration;
                         var courseType = result.CourseType;
                         $("#BatchPlanner_CourseType").val(result.CourseType);
                         if (courseType == "Career") {
@@ -160,5 +163,82 @@
                     processData: false
                 });
             });
+
+        $('input[type="checkbox"]').change(function () {
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            if (checkboxlength != 0) {
+                BatchLogic();
+            }
+        });
+
+
+
+        function BatchLogic() {
+            var startTimeHours = $('#BatchPlanner_StartTimeHours :selected').val();
+            var endTimeHours = $('#BatchPlanner_EndTimeHours :selected').val();
+            var minimumCandidate = $('#BatchPlanner_MinimumCandidate').val();
+            var numberOfHoursDaily = 0;
+            //if (endTimeHours > startTimeHours) {
+                numberOfHoursDaily = endTimeHours - startTimeHours;
+            //} else {
+              //  numberOfHoursDaily = startTimeHours - endTimeHours;
+            //}
+            var days = courseDuration / numberOfHoursDaily;
+            if (days != 0) {
+                var centreId = $('#BatchPlanner_CentreId :selected').val();
+                var roomId = $('#BatchPlanner_RoomId :selected').val();
+                var batchStartDate = $('#BatchPlanner_BatchStartDate').val();
+                var numberOfCourseHours = courseDuration;
+                var dailyBatchHours = numberOfHoursDaily;
+                var courseId = $('#BatchPlanner_CourseId :selected').val();
+                //var downPayment = $('#CourseInstallment_DownPayment').val();
+                var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                var numberOfWeekDays = checkboxlength;
+                var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
+                //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
+                //then add days in days like days = days + publicholidaycount
+
+                $.ajax({
+                    url: '/BatchPlanner/GetMonth',
+                    type: 'POST',
+                    data: JSON.stringify({
+                        centreId: centreId,
+                        roomId: roomId,
+                        startDate: batchStartDate,
+                        numberOfCourseHours: numberOfCourseHours,
+                        dailyBatchHours: dailyBatchHours,
+                        courseId: courseId,
+                        numberOfWeekDays: numberOfWeekDays
+                        //courseFee: courseFee,
+                        //downPayment: downPayment
+                    }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    //error: function (xhr) {
+                    //    alert('Error: ' + xhr.statusText);
+                    //},
+                    success: function (result) {
+                        //var start = result.StartDate.getDate() + " " + result.StartDate.getMonthName() + " " + result.StartDate.getFullYear();
+                        //$("#Batch_NumberOfHolidays").empty();
+                        $("#BatchPlanner_MaximumCandidate").val(result.MaximumCandidate);
+                        $('#BatchPlanner_BatchStartDate').val(result.StartDate);
+                        $('#BatchPlanner_BatchEndDate').val(result.EndDate);
+                        $('#BatchPlanner_AssessmentDate').val(result.AssessmentDate);
+                        $('#BatchPlanner_DurationOfBatchSlot').val(result.Month);
+                        $('#BatchPlanner_NumberOfBatch').val(result.NumberOfBatch);
+                        $('#BatchPlanner_InstallmentDuration').val(result.NumberOfInstallment);
+                        $('#BatchPlanner_MonthlyInstallment').val(result.InstallmentAmount);
+                        if (minimumCandidate != null) {
+                            var minimumRevenue = result.InstallmentAmount * result.NumberOfInstallment * minimumCandidate;
+                            $('#BatchPlanner_MinimumRevenue').val(minimumRevenue);
+                        }
+                    },
+                    async: true,
+                    processData: false
+                });
+            }
+        };
+
+
     </script>
 }

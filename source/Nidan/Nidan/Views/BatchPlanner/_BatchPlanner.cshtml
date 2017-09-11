@@ -233,6 +233,24 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
+                @Html.LabelFor(model => model.BatchPlanner.BatchEndDate, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.BatchPlanner.BatchEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                    @Html.ValidationMessageFor(model => model.BatchPlanner.BatchEndDate, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.BatchPlanner.AssessmentDate, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.BatchPlanner.AssessmentDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                    @Html.ValidationMessageFor(model => model.BatchPlanner.AssessmentDate, "", new { @class = "help-block" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
                 @Html.LabelFor(model => model.BatchPlanner.NumberOfCandidateEngaged, new { @class = "control-label col-md-4 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(model => model.BatchPlanner.NumberOfCandidateEngaged, new { @class = "form-control col-md-7 col-xs-12" })

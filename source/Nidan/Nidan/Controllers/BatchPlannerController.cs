@@ -145,5 +145,12 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCourse(UserOrganisationId, courseId);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult GetMonth(int centreId, int roomId, DateTime startDate, int numberOfCourseHours, int dailyBatchHours, int courseId, int numberOfWeekDays)
+        {
+            var data = NidanBusinessService.GetBatchPlannerDetail(UserOrganisationId, centreId, roomId, startDate, numberOfCourseHours, dailyBatchHours, courseId, numberOfWeekDays);
+            return this.JsonNet(data);
+        }
     }
 }

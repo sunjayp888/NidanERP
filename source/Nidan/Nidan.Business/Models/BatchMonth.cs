@@ -15,5 +15,7 @@ namespace Nidan.Business.Models
         public int Holiday { get; set; }
         public int NumberOfInstallment { get; set; }
         public int InstallmentAmount { get; set; }
+        public int MaximumCandidate { get; set; }
+        public int NumberOfBatch { get; set; }
     }
 }

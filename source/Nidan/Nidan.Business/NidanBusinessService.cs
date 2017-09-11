@@ -1519,7 +1519,7 @@ namespace Nidan.Business
 
         public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
-            var data= _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
+            var data = _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
             CreateBatchPlannerDay(organisationId, batchPlanner.BatchPlannerId, batchPlanner.CentreId, batchPlannerDay);
             return data;
         }
@@ -2526,6 +2526,39 @@ namespace Nidan.Business
                 AssessmentDate = assessmentDate,
                 NumberOfInstallment = numberOfInstallment,
                 InstallmentAmount = installmentAmount
+            };
+        }
+
+        public BatchMonth GetBatchPlannerDetail(int organisationId, int centreId, int roomId, DateTime startDate, int numberOfCourseHours, int dailyBatchHours, int courseId, int numberOfWeekDays)
+        {
+            var courseFeeData = RetrieveCourseInstallments(organisationId, e => e.CourseId == courseId);
+            var roomData = RetrieveRoom(organisationId, roomId);
+            var maxCandidate = Math.Round((decimal)roomData.SquareFeet / 10);
+            var maxCourseFee = courseFeeData.Max(e => e.Fee);
+            var downPayment = courseFeeData.FirstOrDefault(e => e.Fee == maxCourseFee)?.DownPayment;
+            var hoursPerWeekToWork = dailyBatchHours * numberOfWeekDays;
+            var totalNumberOfDays = (numberOfCourseHours / hoursPerWeekToWork) * 7;
+            var endDate = startDate.AddDays(totalNumberOfDays);
+            //calculate public holiday from startdate and endDate for eg 7
+            var date = endDate;
+            var publicHoliday = RetrieveHolidays(organisationId, e => e.HolidayDate >= startDate && e.HolidayDate <= date && e.CentreId == centreId).Items.Count();
+            int months = (endDate.Year - startDate.Year) * 12 + endDate.Month - startDate.Month;
+            var numberOfBatch = Math.Round((decimal)12 / months);
+            endDate = endDate.AddDays(publicHoliday);
+            var assessmentDate = endDate.AddDays(3);
+            var numberOfInstallment = months - 2 != 0 ? months - 2 : 1;
+            var installmentAmount = (maxCourseFee - downPayment) / (numberOfInstallment != 0 ? numberOfInstallment : 1);
+            return new BatchMonth
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                Month = months,
+                Holiday = publicHoliday,
+                AssessmentDate = assessmentDate,
+                NumberOfInstallment = numberOfInstallment,
+                InstallmentAmount = installmentAmount ?? 0,
+                MaximumCandidate = (int)maxCandidate,
+                NumberOfBatch = (int)numberOfBatch
             };
         }
 

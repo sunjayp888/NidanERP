@@ -48,6 +48,12 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime BatchStartDate { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime BatchEndDate { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime AssessmentDate { get; set; }
+
         public int InstallmentDuration { get; set; }
 
         public int DurationOfBatchSlot { get; set; }
