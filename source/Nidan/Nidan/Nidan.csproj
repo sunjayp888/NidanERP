@@ -244,6 +244,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
+    <Compile Include="Controllers\BatchPlannerController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Models\AttendanceViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
+    <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
@@ -663,6 +665,7 @@
     <Content Include="bower_components\jquery-validation\src\localization\methods_pt.js" />
     <Content Include="bower_components\jquery\AUTHORS.txt" />
     <Content Include="bower_components\jquery\dist\core.js" />
+    <Content Include="bower_components\jquery\dist\jquery.ui.min.js" />
     <Content Include="bower_components\jquery\dist\jquery.js" />
     <Content Include="bower_components\jquery\dist\jquery.min.js" />
     <Content Include="bower_components\jquery\dist\jquery.slim.js" />
@@ -1058,6 +1061,9 @@
     <Content Include="bower_components\ngBootbox\examples\index.html" />
     <Content Include="bower_components\ngBootbox\gulpfile.js" />
     <Content Include="bower_components\ngBootbox\ngBootbox.js" />
+    <Content Include="bower_components\notify\pnotify.buttons.js" />
+    <Content Include="bower_components\notify\pnotify.core.js" />
+    <Content Include="bower_components\notify\pnotify.nonblock.js" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\css\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
@@ -1284,6 +1290,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bower_components\gentelella\vendors\" />
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
@@ -1681,6 +1688,10 @@
     <Content Include="Views\Report\FixAsset.cshtml" />
     <Content Include="Views\FixAsset\View.cshtml" />
     <Content Include="Views\Report\Stock.cshtml" />
+    <Content Include="Views\BatchPlanner\Index.cshtml" />
+    <Content Include="Views\BatchPlanner\Create.cshtml" />
+    <Content Include="Views\BatchPlanner\Edit.cshtml" />
+    <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1739,7 +1750,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58520/</IISUrl>
+          <IISUrl>http://localhost:58521/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

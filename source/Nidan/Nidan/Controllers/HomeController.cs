@@ -32,7 +32,7 @@ namespace Nidan.Controllers
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveEnquiries(organisationId,
-               e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && e.EnquiryStatus == "Enquiry").Count();
+                e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && (e.EnquiryStatus == "Enquiry" || e.EnquiryStatus == "Counselling")).Count();
 
             var mobilizationCount =
                 NidanBusinessService.RetrieveMobilizations(organisationId,

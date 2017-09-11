@@ -52,10 +52,15 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        public int CandidateFeeId { get; set; }
 
         [Key]
         [Column(Order = 8)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CentreId { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
         [StringLength(970)]
         public string SearchField { get; set; }
     }

@@ -136,6 +136,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
         public virtual DbSet<StockType> StockTypes { get; set; }
         public virtual DbSet<StockReportDataGrid> StockReportDataGrids { get; set; }
+        public virtual DbSet<BatchPlanner> BatchPlanners { get; set; }
+        public virtual DbSet<BatchPlannerDay> BatchPlannerDays { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -156,6 +158,10 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Course>()
                .Property(e => e.Description)
                .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Course>()
                 .HasMany(e => e.FollowUps)
@@ -1182,6 +1188,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+
             modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -1912,7 +1922,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventBrainstorming>()
-                .Property(e => e.RefernceDetailDocument)
+                .Property(e => e.ReferenceDetailDocument)
                 .IsUnicode(false);
             
             modelBuilder.Entity<MobilizationCentreReport>()
@@ -2195,6 +2205,14 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<StockReportDataGrid>()
                 .Property(e => e.IssuedToPerson)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.CourseType)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -19,9 +19,8 @@ namespace Nidan.Entity
         [StringLength(10)]
         public string DisscussionCompletedYesNo { get; set; }
 
-        [Required]
         [DataType(DataType.MultilineText)]
-        public string RefernceDetailDocument { get; set; }
+        public string ReferenceDetailDocument { get; set; }
 
         public int CentreId { get; set; }
 
