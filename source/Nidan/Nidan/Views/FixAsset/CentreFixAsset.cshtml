@@ -26,31 +26,29 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                        <tr role="row">
-                                            <th><input type="checkbox" id="chkall" /> All</th>
-                                            <th ng-click="model.order('FixAsset.Product.Name')" ng-class="model.orderClass('FixAsset.Product.Name')">Asset</th>
-                                            <th ng-click="model.order('AssetCode')" ng-class="model.orderClass('AssetCode')">AssetCode</th>
-                                            <th ng-click="model.order('RoomId')" ng-class="model.orderClass('RoomId')">Room</th>
-                                            <th ng-click="model.order('DateofPutToUse')" ng-class="model.orderClass('DateofPutToUse')">Date of Put To Use</th>
-                                            <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
-                                        </tr>
+                                    <tr role="row">
+                                        <th><input type="checkbox" id="chkall" /> All</th>
+                                        <th ng-click="model.order('FixAsset.Product.Name')" ng-class="model.orderClass('FixAsset.Product.Name')">Asset</th>
+                                        <th ng-click="model.order('AssetCode')" ng-class="model.orderClass('AssetCode')">AssetCode</th>
+                                        <th ng-click="model.order('RoomId')" ng-class="model.orderClass('RoomId')">Room</th>
+                                        <th ng-click="model.order('DateofPutToUse')" ng-class="model.orderClass('DateofPutToUse')">Date of Put To Use</th>
+                                        <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="centreFixAsset in model.centreFixAssets| orderBy:'CentreFixAssetId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                            <td><input type="checkbox" ng-disabled="centreFixAsset.RoomId!=null"/></td>
-                                            <td><span ng-bind="centreFixAsset.FixAsset.Product.Name"></span></td>
-                                            <td><span ng-bind="centreFixAsset.AssetCode"></span></td>
-                                            <td><span ng-bind="centreFixAsset.Room.Description"></span></td>
-                                            <td><span ng-bind="centreFixAsset.DateofPutToUse|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="centreFixAsset.Remarks"></span></td>
-                                        </tr>
+                                    <tr ng-repeat="centreFixAsset in model.centreFixAssets| orderBy:'CentreFixAssetId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <td><input type="checkbox" ng-disabled="centreFixAsset.RoomId!=null"/></td>
+                                        <td><span ng-bind="centreFixAsset.FixAsset.Product.Name"></span></td>
+                                        <td><span ng-bind="centreFixAsset.AssetCode"></span></td>
+                                        <td><span ng-bind="centreFixAsset.Room.Description"></span></td>
+                                        <td><span ng-bind="centreFixAsset.DateofPutToUse|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="centreFixAsset.Remarks"></span></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-10">
-                                <a href="@Url.Action("Index")" class="btn btn-success" role="button">
-                                    &nbsp;Assign
-                                </a>
+                                <button id="btnCentreFixAsset" type="button" class="btn btn-success" ng-click="model.openCentreFixAssetModalPopUp(@Model.FixAssetId)" data-toggle="modal" data-target="#centreFixAssetModal">Assign Asset</button>
                             </div>
                         </div>
                         @Html.Partial("Pagination/_pagination")
@@ -64,6 +62,7 @@
             </div>
         </div>
     </div>
+    @Html.Partial("_FixAssetModal")
 </div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
@@ -87,5 +86,32 @@
 
             $('#chkall').prop('checked', allchecked);
         });
+
+        $(function () {
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+
     </script>
 }

@@ -11,7 +11,9 @@
         /* jshint validthis:true */
         var vm = this;
         vm.fixAssets = [];
-        vm.FixAssetId;
+        vm.fixAssetId;
+        vm.rooms = [];
+        vm.centreFixAssets = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -22,6 +24,8 @@
         vm.viewFixAsset = viewFixAsset;
         vm.searchFixAssetByDate = searchFixAssetByDate;
         vm.retrieveCentreFixAssetsByFixAssetId = retrieveCentreFixAssetsByFixAssetId;
+        vm.openCentreFixAssetModalPopUp = openCentreFixAssetModalPopUp;
+        vm.markAsset = markAsset;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
@@ -80,6 +84,33 @@
                   vm.searchMessage = vm.fixAssets.length === 0 ? "No Records Found" : "";
                   return vm.fixAssets;
               });
+        }
+
+        function retrieveRooms() {
+            return FixAssetService.retrieveRooms()
+                .then(function (response) {
+                    vm.rooms = response.data;
+                    return vm.rooms;
+                });
+        }
+        
+        function openCentreFixAssetModalPopUp(fixAssetId) {
+            vm.fixAssetId = fixAssetId;
+            retrieveRooms();
+            return FixAssetService.retrieveCentreFixAssetsByFixAssetId(vm.fixAssetId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    $('#dropDownRoom').val("Select Room");
+                    $("#txtDateofUse").val('');
+                });
+        }
+
+        function markAsset() {
+            var roomId = $('#dropDownRoom').val();
+            var dateofuse = $('#txtDateofUse').val();
+            return FixAssetService.markAsset(roomId, dateofuse, vm.centreFixAssets).then(function (response) {
+                vm.centreFixAssets = response.data.Items;
+                return vm.centreFixAssets;
+            });
         }
 
         function pageChanged() {
