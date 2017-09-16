@@ -117,7 +117,11 @@
         }
 
         function pageChanged() {
-            return retrieveCandidateFees();
+            if (vm.searchKeyword) {
+                searchCandidateFee(vm.searchKeyword);
+            } else {
+                return retrieveCandidateFees();
+            }
         }
 
         function order(property) {

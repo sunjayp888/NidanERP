@@ -85,7 +85,10 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchEnquiry(vm.searchKeyword);
-            } else {
+            } else if (vm.fromDate && vm.toDate) {
+                searchEnquiryByDate(vm.fromDate, vm.toDate);
+            }
+            else {
                 return retrieveEnquiries();
             }
         }

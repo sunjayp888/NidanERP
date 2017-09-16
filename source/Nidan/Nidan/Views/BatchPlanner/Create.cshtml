@@ -168,21 +168,43 @@
             var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
             if (checkboxlength != 0) {
                 BatchLogic();
+                NumberOfCandidateEngaged();
+                MinimumRevenue();
             }
         });
 
+        $('#BatchPlanner_MinimumCandidate').keyup(function () {
+            BatchLogic();
+            NumberOfCandidateEngaged();
+            MinimumRevenue();
+        });
 
+        function NumberOfCandidateEngaged() {
+            var maximumCandidate = $('#BatchPlanner_MaximumCandidate').val();
+            var numberOfBatch = $('#BatchPlanner_NumberOfBatch').val();
+            var numberOfCandidateEngaged = maximumCandidate * numberOfBatch;
+            $('#BatchPlanner_NumberOfCandidateEngaged').val(numberOfCandidateEngaged);
+        }
+
+        function MinimumRevenue() {
+            var minimumCandidate = $('#BatchPlanner_MinimumCandidate').val();
+            var installmentDuration = $('#BatchPlanner_InstallmentDuration').val();
+            var monthlyInstallment = $('#BatchPlanner_MonthlyInstallment').val();
+            var minimumRevenue = minimumCandidate * monthlyInstallment * installmentDuration;
+            $('#BatchPlanner_MinimumRevenue').val(minimumRevenue);
+        }
 
         function BatchLogic() {
-            var startTimeHours = $('#BatchPlanner_StartTimeHours :selected').val();
-            var endTimeHours = $('#BatchPlanner_EndTimeHours :selected').val();
+            var startTimeHours = parseInt($('#BatchPlanner_StartTimeHours :selected').val());
+            var endTimeHours = parseInt($('#BatchPlanner_EndTimeHours :selected').val());
             var minimumCandidate = $('#BatchPlanner_MinimumCandidate').val();
             var numberOfHoursDaily = 0;
-            //if (endTimeHours > startTimeHours) {
+            if (endTimeHours > startTimeHours) {
                 numberOfHoursDaily = endTimeHours - startTimeHours;
-            //} else {
-              //  numberOfHoursDaily = startTimeHours - endTimeHours;
-            //}
+            } else {
+                numberOfHoursDaily = (startTimeHours - 12) - endTimeHours;
+                numberOfHoursDaily = Math.abs(numberOfHoursDaily);
+            }
             var days = courseDuration / numberOfHoursDaily;
             if (days != 0) {
                 var centreId = $('#BatchPlanner_CentreId :selected').val();
@@ -195,6 +217,7 @@
                 var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
                 var numberOfWeekDays = checkboxlength;
                 var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
+
                 //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
                 //then add days in days like days = days + publicholidaycount
 

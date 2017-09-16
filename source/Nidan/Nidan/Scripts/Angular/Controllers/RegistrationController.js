@@ -96,7 +96,13 @@
         }
 
         function pageChanged() {
-            return retrieveRegistrations();
+            if (vm.searchKeyword) {
+                searchRegistration(vm.searchKeyword);
+            } else if (vm.fromDate && vm.toDate) {
+                searchRegistrationByDate(vm.fromDate, vm.toDate);
+            } else {
+                return retrieveRegistrations();
+            }
         }
 
         function order(property) {
