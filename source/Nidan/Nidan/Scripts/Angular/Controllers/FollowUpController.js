@@ -63,6 +63,8 @@
             else {
                 if (vm.searchKeyword) {
                     searchFollowUp(vm.searchKeyword);
+                } else if (vm.fromDate && vm.toDate) {
+                    searchFollowUpByDate(vm.fromDate, vm.toDate);
                 } else {
                     retrieveFollowUps();
                 }

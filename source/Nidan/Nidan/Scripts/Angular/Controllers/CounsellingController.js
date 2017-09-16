@@ -76,6 +76,8 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchCounselling(vm.searchKeyword);
+            } else if (vm.fromDate && vm.toDate) {
+                searchCounsellingByDate(vm.fromDate, vm.toDate);
             } else {
                 return retrieveCounsellings();
             }

@@ -85,6 +85,8 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchAdmission(vm.searchKeyword);
+            } else if (vm.fromDate && vm.toDate) {
+                searchAdmissionByDate(vm.fromDate, vm.toDate);
             } else {
                 return retrieveAdmissions();
             }
