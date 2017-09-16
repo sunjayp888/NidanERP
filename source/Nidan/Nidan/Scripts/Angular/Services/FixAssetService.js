@@ -11,7 +11,8 @@
         var service = {
             retrieveFixAssets: retrieveFixAssets,
             searchFixAsset: searchFixAsset,
-            searchFixAssetByDate: searchFixAssetByDate
+            searchFixAssetByDate: searchFixAssetByDate,
+            retrieveCentreFixAssetsByFixAssetId: retrieveCentreFixAssetsByFixAssetId
         };
 
         return service;
@@ -47,6 +48,17 @@
                 orderBy: new Array(OrderBy)
             };
 
+            return $http.post(url, data);
+        }
+
+        function retrieveCentreFixAssetsByFixAssetId(fixAssetId, Paging, OrderBy) {
+
+            var url = "/FixAsset/CentreFixAssetList",
+                data = {
+                    fixAssetId: fixAssetId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
             return $http.post(url, data);
         }
 

@@ -1524,6 +1524,7 @@
     <None Include="Properties\PublishProfiles\Nidan.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Properties\PublishProfiles\sanjay.pubxml" />
+    <None Include="Properties\PublishProfiles\Shraddha.pubxml" />
     <None Include="Properties\PublishProfiles\UAT.pubxml" />
     <Content Include="Views\Personnel\Index.cshtml" />
     <Content Include="Views\Shared\Pagination\_pagination.cshtml" />
@@ -1686,12 +1687,12 @@
     <Content Include="Views\FixAsset\_FixAsset.cshtml" />
     <Content Include="Views\FixAsset\Edit.cshtml" />
     <Content Include="Views\Report\FixAsset.cshtml" />
-    <Content Include="Views\FixAsset\View.cshtml" />
     <Content Include="Views\Report\Stock.cshtml" />
     <Content Include="Views\BatchPlanner\Index.cshtml" />
     <Content Include="Views\BatchPlanner\Create.cshtml" />
     <Content Include="Views\BatchPlanner\Edit.cshtml" />
     <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
+    <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

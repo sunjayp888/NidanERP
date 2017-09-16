@@ -375,6 +375,17 @@ namespace Nidan.Data
             }
         }
 
+        public CentreFixAsset CreateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                centreFixAsset = context.CentreFixAssets.Add(centreFixAsset);
+                context.SaveChanges();
+
+                return centreFixAsset;
+            }
+        }
+
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -3361,8 +3372,8 @@ namespace Nidan.Data
 
         public PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
-            {
-                using (ReadUncommitedTransactionScope)
+        {
+            using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
@@ -3381,7 +3392,7 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
             }
-            }
+        }
 
         public PagedResult<BatchPlanner> RetrieveBatchPlanners(int organisationId, Expression<Func<BatchPlanner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -3415,8 +3426,8 @@ namespace Nidan.Data
                     .Include(c => c.Organisation)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(e=>e.StockPurchaseId==stockPurchaseId);
-                }
+                    .SingleOrDefault(e => e.StockPurchaseId == stockPurchaseId);
+            }
         }
 
         public PagedResult<StockIssue> RetrieveStockIssues(int organisationId, int centreId, Expression<Func<StockIssue, bool>> predicate, List<OrderBy> orderBy = null,
@@ -3454,7 +3465,7 @@ namespace Nidan.Data
                     .Include(c => c.Organisation)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(predicate);
+                    .SingleOrDefault(c=>c.StockIssuedId==stockIssueId);
             }
         }
 
@@ -3481,7 +3492,7 @@ namespace Nidan.Data
 
         public BatchPlanner RetrieveBatchPlanner(int organisationId, int batchPlannerId, Expression<Func<BatchPlanner, bool>> predicate)
         {
-        using (ReadUncommitedTransactionScope)
+            using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
@@ -3518,24 +3529,21 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                      .FixAssets
-                      .Include(p => p.Organisation)
-                      .Include(p => p.Room)
-                      .Include(p => p.Centre)
+                      .FixAssetSearchGrids
                       .AsNoTracking()
                       .Where(predicate)
                       .OrderBy(orderBy ?? new List<OrderBy>
                       {
                         new OrderBy
                         {
-                            Property = "RoomId",
+                            Property = "FixAssetId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                         }
@@ -3543,20 +3551,35 @@ namespace Nidan.Data
             }
         }
 
-        public FixAsset RetrieveFixAsset(int organisationId, Expression<Func<FixAsset, bool>> predicate)
+        public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
                     .FixAssets
-                    .Include(c => c.Room)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(predicate);
-
+                    .SingleOrDefault(c => c.FixAssetId == fixAssetId);
             }
         }
+
+        //public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.Create(organisationId))
+        //    {
+        //        return context
+        //            .FixAssets
+        //            .Include(c => c.Room)
+        //            .Include(p => p.Product)
+        //            .AsNoTracking()
+        //            .Where(predicate)
+        //            .SingleOrDefault(p=>p.FixAssetId==fixAssetId);
+        //    }
+        //}
 
         public BatchPlannerDay RetrieveBatchPlannerDay(int organisationId, int batchPlannerDayId, Expression<Func<BatchPlannerDay, bool>> predicate)
         {
@@ -3571,8 +3594,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -3582,9 +3604,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<FixAssetSearchGrid>("SearchFixAsset @SearchKeyword", category).ToList();
 
-                var fixAssets = context.FixAssets.Include(e => e.Room);
-
-                var data = searchData.Join(fixAssets, e => e.FixAssetId, m => m.FixAssetId, (e, m) => m).ToList().AsQueryable().
+                var data = searchData.ToList().AsQueryable().
                      OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
@@ -3596,6 +3616,33 @@ namespace Nidan.Data
                     .Where(predicate)
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreFixAssets
+                    .Include(e => e.FixAsset)
+                    .Include(e => e.FixAsset.Product)
+                    .Include(e => e.Room)
+                    .Include(e => e.Organisation)
+                    .Include(e => e.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreFixAssetId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 
@@ -3620,29 +3667,44 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
-        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+
+        public CentreProductSetting RetrieveCentreProductSetting(int organisationId, Expression<Func<CentreProductSetting, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-
                 return context
-                      .FixAssetDataGrids
-                      .AsNoTracking()
-                      .Where(predicate)
-                      .OrderBy(orderBy ?? new List<OrderBy>
-                      {
-                        new OrderBy
-                        {
-                            Property = "FixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                        }
-                      ).Paginate(paging);
+                    .CentreProductSettings
+                    .Include(c => c.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(predicate);
             }
         }
 
+        public PagedResult<CentreProductSetting> RetrieveCentreProductSettings(int organisationId, Expression<Func<CentreProductSetting, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreProductSettings
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreProductSettingId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+        
         public PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3665,7 +3727,7 @@ namespace Nidan.Data
                       ).Paginate(paging);
             }
         }
-        
+
         #endregion
 
         #region // Update

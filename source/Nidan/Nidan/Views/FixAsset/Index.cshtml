@@ -110,10 +110,9 @@
                                             <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
                                         }
                                         <th ng-click="model.order('DateofPurchase')" ng-class="model.orderClass('DateofPurchase')">Date of Purchase</th>
-                                        <th ng-click="model.order('AssetCode')" ng-class="model.orderClass('AssetCode')">Asset Code</th>
-                                        <th ng-click="model.order('RoomId')" ng-class="model.orderClass('RoomId')">Room</th>
-                                        <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Asset</th>
-                                        <th ng-click="model.order('DateofPutToUse')" ng-class="model.orderClass('DateofPutToUse')">Date of Put To Use</th>
+                                        <th ng-click="model.order('ProductId')" ng-class="model.orderClass('ProductId')">Asset</th>
+                                        <th ng-click="model.order('Quantity')" ng-class="model.orderClass('Quantity')">Quantity</th>
+                                        <th ng-click="model.order('BalanceQuantity')" ng-class="model.orderClass('BalanceQuantity')">BalanceQuantity</th>
                                         <th ng-click="model.order('Supplier')" ng-class="model.orderClass('Supplier')">Supplier</th>
                                         <th ng-click="model.order('BillNumber')" ng-class="model.orderClass('BillNumber')">Bill No.</th>
                                         <th ng-click="model.order('CostAmount')" ng-class="model.orderClass('CostAmount')">Cost Amount</th>
@@ -127,13 +126,12 @@
                                             <td><span ng-bind="fixAsset.Centre.Name"></span></td>
                                         }
                                         <td><span ng-bind="fixAsset.DateofPurchase|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="fixAsset.AssetCode"></span></td>
-                                        <td><span ng-bind="fixAsset.Room.Description"></span></td>
                                         <td><span ng-bind="fixAsset.Name"></span></td>
+                                        <td><span ng-bind="fixAsset.Quantity"></span></td>
+                                        <td><span ng-bind="fixAsset.BalanceQuantity"></span></td>
                                         <td><span ng-bind="fixAsset.Supplier"></span></td>
                                         <td><span ng-bind="fixAsset.BillNumber"></span></td>
                                         <td><span ng-bind="fixAsset.CostAmount"></span></td>
-                                        <td><span ng-bind="fixAsset.DateofPutToUse|date : format : shortDate"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -141,7 +139,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
                                                     <li>
-                                                        <a style="cursor: pointer;" ng-href="/FixAsset/View/{{fixAsset.FixAssetId}}">
+                                                        <a style="cursor: pointer;" ng-href="/FixAsset/CentreFixAsset/{{fixAsset.FixAssetId}}">
                                                             View
                                                         </a>
                                                     </li>

@@ -52,9 +52,11 @@
         $("#StockPurchase_StockTypeId")
             .change(function() {
                 if ($("#StockPurchase_StockTypeId").val() == 2) {
-                    $('.divsector').show();
+                    $(".divsector").show();
                 }
-                $('.divsector').hide();
+                if ($("#StockPurchase_StockTypeId").val() == 1) {
+                    $(".divsector").hide();
+                }
             });
 
        var daterangepickerOptions = {

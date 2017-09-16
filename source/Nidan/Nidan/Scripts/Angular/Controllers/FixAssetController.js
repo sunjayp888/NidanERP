@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.fixAssets = [];
+        vm.FixAssetId;
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -20,15 +21,16 @@
         vm.searchFixAsset = searchFixAsset;
         vm.viewFixAsset = viewFixAsset;
         vm.searchFixAssetByDate = searchFixAssetByDate;
+        vm.retrieveCentreFixAssetsByFixAssetId = retrieveCentreFixAssetsByFixAssetId;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
 
         function initialise() {
-            vm.orderBy.property = "RoomId";
+            vm.orderBy.property = "DateofPurchase";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "desc";
-            order("RoomId");
+            order("DateofPurchase");
         }
 
         function retrieveFixAssets() {
@@ -39,6 +41,20 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.fixAssets;
                 });
+        }
+
+        function retrieveCentreFixAssetsByFixAssetId(FixAssetId) {
+            vm.FixAssetId;
+            vm.orderBy.property = "CentreFixAssetId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return FixAssetService.retrieveCentreFixAssetsByFixAssetId(FixAssetId, vm.paging, vm.orderBy)
+            .then(function (response) {
+                vm.centreFixAssets = response.data.Items;
+                vm.paging.totalPages = response.data.TotalPages;
+                vm.paging.totalResults = response.data.TotalResults;
+                return vm.centreFixAssets;
+            });
         }
 
         function searchFixAsset(searchKeyword) {

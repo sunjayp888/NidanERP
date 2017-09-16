@@ -23,8 +23,8 @@ namespace Nidan.Entity
         [Column(Order = 2, TypeName = "date")]
         public DateTime StockPurchaseDate { get; set; }
 
-        [StringLength(100)]
-        public string Name { get; set; }
+        [StringLength(500)]
+        public string StockTypeName { get; set; }
 
         [Key]
         [Column(Order = 3)]
@@ -59,6 +59,9 @@ namespace Nidan.Entity
         [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
+
+        [StringLength(500)]
+        public string CentreName { get; set; }
 
         [Key]
         [Column(Order = 8)]

@@ -95,7 +95,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId && p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -103,7 +103,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.StockPurchaseDate >= fromDate && e.StockPurchaseDate <= toDate, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.StockPurchaseDate >= fromDate && e.StockPurchaseDate <= toDate && e.TotalBalanceQuantity!=0, orderBy, paging));
         }
 
         [HttpPost]
@@ -112,7 +112,17 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId==1, orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId==1 && (p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult StockPurchaseBySector(Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId == 2 && (p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
     }

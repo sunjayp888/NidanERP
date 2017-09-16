@@ -14,8 +14,8 @@ namespace Nidan.Entity
     {
         private class FixAssetMetadata
         {
-            [Display(Name = "Asset Name")]
-            public string Name { get; set; }
+            [Display(Name = "Product")]
+            public int ProductId { get; set; }
 
             [Display(Name = "Date of Purchase")]
             public DateTime DateofPurchase { get; set; }
@@ -28,15 +28,7 @@ namespace Nidan.Entity
 
             [Display(Name = "Cost Amount")]
             public decimal CostAmount { get; set; }
-
-            [Display(Name = "Class Room")]
-            public int RoomId { get; set; }
-
-            [Display(Name = "Date of Put To Use")]
-            public DateTime DateofPutToUse { get; set; }
-
-            [Display(Name = "Asset Code")]
-            public string AssetCode { get; set; }
-        }
+            
+            }
     }
 }

@@ -23,39 +23,45 @@ namespace Nidan.Entity
         [Column(Order = 2, TypeName = "date")]
         public DateTime StockPurchaseDate { get; set; }
 
-        public int? StockTypeId { get; set; }
-
-        [StringLength(100)]
-        public string Name { get; set; }
-
         [Key]
         [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StockTypeId { get; set; }
+
+        [StringLength(500)]
+        public string StockTypeName { get; set; }
+
+        [Key]
+        [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Quantity { get; set; }
 
         public int? TotalBalanceQuantity { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 5)]
         [StringLength(500)]
         public string Supplier { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 6)]
         [StringLength(500)]
         public string BillNumber { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 7)]
         public decimal Amount { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 

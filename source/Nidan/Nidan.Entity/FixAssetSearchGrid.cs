@@ -16,54 +16,51 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 1)]
-        [StringLength(500)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ProductId { get; set; }
+
+        [StringLength(100)]
         public string Name { get; set; }
 
         [Key]
-        [Column(Order = 2, TypeName = "date")]
+        [Column(Order = 2)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Quantity { get; set; }
+
+        public int? BalanceQuantity { get; set; }
+
+        [Key]
+        [Column(Order = 3, TypeName = "date")]
         public DateTime DateofPurchase { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 4)]
         [StringLength(500)]
         public string Supplier { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 5)]
         [StringLength(100)]
         public string BillNumber { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 6)]
         public decimal CostAmount { get; set; }
 
         [Key]
-        [Column(Order = 6)]
-        public string Room { get; set; }
-
-        [Key]
-        [Column(Order = 7, TypeName = "date")]
-        public DateTime DateofPutToUse { get; set; }
-
-        [Key]
-        [Column(Order = 8)]
-        [StringLength(500)]
-        public string AssetCode { get; set; }
-
-        [StringLength(500)]
-        public string Remarks { get; set; }
-
-        [Key]
-        [Column(Order = 9)]
+        [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        [StringLength(1630)]
+        [StringLength(850)]
         public string SearchField { get; set; }
     }
 }

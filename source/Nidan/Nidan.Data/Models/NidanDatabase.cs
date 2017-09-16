@@ -138,6 +138,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<StockReportDataGrid> StockReportDataGrids { get; set; }
         public virtual DbSet<BatchPlanner> BatchPlanners { get; set; }
         public virtual DbSet<BatchPlannerDay> BatchPlannerDays { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<CentreProductSetting> CentreProductSettings { get; set; }
+        public virtual DbSet<CentreFixAsset> CentreFixAssets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2090,109 +2093,53 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<StockPurchase>()
                 .Property(e => e.BillNumber)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<StockDataGrid>()
-                .Property(e => e.InventoryItem)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<StockDataGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<StockDataGrid>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<StockDataGrid>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<StockDataGrid>()
-                .Property(e => e.SearchField)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.AssetCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.Room)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.AssetCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.SearchField)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Room)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.AssetCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<StockType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
+            
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+            
+            modelBuilder.Entity<Product>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.InventoryItem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.StockTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
 
             modelBuilder.Entity<StockReportDataGrid>()
                 .Property(e => e.InventoryItem)
                 .IsUnicode(false);
 
             modelBuilder.Entity<StockReportDataGrid>()
-                .Property(e => e.Name)
+                .Property(e => e.StockTypeName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<StockReportDataGrid>()
@@ -2207,12 +2154,69 @@ namespace Nidan.Data.Models
                 .Property(e => e.IssuedToPerson)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchPlanner>()
-                .Property(e => e.SlotType)
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchPlanner>()
-                .Property(e => e.CourseType)
+            modelBuilder.Entity<CentreFixAsset>()
+                .Property(e => e.AssetCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CentreFixAsset>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .HasMany(e => e.CentreFixAssets)
+                .WithRequired(e => e.FixAsset)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -11,5 +11,7 @@ namespace Nidan.Models
     {
         public FixAsset FixAsset { get; set; }
         public SelectList Rooms { get; set; }
+        public SelectList Products { get; set; }
+        public int FixAssetId { get; set; }
     }
 }

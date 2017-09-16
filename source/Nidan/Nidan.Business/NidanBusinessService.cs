@@ -364,16 +364,9 @@ namespace Nidan.Business
             _nidanDataService.Create<RoomAvailable>(organisationId, roomAvailables);
             _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailables);
         }
-
-        //private void CreateTrainerAvailable(int organisationId, int centreId, Batch batch, BatchDay batchDays)
-        //{
-        //    var trainerAvailables = new List<TrainerAvailable>();
-
-        //}
-
+        
         private void CreateBatchTrainer(int organisationId, int centreId, int batchId, List<int> trainerIds)
         {
-
             //Create Department Employment
             var batchTrainer = trainerIds.Select(item => new BatchTrainer()
             {
@@ -1531,9 +1524,41 @@ namespace Nidan.Business
 
         public FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset)
         {
+            var centreProductSetting = _nidanDataService.RetrieveCentreProductSetting(organisationId, e => e.CentreId == fixAsset.CentreId && e.ProductId == fixAsset.ProductId);
             var data = _nidanDataService.Create<FixAsset>(organisationId, fixAsset);
+            //var fixAssetData = RetrieveFixAsset(organisationId, data.FixAssetId, e => true);
+            //fixAssetData.AssetCode = string.Format("{0}/{1}/{2}", fixAssetData.Product.Name, fixAssetData.Room.Description, centreProductSetting.Code);
+            //centreProductSetting.Code = centreProductSetting.Code + 1;
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, fixAssetData);
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreProductSetting);
+            var centreFixAssetList = new List<CentreFixAsset>();
+            for (int i = 1; i <= fixAsset.Quantity; i++)
+            {
+                centreFixAssetList.Add(new CentreFixAsset()
+                {
+                    FixAssetId = data.FixAssetId,
+                    CentreId = fixAsset.CentreId,
+                    OrganisationId = fixAsset.OrganisationId
+                });
+            }
+            _nidanDataService.Create<CentreFixAsset>(organisationId, centreFixAssetList);
             return data;
         }
+
+        //private CentreFixAsset CreateCentreFixAsset(int organisationId, int centreId,  int fixAssetId, CentreFixAsset centreFixAsset)
+        //{
+        //    //var centreFixAssetData = new CentreFixAsset()
+        //    //{
+        //    //    CentreId = centreId,
+        //    //    OrganisationId = organisationId,
+        //    //    RoomId = centreFixAsset.RoomId,
+        //    //    DateofPutToUse = centreFixAsset.DateofPutToUse,
+        //    //    Remarks = centreFixAsset.Remarks
+        //    //};
+        //    //centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.ReceiptNumber + 1;
+        //    //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreRecieptsettingData);
+        //    //return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
+        //}
 
         public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
@@ -1564,6 +1589,12 @@ namespace Nidan.Business
         public BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay)
         {
             var data = _nidanDataService.Create<BatchPlannerDay>(organisationId, batchPlannerDay);
+            return data;
+        }
+
+        public CentreFixAsset CreateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
+        {
+            var data = _nidanDataService.Create<CentreFixAsset>(organisationId, centreFixAsset);
             return data;
         }
 
@@ -2974,7 +3005,7 @@ namespace Nidan.Business
 
         public StockPurchase RetrieveStockPurchase(int organisationId, int id)
         {
-            return _nidanDataService.RetrieveStockPurchase(organisationId,id, p => true);
+            return _nidanDataService.RetrieveStockPurchase(organisationId, id, p => true);
         }
 
         public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -2985,31 +3016,9 @@ namespace Nidan.Business
         public PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, string searchKeyword, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveStockDataGrid(organisationId, searchKeyword, predicate,orderBy, paging);
+            return _nidanDataService.RetrieveStockDataGrid(organisationId, searchKeyword, predicate, orderBy, paging);
         }
-
-        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveFixAssets(organisationId, predicate,orderBy, paging);
-        }
-
-        public FixAsset RetrieveFixAsset(int organisationId, Expression<Func<FixAsset, bool>> predicate)
-        {
-            var fixAsset = _nidanDataService.RetrieveFixAsset(organisationId, predicate);
-            return fixAsset;
-        }
-
-        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveFixAssets(organisationId, searchKeyword, predicate, orderBy, paging);
-        }
-
-        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate, orderBy, paging);
-        }
-
+        
         public List<StockType> RetrieveStockTypes(int organisationId, Expression<Func<StockType, bool>> predicate)
         {
             return _nidanDataService.Retrieve<StockType>(organisationId, predicate);
@@ -3040,6 +3049,33 @@ namespace Nidan.Business
         public BatchPlannerDay RetrieveBatchPlannerDay(int organisationId, int batchPlannerDayId, Expression<Func<BatchPlannerDay, bool>> predicate)
         {
             return _nidanDataService.RetrieveBatchPlannerDay(organisationId, batchPlannerDayId, predicate);
+        }
+
+        public List<Product> RetrieveProducts(int organisationId, Expression<Func<Product, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<Product>(organisationId, predicate);
+        }
+
+        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssets(organisationId, predicate, orderBy, paging);
+        }
+
+        public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveFixAsset(organisationId, fixAssetId, predicate);
+        }
+
+        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssets(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreFixAssets(organisationId, fixAssetId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -3615,7 +3651,7 @@ namespace Nidan.Business
 
         public StockIssue UpdateStockIssue(int organisationId, int centreId, StockIssue stockIssue)
         {
-            var stockPurchaseData =RetrieveStockPurchases(organisationId, centreId, e => e.StockPurchaseId == stockIssue.StockPurchaseId).Items.FirstOrDefault();
+            var stockPurchaseData = RetrieveStockPurchases(organisationId, centreId, e => e.StockPurchaseId == stockIssue.StockPurchaseId).Items.FirstOrDefault();
             if (stockPurchaseData != null)
             {
                 var stockIssueData = new StockIssue()
@@ -3623,10 +3659,10 @@ namespace Nidan.Business
                     IssuedDate = stockIssue.IssuedDate,
                     IssuedQuantity = stockIssue.IssuedQuantity,
                     IssuedToPerson = stockIssue.IssuedToPerson,
-                    BalanceQuantity = (stockPurchaseData.Quantity-stockIssue.IssuedQuantity)
+                    BalanceQuantity = (stockPurchaseData.Quantity - stockIssue.IssuedQuantity)
                 };
             }
-            var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockIssue);
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockIssue);
             _nidanDataService.Create<StockIssue>(organisationId, stockIssue);
             return data;
         }
@@ -3640,7 +3676,7 @@ namespace Nidan.Business
                 //IssuedToPerson = stockIssue.IssuedToPerson,
                 //BalanceQuantity = (stockPurchaseData.Quantity - stockIssue.IssuedQuantity)
             };
-            var data= _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockPurchase);
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, stockPurchase);
             return data;
         }
 
@@ -3649,10 +3685,21 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, fixAsset);
             return data;
         }
-        
+
+        public CentreProductSetting UpdateCentreProductSetting(int organisationId, CentreProductSetting centreProductSetting)
+        {
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreProductSetting);
+            return data;
+        }
+
         public BatchPlanner UpdateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchPlanner);
+        }
+
+        public CentreFixAsset UpdateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreFixAsset);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

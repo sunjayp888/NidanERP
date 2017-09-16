@@ -13,7 +13,8 @@
             searchStockPurchaseByDate: searchStockPurchaseByDate,
             searchStockPurchase: searchStockPurchase,
             retrieveStockIssuesByStockPurchaseId: retrieveStockIssuesByStockPurchaseId,
-            retrieveStockPurchaseByStationary: retrieveStockPurchaseByStationary
+            retrieveStockPurchaseByStationary: retrieveStockPurchaseByStationary,
+            retrieveStockPurchaseBySector: retrieveStockPurchaseBySector
         };
 
         return service;
@@ -54,6 +55,17 @@
             var url = "/StockPurchase/StockIssueList",
                 data = {
                     stockPurchaseId:stockPurchaseId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+            return $http.post(url, data);
+        }
+
+        function retrieveStockPurchaseBySector(Paging, OrderBy) {
+
+            var url = "/StockPurchase/StockPurchaseBySector" +
+                    "",
+                data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

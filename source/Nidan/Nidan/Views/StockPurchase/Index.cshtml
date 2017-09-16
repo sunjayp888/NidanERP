@@ -98,18 +98,17 @@
                                 @Html.Partial("Pagination/_pageSize")
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label class="btn btn-info col-md-12">
-                                            <input id="chk_stationary" type="checkbox" ng-checked="model.retrieveStockPurchaseByStationary()"/>
-                                            Stationary
-                                        </label>
+                                        <button type="button" class="btn btn-info" ng-click="model.retrieveStockPurchaseByStationary()">Stationary</button>
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label class="btn btn-info col-md-12">
-                                            <input id="chk_sector" type="checkbox"/>
-                                            Sector
-                                        </label>
+                                        <button type="button" class="btn btn-info" ng-click="model.retrieveStockPurchaseBySector()">Sector</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info" ng-click="model.initialise()">All</button>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +123,7 @@
                                                 <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
                                             }
                                             <th ng-click="model.order('StockPurchaseDate')" ng-class="model.orderClass('StockPurchaseDate')">Purchase Date</th>
+                                            <th ng-click="model.order('StockTypeId')" ng-class="model.orderClass('StockTypeId')">Stock Type</th>
                                             <th ng-click="model.order('InventoryItem')" ng-class="model.orderClass('InventoryItem')">Inventory Item</th>
                                             <th ng-click="model.order('Quantity')" ng-class="model.orderClass('Quantity')">Total Quantity</th>
                                             <th ng-click="model.order('TotalBalanceQuantity')" ng-class="model.orderClass('TotalBalanceQuantity')">Balance Quantity</th>
@@ -138,12 +138,14 @@
                                             @*|| model.viewStockPurchase(stockPurchase.StockPurchaseId)">*@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="stockPurchases.Centre.Name"></span></td>
+                                                <td><span ng-bind="stockPurchases.CentreName"></span></td>
                                             }
                                             <td><span ng-bind="stockPurchase.StockPurchaseDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="stockPurchase.StockTypeName"></span></td>
                                             <td><span ng-bind="stockPurchase.InventoryItem"></span></td>
                                             <td><span ng-bind="stockPurchase.Quantity"></span></td>
-                                            <td><span ng-bind="stockPurchase.TotalBalanceQuantity"></span></td>
+                                            <td><span ng-if="stockPurchase.TotalBalanceQuantity!=null" ng-bind="stockPurchase.TotalBalanceQuantity"></span>
+                                                <span ng-if="stockPurchase.TotalBalanceQuantity==null" ng-bind="stockPurchase.Quantity"></span></td>
                                             <td><span ng-bind="stockPurchase.Supplier"></span></td>
                                             <td><span ng-bind="stockPurchase.BillNumber"></span></td>
                                             <td><span ng-bind="stockPurchase.Amount"></span></td>
@@ -191,7 +193,7 @@
         $(document).ready(function () {
             $('#input[type=checkbox]').attr('checked', false);
         });
-       $(function () {
+        $(function () {
 
             var daterangepickerOptions = {
                 autoApply: true,
@@ -219,7 +221,7 @@
         });
 
         //if ($('#chk_stationary').checked() == true) {
-            
+
         //}
     </script>
 }

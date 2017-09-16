@@ -112,7 +112,9 @@
     <Compile Include="CentreCourse.cs" />
     <Compile Include="CentreCourseInstallment.cs" />
     <Compile Include="CentreEnrollmentReceiptSetting.cs" />
+    <Compile Include="CentreFixAsset.cs" />
     <Compile Include="CentrePettyCash.cs" />
+    <Compile Include="CentreProductSetting.cs" />
     <Compile Include="CentreReceiptSetting.cs" />
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="PettyCashExpenseReport.cs" />
     <Compile Include="Planning.cs" />
     <Compile Include="Postevent.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dto\Role.cs" />

@@ -9,11 +9,17 @@ namespace Nidan.Entity
     [Table("FixAsset")]
     public partial class FixAsset
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FixAsset()
+        {
+            CentreFixAssets = new HashSet<CentreFixAsset>();
+        }
+
         public int FixAssetId { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string Name { get; set; }
+        public int ProductId { get; set; }
+
+        public int Quantity { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime DateofPurchase { get; set; }
@@ -28,16 +34,6 @@ namespace Nidan.Entity
 
         public decimal CostAmount { get; set; }
 
-        public int RoomId { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime DateofPutToUse { get; set; }
-
-        [Required]
-        [StringLength(500)]
-        public string AssetCode { get; set; }
-
-        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         public int CentreId { get; set; }
@@ -48,6 +44,9 @@ namespace Nidan.Entity
 
         public virtual Centre Centre { get; set; }
 
-        public virtual Room Room { get; set; }
+        public virtual Product Product { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentreFixAsset> CentreFixAssets { get; set; }
     }
 }
