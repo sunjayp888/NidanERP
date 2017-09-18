@@ -1698,6 +1698,7 @@
     <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
     <Content Include="Views\FixAsset\_FixAssetModal.cshtml" />
     <Content Include="Views\BatchPlanner\View.cshtml" />
+
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
