@@ -77,7 +77,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && (p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && (p.StockPurchaseDate.Month == DateTime.UtcNow.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -95,7 +95,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId && p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId && p.StockPurchaseDate.Month == DateTime.UtcNow.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -112,7 +112,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId==1 && (p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId==1 && (p.StockPurchaseDate.Month == DateTime.UtcNow.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -122,7 +122,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId == 2 && (p.StockPurchaseDate.Month == DateTime.Now.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
+            var data = NidanBusinessService.RetrieveStockDataGrid(organisationId, p => isSuperAdmin || p.CentreId == centreId && p.StockTypeId == 2 && (p.StockPurchaseDate.Month == DateTime.UtcNow.Month || p.TotalBalanceQuantity != 0), orderBy, paging);
             return this.JsonNet(data);
         }
     }

@@ -135,7 +135,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Sunday);
+            var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Sunday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveExpenses(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= startOfWeekDate && p.CreatedDate <= endOfWeekDate, orderBy, paging));
