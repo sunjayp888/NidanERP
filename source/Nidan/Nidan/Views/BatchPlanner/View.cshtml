@@ -1,0 +1,278 @@
+﻿@model Nidan.Models.BatchPlannerViewModel
+
+@{
+    ViewBag.Title = string.Format("View Batch Planner for {0}", Model.BatchPlannerGrid.ClassRoomName);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-institution"></i> &nbsp;@string.Format("{0} For {1}:{2} {3} To {4}:{5} {6}", Model.BatchPlannerGrid.ClassRoomName, Model.BatchPlannerGrid.StartTimeHours, Model.BatchPlannerGrid.StartTimeMinutes, Model.BatchPlannerGrid.StartTimeSpan, Model.BatchPlannerGrid.EndTimeHours, Model.BatchPlannerGrid.EndTimeMinutes, Model.BatchPlannerGrid.EndTimeSpan) </button><small> View Batch Planner </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Batch Planner Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Centre Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlanner.Centre.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Class Room</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.ClassRoomName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.Course" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Start Time</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.BatchPlannerGrid.StartTimeHours,Model.BatchPlannerGrid.StartTimeMinutes,Model.BatchPlannerGrid.StartTimeSpan)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">End Time</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.BatchPlannerGrid.EndTimeHours,Model.BatchPlannerGrid.EndTimeMinutes,Model.BatchPlannerGrid.EndTimeSpan)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsMonday, new { autocomplete = "off", @disabled = true })
+                                                                Monday
+                                                            </label>
+                                                        </th>
+
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsTuesday, new { autocomplete = "off", @disabled = true })
+                                                                Monday
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsWednesday, new { autocomplete = "off", @disabled = true })
+                                                                Wednesday
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsThursday, new { autocomplete = "off", @disabled = true })
+                                                                Thursday
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsFriday, new { autocomplete = "off", @disabled = true })
+                                                                Friday
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsSaturday, new { autocomplete = "off", @disabled = true })
+                                                                Saturday
+                                                            </label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="btn btn-info">
+                                                                @Html.CheckBoxFor(m => m.BatchPlanner.BatchPlannerDays.FirstOrDefault().IsSunday, new { autocomplete = "off", @disabled = true })
+                                                                Sunday
+                                                            </label>
+
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Maximum Candidate</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.MaximumCandidate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Class Room</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.MinimumCandidate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Duration Of Batch Slot</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.DurationOfBatchSlot" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Batch</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.NumberOfBatch" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Batch Start Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.BatchStartDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Batch End Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.BatchEndDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Assessment Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.AssessmentDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Candidate Engaged</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.NumberOfCandidateEngaged" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Installment Duration</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.InstallmentDuration" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Monthly Installment</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.MonthlyInstallment" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Minimum Revenue</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.MinimumRevenue" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Trainer</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BatchPlannerGrid.Trainer" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

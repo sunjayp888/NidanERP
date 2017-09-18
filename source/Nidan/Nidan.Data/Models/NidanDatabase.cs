@@ -141,6 +141,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<CentreProductSetting> CentreProductSettings { get; set; }
         public virtual DbSet<CentreFixAsset> CentreFixAssets { get; set; }
+        public virtual DbSet<BatchPlannerGrid> BatchPlannerGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2217,6 +2218,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<FixAssetSearchGrid>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.ClassRoomName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.StartTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.EndTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.Course)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.Trainer)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

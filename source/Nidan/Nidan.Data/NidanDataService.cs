@@ -3465,7 +3465,7 @@ namespace Nidan.Data
                     .Include(c => c.Organisation)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(c=>c.StockIssuedId==stockIssueId);
+                    .SingleOrDefault(c => c.StockIssuedId == stockIssueId);
             }
         }
 
@@ -3497,6 +3497,8 @@ namespace Nidan.Data
             {
                 return context
                     .BatchPlanners
+                    .Include(e => e.BatchPlannerDays)
+                    .Include(e => e.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.BatchPlannerId == batchPlannerId);
@@ -3704,7 +3706,29 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
+        public PagedResult<BatchPlannerGrid> RetrieveBatchPlannerGrids(int organisationId, Expression<Func<BatchPlannerGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPlannerGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchPlannerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
