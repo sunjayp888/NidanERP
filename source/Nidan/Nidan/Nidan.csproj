@@ -1130,6 +1130,7 @@
     <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchAttendanceController.js" />
+    <Content Include="Scripts\Angular\Controllers\BatchPlannerController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
@@ -1180,6 +1181,7 @@
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
+    <Content Include="Scripts\Angular\Services\BatchPlannerService.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
@@ -1695,6 +1697,8 @@
     <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
     <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
     <Content Include="Views\FixAsset\_FixAssetModal.cshtml" />
+    <Content Include="Views\BatchPlanner\View.cshtml" />
+
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

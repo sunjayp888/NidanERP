@@ -3053,6 +3053,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBatchPlanners(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<BatchPlannerGrid> RetrieveBatchPlannerGrids(int organisationId, Expression<Func<BatchPlannerGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPlannerGrids(organisationId, predicate, orderBy, paging);
+        }
+
         public BatchPlanner RetrieveBatchPlanner(int organisationId, int batchPlannerId, Expression<Func<BatchPlanner, bool>> predicate)
         {
             return _nidanDataService.RetrieveBatchPlanner(organisationId, batchPlannerId, predicate);

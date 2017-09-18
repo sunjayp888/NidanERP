@@ -75,6 +75,10 @@ namespace Nidan.Controllers
             }
             var batchPlanner = NidanBusinessService.RetrieveBatchPlanner(organisationId, id.Value, e => true);
             var batchPlannerDay = NidanBusinessService.RetrieveBatchPlannerDays(organisationId, e => e.BatchPlannerId == batchPlanner.BatchPlannerId).Items.FirstOrDefault();
+            var trainers = NidanBusinessService.RetrieveTrainers(organisationId, e => true);
+            var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true);
+            var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true).ToList();
             if (batchPlanner == null)
             {
                 return HttpNotFound();
@@ -83,9 +87,10 @@ namespace Nidan.Controllers
             {
                 BatchPlanner = batchPlanner,
                 BatchPlannerDay = batchPlannerDay,
-                Courses = new SelectList(NidanBusinessService.RetrieveCourses(UserOrganisationId, e => true).ToList(), "CourseId", "Name"),
-                Trainers = new SelectList(NidanBusinessService.RetrieveTrainers(UserOrganisationId, e => true).ToList(), "TrainerId", "Name"),
-                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(UserOrganisationId, e => true).ToList(), "RoomId", "Description")
+                Courses = new SelectList(courses, "CourseId", "Name"),
+                Trainers = new SelectList(trainers, "TrainerId", "Fullname"),
+                Centres = new SelectList(centres, "CentreId", "Name"),
+                Rooms = new SelectList(rooms, "RoomId", "Description")
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
@@ -110,12 +115,34 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: BatchPlanner/View/{id}
+        public ActionResult View(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var batchPlannerGrid = NidanBusinessService.RetrieveBatchPlannerGrids(organisationId, e => e.BatchPlannerId == id).Items.FirstOrDefault();
+            var batchPlannerData = NidanBusinessService.RetrieveBatchPlanner(organisationId, id.Value, e => true);
+            if (batchPlannerGrid == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new BatchPlannerViewModel
+            {
+                BatchPlannerGrid = batchPlannerGrid,
+                BatchPlanner = batchPlannerData
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centreId = UserCentreId;
-            return this.JsonNet(NidanBusinessService.RetrieveBatchPlanners(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveBatchPlannerGrids(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging));
         }
 
         [HttpPost]
