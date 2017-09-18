@@ -10,6 +10,7 @@ namespace Nidan.Models
     public class BatchPlannerViewModel : BaseViewModel
     {
         public BatchPlanner BatchPlanner { get; set; }
+        public BatchPlannerGrid BatchPlannerGrid { get; set; }
         public BatchPlannerDay BatchPlannerDay { get; set; }
         public SelectList Centres { get; set; }
         public SelectList Courses { get; set; }
