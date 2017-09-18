@@ -1494,6 +1494,24 @@ namespace Nidan.Business
             }
         }
 
+        public bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
+        {
+            try
+            {
+                foreach (var centreFixAsset in centreFixAssets)
+                {
+                    centreFixAsset.RoomId = roomId;
+                    centreFixAsset.DateofPutToUse = dateofuse;
+                    UpdateCentreFixAsset(organisationId, centreFixAsset);
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget)
         {
             return _nidanDataService.CreateEventBudget(organisationId, eventBudget);
@@ -3084,6 +3102,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreFixAssets(organisationId, fixAssetId, predicate, orderBy, paging);
         }
 
+        public PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCentreFixAsset(organisationId, predicate, orderBy, paging);
+        }
+
         #endregion
 
         #region // Update
@@ -3705,7 +3729,7 @@ namespace Nidan.Business
 
         public CentreFixAsset UpdateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreFixAsset);
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId,centreFixAsset);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

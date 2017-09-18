@@ -150,5 +150,19 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult Room()
+        {
+            var centreId = UserCentreId;
+            return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, c => c.CentreId==centreId));
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCentreFixAsset(List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
+        {
+            var result = NidanBusinessService.MarkAsset(UserOrganisationId, centreFixAssets, roomId, dateofuse);
+            return this.JsonNet(result);
+        }
     }
 }

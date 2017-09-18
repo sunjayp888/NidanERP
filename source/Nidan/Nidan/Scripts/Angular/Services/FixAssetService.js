@@ -12,7 +12,9 @@
             retrieveFixAssets: retrieveFixAssets,
             searchFixAsset: searchFixAsset,
             searchFixAssetByDate: searchFixAssetByDate,
-            retrieveCentreFixAssetsByFixAssetId: retrieveCentreFixAssetsByFixAssetId
+            retrieveCentreFixAssetsByFixAssetId: retrieveCentreFixAssetsByFixAssetId,
+            retrieveRooms: retrieveRooms,
+            markAsset: markAsset
         };
 
         return service;
@@ -59,6 +61,19 @@
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
+            return $http.post(url, data);
+        }
+
+        function retrieveRooms() {
+
+            var url = "/FixAsset/Room";
+            return $http.post(url);
+        }
+
+        function markAsset(roomId, dateofuse, centreFixAssets) {
+
+            var url = "/FixAsset/UpdateCentreFixAsset";
+            var data = { centreFixAssets: centreFixAssets, roomId: roomId, dateofuse: dateofuse }
             return $http.post(url, data);
         }
 

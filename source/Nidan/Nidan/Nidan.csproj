@@ -298,6 +298,7 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
+    <Compile Include="Models\CentreFixAssetViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
@@ -1695,7 +1696,9 @@
     <Content Include="Views\BatchPlanner\Edit.cshtml" />
     <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
     <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
+    <Content Include="Views\FixAsset\_FixAssetModal.cshtml" />
     <Content Include="Views\BatchPlanner\View.cshtml" />
+
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
