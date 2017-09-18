@@ -3,7 +3,7 @@
 @model Nidan.Models.HomeViewModel
 @{
     ViewBag.Title = "Home";
-    var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+    var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
     var endOfWeekDate = startOfWeekDate.AddDays(6);
     var startOfWeek = startOfWeekDate.ToShortDateString();
     var endOfWeek = startOfWeekDate.AddDays(6).ToShortDateString();

@@ -1066,7 +1066,7 @@ namespace Nidan.Business
                 IsPaymentDone = true,
                 StudentCode = admission.Registration.StudentCode,
                 PaidAmount = candidateInstallment.LumpsumAmount - registration.CandidateFee.PaidAmount,
-                PaymentDate = DateTime.Now,
+                PaymentDate = DateTime.UtcNow,
                 ReceiptNumber = receiptNumber
             };
             // Update data in CandidateInstallment
@@ -1086,7 +1086,7 @@ namespace Nidan.Business
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
-            var installmentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5, 0, 0, 0);
+            var installmentDate = new DateTime(DateTime.UtcNow.Year, DateTime.Now.Month, 5, 0, 0, 0);
             var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
             var candidateFees = new List<CandidateFee>();
             var candidateFeeData = new CandidateFee
@@ -1106,7 +1106,7 @@ namespace Nidan.Business
                 PaidAmount = candidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
                     ? 0
                     : (candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount),
-                PaymentDate = DateTime.Now,
+                PaymentDate = DateTime.UtcNow,
                 ReceiptNumber = receiptNumber
             };
             // Increment RecieptNo by and Update.
@@ -1324,7 +1324,7 @@ namespace Nidan.Business
                 FeeTypeId = (int)FeeType.Registration,
                 PaidAmount = candidateFee.PaidAmount,
                 IsPaymentDone = true,
-                PaymentDate = DateTime.Now,
+                PaymentDate = DateTime.UtcNow,
                 StudentCode = studentCode,
                 PaymentModeId = candidateFee.PaymentModeId,
                 FiscalYear = DateTime.UtcNow.FiscalYear(),
@@ -2431,7 +2431,7 @@ namespace Nidan.Business
         public List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
             var centre = RetrieveCentres(organisationId, predicate).ToList();
-            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+            var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             var graphData = new List<Graph>();
             //foreach (var item in centre)
@@ -3709,7 +3709,7 @@ namespace Nidan.Business
                 var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
                 var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId, e => true);
                 var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
-                var installmentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 5, 0, 0, 0);
+                var installmentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 5, 0, 0, 0);
                 var candidateFees = new List<CandidateFee>();
                 for (int i = 1; i <= batch?.NumberOfInstallment; i++)
                 {
