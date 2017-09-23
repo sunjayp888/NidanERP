@@ -179,6 +179,50 @@
             MinimumRevenue();
         });
 
+        $('#BatchPlanner_RoomId').change(function () {
+            var startTimeHours = $('#BatchPlanner_StartTimeHours :selected').val();
+            var endTimeHours = $('#BatchPlanner_EndTimeHours :selected').val();
+            if (startTimeHours != "" && endTimeHours != "") {
+                BatchLogic();
+                NumberOfCandidateEngaged();
+                MinimumRevenue();
+            }
+        });
+
+        $('#BatchPlanner_CourseId').change(function () {
+            var startTimeHours = $('#BatchPlanner_StartTimeHours :selected').val();
+            var endTimeHours = $('#BatchPlanner_EndTimeHours :selected').val();
+            if (startTimeHours != "" && endTimeHours != "") {
+                BatchLogic();
+                NumberOfCandidateEngaged();
+                MinimumRevenue();
+            }
+        });
+
+        $('#BatchPlanner_StartTimeHours').change(function () {
+            var endTimeHours = $('#BatchPlanner_EndTimeHours :selected').val();
+            var room = $('#BatchPlanner_RoomId :selected').val();
+            var course = $('#BatchPlanner_CourseId :selected').val();
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            if (checkboxlength != 0 && room != "" && course != "" && endTimeHours != "") {
+                BatchLogic();
+                NumberOfCandidateEngaged();
+                MinimumRevenue();
+            }
+        });
+
+        $('#BatchPlanner_EndTimeHours').change(function () {
+            var startTimeHours = $('#BatchPlanner_StartTimeHours :selected').val();
+            var room = $('#BatchPlanner_RoomId :selected').val();
+            var course = $('#BatchPlanner_CourseId :selected').val();
+            var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            if (checkboxlength != 0 && room != "" && course != "" && startTimeHours != "") {
+                BatchLogic();
+                NumberOfCandidateEngaged();
+                MinimumRevenue();
+            }
+        });
+
         function NumberOfCandidateEngaged() {
             var maximumCandidate = $('#BatchPlanner_MaximumCandidate').val();
             var numberOfBatch = $('#BatchPlanner_NumberOfBatch').val();
