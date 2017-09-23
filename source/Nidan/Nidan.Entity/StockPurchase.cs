@@ -34,9 +34,13 @@ namespace Nidan.Entity
 
         public int? SectorId { get; set; }
 
+        public int? StudentKitId { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public virtual StudentKit StudentKit { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
@@ -45,8 +49,5 @@ namespace Nidan.Entity
         public virtual Sector Sector { get; set; }
 
         public virtual StockType StockType { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockIssue> StockIssues { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace Nidan.Models
         public StockPurchase StockPurchase { get; set; }
         public SelectList Sectors { get; set; }
         public SelectList StockTypes { get; set; }
+        public SelectList StudentKits { get; set; }
     }
 }

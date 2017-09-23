@@ -35,11 +35,13 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var sectors = NidanBusinessService.RetrieveCentreSectors(organisationId, centreId, e => e.CentreId == centreId);
             var stockTypes = NidanBusinessService.RetrieveStockTypes(organisationId, e => true);
+            var studentKits = NidanBusinessService.RetrieveStudentKits(organisationId, e => true);
             var viewModel = new StockPurchaseViewModel()
             {
                 StockPurchase = new StockPurchase(),
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
-                StockTypes = new SelectList(stockTypes, "StockTypeId", "Name")
+                StockTypes = new SelectList(stockTypes, "StockTypeId", "Name"),
+                StudentKits = new SelectList(studentKits, "StudentKitId", "Name")
             };
             return View(viewModel);
         }
@@ -61,6 +63,7 @@ namespace Nidan.Controllers
             }
             stockPurchaseViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveCentreSectors(organisationId,centreId, e => true).ToList());
             stockPurchaseViewModel.StockTypes = new SelectList(NidanBusinessService.RetrieveStockTypes(organisationId,e => true).ToList());
+            stockPurchaseViewModel.StudentKits = new SelectList(NidanBusinessService.RetrieveStudentKits(organisationId, e => true).ToList());
             return View(stockPurchaseViewModel);
         }
 
