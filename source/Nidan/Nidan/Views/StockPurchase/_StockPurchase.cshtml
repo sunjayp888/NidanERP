@@ -18,6 +18,14 @@
     </div>
 </div>
 
+<div class="form-group divstudentKit">
+    @Html.LabelFor(model => model.StockPurchase.StudentKitId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.StockPurchase.StudentKitId, Model.StudentKits, "Select Item", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.StudentKitId, "", new { @class = "help-block" })
+    </div>
+</div>
+
 <div class="form-group">
     @Html.LabelFor(model => model.StockPurchase.StockPurchaseDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">

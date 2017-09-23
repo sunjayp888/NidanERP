@@ -49,13 +49,20 @@
         $("#StockPurchase_Quantity").val("");
         $("#StockPurchase_Amount").val("");
         $('.divsector').hide();
+        $('.divstudentKit').hide();
         $("#StockPurchase_StockTypeId")
             .change(function() {
                 if ($("#StockPurchase_StockTypeId").val() == 2) {
                     $(".divsector").show();
+                    $('.divstudentKit').hide();
                 }
                 if ($("#StockPurchase_StockTypeId").val() == 1) {
                     $(".divsector").hide();
+                    $('.divstudentKit').hide();
+                }
+                if ($("#StockPurchase_StockTypeId").val() == 3) {
+                    $(".divsector").hide();
+                    $('.divstudentKit').show();
                 }
             });
 

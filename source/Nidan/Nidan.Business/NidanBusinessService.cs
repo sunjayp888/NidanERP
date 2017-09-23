@@ -3108,6 +3108,11 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentreFixAsset(organisationId, predicate, orderBy, paging);
         }
 
+        public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<StudentKit>(organisationId, predicate);
+        }
+
         #endregion
 
         #region // Update

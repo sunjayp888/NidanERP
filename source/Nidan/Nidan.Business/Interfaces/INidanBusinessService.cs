@@ -296,6 +296,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
