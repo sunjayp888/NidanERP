@@ -37,7 +37,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="centreFixAsset in model.centreFixAssets| orderBy:'CentreFixAssetId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                        <td><input type="checkbox" ng-disabled="centreFixAsset.RoomId!=null"/></td>
+                                        <td><input type="checkbox" name="chk"/></td>@*ng-disabled="centreFixAsset.RoomId!=null"*@
                                         <td><span ng-bind="centreFixAsset.FixAsset.Product.Name"></span></td>
                                         <td><span ng-bind="centreFixAsset.AssetCode"></span></td>
                                         <td><span ng-bind="centreFixAsset.Room.Description"></span></td>
@@ -71,21 +71,21 @@
 </div>
 @section scripts {
     <script>
-        $('#chkall').change(function () {
-            var checkboxes = $(this).closest('table').find(':checkbox');
-            if ($(this).is(':checked')) {
-                checkboxes.prop('checked', true);
-            } else {
-                checkboxes.prop('checked', false);
-            }
-        });
+        //$('#chkall').change(function () {
+        //    var checkboxes = $(this).closest('table').find(':checkbox');
+        //    if ($(this).is(':checked')) {
+        //        checkboxes.prop('checked', true);
+        //    } else {
+        //        checkboxes.prop('checked', false);
+        //    }
+        //});
 
-        $('table').on('change', ':checkbox:not(#chkall)', function () {
-            var checkboxes = $(this).closest('table').find(':checkbox:not(#chkall)'),
-              allchecked = (checkboxes.length === checkboxes.filter(':checked').length);
+        //$('table').on('change', ':checkbox:not(#chkall)', function () {
+        //    var checkboxes = $(this).closest('table').find(':checkbox:not(#chkall)'),
+        //      allchecked = (checkboxes.length === checkboxes.filter(':checked').length);
 
-            $('#chkall').prop('checked', allchecked);
-        });
+        //    $('#chkall').prop('checked', allchecked);
+        //});
 
         $(function () {
             var daterangepickerOptions = {

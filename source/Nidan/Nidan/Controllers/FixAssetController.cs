@@ -158,10 +158,10 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, c => c.CentreId==centreId));
         }
 
-        [HttpPost]
-        public ActionResult UpdateCentreFixAsset(List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
+        [HttpPost]  
+        public ActionResult UpdateCentreFixAsset(int roomId, DateTime dateofuse, List<CentreFixAsset> test)
         {
-            var result = NidanBusinessService.MarkAsset(UserOrganisationId, centreFixAssets, roomId, dateofuse);
+            var result = NidanBusinessService.MarkAsset(UserOrganisationId, test, roomId, dateofuse);
             return this.JsonNet(result);
         }
     }

@@ -93,7 +93,7 @@
                     return vm.rooms;
                 });
         }
-        
+
         function openCentreFixAssetModalPopUp(fixAssetId) {
             vm.fixAssetId = fixAssetId;
             retrieveRooms();
@@ -107,8 +107,11 @@
         function markAsset() {
             var roomId = $('#dropDownRoom').val();
             var dateofuse = $('#txtDateofUse').val();
+            vm.centreFixAssets = $("input[type='checkbox']:checked");
+            //vm.checkedValues = [];
+            //vm.checkedValues=$('input[type="checkbox"]:checked');
             return FixAssetService.markAsset(roomId, dateofuse, vm.centreFixAssets).then(function (response) {
-                vm.centreFixAssets = response.data.Items;
+                vm.centreFixAssets = response.data.items;
                 return vm.centreFixAssets;
             });
         }
@@ -129,7 +132,7 @@
         function editFixAsset(id) {
             $window.location.href = "/FixAsset/Edit/" + id;
         }
-        
+
         function viewFixAsset(fixAssetId) {
             $window.location.href = "/FixAsset/View/" + fixAssetId;
         }
