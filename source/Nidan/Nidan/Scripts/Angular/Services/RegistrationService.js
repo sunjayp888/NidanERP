@@ -43,17 +43,7 @@
 
             return $http.post(url, data);
         }
-
-        //function viewCandidateFee(candidateInstallmentId) {
-
-        //    var url = "/CandidateFee/Detail",
-        //        data = {
-        //            candidateInstallmentId: candidateInstallmentId
-        //        };
-
-        //    return $http.post(url, data);
-        //}
-
+        
         function retrieveEnquiries(Paging, OrderBy) {
 
             var url = "/Registration/EnquiryList",

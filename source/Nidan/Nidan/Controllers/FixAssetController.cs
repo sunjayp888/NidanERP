@@ -159,9 +159,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]  
-        public ActionResult UpdateCentreFixAsset(int roomId, DateTime dateofuse, List<CentreFixAsset> test)
+        public ActionResult UpdateCentreFixAsset(int roomId, DateTime dateofuse, List<CentreFixAsset> centreFixAssets)
         {
-            var result = NidanBusinessService.MarkAsset(UserOrganisationId, test, roomId, dateofuse);
+            var result = NidanBusinessService.MarkAsset(UserOrganisationId, centreFixAssets, roomId, dateofuse);
             return this.JsonNet(result);
         }
     }

@@ -105,11 +105,17 @@
         }
 
         function markAsset() {
-            var roomId = $('#dropDownRoom').val();
-            var dateofuse = $('#txtDateofUse').val();
-            vm.centreFixAssets = $("input[type='checkbox']:checked");
-            //vm.checkedValues = [];
-            //vm.checkedValues=$('input[type="checkbox"]:checked');
+            //vm.centreFixAssets=$('input');
+            angular.forEach(centreFixAssets,
+                function(value, key) {
+
+                });
+            //for (var i = 1; i <= vm.centreFixAssets; i++) {
+            //    if (centreFixAssets[i].selected) {
+            //        vm.centreFixAssets[i].RoomId = $('#dropDownRoom').val();
+            //        vm.centreFixAssets[i].DateofPutToUse = $('#txtDateofUse').val();
+            //    }
+            //}
             return FixAssetService.markAsset(roomId, dateofuse, vm.centreFixAssets).then(function (response) {
                 vm.centreFixAssets = response.data.items;
                 return vm.centreFixAssets;
