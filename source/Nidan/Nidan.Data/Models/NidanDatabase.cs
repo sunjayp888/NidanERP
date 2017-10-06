@@ -1940,7 +1940,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<EventBrainStormingGrid>()
                 .Property(e => e.ReferenceDetailDocument)
                 .IsUnicode(false);
-                
+
             modelBuilder.Entity<RegistrationGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);

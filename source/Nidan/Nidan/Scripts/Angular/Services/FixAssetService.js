@@ -71,7 +71,6 @@
         }
 
         function markAsset(roomId, dateofuse, centreFixAssets) {
-
             var url = "/FixAsset/UpdateCentreFixAsset";
             var data = { centreFixAssets: centreFixAssets, roomId: roomId, dateofuse: dateofuse }
             return $http.post(url, data);

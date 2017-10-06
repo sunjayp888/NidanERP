@@ -58,6 +58,9 @@
         function searchRegistrationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.orderBy.property = "RegistrationDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
             return RegistrationService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.Registrations = response.data.Items;
