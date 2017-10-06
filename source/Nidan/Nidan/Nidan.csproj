@@ -1293,7 +1293,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="bower_components\gentelella\vendors\" />
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
@@ -1698,7 +1697,6 @@
     <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
     <Content Include="Views\FixAsset\_FixAssetModal.cshtml" />
     <Content Include="Views\BatchPlanner\View.cshtml" />
-
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
