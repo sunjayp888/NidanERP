@@ -14,7 +14,8 @@
             retrieveBatchAttendancesByBatchId: retrieveBatchAttendancesByBatchId,
             searchBatchAttendanceByDate: searchBatchAttendanceByDate,
             retrieveBatches: retrieveBatches,
-            markAttendance: markAttendance
+            markAttendance: markAttendance,
+            getBiometricData: getBiometricData
         };
 
         return service;
@@ -78,6 +79,19 @@
 
             var url = "/BatchAttendance/MarkAttendance";
             var data = { attendances: attendances, subjectId: subjectId, sessionId: sessionId }
+            return $http.post(url, data);
+        }
+
+        function getBiometricData(batchId, attendanceDate, Paging, OrderBy) {
+
+            var url = "/BatchAttendance/GetBiometricDataList",
+                data = {
+                    batchId: batchId,
+                    attendanceDate:attendanceDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
             return $http.post(url, data);
         }
 

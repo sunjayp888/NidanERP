@@ -1,0 +1,60 @@
+﻿@model Nidan.Models.FixAssetViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.DateofPurchase, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.FixAsset.DateofPurchase, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.FixAsset.DateofPurchase, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.ProductId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.FixAsset.ProductId, Model.Products, "Select Product", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.FixAsset.ProductId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.Quantity, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.FixAsset.Quantity, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.FixAsset.Quantity, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.Supplier, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.FixAsset.Supplier, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.FixAsset.Supplier, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.BillNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.FixAsset.BillNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.FixAsset.BillNumber, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.CostAmount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.FixAsset.CostAmount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.FixAsset.CostAmount, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.FixAsset.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.EditorFor(model => model.FixAsset.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.FixAsset.Remarks, "", new { @class = "help-block" })
+    </div>
+</div>
+

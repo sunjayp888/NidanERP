@@ -1,0 +1,243 @@
+﻿@model Nidan.Models.BatchPlannerViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Batch Planner ({0})", Model.BatchPlanner.BatchPlannerId);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                @*<h2>@Model.Mobilization.Name<small>Edit mobilizer</small></h2>*@
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.BatchPlanner.BatchPlannerId)
+                        @Html.HiddenFor(model => model.BatchPlannerDay.BatchPlannerDayId)
+                        @Html.Partial("_BatchPlanner", Model)
+                        <div class="col-md-7 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button id="btnsubmit" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        //var courseDuration;
+        ////var courseFee = 0.00;
+        //$('#BatchPlanner_CentreId').change(function () {
+        //    var centreId = $('#BatchPlanner_CentreId :selected').val();
+        //    //Centre Wise ClassRoom
+        //    $.ajax({
+        //        url: '/BatchPlanner/GetClassRoom',
+        //        type: 'POST',
+        //        data: JSON.stringify({ centreId: centreId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#BatchPlanner_RoomId").empty();
+        //            $("#BatchPlanner_RoomId").append($("<option></option>").html("Select Class Room"));
+        //            $.each(result, function (key, value) {
+        //                $("#BatchPlanner_RoomId").append($("<option></option>").val(value.RoomId).html(value.Description));
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //    //Centre Wise Course
+        //    $.ajax({
+        //        url: '/BatchPlanner/GetCourse',
+        //        type: 'POST',
+        //        data: JSON.stringify({ centreId: centreId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#BatchPlanner_CourseId").empty();
+        //            $("#BatchPlanner_CourseId").append($("<option></option>").html("Select Course"));
+        //            $.each(result, function (key, value) {
+        //                $("#BatchPlanner_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //    //Centre Wise Trainer
+        //    $.ajax({
+        //        url: '/BatchPlanner/GetTrainer',
+        //        type: 'POST',
+        //        data: JSON.stringify({ centreId: centreId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#BatchPlanner_TrainerId").empty();
+        //            $("#BatchPlanner_TrainerId").append($("<option></option>").html("Select Trainer"));
+        //            $.each(result, function (key, value) {
+        //                $("#BatchPlanner_TrainerId").append($("<option></option>").val(value.TrainerId).html(value.Fullname));
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //});
+
+        ////Get CourseData
+        //$('#BatchPlanner_CourseId')
+        //    .change(function () {
+        //        var courseId = $('#BatchPlanner_CourseId :selected').val();
+        //        $.ajax({
+        //            url: '/BatchPlanner/GetCourseData',
+        //            type: 'POST',
+        //            data: JSON.stringify({ courseId: courseId }),
+        //            dataType: 'json',
+        //            contentType: 'application/json; charset=utf-8',
+        //            error: function (xhr) {
+        //                alert('Error: ' + xhr.statusText);
+        //            },
+        //            success: function (result) {
+        //                courseDuration = result.Duration;
+        //                var courseType = result.CourseType;
+        //                $("#BatchPlanner_CourseType").val(result.CourseType);
+        //                if (courseType == "Career") {
+        //                    $("#BatchPlanner_SlotType").val("Prime Slot");
+        //                } else {
+        //                    $("#BatchPlanner_SlotType").val("General Slot");
+        //                }
+        //            },
+        //            async: true,
+        //            processData: false
+        //        });
+        //    });
+
+        //$('input[type="checkbox"]').change(function () {
+        //    var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        //    if (checkboxlength != 0) {
+        //        BatchLogic();
+        //        NumberOfCandidateEngaged();
+        //        MinimumRevenue();
+        //    }
+        //});
+
+        //$('#BatchPlanner_MinimumCandidate').keyup(function () {
+        //    BatchLogic();
+        //    NumberOfCandidateEngaged();
+        //    MinimumRevenue();
+        //});
+
+        //function NumberOfCandidateEngaged() {
+        //    var maximumCandidate = $('#BatchPlanner_MaximumCandidate').val();
+        //    var numberOfBatch = $('#BatchPlanner_NumberOfBatch').val();
+        //    var numberOfCandidateEngaged = maximumCandidate * numberOfBatch;
+        //    $('#BatchPlanner_NumberOfCandidateEngaged').val(numberOfCandidateEngaged);
+        //}
+
+        //function MinimumRevenue() {
+        //    var minimumCandidate = $('#BatchPlanner_MinimumCandidate').val();
+        //    var installmentDuration = $('#BatchPlanner_InstallmentDuration').val();
+        //    var monthlyInstallment = $('#BatchPlanner_MonthlyInstallment').val();
+        //    var minimumRevenue = minimumCandidate * monthlyInstallment * installmentDuration;
+        //    $('#BatchPlanner_MinimumRevenue').val(minimumRevenue);
+        //}
+
+        //function BatchLogic() {
+        //    var startTimeHours = parseInt($('#BatchPlanner_StartTimeHours :selected').val());
+        //    var endTimeHours = parseInt($('#BatchPlanner_EndTimeHours :selected').val());
+        //    var minimumCandidate = $('#BatchPlanner_MinimumCandidate').val();
+        //    var numberOfHoursDaily = 0;
+        //    if (endTimeHours > startTimeHours) {
+        //        numberOfHoursDaily = endTimeHours - startTimeHours;
+        //    } else {
+        //        numberOfHoursDaily = (startTimeHours - 12) - endTimeHours;
+        //        numberOfHoursDaily = Math.abs(numberOfHoursDaily);
+        //    }
+        //    var days = courseDuration / numberOfHoursDaily;
+        //    if (days != 0) {
+        //        var centreId = $('#BatchPlanner_CentreId :selected').val();
+        //        var roomId = $('#BatchPlanner_RoomId :selected').val();
+        //        var batchStartDate = $('#BatchPlanner_BatchStartDate').val();
+        //        var numberOfCourseHours = courseDuration;
+        //        var dailyBatchHours = numberOfHoursDaily;
+        //        var courseId = $('#BatchPlanner_CourseId :selected').val();
+        //        //var downPayment = $('#CourseInstallment_DownPayment').val();
+        //        var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        //        var numberOfWeekDays = checkboxlength;
+        //        var batchEndDate = moment().add(days, 'days').format('DD MMMM YYYY');
+
+        //        //Now call a ajax function that will get public holiday count From batchstartdate and var batchEndDate
+        //        //then add days in days like days = days + publicholidaycount
+
+        //        $.ajax({
+        //            url: '/BatchPlanner/GetMonth',
+        //            type: 'POST',
+        //            data: JSON.stringify({
+        //                centreId: centreId,
+        //                roomId: roomId,
+        //                startDate: batchStartDate,
+        //                numberOfCourseHours: numberOfCourseHours,
+        //                dailyBatchHours: dailyBatchHours,
+        //                courseId: courseId,
+        //                numberOfWeekDays: numberOfWeekDays
+        //                //courseFee: courseFee,
+        //                //downPayment: downPayment
+        //            }),
+        //            dataType: 'json',
+        //            contentType: 'application/json; charset=utf-8',
+        //            //error: function (xhr) {
+        //            //    alert('Error: ' + xhr.statusText);
+        //            //},
+        //            success: function (result) {
+        //                //var start = result.StartDate.getDate() + " " + result.StartDate.getMonthName() + " " + result.StartDate.getFullYear();
+        //                //$("#Batch_NumberOfHolidays").empty();
+        //                $("#BatchPlanner_MaximumCandidate").val(result.MaximumCandidate);
+        //                $('#BatchPlanner_BatchStartDate').val(result.StartDate);
+        //                $('#BatchPlanner_BatchEndDate').val(result.EndDate);
+        //                $('#BatchPlanner_AssessmentDate').val(result.AssessmentDate);
+        //                $('#BatchPlanner_DurationOfBatchSlot').val(result.Month);
+        //                $('#BatchPlanner_NumberOfBatch').val(result.NumberOfBatch);
+        //                $('#BatchPlanner_InstallmentDuration').val(result.NumberOfInstallment);
+        //                $('#BatchPlanner_MonthlyInstallment').val(result.InstallmentAmount);
+        //                if (minimumCandidate != null) {
+        //                    var minimumRevenue = result.InstallmentAmount * result.NumberOfInstallment * minimumCandidate;
+        //                    $('#BatchPlanner_MinimumRevenue').val(minimumRevenue);
+        //                }
+        //            },
+        //            async: true,
+        //            processData: false
+        //        });
+        //    }
+        //};
+    </script>
+}

@@ -1,0 +1,75 @@
+﻿@model Nidan.Models.StockPurchaseViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.StockTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.StockPurchase.StockTypeId, Model.StockTypes, "Select Stock Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.StockTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group divsector">
+    @Html.LabelFor(model => model.StockPurchase.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.StockPurchase.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group divstudentKit">
+    @Html.LabelFor(model => model.StockPurchase.StudentKitId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.StockPurchase.StudentKitId, Model.StudentKits, "Select Item", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.StudentKitId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.StockPurchaseDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.StockPurchaseDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.StockPurchaseDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.InventoryItem, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.InventoryItem, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.InventoryItem, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.Quantity, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.Quantity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.Quantity, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.Supplier, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.Supplier, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.Supplier, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.BillNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.BillNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.BillNumber, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.StockPurchase.Amount, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.StockPurchase.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.StockPurchase.Amount, "", new { @class = "help-block" })
+    </div>
+</div>

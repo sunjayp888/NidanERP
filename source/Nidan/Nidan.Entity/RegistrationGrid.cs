@@ -9,10 +9,13 @@ namespace Nidan.Entity
     [Table("RegistrationGrid")]
     public partial class RegistrationGrid
     {
-        [Key]
-        [Column(Order = 0)]
         [StringLength(353)]
         public string CandidateName { get; set; }
+
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Mobile { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -39,7 +42,21 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 5)]
+        public bool IsAdmissionDone { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int EnquiryId { get; set; }
+
+        [Key]
+        [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
+
+        [Key]
+        [Column(Order = 8)]
+        [StringLength(970)]
+        public string SearchField { get; set; }
     }
 }

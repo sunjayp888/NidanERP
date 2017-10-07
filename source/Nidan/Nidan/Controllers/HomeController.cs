@@ -32,7 +32,7 @@ namespace Nidan.Controllers
             var permissions = NidanBusinessService.RetrievePersonnelPermissions(User.IsInRole("Admin"), organisationId, personnelId);
 
             var enquiryCount = NidanBusinessService.RetrieveEnquiries(organisationId,
-               e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && e.EnquiryStatus == "Enquiry").Count();
+                e => (isSuperAdmin || e.CentreId == centreId) && e.EnquiryDate == _today && (e.EnquiryStatus == "Enquiry" || e.EnquiryStatus == "Counselling")).Count();
 
             var mobilizationCount =
                 NidanBusinessService.RetrieveMobilizations(organisationId,
@@ -126,7 +126,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             // var centre = NidanBusinessService.RetrieveCentres(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
-            var startOfWeekDate = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
+            var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             var graphData = new List<Graph>();
             var enquiries =

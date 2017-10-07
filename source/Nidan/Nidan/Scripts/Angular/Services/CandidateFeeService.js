@@ -14,6 +14,7 @@
             retrievePaymentModes: retrievePaymentModes,
             retrieveCandidateFee: retrieveCandidateFee,
             saveFee: saveFee,
+            totalFee:totalFee,
             print:print
         };
 
@@ -53,6 +54,14 @@
             data = {
                 candidateFee: candidateFee
             };
+            return $http.post(url, data);
+        }
+
+        function totalFee(candidateInstallmentId) {
+            var url = "/CandidateFee/TotalFee",
+                data = {
+                    id: candidateInstallmentId
+                };
             return $http.post(url, data);
         }
     }

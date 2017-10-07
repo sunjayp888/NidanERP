@@ -1,0 +1,201 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.BaseViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<div ng-controller="FixAssetController as model" ng-init="model.initialise()">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Fixed Assets <small></small>
+            </h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchFixAsset(searchField)" class="form-control" placeholder="Search for Assets...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchFixAsset(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "FixAsset")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" ng-click="model.searchFixAssetByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Mobilizations <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                    <tr role="row">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
+                                        }
+                                        <th ng-click="model.order('DateofPurchase')" ng-class="model.orderClass('DateofPurchase')">Date of Purchase</th>
+                                        <th ng-click="model.order('ProductId')" ng-class="model.orderClass('ProductId')">Asset</th>
+                                        <th ng-click="model.order('Quantity')" ng-class="model.orderClass('Quantity')">Quantity</th>
+                                        <th ng-click="model.order('BalanceQuantity')" ng-class="model.orderClass('BalanceQuantity')">BalanceQuantity</th>
+                                        <th ng-click="model.order('Supplier')" ng-class="model.orderClass('Supplier')">Supplier</th>
+                                        <th ng-click="model.order('BillNumber')" ng-class="model.orderClass('BillNumber')">Bill No.</th>
+                                        <th ng-click="model.order('CostAmount')" ng-class="model.orderClass('CostAmount')">Cost Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="fixAsset in model.fixAssets" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="fixAsset.Centre.Name"></span></td>
+                                        }
+                                        <td><span ng-bind="fixAsset.DateofPurchase|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="fixAsset.Name"></span></td>
+                                        <td><span ng-bind="fixAsset.Quantity"></span></td>
+                                        <td><span ng-bind="fixAsset.BalanceQuantity"></span></td>
+                                        <td><span ng-bind="fixAsset.Supplier"></span></td>
+                                        <td><span ng-bind="fixAsset.BillNumber"></span></td>
+                                        <td><span ng-bind="fixAsset.CostAmount"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    <li>
+                                                        <a style="cursor: pointer;" ng-href="/FixAsset/CentreFixAsset/{{fixAsset.FixAssetId}}">
+                                                            View
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a style="cursor: pointer;" ng-href="/FixAsset/Edit/{{fixAsset.FixAssetId}}">
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(function () {
+
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+    </script>
+}
+

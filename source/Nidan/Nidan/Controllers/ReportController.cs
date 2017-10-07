@@ -68,6 +68,18 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/FixAsset
+        public ActionResult FixAsset()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report/Stock
+        public ActionResult Stock()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
@@ -168,32 +180,40 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear,int toYear, Paging paging, List<OrderBy> orderBy)
+        public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int year, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear, orderBy);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, year, orderBy);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult MobilizationCountReportBydate(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
+        public ActionResult MobilizationCountReportBydate(int centreId, int month, int year)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month == month && p.Date.Year == year, orderBy);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, year, month);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchStockByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
         [HttpPost]
         public ActionResult TotalSumOfCountReportByMonthAndYear(int centreId, int fromMonth, int toMonth, int fromYear, int toYear)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Month >= fromMonth && p.Month <= toMonth && p.Year >= fromYear && p.Year <= toYear);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fromYear).ToList();
             var totalSumOfCount = new MobilizationCentreReportMonthWise()
             {
-                MobilizationCount = data.Items.Sum(e=>e.MobilizationCount),
-                EnquiryCount = data.Items.Sum(e=>e.EnquiryCount),
-                CounsellingCount = data.Items.Sum(e=>e.CounsellingCount),
-                RegistrationCount = data.Items.Sum(e=>e.RegistrationCount),
-                AdmissionCount = data.Items.Sum(e=>e.AdmissionCount),
-                CourseBooking = data.Items.Sum(e=>e.CourseBooking),
-                FeeCollected = data.Items.Sum(e=>e.FeeCollected)
+                MobilizationCount = data.Sum(e => e.MobilizationCount),
+                EnquiryCount = data.Sum(e => e.EnquiryCount),
+                CounsellingCount = data.Sum(e => e.CounsellingCount),
+                RegistrationCount = data.Sum(e => e.RegistrationCount),
+                AdmissionCount = data.Sum(e => e.AdmissionCount),
+                CourseBooking = data.Sum(e => e.CourseBooking),
+                FeeCollected = data.Sum(e => e.FeeCollected)
             };
             return this.JsonNet(totalSumOfCount);
         }
@@ -201,18 +221,18 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult TotalMobilizationCountReportBydate(int centreId, int month, int year, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, p => p.CentreId == centreId && p.Date.Month == month && p.Date.Year == year, orderBy);
-            var totalSumOfCount = new MobilizationCentreReport()
-            {
-                MobilizationCount = data.Items.Sum(e => e.MobilizationCount),
-                EnquiryCount = data.Items.Sum(e => e.EnquiryCount),
-                CounsellingCount = data.Items.Sum(e => e.CounsellingCount),
-                RegistrationCount = data.Items.Sum(e => e.RegistrationCount),
-                AdmissionCount = data.Items.Sum(e => e.AdmissionCount),
-                CourseBooking = data.Items.Sum(e => e.CourseBooking),
-                FeeCollected = data.Items.Sum(e => e.FeeCollected)
-            };
-            return this.JsonNet(totalSumOfCount);
+            //var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, TODO, TODO, orderBy);
+            //var totalSumOfCount = new MobilizationCentreReport()
+            //{
+            //    MobilizationCount = data.Items.Sum(e => e.MobilizationCount),
+            //    EnquiryCount = data.Items.Sum(e => e.EnquiryCount),
+            //    CounsellingCount = data.Items.Sum(e => e.CounsellingCount),
+            //    RegistrationCount = data.Items.Sum(e => e.RegistrationCount),
+            //    AdmissionCount = data.Items.Sum(e => e.AdmissionCount),
+            //    CourseBooking = data.Items.Sum(e => e.CourseBooking),
+            //    FeeCollected = data.Items.Sum(e => e.FeeCollected)
+            //};
+            return this.JsonNet(null);
         }
 
         [HttpPost]
@@ -318,6 +338,55 @@ namespace Nidan.Controllers
                         p.RegistrationDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_RegistrationReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadMobilizationCountReportCSVByMonthAndYear(int centreId, int fromYear)
+        {
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fromYear).ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByMonthWise-({1}).csv", centre.Name, fromYear));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadMobilizationCountReportCSVByDate(int centreId, int fromMonth, int fromYear)
+        {
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
+            var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, fromYear, fromMonth).ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByDate-({1}-{2}).csv", centre.Name, fromMonth, fromYear));
+        }
+
+        [HttpPost]
+        public ActionResult SearchFixAssetByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DownloadFixAssetCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FixAssetReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadStockCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            var isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate).Items.ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StockReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
     }
 }

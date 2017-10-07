@@ -14,7 +14,7 @@ namespace Nidan.Entity
         {
             CandidateFees = new HashSet<CandidateFee>();
             Registrations=new HashSet<Registration>();
-            CreatedDate = DateTime.Now.Date;
+            CreatedDate = DateTime.UtcNow.Date;
         }
 
         public int CandidateInstallmentId { get; set; }

@@ -6,7 +6,7 @@
     </p>
 </div>
 
-<div ng-controller="BrainstormingController as model">
+<div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -27,7 +27,7 @@
                                             <th>Sr No.</th>
                                             <th>Before Planning Answer/Discuss These Question</th>
                                             <th>Disscussion Completed Y/N</th>
-                                            <th>Refernce Detail</th>
+                                            <th>Reference Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -35,23 +35,26 @@
                                             <td><span ng-bind="brainstorming.BrainstormingId"></span></td>
                                             <td><span ng-bind="brainstorming.BeforePlanningAnswerDiscussTheseQuestion"></span></td>
                                             <td>
-                                               @Html.RadioButtonFor(model => model.EventBrainstorming.DisscussionCompletedYesNo, "Yes")&nbsp; Yes &nbsp;
-                                                @Html.RadioButtonFor(model => model.EventBrainstorming.DisscussionCompletedYesNo, "No") No
+                                                @*@Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "Yes")&nbsp; Yes &nbsp;
+                                                    @Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "No") No*@
+
+                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion{{brainstorming.BrainstormingId}}" value="Yes" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}" >Yes
+                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion_{{brainstorming.BrainstormingId}}" value="No" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}">No
                                             </td>
                                             <td>
-                                                @Html.EditorFor(model => model.EventBrainstorming.RefernceDetailDocument)
+                                                @*@Html.EditorFor(model => model.EventBrainstorming.RefernceDetailDocument)*@
+                                                <textarea ng-model='brainstorming.ReferenceDetailDocument' id="referenceDetailTextBox{{brainstorming.BrainstormingId}}" name="referenceDetailTextBox{{brainstorming.BrainstormingId}}"></textarea>
                                             </td>
                                     </tbody>
                                 </table>
-
-                                @Html.Partial("Pagination/_pagination")
+                                @*@Html.Partial("Pagination/_pagination")*@
                             </div>
                         </div>
-                        <div class="col-md-9 col-sm-12 col-xs-12 col-md-offset-3">
+                        <div class="pull-right">
                             <div class="form-group">
-                                @*ng-if="model.paging.totalPages==model.paging.Page"*@
+                                @*ng-if="model.paging.totalPages==model.paging.page"*@
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="button" class="btn btn-success" ng-click="model.saveEventBrainStorming()">
                                         Submit
                                     </button>
                                 </div>

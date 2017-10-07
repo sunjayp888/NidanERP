@@ -1,0 +1,205 @@
+﻿@model Nidan.Models.ExpenseViewModel
+
+@{
+    ViewBag.Title = string.Format("Edit Other Fee ({0})", Model.Expense.ExpenseId);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>@Model.Expense.ExpenseId<small>Edit Other Fee</small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.Expense.ExpenseId)
+                        @Html.HiddenFor(model => Model.Expense.VoucherNumber)
+                        @Html.HiddenFor(model => Model.Expense.CreatedDate)
+                        @Html.Partial("_Expense", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    @if (Model.CashMemo != null)
+                                    {
+                                        <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
+                                            <i class="fa fa-print"></i> Print
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.CashMemo != null)
+{
+    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+        @Html.Partial("_ExpenseDocument")
+    </div>
+    @*@Html.HiddenFor(m => m.CashMemo)
+        <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
+            @Html.Partial("_Expenses")
+        </div>*@
+}
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+
+@section scripts {
+    <script>
+
+        $('#Expense_DebitAmount').keyup(function () {
+            numberToWords();
+        });
+
+        function numberToWords() {
+            var inputNumber = $('#Expense_DebitAmount').val();
+            var str = new String(inputNumber);
+            var splt = str.split("");
+            var rev = splt.reverse();
+            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+            var twos = [
+                'Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen',
+                ' Eighteen', ' Nineteen'
+            ];
+            var tens = [
+                '', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'
+            ];
+
+            var numLength = rev.length;
+            var word = new Array();
+            var j = 0;
+            var i;
+            for (i = 0; i < numLength; i++) {
+                switch (i) {
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        } else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+                    default:
+                        break;
+                }
+                j++;
+            }
+
+            function aboveTens() {
+                if (rev[i] == 0) {
+                    word[j] = '';
+                } else if (rev[i] == 1) {
+                    word[j] = twos[rev[i - 1]];
+                } else {
+                    word[j] = tens[rev[i]];
+                }
+            }
+
+            word.reverse();
+            var finalOutput = '';
+            for (i = 0; i < numLength; i++) {
+                finalOutput = finalOutput + word[i];
+            }
+            $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
+        };
+
+        $(document)
+            .ready(function () {
+                var cashmemo = $('#Expense_CashMemoNumbers').val();
+                var paidTo = $('#Expense_PaidTo').val();
+
+                if (cashmemo != "" && paidTo != "") {
+                    $('#Expense_CashMemoNumbers').attr('readonly', true);
+                    $('#Expense_PaidTo').attr('readonly', true);
+
+                } else {
+                    $('#Expense_CashMemoNumbers').attr('readonly', false);
+                    $('#Expense_PaidTo').attr('readonly', false);
+
+                }
+
+            });
+
+    </script>
+}

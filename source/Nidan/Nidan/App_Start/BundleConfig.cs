@@ -11,6 +11,7 @@ namespace Nidan
 
             bundles.Add(new ScriptBundle("~/Scripts/bower").Include(
                 "~/bower_components/jquery/dist/jquery.min.js",
+               // "~/bower_components/jquery/dist/jquery.ui.min.js",
                 "~/bower_components/jquery-validation/dist/jquery.validate.min.js",
                 "~/bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
                 "~/bower_components/bootstrap/dist/js/bootstrap.min.js",

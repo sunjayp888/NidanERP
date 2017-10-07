@@ -105,7 +105,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<MobilizationDataGrid> MobilizationDataGrids { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
-        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<CentreVoucherNumber> CentreVoucherNumbers { get; set; }
         public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
@@ -125,12 +124,29 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
+        public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
+        public virtual DbSet<BiometricAttendanceGrid> BiometricAttendanceGrids { get; set; }
+        public virtual DbSet<EventBrainStormingGrid> EventBrainStormingGrids { get; set; }
+        public virtual DbSet<RegistrationGrid> RegistrationGrids { get; set; }
+        public virtual DbSet<StockIssue> StockIssues { get; set; }
+        public virtual DbSet<StockPurchase> StockPurchases { get; set; }
+        public virtual DbSet<StockDataGrid> StockDataGrids { get; set; }
+        public virtual DbSet<FixAsset> FixAssets { get; set; }
+        public virtual DbSet<FixAssetSearchGrid> FixAssetSearchGrids { get; set; }
+        public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
+        public virtual DbSet<StockType> StockTypes { get; set; }
+        public virtual DbSet<StockReportDataGrid> StockReportDataGrids { get; set; }
+        public virtual DbSet<BatchPlanner> BatchPlanners { get; set; }
+        public virtual DbSet<BatchPlannerDay> BatchPlannerDays { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<CentreProductSetting> CentreProductSettings { get; set; }
+        public virtual DbSet<CentreFixAsset> CentreFixAssets { get; set; }
+        public virtual DbSet<BatchPlannerGrid> BatchPlannerGrids { get; set; }
+        public virtual DbSet<StudentKit> StudentKits { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
-
-
+            
             modelBuilder.Entity<Alert>()
                 .HasMany(e => e.AspNetUsersAlertSchedules)
                 .WithRequired(e => e.Alert)
@@ -147,6 +163,10 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Course>()
                .Property(e => e.Description)
                .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Course>()
                 .HasMany(e => e.FollowUps)
@@ -189,133 +209,12 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.FiscalYear)
                 .IsUnicode(false);
-            //modelBuilder.Entity<Colour>()
-            //    .HasMany(e => e.Divisions)
-            //    .WithRequired(e => e.Colour)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Company>()
-            //    .HasMany(e => e.Divisions)
-            //    .WithRequired(e => e.Company)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.CountryAbsenceTypes)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.CountryPublicHolidays)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.DivisionCountryAbsencePeriods)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.DivisionCountryWorkingPatterns)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.Personnels)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Country>()
-            //    .HasMany(e => e.Sites)
-            //    .WithRequired(e => e.Country)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<CountryAbsenceType>()
-            //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
-            //    .WithRequired(e => e.CountryAbsenceType)
-            //    .WillCascadeOnDelete(false);
-
-
-            //modelBuilder.Entity<Division>()
-            //    .HasMany(e => e.DivisionCountryAbsencePeriods)
-            //    .WithRequired(e => e.Division)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Division>()
-            //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
-            //    .WithRequired(e => e.Division)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Division>()
-            //    .HasMany(e => e.DivisionCountryWorkingPatterns)
-            //    .WithRequired(e => e.Division)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Division>()
-            //    .HasMany(e => e.DivisionSites)
-            //    .WithRequired(e => e.Division)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Division>()
-            //    .HasMany(e => e.Employments)
-            //    .WithRequired(e => e.Division)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<DivisionCountryAbsencePeriod>()
-            //    .HasMany(e => e.PersonnelAbsenceEntitlements)
-            //    .WithRequired(e => e.DivisionCountryAbsencePeriod)
-            //    .WillCascadeOnDelete(false);
-
-
-
-            //modelBuilder.Entity<Frequency>()
-            //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
-            //    .WithRequired(e => e.Frequency)
-            //    .WillCascadeOnDelete(false);
-
-
-
+           
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Alerts)
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
-
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.CountryAbsenceTypes)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.CountryPublicHolidays)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.Divisions)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.DivisionCountryAbsencePeriods)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.DivisionCountryAbsenceTypeEntitlements)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.DivisionCountryWorkingPatterns)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Organisation>()
-            //    .HasMany(e => e.DivisionSites)
-            //    .WithRequired(e => e.Organisation)
-            //    .WillCascadeOnDelete(false);
-
+            
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Hosts)
                 .WithRequired(e => e.Organisation)
@@ -325,9 +224,7 @@ namespace Nidan.Data.Models
                 .HasMany(e => e.Personnels)
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
-
-
-
+            
             modelBuilder.Entity<Personnel>()
                 .Property(e => e.Telephone)
                 .IsUnicode(false);
@@ -1173,6 +1070,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<CourseSearchField>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+
             modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -1431,6 +1332,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<AdmissionGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateInstallmentGrid>()
@@ -1762,18 +1667,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.PaidTo)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<RegistrationGrid>()
-                .Property(e => e.PaymentMode)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Expense>()
                 .Property(e => e.VoucherNumber)
                 .IsUnicode(false);
@@ -1794,14 +1687,14 @@ namespace Nidan.Data.Models
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchAttendance>()
-                .Property(e => e.Topic)
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.BioMetricLogTime)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchAttendance>()
-                .Property(e => e.StudentCode)
+            modelBuilder.Entity<Attendance>()
+                .Property(e => e.Direction)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<CounsellingDataGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -1911,26 +1804,9 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventBrainstorming>()
-                .Property(e => e.RefernceDetailDocument)
+                .Property(e => e.ReferenceDetailDocument)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
             
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<AttendanceGrid>()
-                .Property(e => e.Topic)
-                .IsUnicode(false);
-
             modelBuilder.Entity<MobilizationCentreReport>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
@@ -2019,6 +1895,239 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CentreEnrollmentReceiptSetting>()
                 .Property(e => e.TaxYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendance>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.BioMetricLogTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.Direction)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AttendanceGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BiometricAttendanceGrid>()
+               .Property(e => e.StudentCode)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<BiometricAttendanceGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.BeforePlanningAnswerDiscussTheseQuestion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.DisscussionCompletedYesNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventBrainStormingGrid>()
+                .Property(e => e.ReferenceDetailDocument)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<RegistrationGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockIssue>()
+                .Property(e => e.IssuedToPerson)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockPurchase>()
+                .Property(e => e.InventoryItem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockPurchase>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockPurchase>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StudentKit>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+            
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlanner>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+            
+            modelBuilder.Entity<Product>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.InventoryItem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.StockTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockDataGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.InventoryItem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.StockTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.IssuedToPerson)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<StockReportDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CentreFixAsset>()
+                .Property(e => e.AssetCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CentreFixAsset>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .HasMany(e => e.CentreFixAssets)
+                .WithRequired(e => e.FixAsset)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetSearchGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.ClassRoomName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.StartTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.EndTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.SlotType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.CourseType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.Course)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPlannerGrid>()
+                .Property(e => e.Trainer)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

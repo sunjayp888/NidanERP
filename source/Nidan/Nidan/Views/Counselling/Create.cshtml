@@ -35,6 +35,7 @@
                             }
                             @Html.HiddenFor(model => model.Counselling.Enquiry.Title)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.Address1)
+                            @Html.HiddenFor(model => Model.Counselling.Enquiry.GuardianName)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.HowDidYouKnowAboutId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.BatchTimePreferId)
                             @Html.HiddenFor(model => Model.Counselling.Enquiry.CasteCategoryId)
@@ -147,7 +148,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychomatric Test Done</label>
+                                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychometric Test Done</label>
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
                                                             <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
@@ -192,7 +193,6 @@
                                                 <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-3">
                                                     <div class="form-group">
                                                         <div class="pull-right">
-                                                            <button type="button" class="btn btn-info" ng-click="model.removeError()" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                                             <button type="submit" class="btn btn-success">Submit</button>
                                                             @*<a href="@Url.Action("Create", "RegistrationPaymentReceipt", new { id = Model.Counselling.CounsellingId })" class="btn btn-primary" role="button">
                                                                     Create Registration&nbsp;<span class="fa fa-chevron-right"></span>
@@ -239,7 +239,7 @@
             </div>*@
     </div>
 
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+    <div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
         @Html.Partial("_Document")
     </div>
 </div>
@@ -248,3 +248,21 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+@section scripts
+{
+    <script>
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
+    </script>
+}

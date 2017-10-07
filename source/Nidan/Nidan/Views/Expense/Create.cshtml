@@ -1,0 +1,218 @@
+﻿@model Nidan.Models.ExpenseViewModel
+
+@{
+    ViewBag.Title = "Create Other Fee";
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Create Expense <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <strong><i class="fa fa-info-circle"></i> &nbsp;@string.Format("Available Petty Cash - {0} Rs.", @Model.AvailablePettyCash)</strong>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal form-label-left">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        @Html.HiddenFor(model => model.AvailablePettyCash)
+                        @Html.HiddenFor(model => model.CashMemo)
+                        @Html.Partial("_Expense", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    @if (Model.CashMemo != null)
+                                    {
+                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
+
+                                        <a href="@Url.Action("Download", new { id = Model.Expense.ExpenseId })" class="btn btn-success" role="button">
+                                            <i class="fa fa-print"></i> Print
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.CashMemo != null)
+{
+    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+        @Html.Partial("_ExpenseDocument")
+    </div>
+    @*@Html.HiddenFor(m => m.CashMemo)
+    <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
+        @Html.Partial("_Expenses")
+    </div>*@
+}
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        $('#Expense_DebitAmount').val("");
+        $('#Expense_RupeesInWord').val("");
+        $('#Expense_Particulars').val("");
+
+        $('#Expense_DebitAmount').keyup(function() {
+            numberToWords();
+        });
+
+        function numberToWords() {
+            var inputNumber = $('#Expense_DebitAmount').val();
+            var str = new String(inputNumber);
+            var splt = str.split("");
+            var rev = splt.reverse();
+            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+            var twos = [
+                'Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen',
+                ' Eighteen', ' Nineteen'
+            ];
+            var tens = [
+                '', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'
+            ];
+
+            var numLength = rev.length;
+            var word = new Array();
+            var j = 0;
+            var i;
+            for (i = 0; i < numLength; i++) {
+                switch (i) {
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        } else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        } else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+                    default:
+                        break;
+                }
+                j++;
+            }
+
+            function aboveTens() {
+                if (rev[i] == 0) {
+                    word[j] = '';
+                } else if (rev[i] == 1) {
+                    word[j] = twos[rev[i - 1]];
+                } else {
+                    word[j] = tens[rev[i]];
+                }
+            }
+
+            word.reverse();
+            var finalOutput = '';
+            for (i = 0; i < numLength; i++) {
+                finalOutput = finalOutput + word[i];
+            }
+            $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
+        };
+
+        //$(document)
+        //    .ready(function () {
+        //        var cashmemo = $('#OtherFee_CashMemo').val();
+        //        var paidTo = $('#OtherFee_PaidTo').val();
+        //        var project = $('#txt_project').val();
+        //        if (cashmemo != "" && paidTo != "") {
+        //            $('#OtherFee_CashMemo').attr('readonly', true);
+        //            $('#OtherFee_PaidTo').attr('readonly', true);
+
+        //        } else {
+        //            $('#OtherFee_CashMemo').attr('readonly', false);
+        //            $('#OtherFee_PaidTo').attr('readonly', false);
+
+        //        }
+
+        //    });
+
+    </script>
+}

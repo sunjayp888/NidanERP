@@ -10,7 +10,6 @@
     function StudentAdmissionDocumentService($http) {
         var service = {
             retrieveStudentAdmissionDocuments: retrieveStudentAdmissionDocuments,
-            //retrieveStudentAdmissionDocumentsType: retrieveStudentAdmissionDocumentsType,
             createStudentAdmissionDocument: createStudentAdmissionDocument,
             downloadStudentAdmissionDocument: downloadStudentAdmissionDocument
         };
@@ -24,11 +23,6 @@
                 };
             return $http.post(url, data);
         }
-
-        //function retrieveStudentAdmissionDocumentsType() {
-        //    var url = "/Admission/DocumentTypes";
-        //    return $http.post(url);
-        //}
 
         function createStudentAdmissionDocument(studentCode, documentTypeId, attachment) {
 

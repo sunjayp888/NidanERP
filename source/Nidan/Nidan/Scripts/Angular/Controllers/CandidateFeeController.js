@@ -27,6 +27,10 @@
         vm.candidateFeeId;
         vm.paymentModeId;
         vm.saveFee = saveFee;
+        vm.totalFee = totalFee;
+        vm.totalCourseFee;
+        vm.totalPaidFee;
+        vm.balanceFee;
         vm.PaidAmount;
         vm.openCandidateFeeModalPopUp = openCandidateFeeModalPopUp;
         vm.retrievePaymentModes = retrievePaymentModes;
@@ -40,6 +44,7 @@
             vm.orderBy.class = "desc";
             order("InstallmentDate");
             retrievePaymentModes();
+            totalFee(vm.candidateInstallmentId);
         }
 
 
@@ -79,9 +84,9 @@
                 return CandidateFeeService.saveFee(candidateFee)
                     .then(function (response) {
                         retrieveCandidateFees();
+                        totalFee(vm.candidateInstallmentId);
                     });
             }
-
             else {
                 var candidateFeedefault = {
                     CandidateFeeId: vm.candidateFeeId,
@@ -97,8 +102,10 @@
                 return CandidateFeeService.saveFee(candidateFeedefault)
                     .then(function (response) {
                         retrieveCandidateFees();
+                        totalFee(vm.candidateInstallmentId);
                     });
             }
+            
         }
 
         function retrievePaymentModes() {
@@ -110,7 +117,11 @@
         }
 
         function pageChanged() {
-            return retrieveCandidateFees();
+            if (vm.searchKeyword) {
+                searchCandidateFee(vm.searchKeyword);
+            } else {
+                return retrieveCandidateFees();
+            }
         }
 
         function order(property) {
@@ -153,6 +164,13 @@
                 });
         }
 
+        function totalFee(candidateInstallmentId) {
+            return CandidateFeeService.totalFee(candidateInstallmentId).then(function(response) {
+                vm.totalCourseFee = response.data.CourseFee;
+                vm.totalPaidFee = response.data.TotalPaidFee;
+                vm.balanceFee = response.data.BalanceFee;
+            });
+        }
     }
 
 })();

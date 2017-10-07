@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
+using Nidan.Extensions;
 using Nidan.Models;
 
 namespace Nidan.Controllers
@@ -22,23 +23,17 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(EventBrainstormingViewModel eventBrainstormingViewModel, List<Brainstorming> brainstorming, int eventId)
+        public ActionResult Create(int eventId, List<EventBrainstorming> eventBrainstormings)
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var eventData = NidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
-            foreach (var item in brainstorming)
+            foreach (var item in eventBrainstormings)
             {
-                var eventbrainstorming = new EventBrainstorming()
-                {
-                    EventId = eventData.EventId,
-                    BrainstormingId = item.BrainstormingId,
-                };
-                var result = NidanBusinessService.CreateEventBrainstorming(organisationId, centreId, eventbrainstorming);
+                item.CentreId = centreId;
+                item.OrganisationId = organisationId;
             }
-
-            return null;
-
+            var result = NidanBusinessService.CreateEventBrainstorming(organisationId, centreId, eventId, eventBrainstormings);
+            return this.JsonNet(result);
         }
     }
 }

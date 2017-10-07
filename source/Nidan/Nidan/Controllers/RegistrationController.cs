@@ -173,7 +173,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId,
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,
                 p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
@@ -206,7 +206,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.SearchField.Trim().ToLower().Contains(searchKeyword.Trim().ToLower()), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -214,7 +214,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrations(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
 
