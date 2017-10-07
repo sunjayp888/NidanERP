@@ -189,6 +189,7 @@
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />
+    <Compile Include="Partials\CentreFixAsset.cs" />
     <Compile Include="Partials\Counselling.cs" />
     <Compile Include="Partials\Course.cs" />
     <Compile Include="Partials\CourseInstallment.cs" />

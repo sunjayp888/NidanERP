@@ -220,6 +220,7 @@ namespace Nidan.Data.Interfaces
         CentreProductSetting RetrieveCentreProductSetting(int organisationId, Expression<Func<CentreProductSetting, bool>> predicate);
         PagedResult<CentreProductSetting> RetrieveCentreProductSettings(int organisationId, Expression<Func<CentreProductSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchPlannerGrid> RetrieveBatchPlannerGrids(int organisationId, Expression<Func<BatchPlannerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        //FixAsset RetrieveFixAsset(int organisationId, int subjectId, Expression<Func<Subject, bool>> predicate);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

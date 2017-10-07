@@ -26,8 +26,13 @@
         vm.retrieveCentreFixAssetsByFixAssetId = retrieveCentreFixAssetsByFixAssetId;
         vm.openCentreFixAssetModalPopUp = openCentreFixAssetModalPopUp;
         vm.markAsset = markAsset;
+        vm.selectEntity = selectEntity;
+        vm.selectAll = selectAll;
+        //vm.retrieveRoom = retrieveRoom;
+        vm.rooms=[];
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.allItemsSelected = false;
         vm.initialise = initialise;
 
         function initialise() {
@@ -105,22 +110,40 @@
         }
 
         function markAsset() {
-            //vm.centreFixAssets=$('input');
-            angular.forEach(centreFixAssets,
-                function(value, key) {
-
-                });
-            //for (var i = 1; i <= vm.centreFixAssets; i++) {
-            //    if (centreFixAssets[i].selected) {
-            //        vm.centreFixAssets[i].RoomId = $('#dropDownRoom').val();
-            //        vm.centreFixAssets[i].DateofPutToUse = $('#txtDateofUse').val();
-            //    }
-            //}
-            return FixAssetService.markAsset(roomId, dateofuse, vm.centreFixAssets).then(function (response) {
-                vm.centreFixAssets = response.data.items;
-                return vm.centreFixAssets;
-            });
+            vm.roomId = $('#dropDownRoom').val();
+            vm.dateofPutToUse = $('#txtDateofUse').val();
+            for (var i = 0; i <= vm.centreFixAssets.length; i++) {
+                if (vm.centreFixAssets[i].Ischecked) {
+                    vm.centreFixAssets[i].RoomId = vm.roomId;
+                    vm.centreFixAssets[i].DateofPutToUse = vm.dateofPutToUse;
+                    //vm.centreFixAssets[i].AssetCode = vm.centreFixAssets.rooms;
+                    return FixAssetService.markAsset(vm.roomId, vm.dateofPutToUse, vm.centreFixAssets).then(function (response) {
+                        vm.centreFixAssets = response.data.items;
+                        return vm.centreFixAssets;
+                    });
+                }
+            }
+            return vm.centreFixAssets;
         }
+
+        function selectEntity() {
+            // If any entity is not checked, then uncheck the "allItemsSelected" checkbox
+            for (var i = 0; i < vm.centreFixAssets.length; i++) {
+                if (!vm.centreFixAssets[i].Ischecked) {
+                    vm.allItemsSelected = false;
+                    return;
+                }
+            }
+            //If not the check the "allItemsSelected" checkbox
+            vm.allItemsSelected = true;
+        };
+
+        function selectAll() {
+            // Loop through all the entities and set their isChecked property
+            for (var i = 0; i < vm.centreFixAssets.length; i++) {
+                vm.centreFixAssets[i].isChecked = vm.allItemsSelected;
+            }
+        };
 
         function pageChanged() {
             return retrieveFixAssets();

@@ -34,6 +34,7 @@ namespace Nidan.Entity
 
         public decimal CostAmount { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         public int CentreId { get; set; }

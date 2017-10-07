@@ -1496,13 +1496,24 @@ namespace Nidan.Business
 
         public bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
         {
+            var room = RetrieveRoom(organisationId, roomId);
+            //var fixAssets=RetrieveFixAssets(organisationId,e=>e.FixAssetId==)
+            //var countofRoom=RetrieveCentreFixAssets(organisationId,)
             try
             {
                 foreach (var centreFixAsset in centreFixAssets)
                 {
+                    var fixAssets = RetrieveCentreFixAssets(organisationId,centreFixAsset.FixAssetId,e=>true);
+                    var countofRoom = fixAssets.Items.Sum(e => e.RoomId);
+                    var countofProduct = fixAssets.Items.Sum(e => e.FixAsset.ProductId);
                     centreFixAsset.RoomId = roomId;
                     centreFixAsset.DateofPutToUse = dateofuse;
                     UpdateCentreFixAsset(organisationId, centreFixAsset);
+                    if (countofRoom == countofProduct)
+                    {
+                        var num = 0;
+                        centreFixAsset.AssetCode = String.Format("{0} {1} {2}", centreFixAsset.FixAsset.Product.Name, room.Description, num);
+                    }
                 }
             }
             catch (Exception e)

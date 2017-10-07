@@ -27,7 +27,7 @@
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                     <tr role="row">
-                                        <th><input type="checkbox" id="chkall" /> All</th>
+                                        <th><input type="checkbox" ng-model="model.allItemsSelected" ng-change="selectAll()"/> All</th>
                                         <th ng-click="model.order('FixAsset.Product.Name')" ng-class="model.orderClass('FixAsset.Product.Name')">Asset</th>
                                         <th ng-click="model.order('AssetCode')" ng-class="model.orderClass('AssetCode')">AssetCode</th>
                                         <th ng-click="model.order('RoomId')" ng-class="model.orderClass('RoomId')">Room</th>
@@ -37,7 +37,7 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="centreFixAsset in model.centreFixAssets| orderBy:'CentreFixAssetId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                        <td><input type="checkbox" name="chk"/></td>@*ng-disabled="centreFixAsset.RoomId!=null"*@
+                                        <td><input type="checkbox" ng-model="centreFixAsset.Ischecked" ng-change="model.selectEntity()" ng-disabled="centreFixAsset.RoomId!=null"/></td>
                                         <td><span ng-bind="centreFixAsset.FixAsset.Product.Name"></span></td>
                                         <td><span ng-bind="centreFixAsset.AssetCode"></span></td>
                                         <td><span ng-bind="centreFixAsset.Room.Description"></span></td>
@@ -48,7 +48,7 @@
                                 </table>
                             </div>
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-10">
-                                <button id="btnCentreFixAsset" type="button" class="btn btn-success" ng-click="model.openCentreFixAssetModalPopUp(@Model.FixAssetId)" data-toggle="modal" data-target="#centreFixAssetModal">Assign Asset</button>
+                                <button id="btnCentreFixAsset" type="button" class="btn btn-success" ng-click="model.openCentreFixAssetModalPopUp(@Model.FixAssetId)" data-toggle="modal" data-target="#centreFixAssetModal" disabled="disabled">Assign Asset</button>
                             </div>
                         </div>
                         @Html.Partial("Pagination/_pagination")
