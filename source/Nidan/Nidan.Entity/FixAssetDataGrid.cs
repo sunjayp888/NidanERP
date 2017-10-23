@@ -10,58 +10,34 @@ namespace Nidan.Entity
     public partial class FixAssetDataGrid
     {
         [Key]
-        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int FixAssetId { get; set; }
+        public int CentreFixAssetId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ProductId { get; set; }
-
-        [Key]
-        [Column(Order = 2)]
         [StringLength(100)]
         public string Name { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Quantity { get; set; }
+        [StringLength(100)]
+        public string AssetCode { get; set; }
 
-        public int? BalanceQuantity { get; set; }
+        public string Description { get; set; }
 
-        [Key]
-        [Column(Order = 4, TypeName = "date")]
-        public DateTime DateofPurchase { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? DateofPurchase { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
+        [Column(TypeName = "date")]
+        public DateTime? DateofPutToUse { get; set; }
+
         [StringLength(500)]
         public string Supplier { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
         [StringLength(100)]
         public string BillNumber { get; set; }
 
-        [Key]
-        [Column(Order = 7)]
-        public decimal CostAmount { get; set; }
+        public int? CentreId { get; set; }
 
-        [Key]
-        [Column(Order = 8)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
-
-        [Key]
-        [Column(Order = 9)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
-        [Key]
-        [Column(Order = 10)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrganisationId { get; set; }
+        public int? OrganisationId { get; set; }
     }
 }

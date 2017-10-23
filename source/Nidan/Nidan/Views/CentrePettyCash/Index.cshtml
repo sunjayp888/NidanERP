@@ -22,7 +22,7 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -63,7 +63,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="centrePettyCash in model.centrePettyCashs" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentrePettyCash(centrePettyCash.CentrePettyCashId)">
+                                        <tr ng-repeat="centrePettyCash in model.centrePettyCashs" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             <td><span ng-bind="centrePettyCash.Centre.Name"></span></td>
                                             <td><span class="fa fa-inr" ng-bind="centrePettyCash.Amount"></span></td>
                                             <td><span ng-bind="centrePettyCash.Particulars"></span></td>
@@ -73,7 +73,7 @@
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("SuperAdmin"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/CentrePettyCash/Edit/{{centrePettyCash.CentrePettyCashId}}">

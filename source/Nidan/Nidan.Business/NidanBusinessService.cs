@@ -1633,7 +1633,7 @@ namespace Nidan.Business
 
         public Personnel RetrievePersonnel(int organisationId, int personnelId)
         {
-            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, p => true);
+            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, e=>true);
             return personnel;
         }
 
@@ -3117,6 +3117,12 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveCentreFixAsset(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate);
         }
 
         public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)

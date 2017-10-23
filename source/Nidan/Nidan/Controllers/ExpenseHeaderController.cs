@@ -37,7 +37,7 @@ namespace Nidan.Controllers
         }
 
         // POST: ExpenseHeader/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ExpenseHeaderViewModel expenseHeaderViewModel)

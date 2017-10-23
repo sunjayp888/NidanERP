@@ -16,10 +16,10 @@
 
         return service;
        
-        function retrieveExpenseDocuments(StudentCode) {
+        function retrieveExpenseDocuments(studentCode) {
             var url = "/Expense/DocumentList",
                 data = {
-                    studentCode: StudentCode
+                    studentCode: studentCode
                 };
             return $http.post(url, data);
         }

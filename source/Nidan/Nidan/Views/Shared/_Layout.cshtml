@@ -77,6 +77,8 @@
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
+                                            <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
+                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
@@ -88,12 +90,11 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("SuperAdmin","Admin"))
+                                @if (User.IsInAnyRoles("Admin"))
                                     {
                                         <li>
                                             <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                                 <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
                                                 <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>

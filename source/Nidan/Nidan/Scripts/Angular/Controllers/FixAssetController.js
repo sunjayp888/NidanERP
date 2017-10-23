@@ -141,7 +141,7 @@
         function selectAll() {
             // Loop through all the entities and set their isChecked property
             for (var i = 0; i < vm.centreFixAssets.length; i++) {
-                vm.centreFixAssets[i].isChecked = vm.allItemsSelected;
+                vm.centreFixAssets[i].Ischecked = vm.allItemsSelected;
             }
         };
 

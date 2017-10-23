@@ -101,8 +101,8 @@
                                             <th>Asset</th>
                                             <th>Date Of Purchase</th>
                                             <th>Supplier</th>
-                                            <th>Bill Number</th>
-                                            <th>Cost Amount</th>
+                                            <th>Class Room</th>
+                                            <th>Date Of Put To Use</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,11 +112,11 @@
                                                 <td><span ng-bind="report.CentreName"></span></td>
                                             }
                                             <td><span ng-bind="report.AssetCode"></span></td>
-                                            <td><span ng-bind="report.Product.Name"></span></td>
+                                            <td><span ng-bind="report.Name"></span></td>
                                             <td><span ng-bind="report.DateofPurchase|date : format : shortDate"></span></td>
                                             <td><span ng-bind="report.Supplier"></span></td>
-                                            <td><span ng-bind="report.BillNumber"></span></td>
-                                            <td><span ng-bind="report.CostAmount"></span></td>
+                                            <td><span ng-bind="report.Description"></span></td>
+                                            <td><span ng-bind="report.DateofPutToUse|date : format : shortDate"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>

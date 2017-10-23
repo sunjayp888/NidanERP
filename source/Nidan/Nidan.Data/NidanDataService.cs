@@ -603,8 +603,7 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.PersonnelId == personnelId);
-
-            }
+                }
         }
 
         public IEnumerable<Personnel> RetrievePersonnel(int organisationId, IEnumerable<int> companyIds, IEnumerable<int> departmentIds, IEnumerable<int> divisionIds)
@@ -3669,6 +3668,33 @@ namespace Nidan.Data
             }
         }
 
+        //public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+        //    Paging paging = null)
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.Create(organisationId))
+        //    {
+        //        return context
+        //            .CentreFixAssets
+        //            .Include(p => p.FixAsset)
+        //            .Include(p => p.FixAsset.Product)
+        //            .Include(p => p.Room)
+        //            .Include(p => p.Centre)
+        //            .Include(p => p.Organisation)
+        //            .AsNoTracking()
+        //            .Where(predicate)
+        //            .OrderBy(orderBy ?? new List<OrderBy>
+        //            {
+        //                new OrderBy
+        //                {
+        //                    Property = "CentreFixAssetId",
+        //                    Direction = System.ComponentModel.ListSortDirection.Ascending
+        //                }
+        //            })
+        //            .Paginate(paging);
+        //    }
+        //}
+
         public PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3743,6 +3769,28 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "BatchPlannerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FixAssetDataGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreFixAssetId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
