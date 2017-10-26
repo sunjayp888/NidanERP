@@ -35,9 +35,15 @@
                                     <button type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
-                                        <a href="@Url.Action("Download", new { id = Model.CashMemo })" class="btn btn-success" role="button">
+                                        <a ng-href="/Expense/Download/{{@Model.CashMemo}}" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
-                                        </a>
+                                            </a>
+                                        @*<a href="@Url.Action("Download", new { id = Model.CashMemo})" class="btn btn-success" role="button">
+                                            <i class="fa fa-print"></i> Print
+                                        </a>*@
+                                        @*<a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                            Edit
+                                        </a>*@
                                     }
                                 </div>
                             </div>
@@ -50,7 +56,7 @@
 </div>
 @if (Model.CashMemo != null)
 {
-    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise(@Model.CashMemo)">
+    <div ng-controller="ExpenseDocumentController as model" ng-init="model.initialise('@Model.CashMemo')">
         @Html.Partial("_ExpenseDocument")
     </div>
     @*@Html.HiddenFor(m => m.CashMemo)
@@ -67,12 +73,13 @@
 @section scripts {
     <script>
 
-        $('#Expense_DebitAmount').keyup(function () {
+        $('#Expense_DebitAmount').keyup(function() {
             numberToWords();
         });
 
         function numberToWords() {
             var inputNumber = $('#Expense_DebitAmount').val();
+            //parseFloat($('#Expense_DebitAmount').val());
             var str = new String(inputNumber);
             var splt = str.split("");
             var rev = splt.reverse();
@@ -91,77 +98,77 @@
             var i;
             for (i = 0; i < numLength; i++) {
                 switch (i) {
-                    case 0:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = '' + once[rev[i]];
-                        }
-                        word[j] = word[j];
-                        break;
+                case 0:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = '' + once[rev[i]];
+                    }
+                    word[j] = word[j];
+                    break;
 
-                    case 1:
-                        aboveTens();
-                        break;
+                case 1:
+                    aboveTens();
+                    break;
 
-                    case 2:
-                        if (rev[i] == 0) {
-                            word[j] = '';
-                        } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                            word[j] = once[rev[i]] + " Hundred ";
-                        } else {
-                            word[j] = once[rev[i]] + " Hundred and";
-                        }
-                        break;
+                case 2:
+                    if (rev[i] == 0) {
+                        word[j] = '';
+                    } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                        word[j] = once[rev[i]] + " Hundred ";
+                    } else {
+                        word[j] = once[rev[i]] + " Hundred and";
+                    }
+                    break;
 
-                    case 3:
-                        if (rev[i] == 0 || rev[i + 1] == 1) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                            word[j] = word[j] + " Thousand";
-                        }
-                        break;
+                case 3:
+                    if (rev[i] == 0 || rev[i + 1] == 1) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                        word[j] = word[j] + " Thousand";
+                    }
+                    break;
 
 
-                    case 4:
-                        aboveTens();
-                        break;
+                case 4:
+                    aboveTens();
+                    break;
 
-                    case 5:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Lakh";
-                        }
+                case 5:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        word[j] = word[j] + " Lakh";
+                    }
 
-                        break;
+                    break;
 
-                    case 6:
-                        aboveTens();
-                        break;
+                case 6:
+                    aboveTens();
+                    break;
 
-                    case 7:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Crore";
-                        }
-                        break;
+                case 7:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        word[j] = word[j] + " Crore";
+                    }
+                    break;
 
-                    case 8:
-                        aboveTens();
-                        break;
-                    default:
-                        break;
+                case 8:
+                    aboveTens();
+                    break;
+                default:
+                    break;
                 }
                 j++;
             }
@@ -184,8 +191,10 @@
             $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
         };
 
+        
+
         $(document)
-            .ready(function () {
+            .ready(function() {
                 var cashmemo = $('#Expense_CashMemoNumbers').val();
                 var paidTo = $('#Expense_PaidTo').val();
 

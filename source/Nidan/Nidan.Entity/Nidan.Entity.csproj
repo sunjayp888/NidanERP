@@ -189,6 +189,7 @@
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />
+    <Compile Include="Partials\CentreFixAsset.cs" />
     <Compile Include="Partials\Counselling.cs" />
     <Compile Include="Partials\Course.cs" />
     <Compile Include="Partials\CourseInstallment.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Partials\Personnel.cs" />
     <Compile Include="Partials\Room.cs" />
     <Compile Include="Partials\Session.cs" />
+    <Compile Include="Partials\StockIssue.cs" />
     <Compile Include="Partials\StockPurchase.cs" />
     <Compile Include="Partials\Subject.cs" />
     <Compile Include="Partials\Template.cs" />

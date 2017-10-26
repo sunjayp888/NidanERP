@@ -11,6 +11,7 @@ namespace Nidan.Models
     public class CentrePettyCashViewModel : BaseViewModel
     {
         public CentrePettyCash CentrePettyCash { get; set; }
+        //public Personnel Personnel { get; set; }
         public SelectList Centres { get; set; }
     }
 }

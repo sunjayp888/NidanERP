@@ -363,7 +363,7 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveFixAssetDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -373,7 +373,7 @@ namespace Nidan.Controllers
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
-            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate).Items.ToList();
+            var data = NidanBusinessService.RetrieveFixAssetDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FixAssetReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }

@@ -1387,11 +1387,7 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CentrePettyCash>()
-                .Property(e => e.Particulars)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidateFeeGrid>()
+           modelBuilder.Entity<CandidateFeeGrid>()
                  .Property(e => e.PaymentMode)
                  .IsUnicode(false);
 
@@ -2066,22 +2062,6 @@ namespace Nidan.Data.Models
                 .WithRequired(e => e.FixAsset)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
             modelBuilder.Entity<FixAssetSearchGrid>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -2128,6 +2108,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<BatchPlannerGrid>()
                 .Property(e => e.Trainer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.AssetCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Supplier)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.BillNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CentrePettyCash>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

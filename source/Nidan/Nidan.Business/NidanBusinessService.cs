@@ -1496,13 +1496,24 @@ namespace Nidan.Business
 
         public bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
         {
+            var room = RetrieveRoom(organisationId, roomId);
+            //var fixAssets=RetrieveFixAssets(organisationId,e=>e.FixAssetId==)
+            //var countofRoom=RetrieveCentreFixAssets(organisationId,)
             try
             {
                 foreach (var centreFixAsset in centreFixAssets)
                 {
+                    var fixAssets = RetrieveCentreFixAssets(organisationId,centreFixAsset.FixAssetId,e=>true);
+                    var countofRoom = fixAssets.Items.Sum(e => e.RoomId);
+                    var countofProduct = fixAssets.Items.Sum(e => e.FixAsset.ProductId);
                     centreFixAsset.RoomId = roomId;
                     centreFixAsset.DateofPutToUse = dateofuse;
                     UpdateCentreFixAsset(organisationId, centreFixAsset);
+                    if (countofRoom == countofProduct)
+                    {
+                        var num = 0;
+                        centreFixAsset.AssetCode = String.Format("{0} {1} {2}", centreFixAsset.FixAsset.Product.Name, room.Description, num);
+                    }
                 }
             }
             catch (Exception e)
@@ -1622,7 +1633,7 @@ namespace Nidan.Business
 
         public Personnel RetrievePersonnel(int organisationId, int personnelId)
         {
-            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, p => true);
+            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, e=>true);
             return personnel;
         }
 
@@ -3106,6 +3117,12 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveCentreFixAsset(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate);
         }
 
         public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)
