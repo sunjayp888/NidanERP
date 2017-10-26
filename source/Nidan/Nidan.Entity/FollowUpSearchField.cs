@@ -78,6 +78,11 @@ namespace Nidan.Entity
 
         public string ClosingRemark { get; set; }
 
+        [Key]
+        [Column(Order = 6)]
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
         [StringLength(1580)]
         public string SearchField { get; set; }
     }

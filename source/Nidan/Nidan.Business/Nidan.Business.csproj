@@ -131,6 +131,7 @@
     <Compile Include="Models\BatchMonth.cs" />
     <Compile Include="Models\CandidateEnrollment.cs" />
     <Compile Include="Models\CandidateFeeReceipt.cs" />
+    <Compile Include="Models\CentreCandidateFeeSummaryReport.cs" />
     <Compile Include="Models\ExpenseData.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\MobilizationCountData.cs" />

@@ -39,16 +39,16 @@
 
         function createExpenseDocument(studentCode) {
             vm.Errors = [];
-            vm.studentCode = studentCode;
+            vm.StudentCode = studentCode;
             if (vm.documentFile !== undefined) {
                 var documentName = vm.documentFile.name;
                 var documentByteString;
                 var reader = new FileReader();
-                return ExpenseDocumentService.createExpenseDocument(vm.studentCode, vm.documentTypeId, vm.documentFile).then(function (response) {
+                return ExpenseDocumentService.createExpenseDocument(vm.StudentCode, vm.documentTypeId, vm.documentFile).then(function (response) {
                     if (response.data.length === 0) {
                         $("#admissionDocumentModal").modal('hide');
                         vm.documentFile = null;
-                        retrieveExpenseDocuments(vm.studentCode);
+                        retrieveExpenseDocuments(vm.StudentCode);
                     }
                     else {
                         vm.Errors = response.data;

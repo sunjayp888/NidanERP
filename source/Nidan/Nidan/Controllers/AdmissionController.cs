@@ -60,7 +60,7 @@ namespace Nidan.Controllers
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
-            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).Where(e => e.CourseId == registration.CourseId);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId).Where(e => e.CourseId == registration.CourseId);
             registration.CandidateInstallment.DownPayment = registration.CandidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
                                                             ? 0 : (registration.CandidateInstallment.DownPayment - registration.CandidateFee.PaidAmount);
 

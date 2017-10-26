@@ -15,9 +15,9 @@ namespace Nidan.Entity
         public int CentreId { get; set; }
 
         [Key]
-        [Column("Centre Name", Order = 1)]
+        [Column(Order = 1)]
         [StringLength(500)]
-        public string Centre_Name { get; set; }
+        public string CentreName { get; set; }
 
         [Key]
         [Column(Order = 2)]

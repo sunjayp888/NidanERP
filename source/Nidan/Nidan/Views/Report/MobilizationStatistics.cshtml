@@ -4,7 +4,7 @@
     ViewBag.Title = "MobilizationStatistics";
 }
 
-<div ng-controller="ReportController as model">
+<div ng-controller="ReportController as model" ng-init="model.searchMobilizationCountReportByMonth()">
     <div class="row">
         <div class="x_panel">
             <div class="x_title">
@@ -22,6 +22,43 @@
                         <a class="btn btn-warning btn-lg" href="@Url.Action("MobilizationProcessReportByDate", "Report")">
                             <i class="fa fa-line-chart"></i> Report By Date
                         </a>
+                    </div>
+                </div>
+            </div>
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                </p>
+                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Centre</th>
+                                        <th>Mobilization</th>
+                                        <th>Enquiry</th>
+                                        <th>Counselling</th>
+                                        <th>Registration</th>
+                                        <th>Admission</th>
+                                        <th>Course Booking</th>
+                                        <th>Fee Collected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="report in model.reports" ng-class='report.MonthName=="Total"?"row-total-background":""' ng-click='report.MonthName!="Total"? $event.originalEvent.ngClickHandled || model.viewMobilizationReportByMonthWise(report.CentreId,report.Year):"#"'>
+
+                                        <td><span ng-bind="report.CentreName"></span></td>
+                                        <td><span ng-bind="report.MobilizationCount"></span></td>
+                                        <td><span ng-bind="report.EnquiryCount"></span></td>
+                                        <td><span ng-bind="report.CounsellingCount"></span></td>
+                                        <td><span ng-bind="report.RegistrationCount"></span></td>
+                                        <td><span ng-bind="report.AdmissionCount"></span></td>
+                                        <td><span ng-bind="report.CourseBooking"></span></td>
+                                        <td><span ng-bind="report.FeeCollected"></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

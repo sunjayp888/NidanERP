@@ -22,6 +22,7 @@
             searchFixAssetByDate: searchFixAssetByDate,
             searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
+            searchMobilizationCountReportByMonth: searchMobilizationCountReportByMonth,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
             downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
             downloadMobilizationCSVByDate: downloadMobilizationCSVByDate,
@@ -35,7 +36,12 @@
             totalSumOfCountByMonth: totalSumOfCountByMonth,
             totalSumOfCountByDate: totalSumOfCountByDate,
             downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
-            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate
+            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate,
+            retrieveCandidateFeeByDate: retrieveCandidateFeeByDate,
+            retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
+            retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
+            retrieveInstallmentSummaryByDate : retrieveInstallmentSummaryByDate
+
         };
 
         return service;
@@ -165,6 +171,15 @@
                     centreId: centreId,
                     month: fromMonth,
                     year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchMobilizationCountReportByMonth() {
+            var url = "/Report/MobilizationCountReportByCurrentMonth",
+                data = {
+                    
                 };
 
             return $http.post(url, data);
@@ -301,6 +316,46 @@
                     centreId: centreId,
                     month: fromMonth,
                     year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateFeeByDate(centreId, date) {
+            var url = "/Report/CentreCandidateFeeSummaryReportByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveRegistrationSummaryByDate(centreId, date) {
+            var url = "/Report/RegistrationSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        } 
+
+        function retrieveDownPaymentSummaryByDate(centreId, date) {
+            var url = "/Report/DownPaymentSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveInstallmentSummaryByDate(centreId, date) {
+            var url = "/Report/InstallmentSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
                 };
 
             return $http.post(url, data);

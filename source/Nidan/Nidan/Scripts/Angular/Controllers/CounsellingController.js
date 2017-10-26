@@ -50,6 +50,8 @@
 
         function searchCounselling(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return CounsellingService.searchCounselling(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.counsellings = response.data.Items;
@@ -63,6 +65,7 @@
         function searchCounsellingByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return CounsellingService.searchCounsellingByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.counsellings = response.data.Items;

@@ -107,7 +107,7 @@
                                         <tr ng-repeat="report in model.reports | orderBy:'EnquiryDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                            <td><span ng-bind="report.CentreName"></span></td>
+                                            <td><span ng-bind="report.Centre_Name"></span></td>
                                             }
                                             <td><span ng-bind="report.CandidateName"></span></td>
                                             <td><span ng-bind="report.Mobile"></span></td>

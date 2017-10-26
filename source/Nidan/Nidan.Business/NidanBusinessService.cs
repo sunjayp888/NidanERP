@@ -364,7 +364,7 @@ namespace Nidan.Business
             _nidanDataService.Create<RoomAvailable>(organisationId, roomAvailables);
             _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailables);
         }
-        
+
         private void CreateBatchTrainer(int organisationId, int centreId, int batchId, List<int> trainerIds)
         {
             //Create Department Employment
@@ -1648,8 +1648,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEnquiry(organisationId, id, p => true);
         }
 
-        public PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<EnquiryDataGrid> RetrieveEnquiries(int organisationId, Expression<Func<EnquiryDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveEnquiries(organisationId, predicate, orderBy, paging);
         }
@@ -1709,20 +1708,20 @@ namespace Nidan.Business
             };
         }
 
-        private ValidationResult<Enquiry> EnquiryAlreadyExists(int organisationId, int? enquiryId, string name)
-        {
-            var alreadyExists =
-                _nidanDataService.RetrieveEnquiries(organisationId,
-                        at =>
-                            at.FirstName.ToLower() == name.Trim().ToLower() &&
-                            at.LastName.ToLower() == name.Trim().ToLower() && at.EnquiryId != (enquiryId ?? -1))
-                    .Items.Any();
-            return new ValidationResult<Enquiry>
-            {
-                Succeeded = !alreadyExists,
-                Errors = alreadyExists ? new List<string> { "Enquiry already exists." } : null
-            };
-        }
+        //private ValidationResult<Enquiry> EnquiryAlreadyExists(int organisationId, int? enquiryId, string name)
+        //{
+        //    var alreadyExists =
+        //        _nidanDataService.RetrieveEnquiries(organisationId,
+        //                at =>
+        //                    at.FirstName.ToLower() == name.Trim().ToLower() &&
+        //                    at.LastName.ToLower() == name.Trim().ToLower() && at.EnquiryId != (enquiryId ?? -1))
+        //            .Items.Any();
+        //    return new ValidationResult<Enquiry>
+        //    {
+        //        Succeeded = !alreadyExists,
+        //        Errors = alreadyExists ? new List<string> { "Enquiry already exists." } : null
+        //    };
+        //}
 
         public AbsenceType RetrieveAbsenceType(int organisationId, int id)
         {
@@ -2056,8 +2055,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentres(organisationId, predicate).Items.ToList();
         }
 
-        public PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword,
-            Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, predicate,
                 orderBy, paging);
@@ -2846,6 +2844,91 @@ namespace Nidan.Business
             return eventBrainstorming;
         }
 
+        public PagedResult<Registration> RetrieveRegistrationSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<Registration, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            var candidateFeeData = RetrieveCandidateFees(organisationId, e => e.CentreId == centreId && e.FeeTypeId == (int)FeeType.Registration && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year);
+            var studentCodes = candidateFeeData.Items.Select(e => e.StudentCode).ToList();
+            var registrationData = RetrieveRegistrations(organisationId, e => e.CentreId == centreId && studentCodes.Contains(e.StudentCode));
+            return registrationData;
+        }
+
+        public PagedResult<SummaryReport> RetrieveDownpaymentSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            //var candidateFeeData = RetrieveCandidateFees(organisationId, e => e.CentreId == centreId && e.FeeTypeId == (int)FeeType.Admission && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year);
+            var candidateFeeData = RetrieveSummaryReports(organisationId, centreId, e => e.CentreId == centreId && e.FeeTypeId == (int)FeeType.Admission && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year);
+            //var studentCodes = candidateFeeData.Select(e => e.StudentCode).ToList();
+            //var registrationData = RetrieveRegistrations(organisationId, e => e.CentreId == centreId && studentCodes.Contains(e.StudentCode));
+            return candidateFeeData;
+        }
+
+        public PagedResult<SummaryReport> RetrieveInstallmentSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<SummaryReport, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            //var candidateFeeData = RetrieveCandidateFees(organisationId, e => e.CentreId == centreId && e.FeeTypeId == (int)FeeType.Admission && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year);
+            var candidateFeeData = RetrieveSummaryReports(organisationId, centreId, e => e.ISPaymentDone && e.CentreId == centreId && e.FeeTypeId == (int)FeeType.Installment && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year);
+            //var studentCodes = candidateFeeData.Select(e => e.StudentCode).ToList();
+            //var registrationData = RetrieveRegistrations(organisationId, e => e.CentreId == centreId && studentCodes.Contains(e.StudentCode));
+            return candidateFeeData;
+        }
+
+        public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            var _today = DateTime.UtcNow;
+            var date = _today.Date;
+            var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
+            var data = _nidanDataService.RetriveMobilizationCountReportByMonthWise(organisationId, e => e.Month == _today.Month && e.Year == _today.Year).Items.ToList();
+            var centres = _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
+            foreach (var centre in centres)
+            {
+                var result = data.FirstOrDefault(e => e.CentreId == centre.CentreId);
+                mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? centre.CentreId,
+                    MobilizationCount = result?.MobilizationCount ?? 0,
+                    CentreName = result?.CentreName ?? centre.Name,
+                    AdmissionCount = result?.AdmissionCount ?? 0,
+                    EnquiryCount = result?.EnquiryCount ?? 0,
+                    RegistrationCount = result?.RegistrationCount ?? 0,
+                    CounsellingCount = result?.CounsellingCount ?? 0,
+                    CourseBooking = result?.CourseBooking ?? 0,
+                    FeeCollected = result?.FeeCollected ?? 0,
+                    Year = _today.Year
+                });
+            }
+            mobilizationSummaryReports.Add(new MobilizationSummaryReport()
+            {
+                MonthName = "Total",
+                CounsellingCount = mobilizationSummaryReports.Sum(e => e.CounsellingCount),
+                CourseBooking = mobilizationSummaryReports.Sum(e => e.CourseBooking),
+                EnquiryCount = mobilizationSummaryReports.Sum(e => e.EnquiryCount),
+                FeeCollected = mobilizationSummaryReports.Sum(e => e.FeeCollected),
+                RegistrationCount = mobilizationSummaryReports.Sum(e => e.RegistrationCount),
+                AdmissionCount = mobilizationSummaryReports.Sum(e => e.AdmissionCount),
+                MobilizationCount = mobilizationSummaryReports.Sum(e => e.MobilizationCount)
+            });
+            return mobilizationSummaryReports;
+        }
+
+        public CentreCandidateFeeSummaryReport RetriveCentreCandidateFeeByDate(int organisationId, int centreId, DateTime date)
+        {
+            var candidatefeeData = RetrieveCandidateFees(organisationId, e => e.CentreId == centreId && e.PaymentDate.Value.Day == date.Day && e.PaymentDate.Value.Month == date.Month && e.PaymentDate.Value.Year == date.Year).Items.ToList();
+            var totalRegistrationAmount = candidatefeeData.Where(e => e.FeeTypeId == 1).Sum(e => e.PaidAmount);
+            var totalInstallmentAmount = candidatefeeData.Where(e => e.FeeTypeId == 3).Sum(e => e.PaidAmount);
+            var totalDownPaymentAmount = candidatefeeData.Where(e => e.FeeTypeId == 2).Sum(e => e.PaidAmount);
+            var centreName = candidatefeeData.FirstOrDefault()?.Centre.Name ?? string.Empty;
+            var centreCandidateFeeSummaryReport = new CentreCandidateFeeSummaryReport()
+            {
+                TotalRegistrationAmount = totalRegistrationAmount ?? 0,
+                TotalDownPaymentAmount = totalDownPaymentAmount ?? 0,
+                TotalInstallmentAmount = totalInstallmentAmount ?? 0,
+                CentreName = centreName,
+                Date = date.ToString("dd-MM-yyyy"),
+                CentreId = centreId
+            };
+            return centreCandidateFeeSummaryReport;
+        }
+
         public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null)
         {
             var startFiscalDate = new DateTime(year, 04, 01);
@@ -3036,7 +3119,7 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveStockDataGrid(organisationId, searchKeyword, predicate, orderBy, paging);
         }
-        
+
         public List<StockType> RetrieveStockTypes(int organisationId, Expression<Func<StockType, bool>> predicate)
         {
             return _nidanDataService.Retrieve<StockType>(organisationId, predicate);
@@ -3111,6 +3194,12 @@ namespace Nidan.Business
         public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)
         {
             return _nidanDataService.Retrieve<StudentKit>(organisationId, predicate);
+        }
+
+        public PagedResult<SummaryReport> RetrieveSummaryReports(int organisationId, int centreId, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveSummaryReports(organisationId, centreId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -3206,10 +3295,15 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentre(organisationId, id, p => true);
         }
 
-        public PagedResult<Counselling> RetrieveCounsellings(int organisationId,
-            Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCounsellings(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CounsellingDataGrid> RetrieveCounsellingDataGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCounsellingDataGrid(organisationId, predicate, orderBy, paging);
         }
 
         public Batch RetrieveBatch(int organisationId, int id)
@@ -3734,7 +3828,7 @@ namespace Nidan.Business
 
         public CentreFixAsset UpdateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId,centreFixAsset);
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreFixAsset);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

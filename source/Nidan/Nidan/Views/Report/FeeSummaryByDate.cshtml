@@ -1,0 +1,234 @@
+﻿@using Nidan.Extensions
+@{
+    ViewBag.Title = "Fee Summary";
+}
+
+<div ng-controller="ReportController as model" ng-init="model.retrieveCandidateFeeByDate(model.centreId,model.date)">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                <small></small>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Fee Summary Reports <small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <tbody>
+                                        <tr>
+                                            <td><b><span ng-bind="model.reports.CentreName"></span></b></td>
+                                            <td><b><span ng-bind="model.reports.Date"></span></b></td>
+                                        </tr>
+                                        <tr ng-click='model.reports.TotalRegistrationAmount!=0 ? model.retrieveRegistrationSummaryByDate(model.reports.CentreId,model.reports.Date) : "#"'>
+                                            <td><b>Registration</b></td>
+                                            <td><b><span ng-bind="model.reports.TotalRegistrationAmount"></span></b></td>
+                                        </tr>
+                                        <tr ng-click='model.reports.TotalDownPaymentAmount!=0 ? model.retrieveDownPaymentSummaryByDate(model.reports.CentreId,model.reports.Date) : "#"'>
+                                            <td><b>Down Payment</b></td>
+                                            <td><b><span ng-bind="model.reports.TotalDownPaymentAmount"></span></b></td>
+                                        </tr>
+                                        <tr ng-click='model.reports.TotalInstallmentAmount!=0 ? model.retrieveInstallmentSummaryByDate(model.reports.CentreId,model.reports.Date) : "#"'>
+                                            <td><b>Installment</b></td>
+                                            <td><b><span ng-bind="model.reports.TotalInstallmentAmount"></span></b></td>
+                                        </tr>
+                                    </tbody>
+                                    @*<tbody>
+                                            <tr class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                                <td><span ng-bind="model.reports.TotalRegistrationAmount"></span></td>
+                                                <td><span ng-bind="model.reports.TotalDownPaymentAmount"></span></td>
+                                                <td><span ng-bind="model.reports.TotalInstallmentAmount"></span></td>
+                                            </tr>
+                                        </tbody>*@
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row" ng-if="model.registrationSummaryReports.length > 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Registration Summary Report By Date<small></small>
+                    </h2>
+                    <div class="clearfix">
+                    </div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pagination")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Candidate Name</th>
+                                            <th>Course</th>
+                                            <th>Course Fee</th>
+                                            <th>Registration Amount</th>
+                                            <th>Receipt No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="report in model.registrationSummaryReports" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="report.Enquiry.Fullname"></span></td>
+                                            <td><span ng-bind="report.Course.Name"></span></td>
+                                            <td><span ng-bind="report.CandidateInstallment.PaymentMethod=='MonthlyInstallment' ? report.CandidateInstallment.CourseFee : report.CandidateInstallment.LumpsumAmount"></span></td>
+                                            <td><span ng-bind="report.CandidateFee.PaidAmount"></span></td>
+                                            <td><span ng-bind="report.CandidateFee.ReceiptNumber"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="model.downPaymentSummaryReports.length > 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix">Down Payment Summary Report By Date</div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pagination")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Candidate Name</th>
+                                            <th>Course</th>
+                                            <th>Course Fee</th>
+                                            <th>Registration Amount</th>
+                                            <th>Receipt No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="report in model.downPaymentSummaryReports" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="report.Title"></span> <span ng-bind="report.FirstName"></span> <span ng-bind="report.MiddleName"></span> <span ng-bind="report.LastName"></span></td>
+                                            <td><span ng-bind="report.CourseName"></span></td>
+                                            <td><span ng-bind="report.CourseFee"></span></td>
+                                            <td><span ng-bind="report.PaidAmount"></span></td>
+                                            <td><span ng-bind="report.ReceiptNumber"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="model.installmentSummaryReports.length > 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix">Installment Summary Report By Date</div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pagination")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Candidate Name</th>
+                                            <th>Course</th>
+                                            <th>Number of Installment</th>
+                                            <th>Installment Amount</th>
+                                            <th>Collected Amount</th>
+                                            <th>Course Fee</th>
+                                            <th>Total Paid Amount</th>
+                                            <th>Balance</th>
+                                            <th>Receipt No</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="report in model.installmentSummaryReports" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="report.Title"></span> <span ng-bind="report.FirstName"></span> <span ng-bind="report.MiddleName"></span> <span ng-bind="report.LastName"></span></td>
+                                            <td><span ng-bind="report.CourseName"></span></td>
+                                            <td><span ng-bind="report.NumberOfInstallment"></span></td>
+                                            <td><span ng-bind="report.InstallmentAmount"></span></td>
+                                            <td><span ng-bind="report.PaidAmount"></span></td>
+                                            <td><span ng-bind="report.CourseFee"></span></td>
+                                            <td><span ng-bind="report.TotalPaidAmount"></span></td>
+                                            <td><span ng-bind="report.BalanceAmount"></span></td>
+                                            <td><span ng-bind="report.ReceiptNumber"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

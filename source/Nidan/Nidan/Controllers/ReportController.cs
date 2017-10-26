@@ -80,6 +80,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Stock
+        public ActionResult FeeSummaryByDate()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
@@ -190,6 +196,20 @@ namespace Nidan.Controllers
         public ActionResult MobilizationCountReportBydate(int centreId, int month, int year)
         {
             var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, year, month);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult MobilizationCountReportByCurrentMonth()
+        {
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthWise(UserOrganisationId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult CentreCandidateFeeSummaryReportByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetriveCentreCandidateFeeByDate(UserOrganisationId, centreId, date);
             return this.JsonNet(data);
         }
 
@@ -387,6 +407,27 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StockReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult RegistrationSummaryByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetrieveRegistrationSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DownPaymentSummaryByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetrieveDownpaymentSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult InstallmentSummaryByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            return this.JsonNet(data);
         }
     }
 }

@@ -71,7 +71,7 @@
                                         <tr ng-repeat="expense in model.expenses | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editExpense(expense.ExpenseId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="expense.CentreName"></span></td>
+                                                <td><span ng-bind="expense.Centre.CentreCode"></span></td>
                                             }
                                             <td><span ng-bind="expense.CreatedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="expense.VoucherNumber"></span></td>
