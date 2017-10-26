@@ -22,7 +22,7 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -72,7 +72,7 @@
                                                     @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/ExpenseHeader/Edit/{{expenseHeader.expenseHeaderId}}">
+                                                            <a style="cursor: pointer;" ng-href="/ExpenseHeader/Edit/{{expenseHeader.ExpenseHeaderId}}">
                                                                 Edit
                                                             </a>
                                                         </li>

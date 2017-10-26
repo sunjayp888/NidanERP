@@ -244,6 +244,7 @@
     <Compile Include="Subject.cs" />
     <Compile Include="SubjectCourse.cs" />
     <Compile Include="SubjectTrainer.cs" />
+    <Compile Include="SummaryReport.cs" />
     <Compile Include="Taluka.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Trainer.cs" />

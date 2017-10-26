@@ -13,6 +13,9 @@
         vm.totalSumOfCountReportsByMonth = [];
         vm.totalSumOfCountReportsByDate = [];
         vm.reports = [];
+        vm.registrationSummaryReports = [];
+        vm.downPaymentSummaryReports = [];
+        vm.installmentSummaryReports = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -20,6 +23,9 @@
         vm.orderClass = orderClass;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.centreId;
+        vm.fromYear;
+        vm.date;
         vm.initialise = initialise;
         //vm.retrieveEnquiryReports = retrieveEnquiryReports;
         vm.searchEnquiryByDate = searchEnquiryByDate;
@@ -34,6 +40,7 @@
         vm.searchExpenseByDate = searchExpenseByDate;
         vm.searchStockByDate = searchStockByDate;
         vm.searchMobilizationCountReportBydate = searchMobilizationCountReportBydate;
+        vm.searchMobilizationCountReportByMonth = searchMobilizationCountReportByMonth;
         vm.searchMobilizationCountReportByMonthAndYear = searchMobilizationCountReportByMonthAndYear;
         vm.searchFixAssetByDate = searchFixAssetByDate;
         vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
@@ -50,7 +57,12 @@
         vm.downloadMobilizationCountReportCSVByMonthAndYear = downloadMobilizationCountReportCSVByMonthAndYear;
         vm.downloadMobilizationCountReportCSVByDate = downloadMobilizationCountReportCSVByDate;
         vm.viewMobilizationReportByDate = viewMobilizationReportByDate;
-
+        vm.viewMobilizationReportByMonthWise = viewMobilizationReportByMonthWise;
+        vm.viewCandidateFeeByDate = viewCandidateFeeByDate;
+        vm.retrieveCandidateFeeByDate = retrieveCandidateFeeByDate;
+        vm.retrieveRegistrationSummaryByDate = retrieveRegistrationSummaryByDate;
+        vm.retrieveDownPaymentSummaryByDate = retrieveDownPaymentSummaryByDate;
+        vm.retrieveInstallmentSummaryByDate = retrieveInstallmentSummaryByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -240,13 +252,24 @@
                 });
         }
 
+        function searchMobilizationCountReportByMonth() {
+            vm.orderBy.property = "Month";
+            vm.orderBy.class = "asc";
+            order("Date");
+            return ReportService.searchMobilizationCountReportByMonth().then(function (response) {
+                    vm.reports = response.data;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
         function searchMobilizationCountReportByMonthAndYear(centreId,fromYear) {
-            vm.centreId = centreId;
-            vm.fromYear = fromYear;
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
             vm.orderBy.property = "Month";
             vm.orderBy.class = "asc";
             order("Month");
-            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId,fromYear, vm.paging, vm.orderBy)
+            return ReportService.searchMobilizationCountReportByMonthAndYear(vm.centreId, vm.fromYear, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
@@ -352,6 +375,48 @@
             });
         }
 
+        function retrieveCandidateFeeByDate(centreId,date) {
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.date = date == undefined ? getUrlParameter("date") : date;
+            return ReportService.retrieveCandidateFeeByDate(vm.centreId, vm.date).then(function (response) {
+                vm.reports = response.data;
+                return vm.reports;
+            });
+        } 
+
+        function retrieveRegistrationSummaryByDate(centreId, date) {
+            vm.centreId = centreId;
+            vm.date = date;
+            return ReportService.retrieveRegistrationSummaryByDate(vm.centreId, vm.date).then(function (response) {
+                vm.registrationSummaryReports = response.data.Items;
+                vm.downPaymentSummaryReports = null;
+                vm.installmentSummaryReports = null;
+                return vm.registrationSummaryReports;
+            });
+        } 
+
+        function retrieveDownPaymentSummaryByDate(centreId, date) {
+            vm.centreId = centreId;
+            vm.date = date;
+            return ReportService.retrieveDownPaymentSummaryByDate(vm.centreId, vm.date).then(function (response) {
+                vm.downPaymentSummaryReports = response.data.Items;
+                vm.registrationSummaryReports = null;
+                vm.installmentSummaryReports = null;
+                return vm.downPaymentSummaryReports;
+            });
+        }
+
+        function retrieveInstallmentSummaryByDate(centreId, date) {
+            vm.centreId = centreId;
+            vm.date = date;
+            return ReportService.retrieveInstallmentSummaryByDate(vm.centreId, vm.date).then(function (response) {
+                vm.installmentSummaryReports = response.data.Items;
+                vm.registrationSummaryReports = null;
+                vm.downPaymentSummaryReports = null;
+                return vm.installmentSummaryReports;
+            });
+        }
+
         function totalSumOfCountByDate(centreId, fromMonth, fromYear) {
             return ReportService.totalSumOfCountByDate(centreId, fromMonth, fromYear).then(function (response) {
                 vm.totalSumOfCountReportsByDate = response.data;
@@ -361,6 +426,16 @@
 
         function viewMobilizationReportByDate(centreId, fromMonth, fromYear) {
             window.location.href = "/Report/MobilizationProcessReportByDate?centreId=" +centreId + "&month=" + fromMonth + "&year=" + fromYear;
+        }
+
+        function viewCandidateFeeByDate(centreId,date) {
+            window.location.href = "/Report/FeeSummaryByDate?centreId=" + centreId + "&date=" + date;
+        }
+
+        function viewMobilizationReportByMonthWise(centreId, fromYear) {
+            vm.centreId = centreId;
+            vm.fromYear = fromYear;
+            window.location.href = "/Report/MobilizationProcessReportByMonth?centreId=" + centreId + "&year=" + fromYear;
         }
 
        function getUrlParameter(sParam) {

@@ -77,14 +77,12 @@
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
+                                            
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
-                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
-                                            <li><a href='@Url.Action("Index", "BatchPlanner")'>Batch Planner</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -93,10 +91,12 @@
                                         <li>
                                             <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
+                                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                                {
+                                                    <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
+                                                    <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                                                }
                                                 <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
-                                                <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
-                                                <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                             </ul>
                                         </li>
                                     }
@@ -111,8 +111,8 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            <li><a href='@Url.Action("FixAsset", "Report")'>Fix Asset</a></li>
-                                            <li><a href='@Url.Action("Stock", "Report")'>Stock</a></li>
+                                            @*<li><a href='@Url.Action("FixAsset", "Report")'>Fix Asset</a></li>
+                                            <li><a href='@Url.Action("Stock", "Report")'>Stock</a></li>*@
                                         }
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
@@ -130,8 +130,8 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
-                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
+                                            @*<li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
+                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>*@
                                         </ul>
                                     }
                                 </li>

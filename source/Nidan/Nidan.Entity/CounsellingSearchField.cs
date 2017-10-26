@@ -19,35 +19,34 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EnquiryId { get; set; }
 
-        [StringLength(50)]
-        public string Title { get; set; }
-
-        [StringLength(100)]
-        public string FirstName { get; set; }
-
-        [StringLength(100)]
-        public string MiddleName { get; set; }
-
-        [StringLength(100)]
-        public string LastName { get; set; }
+        [StringLength(353)]
+        public string CandidateName { get; set; }
 
         [Key]
         [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        [StringLength(500)]
+        public string CentreName { get; set; }
 
         [Key]
         [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrganisationId { get; set; }
+        public int CentreId { get; set; }
 
         [Key]
         [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int PersonnelId { get; set; }
+        public int OrganisationId { get; set; }
 
         [Key]
         [Column(Order = 5)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int PersonnelId { get; set; }
+
+        [StringLength(1000)]
+        public string CourseOffered { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CourseOfferedId { get; set; }
 
@@ -76,11 +75,16 @@ namespace Nidan.Entity
         public string RemarkByBm { get; set; }
 
         [Key]
-        [Column(Order = 6)]
-        public bool IsRegistrationDone { get; set; }
+        [Column(Order = 7)]
+        [StringLength(3)]
+        public string IsRegistrationDone { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 8, TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
         [StringLength(1470)]
         public string SearchField { get; set; }
     }

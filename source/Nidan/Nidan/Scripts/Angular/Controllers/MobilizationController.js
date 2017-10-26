@@ -71,7 +71,10 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchMobilization(vm.searchKeyword);
-            } else {
+            } else if (vm.fromDate && vm.toDate) {
+                searchMobilizationByDate(vm.fromDate, vm.toDate);
+            }
+            else {
                 return retrieveMobilizations();
             }
         }

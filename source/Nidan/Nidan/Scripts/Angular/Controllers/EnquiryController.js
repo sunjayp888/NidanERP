@@ -59,6 +59,8 @@
 
         function searchEnquiry(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return EnquiryService.searchEnquiry(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.enquiries = response.data.Items;
@@ -72,6 +74,7 @@
         function searchEnquiryByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return EnquiryService.searchEnquiryByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.enquiries = response.data.Items;
