@@ -45,6 +45,8 @@
 
         function searchMobilization(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return MobilizationService.searchMobilization(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.mobilizations = response.data.Items;
@@ -58,6 +60,7 @@
         function searchMobilizationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return MobilizationService.searchMobilizationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.mobilizations = response.data.Items;

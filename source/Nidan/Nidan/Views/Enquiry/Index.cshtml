@@ -167,13 +167,13 @@
                                                             </a>
                                                         </li>
 
-                                                        <li ng-if="!enquiry.IsCounsellingDone">
+                                                        <li ng-if="enquiry.IsCounsellingDone=='NO'">
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
                                                                 Create Counselling
                                                             </a>
                                                         </li>
 
-                                                        <li ng-if="!enquiry.IsRegistrationDone">
+                                                        <li ng-if="enquiry.IsRegistrationDone=='NO'">
                                                             <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
                                                                 Create Registration
                                                             </a>

@@ -410,23 +410,24 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegistrationSummaryByDate(int centreId, DateTime date)
+        public ActionResult RegistrationSummaryByDate(int centreId, string date)
         {
-            var data = NidanBusinessService.RetrieveRegistrationSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            var newDate = DateTime.Parse(date);
+            var data = NidanBusinessService.RetrieveRegistrationSummaryByDate(UserOrganisationId, centreId, newDate, e => true);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult DownPaymentSummaryByDate(int centreId, DateTime date)
+        public ActionResult DownPaymentSummaryByDate(int centreId, DateTime? date)
         {
-            var data = NidanBusinessService.RetrieveDownpaymentSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            var data = NidanBusinessService.RetrieveDownpaymentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult InstallmentSummaryByDate(int centreId, DateTime date)
+        public ActionResult InstallmentSummaryByDate(int centreId, DateTime? date)
         {
-            var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date, e => true);
+            var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
             return this.JsonNet(data);
         }
     }
