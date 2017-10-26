@@ -61,6 +61,7 @@
             vm.orderBy.property = "RegistrationDate";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
+            vm.searchKeyword = null;
             return RegistrationService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.Registrations = response.data.Items;
@@ -76,6 +77,8 @@
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return RegistrationService.searchRegistration(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.Registrations = response.data.Items;

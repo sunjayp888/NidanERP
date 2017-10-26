@@ -51,6 +51,8 @@
 
         function searchAdmission(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return AdmissionService.searchAdmission(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.admissions = response.data.Items;
@@ -64,6 +66,7 @@
         function searchAdmissionByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return AdmissionService.searchAdmissionByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.admissions = response.data.Items;
