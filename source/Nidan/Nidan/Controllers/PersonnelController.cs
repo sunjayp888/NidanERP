@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -78,6 +79,7 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
+            var roles =
             var viewModel = new PersonnelProfileViewModel
             {
                 Centres = new SelectList(centres, "CentreId", "Name"),
@@ -302,6 +304,14 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrievePersonnelBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
         }
 
+
+        private List<string> RetrieveRoles()
+        {
+            return Enum.GetValues(typeof(Role))
+           .Cast<Role>()
+           .Select(v => v.ToString())
+           .ToList();
+        }
 
         protected override void Dispose(bool disposing)
         {
