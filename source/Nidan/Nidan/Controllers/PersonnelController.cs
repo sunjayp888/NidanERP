@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -12,13 +13,13 @@ using Nidan.Attributes;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
+using Nidan.Entity.Extensions;
 using Nidan.Extensions;
 using Nidan.Models;
 using Nidan.Models.Authorization;
 
 namespace Nidan.Controllers
 {
-    [Authorize]
     public class PersonnelController : BaseController
     {
         private ApplicationRoleManager _roleManager;
@@ -78,23 +79,10 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
+            var roles = RetrieveRoles();
             var viewModel = new PersonnelProfileViewModel
             {
-
                 Centres = new SelectList(centres, "CentreId", "Name"),
-                Personnel = new Personnel
-                {
-                    OrganisationId = UserOrganisationId,
-                    DOB = DateTime.Today,
-                    Title = "Mr",
-                    Forenames = "A",
-                    Surname = "B",
-                    Email = string.Format("{0}@hr.com", Guid.NewGuid()),
-                    Address1 = "Address1",
-                    Postcode = "POST CODE",
-                    Telephone = "12345678",
-                    NINumber = "NZ1234567",
-                },
             };
             return View(viewModel);
         }
@@ -122,7 +110,7 @@ namespace Nidan.Controllers
                 //var personnel = new Personnel(){set all mandatory field like forename }
                 //CreateTrainerUserAndRole(personnel)
 
-                var result = CreateUserAndRole(personnelViewModel.Personnel);
+                var result = CreateUserAndRole(personnelViewModel.Personnel, "Counseller");
                 if (result.Succeeded)
                     return RedirectToAction("Index");
 
@@ -137,7 +125,7 @@ namespace Nidan.Controllers
             return View(personnelViewModel);
         }
 
-        private IdentityResult CreateUserAndRole(Personnel personnel)
+        private IdentityResult CreateUserAndRole(Personnel personnel, string role)
         {
             var createUser = new ApplicationUser
             {
@@ -148,10 +136,15 @@ namespace Nidan.Controllers
                 CentreId = personnel.CentreId
             };
 
-            var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == "User").Id;
+            var roleId = RoleManager.Roles.FirstOrDefault(r => r.Name == role).Id;
             createUser.Roles.Add(new IdentityUserRole { UserId = createUser.Id, RoleId = roleId });
+            var password = string.Format("{0}{1}", personnel.Forenames.ToUpper().First(), Guid.NewGuid().ToString().Substring(30));
+            var result = UserManager.Create(createUser, password);
+            if (result.Succeeded)
+            {
+                //send email
+            }
 
-            var result = UserManager.Create(createUser, "Password1!");
             return result;
         }
 
@@ -301,7 +294,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var personnel = NidanBusinessService.RetrievePersonnel(organisationId, personnelId);
             var batchId = personnel.Admissions.FirstOrDefault()?.BatchId ?? 0;
-            var batchData = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId && e.BatchId == batchId,null,null);
+            var batchData = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId && e.BatchId == batchId, null, null);
             return this.JsonNet(batchData);
         }
 
@@ -311,6 +304,14 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrievePersonnelBySearchKeyword(UserOrganisationId, searchKeyword, orderBy, paging));
         }
 
+
+        private List<string> RetrieveRoles()
+        {
+            return Enum.GetValues(typeof(Role))
+           .Cast<Role>()
+           .Select(v => v.ToString())
+           .ToList();
+        }
 
         protected override void Dispose(bool disposing)
         {
