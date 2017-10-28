@@ -20,7 +20,7 @@
         vm.searchPersonnel = searchPersonnel;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise();
 
         function initialise() {
             order("Forenames");

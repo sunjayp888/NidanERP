@@ -88,6 +88,7 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="AspNetRole.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
     <Compile Include="Batch.cs" />

@@ -144,6 +144,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BatchPlannerGrid> BatchPlannerGrids { get; set; }
         public virtual DbSet<StudentKit> StudentKits { get; set; }
         public virtual DbSet<SummaryReport> SummaryReports { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

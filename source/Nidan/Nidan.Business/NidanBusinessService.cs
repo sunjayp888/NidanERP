@@ -1620,18 +1620,6 @@ namespace Nidan.Business
 
         #region // Retrieve
 
-        public Personnel RetrievePersonnel(int organisationId, int personnelId)
-        {
-            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, p => true);
-            return personnel;
-        }
-
-        public PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy,
-            Paging paging)
-        {
-            return _nidanDataService.RetrievePersonnel(organisationId, p => p.CentreId == centreId, orderBy, paging);
-        }
-
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);
@@ -1801,6 +1789,17 @@ namespace Nidan.Business
             }
         }
 
+        public PagedResult<Personnel> RetrievePersonnels(int organisationId, Expression<Func<Personnel, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrievePersonnels(organisationId, predicate, orderBy, paging);
+        }
+
+        public Personnel RetrievePersonnel(int organisationId, int personnelId)
+        {
+            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, p => true);
+            return personnel;
+        }
+
         public PagedResult<PersonnelSearchField> RetrievePersonnelBySearchKeyword(int organisationId,
             string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -1812,10 +1811,10 @@ namespace Nidan.Business
         //    return _nidanDataService.RetrieveEnquiryBySearchKeyword(organisationId, searchKeyword, orderBy, paging);
         //}
 
-        public IEnumerable<Personnel> RetrieveReportsToPersonnel(int organisationId, int personnelId)
-        {
-            return _nidanDataService.RetrievePersonnel(organisationId, p => p.PersonnelId != personnelId).Items;
-        }
+        //public IEnumerable<Personnel> RetrieveReportsToPersonnel(int organisationId, int personnelId)
+        //{
+        //    return _nidanDataService.RetrievePersonnel(organisationId, p => p.PersonnelId != personnelId).Items;
+        //}
 
         public IEnumerable<TenantOrganisation> RetrieveTenantOrganisations()
         {
@@ -1866,6 +1865,36 @@ namespace Nidan.Business
                 CanEditEmployments = isAdmin
             };
         }
+
+        public Personnel RetrievePersonnel(int organisationId, int personnelId, Expression<Func<Personnel, bool>> predicate)
+        {
+            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, p => true);
+            return personnel;
+        }
+
+        //public IEnumerable<Personnel> RetrievePersonnel(int organisationId, IEnumerable<int> companyIds, IEnumerable<int> departmentIds,
+        //    IEnumerable<int> divisionIds)
+        //{
+        //    using (ReadUncommitedTransactionScope)
+        //    using (var context = _databaseFactory.Create(organisationId))
+        //    {
+        //        var personnel = context
+        //            .Personnels
+        //            //.Include(p => p.Employments.Select(e => e.Division))
+        //            .AsNoTracking();
+
+        //        //if (companyIds != null && companyIds.Any())
+        //        //    personnel = personnel.Where(p => companyIds.Contains(p.Employments.OrderByDescending(by => by.StartDate).FirstOrDefault().Division.CompanyId));
+
+        //        //if (departmentIds != null && departmentIds.Any())
+        //        //    personnel = personnel.Where(p => departmentIds.Contains(p.Employments.OrderByDescending(by => by.StartDate).FirstOrDefault().DepartmentId));
+
+        //        //if (divisionIds != null && divisionIds.Any())
+        //        //    personnel = personnel.Where(p => divisionIds.Contains(p.Employments.OrderByDescending(by => by.StartDate).FirstOrDefault().DivisionId));
+
+        //        return personnel.ToList();
+        //    }
+        //}
 
         public PagedResult<Question> RetrieveQuestions(int organisationId, Expression<Func<Question, bool>> predicate,
             List<OrderBy> orderBy, Paging paging)
@@ -1997,6 +2026,11 @@ namespace Nidan.Business
         public List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Room>(organisationId, predicate);
+        }
+
+        public List<AspNetRole> RetrieveAspNetRoles(int organisationId, Expression<Func<AspNetRole, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<AspNetRole>(organisationId, predicate);
         }
 
         public List<CasteCategory> RetrieveCasteCategories(int organisationId,
