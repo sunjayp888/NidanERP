@@ -27,6 +27,11 @@
         vm.retrieveExpensesByCashMemo = retrieveExpensesByCashMemo;
         vm.initialise = initialise;
         vm.cashMemo = "";
+        vm.isExpenseLimitExceed = "";
+        vm.isDateInCurrentWeek = null;
+        vm.expenseLimitCheck = expenseLimitCheck;
+        vm.dateInCurrentWeek = dateInCurrentWeek;
+        vm.expenseHeaderId = 0;
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
@@ -104,7 +109,17 @@
             return ExpenseService.deleteExpense(centreId, expenseId).then(function () {
                 retrieveExpensesByCashMemo(cashMemo);
             });
+        }
 
+        function expenseLimitCheck() {
+            return ExpenseService.expenseLimitCheck(vm.expenseHeaderId).then(function (response) {
+                vm.isExpenseLimitExceed = response.data;
+            });
+        } 
+        function dateInCurrentWeek(expenseId) {
+            return ExpenseService.dateInCurrentWeek(expenseId).then(function (response) {
+                vm.isDateInCurrentWeek = response.data;
+            });
         }
     }
 

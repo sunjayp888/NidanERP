@@ -11,8 +11,8 @@ namespace Nidan.Entity
     {
         public Expense()
         {
-            ExpenseProjects=new HashSet<ExpenseProject>();
-            CreatedDate=DateTime.UtcNow.Date;
+            ExpenseProjects = new HashSet<ExpenseProject>();
+            CreatedDate = DateTime.UtcNow.Date;
         }
         public int ExpenseId { get; set; }
 
@@ -49,9 +49,12 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime ExpenseGeneratedDate { get; set; }
+
         public virtual ExpenseHeader ExpenseHeader { get; set; }
 
-        public  virtual Centre Centre { get; set; }
+        public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 

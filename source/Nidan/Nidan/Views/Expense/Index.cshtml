@@ -1,13 +1,16 @@
-﻿@using Nidan.Extensions
+﻿@using Nidan.Business.Extensions
+@using Nidan.Extensions
 @{
     ViewBag.Title = "Expense";
+    var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
+    var endOfWeekDate = startOfWeekDate.AddDays(5);
 }
 
 <div ng-controller="ExpenseController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Other Fees <small></small>
+                Expenses<small></small>
             </h3>
         </div>
         @*<div class="title_right">
@@ -21,7 +24,7 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -59,7 +62,7 @@
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
-                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
+                                            <th ng-click="model.order('ExpenseGeneratedDate')" ng-class="model.orderClass('ExpenseGeneratedDate')">Generated Date</th>
                                             <th ng-click="model.order('VoucherNumber')" ng-class="model.orderClass('VoucherNumber')">Voucher Number</th>
                                             <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
                                             <th ng-click="model.order('TotalDebitAmount')" ng-class="model.orderClass('TotalDebitAmount')">Debit Amount</th>
@@ -68,12 +71,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="expense in model.expenses | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.editExpense(expense.ExpenseId)">
+                                        <tr ng-repeat="expense in model.expenses | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="expense.Centre.CentreCode"></span></td>
                                             }
-                                            <td><span ng-bind="expense.CreatedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="expense.VoucherNumber"></span></td>
                                             <td><span ng-bind="expense.CashMemoNumbers"></span></td>
                                             <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
@@ -81,12 +84,13 @@
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down"></i>
+                                                        <i class="fa fa-chevron-down" ng-click="model.dateInCurrentWeek(expense.ExpenseId)"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                                         {
-                                                            <li>
+                                                            <li ng-if="model.isDateInCurrentWeek">
+                                                                @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
                                                                 <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
                                                                     Edit
                                                                 </a>

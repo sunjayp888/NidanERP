@@ -3,10 +3,6 @@
 @{
     ViewBag.Title = "Create Other Fee";
 }
-
-
-
-
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -39,12 +35,12 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button id="btn_submit" type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
                                         <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
 
-                                        <a href="@Url.Action("Download", new { id = Model.Expense.ExpenseId })" class="btn btn-success" role="button">
+                                        <a href="@Url.Action("Download", new {id = Model.Expense.ExpenseId})" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
                                     }
@@ -76,12 +72,50 @@
 </div>
 @section scripts {
     <script>
+        $(function () {
+
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                minDate: moment().subtract('6', 'days').format('DD MMMM YYYY'),
+                maxDate: moment(),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
         $('#Expense_DebitAmount').val("");
         $('#Expense_RupeesInWord').val("");
         $('#Expense_Particulars').val("");
 
         $('#Expense_DebitAmount').keyup(function () {
             numberToWords();
+        });
+
+        //Expense Debit Amount Validation
+        $("#Expense_DebitAmount").keyup(function () {
+            var expenseAmount = $("#Expense_DebitAmount").val();
+            if (expenseAmount < 999) {
+                $('#btn_submit').attr('disabled', false);
+            } else {
+                $('#btn_submit').attr('disabled', true);
+                alert('Expense Voucher CAN NOT be above Rs.999/-');
+            }
         });
 
         function numberToWords() {
