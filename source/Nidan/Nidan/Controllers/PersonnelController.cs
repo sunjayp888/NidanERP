@@ -79,7 +79,7 @@ namespace Nidan.Controllers
         public ActionResult Create()
         {
             var centres = NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true);
-            var roles =
+            var roles = RetrieveRoles();
             var viewModel = new PersonnelProfileViewModel
             {
                 Centres = new SelectList(centres, "CentreId", "Name"),
