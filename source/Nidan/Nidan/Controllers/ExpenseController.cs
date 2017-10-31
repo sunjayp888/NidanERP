@@ -75,6 +75,7 @@ namespace Nidan.Controllers
                 expenseViewModel.Expense.OrganisationId = organisationId;
                 expenseViewModel.Expense.CentreId = centreId;
                 expenseViewModel.Expense.PersonnelId = personnelId;
+                expenseViewModel.Expense.CreatedBy = personnelId;
                 expenseViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
                 expenseViewModel.Expense.CreatedBy = personnelId;
                 expenseViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
@@ -127,6 +128,7 @@ namespace Nidan.Controllers
                 expenseViewModel.Expense.OrganisationId = organisationId;
                 expenseViewModel.Expense.CentreId = isSuperAdmin ? expenseViewModel.Expense.CentreId : centreId;
                 expenseViewModel.Expense.PersonnelId = personnelId;
+                expenseViewModel.Expense.CreatedBy = personnelId;
                 expenseViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
                 expenseViewModel.Expense = NidanBusinessService.UpdateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");

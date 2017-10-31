@@ -24,18 +24,16 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EnquiryId { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
         [StringLength(353)]
         public string CandidateName { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 4)]
         [StringLength(500)]
         public string EmailId { get; set; }
 
@@ -43,12 +41,12 @@ namespace Nidan.Entity
         public DateTime? DateOfBirth { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Age { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 6)]
         [StringLength(500)]
         public string Address1 { get; set; }
 
@@ -62,22 +60,22 @@ namespace Nidan.Entity
         public string Address4 { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 7)]
         [StringLength(100)]
         public string Taluka { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 8)]
         [StringLength(100)]
         public string State { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 9)]
         [StringLength(100)]
         public string District { get; set; }
 
         [Key]
-        [Column(Order = 11)]
+        [Column(Order = 10)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PinCode { get; set; }
 
@@ -87,7 +85,7 @@ namespace Nidan.Entity
         public long? GuardianContactNo { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 11)]
         [StringLength(500)]
         public string Occupation { get; set; }
 
@@ -95,17 +93,17 @@ namespace Nidan.Entity
         public string Religion { get; set; }
 
         [Key]
-        [Column("Caste Category", Order = 13)]
+        [Column("Caste Category", Order = 12)]
         [StringLength(500)]
         public string Caste_Category { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 13)]
         [StringLength(100)]
         public string Gender { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 14)]
         [StringLength(1000)]
         public string Qualification { get; set; }
 
@@ -116,17 +114,17 @@ namespace Nidan.Entity
         public string Marks { get; set; }
 
         [Key]
-        [Column(Order = 16)]
+        [Column(Order = 15)]
         [StringLength(500)]
         public string Scheme { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 16)]
         [StringLength(500)]
         public string Sector { get; set; }
 
         [Key]
-        [Column("How Did You Know About Us", Order = 18)]
+        [Column("How Did You Know About Us", Order = 17)]
         [StringLength(1000)]
         public string How_Did_You_Know_About_Us { get; set; }
 
@@ -149,17 +147,17 @@ namespace Nidan.Entity
         public string EnquiryStatus { get; set; }
 
         [Key]
-        [Column("Enquiry Type", Order = 19)]
+        [Column("Enquiry Type", Order = 18)]
         [StringLength(500)]
         public string Enquiry_Type { get; set; }
 
         [Key]
-        [Column("Student Type", Order = 20)]
+        [Column("Student Type", Order = 19)]
         [StringLength(500)]
         public string Student_Type { get; set; }
 
         [Key]
-        [Column("Batch Time Prefer", Order = 21)]
+        [Column("Batch Time Prefer", Order = 20)]
         [StringLength(500)]
         public string Batch_Time_Prefer { get; set; }
 
@@ -184,6 +182,11 @@ namespace Nidan.Entity
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
+
+        [Key]
+        [Column(Order = 21)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
 
         [Key]
         [Column(Order = 22)]

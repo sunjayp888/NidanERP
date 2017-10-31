@@ -71,6 +71,8 @@ namespace Nidan.Entity
 
         public int PersonnelId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         [StringLength(5)]
         public string Close { get; set; }
 

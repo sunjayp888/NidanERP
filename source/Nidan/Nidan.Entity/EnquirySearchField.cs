@@ -223,6 +223,11 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
+        [Key]
+        [Column(Order = 26)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
+
         [StringLength(5280)]
         public string SearchField { get; set; }
     }

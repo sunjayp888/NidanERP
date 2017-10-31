@@ -66,10 +66,12 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 followUpViewModel.FollowUp.OrganisationId = organisationId;
                 followUpViewModel.FollowUp.CentreId = centreId;
+                followUpViewModel.FollowUp.CreatedBy = personnelId;
                 followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(organisationId, followUpViewModel.FollowUp);
                 return RedirectToAction("Index");
             }
@@ -112,16 +114,16 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var followUpType = TempData["FollowUpType"] as string;
             if (followUpType != null && followUpType == "Enquiry")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
                    p => (isSuperAdmin || p.CentreId == UserCentreId)
                    && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
 
             if (followUpType != null && followUpType == "Counselling")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
                    p => (isSuperAdmin || p.CentreId == UserCentreId)
                    && p.FollowUpDateTime == _today && p.FollowUpType == "Counselling", orderBy, paging));
 
-            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
               p => (isSuperAdmin || p.CentreId == UserCentreId)
               && p.Close != "Yes", orderBy, paging));
         }

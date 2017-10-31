@@ -88,6 +88,7 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="AspNetRole.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
     <Compile Include="Batch.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
+    <Compile Include="FollowUpHistoryData.cs" />
     <Compile Include="FollowUpSearchField.cs" />
     <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />

@@ -51,7 +51,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 8)]
         [StringLength(151)]
-        public string CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
 
         [Key]
         [Column(Order = 9)]

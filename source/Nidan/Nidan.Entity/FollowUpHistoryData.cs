@@ -6,14 +6,21 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("FollowUpHistory")]
-    public partial class FollowUpHistory
+    [Table("FollowUpHistoryData")]
+    public partial class FollowUpHistoryData
     {
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FollowUpHistoryId { get; set; }
 
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FollowUpId { get; set; }
 
-        [Required]
+        [Key]
+        [Column(Order = 2)]
         [StringLength(200)]
         public string FollowUpType { get; set; }
 
@@ -24,20 +31,25 @@ namespace Nidan.Entity
 
         public string ClosingRemarks { get; set; }
 
+        [Key]
+        [Column(Order = 3)]
         public DateTime FollowUpDate { get; set; }
 
+        [Key]
+        [Column(Order = 4)]
         public DateTime CreatedDate { get; set; }
 
+        [Key]
+        [Column(Order = 5)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
+        [Key]
+        [Column(Order = 6)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        public int FollowUpBy { get; set; }
-
-        public virtual FollowUp FollowUp { get; set; }
-
-        public virtual Centre Centre { get; set; }
-
-        public virtual Organisation Organisation { get; set; }
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
     }
 }
