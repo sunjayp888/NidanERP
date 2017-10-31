@@ -1,37 +1,26 @@
 ﻿@using Nidan.Extensions
-
 @{
-    ViewBag.Title = "Enquiry";
+    ViewBag.Title = "Admission";
 }
-<div ng-controller="EnquiryController as model" ng-init="model.initialise()">
+
+<div ng-controller="AdmissionController as model" ng-init="model.retrieveTodaysAdmissions()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Enquiries <small></small>
+                Today's Admissions <small></small>
             </h3>
         </div>
         <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchAdmission(searchField)" class="form-control" placeholder="Search for Admission...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchAdmission(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
-
-    @if (User.IsInAnyRoles("Admin"))
-    {
-        <div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Enquiry")">
-                    <i class="fa fa-user"></i> Create
-                </a>
-            </div>
-        </div>
-    }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -74,7 +63,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <button type="button" ng-click="model.searchEnquiryByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                        <button type="button" ng-click="model.searchAdmissionByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -87,12 +76,6 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Enquiries<small></small>
-                    </h2>
-                    <div class="clearfix"></div>
-                </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
@@ -107,45 +90,39 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                        <tr role="row">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <th>Centre</th>
-                                            }
-                                            <th>Created By</th>
-                                            <th>Candidate Name</th>
-                                            <th>Contact No</th>
-                                            @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
-                                            @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
-                                            @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
-                                            <th>Status</th>
-                                            <th>Enquiry Date</th>
-                                            <th>Follow-Up Date</th>
-                                            @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
+                                    <tr role="row">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <td><span ng-bind="enquiry.CentreName"></span></td>
+                                            <th>Centre</th>
                                         }
-                                        <td><span ng-bind="enquiry.CreatedByName"></span></td>
-                                        <td><span ng-bind="enquiry.CandidateName"></span></td>
-                                        <td><span ng-bind="enquiry.Mobile"></span></td>
-                                        @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
-                                        <td class="col-lg-4">
-
-                                            <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
-                                            <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
+                                        <th ng-click="model.order('AdmissionDate')" ng-class="model.orderClass('AdmissionDate')">Admission Date</th>
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                        <th ng-click="model.order('BatchName')" ng-class="model.orderClass('BatchName')">Batch</th>
+                                        <th ng-click="model.order('TotalFee')" ng-class="model.orderClass('TotalFee')">Total Fees</th>
+                                        <th ng-click="model.order('PaidAmount')" ng-class="model.orderClass('PaidAmount')">Paid Amount</th>
+                                        <th>Pending Amount</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="admission in model.admissions" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewAdmission(admission.AdmissionId)">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="admission.CentreName"></span></td>
+                                        }
+                                        <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="admission.CandidateName"></span></td>
+                                        <td>
+                                            <span ng-bind="admission.BatchName"></span>
+                                            <button ng-if="admission.BatchName==null" type="button" class="btn btn-round btn-warning btn-xs">Batch Not Assigned</button>
                                         </td>
-                                        <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
-                                        @*<td><span ng-bind="enquiry.Close"></span></td>*@
+                                        <td><i class="fa fa-inr"></i> <span ng-bind="admission.TotalFee"></span></td>
+                                        <td><i class="fa fa-inr"></i> <span ng-bind="admission.PaidAmount"></span></td>
+                                        @*<td><span ng-bind="admission.Registration.CandidateFee.Particulars"></span></td>*@
+                                        <td>
+                                            <button ng-if="admission.PendingAmount==0.00" type="button"  class="btn btn-round btn-success btn-xs">Fully Paid</button>
+                                            <span ng-if="admission.PendingAmount!=0.00" class="fa fa-inr" ng-bind="admission.PendingAmount"></span>
+                                        </td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -155,38 +132,31 @@
                                                     @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/View/{{enquiry.EnquiryId}}">
+                                                            <a style="cursor: pointer;" ng-href="/Admission/View/{{admission.AdmissionId}}">
                                                                 View
                                                             </a>
                                                         </li>
-													}
-
-														 @if (User.IsInAnyRoles("Admin"))
-														 {
-															<li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
-                                                                Edit
+                                                    }
+                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    {
+                                                        <li ng-if="admission.BatchName==null">
+                                                            <a style="cursor: pointer;" ng-href="/Admission/AssignBatch/{{admission.AdmissionId}}">
+                                                                Assign Batch
                                                             </a>
                                                         </li>
-
-                                                        <li ng-if="enquiry.IsCounsellingDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
-                                                                Create Counselling
+                                                    }
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Admission/Download/{{admission.AdmissionId}}">
+                                                                Download
                                                             </a>
                                                         </li>
-
-                                                        <li ng-if="enquiry.IsRegistrationDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
-                                                                Create Registration
-                                                            </a>
-                                                        </li>
-														}
-                                                    
+                                                    }
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -201,26 +171,12 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Confirmation</h2>
-                </div>
-
-                <div class="modal-body">
-                    <input type="hidden" ng-model='model.EnquiryId' />
-                    Are you sure, you want to delete Enquiry <span ng-bind="model.EnquiryName"></span> ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;All Admissions
+    </a>
+</div>
 @section scripts {
     <script>
         $(function () {
@@ -249,5 +205,9 @@
                 });
             });
         });
+
+     
+    
+
     </script>
 }

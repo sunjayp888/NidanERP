@@ -59,6 +59,7 @@
                                             <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
                                             <th ng-click="model.order('Amount')" ng-class="model.orderClass('Amount')">Amount</th>
                                             <th ng-click="model.order('Particulars')" ng-class="model.orderClass('Particulars')">Particulars</th>
+                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -67,6 +68,7 @@
                                             <td><span ng-bind="centrePettyCash.Centre.Name"></span></td>
                                             <td><span class="fa fa-inr" ng-bind="centrePettyCash.Amount"></span></td>
                                             <td><span ng-bind="centrePettyCash.Particulars"></span></td>
+                                            <td><span ng-bind="centrePettyCash.CreatedDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

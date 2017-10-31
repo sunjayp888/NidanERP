@@ -86,7 +86,7 @@ namespace Nidan.Controllers
         public ActionResult Edit(CentrePettyCashViewModel centrePettyCashViewModel)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
+            var centreId = centrePettyCashViewModel.CentrePettyCash.CentreId;
             if (ModelState.IsValid)
             {
                 centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.UpdateCentrePettyCash(organisationId, centreId, UserPersonnelId, centrePettyCashViewModel.CentrePettyCash);

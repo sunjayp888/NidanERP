@@ -13,7 +13,9 @@
             //canDeleteOtherFee: canDeleteOtherFee,
             deleteExpense: deleteExpense,
             searchExpense: searchExpense,
-            retrieveExpensesByCashMemo: retrieveExpensesByCashMemo
+            retrieveExpensesByCashMemo: retrieveExpensesByCashMemo,
+            expenseLimitCheck: expenseLimitCheck,
+            dateInCurrentWeek: dateInCurrentWeek
         };
 
         return service;
@@ -69,5 +71,20 @@
             return $http.post(url, data);
         }
 
+        function expenseLimitCheck(expenseHeaderId) {
+            var url = "/Expense/ExpenseLimitCheck",
+                data = {
+                    expenseHeaderId: expenseHeaderId
+                };
+            return $http.post(url, data);
+        } 
+
+        function dateInCurrentWeek(expenseId) {
+            var url = "/Expense/IsDateInCurrentWeek",
+                data = {
+                    expenseId: expenseId
+                };
+            return $http.post(url, data);
+        }
     }
 })();

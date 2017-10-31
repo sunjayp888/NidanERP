@@ -1,34 +1,33 @@
 ﻿@using Nidan.Extensions
+
 @{
-    ViewBag.Title = "Mobilization";
+    ViewBag.Title = "Enquiry";
 }
-<div ng-controller="MobilizationController as model" ng-init="model.initialise()">
+<div ng-controller="EnquiryController as model" ng-init="model.retrieveTodaysEnquiries()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Mobilizations <small></small>
+                Today's Enquiries <small></small>
             </h3>
         </div>
         <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchMobilization(searchField)" class="form-control" placeholder="Search for mobilizer...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchEnquiry(searchField)" class="form-control" placeholder="Search for Enquiry...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchMobilization(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchEnquiry(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
         </div>
     </div>
+
     @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Mobilization")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Enquiry")">
                     <i class="fa fa-user"></i> Create
-                </a>
-                <a class="btn btn-warning btn-lg" href="@Url.Action("Upload", "Mobilization")">
-                    <i class="fa fa-upload"></i> Upload
                 </a>
             </div>
         </div>
@@ -75,7 +74,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <button type="button" ng-click="model.searchMobilizationByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                        <button type="button" ng-click="model.searchEnquiryByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -84,18 +83,21 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            Mobilizations <small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
+                <div class="x_title">
+                    <h2>
+                        Enquiries<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
                         <div class="row">
                             <div class="col-xs-12">
                                 @Html.Partial("Pagination/_pageSize")
@@ -105,73 +107,79 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                        }
-                                        <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
-                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                        <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                        <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
-                                        <th ng-click="model.order('Qualification')" ng-class="model.orderClass('Qualification')">Qualification</th>
-                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Mobilized Date</th>
-                                        <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Follow-Up Date</th>
-                                        <th ng-click="model.order('StudentLocation')" ng-class="model.orderClass('StudentLocation')">Student Location</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="mobilizer in model.mobilizations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewMobilization(mobilizer.MobilizationId)">
-                                            @*<td><span ng-cloak class="ng-cloak"><img class="avatar" ng-src="{{ person.Avatar.Url || '/Content/images/user.png' }}" alt="Avatar" title="avatar"></span><br /></td>*@
+                                        <tr role="row">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="mobilizer.CentreName"></span></td>
+                                                <th>Centre</th>
                                             }
-                                            <td><span ng-bind="mobilizer.CreatedByName"></span></td>
-                                            <td><span ng-bind="mobilizer.CandidateName"></span></td>
-                                            <td><span ng-bind="mobilizer.Mobile"></span></td>
-                                            <td><span ng-bind="mobilizer.InterestedCourse"></span></td>
-                                            <td><span ng-bind="mobilizer.Qualification"></span></td>
-                                            <td><span ng-bind="mobilizer.CreatedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="mobilizer.FollowUpDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="mobilizer.StudentLocation"></span></td>
+                                            <th>Candidate Name</th>
+                                            <th>Contact No</th>
+                                            @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
+                                            @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
+                                            @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
+                                            <th>Status</th>
+                                            <th>Enquiry Date</th>
+                                            <th>Follow-Up Date</th>
+                                            @*<th ng-click="model.order('Close')" ng-class="model.orderClass('Close')">Enquiry Status Closed</th>*@
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="enquiry.CentreName"></span></td>
+                                            }
+                                            <td><span ng-bind="enquiry.CandidateName"></span></td>
+                                            <td><span ng-bind="enquiry.Mobile"></span></td>
+                                            @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
+                                            @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
+                                            @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
+                                            <td class="col-lg-4">
+
+                                                <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
+                                                <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
+                                                <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
+                                            </td>
+                                            <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
+                                            @*<td><span ng-bind="enquiry.Close"></span></td>*@
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/View/{{mobilizer.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Enquiry/View/{{enquiry.EnquiryId}}">
                                                                     View
                                                                 </a>
                                                             </li>
-															
-															}
-															
-															@if (User.IsInAnyRoles("Admin"))
-                                                            { 
+                                                        }
+
+                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/Mobilization/Edit/{{mobilizer.MobilizationId}}">
+                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
                                                                     Edit
                                                                 </a>
                                                             </li>
 
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Create/{{mobilizer.MobilizationId}}">
-                                                                    Create Enquiry
+                                                            <li ng-if="enquiry.IsCounsellingDone=='NO'">
+                                                                <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
+                                                                    Create Counselling
                                                                 </a>
                                                             </li>
-																}
-                                                            @*<li >
-                                                                    <a style="cursor: pointer;" ng-bootbox-confirm="Are you sure, you want to archive Mobilizer {{mobilizer.FirstName}}" ng-bootbox-confirm-action="model.deleteAbsenceType(mobilizer.MobilizationId)" ng-bootbox-confirm-action-cancel="" ng-click="$event.originalEvent.ngClickHandled = true;">
-                                                                        Archive
-                                                                    </a>
-                                                                </li>*@
-                                                        
+
+                                                            <li ng-if="enquiry.IsRegistrationDone=='NO'">
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
+                                                                    Create Registration
+                                                                </a>
+                                                            </li>
+                                                        }
+
                                                     </ul>
                                                 </div>
                                             </td>
@@ -197,9 +205,10 @@
                 <div class="modal-header">
                     <h2>Confirmation</h2>
                 </div>
+
                 <div class="modal-body">
-                    <input type="hidden" ng-model='model.MobilizationId' />
-                    Are you sure, you want to delete Mobilization <span ng-bind="model.MobilizationName"></span> ?
+                    <input type="hidden" ng-model='model.EnquiryId' />
+                    Are you sure, you want to delete Enquiry <span ng-bind="model.EnquiryName"></span> ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
@@ -209,6 +218,12 @@
         </div>
     </div>
 </div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;All Enquiries
+    </a>
+</div>
+
 @section scripts {
     <script>
         $(function () {

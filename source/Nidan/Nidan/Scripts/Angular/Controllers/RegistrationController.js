@@ -25,18 +25,35 @@
         vm.viewRegistration = viewRegistration;
         vm.createRegistration = createRegistration;
         vm.searchRegistrationByDate = searchRegistrationByDate;
+        vm.retrieveTodaysRegistrations = retrieveTodaysRegistrations,
         vm.retrieveEnquiries = retrieveEnquiries;
         vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
 
         function initialise() {
-            order("EnquiryId");
+            vm.orderBy.property = "RegistrationId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            order("RegistrationId");
         }
 
         function retrieveRegistrations() {
             return RegistrationService.retrieveRegistrations(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.Registrations = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.Registrations;
+                });
+        }
+
+        function retrieveTodaysRegistrations() {
+            vm.orderBy.property = "RegistrationId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return RegistrationService.retrieveTodaysRegistrations(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.Registrations = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
