@@ -214,9 +214,11 @@ namespace Nidan.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public async Task<ActionResult> ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            var resetPasswordToken = await UserManager.GeneratePasswordResetTokenAsync(User.Identity.GetUserId());
+            var model = new ResetPasswordViewModel() { Code = resetPasswordToken };
+            return View(model);
         }
 
         //
@@ -236,6 +238,7 @@ namespace Nidan.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
