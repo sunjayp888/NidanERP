@@ -14,12 +14,19 @@ namespace Nidan.Controllers
     [Authorize]
     public class EnquiryController : BaseController
     {
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Date.Year, DateTime.UtcNow.Date.Month, DateTime.UtcNow.Date.Day, 0, 0, 0);
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
 
         // GET: Enquiry
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Enquiry
+        public ActionResult TodaysEnquiry()
         {
             return View(new BaseViewModel());
         }
@@ -229,6 +236,13 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.IsAdmissionDone == "NO" && p.Close == "No", orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult TodaysEnquiryList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.IsAdmissionDone == "NO" && p.Close == "No" && p.EnquiryDate == _today, orderBy, paging));
         }
 
         [HttpPost]

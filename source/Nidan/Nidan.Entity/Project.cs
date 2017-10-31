@@ -20,7 +20,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string Name { get; set; }
 
-        public int? CentreId { get; set; }
+        public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
 

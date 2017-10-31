@@ -14,7 +14,8 @@
             deleteAdmission: deleteAdmission,
             searchAdmission: searchAdmission,
             retrieveDocumentsType: retrieveDocumentsType,
-            searchAdmissionByDate: searchAdmissionByDate
+            searchAdmissionByDate: searchAdmissionByDate,
+            retrieveTodaysAdmissions: retrieveTodaysAdmissions
         };
 
         return service;
@@ -22,6 +23,17 @@
         function retrieveAdmissions(Paging, OrderBy) {
 
             var url = "/Admission/List",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveTodaysAdmissions(Paging, OrderBy) {
+
+            var url = "/Admission/TodaysAdmissionList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)

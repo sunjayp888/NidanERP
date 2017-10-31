@@ -20,13 +20,17 @@ namespace Nidan.Controllers
     public class MobilizationController : BaseController
     {
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public MobilizationController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
         {
         }
         // GET: Mobilization
 
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        public ActionResult TodaysMobilization()
         {
             return View(new BaseViewModel());
         }
@@ -205,6 +209,13 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes", orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult TodaysMobilizationList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes" && p.CreatedDate==_today, orderBy, paging));
         }
 
         [HttpPost]
