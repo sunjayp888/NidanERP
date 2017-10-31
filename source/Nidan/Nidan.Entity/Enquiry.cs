@@ -14,7 +14,7 @@ namespace Nidan.Entity
             Counsellings = new HashSet<Counselling>();
             EnquiryCourses = new HashSet<EnquiryCourse>();
             Registrations = new HashSet<Registration>();
-            EnquiryDate=DateTime.UtcNow.Date;
+            EnquiryDate = DateTime.UtcNow.Date;
             FollowUpDate = DateTime.UtcNow.AddDays(2);
         }
 
@@ -35,10 +35,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string LastName { get; set; }
 
-        [Required]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
-
 
         public long? AlternateMobile { get; set; }
 
@@ -72,7 +69,6 @@ namespace Nidan.Entity
 
         public int PinCode { get; set; }
 
-		[Required]
         [StringLength(500)]
         public string GuardianName { get; set; }
 
@@ -86,7 +82,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(100)]
-        public string Gender { get; set; } = "Female";
+        public string Gender { get; set; }
 
         public int EducationalQualificationId { get; set; }
 
@@ -111,10 +107,6 @@ namespace Nidan.Entity
 
         [Column(TypeName = "date")]
         public DateTime EnquiryDate { get; set; }
-
-        public int CentreId { get; set; }
-
-        public int OrganisationId { get; set; }
 
         [StringLength(100)]
         public string StudentCode { get; set; }
@@ -174,6 +166,12 @@ namespace Nidan.Entity
 
         public bool IsAdmissionDone { get; set; }
 
+        public int CentreId { get; set; }
+
+        public int OrganisationId { get; set; }
+
+        public int CreatedBy { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }
@@ -219,7 +217,5 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
-
-
     }
 }

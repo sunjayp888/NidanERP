@@ -59,11 +59,14 @@ namespace Nidan.Controllers
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.OrganisationId = organisationId;
+                mobilizationViewModel.Mobilization.CentreId = centreId;
+                mobilizationViewModel.Mobilization.PersonnelId = personnelId;
+                mobilizationViewModel.Mobilization.CreatedBy = personnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
@@ -109,11 +112,15 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MobilizationViewModel mobilizationViewModel)
         {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.OrganisationId = organisationId;
+                mobilizationViewModel.Mobilization.CentreId = centreId;
+                mobilizationViewModel.Mobilization.PersonnelId = personnelId;
+                mobilizationViewModel.Mobilization.CreatedBy = personnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);

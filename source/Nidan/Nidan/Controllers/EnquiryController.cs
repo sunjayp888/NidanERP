@@ -86,6 +86,8 @@ namespace Nidan.Controllers
         public ActionResult Create(EnquiryViewModel enquiryViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             enquiryViewModel.Enquiry.StudentCode = "ABC";
             if (ModelState.IsValid)
             {
@@ -103,7 +105,8 @@ namespace Nidan.Controllers
                     // NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
-                enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.CentreId = centreId;
+                enquiryViewModel.Enquiry.CreatedBy = personnelId;
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
@@ -190,10 +193,13 @@ namespace Nidan.Controllers
         public ActionResult Edit(EnquiryViewModel enquiryViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
-                enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.CentreId = centreId;
+                enquiryViewModel.Enquiry.CreatedBy = personnelId;
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(organisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);

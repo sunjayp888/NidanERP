@@ -80,7 +80,7 @@
                                                             @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                             {
                                                                 <li>
-                                                                    <a style="cursor: pointer;" ng-href="/Personnel/Edit/{{person.PersonnelId}}">
+                                                                    <a style="cursor: pointer;" ng-click="model.editPersonnel(person.PersonnelId)">
                                                                         Edit Profile
                                                                     </a>
                                                                 </li>

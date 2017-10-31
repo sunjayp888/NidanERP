@@ -164,6 +164,7 @@
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
+    <Compile Include="FollowUpHistoryData.cs" />
     <Compile Include="FollowUpSearchField.cs" />
     <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />

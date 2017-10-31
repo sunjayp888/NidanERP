@@ -427,6 +427,7 @@ namespace Nidan.Business
                 AlternateMobile = mobilization.AlternateMobile,
                 FollowUpType = "Mobilization",
                 Close = "No",
+                CreatedBy = mobilization.CreatedBy,
                 FollowUpUrl = string.Format("/Mobilization/Edit/{0}", data.MobilizationId),
                 ReadDateTime = _today.AddYears(-100)
             };
@@ -441,7 +442,8 @@ namespace Nidan.Business
                 CreatedDate = DateTime.UtcNow.Date,
                 FollowUpDate = followUpData.FollowUpDateTime.Date,
                 CentreId = followUpData.CentreId,
-                OrganisationId = organisationId
+                OrganisationId = organisationId,
+                FollowUpBy = followUpData.CreatedBy
             };
             _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             return data;
@@ -522,6 +524,7 @@ namespace Nidan.Business
                 FollowUpUrl = string.Format("/Enquiry/Edit/{0}", enquiry.EnquiryId),
                 AlternateMobile = enquiry.AlternateMobile,
                 Close = "No",
+                CreatedBy = enquiry.CreatedBy,
                 ReadDateTime = _today.AddYears(-100)
             };
             var followUpData = _nidanDataService.Create<FollowUp>(organisationId, followUp);
@@ -535,7 +538,8 @@ namespace Nidan.Business
                 CreatedDate = DateTime.UtcNow.Date,
                 FollowUpDate = followUpData.FollowUpDateTime.Date,
                 CentreId = followUpData.CentreId,
-                OrganisationId = organisationId
+                OrganisationId = organisationId,
+                FollowUpBy = followUpData.CreatedBy
             };
             _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
         }
@@ -673,6 +677,7 @@ namespace Nidan.Business
                 followUp.FollowUpType = "Counselling";
                 followUp.FollowUpUrl = string.Format("/Counselling/Edit/{0}", data.CounsellingId);
                 followUp.CounsellingId = data.CounsellingId;
+                followUp.CreatedBy = data.CreatedBy;
                 var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
                 var followUpHistory = new FollowUpHistory
                 {
@@ -684,7 +689,8 @@ namespace Nidan.Business
                     FollowUpDate = counselling.FollowUpDate ?? followUpData.FollowUpDateTime.Date,
                     CreatedDate = DateTime.UtcNow.Date,
                     CentreId = followUpData.CentreId,
-                    OrganisationId = organisationId
+                    OrganisationId = organisationId,
+                    FollowUpBy = followUpData.CreatedBy
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
@@ -986,6 +992,7 @@ namespace Nidan.Business
             admission.OrganisationId = organisationId;
             admission.CentreId = centreId;
             admission.EnrollmentNumber = receiptNumber;
+            admission.CreatedBy = personnelId;
             centreEnrollmentRecieptsettingData.EnrollmentNumber = centreEnrollmentRecieptsettingData.EnrollmentNumber + 1;
             centreEnrollmentRecieptsettingData.TaxYear = DateTime.UtcNow.FiscalYear();
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreEnrollmentRecieptsettingData);
@@ -1021,6 +1028,7 @@ namespace Nidan.Business
                 followup.Enquiry = null;
                 followup.Organisation = null;
                 followup.Registration = null;
+                followup.CreatedBy = personnelId;
                 var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followup);
                 var followUpHistory = new FollowUpHistory
                 {
@@ -1032,7 +1040,8 @@ namespace Nidan.Business
                     FollowUpDate = followUpData.FollowUpDateTime.Date,
                     CreatedDate = DateTime.UtcNow.Date,
                     CentreId = followUpData.CentreId,
-                    OrganisationId = organisationId
+                    OrganisationId = organisationId,
+                    FollowUpBy = personnelId
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
@@ -1191,7 +1200,7 @@ namespace Nidan.Business
 
             //
 
-            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId);
+            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId,personnelId);
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
@@ -1242,7 +1251,7 @@ namespace Nidan.Business
         }
 
         private Registration CandidateRegistration(int organisationId, int centreId, string studentCode,
-            Registration registration, int candidateFeeId)
+            Registration registration, int candidateFeeId,int personnelId)
         {
             var registrationData = new Registration()
             {
@@ -1287,6 +1296,7 @@ namespace Nidan.Business
                 followUp.RegistrationId = data.RegistrationId;
                 followUp.FollowUpType = "Registration";
                 followUp.FollowUpUrl = string.Format("/Registration/Edit/{0}", data?.RegistrationId);
+                followUp.CreatedBy = personnelId;
                 var followUpData = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
                 var followUpHistory = new FollowUpHistory
                 {
@@ -1298,7 +1308,8 @@ namespace Nidan.Business
                     FollowUpDate = registration.FollowupDate ?? followUpData.FollowUpDateTime.Date,
                     CreatedDate = DateTime.UtcNow.Date,
                     CentreId = followUpData.CentreId,
-                    OrganisationId = organisationId
+                    OrganisationId = organisationId,
+                    FollowUpBy = personnelId
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
@@ -1737,6 +1748,21 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveAreaOfInterests(organisationId, p => true, orderBy, paging);
         }
 
+        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFollowUps(organisationId, predicate, orderBy, paging);
+        }
+
+        public FollowUp RetrieveFollowUp(int organisationId, int followUpId)
+        {
+            return _nidanDataService.RetrieveFollowUp(organisationId,followUpId,e=>true);
+        }
+
+        public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveFollowUpsData(organisationId, predicate, orderBy, paging);
+        }
+
         //private Document RetrieveDocument(int organisationId, int personnelId)
         //{
         //    var organisation = RetrieveOrganisation(organisationId);
@@ -1910,17 +1936,6 @@ namespace Nidan.Business
         public List<EventActivityType> RetrieveActivityTypes(int organisationId)
         {
             return _nidanDataService.Retrieve<EventActivityType>(organisationId, e => true);
-        }
-
-        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveFollowUps(organisationId, predicate, orderBy, paging);
-        }
-
-        public FollowUp RetrieveFollowUp(int organisationId, int followUpId)
-        {
-            return _nidanDataService.RetrieveFollowUp(organisationId, followUpId, p => true);
         }
 
         public List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate)
@@ -2527,8 +2542,8 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveRegistration(organisationId, centreId, registraionId, p => true);
         }
 
-        public PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId,
-            Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<FollowUpHistoryData> RetrieveFollowUpHistories(int organisationId,
+            Expression<Func<FollowUpHistoryData, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveFollowUpHistories(organisationId, predicate, orderBy, paging);
         }
@@ -2539,8 +2554,8 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveFollowUpHistory(organisationId, followUpHistoryId, predicate);
         }
 
-        public PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword,
-            Expression<Func<FollowUp, bool>> predicate,
+        public PagedResult<FollowUpSearchField> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<FollowUpSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveFollowUpBySearchKeyword(organisationId, searchKeyword, predicate, orderBy,
@@ -3261,7 +3276,7 @@ namespace Nidan.Business
         //    //                //FileName = personnel.Fullname + ".jpg",
         //    //                PayrollId = personnelId.ToString(),
         //    //                //EmployeeName = personnel.Fullname,
-        //    //                CreatedBy = personnelId.ToString(),
+        //    //                CreatedByName = personnelId.ToString(),
         //    //                DocumentAttribute = new List<DocumentAttribute>
         //    //                {
         //    //                    new DocumentAttribute
@@ -3605,7 +3620,8 @@ namespace Nidan.Business
                 FollowUpDate = followUp.FollowUpDateTime.Date,
                 CreatedDate = DateTime.UtcNow.Date,
                 CentreId = followUp.CentreId,
-                OrganisationId = organisationId
+                OrganisationId = organisationId,
+                FollowUpBy = followUp.CreatedBy
             };
             var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, followUp);
             _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);

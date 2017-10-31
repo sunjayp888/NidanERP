@@ -42,6 +42,11 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 4)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
         [StringLength(1470)]
         public string SearchField { get; set; }
     }

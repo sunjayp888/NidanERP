@@ -49,6 +49,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public virtual ExpenseHeader ExpenseHeader { get; set; }
 
         public  virtual Centre Centre { get; set; }

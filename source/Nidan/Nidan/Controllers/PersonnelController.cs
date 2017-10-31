@@ -25,7 +25,7 @@ namespace Nidan.Controllers
     public class PersonnelController : BaseController
     {
         private ApplicationRoleManager _roleManager;
-        private IEmailService _emailService;
+        private readonly IEmailService _emailService;
         public ApplicationRoleManager RoleManager
         {
             get
@@ -38,8 +38,9 @@ namespace Nidan.Controllers
             }
         }
 
-        public PersonnelController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
+        public PersonnelController(INidanBusinessService hrBusinessService, IEmailService emailService) : base(hrBusinessService)
         {
+            _emailService = emailService;
         }
 
         // GET: Personnel
@@ -153,8 +154,8 @@ namespace Nidan.Controllers
                 var emailData = new EmailData()
                 {
                     BCCAddressList = new List<string> { "developer@nidantech.com" },
-                    Body = String.Format("Dear {0},{1}{2} Your Password Is{3}",personnel.Title,personnel.Forenames,personnel.Surname,password),
-                    Subject = "Password for NidanERP",
+                    Body = String.Format("Dear {0}.{1} {2}, Your Login Details For Nidan ERP Portal : User Id = {3} and Password = {4}",personnel.Title,personnel.Forenames,personnel.Surname,personnel.Email,password),
+                    Subject = "Login Details For NidanERP",
                     IsHtml = true,
                     ToAddressList = new List<string> { personnel.Email }
 

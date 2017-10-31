@@ -112,6 +112,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
                 admissionViewModel.Admission.Batch = null;
                 admissionViewModel.Admission.Registration = null;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
@@ -232,6 +233,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
@@ -304,6 +306,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 NidanBusinessService.AssignBatch(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }

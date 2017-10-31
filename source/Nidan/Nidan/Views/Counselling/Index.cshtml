@@ -111,6 +111,7 @@
                                             {
                                                 <th>Centre</th>
                                             }
+                                            <th>CreatedByName</th>
                                             <th>Candidate Name</th>
                                             @*<th ng-click="model.order('Personnel')" ng-class="model.orderClass('CounselledBy')">Counseller</th>*@
                                             <th>Course</th>
@@ -129,6 +130,7 @@
                                             {
                                                 <td><span ng-bind="counselling.CentreName"></span></td>
                                             }
+                                            <td><span ng-bind="counselling.CreatedByName"></span></td>
                                             <td><span ng-bind="counselling.CandidateName"></span></td>
                                             <td><span ng-bind="counselling.CourseOffered"></span></td>
                                             <td><span ng-bind="counselling.CreatedDate |date : format : shortDate"></span></td>

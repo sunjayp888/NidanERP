@@ -557,6 +557,71 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUps
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry.Course)
+                    .Include(p => p.Registration.Course)
+                    .Include(p => p.Course)
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDateTime",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUpSearchFields
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDateTime",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUps
+                    .Include(f => f.Mobilization)
+                    .Include(f => f.Enquiry)
+                    .Include(f => f.Enquiry.EnquiryCourses)
+                    .Include(f => f.Enquiry.Counsellings)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.FollowUpId == followUpId);
+
+            }
+        }
+
         public bool PersonnelEmploymentHasAbsences(int organisationId, int personnelId, int employmentId)
         {
             using (ReadUncommitedTransactionScope)
@@ -816,50 +881,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .FollowUps
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Enquiry.Course)
-                    .Include(p => p.Registration.Course)
-                    .Include(p => p.Course)
-                    .Include(p => p.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "FollowUpDateTime",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .FollowUps
-                    .Include(f => f.Mobilization)
-                    .Include(f => f.Enquiry)
-                    .Include(f => f.Enquiry.EnquiryCourses)
-                    .Include(f => f.Enquiry.Counsellings)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.FollowUpId == followUpId);
-
-            }
-        }
-
+        
         public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2225,14 +2247,13 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<FollowUpHistoryData> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistoryData, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .FollowUpHistories
-                    .Include(p => p.Organisation)
+                    .FollowUpHistoryDatas
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -2260,7 +2281,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate,
+        public PagedResult<FollowUpSearchField> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUpSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -2271,9 +2292,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<FollowUpSearchField>("SearchFollowUp @SearchKeyword", category).ToList();
 
-                var followUps = context.FollowUps.Include(e => e.Course).Include(e=>e.Centre);
-
-                var data = searchData.Join(followUps, e => e.FollowUpId, m => m.FollowUpId, (e, m) => m).ToList().AsQueryable().
+                var data = searchData.AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy

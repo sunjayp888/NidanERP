@@ -135,6 +135,7 @@
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
+                                            <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                             <th ng-click="model.order('FirstName')" ng-class="model.orderClass('FirstName')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('IntrestedCourseId')" ng-class="model.orderClass('IntrestedCourseId')">Interested Course</th>
@@ -152,9 +153,10 @@
                                             {
                                                 <td><span ng-bind="followUp.CentreName"></span></td>
                                             }
-                                            <td><span ng-bind="followUp.CandidateName"></span></td>
+                                            <td><span ng-bind="followUp.CreatedByName"></span></td>
+                                            <td><span ng-bind="followUp.Title"></span> <span ng-bind="followUp.FirstName"></span> <span ng-bind="followUp.MiddleName"></span> <span ng-bind="followUp.LastName"></span></td>
                                             <td><span ng-bind="followUp.Mobile"></span></td>
-                                            <td><span ng-bind="followUp.Course.Name"></span></td>
+                                            <td><span ng-bind="followUp.CourseName"></span></td>
                                             <td><span ng-bind="followUp.Remark"></span></td>
                                             <td><span ng-bind="followUp.FollowUpType"></span></td>
                                             <td><span ng-bind="followUp.FollowUpDateTime|date : format : shortDate"></span></td>

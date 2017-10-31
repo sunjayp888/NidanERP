@@ -17,6 +17,7 @@
         vm.order = order;
         vm.orderClass = orderClass;
         vm.viewPersonnelProfile = viewPersonnelProfile;
+        vm.editPersonnel = editPersonnel;
         vm.searchPersonnel = searchPersonnel;
         vm.searchKeyword = "";
         vm.searchMessage = "";
@@ -70,6 +71,10 @@
 
         function viewPersonnelProfile(personnelId) {
             $window.location.href = "/Personnel/Profile/" + personnelId;
+        }
+
+        function editPersonnel(id) {
+            $window.location.href = "/Personnel/Edit/" + id;
         }
 
     }

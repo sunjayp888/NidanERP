@@ -57,8 +57,9 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        //public virtual FollowUp FollowUp { get; set; }
-
-        //public virtual Course Course { get; set; }
+        [Key]
+        [Column(Order = 8)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
     }
 }

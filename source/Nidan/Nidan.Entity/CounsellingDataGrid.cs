@@ -72,5 +72,10 @@ namespace Nidan.Entity
         [Column(Order = 7)]
         [StringLength(3)]
         public string IsRegistrationDone { get; set; }
+
+        [Key]
+        [Column(Order = 8)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
     }
 }

@@ -27,28 +27,26 @@ namespace Nidan.Entity
         [StringLength(200)]
         public string EventName { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
         [StringLength(353)]
         public string CandidateName { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 4)]
         [StringLength(1000)]
         public string InterestedCourse { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 5)]
         [StringLength(1000)]
         public string Qualification { get; set; }
 
         [Key]
-        [Column(Order = 7, TypeName = "date")]
+        [Column(Order = 6, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "date")]
@@ -67,7 +65,12 @@ namespace Nidan.Entity
 
         public string ClosingRemark { get; set; }
 
-        [StringLength(3580)]
+        [Key]
+        [Column(Order = 7)]
+        [StringLength(151)]
+        public string CreatedByName { get; set; }
+
+        [StringLength(3680)]
         public string SearchField { get; set; }
     }
 }

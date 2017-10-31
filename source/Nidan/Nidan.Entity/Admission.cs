@@ -13,7 +13,11 @@ namespace Nidan.Entity
         {
             AdmissionDate = DateTime.UtcNow.Date;
         }
-        public int AdmissionId { get; set; }
+
+    public int AdmissionId { get; set; }
+
+        [StringLength(500)]
+        public string EnrollmentNumber { get; set; }
 
         public int RegistrationId { get; set; }
 
@@ -28,7 +32,7 @@ namespace Nidan.Entity
 
         public int? PersonnelId { get; set; }
 
-        public string EnrollmentNumber { get; set; }
+        public int CreatedBy { get; set; }
 
         public virtual Registration Registration { get; set; }
 
