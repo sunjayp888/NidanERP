@@ -10,6 +10,7 @@
     function EnquiryService($http) {
         var service = {
             retrieveEnquiries: retrieveEnquiries,
+            retrieveTodaysEnquiries:retrieveTodaysEnquiries,
             canDeleteEnquiry: canDeleteEnquiry,
             // deleteEnquiry: deleteEnquiry
             searchEnquiry: searchEnquiry,
@@ -22,6 +23,17 @@
         function retrieveEnquiries(Paging, OrderBy) {
 
             var url = "/Enquiry/List",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveTodaysEnquiries(Paging, OrderBy) {
+
+            var url = "/Enquiry/TodaysEnquiryList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)

@@ -22,19 +22,33 @@
         vm.searchMobilization = searchMobilization;
         vm.viewMobilization = viewMobilization;
         vm.searchMobilizationByDate = searchMobilizationByDate;
+        vm.retrieveTodaysMobilizations = retrieveTodaysMobilizations;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
             vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "desc";
+            vm.orderBy.class = "asc";
             order("CreatedDate");
         }
 
         function retrieveMobilizations() {
             return MobilizationService.retrieveMobilizations(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.mobilizations = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.mobilizations;
+                });
+        }
+
+        function retrieveTodaysMobilizations() {
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return MobilizationService.retrieveTodaysMobilizations(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.mobilizations = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

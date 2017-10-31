@@ -49,6 +49,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime ExpenseGeneratedDate { get; set; }
 

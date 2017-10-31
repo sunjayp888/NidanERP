@@ -28,6 +28,7 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.searchAdmissionByDate = searchAdmissionByDate;
+        vm.retrieveTodaysAdmissions = retrieveTodaysAdmissions;
         vm.isDisabled = false;
         vm.disableButton = disableButton;
         vm.initialise = initialise;
@@ -41,6 +42,19 @@
 
         function retrieveAdmissions() {
             return AdmissionService.retrieveAdmissions(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.admissions = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.admissions;
+                });
+        }
+
+        function retrieveTodaysAdmissions() {
+            vm.orderBy.property = "AdmissionId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return AdmissionService.retrieveTodaysAdmissions(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.admissions = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

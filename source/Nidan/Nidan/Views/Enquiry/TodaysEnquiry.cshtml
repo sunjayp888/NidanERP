@@ -3,11 +3,11 @@
 @{
     ViewBag.Title = "Enquiry";
 }
-<div ng-controller="EnquiryController as model" ng-init="model.initialise()">
+<div ng-controller="EnquiryController as model" ng-init="model.retrieveTodaysEnquiries()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Enquiries <small></small>
+                Today's Enquiries <small></small>
             </h3>
         </div>
         <div class="title_right">
@@ -125,65 +125,65 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <td><span ng-bind="enquiry.CentreName"></span></td>
-                                        }
-                                        <td><span ng-bind="enquiry.CandidateName"></span></td>
-                                        <td><span ng-bind="enquiry.Mobile"></span></td>
-                                        @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
-                                        <td class="col-lg-4">
+                                        <tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="enquiry.CentreName"></span></td>
+                                            }
+                                            <td><span ng-bind="enquiry.CandidateName"></span></td>
+                                            <td><span ng-bind="enquiry.Mobile"></span></td>
+                                            @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
+                                            @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
+                                            @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
+                                            <td class="col-lg-4">
 
-                                            <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
-                                            <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
-                                        </td>
-                                        <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
-                                        @*<td><span ng-bind="enquiry.Close"></span></td>*@
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
-                                                    {
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/View/{{enquiry.EnquiryId}}">
-                                                                View
-                                                            </a>
-                                                        </li>
-													}
+                                                <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
+                                                <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
+                                                <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
+                                            </td>
+                                            <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>
+                                            @*<td><span ng-bind="enquiry.Close"></span></td>*@
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Enquiry/View/{{enquiry.EnquiryId}}">
+                                                                    View
+                                                                </a>
+                                                            </li>
+                                                        }
 
-														 @if (User.IsInAnyRoles("Admin"))
-														 {
-															<li>
-                                                            <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
-                                                                Edit
-                                                            </a>
-                                                        </li>
+                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Enquiry/Edit/{{enquiry.EnquiryId}}">
+                                                                    Edit
+                                                                </a>
+                                                            </li>
 
-                                                        <li ng-if="enquiry.IsCounsellingDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
-                                                                Create Counselling
-                                                            </a>
-                                                        </li>
+                                                            <li ng-if="enquiry.IsCounsellingDone=='NO'">
+                                                                <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
+                                                                    Create Counselling
+                                                                </a>
+                                                            </li>
 
-                                                        <li ng-if="enquiry.IsRegistrationDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
-                                                                Create Registration
-                                                            </a>
-                                                        </li>
-														}
-                                                    
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                            <li ng-if="enquiry.IsRegistrationDone=='NO'">
+                                                                <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
+                                                                    Create Registration
+                                                                </a>
+                                                            </li>
+                                                        }
+
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -217,6 +217,11 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;All Enquiries
+    </a>
 </div>
 
 @section scripts {

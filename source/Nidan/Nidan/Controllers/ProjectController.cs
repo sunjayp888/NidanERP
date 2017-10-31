@@ -22,8 +22,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isAdmin = User.IsInAnyRoles("Admin");
-            var data = NidanBusinessService.RetrieveProjects(UserOrganisationId, p => isAdmin, orderBy, paging);
+            //bool isAdmin = User.IsInAnyRoles("Admin");
+            var data = NidanBusinessService.RetrieveProjects(UserOrganisationId, p => p.CentreId == UserCentreId, orderBy, paging);
             return this.JsonNet(data);
         }
 
