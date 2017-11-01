@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Expense.DebitAmount, "Debit Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
             <div class="col-md-6 col-sm-6 col-xs-12">
-                @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12"})
+                @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12",@max=999})
                 @Html.ValidationMessageFor(model => model.Expense.DebitAmount, "", new { @class = "help-block" })
             </div>
         </div>
