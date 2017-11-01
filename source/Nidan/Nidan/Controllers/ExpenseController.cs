@@ -29,6 +29,11 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        public ActionResult TermsAndCondition()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: OtherFee/Create
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
