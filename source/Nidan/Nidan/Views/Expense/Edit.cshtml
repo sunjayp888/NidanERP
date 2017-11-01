@@ -26,16 +26,16 @@
 
                         }
                         @Html.HiddenFor(model => Model.Expense.ExpenseId)
+                        @Html.HiddenFor(model => Model.Expense.ExpenseHeaderId)
                         @Html.HiddenFor(model => Model.Expense.VoucherNumber)
                         @Html.HiddenFor(model => Model.Expense.CreatedDate)
                         @Html.Partial("_Expense", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
-                                        <a ng-href="/Expense/Download/{{@Model.CashMemo}}" class="btn btn-success" role="button">
+                                        <a ng-href="/Expense/Download/{{@Model.CashMemo}}" class="btn btn-primary" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
                                     }
@@ -183,23 +183,5 @@
             }
             $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
         };
-
-        $(document)
-            .ready(function () {
-                var cashmemo = $('#Expense_CashMemoNumbers').val();
-                var paidTo = $('#Expense_PaidTo').val();
-
-                if (cashmemo != "" && paidTo != "") {
-                    $('#Expense_CashMemoNumbers').attr('readonly', true);
-                    $('#Expense_PaidTo').attr('readonly', true);
-
-                } else {
-                    $('#Expense_CashMemoNumbers').attr('readonly', false);
-                    $('#Expense_PaidTo').attr('readonly', false);
-
-                }
-
-            });
-
     </script>
 }
