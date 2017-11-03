@@ -31,6 +31,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(500)]
+        [RegularExpression(@"^[a-zA-Z ]+", ErrorMessage = "Numbers / Special Symbols Are Not Allowed")]
         public string RupeesInWord { get; set; }
 
         public decimal DebitAmount { get; set; }
