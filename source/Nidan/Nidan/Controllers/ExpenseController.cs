@@ -103,6 +103,8 @@ namespace Nidan.Controllers
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
             var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList();
             var expense = NidanBusinessService.RetrieveExpense(organisationId, centreId, id.Value, e => e.CentreId == centreId);
+            var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.FirstOrDefault()?.Amount ?? 0;
+            var totalDebitAmount = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
 
             if (expense == null)
             {
@@ -111,6 +113,7 @@ namespace Nidan.Controllers
             var viewModel = new ExpenseViewModel
             {
                 Expense = expense,
+                AvailablePettyCash = totalPettyCash - totalDebitAmount,
                 CashMemo = expense.CashMemoNumbers,
                 ExpenseHeaders = new SelectList(expenseHeader, "ExpenseHeaderId", "Name"),
                 Projects = new SelectList(project, "ProjectId", "Name"),
@@ -151,7 +154,8 @@ namespace Nidan.Controllers
             //var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Sunday);
             //var endOfWeekDate = startOfWeekDate.AddDays(6);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveExpenses(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+            var data = NidanBusinessService.RetrieveExpenses(UserOrganisationId, UserCentreId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
