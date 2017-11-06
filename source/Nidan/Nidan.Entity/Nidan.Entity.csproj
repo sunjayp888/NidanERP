@@ -91,6 +91,7 @@
     <Compile Include="AspNetRole.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
+    <Compile Include="AvailablePettyCashGrid.cs" />
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchDay.cs" />

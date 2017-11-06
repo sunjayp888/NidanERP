@@ -146,6 +146,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<SummaryReport> SummaryReports { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<FollowUpHistoryData> FollowUpHistoryDatas { get; set; }
+        public virtual DbSet<AvailablePettyCashGrid> AvailablePettyCashGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2192,6 +2193,22 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<FollowUpHistoryData>()
                 .Property(e => e.ClosingRemarks)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalTransferAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalDebitAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.AvailablePettyCash)
+                .HasPrecision(38, 2);
 
             base.OnModelCreating(modelBuilder);
         }
