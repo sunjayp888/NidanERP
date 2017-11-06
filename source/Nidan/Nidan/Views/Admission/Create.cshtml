@@ -406,7 +406,8 @@
         });
         //---------------- Admission Cash/Cheque ----------------
         $('#downpayment').hide();
-        $('#lumpsum').hide();
+        $('#lumpsum').hide(); 
+        $('#overrideFeeAmount').hide();
 
         $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
             $('#downpayment').show();
@@ -424,6 +425,31 @@
             $('#downpayment').show();
             $('#lumpsum').hide();
         }
+
+        //$('#CandidateFee_IsPaidAmountOverride').change(function () {
+        //    if ($(this).is(":checked")) {
+        //        $("#overrideFeeAmount").show();
+        //    } else {
+        //        $("#overrideFeeAmount").hide();
+        //    }
+
+        $(function () {
+            $("#CandidateFee_IsPaidAmountOverride").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#overrideFeeAmount").show();
+                } else {
+                    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+                        $('#downpayment').hide();
+                        $('#lumpsum').show();
+                    }
+                    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+                        $('#downpayment').show();
+                        $('#lumpsum').hide();
+                    }
+                    $("#overrideFeeAmount").hide();
+                }
+            });
+        });
 
         if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
             $('#PaymentDetails').show();
