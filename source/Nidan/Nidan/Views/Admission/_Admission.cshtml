@@ -48,6 +48,18 @@
                     </label>
                 </div>
             </div>
+            
+            <div id="IsAdmissionAmountOverrideDiv">
+                <div class="form-group">
+                    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-7 col-sm-3 col-xs-12">
+                        <label class="btn btn-info pull-right col-md-6">
+                            @Html.CheckBoxFor(model => model.CandidateFee.IsPaidAmountOverride, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                            Override Fee.
+                        </label>
+                    </div>
+                </div>
+            </div>
 
             <div id="downpayment" class="form-group">
                 @Html.LabelFor(model => model.Admission.Registration.CandidateInstallment.DownPayment, "Down Payment", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -62,6 +74,14 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(model => model.LumpsumAfterRegistration, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
                     @Html.ValidationMessageFor(model => model.LumpsumAfterRegistration, "", new { @class = "help-block" })
+                </div>
+            </div>
+            
+            <div id="overrideFeeAmount" class="form-group">
+                @Html.LabelFor(model => model.CandidateFee.PaidAmount, "Paid Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(model => model.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12",})
+                    @Html.ValidationMessageFor(model => model.CandidateFee.PaidAmount, "", new { @class = "help-block" })
                 </div>
             </div>
 

@@ -1112,7 +1112,7 @@ namespace Nidan.Business
                 PersonnelId = personnelId,
                 IsPaymentDone = true,
                 StudentCode = admission.Registration.StudentCode,
-                PaidAmount = candidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
+                PaidAmount = candidateFee.IsPaidAmountOverride ? candidateFee.PaidAmount : candidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
                     ? 0
                     : (candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount),
                 PaymentDate = DateTime.UtcNow,
@@ -1137,9 +1137,9 @@ namespace Nidan.Business
                         FeeTypeId = (int)FeeType.Installment,
                         FollowUpDate = batch?.BatchStartDate.AddMonths(batch.NumberOfInstallment),
                         FiscalYear = DateTime.UtcNow.FiscalYear(),
-                        InstallmentAmount =
-                            (candidateInstallment.CourseFee - candidateInstallment.DownPayment) /
-                            batch?.NumberOfInstallment,
+                        InstallmentAmount = candidateFee.IsPaidAmountOverride ?
+                            (candidateInstallment.CourseFee - (candidateFee.PaidAmount + registration.CandidateFee.PaidAmount)) / batch?.NumberOfInstallment :
+                            (candidateInstallment.CourseFee - candidateInstallment.DownPayment) / batch?.NumberOfInstallment,
                         CentreId = centreId,
                         OrganisationId = organisationId,
                         PersonnelId = personnelId,
@@ -1200,7 +1200,7 @@ namespace Nidan.Business
 
             //
 
-            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId,personnelId);
+            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
@@ -1251,7 +1251,7 @@ namespace Nidan.Business
         }
 
         private Registration CandidateRegistration(int organisationId, int centreId, string studentCode,
-            Registration registration, int candidateFeeId,int personnelId)
+            Registration registration, int candidateFeeId, int personnelId)
         {
             var registrationData = new Registration()
             {
@@ -1755,7 +1755,7 @@ namespace Nidan.Business
 
         public FollowUp RetrieveFollowUp(int organisationId, int followUpId)
         {
-            return _nidanDataService.RetrieveFollowUp(organisationId,followUpId,e=>true);
+            return _nidanDataService.RetrieveFollowUp(organisationId, followUpId, e => true);
         }
 
         public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
