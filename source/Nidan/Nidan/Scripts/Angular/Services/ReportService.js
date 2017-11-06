@@ -18,7 +18,7 @@
             searchAdmissionByDate: searchAdmissionByDate,
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
-            searchExpenseByDate: searchExpenseByDate,
+            availablePettyCashReport: availablePettyCashReport,
             searchFixAssetByDate: searchFixAssetByDate,
             searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
@@ -40,7 +40,8 @@
             retrieveCandidateFeeByDate: retrieveCandidateFeeByDate,
             retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
             retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
-            retrieveInstallmentSummaryByDate : retrieveInstallmentSummaryByDate
+            retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
+            retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId
 
         };
 
@@ -153,11 +154,9 @@
             return $http.post(url, data);
         }
 
-        function searchExpenseByDate(FromDate, ToDate, Paging, OrderBy) {
-            var url = "/Report/ExpenseReportByDate",
+        function availablePettyCashReport(Paging, OrderBy) {
+            var url = "/Report/AvailablePettyCashReport",
                 data = {
-                    fromDate: FromDate,
-                    toDate: ToDate,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -356,6 +355,17 @@
                 data = {
                     centreId: centreId,
                     date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCentrePettyCashByCentreId(centreId, Paging, OrderBy) {
+            var url = "/Report/CentrePettyCashList",
+                data = {
+                    centreId: centreId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);

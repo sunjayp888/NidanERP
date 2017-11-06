@@ -588,6 +588,7 @@ namespace Nidan.Business
                     MobilizationTypeId = mobilizationType.MobilizationTypeId,
                     PersonnelId = personnelId,
                     Close = "No",
+                    CreatedBy = personnelId,
                     OtherInterestedCourse = item.OtherInterestedCourse
                 };
                 var data = _nidanDataService.CreateMobilization(organisationId, mobilizer);
@@ -607,6 +608,7 @@ namespace Nidan.Business
                     ReadDateTime = _today.AddYears(-100),
                     Close = "No",
                     FollowUpType = "Mobilization",
+                    CreatedBy = personnelId,
                     FollowUpUrl = string.Format("/Mobilization/Edit/{0}", data.MobilizationId)
                 });
             }
@@ -623,6 +625,7 @@ namespace Nidan.Business
                     CreatedDate = DateTime.UtcNow.Date,
                     FollowUpDate = item.FollowUpDateTime,
                     CentreId = centreId,
+                    FollowUpBy = item.CreatedBy,
                     OrganisationId = organisationId
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
@@ -1200,7 +1203,7 @@ namespace Nidan.Business
 
             //
 
-            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId,personnelId);
+            var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
@@ -1251,7 +1254,7 @@ namespace Nidan.Business
         }
 
         private Registration CandidateRegistration(int organisationId, int centreId, string studentCode,
-            Registration registration, int candidateFeeId,int personnelId)
+            Registration registration, int candidateFeeId, int personnelId)
         {
             var registrationData = new Registration()
             {
@@ -1755,7 +1758,7 @@ namespace Nidan.Business
 
         public FollowUp RetrieveFollowUp(int organisationId, int followUpId)
         {
-            return _nidanDataService.RetrieveFollowUp(organisationId,followUpId,e=>true);
+            return _nidanDataService.RetrieveFollowUp(organisationId, followUpId, e => true);
         }
 
         public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -3249,6 +3252,30 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveSummaryReports(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            var centres = RetrieveCentres(organisationId, e => true);
+            var data = RetrieveAvailablePettyCashGrid(organisationId, e => true, orderBy, paging).Items.ToList();
+            var availablePettyCashReport = new List<AvailablePettyCashReport>();
+            foreach (var centre in centres)
+            {
+                var result = data.FirstOrDefault(e => e.CentreId == centre.CentreId);
+                availablePettyCashReport.Add(new AvailablePettyCashReport()
+                {
+                    CentreId = result?.CentreId ?? centre.CentreId,
+                    AvailablePettyCash = result?.AvailablePettyCash ?? 0,
+                    CentreName = centre.Name
+                });
+            }
+            return availablePettyCashReport;
+        }
+
+        public PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAvailablePettyCashGrid(organisationId, predicate, orderBy, paging);
         }
 
         #endregion

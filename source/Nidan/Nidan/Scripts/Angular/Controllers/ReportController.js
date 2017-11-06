@@ -16,6 +16,7 @@
         vm.registrationSummaryReports = [];
         vm.downPaymentSummaryReports = [];
         vm.installmentSummaryReports = [];
+        vm.centrePettyCashReports = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -37,7 +38,7 @@
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
-        vm.searchExpenseByDate = searchExpenseByDate;
+        vm.availablePettyCashReport = availablePettyCashReport;
         vm.searchStockByDate = searchStockByDate;
         vm.searchMobilizationCountReportBydate = searchMobilizationCountReportBydate;
         vm.searchMobilizationCountReportByMonth = searchMobilizationCountReportByMonth;
@@ -63,6 +64,8 @@
         vm.retrieveRegistrationSummaryByDate = retrieveRegistrationSummaryByDate;
         vm.retrieveDownPaymentSummaryByDate = retrieveDownPaymentSummaryByDate;
         vm.retrieveInstallmentSummaryByDate = retrieveInstallmentSummaryByDate;
+        vm.retrieveCentrePettyCashByCentreId = retrieveCentrePettyCashByCentreId;
+        vm.viewCentrePettyCashByCentreId = viewCentrePettyCashByCentreId;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -219,15 +222,13 @@
                 });
         }
 
-        function searchExpenseByDate(fromDate, toDate) {
-            vm.fromDate = fromDate;
-            vm.toDate = toDate;
-            vm.orderBy.property = "ExpenseCreatedDate";
+        function availablePettyCashReport() {
+            vm.orderBy.property = "CentreId";
             vm.orderBy.class = "asc";
-            order("ExpenseCreatedDate");
-            return ReportService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+            vm.orderBy.direction = "Ascending";
+            return ReportService.availablePettyCashReport(vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.reports = response.data.Items;
+                    vm.reports = response.data;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
@@ -417,6 +418,17 @@
             });
         }
 
+        function retrieveCentrePettyCashByCentreId(centreId) {
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            return ReportService.retrieveCentrePettyCashByCentreId(vm.centreId, vm.paging, vm.orderBy).then(function (response) {
+                vm.centrePettyCashReports = response.data.Items;
+                return vm.centrePettyCashReports;
+            });
+        }
+
         function totalSumOfCountByDate(centreId, fromMonth, fromYear) {
             return ReportService.totalSumOfCountByDate(centreId, fromMonth, fromYear).then(function (response) {
                 vm.totalSumOfCountReportsByDate = response.data;
@@ -431,6 +443,12 @@
         function viewCandidateFeeByDate(centreId,date) {
             window.location.href = "/Report/FeeSummaryByDate?centreId=" + centreId + "&date=" + date;
         }
+
+        function viewCentrePettyCashByCentreId(centreId) {
+            window.location.href = "/Report/CentrePettyCashByCentre?centreId=" + centreId;
+        }
+
+        
 
         function viewMobilizationReportByMonthWise(centreId, fromYear) {
             vm.centreId = centreId;

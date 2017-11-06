@@ -86,6 +86,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Stock
+        public ActionResult CentrePettyCashByCentre()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
@@ -178,10 +184,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult ExpenseReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrievePettyCashExpenseReports(UserOrganisationId, p => (isSuperAdmin) && p.ExpenseCreatedDate >= fromDate && p.ExpenseCreatedDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId,orderBy,paging);
             return this.JsonNet(data);
         }
 
@@ -428,6 +433,14 @@ namespace Nidan.Controllers
         public ActionResult InstallmentSummaryByDate(int centreId, DateTime? date)
         {
             var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult CentrePettyCashList(int centreId,Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId,p => (isSuperAdmin && p.CentreId == centreId), orderBy, paging);
             return this.JsonNet(data);
         }
     }
