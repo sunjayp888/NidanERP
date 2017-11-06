@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create Other Fee";
 }
-<div class="row">
+<div class="row" ng-controller="ExpenseController as model">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -35,7 +35,6 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="btn_submit" type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
                                         <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
@@ -119,20 +118,5 @@
                 alert('Expense Voucher CAN NOT be above Rs.999/-');
             }
         });
-
-        function expenseval() {
-            $("#Expense_DebitAmount").keyup(function () {
-                var expenseAmount = $("#Expense_DebitAmount").val();
-                //numberToWords();
-                if (expenseAmount < 999) {
-                    $('#btn_submit').attr('disabled', false);
-                } else {
-                    $('#btn_submit').attr('disabled', true);
-                    alert('Expense Voucher CAN NOT be above Rs.999/-');
-                }
-            });
-        }
-
-        
     </script>
 }

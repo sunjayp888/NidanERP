@@ -1,9 +1,6 @@
-﻿@using Nidan.Business.Extensions
-@using Nidan.Extensions
+﻿@using Nidan.Extensions
 @{
     ViewBag.Title = "Expense";
-    var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
-    var endOfWeekDate = startOfWeekDate.AddDays(5);
 }
 
 <div ng-controller="ExpenseController as model" ng-init="model.initialise()">
