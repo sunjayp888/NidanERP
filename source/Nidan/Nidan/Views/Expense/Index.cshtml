@@ -60,6 +60,7 @@
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                             }
                                             <th ng-click="model.order('ExpenseGeneratedDate')" ng-class="model.orderClass('ExpenseGeneratedDate')">Generated Date</th>
+                                            <th ng-click="model.order('ExpenseHeaderId')" ng-class="model.orderClass('ExpenseHeaderId')">Expense Head</th>
                                             <th ng-click="model.order('VoucherNumber')" ng-class="model.orderClass('VoucherNumber')">Voucher Number</th>
                                             <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
                                             <th ng-click="model.order('TotalDebitAmount')" ng-class="model.orderClass('TotalDebitAmount')">Debit Amount</th>
@@ -74,6 +75,7 @@
                                                 <td><span ng-bind="expense.Centre.CentreCode"></span></td>
                                             }
                                             <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="expense.ExpenseHeader.Name"></span></td>
                                             <td><span ng-bind="expense.VoucherNumber"></span></td>
                                             <td><span ng-bind="expense.CashMemoNumbers"></span></td>
                                             <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
@@ -92,7 +94,7 @@
                                                                 </a>
                                                             </li>
                                                         }
-                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Admin"))
                                                         {
                                                             <li ng-if="model.isDateInCurrentWeek">
                                                                 @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
@@ -100,13 +102,12 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
-                                                                    Download
-                                                                </a>
-                                                            </li>
                                                         }
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
+                                                                Download
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>

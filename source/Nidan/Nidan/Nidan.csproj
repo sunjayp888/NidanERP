@@ -1703,6 +1703,10 @@
     <Content Include="Views\BatchPlanner\View.cshtml" />
     <Content Include="Views\Expense\TermsAndCondition.cshtml" />
     <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
+    <Content Include="Views\Admission\TodaysAdmission.cshtml" />
+    <Content Include="Views\Enquiry\TodaysEnquiry.cshtml" />
+    <Content Include="Views\Mobilization\TodaysMobilization.cshtml" />
+    <Content Include="Views\Registration\TodaysRegistration.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
