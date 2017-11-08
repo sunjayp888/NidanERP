@@ -226,7 +226,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

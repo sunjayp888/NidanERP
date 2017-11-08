@@ -11,8 +11,9 @@ namespace Nidan.Entity
     {
         public Trainer()
         {
-            CreatedDate=DateTime.UtcNow.Date;
+            CreatedDate = DateTime.UtcNow.Date;
         }
+
         public int TrainerId { get; set; }
 
         [Required]
@@ -51,14 +52,18 @@ namespace Nidan.Entity
         public int DistrictId { get; set; }
 
         [Required]
-        [StringLength(12)]
-        public string PinCode { get; set; }
+        [RegularExpression(@"^\d{6,}$", ErrorMessage = "Not a valid Pin Code")]
+        public int PinCode { get; set; }
 
         [StringLength(100)]
         public string Gender { get; set; }
 
+        [Required]
+        [RegularExpression(@"^\d{16,}$", ErrorMessage = "Not a valid Aadhar Number")]
         public long AadharNo { get; set; }
 
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
 
         [Column(TypeName = "date")]
