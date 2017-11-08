@@ -368,7 +368,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
-                                        <button id="admissionSubmit" type="submit" class="btn btn-success" ng-disabled="isDisabled" ng-click="model.disableButton()">Submit</button>
+                                        <button id="admissionSubmit" type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -391,39 +391,53 @@
 </div>
 @section scripts{
     <script>
+        $('#admissionSubmit').attr('disabled', true);
         //Submit Button Blur after Click
-        $(document).on('submit', 'form', function () {
-            var buttons = $(this).find('[type="submit"]');
-            if ($(this).valid()) {
-                buttons.each(function (btn) {
-                    $(buttons[btn]).prop('disabled', true);
-                });
-            } else {
-                buttons.each(function (btn) {
-                    $(buttons[btn]).prop('disabled', false);
-                });
-            }
-        });
+        $(document).on('submit',
+            'form',
+            function() {
+                var buttons = $(this).find('[type="submit"]');
+                if ($(this).valid()) {
+                    buttons.each(function(btn) {
+                        $(buttons[btn]).prop('disabled', true);
+                    });
+                } else {
+                    buttons.each(function(btn) {
+                        $(buttons[btn]).prop('disabled', false);
+                    });
+                }
+            });
         //---------------- Admission Cash/Cheque ----------------
         $('#downpayment').hide();
-        $('#lumpsum').hide(); 
+        $('#lumpsum').hide();
         $('#overrideFeeAmount').hide();
+        $('#IsAdmissionAmountOverrideDiv').hide();
 
-        $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function () {
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').click(function() {
             $('#downpayment').show();
             $('#lumpsum').hide();
+            $('#IsAdmissionAmountOverrideDiv').show();
+            overrideValidation();
         });
-        $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function () {
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function() {
             $('#downpayment').hide();
             $('#lumpsum').show();
+            $('#overrideFeeAmount').hide();
+            $('#IsAdmissionAmountOverrideDiv').hide();
+            $('#admissionSubmit').attr('disabled', false);
         });
         if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
             $('#downpayment').hide();
             $('#lumpsum').show();
+            $('#overrideFeeAmount').hide();
+            $('#IsAdmissionAmountOverrideDiv').hide();
+            $('#admissionSubmit').attr('disabled', false);
         }
         if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
             $('#downpayment').show();
             $('#lumpsum').hide();
+            $('#IsAdmissionAmountOverrideDiv').show();
+            overrideValidation();
         }
 
         //$('#CandidateFee_IsPaidAmountOverride').change(function () {
@@ -433,8 +447,8 @@
         //        $("#overrideFeeAmount").hide();
         //    }
 
-        $(function () {
-            $("#CandidateFee_IsPaidAmountOverride").click(function () {
+        $(function() {
+            $("#CandidateFee_IsPaidAmountOverride").click(function() {
                 if ($(this).is(":checked")) {
                     $("#overrideFeeAmount").show();
                 } else {
@@ -451,6 +465,38 @@
             });
         });
 
+
+        //Admission Override Amount Validation
+        $("#CandidateFee_PaidAmount").keyup(function() {
+            overrideValidation();
+        });
+
+        function overrideValidation() {
+            $("#CandidateFee_PaidAmount").keyup(function() {
+                var admissionFee = $("#CandidateFee_PaidAmount").val();
+                var downpayment = $("#Admission_Registration_CandidateInstallment_DownPayment").val();
+                var lumpsum = $("#LumpsumAfterRegistration").val();
+                if (admissionFee != "") {
+                    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').is(':checked')) {
+                        if (parseInt(admissionFee) < parseInt(lumpsum)) {
+                            $('#admissionSubmit').attr('disabled', true);
+                        } else {
+                            $('#admissionSubmit').attr('disabled', false);
+                        }
+                    }
+                    if ($('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').is(':checked')) {
+                        if (parseInt(admissionFee) < parseInt(downpayment)) {
+                            $('#admissionSubmit').attr('disabled', true);
+                        } else {
+                            $('#admissionSubmit').attr('disabled', false);
+                        }
+                    }
+                } else {
+                    $('#admissionSubmit').attr('disabled', true);
+                }
+            });
+        }
+
         if ($('#Admission_PaymentModeId :selected').text() == "Cheque") {
             $('#PaymentDetails').show();
             $('.bank-details-textbox-admission').show();
@@ -461,7 +507,7 @@
             $('#PaymentDetails').show();
         }
 
-        $("#CandidateFee_PaymentModeId").change(function () {
+        $("#CandidateFee_PaymentModeId").change(function() {
             if ($('#CandidateFee_PaymentModeId :selected').text() == "Cheque") {
                 $('#PaymentDetails').show();
                 $('.bank-details-textbox-admission').show();
@@ -473,7 +519,7 @@
             }
         });
 
-        $("#Admission_Discount").change(function () {
+        $("#Admission_Discount").change(function() {
             if ($('#Admission_Discount :selected').text() == "Select Discount") {
                 $('#divDiscountFee').hide();
             } else {
@@ -489,7 +535,7 @@
         //---------------- Admission Installment/Lumpsum ----------------
 
         $('#BatchDetails').hide();
-        $("#Admission_BatchId").change(function () {
+        $("#Admission_BatchId").change(function() {
             if ($('#Admission_BatchId :selected').val() == "") {
                 $('#divBatchDetails').hide();
             } else {
@@ -503,7 +549,7 @@
 
         //=========================================================================
 
-        $('#Admission_BatchId').change(function () {
+        $('#Admission_BatchId').change(function() {
             var batchId = $('#Admission_BatchId :selected').val();
             if (batchId != "") {
                 $.ajax({
@@ -512,41 +558,51 @@
                     data: JSON.stringify({ batchId: batchId }),
                     dataType: 'json',
                     contentType: 'application/json; charset=utf-8',
-                    error: function (xhr) {
+                    error: function(xhr) {
                         alert('Error: ' + xhr.statusText);
                     },
-                    success: function (result) {
+                    success: function(result) {
                         $("#Batch_RoomId").empty();
                         $("#Batch_CourseInstallmentId").empty();
                         $("#Batch_CourseId").empty();
-                        $.each(result, function (key, value) {
-                            $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
-                            $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
-                            $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
-                            $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
-                            $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
-                            $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
-                            $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
-                            $("#txtBatchMonth").val(result.Month);
-                            $("#txtBatchStartDate").val(result.BatchStartDate);
-                            $("#txtBatchEndDate").val(result.BatchEndDate);
-                            $("#txtBatchAssessmentDate").val(result.AssessmentDate);
-                            $("#txtBatchStartTime").val(result.BatchStartTimeHours + " : " + result.BatchStartTimeMinutes + " " + result.BatchStartTimeSpan);
-                            $("#txtBatchEndTime").val(result.BatchEndTimeHours + " : " + result.BatchEndTimeMinutes + " " + result.BatchEndTimeSpan);
-                        });
+                        $.each(result,
+                            function(key, value) {
+                                $("#BatchDay_IsTuesday").prop("checked", result.BatchDays[0].IsTuesday);
+                                $("#BatchDay_IsWednesday").prop("checked", result.BatchDays[0].IsWednesday);
+                                $("#BatchDay_IsThursday").prop("checked", result.BatchDays[0].IsThursday);
+                                $("#BatchDay_IsFriday").prop("checked", result.BatchDays[0].IsFriday);
+                                $("#BatchDay_IsSaturday").prop("checked", result.BatchDays[0].IsSaturday);
+                                $("#BatchDay_IsSunday").prop("checked", result.BatchDays[0].IsSunday);
+                                $("#BatchDay_IsMonday").prop("checked", result.BatchDays[0].IsMonday);
+                                $("#txtBatchMonth").val(result.Month);
+                                $("#txtBatchStartDate").val(result.BatchStartDate);
+                                $("#txtBatchEndDate").val(result.BatchEndDate);
+                                $("#txtBatchAssessmentDate").val(result.AssessmentDate);
+                                $("#txtBatchStartTime")
+                                    .val(result.BatchStartTimeHours +
+                                        " : " +
+                                        result.BatchStartTimeMinutes +
+                                        " " +
+                                        result.BatchStartTimeSpan);
+                                $("#txtBatchEndTime").val(result.BatchEndTimeHours +
+                                    " : " +
+                                    result.BatchEndTimeMinutes +
+                                    " " +
+                                    result.BatchEndTimeSpan);
+                            });
                     },
                     async: true,
                     processData: false
                 });
             }
             $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly')
-                .click(function () {
+                .click(function() {
                     $('#downpayment').show();
                     $('#lumpsum').hide();
                 });
 
             $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum')
-                .click(function () {
+                .click(function() {
                     $('#downpayment').hide();
                     $('#lumpsum').show();
                 });
@@ -570,19 +626,19 @@
             opens: 'left',
             minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function () {
+            onSelect: function() {
                 selectedDate = moment().format('DD MMMM YYYY');
             },
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
-        jQuery(function () {
+        jQuery(function() {
             jQuery(".date").daterangepicker(daterangepickerOptions);
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                    function (ev, picker) {
+                    function(ev, picker) {
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
@@ -603,8 +659,13 @@
             var splt = str.split("");
             var rev = splt.reverse();
             var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
-            var twos = ['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
-            var tens = ['', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'];
+            var twos = [
+                'Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen',
+                ' Eighteen', ' Nineteen'
+            ];
+            var tens = [
+                '', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'
+            ];
 
             numLength = rev.length;
             var word = new Array();
@@ -612,91 +673,89 @@
 
             for (i = 0; i < numLength; i++) {
                 switch (i) {
+                case 0:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = '' + once[rev[i]];
+                    }
+                    word[j] = word[j];
+                    break;
 
-                    case 0:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        }
-                        else {
-                            word[j] = '' + once[rev[i]];
-                        }
-                        word[j] = word[j];
-                        break;
+                case 1:
+                    aboveTens();
+                    break;
 
-                    case 1:
-                        aboveTens();
-                        break;
+                case 2:
+                    if (rev[i] == 0) {
+                        word[j] = '';
+                    } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                        word[j] = once[rev[i]] + " Hundred ";
+                    } else {
+                        word[j] = once[rev[i]] + " Hundred and";
+                    }
+                    break;
 
-                    case 2:
-                        if (rev[i] == 0) {
-                            word[j] = '';
-                        }
-                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                            word[j] = once[rev[i]] + " Hundred ";
-                        }
-                        else {
-                            word[j] = once[rev[i]] + " Hundred and";
-                        }
-                        break;
-
-                    case 3:
-                        if (rev[i] == 0 || rev[i + 1] == 1) {
-                            word[j] = '';
-                        }
-                        else {
-                            word[j] = once[rev[i]];
-                        }
-                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                            word[j] = word[j] + " Thousand";
-                        }
-                        break;
+                case 3:
+                    if (rev[i] == 0 || rev[i + 1] == 1) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                        word[j] = word[j] + " Thousand";
+                    }
+                    break;
 
 
-                    case 4:
-                        aboveTens();
-                        break;
+                case 4:
+                    aboveTens();
+                    break;
 
-                    case 5:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        }
-                        else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Lakh";
-                        }
+                case 5:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        word[j] = word[j] + " Lakh";
+                    }
 
-                        break;
+                    break;
 
-                    case 6:
-                        aboveTens();
-                        break;
+                case 6:
+                    aboveTens();
+                    break;
 
-                    case 7:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        }
-                        else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Crore";
-                        }
-                        break;
+                case 7:
+                    if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                        word[j] = '';
+                    } else {
+                        word[j] = once[rev[i]];
+                    }
+                    if (rev[i + 1] !== '0' || rev[i] > '0') {
+                        word[j] = word[j] + " Crore";
+                    }
+                    break;
 
-                    case 8:
-                        aboveTens();
-                        break;
-                    default: break;
+                case 8:
+                    aboveTens();
+                    break;
+                default:
+                    break;
                 }
                 j++;
             }
 
             function aboveTens() {
-                if (rev[i] == 0) { word[j] = ''; }
-                else if (rev[i] == 1) { word[j] = twos[rev[i - 1]]; }
-                else { word[j] = tens[rev[i]]; }
+                if (rev[i] == 0) {
+                    word[j] = '';
+                } else if (rev[i] == 1) {
+                    word[j] = twos[rev[i - 1]];
+                } else {
+                    word[j] = tens[rev[i]];
+                }
             }
 
             word.reverse();
@@ -713,4 +772,4 @@
         //    });
 
     </script>
-}
+    }
