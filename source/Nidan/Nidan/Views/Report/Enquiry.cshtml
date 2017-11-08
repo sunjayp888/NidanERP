@@ -82,12 +82,6 @@
                     <p class="text-muted font-13 m-b-30">
                     </p>
                     <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                @Html.Partial("Pagination/_pagination")
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
@@ -97,6 +91,7 @@
                                             {
                                             <th>Centre</th>
                                             }
+                                            <th>Created By</th>
                                             <th>Candidate Name</th>
                                             <th>Contact No</th>
                                             <th>Enquiry Date</th>
@@ -109,14 +104,11 @@
                                             {
                                             <td><span ng-bind="report.Centre_Name"></span></td>
                                             }
+                                            <td><span ng-bind="report.CreatedByName"></span></td>
                                             <td><span ng-bind="report.CandidateName"></span></td>
                                             <td><span ng-bind="report.Mobile"></span></td>
-                                            @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                            @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
-                                            @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
                                             <td><span ng-bind="report.EnquiryDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>
-                                            @*<td><span ng-bind="enquiry.Close"></span></td>*@
                                         </tr>
                                     </tbody>
                                 </table>

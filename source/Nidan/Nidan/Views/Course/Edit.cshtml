@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.CourseViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.CourseViewModel
 
 @{
     ViewBag.Title = string.Format("Edit Course ({0})", Model.Course.Name);
@@ -25,6 +26,7 @@
                             </div>
 
                         }
+
                         @Html.HiddenFor(model => Model.Course.CourseId)
                         @Html.Partial("_Course", Model)
 
@@ -35,8 +37,12 @@
                                 </div>
                             </div>
                         </div>
-                        @Html.Partial("_CourseInstallmentList", Model)
-                        @Html.Partial("_SubjectList", Model)
+                        @if (User.IsInAnyRoles("SuperAdmin"))
+                        {
+                            @Html.Partial("_CourseInstallmentList", Model)
+                            @Html.Partial("_SubjectList", Model)
+                        }
+
                     </div>
                 }
             </div>

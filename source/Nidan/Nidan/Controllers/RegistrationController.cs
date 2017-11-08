@@ -97,7 +97,7 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e => e.CourseInstallment).ToList();
             var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, registration.EnquiryId);
@@ -114,7 +114,6 @@ namespace Nidan.Controllers
                 CounsellingCourse = new SelectList(counsellingCourse, "CourseId", "Name"),
                 Enquiry = enquiry
             };
-
             return View(viewModel);
         }
 

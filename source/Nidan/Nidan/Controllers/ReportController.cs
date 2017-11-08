@@ -186,7 +186,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId,orderBy,paging);
+            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -296,11 +296,7 @@ namespace Nidan.Controllers
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
-            var data =
-                NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId,
-                    p =>
-                        (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate >= fromDate &&
-                        p.FollowUpDate <= toDate).Items.ToList();
+            var data = NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate >= fromDate && p.FollowUpDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FollowUpReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
@@ -437,10 +433,10 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult CentrePettyCashList(int centreId,Paging paging, List<OrderBy> orderBy)
+        public ActionResult CentrePettyCashList(int centreId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId,p => (isSuperAdmin && p.CentreId == centreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId, p => (isSuperAdmin && p.CentreId == centreId), orderBy, paging);
             return this.JsonNet(data);
         }
     }
