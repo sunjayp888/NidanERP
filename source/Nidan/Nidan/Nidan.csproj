@@ -1707,6 +1707,7 @@
     <Content Include="Views\Enquiry\TodaysEnquiry.cshtml" />
     <Content Include="Views\Mobilization\TodaysMobilization.cshtml" />
     <Content Include="Views\Registration\TodaysRegistration.cshtml" />
+    <Content Include="Views\Report\FeeSummaryByDate.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
