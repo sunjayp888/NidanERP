@@ -22,8 +22,11 @@
             searchFixAssetByDate: searchFixAssetByDate,
             searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
+            searchBankDepositeReportBydate: searchBankDepositeReportBydate,
             searchMobilizationCountReportByMonth: searchMobilizationCountReportByMonth,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
+            searchBankDepositeReportByMonthAndYear: searchBankDepositeReportByMonthAndYear,
+            searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
             downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
             downloadMobilizationCSVByDate: downloadMobilizationCSVByDate,
             downloadFollowUpCSVByDate: downloadFollowUpCSVByDate,
@@ -38,6 +41,7 @@
             downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
             downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate,
             retrieveCandidateFeeByDate: retrieveCandidateFeeByDate,
+            retrieveBankDepositeByDate:retrieveBankDepositeByDate,
             retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
             retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
             retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
@@ -175,6 +179,17 @@
             return $http.post(url, data);
         }
 
+        function searchBankDepositeReportBydate(centreId, fromMonth, fromYear) {
+            var url = "/Report/BankDepositeReportBydate",
+                data = {
+                    centreId: centreId,
+                    month: fromMonth,
+                    year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
         function searchMobilizationCountReportByMonth() {
             var url = "/Report/MobilizationCountReportByCurrentMonth",
                 data = {
@@ -191,6 +206,27 @@
                     year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
+            var url = "/Report/BankDepositeReportByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    year: fromYear,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonth() {
+            var url = "/Report/TotalBankDepositeReportByCurrentMonth",
+                data = {
+
                 };
 
             return $http.post(url, data);
@@ -322,6 +358,16 @@
 
         function retrieveCandidateFeeByDate(centreId, date) {
             var url = "/Report/CentreCandidateFeeSummaryReportByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveBankDepositeByDate(centreId, date) {
+            var url = "/Report/CentreBankDepositeReportByDate",
                 data = {
                     centreId: centreId,
                     date: date

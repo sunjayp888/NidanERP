@@ -61,6 +61,7 @@ namespace Nidan.Entity
             BatchPlannerDays=new HashSet<BatchPlannerDay>();
             CentreProductSettings=new HashSet<CentreProductSetting>();
             CentreFixAssets = new HashSet<CentreFixAsset>();
+            BankDeposites = new HashSet<BankDeposite>();
         }
 
         public int CentreId { get; set; }
@@ -250,5 +251,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreFixAsset> CentreFixAssets { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BankDeposite> BankDeposites { get; set; }
     }
 }
