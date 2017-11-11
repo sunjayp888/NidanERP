@@ -35,7 +35,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string LastName { get; set; }
 
-        [Required]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
 
@@ -69,8 +68,7 @@ namespace Nidan.Entity
 
         public int DistrictId { get; set; }
 
-        [Required]
-        [RegularExpression(@"^\d{6,}$", ErrorMessage = "Not a valid Pin Code")]
+        //[RegularExpression(@"^\d{6,}$", ErrorMessage = "Not a valid Pin Code")]
         public int PinCode { get; set; }
 
         [StringLength(500)]

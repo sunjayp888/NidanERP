@@ -147,6 +147,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<FollowUpHistoryData> FollowUpHistoryDatas { get; set; }
         public virtual DbSet<AvailablePettyCashGrid> AvailablePettyCashGrids { get; set; }
+        public virtual DbSet<BankDeposite> BankDeposites { get; set; }
+        public virtual DbSet<BankDepositeSearchField> BankDepositeSearchFields { get; set; }
+        public virtual DbSet<BankDepositeCentreReportMonthWise> BankDepositeCentreReportMonthWises { get; set; }
+        public virtual DbSet<BankDepositeCentreReport> BankDepositeCentreReports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2209,6 +2213,74 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<FollowUpDataGrid>()
                 .Property(e => e.ClosingRemarks)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ReceivedFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.RupeesInWords)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.Project)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ReceivedFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReportMonthWise>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReportMonthWise>()
+                .Property(e => e.TotalBankDepositeAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<BankDepositeCentreReport>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReport>()
+                .Property(e => e.TotalBankDeposite)
+                .HasPrecision(38, 2);
 
             base.OnModelCreating(modelBuilder);
         }
