@@ -3,7 +3,7 @@
     ViewBag.Title = "Expense";
 }
 
-<div ng-controller="ExpenseController as model" ng-init="model.initialise()">
+<div ng-controller="ExpenseController as model" ng-init="model.retrieveCentres()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -34,12 +34,14 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-                @*<div class="x_title">
-                        <h2>
-                            Rooms<small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>*@
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <select class="form-control col-md-7 col-xs-12" ng-model="item">
+                            @*<option value="0">Select Centre</option>*@
+                            <option data-ng-repeat="expense in model.expenses" value="{{expense.CentreId}}">{{expense.Name}}</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="x_content">
                     <p class="text-muted font-13 m-b-30">
                     </p>

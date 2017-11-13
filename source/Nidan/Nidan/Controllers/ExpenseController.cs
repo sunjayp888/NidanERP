@@ -224,5 +224,13 @@ namespace Nidan.Controllers
             var result = totalMonthlyExpenseByExpenseHeader >= 2000;
             return result;
         }
+
+        [HttpPost]
+        public ActionResult GetCentres()
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            return this.JsonNet(data);
+        }
     }
 }
