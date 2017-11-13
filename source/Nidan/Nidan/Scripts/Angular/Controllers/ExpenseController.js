@@ -21,7 +21,7 @@
         vm.deleteExpense = deleteExpense;
         vm.searchExpense = searchExpense;
         vm.viewExpense = viewExpense;
-        //vm.addExpense = addExpense;
+        vm.retrieveCentres = retrieveCentres;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveExpensesByCashMemo = retrieveExpensesByCashMemo;
@@ -106,6 +106,16 @@
 
         function viewExpense(cashMemo) {
             $window.location.href = "/Expense/Create/" + cashMemo;
+        }
+
+        function retrieveCentres() {
+            //vm.orderBy.property = "CentreId";
+            //vm.orderBy.direction = "Descending";
+            //vm.orderBy.class = "desc";
+            return ExpenseService.retrieveCentres().then(function (response) {
+                vm.expenses = response.data;
+                return vm.expenses;
+            });
         }
 
         function deleteExpense(centreId, expenseId, cashMemo) {
