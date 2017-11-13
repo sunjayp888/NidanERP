@@ -36,10 +36,10 @@
         vm.testcalender = testcalender;
 
         function initialise() {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ExpenseGeneratedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
-            order("CreatedDate");
+            order("ExpenseGeneratedDate");
             alert(isExpenseLimitExceed);
         }
 

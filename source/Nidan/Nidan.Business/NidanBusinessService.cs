@@ -3351,6 +3351,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveSummaryReports(organisationId, centreId, predicate, orderBy, paging);
         }
 
+        public PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveExpenseHeadLimits(organisationId, centreId, predicate, orderBy, paging);
+        }
+
         public IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
             var centres = RetrieveCentres(organisationId, e => true);
