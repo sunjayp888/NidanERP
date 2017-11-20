@@ -9,6 +9,7 @@ namespace Nidan.Models
     public class ReportViewModel : BaseViewModel
     {
         public SelectList Centres { get; set; }
+        public SelectList AssetClasses { get; set; }
         public string FromMonth { get; set; }
         public string ToMonth { get; set; }
         public IEnumerable<SelectListItem> MonthList { get; set; }

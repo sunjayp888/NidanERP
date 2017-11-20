@@ -46,13 +46,10 @@ namespace Nidan.Entity
 
         public int? NumberOfInstallment { get; set; }
 
-        [Key]
-        [Column(Order = 7)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CentreId { get; set; }
+        public int? CentreId { get; set; }
 
         [Key]
-        [Column(Order = 8, TypeName = "date")]
+        [Column(Order = 7, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [StringLength(1530)]

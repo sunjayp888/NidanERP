@@ -19,6 +19,8 @@
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
             searchExpenseByDate: searchExpenseByDate,
+            searchFixAssetByCentreIdAssetClassId: searchFixAssetByCentreIdAssetClassId,
+            searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
             downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
@@ -28,8 +30,12 @@
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
             downloadExpenseCSVByDate: downloadExpenseCSVByDate,
+            downloadFixAssetByCentreIdAssetClassId: downloadFixAssetByCentreIdAssetClassId,
+            downloadStockCSVByDate: downloadStockCSVByDate,
             totalSumOfCountByMonth: totalSumOfCountByMonth,
-            totalSumOfCountByDate: totalSumOfCountByDate
+            totalSumOfCountByDate: totalSumOfCountByDate,
+            downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
+            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate
         };
 
         return service;
@@ -57,16 +63,17 @@
             return $http.post(url, data);
         }
 
-        //function retrieveMobilizationReports(Paging, OrderBy) {
+        function searchStockByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/searchStockByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
-        //    var url = "/Report/MobilizationList",
-        //        data = {
-        //            paging: Paging,
-        //            orderBy: new Array(OrderBy)
-        //        };
-
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         function searchMobilizationByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchMobilizationByDate",
@@ -80,16 +87,17 @@
             return $http.post(url, data);
         }
 
-        //function retrieveFollowUpReports(Paging, OrderBy) {
+        function searchFixAssetByCentreIdAssetClassId(assetClassId, centreId, Paging, OrderBy) {
+            var url = "/Report/FixAssetByCentreIdAssetClassId",
+                data = {
+                    assetClassId: assetClassId,
+                    centreId: centreId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
-        //    var url = "/Report/FollowUpList",
-        //        data = {
-        //            paging: Paging,
-        //            orderBy: new Array(OrderBy)
-        //        };
-
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         function searchFollowUpByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchFollowUpByDate",
@@ -151,27 +159,22 @@
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear, Paging, OrderBy) {
+        function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
             var url = "/Report/MobilizationCountReportBydate",
                 data = {
                     centreId: centreId,
                     month: fromMonth,
-                    year: fromYear,
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
+                    year: fromYear
                 };
 
             return $http.post(url, data);
         }
 
-        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, Paging, OrderBy) {
+        function searchMobilizationCountReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
             var url = "/Report/MobilizationCountReportByMonthAndYear",
                 data = {
                     centreId: centreId,
-                    fromMonth: fromMonth,
-                    toMonth: toMonth,
-                    fromYear: fromYear,
-                    toYear: toYear,
+                    year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -238,6 +241,45 @@
                 data = {
                     fromDate: fromDate,
                     toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadFixAssetByCentreIdAssetClassId(assetClassId, centreId) {
+            var url = "/Report/DownloadFixAssetByCentreIdAssetClassId",
+                data = {
+                    assetClassId: assetClassId,
+                    centreId: centreId,
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadStockCSVByDate(fromDate, toDate) {
+            var url = "/Report/DownloadStockCSVByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear) {
+            var url = "/Report/DownloadMobilizationCountReportCSVByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    fromYear: fromYear,
+                };
+            return $http.post(url, data);
+        }
+
+        function downloadMobilizationCountReportCSVByDate(centreId, month, year) {
+            var url = "/Report/DownloadMobilizationCountReportCSVByDate",
+                data = {
+                    centreId: centreId,
+                    month: month,
+                    year: year
                 };
             return $http.post(url, data);
         }

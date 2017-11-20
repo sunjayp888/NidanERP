@@ -35,16 +35,18 @@
         vm.allItemsSelected = false;
         vm.selectEntity = selectEntity;
         vm.markAttendance = markAttendance;
+        vm.getBiometricData = getBiometricData;
         vm.MarkDate;
         vm.fromDate;
         vm.toDate;
         vm.batchId;
 
         function initialise() {
-            vm.orderBy.property = "StudentCode";
+            vm.orderBy.property = "AttendanceDate";
             vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "desc";
-            order("StudentCode");
+            vm.orderBy.class = "asc";
+            retrieveBatches();
+            retrieveBatchAttendances();
         }
 
         function selectAll() {
@@ -100,7 +102,22 @@
             vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type,vm.MarkDate, vm.paging, vm.orderBy)
+            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.MarkDate, vm.paging, vm.orderBy)
+                    .then(function (response) {
+                        vm.batchAttendances = response.data;
+                        vm.paging.totalPages = response.data.TotalPages;
+                        vm.paging.totalResults = response.data.TotalResults;
+                        return vm.batchAttendances;
+                    });
+        }
+
+        function getBiometricData() {
+            vm.orderBy.property = "StudentCode";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.batchId = $("#BatchAttendance_BatchId").val();
+            vm.attendanceDate = $("#BatchAttendance_Attendance_AttendanceDate").val();
+            return BatchAttendanceService.getBiometricData(vm.batchId, vm.attendanceDate, vm.paging, vm.orderBy)
                     .then(function (response) {
                         vm.batchAttendances = response.data.Items;
                         vm.paging.totalPages = response.data.TotalPages;
@@ -109,20 +126,6 @@
                     });
         }
 
-        function retrieveSyncData(batchId) {
-            vm.orderBy.property = "StudentCode";
-            vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "asc";
-            vm.batchId = $('#BatchAttendance_BatchId').val();
-            return BatchAttendanceService.retrieveSyncData(vm.batchId, vm.paging, vm.orderBy)
-                    .then(function (response) {
-                        vm.batchAttendances = response.data.Items;
-                        vm.paging.totalPages = response.data.TotalPages;
-                        vm.paging.totalResults = response.data.TotalResults;
-                        return vm.batchAttendances;
-                    });
-        }
-      
         function pageChanged() {
             vm.fromDate = $("#fromDate").val();
             vm.toDate = $("#toDate").val();
@@ -130,11 +133,11 @@
             if (path[2] == "BatchAttendance") {
                 searchBatchAttendanceByDate(fromDate, toDate, batchId);
             }
-            if (path[3] == "Create" ) {
+            if (path[3] == "Create") {
                 retrieveBatchAttendancesByBatchId();
             }
-            
-             
+
+
         }
 
         function order(property) {
@@ -190,9 +193,25 @@
         };
 
         function markAttendance() {
+            var inTimeSpan = $('#rbBatchAttendanceInTimeSpanAM').is(':checked') ? $('#rbBatchAttendanceInTimeSpanAM').val() : $('#rbBatchAttendanceInTimeSpanPM').val();
+            var outTimeSpan = $('#rbBatchAttendanceOutTimeSpanAM').is(':checked') ? $('#rbBatchAttendanceOutTimeSpanAM').val() : $('#rbBatchAttendanceOutTimeSpanPM').val();
+            for (var i = 0; i < vm.batchAttendances.length; i++) {
+                if (vm.batchAttendances[i].IsPresent) {
+                    vm.batchAttendances[i].InHour = $("#BatchAttendance_Attendance_InHour").val();
+                    vm.batchAttendances[i].InMinute = $("#BatchAttendance_Attendance_InMinute").val();
+                    vm.batchAttendances[i].InTimeSpan = inTimeSpan;
+                    vm.batchAttendances[i].OutHour = $("#BatchAttendance_Attendance_OutHour").val();
+                    vm.batchAttendances[i].OutMinute = $("#BatchAttendance_Attendance_OutMinute").val();
+                    vm.batchAttendances[i].OutTimeSpan = outTimeSpan;
+                    vm.batchAttendances[i].AttendanceDate = $("#BatchAttendance_Attendance_AttendanceDate").val();
+                    vm.batchAttendances[i].Topic = $("#BatchAttendance_Topic").val();
+                    vm.allItemsSelected = false;
+                }
+            }
             var subjectId = $("#BatchAttendance_SubjectId").val();
-            var sessionId = $("#BatchAttendance_SessionId").val();
-            return BatchAttendanceService.markAttendance(subjectId, sessionId,vm.batchAttendances).then(function (response) {
+            var sessionId = $("#BatchAttendance_SubjectId").val();
+            var batchId = $("#BatchAttendance_BatchId").val();
+            return BatchAttendanceService.markAttendance(batchId, subjectId, sessionId, vm.batchAttendances).then(function (response) {
                 vm.batches = response.data.Items;
                 return vm.batches;
             });

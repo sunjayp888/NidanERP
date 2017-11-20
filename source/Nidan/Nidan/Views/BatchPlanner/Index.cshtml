@@ -1,0 +1,127 @@
+﻿@using Nidan.Extensions
+
+@{
+    ViewBag.Title = "Batch Planner";
+}
+
+<div ng-controller="BatchPlannerController as model">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Batch Planner <small></small>
+            </h3>
+        </div>
+    </div>
+
+    @if (User.IsInAnyRoles("SuperAdmin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "BatchPlanner")">
+                    <i class="fa fa-group"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Batch Planner<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Class Room</th>
+                                            <th>Timing</th>
+                                            @*<th>SlotType</th>*@
+                                            <th>Course</th>
+                                            <th>Max Candidates</th>
+                                            <th>Min Candidates</th>
+                                            <th>Monthly Inst.</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Inst. Duration</th>
+                                            <th>Duration Of Batch Slot</th>
+                                            <th>Number Of Batch</th>
+                                            <th>Number Of Candidate Engaged</th>
+                                            <th>Minimum Revenue</th>
+                                            <th>Trainer</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="batchPlanner in model.batchPlanners" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBatchPlanner(batchPlanner.BatchPlannerId)">
+                                            <td><span ng-bind="batchPlanner.ClassRoomName"></span></td>
+                                            <td>
+                                                <span ng-bind="batchPlanner.StartTimeHours"></span>
+                                                @*:<span ng-bind="batchPlanner.StartTimeMinutes"></span>
+                                                <span ng-bind="batchPlanner.StartTimeSpan"></span>*@-
+                                                <span ng-bind="batchPlanner.EndTimeHours"></span>
+                                                @*:<span ng-bind="batchPlanner.EndTimeMinutes"></span>
+                                                <span ng-bind="batchPlanner.EndTimeSpan"></span>*@
+                                            </td>
+                                            @*<td><span ng-bind="batchPlanner.SlotType"></span></td>*@
+                                            <td><span ng-bind="batchPlanner.Course"></span></td>
+                                            <td><span ng-bind="batchPlanner.MaximumCandidate"></span></td>
+                                            <td><span ng-bind="batchPlanner.MinimumCandidate"></span></td>
+                                            <td><span ng-bind="batchPlanner.MonthlyInstallment"></span></td>
+                                            <td><span ng-bind="batchPlanner.BatchStartDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="batchPlanner.BatchEndDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="batchPlanner.InstallmentDuration"></span></td>
+                                            <td><span ng-bind="batchPlanner.DurationOfBatchSlot"></span></td>
+                                            <td><span ng-bind="batchPlanner.NumberOfBatch"></span></td>
+                                            <td><span ng-bind="batchPlanner.NumberOfCandidateEngaged"></span></td>
+                                            <td><span ng-bind="batchPlanner.MinimumRevenue"></span></td>
+                                            <td><span ng-bind="batchPlanner.Trainer"></span></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/BatchPlanner/View/{{batchPlanner.BatchPlannerId}}">
+                                                                View
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/BatchPlanner/Edit/{{batchPlanner.BatchPlannerId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

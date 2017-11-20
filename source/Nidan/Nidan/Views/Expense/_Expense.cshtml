@@ -1,0 +1,67 @@
+﻿@model Nidan.Models.ExpenseViewModel
+
+<div class="form-control-required-example"> = Required</div>
+<br />
+<br />
+<div ng-controller="ProjectController as model">
+    <div class="form-group">
+        @Html.Label("Project", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div id="divproject" class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" id="@Html.IdFor(model => model.SelectedProjectIdsJson)" name="@Html.NameFor(model => model.SelectedProjectIdsJson)" ng-init="model.selectedProjects = @Model.SelectedProjectIdsJson" value="{{model.selectedProjects}}" />
+            <ui-select multiple tagging ng-model="model.selectedProjects" on-remove="model.deleteExpenseProject(@Model.Expense.ExpenseId,$item)" class="form-control" ng-change="model.filterSelected()" style="width: 100%" ng-disabled="model.projects.length <=0">
+                <ui-select-match placeholder="Select Projects"> <span ng-bind-html="$item.Name"></span></ui-select-match>
+                <ui-select-choices repeat="project.ProjectId as project in model.projects | filter:$select.search">
+                    <span ng-bind-html="project.Name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.ExpenseHeaderId, "Expense Head", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Expense.ExpenseHeaderId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.CashMemoNumbers, "Cash Memo Numbers", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Expense.CashMemoNumbers, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Expense.CashMemoNumbers, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.DebitAmount, "Debit Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12"})
+        @Html.ValidationMessageFor(model => model.Expense.DebitAmount, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.RupeesInWord, "Rupees In Word", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Expense.RupeesInWord, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+        @Html.ValidationMessageFor(model => model.Expense.RupeesInWord, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.PaidTo, "Paid To", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Expense.PaidTo, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Expense.PaidTo, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Expense.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.EditorFor(model => model.Expense.Particulars, new { @class = "form-control col-md-7 col-xs-12 multi-line-text-area required" })
+        @Html.ValidationMessageFor(model => model.Expense.Particulars, "", new { @class = "help-block" })
+    </div>
+</div>

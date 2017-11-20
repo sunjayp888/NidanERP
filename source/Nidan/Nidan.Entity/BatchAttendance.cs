@@ -11,10 +11,8 @@ namespace Nidan.Entity
     {
         public int BatchAttendanceId { get; set; }
 
-        [Required]
         public int BatchId { get; set; }
 
-        [Required]
         public int AttendanceId { get; set; }
 
         [Required]
@@ -23,44 +21,35 @@ namespace Nidan.Entity
         [Required]
         public int SessionId { get; set; }
 
-        [Required]
         [StringLength(500)]
         public string Topic { get; set; }
 
-        [Required]
-        public int BatchTrainerId { get; set; }
+        public int? BatchTrainerId { get; set; }
 
         [Required]
         [StringLength(100)]
         public string StudentCode { get; set; }
 
-        [Required]
-        public DateTime CreatedDate { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
-
-        [Required]
         public int CentreId { get; set; }
 
-        [Required]
         public int OrganisationId { get; set; }
+
+        public int CreatedBy { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }
 
-        public virtual Personnel Personnel { get; set; }
-
         public virtual BatchTrainer BatchTrainer { get; set; }
-
-        public virtual Session Session { get; set; }
-
-        public virtual Subject Subject { get; set; }
 
         public virtual Attendance Attendance { get; set; }
 
         public virtual Batch Batch { get; set; }
+
+        public virtual Session Session { get; set; }
+
+        public virtual Subject Subject { get; set; }
     }
 }

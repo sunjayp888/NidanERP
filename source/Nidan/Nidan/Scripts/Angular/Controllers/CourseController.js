@@ -53,11 +53,12 @@
         }
 
         function retrieveCourseBySectorId() {
-            return CourseService.retrieveCourseBySectorId(vm.type).then(function (response) {
-                vm.courses = response.data;
-                $('#Enquiry_SectorId option').eq(vm.type).prop('selected', true);
-                return vm.courses;
-            });
+            var selectedSectorId = $('#Enquiry_SectorId').val();
+                return CourseService.retrieveCourseBySectorId(vm.type).then(function(response) {
+                    vm.courses = response.data;
+                    $('#Enquiry_SectorId option').eq(selectedSectorId).prop('selected', true);
+                    return vm.courses;
+                });
         }
 
         function searchCourse(searchKeyword) {
@@ -73,7 +74,11 @@
         }
 
         function pageChanged() {
-            return retrieveCourses();
+            if (vm.searchKeyword) {
+                searchCourse(vm.searchKeyword);
+            } else {
+                return retrieveCourses();
+            }
         }
 
         function order(property) {
@@ -125,7 +130,10 @@
 
         function setDefaultSector(id) {
             vm.type = id;
-            retrieveCourseBySectorId();
+          //  $('#Enquiry_SectorId option').eq(id).prop('selected', true);
+            if (vm.type != 0) {
+                retrieveCourseBySectorId();
+            }
         }
     }
 

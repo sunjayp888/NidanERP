@@ -58,6 +58,9 @@
         function searchRegistrationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.orderBy.property = "RegistrationDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
             return RegistrationService.searchRegistrationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.Registrations = response.data.Items;
@@ -69,6 +72,9 @@
         }
 
         function searchRegistration(searchKeyword) {
+            vm.orderBy.property = "RegistrationDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
             vm.searchKeyword = searchKeyword;
             return RegistrationService.searchRegistration(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
@@ -93,7 +99,13 @@
         }
 
         function pageChanged() {
-            return retrieveRegistrations();
+            if (vm.searchKeyword) {
+                searchRegistration(vm.searchKeyword);
+            } else if (vm.fromDate && vm.toDate) {
+                searchRegistrationByDate(vm.fromDate, vm.toDate);
+            } else {
+                return retrieveRegistrations();
+            }
         }
 
         function order(property) {

@@ -67,7 +67,13 @@
         }
 
         function pageChanged() {
-            return retrieveAttendances();
+            if (vm.searchKeyword) {
+                searchAttendance(vm.searchKeyword);
+            } else if (vm.fromDate && vm.toDate) {
+                searchAttendanceByDate(vm.fromDate, vm.toDate);
+            } else {
+                return retrieveAttendances();
+            }
         }
 
         function order(property) {

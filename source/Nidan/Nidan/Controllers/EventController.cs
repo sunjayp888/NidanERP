@@ -52,7 +52,7 @@ namespace Nidan.Controllers
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
                 eventViewModel.Event.CentreId = UserCentreId;
                 eventViewModel.Event.CreatedDateTime = _today;
-                eventViewModel.Event= NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
+                eventViewModel.Event = NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
             return View(eventViewModel);
@@ -102,16 +102,36 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult BrainstormingList(Paging paging, List<OrderBy> orderBy )
+        public ActionResult EventBrainStormingList(int eventId)
         {
-            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true, orderBy, paging);
+            var organisationId = UserOrganisationId;
+            var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
+            var brainStormingList = _nidanBusinessService.RetrieveEventBrainStormingGrid(UserOrganisationId, e => e.CentreId == eventResult.CentreId && e.EventId == eventId);
+            if (brainStormingList.Items.Any())
+                return this.JsonNet(brainStormingList);
+            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult BrainStorm()
+        public ActionResult BrainStormingQuestion()
         {
-            return null;
+            var organisationId = UserOrganisationId;
+            var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
+            return this.JsonNet(data);
         }
+
+
+        //public ActionResult BrainStorm()
+        //{
+        //    return null;
+        //}
+
+        public PartialViewResult BrainStorm()
+        {
+            return PartialView("_BrainStorming");
+        }
+
+
     }
 }

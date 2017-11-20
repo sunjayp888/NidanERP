@@ -13,6 +13,8 @@
         vm.totalSumOfCountReportsByMonth = [];
         vm.totalSumOfCountReportsByDate = [];
         vm.reports = [];
+        vm.centreId;
+        vm.assetClassId;
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -32,8 +34,10 @@
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.searchCounsellingByDate = searchCounsellingByDate;
         vm.searchExpenseByDate = searchExpenseByDate;
+        vm.searchStockByDate = searchStockByDate;
         vm.searchMobilizationCountReportBydate = searchMobilizationCountReportBydate;
         vm.searchMobilizationCountReportByMonthAndYear = searchMobilizationCountReportByMonthAndYear;
+        vm.searchFixAssetByCentreIdAssetClassId = searchFixAssetByCentreIdAssetClassId;
         vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
         vm.downloadMobilizationCSVByDate = downloadMobilizationCSVByDate;
         vm.downloadFollowUpCSVByDate = downloadFollowUpCSVByDate;
@@ -41,8 +45,14 @@
         vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
         vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
         vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
+        vm.downloadFixAssetByCentreIdAssetClassId = downloadFixAssetByCentreIdAssetClassId;
+        vm.downloadStockCSVByDate = downloadStockCSVByDate;
         vm.totalSumOfCountByMonth = totalSumOfCountByMonth;
         vm.totalSumOfCountByDate = totalSumOfCountByDate;
+        vm.downloadMobilizationCountReportCSVByMonthAndYear = downloadMobilizationCountReportCSVByMonthAndYear;
+        vm.downloadMobilizationCountReportCSVByDate = downloadMobilizationCountReportCSVByDate;
+        vm.viewMobilizationReportByDate = viewMobilizationReportByDate;
+
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -51,16 +61,22 @@
             order("ReportId");
         }
 
-        //function retrieveEnquiryReports() {
-        //    return ReportService.retrieveEnquiryReports(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.reports = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.reports;
-        //        });
-        //}
-
+        function searchFixAssetByCentreIdAssetClassId(assetClassId, centreId) {
+            vm.assetClassId = assetClassId;
+            vm.centreId = centreId;
+            vm.orderBy.property = "fixAssetMappingId";
+            vm.orderBy.class = "asc";
+            order("fixAssetMappingId");
+            return ReportService.searchFixAssetByCentreIdAssetClassId(vm.assetClassId, vm.centreId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+        
         function searchEnquiryByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
@@ -76,16 +92,6 @@
                     return vm.reports;
                 });
         }
-
-        //function retrieveMobilizationReports() {
-        //    return ReportService.retrieveMobilizationReports(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.reports = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.reports;
-        //        });
-        //}
 
         function searchMobilizationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
@@ -145,17 +151,21 @@
                 });
         }
 
-        //function searchReport(searchKeyword) {
-        //    vm.searchKeyword = searchKeyword;
-        //    return ReportService.searchReport(vm.searchKeyword, vm.paging, vm.orderBy)
-        //      .then(function (response) {
-        //          vm.reports = response.data.Items;
-        //          vm.paging.totalPages = response.data.TotalPages;
-        //          vm.paging.totalResults = response.data.TotalResults;
-        //          vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-        //          return vm.reports;
-        //      });
-        //}
+        function searchStockByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "StockPurchaseDate";
+            vm.orderBy.class = "asc";
+            order("StockPurchaseDate");
+            return ReportService.searchStockByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
 
         function searchRegistrationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
@@ -206,37 +216,31 @@
         }
 
         function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
-            vm.centreId = centreId;
-            vm.fromMonth = fromMonth;
-            vm.fromYear = fromYear;
-            vm.orderBy.property = "Date";
-            vm.orderBy.class = "asc";
-            //order("Date");
-            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear, vm.paging, vm.orderBy)
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.fromMonth = fromMonth == undefined ? getUrlParameter("month") : fromMonth;
+            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
+
+            return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear)
                 .then(function (response) {
-                    vm.reports = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    totalSumOfCountByDate(centreId, fromMonth, fromYear);
+                    // totalSumOfCountByDate(centreId, fromMonth, fromYear);
+                    $('#CentreId').val(vm.centreId);
+                    $('#FromMonth').val(vm.fromMonth);
+                    $('#FromYear').val(vm.fromYear);
                     return vm.reports;
                 });
         }
 
-        function searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear) {
+        function searchMobilizationCountReportByMonthAndYear(centreId,fromYear) {
             vm.centreId = centreId;
-            vm.fromMonth = fromMonth;
-            vm.toMonth = toMonth;
             vm.fromYear = fromYear;
-            vm.toYear = toYear;
             vm.orderBy.property = "Month";
             vm.orderBy.class = "asc";
             order("Month");
-            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId, fromMonth, toMonth, fromYear, toYear, vm.paging, vm.orderBy)
+            return ReportService.searchMobilizationCountReportByMonthAndYear(centreId,fromYear, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.reports = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
                     totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear);
                     return vm.reports;
@@ -245,6 +249,7 @@
 
         function pageChanged() {
             vm.centreId = $("#CentreId").val();
+            vm.assetClassId = $("#AssetClassId").val();
             vm.fromDate = $("#fromDate").val();
             vm.toDate = $("#toDate").val();
             vm.fromMonth = $("#FromMonth").val();
@@ -276,10 +281,13 @@
             if (path[2] == "MobilizationProcessReportByMonth") {
                 searchMobilizationCountReportByMonthAndYear(vm.centreId, vm.fromMonth, vm.toMonth, vm.fromYear, vm.toYear);
             }
+            if (path[2] == "FixAssetByCentreIdAssetClassId") {
+                searchFixAssetByCentreIdAssetClassId(vm.centreId, vm.assetClassId);
+            }
         }
 
-        function downloadEnquiryCSVByDate(fromDate, toDate) {
-            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
+        function downloadFixAssetByCentreIdAssetClassId(centreId, assetClassId) {
+            return ReportService.downloadFixAssetByCentreIdAssetClassId(centreId, assetClassId);
         }
 
         function downloadMobilizationCSVByDate(fromDate, toDate) {
@@ -306,6 +314,22 @@
             return ReportService.downloadExpenseCSVByDate(fromDate, toDate);
         }
 
+        function downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear) {
+            return ReportService.downloadMobilizationCountReportCSVByMonthAndYear(centreId,fromYear);
+        }
+
+        function downloadMobilizationCountReportCSVByDate(centreId, month, year) {
+            return ReportService.downloadMobilizationCountReportCSVByDate(centreId, month, year);
+        }
+
+        function downloadEnquiryCSVByDate(fromDate, toDate) {
+            return ReportService.downloadEnquiryCSVByDate(fromDate, toDate);
+        }
+
+        function downloadStockCSVByDate(fromDate, toDate) {
+            return ReportService.downloadStockCSVByDate(fromDate, toDate);
+        }
+
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
         }
@@ -326,6 +350,25 @@
                 vm.totalSumOfCountReportsByDate = response.data;
                 return vm.totalSumOfCountReportsByDate;
             });
+        }
+
+        function viewMobilizationReportByDate(centreId, fromMonth, fromYear) {
+            window.location.href = "/Report/MobilizationProcessReportByDate?centreId=" +centreId + "&month=" + fromMonth + "&year=" + fromYear;
+        }
+
+       function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
         }
     }
 

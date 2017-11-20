@@ -33,7 +33,6 @@
                                 <div class="form-group">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-success">Submit</button>
-                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#trainerDocumentModal">Upload Document</button>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +41,7 @@
                 </div>
             </div>
         </div>
-        <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Trainer.TrainerId.ToString())">
+        <div ng-controller="TrainerDocumentController as model" ng-init="model.initialise(@Model.Trainer.TrainerId.ToString())">
             @Html.Partial("_TrainerDocument")
         </div>
     </div>
@@ -54,7 +53,19 @@
 </div>
 @section scripts {
     <script>
-
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
         jQuery(function () {
             if (!$('#Trainer_Certified').is(':checked')) {
                 $('.trainer-certification-textbox').hide();

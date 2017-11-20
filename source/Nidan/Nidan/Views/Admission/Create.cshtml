@@ -39,6 +39,7 @@
                             @Html.HiddenFor(m => m.Registration.Enquiry.LastName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.MiddleName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.FirstName)
+                            @Html.HiddenFor(m => m.Registration.Enquiry.GuardianName)
                             @Html.HiddenFor(m => m.Registration.Enquiry.Mobile)
                             @Html.HiddenFor(m => m.Registration.Enquiry.Title)
                             @Html.HiddenFor(m => m.Registration.Enquiry.EmailId)
@@ -366,7 +367,6 @@
                             <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                 <div class="form-group">
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#admissionDocumentModal">Upload Document</button>
                                         <button id="admissionSubmit" type="submit" class="btn btn-success" ng-disabled="isDisabled" ng-click="model.disableButton()">Submit</button>
                                     </div>
                                 </div>
@@ -379,7 +379,7 @@
     </div>
 </div>
 
-<div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Admission.Registration.StudentCode)">
+<div ng-controller="StudentAdmissionDocumentController as model" ng-init="model.initialise(@Model.Admission.Registration.StudentCode)">
     @Html.Partial("_AdmissionDocument")
 </div>
 
@@ -390,6 +390,19 @@
 </div>
 @section scripts{
     <script>
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
         //---------------- Admission Cash/Cheque ----------------
         $('#downpayment').hide();
         $('#lumpsum').hide();
@@ -542,9 +555,9 @@
             $('#BatchStartDate').val(moment().format('DD MMMM YYYY'));
             $(".generated .date")
                 .on('apply.daterangepicker',
-                function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
         });
 
         ////================================================================== Calculation Sum Of Rupees

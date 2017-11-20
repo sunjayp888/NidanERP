@@ -61,7 +61,13 @@
                 upcomingFollowUp();
             }
             else {
-                retrieveFollowUps();
+                if (vm.searchKeyword) {
+                    searchFollowUp(vm.searchKeyword);
+                } else if (vm.fromDate && vm.toDate) {
+                    searchFollowUpByDate(vm.fromDate, vm.toDate);
+                } else {
+                    retrieveFollowUps();
+                }
             }
         }
 
@@ -86,7 +92,7 @@
                   vm.followUps = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;
                   vm.paging.totalResults = response.data.TotalResults;
-                  vm.searchMessage = vm.enquiries.length === 0 ? "No Records Found" : "";
+                  vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                   return vm.followUps;
               });
         }
@@ -106,7 +112,7 @@
                   vm.followUps = response.data.Items;
                   vm.paging.totalPages = response.data.TotalPages;
                   vm.paging.totalResults = response.data.TotalResults;
-                  vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                  vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                   return vm.followUps;
               });
         }
@@ -132,7 +138,7 @@
                     vm.followUps = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                     return vm.followUps;
                 });
         }
@@ -146,7 +152,7 @@
                     vm.followUps = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                     return vm.followUps;
                 });
         }
@@ -160,7 +166,7 @@
                     vm.followUps = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                     return vm.followUps;
                 });
         }
@@ -174,7 +180,7 @@
                     vm.followUps = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.trainers.length === 0 ? "No Records Found" : "";
+                    vm.searchMessage = vm.followUps.length === 0 ? "No Records Found" : "";
                     return vm.followUps;
                 });
         }

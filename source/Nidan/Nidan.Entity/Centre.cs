@@ -41,7 +41,7 @@ namespace Nidan.Entity
             TrainerAvailables = new HashSet<TrainerAvailable>();
             Holidays = new HashSet<Holiday>();
             OtherFees = new HashSet<OtherFee>();
-            CentrePettyCashs = new HashSet<CentrePettyCash>();
+            CentrePettyCashes = new HashSet<CentrePettyCash>();
             Vouchers = new HashSet<Voucher>();
             CentreVoucherNumbers = new HashSet<CentreVoucherNumber>();
             ExpenseProjects = new HashSet<ExpenseProject>();
@@ -54,6 +54,14 @@ namespace Nidan.Entity
             EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
+            StockIssues=new HashSet<StockIssue>();
+            StockPurchases=new HashSet<StockPurchase>();
+            FixAssets=new HashSet<FixAsset>();
+            BatchPlanners=new HashSet<BatchPlanner>();
+            BatchPlannerDays=new HashSet<BatchPlannerDay>();
+            CentreProductSettings=new HashSet<CentreProductSetting>();
+            FixAssetMappings = new HashSet<FixAssetMapping>();
+            CentreItemSettings=new HashSet<CentreItemSetting>();
         }
 
         public int CentreId { get; set; }
@@ -183,7 +191,7 @@ namespace Nidan.Entity
         public virtual ICollection<OtherFee> OtherFees { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentrePettyCash> CentrePettyCashs { get; set; }
+        public virtual ICollection<CentrePettyCash> CentrePettyCashes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Voucher> Vouchers { get; set; }
@@ -222,5 +230,31 @@ namespace Nidan.Entity
       
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockIssue> StockIssues { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockPurchase> StockPurchases { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FixAsset> FixAssets { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlannerDay> BatchPlannerDays { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentreProductSetting> CentreProductSettings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FixAssetMapping> FixAssetMappings { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentreItemSetting> CentreItemSettings { get; set; }
+
     }
+
 }

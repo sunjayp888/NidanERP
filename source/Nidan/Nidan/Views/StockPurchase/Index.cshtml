@@ -1,0 +1,227 @@
+﻿@using Nidan.Extensions
+@{
+    ViewBag.Title = "StockPurchase";
+}
+<div ng-controller="StockPurchaseController as model" ng-init="model.initialise()">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Purchase Stocks <small></small>
+            </h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchStockPurchase(searchField)" class="form-control" placeholder="Search for Stock...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchStockPurchase(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInAnyRoles("Admin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "StockPurchase")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" ng-click="model.searchStockPurchaseByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Mobilizations <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info" ng-click="model.retrieveStockPurchaseByStationary()">Stationary</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info" ng-click="model.retrieveStockPurchaseBySector()">Sector</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-info" ng-click="model.initialise()">All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <th ng-click="model.order('CentreId')" ng-class="model.orderClass('CentreId')">Centre</th>
+                                            }
+                                            <th ng-click="model.order('StockPurchaseDate')" ng-class="model.orderClass('StockPurchaseDate')">Purchase Date</th>
+                                            <th ng-click="model.order('StockTypeId')" ng-class="model.orderClass('StockTypeId')">Stock Type</th>
+                                            <th ng-click="model.order('InventoryItem')" ng-class="model.orderClass('InventoryItem')">Inventory Item</th>
+                                            <th ng-click="model.order('Quantity')" ng-class="model.orderClass('Quantity')">Total Quantity</th>
+                                            <th ng-click="model.order('TotalBalanceQuantity')" ng-class="model.orderClass('TotalBalanceQuantity')">Balance Quantity</th>
+                                            <th ng-click="model.order('Supplier')" ng-class="model.orderClass('Supplier')">Supplier</th>
+                                            <th ng-click="model.order('BillNumber')" ng-class="model.orderClass('BillNumber')">Bill No.</th>
+                                            <th ng-click="model.order('Amount')" ng-class="model.orderClass('Amount')">Amount</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="stockPurchase in model.stockPurchases" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            @*|| model.viewStockPurchase(stockPurchase.StockPurchaseId)">*@
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <td><span ng-bind="stockPurchases.CentreName"></span></td>
+                                            }
+                                            <td><span ng-bind="stockPurchase.StockPurchaseDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="stockPurchase.StockTypeName"></span></td>
+                                            <td><span ng-bind="stockPurchase.InventoryItem"></span></td>
+                                            <td><span ng-bind="stockPurchase.Quantity"></span></td>
+                                            <td><span ng-if="stockPurchase.TotalBalanceQuantity!=null" ng-bind="stockPurchase.TotalBalanceQuantity"></span>
+                                                <span ng-if="stockPurchase.TotalBalanceQuantity==null" ng-bind="stockPurchase.Quantity"></span></td>
+                                            <td><span ng-bind="stockPurchase.Supplier"></span></td>
+                                            <td><span ng-bind="stockPurchase.BillNumber"></span></td>
+                                            <td><span ng-bind="stockPurchase.Amount"></span></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        <li>
+                                                            @*<a style="cursor: pointer;" ng-click="model.retrieveStockIssuesByStockPurchaseId(stockPurchase.StockPurchaseId)">
+                                                                    View
+                                                                </a>*@
+                                                            <a style="cursor: pointer;" ng-href="/StockPurchase/StockIssue/{{stockPurchase.StockPurchaseId}}">
+                                                                View
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/StockIssue/Create/{{stockPurchase.StockPurchaseId}}">
+                                                                Issue
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#input[type=checkbox]').attr('checked', false);
+        });
+        $(function () {
+
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        });
+
+        //if ($('#chk_stationary').checked() == true) {
+
+        //}
+    </script>
+}

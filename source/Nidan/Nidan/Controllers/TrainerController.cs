@@ -229,5 +229,31 @@ namespace Nidan.Controllers
             return this.JsonNet(NidanBusinessService.RetrieveTrainerBySearchKeyword(UserOrganisationId, searchKeyword, p => isSuperAdmin || p.CentreId == UserCentreId, orderBy, paging));
         }
 
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveTrainerDocuments(organisationId, centreId, studentCode);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var trainerData = NidanBusinessService.RetrieveTrainers(organisationId, e => e.CentreId == centreId && e.TrainerId.ToString() == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                trainerData?.FirstName, "Trainer Document", documentViewModel.Attachment.FileName,
+                documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
+        }
     }
 }

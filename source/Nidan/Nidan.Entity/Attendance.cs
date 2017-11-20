@@ -18,7 +18,6 @@ namespace Nidan.Entity
 
         public bool? IsPresent { get; set; }
 
-        [Required]
         [Column(TypeName = "date")]
         public DateTime? AttendanceDate { get; set; }
 
@@ -32,23 +31,17 @@ namespace Nidan.Entity
 
         public int? OrganisationId { get; set; }
 
-        [Required]
         public int? InHour { get; set; }
 
-        [Required]
         public int? InMinute { get; set; }
 
-        [Required]
         public int? OutHour { get; set; }
 
-        [Required]
         public int? OutMinute { get; set; }
 
-        [Required]
         [StringLength(5)]
         public string InTimeSpan { get; set; }
 
-        [Required]
         [StringLength(5)]
         public string OutTimeSpan { get; set; }
 

@@ -22,31 +22,31 @@
                         </div>
                     </div>
                     <div class="row">
+                        
                         <div class="col-xs-12">
                             <div class="table-responsive">
                                 <table class="table table-striped jambo_table bulk_action">
                                     <thead>
-                                        <tr class="headings">
-                                            <th><input type="checkbox" ng-model="model.allItemsSelected" ng-change="model.selectAll()"></th>
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                            }
-                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                        </tr>
+                                    <tr class="headings">
+                                        <th><input type="checkbox" ng-model="model.allItemsSelected" ng-change="model.selectAll()"></th>
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                        }
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-class="{selected: batchAttendance.IsPresent}">
-                                            <td>
-                                                <input type="checkbox" ng-model="batchAttendance.IsPresent" ng-change="model.selectEntity()">
-                                            </td>
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <td><span ng-bind="batchAttendance.CentreName"></span></td>
-                                            }
-                                            @*<td><span ng-bind="batchAttendance.Registration.Enquiry.Title"></span> <span ng-bind="batchAttendance.Registration.Enquiry.FirstName"></span> <span ng-bind="batchAttendance.Registration.Enquiry.MiddleName"></span> <span ng-bind="batchAttendance.Registration.Enquiry.LastName"></span></td>*@
-                                            <td><span ng-bind="batchAttendance.CandidateName"></span></td>
-                                        </tr>
+                                    <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-class="{selected: batchAttendance.IsPresent}">
+                                        <td>
+                                            <input type="checkbox" ng-model="batchAttendance.IsPresent" ng-change="model.selectEntity()" ng-checked="batchAttendance.IsPresent">
+                                        </td>
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="batchAttendance.CentreName"></span></td>
+                                        }
+                                            @*<td><span ng-bind="batchAttendance.Registration.Enquiry.Title"></span> <span ng-bind="batchAttendance.Registration.Enquiry.FirstName"></span> <span ng-bind="batchAttendance.Registration.Enquiry.MiddleName"></span> <span ng-bind="batchAttendance.Registration.Enquiry.LastName"></span></td>*@<td><span ng-bind="batchAttendance.CandidateName"></span></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

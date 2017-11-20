@@ -61,7 +61,11 @@
         }
 
         function pageChanged() {
-            return retrieveTrainers();
+            if (vm.searchKeyword) {
+                searchTrainer(vm.searchKeyword);
+            } else {
+                return retrieveTrainers();
+            }
         }
 
         function order(property) {

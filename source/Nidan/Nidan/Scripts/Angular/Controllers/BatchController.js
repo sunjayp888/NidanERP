@@ -99,7 +99,11 @@
         }
 
         function pageChanged() {
-            return retrieveBatches();
+            if (vm.fromDate && vm.toDate) {
+                searchBatchByDate(vm.fromDate, vm.toDate);
+            } else {
+                return retrieveBatches();
+            }
         }
 
         function order(property) {

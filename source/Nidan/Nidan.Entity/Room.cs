@@ -9,6 +9,13 @@ namespace Nidan.Entity
     [Table("Room")]
     public partial class Room
     {
+        public Room()
+        {
+            Batches=new HashSet<Batch>();
+            RoomAvailables=new HashSet<RoomAvailable>();
+            BatchPlanners=new HashSet<BatchPlanner>();
+        }
+
         public int RoomId { get; set; }
 
         [Required]
@@ -51,5 +58,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomAvailable> RoomAvailables { get; set; }
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
+        
     }
 }

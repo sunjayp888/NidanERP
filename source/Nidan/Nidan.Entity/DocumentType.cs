@@ -33,6 +33,8 @@ namespace Nidan.Entity
 
         public bool IsTrainer { get; set; }
 
+        public bool IsFixAsset { get; set; }
+
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }

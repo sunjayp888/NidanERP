@@ -52,7 +52,11 @@
         }
 
         function pageChanged() {
-            return retrieveCourseInstallments();
+            if (vm.searchKeyword) {
+                searchCourseInstallment(vm.searchKeyword);
+            } else {
+                return retrieveCourseInstallments();
+            }
         }
 
         function order(property) {

@@ -1,0 +1,56 @@
+﻿@model Nidan.Models.StockPurchaseViewModel
+@{
+    ViewBag.Title = "StockIssueList";
+}
+<div ng-controller="StockIssueController as model">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Stock Issued List <small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('IssuedDate')" ng-class="model.orderClass('IssuedDate')">Date</th>
+                                            <th ng-click="model.order('IssuedQuantity')" ng-class="model.orderClass('IssuedQuantity')">Quantity</th>
+                                            <th ng-click="model.order('IssuedToPerson')" ng-class="model.orderClass('IssuedToPerson')">Issued To Person</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="stockIssue in model.stockIssues| orderBy:'StockIssuedId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="stockIssue.IssuedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="stockIssue.IssuedQuantity"></span></td>
+                                            <td><span ng-bind="stockIssue.IssuedToPerson"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

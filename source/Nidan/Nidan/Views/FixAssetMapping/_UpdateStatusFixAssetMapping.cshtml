@@ -1,0 +1,71 @@
+﻿@model Nidan.Models.FixAssetMappingViewModel
+@Html.HiddenFor(model => model.FixAssetMapping.FixAssetMappingId)
+
+<div class="modal fade" id="updateFixAssetMapping" ng-hide="model.ShowModal">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Infra Equipment Detail</h2>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label id="labelStatus" class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select id="dropStatus" class="form-control col-md-7 col-sm-6 col-xs-12">
+                                <option>Select Status</option>
+                                <option data-ng-repeat="t in model.assignOutStates" ng-model="model.assetOutStatusId" value="{{t.AssetOutStatusId}}">{{t.Name}}</option>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Status Date</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="txtStatusDate" type="text" class="form-control date" />
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Cost</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input id="txtCost" type="text" class="form-control" />
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                    @*</div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remark</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="txtRemark" type="text" class="form-control" />
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>*@
+                    <div class="modal-footer">
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="control-label col-md-14 col-sm-14 col-xs-12">
+                                    <div class="pull-right col-md-12">
+                                        <div class="col-md-9">
+                                            <button type="submit" id="btnupdateFixAssetMapping" ng-click="model.updateFixAssetMapping()" class="btn btn-success" data-dismiss="modal">Update</button>
+                                        </div>
+                                        <div class="pull-right col-md-3">
+                                            <button type="button" id="btnCancel" ng-click="model.retrieveFixAssetMappingbyAssetClassId(model.assetClassId)" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>

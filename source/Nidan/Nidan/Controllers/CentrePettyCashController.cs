@@ -46,10 +46,12 @@ namespace Nidan.Controllers
         public ActionResult Create(CentrePettyCashViewModel centrePettyCashViewModel)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
+            var centreId = centrePettyCashViewModel.CentrePettyCash.CentreId;
+            var personnel = NidanBusinessService.RetrievePersonnel(organisationId, centreId, null, null).Items.FirstOrDefault();
             if (ModelState.IsValid)
             {
-                centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.CreateCentrePettyCash(organisationId, centreId, UserPersonnelId, centrePettyCashViewModel.CentrePettyCash);
+                var personnelId = personnel?.PersonnelId ?? 0;
+                centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.CreateCentrePettyCash(organisationId, centreId, personnelId, centrePettyCashViewModel.CentrePettyCash);
                 return RedirectToAction("Index");
             }
             centrePettyCashViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => true).ToList());

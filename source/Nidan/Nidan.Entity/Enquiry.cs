@@ -28,7 +28,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string FirstName { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string MiddleName { get; set; }
 
@@ -73,6 +72,7 @@ namespace Nidan.Entity
 
         public int PinCode { get; set; }
 
+		[Required]
         [StringLength(500)]
         public string GuardianName { get; set; }
 
