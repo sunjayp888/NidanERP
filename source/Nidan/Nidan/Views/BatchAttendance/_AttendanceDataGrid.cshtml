@@ -39,7 +39,7 @@
                                     <tbody>
                                     <tr ng-repeat="batchAttendance in model.batchAttendances" class="even pointer" ng-class="{selected: batchAttendance.IsPresent}">
                                         <td>
-                                            <input type="checkbox" ng-model="batchAttendance.IsPresent" ng-change="model.selectEntity()" ng-checked="batchAttendance.Direction!='Null'">
+                                            <input type="checkbox" ng-model="batchAttendance.IsPresent" ng-change="model.selectEntity()" ng-checked="batchAttendance.IsPresent">
                                         </td>
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {

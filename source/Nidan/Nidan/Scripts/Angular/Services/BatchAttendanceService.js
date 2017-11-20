@@ -22,7 +22,7 @@
 
         function retrieveBatchAttendances(Paging, OrderBy) {
 
-            var url = "/BatchAttendance/AttendanceList",
+            var url = "/BatchAttendance/List",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
@@ -75,10 +75,15 @@
             return $http.post(url);
         }
 
-        function markAttendance(subjectId, sessionId, attendances) {
+        function markAttendance(batchId, subjectId, sessionId, attendances) {
 
             var url = "/BatchAttendance/MarkAttendance";
-            var data = { attendances: attendances, subjectId: subjectId, sessionId: sessionId }
+            var data = {
+                attendances: attendances,
+                batchId:batchId,
+                subjectId: subjectId,
+                sessionId: sessionId
+            }
             return $http.post(url, data);
         }
 

@@ -2672,7 +2672,6 @@ namespace Nidan.Data
                     .Include(p => p.Organisation)
                     .Include(p => p.Centre)
                     .Include(p => p.Personnel)
-                    .Include(p => p.StudentCode)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -3801,6 +3800,28 @@ namespace Nidan.Data
                             }
                         }
                     ).Paginate(paging);
+            }
+        }
+
+        public PagedResult<BatchAttendanceDataGrid> RetrieveBatchAttendanceDataGrid(int organisationId, Expression<Func<BatchAttendanceDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchAttendanceDataGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AttendanceId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 

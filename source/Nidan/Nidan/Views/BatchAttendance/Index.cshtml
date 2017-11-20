@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
-<div ng-controller="BatchAttendanceController as model" ng-init="model.retrieveBatches()">
+<div ng-controller="BatchAttendanceController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -20,7 +20,7 @@
                 </div>
             </div>*@
     </div>
-    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+    @if (User.IsInAnyRoles("Admin"))
     {
         <div class="row">
             <div class="col-xs-12">
@@ -55,7 +55,7 @@
                                     <div class="form-group">
                                         <select class="form-control col-md-7 col-xs-12" ng-model="item">
                                             <option value="0">Select Batch</option>
-                                            <option data-ng-repeat="batch in model.batches" value="{{batch.BatchId}}">{{batch.Name}}</option>
+                                            <option data-ng-repeat="batch in model.batches" ng-model="model.BatchId" value="{{batch.BatchId}}">{{batch.Name}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('InTime')" ng-class="model.orderClass('InTime')">In-Time</th>
                                             <th ng-click="model.order('OutTime')" ng-class="model.orderClass('OutTime')">Out-Time</th>
-                                            <th ng-click="model.order('Topic')" ng-class="model.orderClass('Topic')">Topic</th>
+                                            <th ng-click="model.order('SessionName')" ng-class="model.orderClass('SessionName')">Session Name</th>
                                             <th ng-click="model.order('IsPresent')" ng-class="model.orderClass('IsPresent')">Attendance</th>
                                         </tr>
                                     </thead>
@@ -133,9 +133,9 @@
                                             }
                                             <td><span ng-bind="bachtAttendance.AttendanceDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="bachtAttendance.CandidateName"></span></td>
-                                            <td><span ng-bind="bachtAttendance.InTime"></span></td>
-                                            <td><span ng-bind="bachtAttendance.OutTime"></span></td>
-                                            <td><span ng-bind="bachtAttendance.Topic"></span></td>
+                                            <td><span ng-if="bachtAttendance.IsPresent" ><span ng-bind="bachtAttendance.InHour"></span> : <span ng-bind="bachtAttendance.InMinute"></span> <span ng-bind="bachtAttendance.InTimeSpan"></span></span></td>
+                                            <td><span ng-if="bachtAttendance.IsPresent" ><span ng-bind="bachtAttendance.OutHour"></span> : <span ng-bind="bachtAttendance.OutMinute"></span> <span ng-bind="bachtAttendance.OutTimeSpan"></span></span></td>
+                                            <td><span ng-bind="bachtAttendance.SessionName"></span></td>
                                             <td>
                                                 <button ng-if="!bachtAttendance.IsPresent" type="button" class="btn btn-round btn-danger btn-xs">Absent</button>
                                                 <button ng-if="bachtAttendance.IsPresent" type="button" class="btn btn-round btn-success btn-xs">Present</button>

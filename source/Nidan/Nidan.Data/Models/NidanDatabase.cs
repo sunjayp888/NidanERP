@@ -139,6 +139,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CentreProductSetting> CentreProductSettings { get; set; }
         public virtual DbSet<BatchPlannerGrid> BatchPlannerGrids { get; set; }
         public virtual DbSet<StudentKit> StudentKits { get; set; }
+        public virtual DbSet<BatchAttendanceDataGrid> BatchAttendanceDataGrids { get; set; }
         public virtual DbSet<AssignType> AssignTypes { get; set; }
         public virtual DbSet<CentreItemSetting> CentreItemSettings { get; set; }
         public virtual DbSet<FixAssetMappingCountByCentre> FixAssetMappingCountByCentres { get; set; }
@@ -149,7 +150,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
         public virtual DbSet<FixAssetDetailGrid> FixAssetDetailGrids { get; set; }
-
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1345,6 +1345,10 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<AdmissionGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CandidateInstallmentGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -2226,6 +2230,50 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.InTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.OutTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.BioMetricLogTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.Direction)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.SubjectName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.SessionName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
+                .Property(e => e.Topic)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchAttendanceDataGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 

@@ -9,7 +9,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.BatchAttendance.Attendance.AttendanceDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.BatchAttendance.Attendance.AttendanceDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" , ng_model = "model.MarkDate" })
+        @Html.TextBoxFor(model => model.BatchAttendance.Attendance.AttendanceDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", ng_model = "model.MarkDate" })
         <span class="form-control-feedback" aria-hidden="true"></span>
         @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.AttendanceDate, "", new { @class = "help-block" })
     </div>
@@ -22,6 +22,84 @@
         @Html.ValidationMessageFor(model => model.BatchAttendance.BatchId, "", new { @class = "help-block" })
     </div>
 </div>
+
+
 <div class="form-group">
-    <button type="button" ng-click="model.getBiometricData()" class="btn btn-primary"><i class="fa fa-refresh"></i> Sync</button>
+    @Html.LabelFor(model => model.BatchAttendance.SubjectId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.BatchAttendance.SubjectId, Model.Subjects, "Select Subject", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.SubjectId, "", new { @class = "help-block" })
+    </div>
 </div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BatchAttendance.SessionId, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.BatchAttendance.SessionId, Model.Sessions, "Select Session", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.SessionId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-6 col-xs-12">In Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.BatchAttendance.Attendance.InHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.InHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12 batchStartTime">
+        @Html.DropDownListFor(model => model.BatchAttendance.Attendance.InMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.InMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <label class="btn btn-info">
+            @Html.RadioButtonFor(model => model.BatchAttendance.Attendance.InTimeSpan, "AM", new { id = "rbBatchAttendanceInTimeSpanAM" })
+            AM
+        </label>
+        <label class="btn btn-info">
+            @Html.RadioButtonFor(model => model.BatchAttendance.Attendance.InTimeSpan, "PM", new { id = "rbBatchAttendanceInTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-6 col-xs-12">Out Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @*@Html.TextBoxFor(model => model.Batch.BatchEndTimeHours, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "HH", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeHours, "", new { @class = "help-block" })*@
+        @Html.DropDownListFor(model => model.BatchAttendance.Attendance.OutHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.OutHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @*@Html.TextBoxFor(model => model.Batch.BatchEndTimeMinutes, new { @class = "form-control col-md-7 col-xs-12", @placeholder = "MM", @readonly = true })
+            @Html.ValidationMessageFor(model => model.Batch.BatchEndTimeMinutes, "", new { @class = "help-block" })*@
+        @Html.DropDownListFor(model => model.BatchAttendance.Attendance.OutMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Attendance.OutMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <label class="btn btn-info">
+            @Html.RadioButtonFor(model => model.BatchAttendance.Attendance.OutTimeSpan, "AM", new { id = "rbBatchAttendanceOutTimeSpanAM" })
+            AM
+        </label>
+        <label class="btn btn-info">
+            @Html.RadioButtonFor(model => model.BatchAttendance.Attendance.OutTimeSpan, "PM", new { id = "rbBatchAttendanceOutTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BatchAttendance.Topic, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.BatchAttendance.Topic, new { @class = "form-control has-feedback-left" })
+        <span class="form-control-feedback" aria-hidden="true"></span>
+        @Html.ValidationMessageFor(model => model.BatchAttendance.Topic, "", new { @class = "help-block" })
+    </div>
+</div>
+@*<div class="form-group">
+    <button type="button" ng-click="model.getBiometricData()" class="btn btn-primary"><i class="fa fa-refresh"></i> Sync</button>
+</div>*@
