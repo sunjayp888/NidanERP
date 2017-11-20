@@ -6,62 +6,43 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("FixAssetDataGrid")]
-    public partial class FixAssetDataGrid
+    [Table("FixAssetDetailGrid")]
+    public partial class FixAssetDetailGrid
     {
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FixAssetMappingId { get; set; }
 
-        public int? FixAssetId { get; set; }
-
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ItemSettingId { get; set; }
-
-        [StringLength(100)]
-        public string AssetCode { get; set; }
+        public int AssetClassId { get; set; }
 
         [Key]
         [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int AssetClassId { get; set; }
-
-        public int? RoomId { get; set; }
-
-        public string RoomName { get; set; }
-
-        [Key]
-        [Column(Order = 3)]
         [StringLength(100)]
         public string AssetClassName { get; set; }
 
-        public int? ItemId { get; set; }
+        [Key]
+        [Column(Order = 3)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ItemId { get; set; }
 
         [Key]
         [Column(Order = 4)]
         [StringLength(100)]
         public string ItemName { get; set; }
 
-        [StringLength(100)]
-        public string InvoiceNumber { get; set; }
-
-        [StringLength(100)]
-        public string PurchaseFrom { get; set; }
-
-        [Column(TypeName = "date")]
-        public DateTime? DateofPurchase { get; set; }
-
         [Key]
-        [Column(Order = 5)]
-        public decimal CostPerAsset { get; set; }
+        [Column(Order = 5, TypeName = "date")]
+        public DateTime DateofPurchase { get; set; }
 
-        public int? AssignTypeId { get; set; }
+        [StringLength(207)]
+        public string AssetCodeAsPerTally { get; set; }
 
         [StringLength(100)]
-        public string AssignTypeName { get; set; }
+        public string AssetCode { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? AssetOutDate { get; set; }
@@ -77,7 +58,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 7)]
         [StringLength(100)]
-        public string AssignOutStatusName { get; set; }
+        public string AssetOutStatusName { get; set; }
 
         [Key]
         [Column(Order = 8, TypeName = "date")]

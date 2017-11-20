@@ -260,6 +260,7 @@
     <Compile Include="Controllers\ExpenseHeaderController.cs" />
     <Compile Include="Controllers\ExpenseProjectController.cs" />
     <Compile Include="Controllers\FixAssetController.cs" />
+    <Compile Include="Controllers\FixAssetMappingController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -298,7 +299,6 @@
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
-    <Compile Include="Models\CentreFixAssetViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
@@ -309,6 +309,7 @@
     <Compile Include="Models\EventBrainstormingViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\ExpenseHeaderViewModel.cs" />
+    <Compile Include="Models\FixAssetMappingViewModel.cs" />
     <Compile Include="Models\FixAssetViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
@@ -1155,6 +1156,7 @@
     <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetController.js" />
+    <Content Include="Scripts\Angular\Controllers\FixAssetMappingController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
@@ -1179,6 +1181,7 @@
     <Content Include="Scripts\Angular\Controllers\TrainerDocumentController.js" />
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
+    <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchPlannerService.js" />
@@ -1201,6 +1204,8 @@
     <Content Include="Scripts\Angular\Services\ExpenseDocumentService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseProjectService.js" />
+    <Content Include="Scripts\Angular\Services\FixAssetDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\FixAssetMappingService.js" />
     <Content Include="Scripts\Angular\Services\FixAssetService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
@@ -1684,19 +1689,22 @@
     <Content Include="Views\StockIssue\Create.cshtml" />
     <Content Include="Views\StockPurchase\_StockIssueList.cshtml" />
     <Content Include="Views\StockPurchase\StockIssue.cshtml" />
-    <Content Include="Views\FixAsset\Index.cshtml" />
-    <Content Include="Views\FixAsset\Create.cshtml" />
-    <Content Include="Views\FixAsset\_FixAsset.cshtml" />
-    <Content Include="Views\FixAsset\Edit.cshtml" />
-    <Content Include="Views\Report\FixAsset.cshtml" />
     <Content Include="Views\Report\Stock.cshtml" />
     <Content Include="Views\BatchPlanner\Index.cshtml" />
     <Content Include="Views\BatchPlanner\Create.cshtml" />
     <Content Include="Views\BatchPlanner\Edit.cshtml" />
     <Content Include="Views\BatchPlanner\_BatchPlanner.cshtml" />
-    <Content Include="Views\FixAsset\CentreFixAsset.cshtml" />
-    <Content Include="Views\FixAsset\_FixAssetModal.cshtml" />
     <Content Include="Views\BatchPlanner\View.cshtml" />
+    <Content Include="Views\FixAsset\Index.cshtml" />
+    <Content Include="Views\FixAsset\Create.cshtml" />
+    <Content Include="Views\FixAsset\_FixAsset.cshtml" />
+    <Content Include="Views\FixAssetMapping\Index.cshtml" />
+    <Content Include="Views\FixAssetMapping\_AssignFixAssetMapping.cshtml" />
+    <Content Include="Views\FixAssetMapping\_UpdateStatusFixAssetMapping.cshtml" />
+    <Content Include="Views\FixAssetMapping\FixAssetMappingbyAssetClassId.cshtml" />
+    <Content Include="Views\FixAsset\View.cshtml" />
+    <Content Include="Views\FixAsset\_FixAssetDocument.cshtml" />
+    <Content Include="Views\Report\FixAsset.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -14,7 +14,6 @@ namespace Nidan.Entity
             Batches=new HashSet<Batch>();
             RoomAvailables=new HashSet<RoomAvailable>();
             BatchPlanners=new HashSet<BatchPlanner>();
-            CentreFixAssets = new HashSet<CentreFixAsset>();
         }
 
         public int RoomId { get; set; }
@@ -62,9 +61,6 @@ namespace Nidan.Entity
         
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentreFixAsset> CentreFixAssets { get; set; }
-
+        
     }
 }

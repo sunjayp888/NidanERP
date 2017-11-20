@@ -19,7 +19,7 @@
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
             searchExpenseByDate: searchExpenseByDate,
-            searchFixAssetByDate: searchFixAssetByDate,
+            searchFixAssetByCentreIdAssetClassId: searchFixAssetByCentreIdAssetClassId,
             searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
@@ -30,7 +30,7 @@
             downloadRegistrationCSVByDate: downloadRegistrationCSVByDate,
             downloadCounsellingCSVByDate: downloadCounsellingCSVByDate,
             downloadExpenseCSVByDate: downloadExpenseCSVByDate,
-            downloadFixAssetCSVByDate: downloadFixAssetCSVByDate,
+            downloadFixAssetByCentreIdAssetClassId: downloadFixAssetByCentreIdAssetClassId,
             downloadStockCSVByDate: downloadStockCSVByDate,
             totalSumOfCountByMonth: totalSumOfCountByMonth,
             totalSumOfCountByDate: totalSumOfCountByDate,
@@ -87,11 +87,11 @@
             return $http.post(url, data);
         }
 
-        function searchFixAssetByDate(FromDate, ToDate, Paging, OrderBy) {
-            var url = "/Report/SearchFixAssetByDate",
+        function searchFixAssetByCentreIdAssetClassId(assetClassId, centreId, Paging, OrderBy) {
+            var url = "/Report/FixAssetByCentreIdAssetClassId",
                 data = {
-                    fromDate: FromDate,
-                    toDate: ToDate,
+                    assetClassId: assetClassId,
+                    centreId: centreId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -245,9 +245,11 @@
             return $http.post(url, data);
         }
 
-        function downloadFixAssetCSVByDate(fromDate, toDate) {
-            var url = "/Report/DownloadFixAssetCSVByDate",
+        function downloadFixAssetByCentreIdAssetClassId(assetClassId, centreId) {
+            var url = "/Report/DownloadFixAssetByCentreIdAssetClassId",
                 data = {
+                    assetClassId: assetClassId,
+                    centreId: centreId,
                     fromDate: fromDate,
                     toDate: toDate
                 };

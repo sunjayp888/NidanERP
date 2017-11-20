@@ -9,26 +9,34 @@ using Nidan.Entity.Interfaces;
 
 namespace Nidan.Entity
 {
-    [MetadataType(typeof(FixAssetMetadata))]
+    [MetadataType(typeof(FixAssetMetaData))]
     public partial class FixAsset : IOrganisationFilterable
     {
-        private class FixAssetMetadata
+        private class FixAssetMetaData
         {
-            [Display(Name = "Product")]
-            public int ProductId { get; set; }
+            [Display(Name = "Asset Class")]
+            public int AssetClassId { get; set; }
+
+            [Display(Name = "Item")]
+            public int ItemId { get; set; }
+
+            [Display(Name = "Invoice Number")]
+            public string InvoiceNumber { get; set; }
 
             [Display(Name = "Date of Purchase")]
             public DateTime DateofPurchase { get; set; }
 
-            [Display(Name = "Supplier")]
-            public string Supplier { get; set; }
+            [Display(Name = "Cost")]
+            public decimal Cost { get; set; }
 
-            [Display(Name = "Bill Number")]
-            public string BillNumber { get; set; }
+            [Display(Name = "Purchase From")]
+            public string PurchaseFrom { get; set; }
 
-            [Display(Name = "Cost Amount")]
-            public decimal CostAmount { get; set; }
-            
-            }
+            [Display(Name = "Quantity")]
+            public int Quantity { get; set; }
+
+            [Display(Name = "Remarks")]
+            public int Remark { get; set; }
+        }
     }
 }

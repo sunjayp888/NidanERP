@@ -61,16 +61,16 @@ namespace Nidan.Business.Interfaces
         BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance);
         bool CreateEventBrainstorming(int organisationId, int centreId, int eventId, List<EventBrainstorming> eventBrainstorming);
         bool MarkAttendance(int organisationId, int centreId, int personnelId, List<AttendanceGrid> attendances, int subjectId, int sessionId);
-        bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse);
         EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
         EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
         CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting);
         StockPurchase CreateStockPurchase(int organisationId, StockPurchase stockPurchase);
         StockIssue CreateStockIssue(int organisationId, StockIssue stockIssue);
-        FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset);
         BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay);
         BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay);
-        CentreFixAsset CreateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset);
+        FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset);
+        FixAssetMapping CreateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
+       
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -120,6 +120,8 @@ namespace Nidan.Business.Interfaces
         List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate);
         List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate);
+        List<AssignType> RetrieveAssignTypes(int organisationId, Expression<Func<AssignType, bool>> predicate);
+        List<AssetOutState> RetrieveAssetOutStates(int organisationId, Expression<Func<AssetOutState, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
@@ -213,6 +215,8 @@ namespace Nidan.Business.Interfaces
         List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
+        List<AssetClass> RetrieveAssetClasses(int organisationId, Expression<Func<AssetClass, bool>> predicate);
+        List<Item> RetrieveItems(int organisationId, Expression<Func<Item, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
         PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate);
@@ -291,13 +295,15 @@ namespace Nidan.Business.Interfaces
         PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchPlannerDay RetrieveBatchPlannerDay(int organisationId, int batchPlannerDayId, Expression<Func<BatchPlannerDay, bool>> predicate);
         List<Product> RetrieveProducts(int organisationId, Expression<Func<Product, bool>> predicate);
-        PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate);
-        PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate);
+        PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId);
+        PagedResult<FixAssetMapping> RetrieveFixAssetMappings(int organisationId, Expression<Func<FixAssetMapping, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        FixAssetMapping RetrieveFixAssetMapping(int organisationId, int fixAssetMappingId);
+        PagedResult<FixAssetMappingCountByCentre> RetrieveFixAssetMappingCountByCentre(int organisationId, Expression<Func<FixAssetMappingCountByCentre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FixAssetDetailGrid> RetrieveFixAssetDetailGrid(int organisationId, Expression<Func<FixAssetDetailGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -338,7 +344,8 @@ namespace Nidan.Business.Interfaces
         FixAsset UpdateFixAsset(int organisationId, FixAsset fixAsset);
         CentreProductSetting UpdateCentreProductSetting(int organisationId, CentreProductSetting centreProductSetting);
         BatchPlanner UpdateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay);
-        CentreFixAsset UpdateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset);
+        FixAssetMapping UpdateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
+        bool AssignFixAssetMapping(int organisationId, int personnelId, int centreId, List<FixAssetMapping> fixAssetMappings);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
@@ -365,8 +372,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<StudentDocument> RetrieveCounsellingDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveTrainerDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveExpenseDocuments(int organisationId, int centreId, string studentCode);
-        //Document CreateDocument(int organisationId, int centreId, int documentTypeId, string filePath,
-        //    string studentCode, string studentName, string description, string fileName);
+        IEnumerable<StudentDocument> RetrieveFixAssetDocuments(int organisationId, int centreId, string studentCode);
 
         //Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
