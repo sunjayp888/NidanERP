@@ -93,6 +93,10 @@
     <Compile Include="AssignType.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
+    <Compile Include="BankDeposite.cs" />
+    <Compile Include="BankDepositeCentreReport.cs" />
+    <Compile Include="BankDepositeCentreReportMonthWise.cs" />
+    <Compile Include="BankDepositeSearchField.cs" />
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchAttendanceDataGrid.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="OtherFee.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Admission.cs" />
+    <Compile Include="Partials\BankDeposite.cs" />
     <Compile Include="Partials\Batch.cs" />
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />

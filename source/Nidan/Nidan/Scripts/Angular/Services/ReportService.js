@@ -35,7 +35,11 @@
             totalSumOfCountByMonth: totalSumOfCountByMonth,
             totalSumOfCountByDate: totalSumOfCountByDate,
             downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
-            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate
+            downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate,
+            searchBankDepositeReportBydate: searchBankDepositeReportBydate,
+            searchBankDepositeReportByMonthAndYear: searchBankDepositeReportByMonthAndYear,
+            searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
+            retrieveBankDepositeByDate: retrieveBankDepositeByDate
         };
 
         return service;
@@ -303,6 +307,48 @@
                     centreId: centreId,
                     month: fromMonth,
                     year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportBydate(centreId, fromMonth, fromYear) {
+            var url = "/Report/BankDepositeReportBydate",
+                data = {
+                    centreId: centreId,
+                    month: fromMonth,
+                    year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
+            var url = "/Report/BankDepositeReportByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    year: fromYear,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonth() {
+            var url = "/Report/TotalBankDepositeReportByCurrentMonth",
+                data = {
+
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveBankDepositeByDate(centreId, date) {
+            var url = "/Report/CentreBankDepositeReportByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
                 };
 
             return $http.post(url, data);

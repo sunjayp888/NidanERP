@@ -241,6 +241,7 @@
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
+    <Compile Include="Controllers\BankDepositeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
     <Compile Include="Models\AttendanceViewModel.cs" />
+    <Compile Include="Models\BankDepositeViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
@@ -1130,6 +1132,8 @@
     <Content Include="Installment.html" />
     <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
+    <Content Include="Scripts\Angular\Controllers\BankDepositeController.js" />
+    <Content Include="Scripts\Angular\Controllers\BankDepositeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchAttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchPlannerController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
@@ -1183,6 +1187,8 @@
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
+    <Content Include="Scripts\Angular\Services\BankDepositeDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\BankDepositeService.js" />
     <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchPlannerService.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
@@ -1705,6 +1711,16 @@
     <Content Include="Views\FixAsset\View.cshtml" />
     <Content Include="Views\FixAsset\_FixAssetDocument.cshtml" />
     <Content Include="Views\Report\FixAsset.cshtml" />
+    <Content Include="Views\BankDeposite\Create.cshtml" />
+    <Content Include="Views\BankDeposite\Edit.cshtml" />
+    <Content Include="Views\BankDeposite\Index.cshtml" />
+    <Content Include="Views\BankDeposite\View.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDeposite.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDepositeDocument.cshtml" />
+    <Content Include="Views\Report\BankDepositeDetailByDate.cshtml" />
+    <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
+    <Content Include="Views\Report\BankDepositeReport.cshtml" />
+    <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
