@@ -75,7 +75,7 @@
                                             </td>
                                             <td><span ng-bind="candidateFee.InstallmentDate|date : format : shortDate"></span></td>
                                             <td><span class="fa fa-inr" ng-if="candidateFee.InstallmentAmount!=null" ng-bind="candidateFee.InstallmentAmount"></span></td>
-                                            <td><span ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
+                                            <td><span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentDate|date : format : shortDate"></span></td>
                                             <td>
                                                 <span ng-if="candidateFee.IsPaymentDone" ng-bind="candidateFee.PaymentMode"></span>
                                             </td>

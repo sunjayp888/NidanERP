@@ -15,7 +15,9 @@
             searchExpense: searchExpense,
             retrieveExpensesByCashMemo: retrieveExpensesByCashMemo,
             expenseLimitCheck: expenseLimitCheck,
-            dateInCurrentWeek: dateInCurrentWeek
+            dateInCurrentWeek: dateInCurrentWeek,
+            retrieveCentres: retrieveCentres,
+            searchExpenseByDate: searchExpenseByDate
         };
 
         return service;
@@ -90,6 +92,26 @@
                 data = {
                     expenseId: expenseId
                 };
+            return $http.post(url, data);
+        }
+
+        function retrieveCentres() {
+
+            var url = "/Expense/GetCentres";
+            return $http.post(url);
+        }
+
+        function searchExpenseByDate(FromDate, ToDate, CentreId, Paging, OrderBy) {
+            var url = "/Expense/SearchByDate",
+                data = {
+                    //batchId:BatchId,
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    centreId: CentreId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
             return $http.post(url, data);
         }
     }
