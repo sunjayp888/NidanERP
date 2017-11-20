@@ -17,19 +17,11 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Course.CourseType, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
-            @Html.RadioButtonFor(model => model.Course.CourseType, "Career", new { id = "rbCareer"})
-            Career
-        </label>
-    </div>
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
-            @Html.RadioButtonFor(model => model.Course.CourseType, "STC", new { id = "rbSTC" })
-            STC
-        </label>
+<div class="form-group ">
+    @Html.LabelFor(model => model.Course.CourseTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Course.CourseTypeId, Model.CourseTypes, "Select Course Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Course.CourseTypeId, "", new { @class = "help-block" })
     </div>
 </div>
 

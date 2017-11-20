@@ -68,6 +68,26 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/BankDeposite
+        public ActionResult BankDepositeDetailByDate()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report/BankDepositeReports
+        public ActionResult BankDepositeReport()
+        {
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
+        }
+
         // GET: Report/FixAsset
         public ActionResult FixAsset()
         {
@@ -116,8 +136,36 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Report/BankDepositeProcessReportByMonth
+        public ActionResult BankDepositeProcessReportByMonth()
+        {
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
+        }
+
         // GET: Report/MobilizationProcessReportByDate
         public ActionResult MobilizationProcessReportByDate()
+        {
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name")
+            };
+            viewModel.MonthList = new SelectList(viewModel.MonthType, "Id", "Name");
+            viewModel.YearList = new SelectList(viewModel.YearType, "Id", "Name");
+            return View(viewModel);
+        }
+
+        // GET: Report/BankDepositeReportByDate
+        public ActionResult BankDepositeReportByDate()
         {
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
@@ -194,10 +242,39 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+
+        [HttpPost]
+        public ActionResult BankDepositeReportByMonthAndYear(int centreId, int year, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetriveBankDepositeReportByMonthAndYear(UserOrganisationId, centreId, year, orderBy);
+            return this.JsonNet(data);
+        }
+
         [HttpPost]
         public ActionResult MobilizationCountReportBydate(int centreId, int month, int year)
         {
             var data = NidanBusinessService.RetriveMobilizationCountReportByDate(UserOrganisationId, centreId, year, month);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult BankDepositeReportBydate(int centreId, int month, int year)
+        {
+            var data = NidanBusinessService.RetriveBankDepositeReportByDate(UserOrganisationId, centreId, year, month);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult TotalBankDepositeReportByCurrentMonth()
+        {
+            var data = NidanBusinessService.RetriveBankDepositeCountReportByMonthWise(UserOrganisationId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult CentreBankDepositeReportByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetriveCentreBankDepositeByDate(UserOrganisationId, centreId, date);
             return this.JsonNet(data);
         }
 
@@ -355,6 +432,24 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fromYear).ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StatisticsReportByMonthWise-({1}).csv", centre.Name, fromYear));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadBankDepositeReportCSVByMonthAndYear(int centreId, int fromYear)
+        {
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
+            var data = NidanBusinessService.RetriveBankDepositeReportByMonthAndYear(UserOrganisationId, centreId, fromYear).ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_BankDepositeReportByMonthWise-({1}).csv", centre.Name, fromYear));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadBankDepositeReportCSVByDate(int centreId, int fromMonth, int fromYear)
+        {
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
+            var data = NidanBusinessService.RetriveBankDepositeReportByDate(UserOrganisationId, centreId, fromYear, fromMonth).ToList();
+            var csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_BankDepositeByDate-({1}-{2}).csv", centre.Name, fromMonth, fromYear));
         }
 
         [HttpPost]

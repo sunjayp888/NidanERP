@@ -1538,35 +1538,6 @@ namespace Nidan.Business
             }
         }
 
-        public bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse)
-        {
-            var room = RetrieveRoom(organisationId, roomId);
-            //var fixAssets=RetrieveFixAssets(organisationId,e=>e.FixAssetId==)
-            //var countofRoom=RetrieveCentreFixAssets(organisationId,)
-            try
-            {
-                foreach (var centreFixAsset in centreFixAssets)
-                {
-                    var fixAssets = RetrieveCentreFixAssets(organisationId, centreFixAsset.FixAssetId, e => true);
-                    var countofRoom = fixAssets.Items.Sum(e => e.RoomId);
-                    var countofProduct = fixAssets.Items.Sum(e => e.FixAsset.ProductId);
-                    centreFixAsset.RoomId = roomId;
-                    centreFixAsset.DateofPutToUse = dateofuse;
-                    UpdateCentreFixAsset(organisationId, centreFixAsset);
-                    if (countofRoom == countofProduct)
-                    {
-                        var num = 0;
-                        centreFixAsset.AssetCode = String.Format("{0} {1} {2}", centreFixAsset.FixAsset.Product.Name, room.Description, num);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget)
         {
             return _nidanDataService.CreateEventBudget(organisationId, eventBudget);
@@ -1661,6 +1632,12 @@ namespace Nidan.Business
             return data;
         }
 
+        public BankDeposite CreateBankDeposite(int organisationId, BankDeposite bankDeposite)
+        {
+            var data = _nidanDataService.Create<BankDeposite>(organisationId, bankDeposite);
+            return data;
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -1692,6 +1669,107 @@ namespace Nidan.Business
         {
             var data = _nidanDataService.RetrieveFixAssetDetailGrid(organisationId, predicate);
             return data;
+        }
+
+        public IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            var _today = DateTime.UtcNow;
+            var date = _today.Date;
+            var bankDepositeSummaryReports = new List<BankDepositeSummaryReport>();
+            var data = _nidanDataService.RetriveBankDepositeCentreReportMonthWise(organisationId, e => e.Month == _today.Month && e.Year == _today.Year).Items.ToList();
+            var centres = _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
+            foreach (var centre in centres)
+            {
+                var result = data.FirstOrDefault(e => e.CentreId == centre.CentreId);
+                bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? centre.CentreId,
+                    TotalBankDepositeAmount = result?.TotalBankDepositeAmount ?? 0,
+                    CentreName = result?.CentreName ?? centre.Name,
+                    Year = _today.Year
+                });
+            }
+            bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+            {
+                MonthName = "Total",
+                TotalBankDepositeAmount = bankDepositeSummaryReports.Sum(e => e.TotalBankDepositeAmount),
+            });
+            return bankDepositeSummaryReports;
+        }
+
+        public PagedResult<BankDepositeSearchField> RetriveCentreBankDepositeByDate(int organisationId, int centreId, DateTime date)
+        {
+            var bankDepositeData = _nidanDataService.RetrieveBankDeposites(organisationId, e => e.CentreId == centreId && e.DepositedDate.Day == date.Day && e.DepositedDate.Month == date.Month && e.DepositedDate.Year == date.Year);
+            return bankDepositeData;
+        }
+
+        public IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            var startFiscalDate = new DateTime(year, 04, 01);
+            var endFiscalDate = new DateTime(startFiscalDate.AddYears(1).Year, 03, 31);
+            var bankDepositeSummaryReports = new List<BankDepositeSummaryReport>();
+            var data = _nidanDataService.RetriveBankDepositeReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId).Items.ToList();
+            var months = DateTimeExtensions.EachMonth(startFiscalDate, endFiscalDate);
+            foreach (var item in months)
+            {
+                var result = data.FirstOrDefault(e => e.Month == item.Month && e.Year == item.Year);
+                bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? 0,
+                    TotalBankDepositeAmount = result?.TotalBankDepositeAmount ?? 0,
+                    CentreName = result?.CentreName ?? String.Empty,
+                    MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month),
+                    Year = item.Year,
+                    Month = item.Month
+                });
+            }
+            bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+            {
+                MonthName = "Total",
+                TotalBankDepositeAmount = bankDepositeSummaryReports.Sum(e => e.TotalBankDepositeAmount),
+            });
+            return bankDepositeSummaryReports;
+        }
+
+        public IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, int year, int month, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            var firstDayOfMonth = new DateTime(year, month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var bankDepositeSummaryReports = new List<BankDepositeSummaryReport>();
+            var days = DateTimeExtensions.EachDay(firstDayOfMonth, lastDayOfMonth);
+            var data = _nidanDataService.RetriveBankDepositeReportByDate(organisationId, centreId, e => e.DepositedDate >= firstDayOfMonth && e.DepositedDate <= lastDayOfMonth && e.CentreId == centreId, orderBy, paging).Items.ToList();
+            foreach (var item in days)
+            {
+                var result = data.FirstOrDefault(e => e.DepositedDate.Month == item.Month && e.DepositedDate.Day == item.Day && e.DepositedDate.Year == item.Year);
+                bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+                {
+                    CentreId = result?.CentreId ?? 0,
+                    TotalBankDepositeAmount = result?.TotalBankDeposite ?? 0,
+                    CentreName = result?.CentreName ?? String.Empty,
+                    MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month),
+                    Year = item.Year,
+                    Month = item.Month,
+                    Date = item.ToShortDateString()
+                });
+            }
+            bankDepositeSummaryReports.Add(new BankDepositeSummaryReport()
+            {
+                Date = "Total",
+                TotalBankDepositeAmount = bankDepositeSummaryReports.Sum(e => e.TotalBankDepositeAmount),
+            });
+            return bankDepositeSummaryReports;
+        }
+
+        public PagedResult<BankDepositeSearchField> RetrieveBankDeposites(int organisationId, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBankDeposites(organisationId, predicate, orderBy, paging);
+        }
+
+        public BankDeposite RetrieveBankDeposite(int organisationId, int bankDepositeId, Expression<Func<BankDeposite, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveBankDeposite(organisationId, bankDepositeId, predicate);
         }
 
         #endregion
@@ -3885,6 +3963,11 @@ namespace Nidan.Business
             }
         }
 
+        public BankDeposite UpdateBankDeposite(int organisationId, BankDeposite bankDeposite)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, bankDeposite);
+        }
+
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
@@ -4165,6 +4248,26 @@ namespace Nidan.Business
         {
             var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
             var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsFixAsset);
+            var studentDocumentTypeList = new List<StudentDocument>();
+            foreach (var item in documentTypes)
+            {
+                var result = studentDocuments.FirstOrDefault(e => e.DocumentTypeId == item.DocumentTypeId);
+                studentDocumentTypeList.Add(new StudentDocument()
+                {
+                    DocumentTypeId = item.DocumentTypeId,
+                    Guid = result?.Guid,
+                    StudentCode = studentCode,
+                    IsPending = result == null,
+                    Name = item.Name
+                });
+            }
+            return studentDocumentTypeList;
+        }
+
+        public IEnumerable<StudentDocument> RetrieveBankDepositeDocuments(int organisationId, int centreId, string studentCode)
+        {
+            var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
+            var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsBankDepositeDocument);
             var studentDocumentTypeList = new List<StudentDocument>();
             foreach (var item in documentTypes)
             {

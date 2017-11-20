@@ -1,0 +1,85 @@
+﻿@model Nidan.Models.BankDepositeViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.BankDeposite.BankDepositeId)
+                        @Html.Partial("_BankDeposite", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-controller="BankDepositeDocumentController as model" ng-init="model.initialise(@Model.BankDeposite.BankDepositeId)">
+    @Html.Partial("_BankDepositeDocument")
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
+            daysOfTheWeek: ['M', 'T', 'W', 'T', 'F'],
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+        moment.weekdays(true);
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('#BankDeposite_DepositedDate').val(moment().format('DD MMMM YYYY'));
+            $(".date")
+                .on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
+        });
+
+        $('.bank-details-textbox').hide();
+        $("#BankDeposite_PaymentModeId").change(function () {
+            if ($('#BankDeposite_PaymentModeId :selected').text() == "Cheque") {
+                $('.bank-details-textbox').show();
+                $("#BankDeposite_BankName").val("");
+                $("#BankDeposite_ChequeNumber").val("");
+            } else {
+                $('.bank-details-textbox').hide();
+            }
+        });
+    </script>
+}
+

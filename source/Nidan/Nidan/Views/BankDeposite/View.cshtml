@@ -1,0 +1,204 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.BankDepositeViewModel
+@{
+    ViewBag.Title = "View";
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Bank Deposited Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Project</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.Project.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Receipt Number</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.ReceiptNumber" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Deposited Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.DepositedDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Received From</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.ReceivedFrom" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Credit Amount</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.CreditAmount" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Rupees In Words</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.RupeesInWords" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Status</button>
+                                                </span>
+                                                @if (Model.BankDeposite.IsCleared && !Model.BankDeposite.IsBounced)
+                                                {
+                                                    <input type="text" disabled="disabled" value="Cleared" class="form-control col-lg-4">
+                                                }
+                                                @if (!Model.BankDeposite.IsCleared && Model.BankDeposite.IsBounced)
+                                                {
+                                                    <input type="text" disabled="disabled" value="Bounced" class="form-control col-lg-4">
+                                                }
+                                                @if (!Model.BankDeposite.IsCleared && !Model.BankDeposite.IsBounced)
+                                                {
+                                                    <input type="text" disabled="disabled" value="Pending" class="form-control col-lg-4">
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Remarks</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.Remark" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Payment Mode</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.BankDeposite.PaymentMode.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        @if (Model.BankDeposite.PaymentModeId == 2)
+                                        {
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Cheque Date</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.BankDeposite.ChequeDate" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                                @if (Model.BankDeposite.PaymentModeId == 2)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Cheque Number</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.BankDeposite.ChequeNumber" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Bank Name</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.BankDeposite.BankName" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="col-lg-4">
+        <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+            <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+        </a>
+    </div>
+    @if (User.IsInAnyRoles("SuperAdmin"))
+    {
+        if (!Model.BankDeposite.IsCleared && !Model.BankDeposite.IsBounced)
+        {
+            <div class="col-lg-4">
+                <a class="btn btn-success" role="button" ng-href="/BankDeposite/UpdateIsCleared/{{@Model.BankDeposite.BankDepositeId}}">
+                    &nbsp;Cleared
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a class="btn btn-danger" role="button" ng-href="/BankDeposite/UpdateIsBounced/{{@Model.BankDeposite.BankDepositeId}}">
+                    &nbsp;Bounced
+                </a>
+            </div>
+        }
+    }
+</div>
+

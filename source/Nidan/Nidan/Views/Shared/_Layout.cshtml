@@ -65,10 +65,20 @@
                                         </ul>
                                     </li>
                                 }
+                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
+                                        </ul>
+                                    </li>
+                                }
                                 <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
+                                        <li><a href='@Url.Action("Index", "BankDeposite")'>Bank Deposit</a></li>
                                     </ul>
                                 </li>
                                 @if (User.IsInAnyRoles("SuperAdmin"))
@@ -78,29 +88,26 @@
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
                                             <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
-                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
                                             <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
-                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
                                             <li><a href='@Url.Action("Index", "BatchPlanner")'>Batch Planner</a></li>
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin"))
-                                    {
-                                        <li>
-                                            <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
-                                            <ul class="nav child_menu">
-                                                <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
-                                                <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
-                                                <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
-                                            </ul>
-                                        </li>
-                                    }
+                                <li>
+                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                                        }
+                                        <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
+                                    </ul>
+                                </li>
                                 <li>
                                     <a><i class="fa fa-file-excel-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -112,12 +119,13 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            <li><a href='@Url.Action("FixAsset", "Report")'>Fix Asset</a></li>
                                             <li><a href='@Url.Action("Stock", "Report")'>Stock</a></li>
                                         }
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <li><a href='@Url.Action("MobilizationStatistics", "Report")'>Mobilization Statistics</a></li>
+                                            <li><a href='@Url.Action("BankDepositeReport", "Report")'>Bank Deposit Report</a></li>
+                                            <li><a href='@Url.Action("FixAsset", "Report")'>Fix Asset</a></li>
                                         }
                                     </ul>
                                 </li>
@@ -132,14 +140,27 @@
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
                                             <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
+                                        </ul>
+                                    }
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-gear"></i> Fixed Asset <span class="fa fa-chevron-down"></span></a>
+                                    @if (User.IsInAnyRoles("Admin"))
+                                    {
+                                        <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "FixAssetMapping")'>Infra Equipment</a></li>
+                                        </ul>
+                                    }
+                                    @if (User.IsInAnyRoles("SuperAdmin"))
+                                    {
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
                                         </ul>
                                     }
                                 </li>
                             </ul>
                         </div>
-
-                    </div>
+                        </div>
                     <!-- /sidebar menu -->
                 </div>
             </div>
@@ -218,20 +239,20 @@
     @Scripts.Render("~/Scripts/Application")
     @RenderSection("scripts", false)
 
-<script>
-    $(document).ready(function () {
-        $(".btn-primary").mouseover(function () {
-            if ($(".btn-primary").text().trim() == "Back to list") {
-                $('input[type="text"]').rules('remove', 'required');
-            }
+    <script>
+        $(document).ready(function () {
+            $(".btn-primary").mouseover(function () {
+                if ($(".btn-primary").text().trim() == "Back to list") {
+                    $('input[type="text"]').rules('remove', 'required');
+                }
+            });
+            $(".btn-primary").mouseout(function () {
+                if ($(".btn-primary").text().trim() == "Back to list") {
+                    $('input[type="text"]').rules('add', 'required');
+                }
+            });
+            //$("#tabs").tabs();
         });
-        $(".btn-primary").mouseout(function () {
-            if ($(".btn-primary").text().trim() == "Back to list") {
-                $('input[type="text"]').rules('add', 'required');
-            }
-        });
-        //$("#tabs").tabs();
-    });
-</script>   
+    </script>
 </body>
 </html>
