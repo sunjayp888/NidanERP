@@ -364,7 +364,7 @@ namespace Nidan.Business
             _nidanDataService.Create<RoomAvailable>(organisationId, roomAvailables);
             _nidanDataService.Create<TrainerAvailable>(organisationId, trainerAvailables);
         }
-        
+
         private void CreateBatchTrainer(int organisationId, int centreId, int batchId, List<int> trainerIds)
         {
             //Create Department Employment
@@ -1455,28 +1455,71 @@ namespace Nidan.Business
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
         //}
 
-        public bool MarkAttendance(int organisationId, int centreId, int personnelId, List<AttendanceGrid> attendances, int subjectId, int sessionId)
+        public bool MarkAttendance(int organisationId, int centreId, int personnelId, List<StudentAttendance> attendances, int batchId, int subjectId, int sessionId)
         {
             try
             {
                 var attendanceData = RetrieveAttendances(organisationId, e => true);
+                var batchAttendanceData = RetrieveBatchAttendances(organisationId, e => true);
                 foreach (var attendance in attendances)
                 {
-                    var record = attendanceData.Items.Where(e => e.AttendanceDate == attendance.AttendanceDate && e.StudentCode == attendance.StudentCode);
-                    if (record.Any())
+                    var attendanceRecord = attendanceData.Items.Where(e => e.AttendanceDate == attendance.AttendanceDate && e.StudentCode == attendance.StudentCode);
+                    if (attendanceRecord.Any())
                     {
-                        attendance.IsPresent = true;
+                        var result = attendanceData.Items.FirstOrDefault(e => e.AttendanceDate == attendance.AttendanceDate && e.StudentCode == attendance.StudentCode);
+                        if (result != null && attendance.IsPresent)
+                        {
+                            var batchResult = batchAttendanceData.Items.FirstOrDefault(e => e.CreatedDate == attendance.AttendanceDate && e.StudentCode == attendance.StudentCode && e.AttendanceId == result.AttendanceId);
+                            result.InHour = attendance.InHour;
+                            result.InMinute = attendance.InMinute;
+                            result.InTimeSpan = attendance.InTimeSpan;
+                            result.OutHour = attendance.OutHour;
+                            result.OutMinute = attendance.OutMinute;
+                            result.OutTimeSpan = attendance.OutTimeSpan;
+                            result.IsPresent = true;
+                            UpdateAttendance(organisationId, result);
+                            if (batchResult != null)
+                            {
+                                batchResult.SubjectId = subjectId;
+                                batchResult.SessionId = sessionId;
+                                batchResult.Topic = attendance.Topic;
+                                UpdateBatchAttendance(organisationId, batchResult);
+                            }
+                        }
                     }
                     else
                     {
                         var attendanceCreate = new Attendance()
                         {
                             PersonnelId = personnelId,
+                            StudentCode = attendance.StudentCode,
+                            InHour = attendance.InHour,
+                            InMinute = attendance.InMinute,
+                            InTimeSpan = attendance.InTimeSpan,
+                            OutHour = attendance.OutHour,
+                            OutMinute = attendance.OutMinute,
+                            OutTimeSpan = attendance.OutTimeSpan,
+                            IsPresent = attendance.IsPresent,
+                            AttendanceDate = attendance.AttendanceDate,
+                            CentreId = centreId,
+                            OrganisationId = organisationId,
+                            BioMetricLogTime = attendance.BiometricLogTime,
+                            Direction = attendance.Direction
                         };
                         var data = CreateAttendance(organisationId, centreId, personnelId, attendanceCreate);
                         var batchAttendanceCreate = new BatchAttendance()
                         {
-                            AttendanceId = data.AttendanceId
+                            BatchId = batchId,
+                            AttendanceId = data.AttendanceId,
+                            SubjectId = subjectId,
+                            SessionId = sessionId,
+                            Topic = attendance.Topic,
+                            //BatchTrainerId =  ,
+                            StudentCode = attendance.StudentCode,
+                            CentreId = centreId,
+                            OrganisationId = organisationId,
+                            CreatedBy = personnelId,
+                            CreatedDate = attendance.AttendanceDate,
                         };
                         CreateBatchAttendance(organisationId, centreId, personnelId, batchAttendanceCreate);
                     }
@@ -1503,7 +1546,7 @@ namespace Nidan.Business
             {
                 foreach (var centreFixAsset in centreFixAssets)
                 {
-                    var fixAssets = RetrieveCentreFixAssets(organisationId,centreFixAsset.FixAssetId,e=>true);
+                    var fixAssets = RetrieveCentreFixAssets(organisationId, centreFixAsset.FixAssetId, e => true);
                     var countofRoom = fixAssets.Items.Sum(e => e.RoomId);
                     var countofProduct = fixAssets.Items.Sum(e => e.FixAsset.ProductId);
                     centreFixAsset.RoomId = roomId;
@@ -1633,7 +1676,7 @@ namespace Nidan.Business
 
         public Personnel RetrievePersonnel(int organisationId, int personnelId)
         {
-            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, e=>true);
+            var personnel = _nidanDataService.RetrievePersonnel(organisationId, personnelId, e => true);
             return personnel;
         }
 
@@ -3047,7 +3090,7 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveStockDataGrid(organisationId, searchKeyword, predicate, orderBy, paging);
         }
-        
+
         public List<StockType> RetrieveStockTypes(int organisationId, Expression<Func<StockType, bool>> predicate)
         {
             return _nidanDataService.Retrieve<StockType>(organisationId, predicate);
@@ -3128,6 +3171,47 @@ namespace Nidan.Business
         public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)
         {
             return _nidanDataService.Retrieve<StudentKit>(organisationId, predicate);
+        }
+
+        public List<StudentAttendance> RetrieveStudentAttendanceByBatchId(int organisationId, int personnelId, int batchId, DateTime date)
+        {
+            var allCandidatesByBatchId = RetrieveAdmissionGrid(organisationId, e => e.BatchId == batchId).Items.ToList();
+            var studentCodes = allCandidatesByBatchId.Select(e => e.StudentCode);
+            //var candidatesByBatchId = RetrieveAttendanceGrid(organisationId, e => e.BatchId == batchId && studentCodes.Contains(e.StudentCode)).Items.ToList();
+            var todaysBiometricAttendance = RetrieveBiometricAttendanceGrid(organisationId, e => studentCodes.Contains(e.StudentCode) && DbFunctions.TruncateTime(e.LogDateTime) == date);
+            var todaysAttendance = RetrieveAttendances(organisationId, e => studentCodes.Contains(e.StudentCode) && DbFunctions.TruncateTime(e.AttendanceDate) == date && e.IsPresent == true);
+            var studentAttendance = new List<StudentAttendance>();
+            foreach (var candidate in allCandidatesByBatchId)
+            {
+                var biometricResult = todaysBiometricAttendance.Items.FirstOrDefault(e => e.StudentCode == candidate.StudentCode && e.Direction == "I");
+                var attendanceResult = todaysAttendance.Items.FirstOrDefault(e => e.StudentCode == candidate.StudentCode);
+                studentAttendance.Add(new StudentAttendance()
+                {
+                    CandidateName = candidate.CandidateName,
+                    StudentCode = candidate.StudentCode,
+                    PersonnelId = personnelId,
+                    InHour = 0,
+                    InMinute = 0,
+                    InTimeSpan = String.Empty,
+                    OutHour = 0,
+                    OutMinute = 0,
+                    OutTimeSpan = String.Empty,
+                    IsPresent = biometricResult != null || attendanceResult != null,
+                    AttendanceDate = date,
+                    CentreId = candidate.CentreId,
+                    OrganisationId = organisationId,
+                    BiometricLogTime = biometricResult?.LogDateTime.ToString(),
+                    Direction = biometricResult?.Direction,
+                    Topic = String.Empty
+                });
+            }
+            return studentAttendance;
+        }
+
+        public PagedResult<BatchAttendanceDataGrid> RetrieveBatchAttendanceDataGrid(int organisationId, Expression<Func<BatchAttendanceDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchAttendanceDataGrid(organisationId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -3751,7 +3835,7 @@ namespace Nidan.Business
 
         public CentreFixAsset UpdateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId,centreFixAsset);
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreFixAsset);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

@@ -21,21 +21,33 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? AttendanceDate { get; set; }
 
-        public DateTime? AttendanceDateTime { get; set; }
-
-        public int? CentreId { get; set; }
-
-        public int? OrganisationId { get; set; }
-
         [StringLength(50)]
         public string BioMetricLogTime { get; set; }
 
         [StringLength(2)]
         public string Direction { get; set; }
 
-        public virtual Centre Centre { get; set; }
+        public int? CentreId { get; set; }
+
+        public int? OrganisationId { get; set; }
+
+        public int? InHour { get; set; }
+
+        public int? InMinute { get; set; }
+
+        public int? OutHour { get; set; }
+
+        public int? OutMinute { get; set; }
+
+        [StringLength(5)]
+        public string InTimeSpan { get; set; }
+
+        [StringLength(5)]
+        public string OutTimeSpan { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual Centre Centre { get; set; }
 
         public virtual Personnel Personnel { get; set; }
     }

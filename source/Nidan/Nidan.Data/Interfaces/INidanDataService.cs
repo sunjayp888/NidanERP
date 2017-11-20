@@ -221,6 +221,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<CentreProductSetting> RetrieveCentreProductSettings(int organisationId, Expression<Func<CentreProductSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchPlannerGrid> RetrieveBatchPlannerGrids(int organisationId, Expression<Func<BatchPlannerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchAttendanceDataGrid> RetrieveBatchAttendanceDataGrid(int organisationId, Expression<Func<BatchAttendanceDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

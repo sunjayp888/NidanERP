@@ -60,7 +60,7 @@ namespace Nidan.Business.Interfaces
         Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
         BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance);
         bool CreateEventBrainstorming(int organisationId, int centreId, int eventId, List<EventBrainstorming> eventBrainstorming);
-        bool MarkAttendance(int organisationId, int centreId, int personnelId, List<AttendanceGrid> attendances, int subjectId, int sessionId);
+        bool MarkAttendance(int organisationId, int centreId, int personnelId, List<StudentAttendance> attendances, int batchId, int subjectId, int sessionId);
         bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse);
         EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
         EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
@@ -298,6 +298,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate);
+        List<StudentAttendance> RetrieveStudentAttendanceByBatchId(int organisationId, int personnelId, int batchId, DateTime date);
+        PagedResult<BatchAttendanceDataGrid> RetrieveBatchAttendanceDataGrid(int organisationId, Expression<Func<BatchAttendanceDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

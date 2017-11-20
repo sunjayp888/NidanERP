@@ -12,6 +12,11 @@ namespace Nidan.Entity
         [StringLength(353)]
         public string CandidateName { get; set; }
 
+        [StringLength(100)]
+        public string StudentCode { get; set; }
+
+        public int? BatchId { get; set; }
+
         [StringLength(500)]
         public string BatchName { get; set; }
 

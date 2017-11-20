@@ -92,6 +92,7 @@
     <Compile Include="AttendanceGrid.cs" />
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
+    <Compile Include="BatchAttendanceDataGrid.cs" />
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchPlanner.cs" />
     <Compile Include="BatchPlannerDay.cs" />

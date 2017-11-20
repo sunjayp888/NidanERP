@@ -71,5 +71,52 @@
             });
         });
 
-        </script>
+        $('#BatchAttendance_BatchId').change(function () {
+            var batchId = $('#BatchAttendance_BatchId :selected').val();
+            $.ajax({
+                url: '/BatchAttendance/GetSubject',
+                type: 'POST',
+                data: JSON.stringify({ batchId: batchId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#BatchAttendance_SubjectId").empty();
+                    $("#BatchAttendance_SubjectId").append($("<option></option>").html("Select Subject"));
+                    $.each(result, function (key, value) {
+                        $("#BatchAttendance_SubjectId").append($("<option></option>").val(value.SubjectId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#BatchAttendance_SubjectId').change(function () {
+            var subjectId = $('#BatchAttendance_SubjectId :selected').val();
+            $.ajax({
+                url: '/BatchAttendance/GetSession',
+                type: 'POST',
+                data: JSON.stringify({ subjectId: subjectId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#BatchAttendance_SessionId").empty();
+                    $("#BatchAttendance_SessionId").append($("<option></option>").html("Select Session"));
+                    $.each(result, function (key, value) {
+                        $("#BatchAttendance_SessionId").append($("<option></option>").val(value.Session).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+    </script>
 }
