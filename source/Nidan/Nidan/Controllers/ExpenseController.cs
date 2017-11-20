@@ -71,15 +71,22 @@ namespace Nidan.Controllers
             var currentMonth = DateTime.UtcNow.Month;
             var currentYear = DateTime.UtcNow.Year;
             var isCashAvailable = expenseViewModel.AvailablePettyCash > expenseViewModel.Expense.DebitAmount;
-            var limitAmount = NidanBusinessService.RetrieveExpenseHeadLimits(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseMonth == currentMonth && e.ExpenseYear == currentYear && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId).Items.FirstOrDefault().LimitAmount;
-            var totalMonthlyExpenseByExpenseHeader = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId).Items.Sum(e => e.DebitAmount);
-            var balanceLimit = limitAmount - totalMonthlyExpenseByExpenseHeader;
-            var isExpenseLimitExceed= expenseViewModel.Expense.DebitAmount >= balanceLimit;
+            var expenseHeadLimit = NidanBusinessService.RetrieveExpenseHeadLimits(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseMonth == currentMonth && e.ExpenseYear == currentYear && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId).Items.FirstOrDefault();
             expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
-            if (isExpenseLimitExceed)
+            expenseViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList());
+            if (expenseHeadLimit != null)
             {
-                ModelState.AddModelError("", "Limit is exceeded for selected Expense Head");
-                return View(expenseViewModel);
+                var limitAmount = expenseHeadLimit.LimitAmount;
+                var monthlyExpenseByExpenseHeader = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId);
+                var totalMonthlyExpenseByExpenseHeader = monthlyExpenseByExpenseHeader.Items.Sum(e => e.DebitAmount);
+                var balanceLimit = limitAmount - totalMonthlyExpenseByExpenseHeader;
+                var isExpenseLimitExceed= expenseViewModel.Expense.DebitAmount >= balanceLimit;
+                expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
+                if (isExpenseLimitExceed)
+                {
+                    ModelState.AddModelError("", String.Format("Limit is exceeded for {0} Expense Head",monthlyExpenseByExpenseHeader.Items.FirstOrDefault()?.ExpenseHeader.Name));
+                    return View(expenseViewModel);
+                }
             }
             if (!isCashAvailable)
             {
@@ -97,8 +104,7 @@ namespace Nidan.Controllers
                 expenseViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
-            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
-            expenseViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList());
+            
             return View(expenseViewModel);
         }
 
@@ -142,6 +148,29 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var personnelId = UserPersonnelId;
+            var currentMonth = DateTime.UtcNow.Month;
+            var currentYear = DateTime.UtcNow.Year;
+            var isCashAvailable = expenseViewModel.AvailablePettyCash > expenseViewModel.Expense.DebitAmount;
+            var expenseHeadLimit = NidanBusinessService.RetrieveExpenseHeadLimits(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseMonth == currentMonth && e.ExpenseYear == currentYear && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId).Items.FirstOrDefault();
+            if (expenseHeadLimit != null)
+            {
+                var limitAmount = expenseHeadLimit.LimitAmount;
+                var monthlyExpenseByExpenseHeader = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId);
+                var totalMonthlyExpenseByExpenseHeader = monthlyExpenseByExpenseHeader.Items.Sum(e => e.DebitAmount);
+                var balanceLimit = limitAmount - totalMonthlyExpenseByExpenseHeader;
+                var isExpenseLimitExceed = expenseViewModel.Expense.DebitAmount >= balanceLimit;
+                expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
+                if (isExpenseLimitExceed)
+                {
+                    ModelState.AddModelError("", String.Format("Limit is exceeded for {0} Expense Head", monthlyExpenseByExpenseHeader.Items.FirstOrDefault()?.ExpenseHeader.Name));
+                    return View(expenseViewModel);
+                }
+            }
+            if (!isCashAvailable)
+            {
+                ModelState.AddModelError("", String.Format("Insufficient cash, available petty cash is {0}", expenseViewModel.AvailablePettyCash));
+                return View(expenseViewModel);
+            }
             if (ModelState.IsValid)
             {
                 expenseViewModel.Expense.OrganisationId = organisationId;
@@ -240,7 +269,23 @@ namespace Nidan.Controllers
                 var result = totalMonthlyExpenseByExpenseHeader >= expenseHeadLimit;
                 return result;
             }
-            return false;
+            return true;
+        }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, int centreId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveExpenses(UserOrganisationId,centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate && e.CentreId == centreId, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetCentres()
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            return this.JsonNet(data);
         }
     }
 }

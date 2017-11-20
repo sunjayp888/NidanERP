@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.expenses = [];
+        vm.centres = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -34,13 +35,16 @@
         vm.expenseHeaderId = "";
         vm.setDefaultExpenseHeaderId = setDefaultExpenseHeaderId;
         vm.testcalender = testcalender;
+        vm.retrieveCentres = retrieveCentres;
+        vm.centreId;
+        vm.searchExpenseByDate = searchExpenseByDate;
 
         function initialise() {
             vm.orderBy.property = "ExpenseGeneratedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
             order("ExpenseGeneratedDate");
-            alert(isExpenseLimitExceed);
+            retrieveCentres();
         }
 
         function retrieveExpenses() {
@@ -70,6 +74,24 @@
         function searchExpense(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return ExpenseService.searchExpense(vm.searchKeyword, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.expenses = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
+                    return vm.expenses;
+                });
+        }
+
+        function searchExpenseByDate(fromDate, toDate, centreId) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.centreId = centreId;
+            vm.orderBy.property = "ExpenseGeneratedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            //vm.batchId = batchId;
+            return ExpenseService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.centreId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -133,6 +155,13 @@
                 //$("#slc option[value=3]").prop('selected', 'selected');
                 //$('#Expense_ExpenseHeaderId option').eq(expenseHeaderId).prop('selected', true);
             }
+        }
+
+        function retrieveCentres() {
+            return ExpenseService.retrieveCentres().then(function (response) {
+                vm.centres = response.data;
+                return vm.centres;
+            });
         }
 
         function testcalender () {
