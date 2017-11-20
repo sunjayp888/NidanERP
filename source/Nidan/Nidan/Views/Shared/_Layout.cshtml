@@ -132,7 +132,7 @@
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
                                             <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
-                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
+                                            <li><a href='@Url.Action("Index", "FixAssetMapping")'>Infra Equipment</a></li>
                                         </ul>
                                     }
                                 </li>
@@ -216,7 +216,7 @@
     @Scripts.Render("~/Scripts/bower")
     @Scripts.Render("~/Scripts/bower/gentelella")
     @Scripts.Render("~/Scripts/Application")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 
 <script>
     $(document).ready(function () {
@@ -230,7 +230,7 @@
                 $('input[type="text"]').rules('add', 'required');
             }
         });
-        $("#tabs").tabs();
+        //$("#tabs").tabs();
     });
 </script>   
 </body>

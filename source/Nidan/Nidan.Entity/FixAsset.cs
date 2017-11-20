@@ -12,42 +12,53 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FixAsset()
         {
-            CentreFixAssets = new HashSet<CentreFixAsset>();
+            FixAssetMappings = new HashSet<FixAssetMapping>();
+            CreatedDate = DateTime.UtcNow.Date;
         }
 
         public int FixAssetId { get; set; }
 
-        public int ProductId { get; set; }
+        public int AssetClassId { get; set; }
 
-        public int Quantity { get; set; }
+        public int ItemId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string InvoiceNumber { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime DateofPurchase { get; set; }
 
-        [Required]
-        [StringLength(500)]
-        public string Supplier { get; set; }
+        public decimal Cost { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string BillNumber { get; set; }
+        public string PurchaseFrom { get; set; }
 
-        public decimal CostAmount { get; set; }
+        public int Quantity { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        public string Remarks { get; set; }
+        public int CreatedBy { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [StringLength(500)]
+        public string Remark { get; set; }
+
+        public virtual AssetClass AssetClass { get; set; }
+
+        public virtual Item Item { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }
 
-        public virtual Product Product { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentreFixAsset> CentreFixAssets { get; set; }
+        public virtual ICollection<FixAssetMapping> FixAssetMappings { get; set; }
     }
 }

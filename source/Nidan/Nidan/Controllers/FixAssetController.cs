@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -14,8 +15,11 @@ namespace Nidan.Controllers
 {
     public class FixAssetController : BaseController
     {
-        public FixAssetController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        private readonly IDocumentService _documentService;
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
+        public FixAssetController(INidanBusinessService hrBusinessService, IDocumentService documentService) : base(hrBusinessService)
         {
+            _documentService = documentService;
         }
 
         // GET: FixAsset
@@ -24,51 +28,59 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        // GET: Batch/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [HttpPost]
+        public ActionResult Centre()
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCentres(UserOrganisationId, e => true));
+        }
+
+        //Get :FixAsset/Create
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            //var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == centreId);
-            var products = NidanBusinessService.RetrieveProducts(organisationId, e => true);
+            var assetClass = NidanBusinessService.RetrieveAssetClasses(organisationId, e=>true);
+            var items = NidanBusinessService.RetrieveItems(organisationId, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             var viewModel = new FixAssetViewModel()
             {
                 FixAsset = new FixAsset(),
-                //Rooms = new SelectList(rooms, "RoomId", "Description"),
-                Products = new SelectList(products, "ProductId", "Name")
+                AssetClasses = new SelectList(assetClass, "AssetClassId", "Name"),
+                Itemes = new SelectList(items, "ItemId", "Name"),
+                Centres = new SelectList(centres, "CentreId","Name")
             };
-
             return View(viewModel);
         }
 
-        // POST: Batch/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        // POST: FixAsset/Create
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FixAssetViewModel fixAssetViewModel)
         {
             var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 fixAssetViewModel.FixAsset.OrganisationId = organisationId;
-                fixAssetViewModel.FixAsset.CentreId = UserCentreId;
-                fixAssetViewModel.FixAsset = NidanBusinessService.CreateFixAsset(organisationId, fixAssetViewModel.FixAsset);
+                fixAssetViewModel.FixAsset.CreatedBy = personnelId;
+                fixAssetViewModel.FixAsset = NidanBusinessService.CreateFixAsset(UserOrganisationId, fixAssetViewModel.FixAsset);
                 return RedirectToAction("Index");
             }
-            //fixAssetViewModel.Rooms = new SelectList(NidanBusinessService.RetrieveRooms(organisationId, e => true).ToList());
-            fixAssetViewModel.Products = new SelectList(NidanBusinessService.RetrieveProducts(organisationId, e => true).ToList());
+            fixAssetViewModel.AssetClasses = new SelectList(NidanBusinessService.RetrieveAssetClasses(organisationId, e => true).ToList());
+            fixAssetViewModel.Itemes = new SelectList(NidanBusinessService.RetrieveItems(organisationId, e => true).ToList());
+            fixAssetViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => true).ToList());
             return View(fixAssetViewModel);
         }
 
-        // GET: FixAsset/Edit/{id}
-        public ActionResult Edit(int? id)
+        // GET: FixAsset/View/{id}
+        public ActionResult View(int? id)
         {
-            var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var organisationId = UserOrganisationId;
             var fixAsset = NidanBusinessService.RetrieveFixAsset(organisationId, id.Value, e => true);
             if (fixAsset == null)
             {
@@ -76,94 +88,76 @@ namespace Nidan.Controllers
             }
             var viewModel = new FixAssetViewModel()
             {
-                FixAsset = fixAsset,
-                Rooms = new SelectList(NidanBusinessService.RetrieveRooms(UserOrganisationId, e => e.CentreId == UserCentreId).ToList(), "RoomId", "Description"),
-                Products = new SelectList(NidanBusinessService.RetrieveProducts(UserOrganisationId, e => true).ToList(), "ProductId", "Name"),
+                FixAsset = fixAsset
             };
             return View(viewModel);
-        }
-
-        // POST: FixAsset/Edit/{id}
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(FixAssetViewModel fixAssetViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                fixAssetViewModel.FixAsset.OrganisationId = UserOrganisationId;
-                fixAssetViewModel.FixAsset.CentreId = UserCentreId;
-                fixAssetViewModel.FixAsset = NidanBusinessService.UpdateFixAsset(UserOrganisationId, fixAssetViewModel.FixAsset);
-                return RedirectToAction("Index");
-            }
-            var viewModel = new FixAssetViewModel()
-            {
-                FixAsset = fixAssetViewModel.FixAsset
-            };
-            return View(viewModel);
-        }
-
-        // GET: StockPurchase
-        public ActionResult CentreFixAsset(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var viewModel = new FixAssetViewModel()
-            {
-                FixAssetId = id.Value
-            };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult CentreFixAssetList(int fixAssetId, Paging paging, List<OrderBy> orderBy)
-        {
-            var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCentreFixAssets(organisationId, fixAssetId, e => (isSuperAdmin || e.CentreId == centreId) && e.FixAssetId == fixAssetId, orderBy, paging);
-            return this.JsonNet(data);
-
         }
 
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        //FixAssetByCentreId
+        [HttpPost]
+        public ActionResult FixAssetByCentreId(int centreId,Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            if (centreId == 6)
+            {
+                var alldata = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin), orderBy, paging);
+                return this.JsonNet(alldata);
+            }
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin&&p.CentreId==centreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+
+        [HttpPost]
+        public ActionResult GetItem(int assetClassId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveItems(UserOrganisationId, e => e.AssetClassId == assetClassId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveFixAssetDocuments(organisationId, centreId, studentCode);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public void CreateDocument(DocumentViewModel documentViewModel)
         {
+            var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveFixAssets(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.DateofPurchase >= fromDate && e.DateofPurchase <= toDate, orderBy, paging));
+            var fixAssetData = NidanBusinessService.RetrieveFixAssets(organisationId, e => isSuperAdmin && e.FixAssetId.ToString() == documentViewModel.StudentCode).Items.FirstOrDefault();
+            if (fixAssetData != null)
+                try
+                {
+                    _documentService.Create(organisationId, fixAssetData.CentreId,
+                        documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                        fixAssetData.FixAssetId.ToString(), "Fix Asset Document", documentViewModel.Attachment.FileName,
+                        documentViewModel.Attachment.InputStream.ToBytes());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
         }
 
-        [HttpPost]
-        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        public ActionResult DownloadDocument(Guid id)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
-            return this.JsonNet(data);
+            var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
 
-        [HttpPost]
-        public ActionResult Room()
-        {
-            var centreId = UserCentreId;
-            return this.JsonNet(NidanBusinessService.RetrieveRooms(UserOrganisationId, c => c.CentreId==centreId));
-        }
-
-        [HttpPost]  
-        public ActionResult UpdateCentreFixAsset(int roomId, DateTime dateofuse, List<CentreFixAsset> centreFixAssets)
-        {
-            var centreFixAssetChecked = centreFixAssets.Where(e => e.Ischecked);
-            var result = NidanBusinessService.MarkAsset(UserOrganisationId, centreFixAssetChecked.ToList(), roomId, dateofuse);
-            return this.JsonNet(result);
-        }
     }
 }

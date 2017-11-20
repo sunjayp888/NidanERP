@@ -13,6 +13,8 @@
         vm.totalSumOfCountReportsByMonth = [];
         vm.totalSumOfCountReportsByDate = [];
         vm.reports = [];
+        vm.centreId;
+        vm.assetClassId;
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -35,7 +37,7 @@
         vm.searchStockByDate = searchStockByDate;
         vm.searchMobilizationCountReportBydate = searchMobilizationCountReportBydate;
         vm.searchMobilizationCountReportByMonthAndYear = searchMobilizationCountReportByMonthAndYear;
-        vm.searchFixAssetByDate = searchFixAssetByDate;
+        vm.searchFixAssetByCentreIdAssetClassId = searchFixAssetByCentreIdAssetClassId;
         vm.downloadEnquiryCSVByDate = downloadEnquiryCSVByDate;
         vm.downloadMobilizationCSVByDate = downloadMobilizationCSVByDate;
         vm.downloadFollowUpCSVByDate = downloadFollowUpCSVByDate;
@@ -43,7 +45,7 @@
         vm.downloadRegistrationCSVByDate = downloadRegistrationCSVByDate;
         vm.downloadCounsellingCSVByDate = downloadCounsellingCSVByDate;
         vm.downloadExpenseCSVByDate = downloadExpenseCSVByDate;
-        vm.downloadFixAssetCSVByDate = downloadFixAssetCSVByDate;
+        vm.downloadFixAssetByCentreIdAssetClassId = downloadFixAssetByCentreIdAssetClassId;
         vm.downloadStockCSVByDate = downloadStockCSVByDate;
         vm.totalSumOfCountByMonth = totalSumOfCountByMonth;
         vm.totalSumOfCountByDate = totalSumOfCountByDate;
@@ -59,23 +61,13 @@
             order("ReportId");
         }
 
-        //function retrieveEnquiryReports() {
-        //    return ReportService.retrieveEnquiryReports(vm.paging, vm.orderBy)
-        //        .then(function (response) {
-        //            vm.reports = response.data.Items;
-        //            vm.paging.totalPages = response.data.TotalPages;
-        //            vm.paging.totalResults = response.data.TotalResults;
-        //            return vm.reports;
-        //        });
-        //}
-
-        function searchFixAssetByDate(fromDate, toDate) {
-            vm.fromDate = fromDate;
-            vm.toDate = toDate;
-            vm.orderBy.property = "DateofPurchase";
+        function searchFixAssetByCentreIdAssetClassId(assetClassId, centreId) {
+            vm.assetClassId = assetClassId;
+            vm.centreId = centreId;
+            vm.orderBy.property = "fixAssetMappingId";
             vm.orderBy.class = "asc";
-            order("DateofPurchase");
-            return ReportService.searchFixAssetByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+            order("fixAssetMappingId");
+            return ReportService.searchFixAssetByCentreIdAssetClassId(vm.assetClassId, vm.centreId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -84,7 +76,7 @@
                     return vm.reports;
                 });
         }
-
+        
         function searchEnquiryByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
@@ -257,6 +249,7 @@
 
         function pageChanged() {
             vm.centreId = $("#CentreId").val();
+            vm.assetClassId = $("#AssetClassId").val();
             vm.fromDate = $("#fromDate").val();
             vm.toDate = $("#toDate").val();
             vm.fromMonth = $("#FromMonth").val();
@@ -288,13 +281,13 @@
             if (path[2] == "MobilizationProcessReportByMonth") {
                 searchMobilizationCountReportByMonthAndYear(vm.centreId, vm.fromMonth, vm.toMonth, vm.fromYear, vm.toYear);
             }
-            if (path[2] == "searchFixAssetByDate") {
-                searchFixAssetByDate(vm.fromDate, vm.toDate);
+            if (path[2] == "FixAssetByCentreIdAssetClassId") {
+                searchFixAssetByCentreIdAssetClassId(vm.centreId, vm.assetClassId);
             }
         }
 
-        function downloadFixAssetCSVByDate(fromDate, toDate) {
-            return ReportService.downloadFixAssetCSVByDate(fromDate, toDate);
+        function downloadFixAssetByCentreIdAssetClassId(centreId, assetClassId) {
+            return ReportService.downloadFixAssetByCentreIdAssetClassId(centreId, assetClassId);
         }
 
         function downloadMobilizationCSVByDate(fromDate, toDate) {

@@ -8,6 +8,7 @@ namespace Nidan.Models
         public string CentreName { get; set; }
         public int PersonnelId { get; set; }
         public int CentreId { get; set; }
+        public int AssetClassId { get; set; }
         public Permissions Permissions { get; set; }
     }
 }

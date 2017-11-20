@@ -6,15 +6,10 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Product")]
-    public partial class Product
+    [Table("AssignType")]
+    public partial class AssignType
     {
-        public Product()
-        {
-            CentreProductSettings=new HashSet<CentreProductSetting>();
-        }
-
-        public int ProductId { get; set; }
+        public int AssignTypeId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -25,6 +20,6 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentreProductSetting> CentreProductSettings { get; set; }
+        public virtual ICollection<FixAssetMapping> FixAssetMappings { get; set; }
     }
 }
