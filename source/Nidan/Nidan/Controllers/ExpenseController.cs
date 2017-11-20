@@ -287,5 +287,13 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult GetCentres()
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            return this.JsonNet(data);
+        }
     }
 }
