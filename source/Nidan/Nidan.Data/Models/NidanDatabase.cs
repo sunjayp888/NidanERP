@@ -131,19 +131,25 @@ namespace Nidan.Data.Models
         public virtual DbSet<StockIssue> StockIssues { get; set; }
         public virtual DbSet<StockPurchase> StockPurchases { get; set; }
         public virtual DbSet<StockDataGrid> StockDataGrids { get; set; }
-        public virtual DbSet<FixAsset> FixAssets { get; set; }
-        public virtual DbSet<FixAssetSearchGrid> FixAssetSearchGrids { get; set; }
-        public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
         public virtual DbSet<StockType> StockTypes { get; set; }
         public virtual DbSet<StockReportDataGrid> StockReportDataGrids { get; set; }
         public virtual DbSet<BatchPlanner> BatchPlanners { get; set; }
         public virtual DbSet<BatchPlannerDay> BatchPlannerDays { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<CentreProductSetting> CentreProductSettings { get; set; }
-        public virtual DbSet<CentreFixAsset> CentreFixAssets { get; set; }
         public virtual DbSet<BatchPlannerGrid> BatchPlannerGrids { get; set; }
         public virtual DbSet<StudentKit> StudentKits { get; set; }
         public virtual DbSet<BatchAttendanceDataGrid> BatchAttendanceDataGrids { get; set; }
+        public virtual DbSet<AssignType> AssignTypes { get; set; }
+        public virtual DbSet<CentreItemSetting> CentreItemSettings { get; set; }
+        public virtual DbSet<FixAssetMappingCountByCentre> FixAssetMappingCountByCentres { get; set; }
+        public virtual DbSet<AssetClass> AssetClasses { get; set; }
+        public virtual DbSet<AssetOutState> AssetOutStates { get; set; }
+        public virtual DbSet<FixAsset> FixAssets { get; set; }
+        public virtual DbSet<FixAssetMapping> FixAssetMappings { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
+        public virtual DbSet<FixAssetDetailGrid> FixAssetDetailGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2042,51 +2048,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CentreFixAsset>()
-                .Property(e => e.AssetCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CentreFixAsset>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAsset>()
-                .HasMany(e => e.CentreFixAssets)
-                .WithRequired(e => e.FixAsset)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.Supplier)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.BillNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FixAssetSearchGrid>()
-                .Property(e => e.SearchField)
-                .IsUnicode(false);
-
             modelBuilder.Entity<BatchPlannerGrid>()
                 .Property(e => e.ClassRoomName)
                 .IsUnicode(false);
@@ -2115,32 +2076,161 @@ namespace Nidan.Data.Models
                 .Property(e => e.Trainer)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<FixAssetDataGrid>()
+           modelBuilder.Entity<CentrePettyCash>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AssignType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetMappingCountByCentre>()
+                .Property(e => e.AssetClassName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetMappingCountByCentre>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AssetClass>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AssetClass>()
+                .HasMany(e => e.FixAssets)
+                .WithRequired(e => e.AssetClass)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AssetClass>()
+                .HasMany(e => e.Items)
+                .WithRequired(e => e.AssetClass)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AssetOutState>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AssetOutState>()
+                .HasMany(e => e.FixAssetMappings)
+                .WithRequired(e => e.AssetOutState)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.InvoiceNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.PurchaseFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAsset>()
+                .HasMany(e => e.FixAssetMappings)
+                .WithRequired(e => e.FixAsset)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FixAssetMapping>()
+                .Property(e => e.AssetCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetMapping>()
+                .Property(e => e.AssetOutOwner)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetMapping>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Item>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Item>()
+                .Property(e => e.ItemCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Item>()
+                .HasMany(e => e.FixAssets)
+                .WithRequired(e => e.Item)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<FixAssetDataGrid>()
                 .Property(e => e.AssetCode)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Description)
+                .Property(e => e.RoomName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.Supplier)
+                .Property(e => e.AssetClassName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FixAssetDataGrid>()
-                .Property(e => e.BillNumber)
+                .Property(e => e.ItemName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.InvoiceNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.PurchaseFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.AssignTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.AssetOutOwner)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.AssignOutStatusName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDataGrid>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             modelBuilder.Entity<FixAssetDataGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CentrePettyCash>()
-                .Property(e => e.Particulars)
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.AssetClassName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.ItemName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.AssetCodeAsPerTally)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.AssetCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.AssetOutOwner)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.AssetOutStatusName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FixAssetDetailGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<BatchAttendanceDataGrid>()

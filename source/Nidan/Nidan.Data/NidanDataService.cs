@@ -375,17 +375,15 @@ namespace Nidan.Data
             }
         }
 
-        public CentreFixAsset CreateCentreFixAsset(int organisationId, CentreFixAsset centreFixAsset)
+        public FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset)
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
-                centreFixAsset = context.CentreFixAssets.Add(centreFixAsset);
+                fixAsset = context.FixAssets.Add(fixAsset);
                 context.SaveChanges();
-
-                return centreFixAsset;
+                return fixAsset;
             }
         }
-
 
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
@@ -3528,29 +3526,7 @@ namespace Nidan.Data
                 return data;
             }
         }
-
-        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                      .FixAssetSearchGrids
-                      .AsNoTracking()
-                      .Where(predicate)
-                      .OrderBy(orderBy ?? new List<OrderBy>
-                      {
-                        new OrderBy
-                        {
-                            Property = "FixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                        }
-                      ).Paginate(paging);
-            }
-        }
-
+        
         public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -3560,6 +3536,8 @@ namespace Nidan.Data
                     .FixAssets
                     .Include(c => c.Centre)
                     .Include(c => c.Organisation)
+                    .Include(c => c.Item)
+                    .Include(c => c.AssetClass)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(c => c.FixAssetId == fixAssetId);
@@ -3593,107 +3571,7 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.BatchPlannerDayId == batchPlannerDayId);
             }
         }
-
-        public PagedResult<FixAssetSearchGrid> RetrieveFixAssets(int organisationId, string searchKeyword, Expression<Func<FixAssetSearchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                var category = new SqlParameter("@SearchKeyword", searchKeyword);
-
-                var searchData = context.Database
-                    .SqlQuery<FixAssetSearchGrid>("SearchFixAsset @SearchKeyword", category).ToList();
-
-                var data = searchData.ToList().AsQueryable().
-                     OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "DateofPurchase",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Where(predicate)
-                    .Paginate(paging);
-                return data;
-            }
-        }
-
-        public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CentreFixAssets
-                    .Include(e => e.FixAsset)
-                    .Include(e => e.FixAsset.Product)
-                    .Include(e => e.Room)
-                    .Include(e => e.Organisation)
-                    .Include(e => e.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CentreFixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CentreFixAssets
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CentreFixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        //public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
-        //    Paging paging = null)
-        //{
-        //    using (ReadUncommitedTransactionScope)
-        //    using (var context = _databaseFactory.Create(organisationId))
-        //    {
-        //        return context
-        //            .CentreFixAssets
-        //            .Include(p => p.FixAsset)
-        //            .Include(p => p.FixAsset.Product)
-        //            .Include(p => p.Room)
-        //            .Include(p => p.Centre)
-        //            .Include(p => p.Organisation)
-        //            .AsNoTracking()
-        //            .Where(predicate)
-        //            .OrderBy(orderBy ?? new List<OrderBy>
-        //            {
-        //                new OrderBy
-        //                {
-        //                    Property = "CentreFixAssetId",
-        //                    Direction = System.ComponentModel.ListSortDirection.Ascending
-        //                }
-        //            })
-        //            .Paginate(paging);
-        //    }
-        //}
-
+        
         public PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3789,11 +3667,139 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CentreFixAssetId",
+                            Property = "FixAssetId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+        
+        public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreItemSettings
+                    .AsNoTracking()
+                    .Where(e=>e.CentreId==centreId && e.ItemId==itemId)
+                    .SingleOrDefault(e => e.CentreId == centreId && e.ItemId == itemId);
+            }
+        }
+
+        public PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .FixAssets
+                    .Include(p=>p.AssetClass)
+                    .Include(p=>p.Item)
+                    .Include(p=>p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "FixAssetId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
+        public PagedResult<FixAssetMapping> RetrieveFixAssetMappings(int organisationId, Expression<Func<FixAssetMapping, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .FixAssetMappings
+                    .Include(p => p.FixAsset)
+                    .Include(p => p.FixAsset.Item)
+                    .Include(p => p.FixAsset.AssetClass)
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "FixAssetMappingId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
+        public FixAssetMapping RetrieveFixAssetMapping(int organisationId, int fixAssetMappingId, Expression<Func<FixAssetMapping, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FixAssetMappings
+                    .Include(c => c.Centre)
+                    .Include(c => c.FixAsset)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(c => c.FixAssetMappingId == fixAssetMappingId);
+            }
+        }
+
+        public PagedResult<FixAssetMappingCountByCentre> RetrieveFixAssetMappingCountByCentre(int organisationId, Expression<Func<FixAssetMappingCountByCentre, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .FixAssetMappingCountByCentres
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "CentreId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
+        public PagedResult<FixAssetDetailGrid> RetrieveFixAssetDetailGrid(int organisationId, Expression<Func<FixAssetDetailGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .FixAssetDetailGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "FixAssetMappingId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
             }
         }
 

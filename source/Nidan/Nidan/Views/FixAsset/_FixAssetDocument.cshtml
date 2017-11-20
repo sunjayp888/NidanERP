@@ -1,9 +1,10 @@
-﻿@using Nidan.Extensions
+﻿@model Nidan.Models.FixAssetViewModel
+    
 @{
-    var cashMemo = Model.CashMemo.ToString();
+    var fixAsset = Model.FixAsset.FixAssetId.ToString();
 }
 
-<div class="modal fade" id="otherFeeDocumentModal" ng-hide="model.ShowModal">
+<div class="modal fade" id="fixAssetDocumentModal" ng-hide="model.ShowModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,19 +22,7 @@
                         </div>
                     </div>
                 </div>
-
-                @*<div class="form-group">
-                        <div class="row">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Document Type</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <select ng-model="model.documentTypeId" class="form-control col-md-7 col-xs-12">
-                                    <option data-ng-repeat="t in model.documentsType" ng-model="model.documentTypeId" value="{{t.DocumentTypeId}}">{{t.Name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>*@
-
-
+                
                 <div class="form-group">
                     <div class="row">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">File</label>
@@ -48,7 +37,7 @@
                     <div class="form-group">
                         <div class="pull-right col-md-7">
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-success" ng-click="model.createExpenseDocument('@cashMemo')" data-dismiss="modal">Save</button>
+                                <button type="button" class="btn btn-success" ng-click="model.createFixAssetDocument('@fixAsset')" data-dismiss="modal">Save</button>
                             </div>
                             <div class="pull-right col-md-6">
                                 <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
@@ -68,7 +57,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>
-                            Expense Documents<small></small>
+                            Fix Asset Documents<small></small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>
@@ -80,26 +69,26 @@
                                 <div class="col-xs-12">
                                     <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                         <thead>
-                                            <tr role="row">
-                                                <th ng-click="model.order('DocumentType')" ng-class="model.orderClass('DocumentType')">Document Type</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
+                                        <tr role="row">
+                                            <th ng-click="model.order('DocumentType')" ng-class="model.orderClass('DocumentType')">Document Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="documentsType in model.expenseDocuments" class="odd gradeX">
-                                                <td><span ng-bind="documentsType.Name"></span></td>
-                                                <td>
-                                                    <button ng-if="!documentsType.IsPending" type="button" class="btn btn-round btn-success btn-xs">Uploaded</button>
-                                                    <button ng-if="documentsType.IsPending" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-warning btn-xs" ng-if="documentsType.IsPending" ng-click="model.removeError(documentsType.DocumentTypeId)" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
-                                                    <a style="cursor: pointer;" ng-if="!documentsType.IsPending" ng-href="/Expense/DownloadDocument/{{documentsType.Guid}}" class="btn btn-success btn-xs">
-                                                        Download
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr ng-repeat="documentsType in model.fixAssetDocuments" class="odd gradeX">
+                                            <td><span ng-bind="documentsType.Name"></span></td>
+                                            <td>
+                                                <button ng-if="!documentsType.IsPending" type="button" class="btn btn-round btn-success btn-xs">Uploaded</button>
+                                                <button ng-if="documentsType.IsPending" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-xs" ng-click="model.removeError(documentsType.DocumentTypeId)" data-toggle="modal" data-target="#fixAssetDocumentModal">Upload Document</button>
+                                                <a style="cursor: pointer;" ng-if="!documentsType.IsPending" ng-href="/FixAsset/DownloadDocument/{{documentsType.Guid}}" class="btn btn-success btn-xs">
+                                                    Download
+                                                </a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -116,3 +105,4 @@
         </div>
     </div>
 </div>
+

@@ -6,15 +6,17 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Product")]
-    public partial class Product
+    [Table("AssetOutState")]
+    public partial class AssetOutState
     {
-        public Product()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AssetOutState()
         {
-            CentreProductSettings=new HashSet<CentreProductSetting>();
+            FixAssetMappings = new HashSet<FixAssetMapping>();
         }
 
-        public int ProductId { get; set; }
+        [Key]
+        public int AssetOutStatusId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -25,6 +27,6 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentreProductSetting> CentreProductSettings { get; set; }
+        public virtual ICollection<FixAssetMapping> FixAssetMappings { get; set; }
     }
 }

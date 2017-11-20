@@ -71,7 +71,15 @@ namespace Nidan.Controllers
         // GET: Report/FixAsset
         public ActionResult FixAsset()
         {
-            return View(new BaseViewModel());
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var assetClasses = NidanBusinessService.RetrieveAssetClasses(organisationId, e => true);
+            var viewModel = new ReportViewModel()
+            {
+                Centres = new SelectList(centres, "CentreId", "Name"),
+                AssetClasses = new SelectList(assetClasses, "AssetClassId", "Name")
+            };
+            return View(viewModel);
         }
 
         // GET: Report/Stock
@@ -359,23 +367,56 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchFixAssetByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult FixAssetByCentreIdAssetClassId(int assetClassId, int centreId)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveFixAssetDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
+            if (centreId == 6 && assetClassId != 5)
+            {
+                var allCentredata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, e => e.AssetClassId == assetClassId);
+                return this.JsonNet(allCentredata);
+            }
+            if (assetClassId == 5 && centreId != 6)
+            {
+                var allAssetdata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, e => e.CentreId == centreId);
+                return this.JsonNet(allAssetdata);
+            }
+            if (centreId == 6 && assetClassId == 5)
+            {
+                var alldata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, e => true);
+                return this.JsonNet(alldata);
+            }
+            var data = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, e => e.AssetClassId == assetClassId && e.CentreId == centreId);
             return this.JsonNet(data);
         }
 
         [HttpPost]
-        public ActionResult DownloadFixAssetCSVByDate(DateTime fromDate, DateTime toDate)
+        public ActionResult DownloadFixAssetByCentreIdAssetClassId(int assetClassId, int centreId)
         {
             var isSuperAdmin = User.IsSuperAdmin();
-            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, centreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
-            var data = NidanBusinessService.RetrieveFixAssetDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate).Items.ToList();
+            if (centreId == 6 && assetClassId != 5)
+            {
+                var alldata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, p => (isSuperAdmin) && p.AssetClassId == assetClassId).Items.ToList();
+                var allcsv = alldata.GetCSV();
+                return File(new System.Text.UTF8Encoding().GetBytes(allcsv), "text/csv", string.Format("{0}_FixAssetReport.csv", centre.Name));
+            }
+            if (assetClassId == 5 && centreId != 6)
+            {
+                var alldata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, p => (isSuperAdmin) && p.CentreId == centreId).Items.ToList();
+                var allcsv = alldata.GetCSV();
+                return File(new System.Text.UTF8Encoding().GetBytes(allcsv), "text/csv", string.Format("{0}_FixAssetReport.csv", centre.Name));
+            }
+            if (centreId == 6 && assetClassId == 5)
+            {
+                var alldata = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, e => true)
+                    .Items.ToList();
+                var allcsv = alldata.GetCSV();
+                return File(new System.Text.UTF8Encoding().GetBytes(allcsv), "text/csv",
+                    string.Format("{0}_FixAssetReport.csv", centre.Name));
+            }
+            var data = NidanBusinessService.RetrieveFixAssetDetailGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.AssetClassId == assetClassId).Items.ToList();
             var csv = data.GetCSV();
-            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FixAssetReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FixAssetReport.csv", centre.Name));
         }
 
         [HttpPost]

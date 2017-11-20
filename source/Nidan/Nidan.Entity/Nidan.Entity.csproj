@@ -88,6 +88,9 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="AssetClass.cs" />
+    <Compile Include="AssetOutState.cs" />
+    <Compile Include="AssignType.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
     <Compile Include="Batch.cs" />
@@ -114,7 +117,7 @@
     <Compile Include="CentreCourse.cs" />
     <Compile Include="CentreCourseInstallment.cs" />
     <Compile Include="CentreEnrollmentReceiptSetting.cs" />
-    <Compile Include="CentreFixAsset.cs" />
+    <Compile Include="CentreItemSetting.cs" />
     <Compile Include="CentrePettyCash.cs" />
     <Compile Include="CentreProductSetting.cs" />
     <Compile Include="CentreReceiptSetting.cs" />
@@ -160,7 +163,9 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FixAsset.cs" />
     <Compile Include="FixAssetDataGrid.cs" />
-    <Compile Include="FixAssetSearchGrid.cs" />
+    <Compile Include="FixAssetDetailGrid.cs" />
+    <Compile Include="FixAssetMapping.cs" />
+    <Compile Include="FixAssetMappingCountByCentre.cs" />
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
@@ -172,6 +177,7 @@
     <Compile Include="Interfaces\INotAbsenceDay.cs" />
     <Compile Include="Interfaces\IOrganisationFilterable.cs" />
     <Compile Include="Dto\OrderBy.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationCentreReport.cs" />
     <Compile Include="MobilizationCentreReportMonthWise.cs" />
@@ -190,13 +196,13 @@
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />
-    <Compile Include="Partials\CentreFixAsset.cs" />
     <Compile Include="Partials\Counselling.cs" />
     <Compile Include="Partials\Course.cs" />
     <Compile Include="Partials\CourseInstallment.cs" />
     <Compile Include="Partials\Event.cs" />
     <Compile Include="Partials\Enquiry.cs" />
     <Compile Include="Partials\FixAsset.cs" />
+    <Compile Include="Partials\FixAssetMappingcs.cs" />
     <Compile Include="Partials\FollowUp.cs" />
     <Compile Include="Partials\Mobilization.cs" />
     <Compile Include="Partials\Organisation.cs" />
