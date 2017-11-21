@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.expenses = [];
+        vm.centres = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -27,12 +28,23 @@
         vm.retrieveExpensesByCashMemo = retrieveExpensesByCashMemo;
         vm.initialise = initialise;
         vm.cashMemo = "";
+        vm.isExpenseLimitExceed = "False";
+        vm.isDateInCurrentWeek = null;
+        vm.expenseLimitCheck = expenseLimitCheck;
+        vm.dateInCurrentWeek = dateInCurrentWeek;
+        vm.expenseHeaderId = "";
+        vm.setDefaultExpenseHeaderId = setDefaultExpenseHeaderId;
+        vm.testcalender = testcalender;
+        vm.retrieveCentres = retrieveCentres;
+        vm.centreId;
+        vm.searchExpenseByDate = searchExpenseByDate;
 
         function initialise() {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ExpenseGeneratedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
-            order("CreatedDate");
+            order("ExpenseGeneratedDate");
+            retrieveCentres();
         }
 
         function retrieveExpenses() {
@@ -62,6 +74,24 @@
         function searchExpense(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return ExpenseService.searchExpense(vm.searchKeyword, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.expenses = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
+                    return vm.expenses;
+                });
+        }
+
+        function searchExpenseByDate(fromDate, toDate, centreId) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.centreId = $('#dropCentre').val();
+            vm.orderBy.property = "ExpenseGeneratedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            //vm.batchId = batchId;
+            return ExpenseService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.centreId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -104,8 +134,67 @@
             return ExpenseService.deleteExpense(centreId, expenseId).then(function () {
                 retrieveExpensesByCashMemo(cashMemo);
             });
-
         }
+
+        function expenseLimitCheck() {
+            return ExpenseService.expenseLimitCheck(vm.expenseHeaderId).then(function (response) {
+                vm.isExpenseLimitExceed = response.data;
+                testcalender();
+                return vm.isExpenseLimitExceed;
+            });
+        }
+        function dateInCurrentWeek(expenseId) {
+            return ExpenseService.dateInCurrentWeek(expenseId).then(function (response) {
+                vm.isDateInCurrentWeek = response.data;
+            });
+        }
+
+        function setDefaultExpenseHeaderId(expenseHeaderId) {
+            vm.expenseHeaderId = expenseHeaderId;
+            if (expenseHeaderId != 0) {
+                //$("#slc option[value=3]").prop('selected', 'selected');
+                //$('#Expense_ExpenseHeaderId option').eq(expenseHeaderId).prop('selected', true);
+            }
+        }
+
+        function retrieveCentres() {
+            return ExpenseService.retrieveCentres().then(function (response) {
+                vm.centres = response.data;
+                return vm.centres;
+            });
+        }
+
+        function testcalender() {
+            var today = new Date();
+            var day = today.getDay();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                minDate: day == 1 || day == 7 ? moment().subtract('0', 'days').format('DD MMMM YYYY') : day == 2 ? moment().subtract('1', 'days').format('DD MMMM YYYY') : day == 3 ? moment().subtract('2', 'days').format('DD MMMM YYYY') : day == 4 ? moment().subtract('3', 'days').format('DD MMMM YYYY') : day == 5 ? moment().subtract('4', 'days').format('DD MMMM YYYY') : moment().subtract('5', 'days').format('DD MMMM YYYY'),
+                maxDate: day == 1 ? moment().add('5', 'days').format('DD MMMM YYYY') : day == 2 ? moment().add('4', 'days').format('DD MMMM YYYY') : day == 3 ? moment().add('3', 'days').format('DD MMMM YYYY') : day == 4 ? moment().add('2', 'days').format('DD MMMM YYYY') : day == 5 ? moment().add('1', 'days').format('DD MMMM YYYY') : day == 6 ? moment().add('0', 'days').format('DD MMMM YYYY') : moment().add('6', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+            });
+        };
     }
 
 })();

@@ -154,6 +154,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BankDepositeSearchField> BankDepositeSearchFields { get; set; }
         public virtual DbSet<BankDepositeCentreReportMonthWise> BankDepositeCentreReportMonthWises { get; set; }
         public virtual DbSet<BankDepositeCentreReport> BankDepositeCentreReports { get; set; }
+        public virtual DbSet<ExpenseHeadLimit> ExpenseHeadLimits { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

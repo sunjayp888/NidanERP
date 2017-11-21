@@ -163,6 +163,7 @@
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseDataGrid.cs" />
     <Compile Include="ExpenseHeader.cs" />
+    <Compile Include="ExpenseHeadLimit.cs" />
     <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FixAsset.cs" />
