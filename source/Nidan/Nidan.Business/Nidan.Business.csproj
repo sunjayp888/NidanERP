@@ -130,6 +130,7 @@
     <Compile Include="Interfaces\PdfService.cs" />
     <Compile Include="Interfaces\RazorService.cs" />
     <Compile Include="Models\AdmissionReceipt.cs" />
+    <Compile Include="Models\AvailablePettyCashReport.cs" />
     <Compile Include="Models\BankDepositeSummaryReport.cs" />
     <Compile Include="Models\BatchMonth.cs" />
     <Compile Include="Models\CandidateEnrollment.cs" />

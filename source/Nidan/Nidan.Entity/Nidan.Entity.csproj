@@ -93,6 +93,7 @@
     <Compile Include="AssignType.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="AttendanceGrid.cs" />
+    <Compile Include="AvailablePettyCashGrid.cs" />
     <Compile Include="BankDeposite.cs" />
     <Compile Include="BankDepositeCentreReport.cs" />
     <Compile Include="BankDepositeCentreReportMonthWise.cs" />
