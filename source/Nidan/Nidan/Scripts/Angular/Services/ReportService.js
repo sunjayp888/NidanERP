@@ -39,7 +39,9 @@
             searchBankDepositeReportBydate: searchBankDepositeReportBydate,
             searchBankDepositeReportByMonthAndYear: searchBankDepositeReportByMonthAndYear,
             searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
-            retrieveBankDepositeByDate: retrieveBankDepositeByDate
+            retrieveBankDepositeByDate: retrieveBankDepositeByDate,
+            availablePettyCashReport: availablePettyCashReport,
+            retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId
         };
 
         return service;
@@ -349,6 +351,27 @@
                 data = {
                     centreId: centreId,
                     date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function availablePettyCashReport(Paging, OrderBy) {
+            var url = "/Report/AvailablePettyCashReport",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCentrePettyCashByCentreId(centreId, Paging, OrderBy) {
+            var url = "/Report/CentrePettyCashList",
+                data = {
+                    centreId: centreId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);

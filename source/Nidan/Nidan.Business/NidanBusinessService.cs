@@ -1697,6 +1697,30 @@ namespace Nidan.Business
             return bankDepositeSummaryReports;
         }
 
+        public IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            var centres = RetrieveCentres(organisationId, e => true);
+            var data = _nidanDataService.RetrieveAvailablePettyCashGrid(organisationId, e => true, orderBy, paging).Items.ToList();
+            var availablePettyCashReport = new List<AvailablePettyCashReport>();
+            foreach (var centre in centres)
+            {
+                var result = data.FirstOrDefault(e => e.CentreId == centre.CentreId);
+                availablePettyCashReport.Add(new AvailablePettyCashReport()
+                {
+                    CentreId = result?.CentreId ?? centre.CentreId,
+                    AvailablePettyCash = result?.AvailablePettyCash ?? 0,
+                    CentreName = centre.Name
+                });
+            }
+            return availablePettyCashReport;
+        }
+
+        public PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveAvailablePettyCashGrid(organisationId, predicate, orderBy, paging);
+        }
+
         public PagedResult<BankDepositeSearchField> RetriveCentreBankDepositeByDate(int organisationId, int centreId, DateTime date)
         {
             var bankDepositeData = _nidanDataService.RetrieveBankDeposites(organisationId, e => e.CentreId == centreId && e.DepositedDate.Day == date.Day && e.DepositedDate.Month == date.Month && e.DepositedDate.Year == date.Year);

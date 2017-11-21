@@ -230,6 +230,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<BankDepositeCentreReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, Expression<Func<BankDepositeCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BankDepositeCentreReportMonthWise> RetriveBankDepositeCentreReportMonthWise(int organisationId, Expression<Func<BankDepositeCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

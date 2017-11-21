@@ -155,6 +155,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BankDepositeCentreReportMonthWise> BankDepositeCentreReportMonthWises { get; set; }
         public virtual DbSet<BankDepositeCentreReport> BankDepositeCentreReports { get; set; }
         public virtual DbSet<ExpenseHeadLimit> ExpenseHeadLimits { get; set; }
+        public virtual DbSet<AvailablePettyCashGrid> AvailablePettyCashGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2344,6 +2345,22 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<BankDepositeCentreReport>()
                 .Property(e => e.TotalBankDeposite)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalTransferAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalDebitAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.AvailablePettyCash)
                 .HasPrecision(38, 2);
 
             base.OnModelCreating(modelBuilder);

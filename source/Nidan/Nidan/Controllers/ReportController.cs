@@ -74,6 +74,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Stock
+        public ActionResult CentrePettyCashByCentre()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/BankDepositeReports
         public ActionResult BankDepositeReport()
         {
@@ -321,6 +327,13 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
         public ActionResult DownloadEnquiryCSVByDate(DateTime fromDate, DateTime toDate)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
@@ -523,6 +536,14 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveStockReportDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.StockPurchaseDate >= fromDate && p.StockPurchaseDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_StockReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult CentrePettyCashList(int centreId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId, p => (isSuperAdmin && p.CentreId == centreId), orderBy, paging);
+            return this.JsonNet(data);
         }
     }
 }
