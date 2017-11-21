@@ -1721,6 +1721,7 @@
     <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
     <Content Include="Views\Report\BankDepositeReport.cshtml" />
     <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
+    <Content Include="Views\Expense\TermsAndCondition.cshtml" />
     <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
