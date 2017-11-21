@@ -60,6 +60,9 @@
         vm.viewBankDepositeReportByMonthWise = viewBankDepositeReportByMonthWise;
         vm.viewBankDepositeDetailByDate = viewBankDepositeDetailByDate;
         vm.retrieveBankDepositeByDate = retrieveBankDepositeByDate;
+        vm.availablePettyCashReport = availablePettyCashReport;
+        vm.viewCentrePettyCashByCentreId = viewCentrePettyCashByCentreId;
+        vm.retrieveCentrePettyCashByCentreId = retrieveCentrePettyCashByCentreId;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -254,6 +257,31 @@
                 });
         }
 
+        function availablePettyCashReport() {
+            vm.orderBy.property = "CentreId";
+            vm.orderBy.class = "asc";
+            vm.orderBy.direction = "Ascending";
+            return ReportService.availablePettyCashReport(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function retrieveCentrePettyCashByCentreId(centreId) {
+            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            return ReportService.retrieveCentrePettyCashByCentreId(vm.centreId, vm.paging, vm.orderBy).then(function (response) {
+                vm.centrePettyCashReports = response.data.Items;
+                return vm.centrePettyCashReports;
+            });
+        }
+
         function pageChanged() {
             vm.centreId = $("#CentreId").val();
             vm.assetClassId = $("#AssetClassId").val();
@@ -367,6 +395,10 @@
 
         function viewMobilizationReportByDate(centreId, fromMonth, fromYear) {
             window.location.href = "/Report/MobilizationProcessReportByDate?centreId=" +centreId + "&month=" + fromMonth + "&year=" + fromYear;
+        }
+
+        function viewCentrePettyCashByCentreId(centreId) {
+            window.location.href = "/Report/CentrePettyCashByCentre?centreId=" + centreId;
         }
 
        function getUrlParameter(sParam) {

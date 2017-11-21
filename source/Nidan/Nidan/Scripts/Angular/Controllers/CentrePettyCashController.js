@@ -19,6 +19,7 @@
         vm.editCentrePettyCash = editCentrePettyCash;
         vm.searchCentrePettyCash = searchCentrePettyCash;
         vm.viewCentrePettyCash = viewCentrePettyCash;
+        vm.searchCentrePettyCashByDate = searchCentrePettyCashByDate;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         initialise();
@@ -43,6 +44,19 @@
         function searchCentrePettyCash(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             return CentrePettyCashService.searchCentrePettyCash(vm.searchKeyword, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.centrePettyCashs = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.centrePettyCashs.length === 0 ? "No Records Found" : "";
+                    return vm.centrePettyCashs;
+                });
+        }
+
+        function searchCentrePettyCashByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            return CentrePettyCashService.searchCentrePettyCashByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.centrePettyCashs = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

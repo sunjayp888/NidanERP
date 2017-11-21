@@ -104,6 +104,8 @@
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                                            <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
+                                            <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                         }
                                         <li><a href='@Url.Action("Index", "Expense")'>Expense</a></li>
                                     </ul>
@@ -161,7 +163,6 @@
                             </ul>
                         </div>
                         </div>
-                    <!-- /sidebar menu -->
                 </div>
             </div>
             <!-- top navigation -->

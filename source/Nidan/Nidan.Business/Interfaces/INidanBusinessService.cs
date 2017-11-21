@@ -307,6 +307,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<FixAssetMappingCountByCentre> RetrieveFixAssetMappingCountByCentre(int organisationId, Expression<Func<FixAssetMappingCountByCentre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FixAssetDetailGrid> RetrieveFixAssetDetailGrid(int organisationId, Expression<Func<FixAssetDetailGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BankDepositeSearchField> RetriveCentreBankDepositeByDate(int organisationId, int centreId, DateTime date);
         IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, int year, int month, List<OrderBy> orderBy = null, Paging paging = null);
