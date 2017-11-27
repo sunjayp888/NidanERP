@@ -9,15 +9,18 @@ namespace Nidan.Entity
     [Table("BankDeposite")]
     public partial class BankDeposite
     {
+        public BankDeposite()
+        {
+            CreatedDate = DateTime.UtcNow.Date;
+        }
+
         public int BankDepositeId { get; set; }
 
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
 
-        [Required]
         [StringLength(1000)]
         public string ReceiptNumber { get; set; }
 
-        [Required]
         [StringLength(4000)]
         public string ReceivedFrom { get; set; }
 
@@ -44,21 +47,24 @@ namespace Nidan.Entity
 
         public bool IsBounced { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         public int CreatedBy { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
 
-        public virtual Organisation Organisation { get; set; }
-
         public virtual Centre Centre { get; set; }
 
-        public virtual Project Project { get; set; }
+        public virtual Organisation Organisation { get; set; }
 
         public virtual PaymentMode PaymentMode { get; set; }
-    }
 
+        public virtual Project Project { get; set; }
+    }
 }

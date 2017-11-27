@@ -3926,7 +3926,32 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
+        public PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<BankDepositeSearchField>("SearchBankDeposite @SearchKeyword", category)
+                    .ToList().AsQueryable().
+                    Where(predicate).
+                    OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BankDepositeId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return searchData;
+            }
+        }
+
         public PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
