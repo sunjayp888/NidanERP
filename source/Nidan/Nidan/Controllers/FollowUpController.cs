@@ -70,6 +70,7 @@ namespace Nidan.Controllers
             {
                 followUpViewModel.FollowUp.OrganisationId = organisationId;
                 followUpViewModel.FollowUp.CentreId = centreId;
+                followUpViewModel.FollowUp.CreatedBy = UserPersonnelId;
                 followUpViewModel.FollowUp = NidanBusinessService.UpdateFollowUp(organisationId, followUpViewModel.FollowUp);
                 return RedirectToAction("Index");
             }
@@ -112,16 +113,16 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var followUpType = TempData["FollowUpType"] as string;
             if (followUpType != null && followUpType == "Enquiry")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
                    p => (isSuperAdmin || p.CentreId == UserCentreId)
                    && p.FollowUpDateTime == _today && p.FollowUpType == "Enquiry", orderBy, paging));
 
             if (followUpType != null && followUpType == "Counselling")
-                return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+                return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
                    p => (isSuperAdmin || p.CentreId == UserCentreId)
                    && p.FollowUpDateTime == _today && p.FollowUpType == "Counselling", orderBy, paging));
 
-            return this.JsonNet(NidanBusinessService.RetrieveFollowUps(organisationId,
+            return this.JsonNet(NidanBusinessService.RetrieveFollowUpsData(organisationId,
               p => (isSuperAdmin || p.CentreId == UserCentreId)
               && p.Close != "Yes", orderBy, paging));
         }
@@ -132,7 +133,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var pendingFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime < _today, orderBy, paging);
+            var pendingFollowUpCount = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime < _today, orderBy, paging);
             return this.JsonNet(pendingFollowUpCount);
         }
 
@@ -142,7 +143,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var todaysFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _today, orderBy, paging);
+            var todaysFollowUpCount = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _today, orderBy, paging);
             return this.JsonNet(todaysFollowUpCount);
         }
 
@@ -152,7 +153,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var tomorrowFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _tomorrow, orderBy, paging);
+            var tomorrowFollowUpCount = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime == _tomorrow, orderBy, paging);
             return this.JsonNet(tomorrowFollowUpCount);
         }
 
@@ -162,7 +163,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var upcomingFollowUpCount = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime > _tomorrow, orderBy, paging);
+            var upcomingFollowUpCount = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.Close == "No" && e.FollowUpDateTime > _tomorrow, orderBy, paging);
             return this.JsonNet(upcomingFollowUpCount);
         }
 
@@ -224,7 +225,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveFollowUps(organisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveFollowUpsData(organisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.FollowUpDateTime >= fromDate && e.FollowUpDateTime <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

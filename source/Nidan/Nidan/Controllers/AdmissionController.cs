@@ -368,14 +368,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissionGrid(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate && p.AdmissionDate <= toDate, orderBy, paging);
-            //foreach (var item in data.Items)
-            //{
-            //    var candidateInstallmentId = item.Registration.CandidateInstallmentId;
-            //    var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
-            //    var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
-            //    item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
-            //    item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
-            //}
             return this.JsonNet(data);
         }
 
@@ -385,14 +377,6 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissionBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
-            //foreach (var item in data.Items)
-            //{
-            //    var candidateInstallmentId = item.Registration.CandidateInstallmentId;
-            //    var courseFee = NidanBusinessService.RetrieveCandidateInstallment(organisationId, candidateInstallmentId, e => true).CourseFee;
-            //    var totalPaidAmount = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == candidateInstallmentId).Items.Sum(e => e.PaidAmount);
-            //    item.Registration.CandidateFee.PaidAmount = totalPaidAmount;
-            //    item.Registration.CandidateFee.Particulars = (courseFee - totalPaidAmount).ToString();
-            //}
             return this.JsonNet(data);
         }
 

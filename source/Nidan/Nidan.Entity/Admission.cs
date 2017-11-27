@@ -28,6 +28,8 @@ namespace Nidan.Entity
 
         public int? PersonnelId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public string EnrollmentNumber { get; set; }
 
         public virtual Registration Registration { get; set; }
