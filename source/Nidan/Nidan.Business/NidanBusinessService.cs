@@ -1916,6 +1916,13 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveActivityDataGrids(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBankDepositeBySearchKeyword(organisationId, searchKeyword, predicate,
+                orderBy, paging);
+        }
+
         #endregion
 
         #region // Retrieve

@@ -47,7 +47,6 @@ namespace Nidan.Controllers
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.Amount);
             var totalDebitAmount = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
             var expenseData = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth);
-            //   var eligibleExpenseHeader=expenseData.
             var viewModel = new ExpenseViewModel()
             {
                 Expense = new Expense(),
@@ -118,7 +117,8 @@ namespace Nidan.Controllers
             }
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e =>isSuperAdmin||e.ExpenseHeaderId!=4 ).Items.ToList();
             var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList();
             var expense = NidanBusinessService.RetrieveExpense(organisationId, centreId, id.Value, e => e.CentreId == centreId);
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.Amount);
@@ -274,10 +274,19 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, int centreId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchByDateCentreId(DateTime fromDate, DateTime toDate, int centreId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveExpenses(UserOrganisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate && e.CentreId == centreId, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveExpenses(UserOrganisationId,centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
