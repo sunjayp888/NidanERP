@@ -32,6 +32,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int FollowUpBy { get; set; }
+
         public virtual FollowUp FollowUp { get; set; }
 
         public virtual Centre Centre { get; set; }

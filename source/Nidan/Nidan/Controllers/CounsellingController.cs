@@ -79,6 +79,7 @@ namespace Nidan.Controllers
             {
                 counsellingViewModel.Counselling.OrganisationId = organisationId;
                 counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
+                counsellingViewModel.Counselling.CreatedBy = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
                 counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
@@ -214,7 +215,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Enquiry.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCounsellingDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.Close != "Yes", orderBy, paging));
         }
 
         [HttpPost]
