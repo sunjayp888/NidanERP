@@ -38,11 +38,12 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var currentMonth = DateTime.UtcNow.Month;
-            var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
-            var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList();
+            var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => isSuperAdmin|| e.ExpenseHeaderId!=4).Items.ToList();
+            var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId ).Items.ToList();
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.Amount);
             var totalDebitAmount = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
             var expenseData = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth);

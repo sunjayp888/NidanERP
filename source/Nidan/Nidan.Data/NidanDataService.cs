@@ -385,6 +385,46 @@ namespace Nidan.Data
             }
         }
 
+        public ActivityAssigneeGroup CreateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                activityAssigneeGroup = context.ActivityAssigneeGroups.Add(activityAssigneeGroup);
+                context.SaveChanges();
+                return activityAssigneeGroup;
+            }
+        }
+
+        public Activity CreateActivity(int organisationId, Activity activity)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                activity = context.Activities.Add(activity);
+                context.SaveChanges();
+                return activity;
+            }
+        }
+
+        public ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                activityTask = context.ActivityTasks.Add(activityTask);
+                context.SaveChanges();
+                return activityTask;
+            }
+        }
+
+        public ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                activityTaskState = context.ActivityTaskStates.Add(activityTaskState);
+                context.SaveChanges();
+                return activityTaskState;
+            }
+        }
+
         public Enquiry CreateEnquiry(int organisationId, Enquiry enquiry)
         {
             using (var context = _databaseFactory.Create(organisationId))
@@ -601,7 +641,7 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.PersonnelId == personnelId);
-                }
+            }
         }
 
         public IEnumerable<Personnel> RetrievePersonnel(int organisationId, IEnumerable<int> companyIds, IEnumerable<int> departmentIds, IEnumerable<int> divisionIds)
@@ -636,6 +676,7 @@ namespace Nidan.Data
                 return context
                     .Personnels
                     .Include(p => p.Organisation)
+                    .Include(p => p.ActivityAssignPersonnels)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -3526,7 +3567,7 @@ namespace Nidan.Data
                 return data;
             }
         }
-        
+
         public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -3571,7 +3612,7 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.BatchPlannerDayId == batchPlannerDayId);
             }
         }
-        
+
         public PagedResult<BatchPlannerDay> RetrieveBatchPlannerDays(int organisationId, Expression<Func<BatchPlannerDay, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3674,7 +3715,7 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             using (ReadUncommitedTransactionScope)
@@ -3683,7 +3724,7 @@ namespace Nidan.Data
                 return context
                     .CentreItemSettings
                     .AsNoTracking()
-                    .Where(e=>e.CentreId==centreId && e.ItemId==itemId)
+                    .Where(e => e.CentreId == centreId && e.ItemId == itemId)
                     .SingleOrDefault(e => e.CentreId == centreId && e.ItemId == itemId);
             }
         }
@@ -3696,9 +3737,9 @@ namespace Nidan.Data
 
                 return context
                     .FixAssets
-                    .Include(p=>p.AssetClass)
-                    .Include(p=>p.Item)
-                    .Include(p=>p.Centre)
+                    .Include(p => p.AssetClass)
+                    .Include(p => p.Item)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -3926,7 +3967,263 @@ namespace Nidan.Data
                     .Paginate(paging);
             }
         }
-        
+
+        public PagedResult<ActivityAssigneeGroup> RetrieveActivityAssigneeGroups(int organisationId, Expression<Func<ActivityAssigneeGroup, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityAssigneeGroups
+                    .AsNoTracking()
+                    .Include(e=>e.Centre)
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityAssigneeGroupId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public ActivityAssigneeGroup RetrieveActivityAssigneeGroup(int organisationId, int activityAssigneeGroupId,
+            Expression<Func<ActivityAssigneeGroup, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityAssigneeGroups
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ActivityAssigneeGroupId == activityAssigneeGroupId);
+            }
+        }
+
+        public PagedResult<Activity> RetrieveActivities(int organisationId, Expression<Func<Activity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Activities
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public Activity RetrieveActivity(int organisationId, int activityId, Expression<Func<Activity, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Activities
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ActivityId == activityId);
+            }
+        }
+
+        public PagedResult<ActivityTask> RetrieveActivityTasks(int organisationId, Expression<Func<ActivityTask, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityTasks
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityTaskId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public ActivityTask RetrieveActivityTask(int organisationId, int activityTaskId, Expression<Func<ActivityTask, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityTasks
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ActivityTaskId == activityTaskId);
+            }
+        }
+
+        public PagedResult<ActivityTaskState> RetrieveActivityTaskStates(int organisationId, Expression<Func<ActivityTaskState, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityTaskStates
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityTaskStatesId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public ActivityTaskState RetrieveActivityTaskState(int organisationId, int activityTaskStateId, Expression<Func<ActivityTaskState, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityTaskStates
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.ActivityTaskStateId == activityTaskStateId);
+            }
+        }
+
+        public PagedResult<ActivityType> RetrieveActivityTypes(int organisationId, Expression<Func<ActivityType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .ActivityTypes
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityTypeId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<TaskState> RetrieveTaskStates(int organisationId, Expression<Func<TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .TaskStates
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "TaskStateId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<ActivityAssignPersonnel> RetrieveActivityAssignPersonnels(int organisationId, int centreId, int activityAssigneeGroupId,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ActivityAssignPersonnels
+                    .Include(p => p.ActivityAssigneeGroup)
+                    .Include(p => p.Personnel)
+                    .AsNoTracking()
+                    .Where(c => c.CentreId == centreId && c.ActivityAssigneeGroupId == activityAssigneeGroupId)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityAssignPersonnelId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<ActivityDataGrid>("SearchStock @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ActivityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ActivityDataGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "ActivityId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
         public PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {

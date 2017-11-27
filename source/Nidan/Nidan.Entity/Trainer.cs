@@ -50,9 +50,7 @@ namespace Nidan.Entity
 
         public int DistrictId { get; set; }
 
-        [Required]
-        [StringLength(12)]
-        public string PinCode { get; set; }
+        public int PinCode { get; set; }
 
         [StringLength(100)]
         public string Gender { get; set; }

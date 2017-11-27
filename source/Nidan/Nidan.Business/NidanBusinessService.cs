@@ -1565,7 +1565,7 @@ namespace Nidan.Business
             var data = _nidanDataService.Create<StockIssue>(organisationId, stockIssue);
             return data;
         }
-        
+
         public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay)
         {
             var data = _nidanDataService.CreateBatchPlanner(organisationId, batchPlanner);
@@ -1610,7 +1610,7 @@ namespace Nidan.Business
                 {
                     FixAssetId = data.FixAssetId,
                     CostPerAsset = data.Cost / data.Quantity,
-                    AssetCode = String.Format("Nest/{0}/{1}/{2}", centre.Name, itemName.Name,centreItemSetting.ItemNumber),
+                    AssetCode = String.Format("Nest/{0}/{1}/{2}", centre.Name, itemName.Name, centreItemSetting.ItemNumber),
                     AssetOutOwner = centre.Name,
                     AssetOutStatusId = 1,
                     StatusDate = data.DateofPurchase,
@@ -1620,7 +1620,7 @@ namespace Nidan.Business
                     OrganisationId = data.OrganisationId
                 };
                 centreItemSetting.ItemNumber = centreItemSetting.ItemNumber + 1;
-               _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreItemSetting);
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreItemSetting);
                 _nidanDataService.Create<FixAssetMapping>(organisationId, fixAssetMapping);
             }
             return data;
@@ -1638,6 +1638,43 @@ namespace Nidan.Business
             return data;
         }
 
+        public ActivityAssigneeGroup CreateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup)
+        {
+            var data = _nidanDataService.CreateActivityAssigneeGroup(organisationId, activityAssigneeGroup);
+            return data;
+        }
+
+        public Activity CreateActivity(int organisationId, Activity activity)
+        {
+            var data = _nidanDataService.CreateActivity(organisationId, activity);
+            return data;
+        }
+
+        public ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask)
+        {
+            var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
+            return data;
+        }
+
+        public ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState)
+        {
+            var data = _nidanDataService.CreateActivityTaskState(organisationId, activityTaskState);
+            return data;
+        }
+
+        public ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId,
+            int personnelId)
+        {
+            var activityAssignPersonnel = new ActivityAssignPersonnel()
+            {
+                OrganisationId = organisationId,
+                CentreId = centreId,
+                ActivityAssigneeGroupId = activityAssigneeGroupId,
+                PersonnelId = personnelId
+            };
+            return _nidanDataService.Create<ActivityAssignPersonnel>(organisationId, activityAssignPersonnel);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -1653,7 +1690,7 @@ namespace Nidan.Business
 
         public FixAssetMapping RetrieveFixAssetMapping(int organisationId, int fixAssetMappingId)
         {
-            var data = _nidanDataService.RetrieveFixAssetMapping(organisationId, fixAssetMappingId,e=>true);
+            var data = _nidanDataService.RetrieveFixAssetMapping(organisationId, fixAssetMappingId, e => true);
             return data;
         }
 
@@ -1800,6 +1837,83 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveExpenseHeadLimits(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<ActivityAssigneeGroup> RetrieveActivityAssigneeGroups(int organisationId, Expression<Func<ActivityAssigneeGroup, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityAssigneeGroups(organisationId, predicate, orderBy, paging);
+        }
+
+        public ActivityAssigneeGroup RetrieveActivityAssigneeGroup(int organisationId, int activityAssigneeGroupId,
+            Expression<Func<ActivityAssigneeGroup, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveActivityAssigneeGroup(organisationId, activityAssigneeGroupId, predicate);
+        }
+
+        public PagedResult<Activity> RetrieveActivities(int organisationId, Expression<Func<Activity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivities(organisationId, predicate, orderBy, paging);
+        }
+
+        public Activity RetrieveActivity(int organisationId, int activityId, Expression<Func<Activity, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveActivity(organisationId, activityId, predicate);
+        }
+
+        public PagedResult<ActivityTask> RetrieveActivityTasks(int organisationId, Expression<Func<ActivityTask, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTasks(organisationId, predicate, orderBy, paging);
+        }
+
+        public ActivityTask RetrieveActivityTask(int organisationId, int activityTaskId, Expression<Func<ActivityTask, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveActivityTask(organisationId, activityTaskId, predicate);
+        }
+
+        public PagedResult<ActivityTaskState> RetrieveActivityTaskStates(int organisationId, Expression<Func<ActivityTaskState, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTaskStates(organisationId, predicate, orderBy, paging);
+        }
+
+        public ActivityTaskState RetrieveActivityTaskState(int organisationId, int activityTaskStateId, Expression<Func<ActivityTaskState, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveActivityTaskState(organisationId, activityTaskStateId, predicate);
+        }
+
+        public PagedResult<ActivityType> RetrieveActivityTypes(int organisationId, Expression<Func<ActivityType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTypes(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<TaskState> RetrieveTaskStates(int organisationId, Expression<Func<TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveTaskStates(organisationId, predicate, orderBy, paging);
+        }
+
+        public IEnumerable<Personnel> RetrieveUnassignedPersonnels(int organisationId, int centreId, int activityAssigneeGroupId)
+        {
+            var data = _nidanDataService.RetrievePersonnel(organisationId, a => !a.ActivityAssignPersonnels.Any(d => d.CentreId == centreId && d.ActivityAssignPersonnelId == activityAssigneeGroupId) && a.CentreId==centreId, null, null).Items.ToList();
+            return data;
+        }
+
+        public PagedResult<ActivityAssignPersonnel> RetrieveActivityAssignPersonnels(int organisationId, int centreId, int activityAssigneeGroupId,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityAssigneeGroupId, orderBy, paging);
+        }
+
+        public PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityDataGrids(organisationId, predicate, orderBy, paging);
         }
 
         #endregion
@@ -3285,16 +3399,16 @@ namespace Nidan.Business
         {
             return _nidanDataService.Retrieve<Product>(organisationId, predicate);
         }
-        
+
         public FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate)
         {
             return _nidanDataService.RetrieveFixAsset(organisationId, fixAssetId, predicate);
         }
-        
+
         public PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate,orderBy,paging);
+            return _nidanDataService.RetrieveFixAssetDataGrid(organisationId, predicate, orderBy, paging);
         }
 
         public List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate)
@@ -3998,6 +4112,26 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, bankDeposite);
         }
 
+        public ActivityAssigneeGroup UpdateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityAssigneeGroup);
+        }
+
+        public Activity UpdateActivity(int organisationId, Activity activity)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activity);
+        }
+
+        public ActivityTask UpdateActivityTask(int organisationId, ActivityTask activityTask)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityTask);
+        }
+
+        public ActivityTaskState UpdateActivityTaskState(int organisationId, ActivityTaskState activityTaskState)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityTaskState);
+        }
+
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
@@ -4145,6 +4279,11 @@ namespace Nidan.Business
         public void DeleteExpenseProject(int organisationId, int expenseId, int projectId)
         {
             _nidanDataService.Delete<ExpenseProject>(organisationId, p => p.ExpenseId == expenseId && p.ProjectId == projectId);
+        }
+
+        public void DeleteActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId)
+        {
+            _nidanDataService.Delete<ActivityAssignPersonnel>(organisationId, p => p.CentreId == centreId && p.ActivityAssigneeGroupId == activityAssigneeGroupId && p.PersonnelId == personnelId);
         }
 
         #endregion

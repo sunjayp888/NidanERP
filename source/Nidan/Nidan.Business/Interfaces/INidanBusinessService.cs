@@ -71,6 +71,11 @@ namespace Nidan.Business.Interfaces
         FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset);
         FixAssetMapping CreateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
         BankDeposite CreateBankDeposite(int organisationId, BankDeposite bankDeposite);
+        ActivityAssigneeGroup CreateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup);
+        Activity CreateActivity(int organisationId, Activity activity);
+        ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask);
+        ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
+        ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -315,6 +320,20 @@ namespace Nidan.Business.Interfaces
         PagedResult<BankDepositeSearchField> RetrieveBankDeposites(int organisationId, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BankDeposite RetrieveBankDeposite(int organisationId, int bankDepositeId, Expression<Func<BankDeposite, bool>> predicate);
         PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityAssigneeGroup> RetrieveActivityAssigneeGroups(int organisationId, Expression<Func<ActivityAssigneeGroup, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityAssigneeGroup RetrieveActivityAssigneeGroup(int organisationId, int activityAssigneeGroupId, Expression<Func<ActivityAssigneeGroup, bool>> predicate);
+        PagedResult<Activity> RetrieveActivities(int organisationId, Expression<Func<Activity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Activity RetrieveActivity(int organisationId, int activityId, Expression<Func<Activity, bool>> predicate);
+        PagedResult<ActivityTask> RetrieveActivityTasks(int organisationId, Expression<Func<ActivityTask, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityTask RetrieveActivityTask(int organisationId, int activityTaskId, Expression<Func<ActivityTask, bool>> predicate);
+        PagedResult<ActivityTaskState> RetrieveActivityTaskStates(int organisationId, Expression<Func<ActivityTaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityTaskState RetrieveActivityTaskState(int organisationId, int activityTaskStateId, Expression<Func<ActivityTaskState, bool>> predicate);
+        PagedResult<ActivityType> RetrieveActivityTypes(int organisationId, Expression<Func<ActivityType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<TaskState> RetrieveTaskStates(int organisationId, Expression<Func<TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<Personnel> RetrieveUnassignedPersonnels(int organisationId, int centreId, int personnelId);
+        PagedResult<ActivityAssignPersonnel> RetrieveActivityAssignPersonnels(int organisationId, int centreId, int activityAssigneeGroupId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -358,6 +377,10 @@ namespace Nidan.Business.Interfaces
         FixAssetMapping UpdateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
         bool AssignFixAssetMapping(int organisationId, int personnelId, int centreId, List<FixAssetMapping> fixAssetMappings);
         BankDeposite UpdateBankDeposite(int organisationId, BankDeposite bankDeposite);
+        ActivityAssigneeGroup UpdateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup);
+        Activity UpdateActivity(int organisationId, Activity activity);
+        ActivityTask UpdateActivityTask(int organisationId, ActivityTask activityTask);
+        ActivityTaskState UpdateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
@@ -374,6 +397,7 @@ namespace Nidan.Business.Interfaces
         void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
         void DeleteExpenseProject(int organisationId, int expenseId, int projectId);
+        void DeleteActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId,int personnelId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

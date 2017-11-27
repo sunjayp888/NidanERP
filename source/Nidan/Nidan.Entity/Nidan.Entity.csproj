@@ -84,6 +84,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbsenceType.cs" />
+    <Compile Include="Activity.cs" />
+    <Compile Include="ActivityAssigneeGroup.cs" />
+    <Compile Include="ActivityAssignPersonnel.cs" />
+    <Compile Include="ActivityDataGrid.cs" />
+    <Compile Include="ActivityTask.cs" />
+    <Compile Include="ActivityTaskState.cs" />
+    <Compile Include="ActivityType.cs" />
     <Compile Include="Admission.cs" />
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
@@ -261,6 +268,7 @@
     <Compile Include="SubjectCourse.cs" />
     <Compile Include="SubjectTrainer.cs" />
     <Compile Include="Taluka.cs" />
+    <Compile Include="TaskState.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Trainer.cs" />
     <Compile Include="TrainerAvailable.cs" />
