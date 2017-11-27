@@ -198,6 +198,8 @@
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="ModuleExamQuestionSet.cs" />
+    <Compile Include="ModuleExamSet.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Dto\ScheduleItemType.cs" />
     <Compile Include="Qualification.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="QuestionType.cs" />
     <Compile Include="Registration.cs" />
     <Compile Include="RegistrationGrid.cs" />
     <Compile Include="RegistrationSearchField.cs" />

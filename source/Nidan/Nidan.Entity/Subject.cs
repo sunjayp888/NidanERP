@@ -17,6 +17,7 @@ namespace Nidan.Entity
             SubjectTrainers = new HashSet<SubjectTrainer>();
             SubjectCourses=new HashSet<SubjectCourse>();
             BatchAttendances = new HashSet<BatchAttendance>();
+            ModuleExamSets=new HashSet<ModuleExamSet>();
         }
 
         public int SubjectId { get; set; }
@@ -61,5 +62,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ModuleExamSet> ModuleExamSets { get; set; }
     }
 }

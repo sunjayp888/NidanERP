@@ -270,6 +270,7 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
+    <Compile Include="Controllers\ModuleExamSetController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -323,6 +324,8 @@
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MobilizationViewModel.cs" />
+    <Compile Include="Models\ModuleExamQuestionSetViewModel.cs" />
+    <Compile Include="Models\ModuleExamSetViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\ExpenseViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
@@ -1173,6 +1176,7 @@
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
+    <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
@@ -1225,6 +1229,7 @@
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
+    <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
@@ -1737,6 +1742,11 @@
     <Content Include="Views\Activity\Index.cshtml" />
     <Content Include="Views\Activity\Create.cshtml" />
     <Content Include="Views\Activity\Edit.cshtml" />
+    <Content Include="Views\ModuleExamSet\Index.cshtml" />
+    <Content Include="Views\ModuleExamSet\Create.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamSet.cshtml" />
+    <Content Include="Views\ModuleExamSet\Edit.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamQuestionSet.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1675,6 +1675,16 @@ namespace Nidan.Business
             return _nidanDataService.Create<ActivityAssignPersonnel>(organisationId, activityAssignPersonnel);
         }
 
+        public ModuleExamSet CreateModuleExamSet(int organisationId, ModuleExamSet moduleExamSet)
+        {
+            return _nidanDataService.Create<ModuleExamSet>(organisationId, moduleExamSet);
+        }
+
+        public ModuleExamQuestionSet CreateModuleExamQuestionSet(int organisationId, ModuleExamQuestionSet moduleExamQuestionSet)
+        {
+            return _nidanDataService.Create<ModuleExamQuestionSet>(organisationId, moduleExamQuestionSet);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -1921,6 +1931,28 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveBankDepositeBySearchKeyword(organisationId, searchKeyword, predicate,
                 orderBy, paging);
+        }
+
+        public PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveModuleExamSets(organisationId, predicate, orderBy, paging);
+        }
+
+        public ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveModuleExamSet(organisationId, moduleExamSetId, predicate);
+        }
+
+        public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveModuleExamQuestionSets(organisationId, predicate, orderBy, paging);
+        }
+
+        public ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId,
+            Expression<Func<ModuleExamQuestionSet, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveModuleExamQuestionSet(organisationId, moduleExamQuestionSetId, predicate);
         }
 
         #endregion
@@ -2602,6 +2634,11 @@ namespace Nidan.Business
         public List<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Subject>(organisationId, predicate);
+        }
+
+        public List<QuestionType> RetrieveQuestionTypes(int organisationId, Expression<Func<QuestionType, bool>> predicate)
+        {
+            return _nidanDataService.Retrieve<QuestionType>(organisationId, predicate);
         }
 
         public PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate,

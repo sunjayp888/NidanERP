@@ -76,6 +76,9 @@ namespace Nidan.Business.Interfaces
         ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask);
         ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
         ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
+        ModuleExamSet CreateModuleExamSet(int organisationId, ModuleExamSet moduleExamSet);
+        ModuleExamQuestionSet CreateModuleExamQuestionSet(int organisationId, ModuleExamQuestionSet moduleExamQuestionSet);
+
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -181,6 +184,7 @@ namespace Nidan.Business.Interfaces
         Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate);
         Session RetrieveSession(int organisationId, int id);
         List<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate);
+        List<QuestionType> RetrieveQuestionTypes(int organisationId, Expression<Func<QuestionType, bool>> predicate);
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         Room RetrieveRoom(int organisationId, int id);
@@ -335,6 +339,10 @@ namespace Nidan.Business.Interfaces
         PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate);
+        PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

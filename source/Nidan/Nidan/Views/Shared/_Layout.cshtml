@@ -74,11 +74,20 @@
                                         </ul>
                                     </li>
                                 }*@
-                                <li>
+    <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
                                         <li><a href='@Url.Action("Index", "BankDeposite")'>Bank Deposit</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-file-excel-o"></i> Assesment <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <li><a href='@Url.Action("Index", "ModuleExamSet")'>Module Exam Set</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 @if (User.IsInAnyRoles("SuperAdmin"))
