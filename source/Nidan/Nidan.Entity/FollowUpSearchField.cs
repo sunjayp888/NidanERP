@@ -11,10 +11,17 @@ namespace Nidan.Entity
     {
         [Key]
         [Column(Order = 0)]
+        [StringLength(500)]
+        public string CentreName { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FollowUpId { get; set; }
 
-        public DateTime? FollowUpDateTime { get; set; }
+        [Key]
+        [Column(Order = 2)]
+        public DateTime FollowUpDateTime { get; set; }
 
         public int? MobilizationId { get; set; }
 
@@ -41,29 +48,34 @@ namespace Nidan.Entity
         public bool? Closed { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 3)]
         public DateTime ReadDateTime { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 4)]
         public DateTime CreatedDateTime { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         public long? Mobile { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IntrestedCourseId { get; set; }
+
+        [Key]
+        [Column(Order = 8)]
+        [StringLength(1000)]
+        public string CourseName { get; set; }
 
         [StringLength(200)]
         public string FollowUpType { get; set; }
@@ -78,7 +90,19 @@ namespace Nidan.Entity
 
         public string ClosingRemark { get; set; }
 
-        [StringLength(1580)]
+        public int? AdmissionId { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CreatedBy { get; set; }
+
+        [Key]
+        [Column(Order = 10)]
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
+
+        [StringLength(1730)]
         public string SearchField { get; set; }
     }
 }

@@ -104,6 +104,7 @@ namespace Nidan.Controllers
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
                 enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.CreatedBy = UserPersonnelId;
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
                 enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
@@ -228,7 +229,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false && p.IsAdmissionDone == false && p.Close == "No", orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.IsAdmissionDone == "NO" && p.Close == "No", orderBy, paging));
         }
 
         [HttpPost]
@@ -243,7 +244,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.IsAdmissionDone == false && e.IsRegistrationDone == false, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.EnquiryDate >= fromDate && e.EnquiryDate <= toDate && e.IsAdmissionDone == "NO" && e.IsRegistrationDone == "NO", orderBy, paging));
         }
 
         [HttpPost]

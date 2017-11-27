@@ -40,6 +40,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public virtual Enquiry Enquiry { get; set; }
 
         //public virtual Registration Registration1 { get; set; }

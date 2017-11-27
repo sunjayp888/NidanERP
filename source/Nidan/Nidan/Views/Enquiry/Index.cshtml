@@ -128,18 +128,18 @@
                                     <tr ng-repeat="enquiry in model.enquiries | orderBy:'-ConversionProspect'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewEnquiry(enquiry.EnquiryId)">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <td><span ng-bind="enquiry.Centre.Name"></span></td>
+                                            <td><span ng-bind="enquiry.CentreName"></span></td>
                                         }
-                                        <td><span ng-bind="enquiry.Title"></span> <span ng-bind="enquiry.FirstName"></span> <span ng-bind="enquiry.MiddleName"></span> <span ng-bind="enquiry.LastName"></span></td>
+                                        <td><span ng-bind="enquiry.CandidateName"></span></td>
                                         <td><span ng-bind="enquiry.Mobile"></span></td>
                                         @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
                                         @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
                                         @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
                                         <td class="col-lg-4">
 
-                                            <button ng-if="!enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
-                                            <button ng-if="enquiry.IsCounsellingDone" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
-                                            <button ng-if="!enquiry.IsRegistrationDone" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
+                                            <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
+                                            <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
+                                            <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
                                         </td>
                                         <td><span ng-bind="enquiry.EnquiryDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="enquiry.FollowUpDate|date : format : shortDate"></span></td>

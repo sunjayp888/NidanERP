@@ -113,7 +113,7 @@
                                         <tr ng-repeat="registration in model.Registrations" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewRegistration(registration.RegistrationId)">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
-                                                <td><span ng-bind="registration.Centre.Name"></span></td>
+                                                <td><span ng-bind="registration.CentreName"></span></td>
                                             }
                                             <td><span ng-bind="registration.CandidateName"></span></td>
                                             <td><span ng-bind="registration.Mobile"></span></td>

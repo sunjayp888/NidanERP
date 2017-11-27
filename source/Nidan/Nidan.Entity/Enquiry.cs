@@ -174,6 +174,8 @@ namespace Nidan.Entity
 
         public bool IsAdmissionDone { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }

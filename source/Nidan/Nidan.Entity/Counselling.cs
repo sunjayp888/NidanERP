@@ -68,6 +68,8 @@ namespace Nidan.Entity
 
         public bool IsRegistrationDone { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }

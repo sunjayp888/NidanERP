@@ -66,6 +66,8 @@ namespace Nidan.Entity
 
         public int? RegistrationId { get; set; }
 
+        public int CreatedBy { get; set; }
+
         public virtual Course Course { get; set; }
 
         public virtual Mobilization Mobilization { get; set; }

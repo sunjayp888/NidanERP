@@ -66,6 +66,7 @@ namespace Nidan.Controllers
                 mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
+                mobilizationViewModel.Mobilization.CreatedBy = UserPersonnelId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
