@@ -238,6 +238,8 @@
     <Compile Include="Constraints\TenantRouteConstraint.cs" />
     <Compile Include="Controllers\AbsenceTypeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityAssigneeGroupController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
@@ -291,6 +293,8 @@
     <Compile Include="Interfaces\ITenantsService.cs" />
     <Compile Include="Models\AbsenceTypeViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ActivityAssigneeGroupViewModel.cs" />
+    <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
     <Compile Include="Models\AttendanceViewModel.cs" />
@@ -1131,6 +1135,8 @@
     <None Include="Content\less\Site.less" />
     <Content Include="Installment.html" />
     <Content Include="Registration.html" />
+    <Content Include="Scripts\Angular\Controllers\ActivityAssigneeGroupController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityAssignPersonnelController.js" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BankDepositeController.js" />
     <Content Include="Scripts\Angular\Controllers\BankDepositeDocumentController.js" />
@@ -1186,6 +1192,7 @@
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
+    <Content Include="Scripts\Angular\Services\ActivityAssigneeGroupService.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BankDepositeDocumentService.js" />
     <Content Include="Scripts\Angular\Services\BankDepositeService.js" />
@@ -1723,6 +1730,13 @@
     <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
     <Content Include="Views\Expense\TermsAndCondition.cshtml" />
     <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Index.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\_ActivityAssigneeGroup.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Create.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Edit.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\Create.cshtml" />
+    <Content Include="Views\Activity\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

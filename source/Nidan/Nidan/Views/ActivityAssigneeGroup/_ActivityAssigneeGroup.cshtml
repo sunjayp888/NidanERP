@@ -1,0 +1,21 @@
+﻿@model Nidan.Models.ActivityAssigneeGroupViewModel
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="form-control-required-example"> = Required</div>
+</div>
+<br />
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.ActivityAssigneeGroup.CentreId, "Centre", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.ActivityAssigneeGroup.CentreId, Model.Centres, "Select Centre", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.ActivityAssigneeGroup.CentreId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ActivityAssigneeGroup.Name, "Name", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.ActivityAssigneeGroup.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.ActivityAssigneeGroup.Name, "", new { @class = "help-block" })
+    </div>
+</div>
