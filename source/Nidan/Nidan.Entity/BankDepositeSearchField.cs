@@ -17,7 +17,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
 
         [Key]
         [Column(Order = 2)]

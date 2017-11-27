@@ -166,6 +166,22 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [HttpPost]
+        public ActionResult SearchBankDepositeByDateByCentreId(DateTime fromDate, DateTime toDate, int centreId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveBankDeposites(UserOrganisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.DepositedDate >= fromDate && e.DepositedDate <= toDate && e.CentreId == centreId, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveBankDepositeBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
         //Update IsCleared
         public ActionResult UpdateIsCleared(int? id)
         {
@@ -227,6 +243,14 @@ namespace Nidan.Controllers
         {
             var document = NidanBusinessService.RetrieveDocument(UserOrganisationId, id);
             return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
+        }
+
+        [HttpPost]
+        public ActionResult GetCentres()
+        {
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            return this.JsonNet(data);
         }
 
     }

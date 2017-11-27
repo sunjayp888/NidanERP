@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.bankDeposites = [];
+        vm.centres = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -22,10 +23,14 @@
         vm.updateIsCleared = updateIsCleared;
         vm.updateIsBounced = updateIsBounced;
         vm.searchBankDepositeByDate = searchBankDepositeByDate;
+        vm.searchBankDepositeByDateByCentreId = searchBankDepositeByDateByCentreId;
+        vm.retrieveCentres = retrieveCentres;
+        vm.searchBankDeposite = searchBankDeposite;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.paymentMode = [];
         vm.paymentModeId;
+        vm.centreId;
         vm.retrievePaymentModes = retrievePaymentModes;
         initialise();
 
@@ -38,6 +43,7 @@
         }
 
         function retrieveBankDeposites() {
+            retrieveCentres();
             return BankDepositeService.retrieveBankDeposites(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.bankDeposites = response.data.Items;
@@ -64,6 +70,21 @@
             vm.toDate = toDate;
             vm.searchKeyword = null;
             return BankDepositeService.searchBankDepositeByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.bankDeposites = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.bankDeposites.length === 0 ? "No Records Found" : "";
+                    return vm.bankDeposites;
+                });
+        }
+
+        function searchBankDepositeByDateByCentreId(centreId, fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.centreId = $('#dropCentre').val();
+            vm.searchKeyword = null;
+            return BankDepositeService.searchBankDepositeByDateByCentreId(vm.centreId, vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.bankDeposites = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -112,6 +133,13 @@
                     vm.paymentModes = response.data;
                     return vm.paymentModes;
                 });
+        }
+
+        function retrieveCentres() {
+            return BankDepositeService.retrieveCentres().then(function (response) {
+                vm.centres = response.data;
+                return vm.centres;
+            });
         }
     }
 

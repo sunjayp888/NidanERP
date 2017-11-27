@@ -37,6 +37,7 @@
         vm.testcalender = testcalender;
         vm.retrieveCentres = retrieveCentres;
         vm.centreId;
+        vm.searchExpenseByDateCentreId = searchExpenseByDateCentreId;
         vm.searchExpenseByDate = searchExpenseByDate;
 
         function initialise() {
@@ -83,7 +84,7 @@
                 });
         }
 
-        function searchExpenseByDate(fromDate, toDate, centreId) {
+        function searchExpenseByDateCentreId(fromDate, toDate, centreId) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
             vm.centreId = $('#dropCentre').val();
@@ -91,7 +92,23 @@
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
             //vm.batchId = batchId;
-            return ExpenseService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.centreId, vm.paging, vm.orderBy)
+            return ExpenseService.searchExpenseByDateCentreId(vm.fromDate, vm.toDate, vm.centreId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.expenses = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
+                    return vm.expenses;
+                });
+        }
+
+        function searchExpenseByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "ExpenseGeneratedDate";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            return ExpenseService.searchExpenseByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.expenses = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

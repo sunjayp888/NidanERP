@@ -12,7 +12,9 @@
             retrieveBankDeposites: retrieveBankDeposites,
             searchBankDeposite: searchBankDeposite,
             retrievePaymentModes: retrievePaymentModes,
-            searchBankDepositeByDate: searchBankDepositeByDate
+            retrieveCentres: retrieveCentres,
+            searchBankDepositeByDate: searchBankDepositeByDate,
+            searchBankDepositeByDateByCentreId: searchBankDepositeByDateByCentreId
         };
 
         return service;
@@ -51,10 +53,28 @@
             return $http.post(url, data);
         }
 
+        function searchBankDepositeByDateByCentreId(centreId,FromDate, ToDate, Paging, OrderBy) {
+            var url = "/BankDeposite/SearchBankDepositeByDateByCentreId",
+                data = {
+                    centreId:centreId,
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
 
         function retrievePaymentModes() {
 
             var url = "/BankDeposite/PaymentMode";
+            return $http.post(url);
+        }
+
+        function retrieveCentres() {
+
+            var url = "/BankDeposite/GetCentres";
             return $http.post(url);
         }
     }

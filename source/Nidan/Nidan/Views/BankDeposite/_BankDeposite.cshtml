@@ -1,21 +1,13 @@
 ﻿@model Nidan.Models.BankDepositeViewModel
 <div class="form-control-required-example"> = Required</div>
 
-<div class="form-group ">
+@*<div class="form-group ">
     @Html.LabelFor(model => model.BankDeposite.ProjectId, "Project", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.BankDeposite.ProjectId, Model.Projects, "Select Project", new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.BankDeposite.ProjectId, "", new { @class = "help-block" })
     </div>
-</div>
-
-<div class="form-group">
-    @Html.LabelFor(model => model.BankDeposite.ReceiptNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.BankDeposite.ReceiptNumber, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.BankDeposite.ReceiptNumber, "", new { @class = "help-block" })
-    </div>
-</div>
+</div>*@
 
 <div class="form-group ">
     @Html.LabelFor(model => model.BankDeposite.PaymentModeId, "Payment Mode", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
@@ -60,8 +52,17 @@
 <div class="form-group">
     @Html.LabelFor(model => model.BankDeposite.RupeesInWords, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.BankDeposite.RupeesInWords, new { @class = "form-control col-md-7 col-xs-12",@readonly=true })
+        @Html.TextBoxFor(model => model.BankDeposite.RupeesInWords, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
         @Html.ValidationMessageFor(model => model.BankDeposite.RupeesInWords, "", new { @class = "help-block" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BankDeposite.ReceiptNumber, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.BankDeposite.ReceiptNumber, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.BankDeposite.ReceiptNumber, "", new { @class = "help-block" })
     </div>
 </div>
 
@@ -84,7 +85,7 @@
 <div class="form-group bank-details-textbox">
     @Html.LabelFor(model => model.BankDeposite.Remark, "Remark", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.BankDeposite.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.EditorFor(model => model.BankDeposite.Remark, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.BankDeposite.Remark, "", new { @class = "help-block" })
     </div>
 </div>
