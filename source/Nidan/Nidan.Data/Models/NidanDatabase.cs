@@ -164,6 +164,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<ActivityType> ActivityTypes { get; set; }
         public virtual DbSet<TaskState> TaskStates { get; set; }
         public virtual DbSet<ActivityDataGrid> ActivityDataGrids { get; set; }
+        public virtual DbSet<ModuleExamSet> ModuleExamSets { get; set; }
+        public virtual DbSet<ModuleExamQuestionSet> ModuleExamQuestionSets { get; set; }
+        public virtual DbSet<QuestionType> QuestionTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1991,6 +1994,47 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ActivityDataGrid>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamSet>()
+                .Property(e => e.QuestionSetName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.QuestionDescription)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.OptionA)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.OptionB)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.OptionC)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.OptionD)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.AnswerType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSet>()
+                .Property(e => e.SubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<QuestionType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<QuestionType>()
+                .HasMany(e => e.ModuleExamQuestionSets)
+                .WithRequired(e => e.QuestionType)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<FollowUpSearchField>()
                 .Property(e => e.CentreName)
