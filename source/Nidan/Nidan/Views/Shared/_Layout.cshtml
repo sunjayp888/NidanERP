@@ -1,4 +1,4 @@
-@using Nidan.Extensions
+﻿@using Nidan.Extensions
 @using Microsoft.AspNet.Identity
 
 @model Nidan.Models.BaseViewModel
@@ -157,6 +157,7 @@
                                     @if (User.IsInAnyRoles("SuperAdmin"))
                                     {
                                         <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fix Asset</a></li>
                                         </ul>
                                     }
                                 </li>

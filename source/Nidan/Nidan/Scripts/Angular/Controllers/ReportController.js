@@ -232,60 +232,12 @@
                 });
         }
 
-        function availablePettyCashReport() {
-            vm.orderBy.property = "CentreId";
-            vm.orderBy.class = "asc";
-            vm.orderBy.direction = "Ascending";
-            return ReportService.availablePettyCashReport(vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.reports = response.data;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    return vm.reports;
-                });
-        }
-
         function searchMobilizationCountReportBydate(centreId, fromMonth, fromYear) {
             vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
             vm.fromMonth = fromMonth == undefined ? getUrlParameter("month") : fromMonth;
             vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
 
             return ReportService.searchMobilizationCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear)
-                .then(function (response) {
-                    vm.reports = response.data;
-                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    // totalSumOfCountByDate(centreId, fromMonth, fromYear);
-                    $('#CentreId').val(vm.centreId);
-                    $('#FromMonth').val(vm.fromMonth);
-                    $('#FromYear').val(vm.fromYear);
-                    return vm.reports;
-                });
-        }
-
-        function searchBankDepositeReportBydate(centreId, fromMonth, fromYear) {
-            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
-            vm.fromMonth = fromMonth == undefined ? getUrlParameter("month") : fromMonth;
-            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
-
-            return ReportService.searchBankDepositeReportBydate(vm.centreId, vm.fromMonth, vm.fromYear)
-                .then(function (response) {
-                    vm.reports = response.data;
-                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    // totalSumOfCountByDate(centreId, fromMonth, fromYear);
-                    $('#CentreId').val(vm.centreId);
-                    $('#FromMonth').val(vm.fromMonth);
-                    $('#FromYear').val(vm.fromYear);
-                    return vm.reports;
-                });
-        }
-
-        function searchBankDepositeCountReportBydate(centreId, fromMonth, fromYear) {
-            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
-            vm.fromMonth = fromMonth == undefined ? getUrlParameter("month") : fromMonth;
-            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
-
-            return ReportService.searchBankDepositeCountReportBydate(vm.centreId, vm.fromMonth, vm.fromYear)
                 .then(function (response) {
                     vm.reports = response.data;
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
@@ -323,21 +275,6 @@
                 });
         }
 
-        function searchBankDepositeReportByMonthAndYear(centreId, fromYear) {
-            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
-            vm.fromYear = fromYear == undefined ? getUrlParameter("year") : fromYear;
-            vm.orderBy.property = "Month";
-            vm.orderBy.class = "asc";
-            order("Month");
-            return ReportService.searchBankDepositeReportByMonthAndYear(vm.centreId, vm.fromYear, vm.paging, vm.orderBy)
-                .then(function (response) {
-                    vm.reports = response.data;
-                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
-                    totalSumOfCountByMonth(centreId, fromMonth, toMonth, fromYear, toYear);
-                    return vm.reports;
-                });
-        }
-
         function availablePettyCashReport() {
             vm.orderBy.property = "CentreId";
             vm.orderBy.class = "asc";
@@ -350,17 +287,6 @@
                     vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
                     return vm.reports;
                 });
-        }
-
-        function retrieveCentrePettyCashByCentreId(centreId) {
-            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
-            vm.orderBy.property = "CreatedDate";
-            vm.orderBy.direction = "Descending";
-            vm.orderBy.class = "desc";
-            return ReportService.retrieveCentrePettyCashByCentreId(vm.centreId, vm.paging, vm.orderBy).then(function (response) {
-                vm.centrePettyCashReports = response.data.Items;
-                return vm.centrePettyCashReports;
-            });
         }
 
         function pageChanged() {
@@ -479,15 +405,6 @@
             });
         }
 
-        function retrieveBankDepositeByDate(centreId, date) {
-            vm.centreId = centreId == undefined ? getUrlParameter("centreId") : centreId;
-            vm.date = date == undefined ? getUrlParameter("date") : date;
-            return ReportService.retrieveBankDepositeByDate(vm.centreId, vm.date).then(function (response) {
-                vm.reports = response.data.Items;
-                return vm.reports;
-            });
-        }
-
         function retrieveRegistrationSummaryByDate(centreId, date) {
             vm.centreId = centreId;
             vm.date = date;
@@ -543,32 +460,14 @@
             window.location.href = "/Report/MobilizationProcessReportByDate?centreId=" +centreId + "&month=" + fromMonth + "&year=" + fromYear;
         }
 
-        function viewBankDepositeReportByDate(centreId, fromMonth, fromYear) {
-            window.location.href = "/Report/BankDepositeReportByDate?centreId=" + centreId + "&month=" + fromMonth + "&year=" + fromYear;
-        }
-
         function viewCandidateFeeByDate(centreId,date) {
             window.location.href = "/Report/FeeSummaryByDate?centreId=" + centreId + "&date=" + date;
-        }
-
-        function viewBankDepositeDetailByDate(centreId, date) {
-            window.location.href = "/Report/BankDepositeDetailByDate?centreId=" + centreId + "&date=" + date;
-        }
-
-        function viewCentrePettyCashByCentreId(centreId) {
-            window.location.href = "/Report/CentrePettyCashByCentre?centreId=" + centreId;
         }
         
         function viewMobilizationReportByMonthWise(centreId, fromYear) {
             vm.centreId = centreId;
             vm.fromYear = fromYear;
             window.location.href = "/Report/MobilizationProcessReportByMonth?centreId=" + centreId + "&year=" + fromYear;
-        }
-
-        function viewBankDepositeReportByMonthWise(centreId, fromYear) {
-            vm.centreId = centreId;
-            vm.fromYear = fromYear;
-            window.location.href = "/Report/BankDepositeProcessReportByMonth?centreId=" + centreId + "&year=" + fromYear;
         }
 
         function viewCentrePettyCashByCentreId(centreId) {

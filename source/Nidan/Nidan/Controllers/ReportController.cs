@@ -569,5 +569,12 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult MobilizationCountReportByCurrentMonth()
+        {
+            var data = NidanBusinessService.RetriveMobilizationCountReportByMonthWise(UserOrganisationId);
+            return this.JsonNet(data);
+        }
     }
 }

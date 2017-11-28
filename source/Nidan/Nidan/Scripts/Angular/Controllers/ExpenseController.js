@@ -22,7 +22,7 @@
         vm.deleteExpense = deleteExpense;
         vm.searchExpense = searchExpense;
         vm.viewExpense = viewExpense;
-        vm.retrieveCentres = retrieveCentres;
+        //vm.addExpense = addExpense;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.retrieveExpensesByCashMemo = retrieveExpensesByCashMemo;
@@ -147,16 +147,6 @@
             $window.location.href = "/Expense/Create/" + cashMemo;
         }
 
-        function retrieveCentres() {
-            //vm.orderBy.property = "CentreId";
-            //vm.orderBy.direction = "Descending";
-            //vm.orderBy.class = "desc";
-            return ExpenseService.retrieveCentres().then(function (response) {
-                vm.expenses = response.data;
-                return vm.expenses;
-            });
-        }
-
         function deleteExpense(centreId, expenseId, cashMemo) {
             return ExpenseService.deleteExpense(centreId, expenseId).then(function () {
                 retrieveExpensesByCashMemo(cashMemo);
@@ -189,8 +179,7 @@
                 vm.centres = response.data;
                 return vm.centres;
             });
-            });
-        } 
+        }
 
         function testcalender() {
             var today = new Date();
@@ -203,26 +192,6 @@
                 singleDatePicker: true,
                 showDropdowns: true,
                 showCustomRangeLabel: false,
-                opens: 'left',
-                //minDate: moment(),
-                minDate: day == 1 || day == 7 ? moment().subtract('0', 'days').format('DD MMMM YYYY') : day == 2 ? moment().subtract('1', 'days').format('DD MMMM YYYY') : day == 3 ? moment().subtract('2', 'days').format('DD MMMM YYYY') : day == 4 ? moment().subtract('3', 'days').format('DD MMMM YYYY') : day == 5 ? moment().subtract('4', 'days').format('DD MMMM YYYY') : moment().subtract('5', 'days').format('DD MMMM YYYY'),
-                maxDate: day == 1 ? moment().add('5', 'days').format('DD MMMM YYYY') : day == 2 ? moment().add('4', 'days').format('DD MMMM YYYY') : day == 3 ? moment().add('3', 'days').format('DD MMMM YYYY') : day == 4 ? moment().add('2', 'days').format('DD MMMM YYYY') : day == 5 ? moment().add('1', 'days').format('DD MMMM YYYY') : day == 6 ? moment().add('0', 'days').format('DD MMMM YYYY') : moment().add('6', 'days').format('DD MMMM YYYY'),
-                onSelect: function () {
-                    selectedDate = moment().format('DD MMMM YYYY');
-                },
-                locale: {
-                    "format": "DD MMMM YYYY"
-                }
-            };
-
-            jQuery(function () {
-                jQuery(".date").daterangepicker(daterangepickerOptions);
-                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
-                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
-            });
-        };
                 opens: 'left',
                 //minDate: moment(),
                 minDate: day == 1 || day == 7 ? moment().subtract('0', 'days').format('DD MMMM YYYY') : day == 2 ? moment().subtract('1', 'days').format('DD MMMM YYYY') : day == 3 ? moment().subtract('2', 'days').format('DD MMMM YYYY') : day == 4 ? moment().subtract('3', 'days').format('DD MMMM YYYY') : day == 5 ? moment().subtract('4', 'days').format('DD MMMM YYYY') : moment().subtract('5', 'days').format('DD MMMM YYYY'),

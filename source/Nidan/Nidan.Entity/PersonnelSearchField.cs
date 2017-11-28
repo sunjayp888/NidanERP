@@ -1,9 +1,11 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Nidan.Entity
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("PersonnelSearchField")]
     public partial class PersonnelSearchField
     {
@@ -59,16 +61,12 @@ namespace Nidan.Entity
         [StringLength(12)]
         public string Postcode { get; set; }
 
-        [Key]
-        [Column(Order = 9)]
         [StringLength(15)]
         public string Telephone { get; set; }
 
         [StringLength(15)]
         public string Mobile { get; set; }
 
-        [Key]
-        [Column(Order = 10)]
         [StringLength(10)]
         public string NINumber { get; set; }
 
@@ -100,8 +98,17 @@ namespace Nidan.Entity
         public string BankTelephone { get; set; }
 
         [Key]
-        [Column(Order = 11)]
-        [StringLength(320)]
+        [Column(Order = 9)]
+        [StringLength(256)]
+        public string Email { get; set; }
+
+        public int? CurrentEmploymentId { get; set; }
+
+        public int? CentreId { get; set; }
+
+        [Key]
+        [Column(Order = 10)]
+        [StringLength(603)]
         public string SearchField { get; set; }
     }
 }

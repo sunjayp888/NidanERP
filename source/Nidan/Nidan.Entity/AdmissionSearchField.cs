@@ -44,7 +44,7 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 5)]
-        [StringLength(151)]
+        [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [Key]

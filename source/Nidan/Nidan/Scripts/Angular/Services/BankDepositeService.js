@@ -12,7 +12,6 @@
             retrieveBankDeposites: retrieveBankDeposites,
             searchBankDeposite: searchBankDeposite,
             retrievePaymentModes: retrievePaymentModes,
-            searchBankDepositeByDate: searchBankDepositeByDate
             retrieveCentres: retrieveCentres,
             searchBankDepositeByDate: searchBankDepositeByDate,
             searchBankDepositeByDateByCentreId: searchBankDepositeByDateByCentreId
@@ -54,10 +53,10 @@
             return $http.post(url, data);
         }
 
-        function searchBankDepositeByDateByCentreId(centreId,FromDate, ToDate, Paging, OrderBy) {
+        function searchBankDepositeByDateByCentreId(centreId, FromDate, ToDate, Paging, OrderBy) {
             var url = "/BankDeposite/SearchBankDepositeByDateByCentreId",
                 data = {
-                    centreId:centreId,
+                    centreId: centreId,
                     fromDate: FromDate,
                     toDate: ToDate,
                     paging: Paging,
