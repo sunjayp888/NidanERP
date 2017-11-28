@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Enquiry";
 }
-<div ng-controller="EnquiryController as model">
+<div ng-controller="EnquiryController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -112,6 +112,7 @@
                                             {
                                                 <th>Centre</th>
                                             }
+                                            <th>Created By</th>
                                             <th>Candidate Name</th>
                                             <th>Contact No</th>
                                             @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
@@ -130,6 +131,7 @@
                                         {
                                             <td><span ng-bind="enquiry.CentreName"></span></td>
                                         }
+                                        <td><span ng-bind="enquiry.CandidateName"></span></td>
                                         <td><span ng-bind="enquiry.CandidateName"></span></td>
                                         <td><span ng-bind="enquiry.Mobile"></span></td>
                                         @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
@@ -167,13 +169,13 @@
                                                             </a>
                                                         </li>
 
-                                                        <li ng-if="!enquiry.IsCounsellingDone">
+                                                        <li ng-if="enquiry.IsCounsellingDone=='NO'">
                                                             <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
                                                                 Create Counselling
                                                             </a>
                                                         </li>
 
-                                                        <li ng-if="!enquiry.IsRegistrationDone">
+                                                        <li ng-if="enquiry.IsRegistrationDone=='NO'">
                                                             <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
                                                                 Create Registration
                                                             </a>

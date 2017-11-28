@@ -95,6 +95,7 @@
                                             {
                                                 <th>Centre</th>
                                             }
+                                            <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                             <th ng-click="model.order('AdmissionDate')" ng-class="model.orderClass('AdmissionDate')">Admission Date</th>
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('BatchName')" ng-class="model.orderClass('BatchName')">Batch</th>
@@ -110,6 +111,7 @@
                                             {
                                                 <td><span ng-bind="admission.CentreName"></span></td>
                                             }
+                                            <td><span ng-bind="admission.CreatedByName"></span></td>
                                             <td><span ng-bind="admission.AdmissionDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="admission.CandidateName"></span></td>
                                             <td>

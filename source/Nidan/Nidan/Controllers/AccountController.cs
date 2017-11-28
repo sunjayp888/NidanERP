@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,15 +10,17 @@ using Microsoft.Owin.Security;
 using Nidan.Business.Interfaces;
 using Nidan.Models;
 using Nidan.Models.Authorization;
+using SharedTypes.DataContracts;
 
 namespace Nidan.Controllers
 {
     [Authorize]
     public class AccountController : BaseController
     {
-
-        public AccountController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
+        private readonly IEmailService _emailService;
+        public AccountController(INidanBusinessService hrBusinessService, IEmailService emailService) : base(hrBusinessService)
         {
+            _emailService = emailService;
         }
 
         private ApplicationSignInManager _signInManager;
@@ -214,9 +218,11 @@ namespace Nidan.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public async Task<ActionResult> ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            var resetPasswordToken = await UserManager.GeneratePasswordResetTokenAsync(User.Identity.GetUserId());
+            var model = new ResetPasswordViewModel() { Code = resetPasswordToken };
+            return View(model);
         }
 
         //
@@ -226,6 +232,7 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            var organisationId = UserOrganisationId;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -236,9 +243,20 @@ namespace Nidan.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+            var personnelData = NidanBusinessService.RetrievePersonnel(organisationId, user.PersonnelId);
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
+                var emailData = new EmailData()
+                {
+                    BCCAddressList = new List<string> { "developer@nidantech.com" },
+                    Body = String.Format("Dear {0}.{1} {2}, Your Password has been changed successfully. And your New Password is {3}", personnelData.Title, personnelData.Forenames, personnelData.Surname, model.Password),
+                    Subject = "Changed Password For Nidan ERP",
+                    IsHtml = true,
+                    ToAddressList = new List<string> { personnelData.Email }
+
+                };
+                _emailService.SendEmail(emailData);
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);

@@ -86,7 +86,7 @@ namespace Nidan.Entity
         public string IsRegistrationDone { get; set; }
 
         [Key]
-        [Column(Order = 10, TypeName = "date")]
+        [Column(Order = 7)]
         public DateTime CreatedDate { get; set; }
 
         [Key]

@@ -11,7 +11,7 @@ namespace Nidan.Entity
     {
         public CentrePettyCash()
         {
-            CreatedDate = DateTime.UtcNow.Date;
+            CreatedDate=DateTime.UtcNow.Date;
         }
 
         public int CentrePettyCashId { get; set; }

@@ -96,6 +96,7 @@
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
     <Compile Include="AssetClass.cs" />
+    <Compile Include="AspNetRole.cs" />
     <Compile Include="AssetOutState.cs" />
     <Compile Include="AssignType.cs" />
     <Compile Include="Attendance.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="FollowUp.cs" />
     <Compile Include="FollowUpDataGrid.cs" />
     <Compile Include="FollowUpHistory.cs" />
+    <Compile Include="FollowUpHistoryData.cs" />
     <Compile Include="FollowUpSearchField.cs" />
     <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />
@@ -270,6 +272,7 @@
     <Compile Include="Subject.cs" />
     <Compile Include="SubjectCourse.cs" />
     <Compile Include="SubjectTrainer.cs" />
+    <Compile Include="SummaryReport.cs" />
     <Compile Include="Taluka.cs" />
     <Compile Include="TaskState.cs" />
     <Compile Include="Template.cs" />

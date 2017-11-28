@@ -64,7 +64,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="course in model.courses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCourse(course.CourseId)">
+                                        <tr ng-repeat="course in model.courses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             <td><span ng-bind="course.Scheme.Name"></span></td>
                                             <td><span ng-bind="course.Sector.Name"></span></td>
                                             <td><span ng-bind="course.Name"></span></td>
@@ -76,7 +76,6 @@
                                                             <i class="fa fa-chevron-down"></i>
                                                         </a>
                                                         <ul class="dropdown-menu slidedown">
-
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Course/Edit/{{course.CourseId}}">
                                                                     Edit

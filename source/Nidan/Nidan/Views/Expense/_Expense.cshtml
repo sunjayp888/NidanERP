@@ -75,11 +75,11 @@
             @Html.LabelFor(model => model.Expense.ExpenseGeneratedDate, "Generated Date", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
             <div class="col-md-6 col-sm-6 col-xs-12">
                 @Html.TextBoxFor(model => model.Expense.ExpenseGeneratedDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
-                @*<span class="form-control-feedback" aria-hidden="true"></span>*@
                 @Html.ValidationMessageFor(model => model.Expense.ExpenseGeneratedDate, "", new { @class = "help-block" })
             </div>
         </div>
 
+        <div class="form-group">
         <div class="form-group">
             @Html.LabelFor(model => model.Expense.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
             <div class="col-md-6 col-sm-6 col-xs-12">

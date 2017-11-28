@@ -1,5 +1,7 @@
-﻿@using Nidan.Extensions
+﻿@using Nidan.Entity.Dto
+@using Nidan.Extensions
 @model Nidan.Models.PersonnelProfileViewModel
+
 <div class="form-control-required-example"> = Required</div>
 
 @*@if (User.IsInAnyRoles("SuperAdmin"))
@@ -12,6 +14,14 @@
         </div>
     </div>
 @*}*@
+
+<div class="form-group">
+    <label class = "control-label col-md-3 col-sm-3 col-xs-12">Role</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+    @Html.DropDownListFor(model => model.Role,Model.Roles, new { @class = "form-control col-md-7 col-xs-12 required"})
+        @Html.ValidationMessageFor(model => model.Personnel.CentreId, "", new {@class = "help-block"})
+    </div>
+</div>
 
 <div class="form-group">
     @Html.LabelFor(model => model.Personnel.Title, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })

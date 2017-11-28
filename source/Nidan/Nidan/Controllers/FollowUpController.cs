@@ -66,6 +66,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 followUpViewModel.FollowUp.OrganisationId = organisationId;
@@ -234,7 +235,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveFollowUpBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging));
+            var data = NidanBusinessService.RetrieveFollowUpBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close == "No", orderBy, paging);
+            return this.JsonNet(data);
         }
     }
 }

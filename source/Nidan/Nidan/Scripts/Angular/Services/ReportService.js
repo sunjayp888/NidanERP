@@ -18,11 +18,15 @@
             searchAdmissionByDate: searchAdmissionByDate,
             searchRegistrationByDate: searchRegistrationByDate,
             searchCounsellingByDate: searchCounsellingByDate,
-            searchExpenseByDate: searchExpenseByDate,
+            availablePettyCashReport: availablePettyCashReport,
             searchFixAssetByCentreIdAssetClassId: searchFixAssetByCentreIdAssetClassId,
             searchStockByDate: searchStockByDate,
             searchMobilizationCountReportBydate: searchMobilizationCountReportBydate,
+            searchBankDepositeReportBydate: searchBankDepositeReportBydate,
+            searchMobilizationCountReportByMonth: searchMobilizationCountReportByMonth,
             searchMobilizationCountReportByMonthAndYear: searchMobilizationCountReportByMonthAndYear,
+            searchBankDepositeReportByMonthAndYear: searchBankDepositeReportByMonthAndYear,
+            searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
             downloadEnquiryCSVByDate: downloadEnquiryCSVByDate,
             downloadMobilizationCSVByDate: downloadMobilizationCSVByDate,
             downloadFollowUpCSVByDate: downloadFollowUpCSVByDate,
@@ -41,7 +45,13 @@
             searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
             retrieveBankDepositeByDate: retrieveBankDepositeByDate,
             availablePettyCashReport: availablePettyCashReport,
+            retrieveCandidateFeeByDate: retrieveCandidateFeeByDate,
+            retrieveBankDepositeByDate:retrieveBankDepositeByDate,
+            retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
+            retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
+            retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
             retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId
+
         };
 
         return service;
@@ -153,11 +163,9 @@
             return $http.post(url, data);
         }
 
-        function searchExpenseByDate(FromDate, ToDate, Paging, OrderBy) {
-            var url = "/Report/ExpenseReportByDate",
+        function availablePettyCashReport(Paging, OrderBy) {
+            var url = "/Report/AvailablePettyCashReport",
                 data = {
-                    fromDate: FromDate,
-                    toDate: ToDate,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -176,6 +184,26 @@
             return $http.post(url, data);
         }
 
+        function searchBankDepositeReportBydate(centreId, fromMonth, fromYear) {
+            var url = "/Report/BankDepositeReportBydate",
+                data = {
+                    centreId: centreId,
+                    month: fromMonth,
+                    year: fromYear
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchMobilizationCountReportByMonth() {
+            var url = "/Report/MobilizationCountReportByCurrentMonth",
+                data = {
+                    
+                };
+
+            return $http.post(url, data);
+        }
+
         function searchMobilizationCountReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
             var url = "/Report/MobilizationCountReportByMonthAndYear",
                 data = {
@@ -183,6 +211,27 @@
                     year: fromYear,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
+            var url = "/Report/BankDepositeReportByMonthAndYear",
+                data = {
+                    centreId: centreId,
+                    year: fromYear,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchBankDepositeReportByMonth() {
+            var url = "/Report/TotalBankDepositeReportByCurrentMonth",
+                data = {
+
                 };
 
             return $http.post(url, data);

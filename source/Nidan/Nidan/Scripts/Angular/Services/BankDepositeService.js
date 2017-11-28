@@ -12,6 +12,7 @@
             retrieveBankDeposites: retrieveBankDeposites,
             searchBankDeposite: searchBankDeposite,
             retrievePaymentModes: retrievePaymentModes,
+            searchBankDepositeByDate: searchBankDepositeByDate
             retrieveCentres: retrieveCentres,
             searchBankDepositeByDate: searchBankDepositeByDate,
             searchBankDepositeByDateByCentreId: searchBankDepositeByDateByCentreId

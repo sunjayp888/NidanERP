@@ -97,6 +97,7 @@
                                             {
                                                 <th>Centre</th>
                                             }
+                                            <th>Created By</th>
                                             <th>Candidate Name</th>
                                             <th>Mobile</th>
                                             <th>Interested Course</th>
@@ -112,9 +113,10 @@
                                             {
                                                 <td><span ng-bind="report.CentreName"></span></td>
                                             }
+                                            <td><span ng-bind="report.CreatedByName"></span></td>
                                             <td><span ng-bind="report.CandidateName"></span></td>
-                                            <td><span ng-bind="report.FollowUp.Mobile"></span></td>
-                                            <td><span ng-bind="report.FollowUp.Course.Name"></span></td>
+                                            <td><span ng-bind="report.Mobile"></span></td>
+                                            <td><span ng-bind="report.InterestedCourse"></span></td>
                                             <td><span ng-bind="report.Remarks"></span></td>
                                             <td><span ng-bind="report.FollowUpType"></span></td>
                                             <td><span ng-bind="report.FollowUpDate|date : format : shortDate"></span></td>

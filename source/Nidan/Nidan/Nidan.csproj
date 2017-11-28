@@ -92,6 +92,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharedTypes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\SharedTypes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -1729,6 +1733,22 @@
     <Content Include="Views\BankDeposite\View.cshtml" />
     <Content Include="Views\BankDeposite\_BankDeposite.cshtml" />
     <Content Include="Views\BankDeposite\_BankDepositeDocument.cshtml" />
+    <Content Include="Views\Expense\TermsAndCondition.cshtml" />
+    <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
+    <Content Include="Views\Admission\TodaysAdmission.cshtml" />
+    <Content Include="Views\Enquiry\TodaysEnquiry.cshtml" />
+    <Content Include="Views\Mobilization\TodaysMobilization.cshtml" />
+    <Content Include="Views\Registration\TodaysRegistration.cshtml" />
+    <Content Include="Views\Report\FeeSummaryByDate.cshtml" />
+    <Content Include="Views\BankDeposite\Index.cshtml" />
+    <Content Include="Views\BankDeposite\Create.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDeposite.cshtml" />
+    <Content Include="Views\BankDeposite\Edit.cshtml" />
+    <Content Include="Views\BankDeposite\View.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDepositeDocument.cshtml" />
+    <Content Include="Views\Report\BankDepositeReport.cshtml" />
+    <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
+    <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
     <Content Include="Views\Report\BankDepositeDetailByDate.cshtml" />
     <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
     <Content Include="Views\Report\BankDepositeReport.cshtml" />

@@ -19,8 +19,8 @@ namespace Nidan.Entity
             [Display(Name = "Scheme")]
             public int SchemeId { get; set; }
 
-            [Display(Name = "Course Type")]
-            public string CourseType { get; set; }
+            //[Display(Name = "Course Type")]
+            //public string CourseType { get; set; }
         }
     }
 }

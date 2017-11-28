@@ -1,6 +1,8 @@
 @using Nidan.Extensions
-@using Nidan.Extensions
+@using Microsoft.AspNet.Identity
+
 @model Nidan.Models.BaseViewModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,7 +96,6 @@
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
                                             @*<li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>*@
-                                            <li><a href='@Url.Action("Index", "BatchPlanner")'>Batch Planner</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -156,7 +157,6 @@
                                     @if (User.IsInAnyRoles("SuperAdmin"))
                                     {
                                         <ul class="nav child_menu">
-                                            <li><a href='@Url.Action("Index", "FixAsset")'>Fixed Asset</a></li>
                                         </ul>
                                     }
                                 </li>

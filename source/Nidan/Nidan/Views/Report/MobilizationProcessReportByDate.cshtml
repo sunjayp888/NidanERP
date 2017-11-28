@@ -83,7 +83,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="report in model.reports" ng-class='report.Date=="Total"?"row-total-background":""'>
+                                                    <tr ng-repeat="report in model.reports" ng-class='report.Date=="Total"?"row-total-background":""' ng-click='report.MonthName!="Total"? $event.originalEvent.ngClickHandled || model.viewCandidateFeeByDate(report.CentreId,report.Date):"#"'>
                                                         <td><span ng-bind="report.Date|date : format : shortDate"></span></td>
                                                         <td><span ng-bind="report.MobilizationCount"></span></td>
                                                         <td><span ng-bind="report.EnquiryCount"></span></td>

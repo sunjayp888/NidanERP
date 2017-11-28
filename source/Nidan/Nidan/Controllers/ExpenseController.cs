@@ -43,10 +43,11 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var currentMonth = DateTime.UtcNow.Month;
             var expenseHeader = NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => isSuperAdmin|| e.ExpenseHeaderId!=8).Items.ToList();
-            var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId ).Items.ToList();
+            var project = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList();
             var totalPettyCash = NidanBusinessService.RetrieveCentrePettyCashs(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.Amount);
             var totalDebitAmount = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId).Items.Sum(e => e.DebitAmount);
             var expenseData = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth);
+            //   var eligibleExpenseHeader=expenseData.
             var viewModel = new ExpenseViewModel()
             {
                 Expense = new Expense(),
@@ -73,7 +74,7 @@ namespace Nidan.Controllers
             var currentYear = DateTime.UtcNow.Year;
             var isCashAvailable = expenseViewModel.AvailablePettyCash > expenseViewModel.Expense.DebitAmount;
             var expenseHeadLimit = NidanBusinessService.RetrieveExpenseHeadLimits(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseMonth == currentMonth && e.ExpenseYear == currentYear && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId).Items.FirstOrDefault();
-            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => isSuperAdmin || e.ExpenseHeaderId != 8).Items.ToList());
+            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
             expenseViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == centreId).Items.ToList());
             if (expenseHeadLimit != null)
             {
@@ -81,11 +82,11 @@ namespace Nidan.Controllers
                 var monthlyExpenseByExpenseHeader = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId);
                 var totalMonthlyExpenseByExpenseHeader = monthlyExpenseByExpenseHeader.Items.Sum(e => e.DebitAmount);
                 var balanceLimit = limitAmount - totalMonthlyExpenseByExpenseHeader;
-                var isExpenseLimitExceed = expenseViewModel.Expense.DebitAmount >= balanceLimit;
+                var isExpenseLimitExceed= expenseViewModel.Expense.DebitAmount >= balanceLimit;
                 expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
                 if (isExpenseLimitExceed)
                 {
-                    ModelState.AddModelError("", String.Format("Limit is exceeded for {0} Expense Head", monthlyExpenseByExpenseHeader.Items.FirstOrDefault()?.ExpenseHeader.Name));
+                    ModelState.AddModelError("", String.Format("Limit is exceeded for {0} Expense Head",monthlyExpenseByExpenseHeader.Items.FirstOrDefault()?.ExpenseHeader.Name));
                     return View(expenseViewModel);
                 }
             }
@@ -105,7 +106,8 @@ namespace Nidan.Controllers
                 expenseViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
-
+            expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
+            expenseViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => true).Items.ToList());
             return View(expenseViewModel);
         }
 

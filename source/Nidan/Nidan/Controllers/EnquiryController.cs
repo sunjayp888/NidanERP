@@ -14,12 +14,19 @@ namespace Nidan.Controllers
     [Authorize]
     public class EnquiryController : BaseController
     {
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Date.Year, DateTime.UtcNow.Date.Month, DateTime.UtcNow.Date.Day, 0, 0, 0);
         public EnquiryController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
         }
 
         // GET: Enquiry
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Enquiry
+        public ActionResult TodaysEnquiry()
         {
             return View(new BaseViewModel());
         }
@@ -86,6 +93,8 @@ namespace Nidan.Controllers
         public ActionResult Create(EnquiryViewModel enquiryViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             enquiryViewModel.Enquiry.StudentCode = "ABC";
             if (ModelState.IsValid)
             {
@@ -103,7 +112,7 @@ namespace Nidan.Controllers
                     // NidanBusinessService.DeleteFollowUp(organisationId, enquiryViewModel.CreateEnquiryFromMobilizationFollowUpId);
                 }
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
-                enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.CentreId = centreId;
                 enquiryViewModel.Enquiry.CreatedBy = UserPersonnelId;
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EnquiryStatus = "Enquiry";
@@ -191,10 +200,13 @@ namespace Nidan.Controllers
         public ActionResult Edit(EnquiryViewModel enquiryViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 enquiryViewModel.Enquiry.OrganisationId = organisationId;
-                enquiryViewModel.Enquiry.CentreId = UserCentreId;
+                enquiryViewModel.Enquiry.CentreId = centreId;
+                enquiryViewModel.Enquiry.CreatedBy = personnelId;
                 enquiryViewModel.Enquiry.Close = "No";
                 enquiryViewModel.Enquiry.EmailId = enquiryViewModel.Enquiry.EmailId.ToLower();
                 enquiryViewModel.Enquiry = NidanBusinessService.UpdateEnquiry(organisationId, enquiryViewModel.Enquiry, enquiryViewModel.SelectedCourseIds);
@@ -230,6 +242,13 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.IsAdmissionDone == "NO" && p.Close == "No", orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult TodaysEnquiryList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.IsAdmissionDone == "NO" && p.Close == "No" && p.EnquiryDate == _today, orderBy, paging));
         }
 
         [HttpPost]

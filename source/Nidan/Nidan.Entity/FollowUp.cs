@@ -9,10 +9,13 @@ namespace Nidan.Entity
     [Table("FollowUp")]
     public partial class FollowUp
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FollowUp()
         {
-            CreatedDateTime= DateTime.UtcNow.Date;
+            FollowUpHistories = new HashSet<FollowUpHistory>();
+            CreatedDateTime = DateTime.UtcNow.Date;
         }
+
         public int FollowUpId { get; set; }
 
         public DateTime FollowUpDateTime { get; set; }
@@ -20,6 +23,10 @@ namespace Nidan.Entity
         public int? MobilizationId { get; set; }
 
         public int? EnquiryId { get; set; }
+
+        public int? CounsellingId { get; set; }
+
+        public int? RegistrationId { get; set; }
 
         [StringLength(50)]
         public string Title { get; set; }
@@ -57,14 +64,12 @@ namespace Nidan.Entity
         [StringLength(2000)]
         public string FollowUpUrl { get; set; }
 
-        public int? CounsellingId { get; set; }
-
         [StringLength(5)]
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
 
-        public int? RegistrationId { get; set; }
+        public int? AdmissionId { get; set; }
 
         public int CreatedBy { get; set; }
 
@@ -79,8 +84,6 @@ namespace Nidan.Entity
         public virtual Registration Registration { get; set; }
 
         public virtual Centre Centre { get; set; }
-
-        public int? AdmissionId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUpHistory> FollowUpHistories { get; set; }

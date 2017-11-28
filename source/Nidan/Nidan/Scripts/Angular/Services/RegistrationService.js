@@ -16,7 +16,8 @@
             canDeleteRegistration: canDeleteRegistration,
             deleteRegistration: deleteRegistration,
             searchEnquiry: searchEnquiry,
-            searchRegistration: searchRegistration
+            searchRegistration: searchRegistration,
+            retrieveTodaysRegistrations: retrieveTodaysRegistrations
         };
 
         return service;
@@ -24,6 +25,17 @@
         function retrieveRegistrations(Paging, OrderBy) {
 
             var url = "/Registration/List",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveTodaysRegistrations(Paging, OrderBy) {
+
+            var url = "/Registration/TodaysRegistrationList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)

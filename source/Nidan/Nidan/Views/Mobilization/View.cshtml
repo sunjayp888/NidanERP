@@ -39,10 +39,21 @@
                                     <div class="col-lg-12">
                                         <div class="col-lg-6">
                                             <div class="input-group">
+                                                @if (Model.MobilizationDataGrid.MobilizationTypeId != 3)
+                                                {
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Mobilization Type</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.MobilizationType" class="form-control col-lg-4">
+                                                }
+                                                else
+                                                {
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">Event Name</button>
+                                                    <button type="button" class="btn btn-dark">Event</button>
                                                 </span>
                                                 <input type="text" disabled="disabled" value="@Model.MobilizationDataGrid.EventName" class="form-control col-lg-4">
+                                                }
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

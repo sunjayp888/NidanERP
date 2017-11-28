@@ -94,6 +94,7 @@
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -115,6 +116,7 @@
     <Compile Include="Enum\AssetOutStatus.cs" />
     <Compile Include="Enum\AssignType.cs" />
     <Compile Include="Enum\FeeType.cs" />
+    <Compile Include="Enum\Role.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
@@ -135,6 +137,8 @@
     <Compile Include="Models\BatchMonth.cs" />
     <Compile Include="Models\CandidateEnrollment.cs" />
     <Compile Include="Models\CandidateFeeReceipt.cs" />
+    <Compile Include="Models\CentreBankDepositeReport.cs" />
+    <Compile Include="Models\CentreCandidateFeeSummaryReport.cs" />
     <Compile Include="Models\ExpenseData.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\MobilizationCountData.cs" />

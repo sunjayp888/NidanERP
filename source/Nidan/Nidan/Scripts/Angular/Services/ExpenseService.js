@@ -10,7 +10,7 @@
     function ExpenseService($http) {
         var service = {
             retrieveExpenses: retrieveExpenses,
-            //canDeleteOtherFee: canDeleteOtherFee,
+            retrieveCentres:retrieveCentres,
             deleteExpense: deleteExpense,
             searchExpense: searchExpense,
             retrieveExpensesByCashMemo: retrieveExpensesByCashMemo,
@@ -19,6 +19,7 @@
             retrieveCentres: retrieveCentres,
             searchExpenseByDateCentreId: searchExpenseByDateCentreId,
             searchExpenseByDate: searchExpenseByDate
+
         };
 
         return service;
@@ -32,6 +33,12 @@
                 };
 
             return $http.post(url, data);
+        }
+
+        function retrieveCentres() {
+
+            var url = "/Expense/GetCentres";
+            return $http.post(url);
         }
 
         function searchExpense(SearchKeyword, Paging, OrderBy) {
@@ -112,6 +119,7 @@
                 };
 
             return $http.post(url, data);
+        }
         }
     }
 })();

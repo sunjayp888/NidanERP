@@ -595,6 +595,71 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUps
+                    .Include(p => p.Organisation)
+                    .Include(p => p.Enquiry.Course)
+                    .Include(p => p.Registration.Course)
+                    .Include(p => p.Course)
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDateTime",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUpSearchFields
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "FollowUpDateTime",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .FollowUps
+                    .Include(f => f.Mobilization)
+                    .Include(f => f.Enquiry)
+                    .Include(f => f.Enquiry.EnquiryCourses)
+                    .Include(f => f.Enquiry.Counsellings)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.FollowUpId == followUpId);
+
+            }
+        }
+
         public bool PersonnelEmploymentHasAbsences(int organisationId, int personnelId, int employmentId)
         {
             using (ReadUncommitedTransactionScope)
@@ -667,7 +732,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Personnel> RetrievePersonnel(int organisationId, Expression<Func<Personnel, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Personnel> RetrievePersonnels(int organisationId, Expression<Func<Personnel, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -854,49 +919,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .FollowUps
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Enquiry.Course)
-                    .Include(p => p.Registration.Course)
-                    .Include(p => p.Course)
-                    .Include(p => p.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "FollowUpDateTime",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public FollowUp RetrieveFollowUp(int organisationId, int followUpId, Expression<Func<FollowUp, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .FollowUps
-                    .Include(f => f.Mobilization)
-                    .Include(f => f.Enquiry)
-                    .Include(f => f.Enquiry.EnquiryCourses)
-                    .Include(f => f.Enquiry.Counsellings)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.FollowUpId == followUpId);
-
-            }
-        }
 
         public PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -1079,6 +1101,29 @@ namespace Nidan.Data
                     .Include(p => p.Enquiry)
                     .Include(p => p.Course)
                     .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ConversionProspect",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CounsellingDataGrid> RetrieveCounsellingDataGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CounsellingDataGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -1317,6 +1362,7 @@ namespace Nidan.Data
                   .Registrations
                     .Include(p => p.Organisation)
                     .Include(p => p.Enquiry)
+                    .Include(p => p.Course)
                     .Include(p => p.CandidateFee)
                     .Include(p => p.CandidateFee.PaymentMode)
                     .Include(p => p.CourseInstallment)
@@ -2267,14 +2313,13 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<FollowUpHistoryData> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistoryData, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .FollowUpHistories
-                    .Include(p => p.Organisation)
+                    .FollowUpHistoryDatas
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -2420,8 +2465,8 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<CandidateInstallmentSearchField>("SearchCandidateInstallment @SearchKeyword", category)
                     .ToList()
-                    .AsQueryable().
-
+                    .AsQueryable()
+                    .Where(predicate).
                 //var candidateFeeSearchFields = context.CandidateFeeSearchFields;
 
                 //var data = searchData.Join(candidateFeeSearchFields, e => e.CandidateInstallmentId, m => m.CandidateInstallmentId, (e, m) => m).ToList().AsQueryable().
@@ -2974,6 +3019,28 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<BankDepositeCentreReportMonthWise> RetriveBankDepositeReportByMonthAndYear(int organisationId, int centreId, Expression<Func<BankDepositeCentreReportMonthWise, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BankDepositeCentreReportMonthWises
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Month",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public PagedResult<MobilizationCentreReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId,
             Expression<Func<MobilizationCentreReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -2989,6 +3056,71 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "Date",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<BankDepositeCentreReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, Expression<Func<BankDepositeCentreReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BankDepositeCentreReports
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "DepositedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<MobilizationCentreReportMonthWise> RetriveMobilizationCountReportByMonthWise(int organisationId, Expression<Func<MobilizationCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .MobilizationCentreReportMonthWises
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Month",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<BankDepositeCentreReportMonthWise> RetriveBankDepositeCentreReportMonthWise(int organisationId, Expression<Func<BankDepositeCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BankDepositeCentreReportMonthWises
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Month",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -3899,72 +4031,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<BankDepositeCentreReportMonthWise> RetriveBankDepositeReportByMonthAndYear(int organisationId, int centreId, Expression<Func<BankDepositeCentreReportMonthWise, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .BankDepositeCentreReportMonthWises
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "Month",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public PagedResult<BankDepositeCentreReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, Expression<Func<BankDepositeCentreReport, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .BankDepositeCentreReports
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "DepositedDate",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public PagedResult<BankDepositeCentreReportMonthWise> RetriveBankDepositeCentreReportMonthWise(int organisationId, Expression<Func<BankDepositeCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .BankDepositeCentreReportMonthWises
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "Month",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
         public PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -3997,7 +4063,7 @@ namespace Nidan.Data
                 return context
                     .ActivityAssigneeGroups
                     .AsNoTracking()
-                    .Include(e=>e.Centre)
+                    .Include(e => e.Centre)
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
@@ -4233,29 +4299,8 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.ModuleExamSetId == moduleExamSetId);
             }
         }
-        
-                public PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .FollowUpSearchFields
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "FollowUpDateTime",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
 
-public PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4277,31 +4322,8 @@ public PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Exp
             }
         }
 
- public PagedResult<CounsellingDataGrid> RetrieveCounsellingDataGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .CounsellingDataGrids
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "ConversionProspect",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null,
+                    Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4322,7 +4344,7 @@ public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int org
                     .Paginate(paging);
             }
         }
-     
+
         public ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId,
             Expression<Func<ModuleExamQuestionSet, bool>> predicate)
         {
@@ -4432,6 +4454,28 @@ public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int org
             }
         }
 
+        public PagedResult<SummaryReport> RetrieveSummaryReports(int organisationId, int centreId, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .SummaryReports
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "StudentCode",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -4452,6 +4496,54 @@ public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int org
                         }
                         }
                       ).Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
+           Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreFixAssets
+                    .Include(e => e.FixAsset)
+                    .Include(e => e.FixAsset.Product)
+                    .Include(e => e.Room)
+                    .Include(e => e.Organisation)
+                    .Include(e => e.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreFixAssetId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CentreFixAssets
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CentreFixAssetId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 
@@ -4595,5 +4687,9 @@ public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int org
             }
         }
 
+        public PagedResult<Personnel> RetrievePersonnel(int organisationId, Func<Personnel, bool> predicate, List<OrderBy> orderBy, Paging paging)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

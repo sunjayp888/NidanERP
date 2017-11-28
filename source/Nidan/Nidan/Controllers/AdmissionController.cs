@@ -35,7 +35,7 @@ namespace Nidan.Controllers
                 _roleManager = value;
             }
         }
-
+        private readonly DateTime _today = new DateTime(DateTime.UtcNow.Date.Year, DateTime.UtcNow.Date.Month, DateTime.UtcNow.Date.Day, 0, 0, 0);
         public AdmissionController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
             _documentService = documentService;
@@ -43,6 +43,11 @@ namespace Nidan.Controllers
 
         // GET: Admission
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        public ActionResult TodaysAdmission()
         {
             return View(new BaseViewModel());
         }
@@ -60,7 +65,7 @@ namespace Nidan.Controllers
             var rooms = NidanBusinessService.RetrieveRooms(organisationId, e => e.CentreId == UserCentreId);
             var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true);
             var registration = NidanBusinessService.RetrieveRegistration(organisationId, id.Value);
-            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => true).Where(e => e.CourseId == registration.CourseId);
+            var batches = NidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == UserCentreId).Where(e => e.CourseId == registration.CourseId);
             registration.CandidateInstallment.DownPayment = registration.CandidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
                                                             ? 0 : (registration.CandidateInstallment.DownPayment - registration.CandidateFee.PaidAmount);
 
@@ -112,6 +117,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
                 admissionViewModel.Admission.Batch = null;
                 admissionViewModel.Admission.Registration = null;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 CreateCandidateUserAndRole(personnel);
                 return RedirectToAction("Index");
@@ -232,6 +238,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 admissionViewModel.Admission = NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
@@ -304,6 +311,7 @@ namespace Nidan.Controllers
                 admissionViewModel.Admission.OrganisationId = organisationId;
                 admissionViewModel.Admission.CentreId = centreId;
                 admissionViewModel.Admission.PersonnelId = personnelId;
+                admissionViewModel.Admission.CreatedBy = personnelId;
                 NidanBusinessService.AssignBatch(organisationId, centreId, personnelId, admissionViewModel.Admission);
                 return RedirectToAction("Index");
             }
@@ -343,6 +351,15 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveAdmissionGrid(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult TodaysAdmissionList(Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveAdmissionGrid(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate == _today, orderBy, paging);
             return this.JsonNet(data);
         }
 

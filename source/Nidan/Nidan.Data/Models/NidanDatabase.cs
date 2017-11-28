@@ -148,14 +148,17 @@ namespace Nidan.Data.Models
         public virtual DbSet<FixAsset> FixAssets { get; set; }
         public virtual DbSet<FixAssetMapping> FixAssetMappings { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
-        public virtual DbSet<FixAssetDetailGrid> FixAssetDetailGrids { get; set; }
+        public virtual DbSet<SummaryReport> SummaryReports { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<FollowUpHistoryData> FollowUpHistoryDatas { get; set; }
+        public virtual DbSet<AvailablePettyCashGrid> AvailablePettyCashGrids { get; set; }
         public virtual DbSet<BankDeposite> BankDeposites { get; set; }
         public virtual DbSet<BankDepositeSearchField> BankDepositeSearchFields { get; set; }
         public virtual DbSet<BankDepositeCentreReportMonthWise> BankDepositeCentreReportMonthWises { get; set; }
         public virtual DbSet<BankDepositeCentreReport> BankDepositeCentreReports { get; set; }
         public virtual DbSet<ExpenseHeadLimit> ExpenseHeadLimits { get; set; }
-        public virtual DbSet<AvailablePettyCashGrid> AvailablePettyCashGrids { get; set; }
+        public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
+        public virtual DbSet<FixAssetDetailGrid> FixAssetDetailGrids { get; set; }
         public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<ActivityAssigneeGroup> ActivityAssigneeGroups { get; set; }
         public virtual DbSet<ActivityAssignPersonnel> ActivityAssignPersonnels { get; set; }
@@ -167,6 +170,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<ModuleExamSet> ModuleExamSets { get; set; }
         public virtual DbSet<ModuleExamQuestionSet> ModuleExamQuestionSets { get; set; }
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
+        public virtual DbSet<CentreFixAsset> CentreFixAssets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -188,11 +192,13 @@ namespace Nidan.Data.Models
                .Property(e => e.Description)
                .IsUnicode(false);
             
-            modelBuilder.Entity<Course>()
-                .HasMany(e => e.FollowUps)
-                .WithRequired(e => e.Course)
-                .HasForeignKey(e => e.IntrestedCourseId)
-                .WillCascadeOnDelete(false);
+            ////modelBuilder.Entity<Course>()
+            ////    .Property(e => e.CourseType)
+            ////    .IsUnicode(false);
+            //    .HasMany(e => e.FollowUps)
+            //    .WithRequired(e => e.Course)
+            //    .HasForeignKey(e => e.IntrestedCourseId)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Course>()
                .HasMany(e => e.Counsellings)
@@ -827,8 +833,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Trainer>()
-               .Property(e => e.Title)
-               .IsUnicode(false);
+                .Property(e => e.Title)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Trainer>()
                 .Property(e => e.FirstName)
@@ -925,11 +931,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CourseSearchField>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<CourseSearchField>()
-                .Property(e => e.CourseType)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<TrainerSearchField>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -1205,30 +1207,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateFeeGrid>()
                 .Property(e => e.FiscalYear)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.FollowUpType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FollowUpDataGrid>()
-                .Property(e => e.ClosingRemarks)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Voucher>()
@@ -2515,6 +2493,426 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<AdmissionGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.Lastname)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.CourseName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.FeeTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.TotalPaidAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<SummaryReport>()
+                .Property(e => e.BalanceAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.GuardianName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.YearOfPassOut)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Marks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Promotional)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EnquiryStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerContactNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.AppearingQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.PlacementNeeded)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsCounsellingDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsAdmissionDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.CourseOffered)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.PsychomatricTest)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CounsellingSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.CourseName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.FollowUpURL)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpSearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistoryData>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistoryData>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistoryData>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpHistoryData>()
+                .Property(e => e.ClosingRemarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalTransferAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.TotalDebitAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<AvailablePettyCashGrid>()
+                .Property(e => e.AvailablePettyCash)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.MobilizationType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.EventName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.InterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Qualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.StudentLocation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+               .Property(e => e.CentreName)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.InterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.FollowUpType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FollowUpDataGrid>()
+                .Property(e => e.ClosingRemarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ReceivedFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.RupeesInWords)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDeposite>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.Project)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ReceivedFrom)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.PaymentMode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeSearchField>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReportMonthWise>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReportMonthWise>()
+                .Property(e => e.TotalBankDepositeAmount)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<BankDepositeCentreReport>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BankDepositeCentreReport>()
+                .Property(e => e.TotalBankDeposite)
+                .HasPrecision(38, 2);
 
             base.OnModelCreating(modelBuilder);
         }

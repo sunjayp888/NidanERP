@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Mobilization";
 }
-<div ng-controller="MobilizationController as model">
+<div ng-controller="MobilizationController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
@@ -110,6 +110,7 @@
                                         {
                                             <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                         }
+                                        <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                         <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                         <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                         <th ng-click="model.order('InterestedCourse')" ng-class="model.orderClass('InterestedCourse')">Interested Course</th>
@@ -127,6 +128,7 @@
                                             {
                                                 <td><span ng-bind="mobilizer.CentreName"></span></td>
                                             }
+                                            <td><span ng-bind="mobilizer.CreatedByName"></span></td>
                                             <td><span ng-bind="mobilizer.CandidateName"></span></td>
                                             <td><span ng-bind="mobilizer.Mobile"></span></td>
                                             <td><span ng-bind="mobilizer.InterestedCourse"></span></td>

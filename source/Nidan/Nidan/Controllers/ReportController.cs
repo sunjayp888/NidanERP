@@ -114,6 +114,13 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Stock
+        public ActionResult FeeSummaryByDate()
+        {
+            return View(new BaseViewModel());
+        }
+
+
         // GET: Report/MobilizationStatistics
         public ActionResult MobilizationStatistics()
         {
@@ -234,10 +241,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult ExpenseReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
         {
-            bool isSuperAdmin = User.IsSuperAdmin();
-            var data = NidanBusinessService.RetrievePettyCashExpenseReports(UserOrganisationId, p => (isSuperAdmin) && p.ExpenseCreatedDate >= fromDate && p.ExpenseCreatedDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -285,6 +291,13 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult CentreCandidateFeeSummaryReportByDate(int centreId, DateTime date)
+        {
+            var data = NidanBusinessService.RetriveCentreCandidateFeeByDate(UserOrganisationId, centreId, date);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
         public ActionResult SearchStockByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
@@ -327,13 +340,6 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
-        {
-            var data = NidanBusinessService.RetriveAvailablePettyCashReport(UserOrganisationId, orderBy, paging);
-            return this.JsonNet(data);
-        }
-
-        [HttpPost]
         public ActionResult DownloadEnquiryCSVByDate(DateTime fromDate, DateTime toDate)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
@@ -369,11 +375,7 @@ namespace Nidan.Controllers
             var isSuperAdmin = User.IsSuperAdmin();
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
-            var data =
-                NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId,
-                    p =>
-                        (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate >= fromDate &&
-                        p.FollowUpDate <= toDate).Items.ToList();
+            var data = NidanBusinessService.RetrieveFollowUpDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.FollowUpDate >= fromDate && p.FollowUpDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_FollowUpReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
@@ -497,6 +499,14 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult SearchFixAssetByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveFixAssets(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.DateofPurchase >= fromDate && p.DateofPurchase <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+        [HttpPost]
         public ActionResult DownloadFixAssetByCentreIdAssetClassId(int assetClassId, int centreId)
         {
             var isSuperAdmin = User.IsSuperAdmin();
@@ -543,6 +553,20 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId, p => (isSuperAdmin && p.CentreId == centreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult DownPaymentSummaryByDate(int centreId, DateTime? date)
+        {
+            var data = NidanBusinessService.RetrieveDownpaymentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult InstallmentSummaryByDate(int centreId, DateTime? date)
+        {
+            var data = NidanBusinessService.RetrieveInstallmentSummaryByDate(UserOrganisationId, centreId, date.Value, e => true);
             return this.JsonNet(data);
         }
     }

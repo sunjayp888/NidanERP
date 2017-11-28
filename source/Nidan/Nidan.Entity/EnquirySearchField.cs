@@ -155,22 +155,22 @@ namespace Nidan.Entity
         public int AnnualIncome { get; set; }
 
         [Key]
-        [Column(Order = 19)]
+        [Column(Order = 17)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SchemeId { get; set; }
 
         [Key]
-        [Column(Order = 20)]
+        [Column(Order = 18)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EnquiryTypeId { get; set; }
 
         [Key]
-        [Column(Order = 21)]
+        [Column(Order = 19)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StudentTypeId { get; set; }
 
         [Key]
-        [Column(Order = 22)]
+        [Column(Order = 20)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 

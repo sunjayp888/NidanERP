@@ -39,7 +39,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        public int CourseTypeId { get; set; }
+          public int CourseTypeId { get; set; }
+
 
         [StringLength(1000)]
         public string Description { get; set; }

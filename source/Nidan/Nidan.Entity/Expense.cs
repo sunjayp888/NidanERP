@@ -11,8 +11,8 @@ namespace Nidan.Entity
     {
         public Expense()
         {
-            ExpenseProjects=new HashSet<ExpenseProject>();
-            CreatedDate=DateTime.UtcNow.Date;
+            ExpenseProjects = new HashSet<ExpenseProject>();
+            CreatedDate = DateTime.UtcNow.Date;
         }
         public int ExpenseId { get; set; }
 
@@ -31,6 +31,7 @@ namespace Nidan.Entity
 
         [Required]
         [StringLength(500)]
+        [RegularExpression(@"^[a-zA-Z ]+", ErrorMessage = "Numbers / Special Symbols Are Not Allowed")]
         public string RupeesInWord { get; set; }
 
         public decimal DebitAmount { get; set; }
@@ -56,7 +57,7 @@ namespace Nidan.Entity
 
         public virtual ExpenseHeader ExpenseHeader { get; set; }
 
-        public  virtual Centre Centre { get; set; }
+        public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 

@@ -62,6 +62,7 @@ namespace Nidan.Entity
             CentreProductSettings=new HashSet<CentreProductSetting>();
             FixAssetMappings = new HashSet<FixAssetMapping>();
             CentreItemSettings=new HashSet<CentreItemSetting>();
+            BankDeposites = new HashSet<BankDeposite>();
             ActivityAssignPersonnels=new HashSet<ActivityAssignPersonnel>();
             Activities=new HashSet<Activity>();
             ActivityTaskStates=new HashSet<ActivityTaskState>();
@@ -259,6 +260,10 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreItemSetting> CentreItemSettings { get; set; }
+        
+                [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BankDeposite> BankDeposites { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityTaskState> ActivityTaskStates { get; set; }

@@ -11,9 +11,10 @@ namespace Nidan.Entity
     {
         public Counselling()
         {
-            CreatedDate=DateTime.UtcNow.Date;
-            FollowUpDate= DateTime.UtcNow.AddDays(2);
+            CreatedDate = DateTime.UtcNow.Date;
+            FollowUpDate = DateTime.UtcNow.AddDays(2);
         }
+
         public int CounsellingId { get; set; }
 
         public int EnquiryId { get; set; }
@@ -50,7 +51,6 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime? FollowUpDate { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string RemarkByBranchManager { get; set; }
 
         public int SectorId { get; set; }
@@ -65,6 +65,8 @@ namespace Nidan.Entity
 
         [DataType(DataType.MultilineText)]
         public string ClosingRemark { get; set; }
+
+        public string RemarkByBm { get; set; }
 
         public bool IsRegistrationDone { get; set; }
 
