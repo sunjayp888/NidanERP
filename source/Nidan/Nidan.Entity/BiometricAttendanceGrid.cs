@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Nidan.Entity
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("BiometricAttendanceGrid")]
     public partial class BiometricAttendanceGrid
     {
-        [StringLength(100)]
+        [StringLength(50)]
         public string StudentCode { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? LogDateTime { get; set; }
 
         [StringLength(353)]
         public string CandidateName { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string Direction { get; set; }
+
+        public int? BatchId { get; set; }
 
         [Key]
         [Column(Order = 0)]

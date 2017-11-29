@@ -125,8 +125,9 @@
                     },
                     locale: {
                         "format": "DD MMMM YYYY"
-                        }
+                    }
                 };
+
                 jQuery(function () {
                     jQuery(".date").daterangepicker(daterangepickerOptions);
                     $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
@@ -136,20 +137,19 @@
                         });
                 });
             });
-                        }
-                        break;
+        }
 
         if (userRole == "SuperAdmin") {
             $('#Expense_ExpenseGeneratedDate').val("");
             $("#Expense_ExpenseGeneratedDate").attr("placeholder", "yyyy-MM-dd").blur();
         }
 
+        //---------------------------------------------------
         //Expense Debit Amount Validation
         $("#Expense_DebitAmount").keyup(function () {
             var expenseAmount = $("#Expense_DebitAmount").val();
             //numberToWords();
             if (expenseAmount < 999) {
-                $('#btn_submit').attr('disabled', false);
                 $('#btn_submit').attr('disabled', false);
             } else {
                 $('#btn_submit').attr('disabled', true);

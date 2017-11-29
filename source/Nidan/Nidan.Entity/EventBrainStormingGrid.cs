@@ -14,10 +14,6 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BrainstormingId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        public string BeforePlanningAnswerDiscussTheseQuestion { get; set; }
-
         public int? EventBrainstormingId { get; set; }
 
         public int? EventId { get; set; }
@@ -30,7 +26,7 @@ namespace Nidan.Entity
         public int? CentreId { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
     }

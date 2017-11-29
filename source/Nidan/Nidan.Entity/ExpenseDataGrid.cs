@@ -11,6 +11,7 @@ namespace Nidan.Entity
     {
         [Key]
         [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ExpenseId { get; set; }
 
         [Key]
@@ -50,7 +51,7 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 8)]
-        [StringLength(151)]
+        [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [Key]

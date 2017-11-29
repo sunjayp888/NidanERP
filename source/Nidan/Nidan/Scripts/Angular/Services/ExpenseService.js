@@ -35,12 +35,6 @@
             return $http.post(url, data);
         }
 
-        function retrieveCentres() {
-
-            var url = "/Expense/GetCentres";
-            return $http.post(url);
-        }
-
         function searchExpense(SearchKeyword, Paging, OrderBy) {
             var url = "/Expense/Search",
                 data = {
@@ -119,7 +113,6 @@
                 };
 
             return $http.post(url, data);
-        }
         }
     }
 })();

@@ -121,9 +121,9 @@
     <Compile Include="Budget.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
-    <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateInstallment.cs" />
+    <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />

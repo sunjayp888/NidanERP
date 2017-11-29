@@ -4499,54 +4499,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null,
-           Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CentreFixAssets
-                    .Include(e => e.FixAsset)
-                    .Include(e => e.FixAsset.Product)
-                    .Include(e => e.Room)
-                    .Include(e => e.Organisation)
-                    .Include(e => e.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CentreFixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .CentreFixAssets
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CentreFixAssetId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
         #endregion
 
         #region // Update

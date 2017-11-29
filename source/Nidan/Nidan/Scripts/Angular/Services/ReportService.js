@@ -40,13 +40,8 @@
             totalSumOfCountByDate: totalSumOfCountByDate,
             downloadMobilizationCountReportCSVByMonthAndYear: downloadMobilizationCountReportCSVByMonthAndYear,
             downloadMobilizationCountReportCSVByDate: downloadMobilizationCountReportCSVByDate,
-            searchBankDepositeReportBydate: searchBankDepositeReportBydate,
-            searchBankDepositeReportByMonthAndYear: searchBankDepositeReportByMonthAndYear,
-            searchBankDepositeReportByMonth: searchBankDepositeReportByMonth,
             retrieveBankDepositeByDate: retrieveBankDepositeByDate,
-            availablePettyCashReport: availablePettyCashReport,
             retrieveCandidateFeeByDate: retrieveCandidateFeeByDate,
-            retrieveBankDepositeByDate:retrieveBankDepositeByDate,
             retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
             retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
             retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
@@ -363,53 +358,11 @@
             return $http.post(url, data);
         }
 
-        function searchBankDepositeReportBydate(centreId, fromMonth, fromYear) {
-            var url = "/Report/BankDepositeReportBydate",
-                data = {
-                    centreId: centreId,
-                    month: fromMonth,
-                    year: fromYear
-                };
-
-            return $http.post(url, data);
-        }
-
-        function searchBankDepositeReportByMonthAndYear(centreId, fromYear, Paging, OrderBy) {
-            var url = "/Report/BankDepositeReportByMonthAndYear",
-                data = {
-                    centreId: centreId,
-                    year: fromYear,
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
-                };
-
-            return $http.post(url, data);
-        }
-
-        function searchBankDepositeReportByMonth() {
-            var url = "/Report/TotalBankDepositeReportByCurrentMonth",
-                data = {
-
-                };
-
-            return $http.post(url, data);
-        }
-
         function retrieveBankDepositeByDate(centreId, date) {
             var url = "/Report/CentreBankDepositeReportByDate",
                 data = {
                     centreId: centreId,
                     date: date
-                };
-
-            return $http.post(url, data);
-        }
-
-        function availablePettyCashReport(Paging, OrderBy) {
-            var url = "/Report/AvailablePettyCashReport",
-                data = {
-                    paging: Paging,
-                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);
@@ -421,6 +374,46 @@
                     centreId: centreId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateFeeByDate(centreId, date) {
+            var url = "/Report/CentreCandidateFeeSummaryReportByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveRegistrationSummaryByDate(centreId, date) {
+            var url = "/Report/RegistrationSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveDownPaymentSummaryByDate(centreId, date) {
+            var url = "/Report/DownPaymentSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveInstallmentSummaryByDate(centreId, date) {
+            var url = "/Report/InstallmentSummaryByDate",
+                data = {
+                    centreId: centreId,
+                    date: date
                 };
 
             return $http.post(url, data);

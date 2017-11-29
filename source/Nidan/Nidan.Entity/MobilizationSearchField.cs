@@ -100,7 +100,7 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 13)]
-        [StringLength(151)]
+        [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [StringLength(4000)]

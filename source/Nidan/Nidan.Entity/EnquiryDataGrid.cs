@@ -148,17 +148,17 @@ namespace Nidan.Entity
         public string EnquiryStatus { get; set; }
 
         [Key]
-        [Column("Enquiry Type", Order = 18)]
+        [Column("Enquiry Type", Order = 19)]
         [StringLength(500)]
         public string Enquiry_Type { get; set; }
 
         [Key]
-        [Column("Student Type", Order = 19)]
+        [Column("Student Type", Order = 20)]
         [StringLength(500)]
         public string Student_Type { get; set; }
 
         [Key]
-        [Column("Batch Time Prefer", Order = 20)]
+        [Column("Batch Time Prefer", Order = 21)]
         [StringLength(500)]
         public string Batch_Time_Prefer { get; set; }
 

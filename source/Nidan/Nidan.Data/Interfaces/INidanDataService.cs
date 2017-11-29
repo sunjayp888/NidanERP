@@ -219,8 +219,6 @@ namespace Nidan.Data.Interfaces
         PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<StockDataGrid> RetrieveStockDataGrid(int organisationId, string searchKeyword, Expression<Func<StockDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate);
-        PagedResult<CentreFixAsset> RetrieveCentreFixAssets(int organisationId, int fixAssetId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<CentreFixAsset> RetrieveCentreFixAsset(int organisationId, Expression<Func<CentreFixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<StockReportDataGrid> RetrieveStockReportDataGrid(int organisationId, Expression<Func<StockReportDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchPlanner> RetrieveBatchPlanners(int organisationId, Expression<Func<BatchPlanner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchPlanner RetrieveBatchPlanner(int organisationId, int batchPlannerId, Expression<Func<BatchPlanner, bool>> predicate);

@@ -355,6 +355,7 @@ namespace Nidan.Business.Interfaces
         ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate);
         PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
+        PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
