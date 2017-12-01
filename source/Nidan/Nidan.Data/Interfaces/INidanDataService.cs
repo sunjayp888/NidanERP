@@ -256,8 +256,12 @@ namespace Nidan.Data.Interfaces
         PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate);
-        PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamQuestionAnswerGrid> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
+        Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate);
+        PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId,int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

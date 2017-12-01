@@ -20,6 +20,7 @@ namespace Nidan.Entity
             Expenses=new HashSet<Expense>();
             CentrePettyCashes = new HashSet<CentrePettyCash>();
             ActivityAssignPersonnels=new HashSet<ActivityAssignPersonnel>();
+            CandidateAssesments = new HashSet<CandidateAssesment>();
         }
 
         public int PersonnelId { get; set; }
@@ -139,5 +140,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityAssignPersonnel> ActivityAssignPersonnels { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssesment> CandidateAssesments { get; set; }
     }
 }

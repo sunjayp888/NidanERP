@@ -1,0 +1,54 @@
+﻿<div class="modal fade" id="moduleExamSetModal" ng-hide="model.ShowModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Assign Module Exam Set</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label id="labelSubject" class="control-label col-md-3 col-sm-3 col-xs-12">Subject</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="dropSubject" class="form-control col-md-7 col-sm-6 col-xs-12">
+                                    <option>Select Subject</option>
+                                    <option data-ng-repeat="t in model.subjects" ng-model="model.subjectId" value="{{t.SubjectId}}">{{t.Name}}</option>
+                                </select>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="form-group">
+                            <label id="labelModuleSet" class="control-label col-md-3 col-sm-3 col-xs-12">Module Exam Set</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select id="dropModuleSet" class="form-control col-md-7 col-sm-6 col-xs-12">
+                                    <option>Select Module Exam Set</option>
+                                    <option data-ng-repeat="t in model.moduleExamSets" ng-model="model.moduleExamSetId" value="{{t.ModuleExamSetId}}">{{t.QuestionSetName}}</option>
+                                </select>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="control-label col-md-14 col-sm-14 col-xs-12">
+                                        <div class="pull-right col-md-12">
+                                            <div class="col-md-9">
+                                                <button type="submit" id="btnAssignModuleExamSet" ng-click="model.assignUpdateModuleExamSet()" class="btn btn-success" data-dismiss="modal">Assign</button>
+                                            </div>
+                                            <div class="pull-right col-md-3">
+                                                <button type="button" id="btnCancel" ng-click="model.retrieveCandidateAssesmentByBatchId(model.batchId)" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

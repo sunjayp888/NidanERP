@@ -68,7 +68,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(UserOrganisationId, id.Value,e=>true);
+            var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(UserOrganisationId, id.Value, e => true);
             var questionTypes = NidanBusinessService.RetrieveQuestionTypes(organisationId, e => true);
             var subjects = NidanBusinessService.RetrieveSubjects(organisationId, e => true);
             if (moduleExamSet == null)
@@ -77,10 +77,14 @@ namespace Nidan.Controllers
             }
             var viewModel = new ModuleExamQuestionSetViewModel()
             {
-                ModuleExamSet=moduleExamSet,
+                ModuleExamSet = moduleExamSet,
                 ModuleExamSetId = moduleExamSet.ModuleExamSetId,
                 QuestionTypes = new SelectList(questionTypes, "QuestionTypeId", "Name"),
-                Subjects = new SelectList(subjects, "SubjectId","Name")
+                Subjects = new SelectList(subjects, "SubjectId", "Name"),
+                ModuleExamQuestionSet = new ModuleExamQuestionSet()
+                {
+                    ModuleExamSetId = moduleExamSet.ModuleExamSetId
+                }
             };
             return View(viewModel);
         }
@@ -90,17 +94,20 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ModuleExamQuestionSetViewModel moduleExamQuestionSetViewModel)
         {
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                moduleExamQuestionSetViewModel.ModuleExamQuestionSet.OrganisationId = UserOrganisationId;
-                moduleExamQuestionSetViewModel.ModuleExamQuestionSet.CreatedBy = UserPersonnelId;
+                moduleExamQuestionSetViewModel.ModuleExamQuestionSet.OrganisationId = organisationId;
+                moduleExamQuestionSetViewModel.ModuleExamQuestionSet.CreatedBy = personnelId;
                 moduleExamQuestionSetViewModel.ModuleExamQuestionSet = NidanBusinessService.CreateModuleExamQuestionSet(UserOrganisationId, moduleExamQuestionSetViewModel.ModuleExamQuestionSet);
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "ModuleExamSet", new { id = moduleExamQuestionSetViewModel.ModuleExamSet.ModuleExamSetId });
             }
             var viewModel = new ModuleExamQuestionSetViewModel()
             {
                 ModuleExamQuestionSet = moduleExamQuestionSetViewModel.ModuleExamQuestionSet
             };
+            moduleExamQuestionSetViewModel.Subjects = new SelectList(NidanBusinessService.RetrieveSubjects(organisationId, e => true).ToList(), "SubjectId", "Name");
             return View(viewModel);
         }
 
@@ -108,6 +115,13 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             var data = NidanBusinessService.RetrieveModuleExamSets(UserOrganisationId, e => true, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult ModuleExamQuestion(int moduleExamSetId, Paging paging, List<OrderBy> orderBy)
+        {
+            var data = NidanBusinessService.RetrieveModuleExamQuestionSets(UserOrganisationId, e => e.ModuleExamSetId == moduleExamSetId, orderBy, paging);
             return this.JsonNet(data);
         }
     }

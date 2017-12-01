@@ -86,6 +86,16 @@
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
+                                        <a><i class="fa fa-inr"></i> Assesment <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "ModuleExamSet")'>Module Exam Set</a></li>
+                                            <li><a href='@Url.Action("Index", "Assesment")'>Assesment</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                {
+                                    <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>

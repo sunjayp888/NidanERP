@@ -18,6 +18,7 @@ namespace Nidan.Entity
             TrainerAvailables=new HashSet<TrainerAvailable>();
             BatchAttendances = new HashSet<BatchAttendance>();
             CreatedDate=DateTime.UtcNow.Date;
+            Assesments = new HashSet<Assesment>();
         }
 
         public int BatchId { get; set; }
@@ -130,5 +131,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assesment> Assesments { get; set; }
     }
 }
