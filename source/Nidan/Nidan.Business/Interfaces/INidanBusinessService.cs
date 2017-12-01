@@ -78,7 +78,8 @@ namespace Nidan.Business.Interfaces
         ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
         ModuleExamSet CreateModuleExamSet(int organisationId, ModuleExamSet moduleExamSet);
         ModuleExamQuestionSet CreateModuleExamQuestionSet(int organisationId, ModuleExamQuestionSet moduleExamQuestionSet);
-
+        Assesment CreateAssesment(int organisationId, Assesment assesment);
+        CandidateAssesment CreateCandidateAssesment(int organisationId, CandidateAssesment candidateAssesment);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -353,11 +354,17 @@ namespace Nidan.Business.Interfaces
         PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate);
-        PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamQuestionAnswerGrid> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
         PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
         PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskDataGrids(int organisationId, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate);
+        PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<AssesmentType> RetrieveAssesmentTypes(int organisationId, Expression<Func<AssesmentType, bool>> predicate);
+        PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId, int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate);
+        CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -405,6 +412,9 @@ namespace Nidan.Business.Interfaces
         Activity UpdateActivity(int organisationId, Activity activity);
         ActivityTask UpdateActivityTask(int organisationId, ActivityTask activityTask);
         ActivityTaskState UpdateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
+        Assesment UpdateAssesment(int organisationId, Assesment assesment);
+        bool AssignModuleExamSet(int organisationId, int personnelId, int assesmentId, List<CandidateAssesment> assesments);
+        CandidateAssesment UpdateCandidateAssesment(int organisationId, CandidateAssesment candidateAssesment);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

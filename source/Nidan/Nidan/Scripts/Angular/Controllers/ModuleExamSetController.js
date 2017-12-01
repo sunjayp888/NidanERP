@@ -22,17 +22,36 @@
         vm.retrieveModuleExamSets = retrieveModuleExamSets;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.retrieveModuleExamQuestionSets = retrieveModuleExamQuestionSets;
+        vm.moduleExamSetId;
+        vm.initialise = initialise;
 
         function initialise() {
             vm.orderBy.property = "ModuleExamSetId";
             vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "desc";
+            vm.orderBy.class = "asc";
             order("ModuleExamSetId");
         }
 
         function retrieveModuleExamSets() {
+            vm.orderBy.property = "ModuleExamSetId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
             return ModuleExamSetService.retrieveModuleExamSets(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.moduleExamSets = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.moduleExamSets;
+                });
+        }
+
+        function retrieveModuleExamQuestionSets(moduleExamSetId) {
+            vm.orderBy.property = "ModuleExamSetId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.moduleExamSetId = moduleExamSetId;
+            return ModuleExamSetService.retrieveModuleExamQuestionSets(vm.moduleExamSetId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.moduleExamSets = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
@@ -56,7 +75,11 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchModuleExamSet(vm.searchKeyword);
-            } else {
+            }
+            if (path[2] == "Edit") {
+                retrieveModuleExamQuestionSets(vm.moduleExamSetId);
+            }
+            else {
                 return retrieveModuleExamSets();
             }
         }

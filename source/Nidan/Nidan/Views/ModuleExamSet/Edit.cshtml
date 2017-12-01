@@ -22,7 +22,6 @@
                             </div>
 
                         }
-                        @*@Html.HiddenFor(model => Model.Mobilization.MobilizationId)*@
                         @Html.Partial("_ModuleExamQuestionSet", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -37,8 +36,28 @@
         </div>
     </div>
 </div>
+@Html.Partial("_ModuleExamQuestionAnswer", Model)
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+@section scripts {
+    <script>
+        $('#ModuleExamQuestionSet_MarkPerQuestion').val(" ");
+        $('#div_mcq').hide();
+        $('#div_subjective').hide();
+
+        $('#ModuleExamQuestionSet_QuestionTypeId').change(function () {
+            var questionTypeId = $('#ModuleExamQuestionSet_QuestionTypeId').val();
+            if (questionTypeId == 1) {
+                $('#div_mcq').show();
+                $('#div_subjective').hide();
+            }
+            if (questionTypeId == 2) {
+                $('#div_mcq').hide();
+                $('#div_subjective').show();
+            }
+        });
+
+    </script>}
