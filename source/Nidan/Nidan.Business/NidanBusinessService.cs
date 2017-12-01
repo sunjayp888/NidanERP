@@ -1659,14 +1659,18 @@ namespace Nidan.Business
             return data;
         }
 
-        public Activity CreateActivity(int organisationId, Activity activity)
+        public Activity CreateActivity(int organisationId, int personnelId, int centreId, Activity activity)
         {
+            activity.CreatedBy = personnelId;
+            activity.CentreId = centreId;
             var data = _nidanDataService.CreateActivity(organisationId, activity);
             return data;
         }
 
-        public ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask)
+        public ActivityTask CreateActivityTask(int organisationId, int personnelId, int centreId, ActivityTask activityTask)
         {
+            activityTask.CreatedBy = personnelId;
+            activityTask.CentreId = centreId;
             var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
             return data;
         }
@@ -1998,6 +2002,18 @@ namespace Nidan.Business
             Paging paging)
         {
             return _nidanDataService.RetrievePersonnel(organisationId, p => p.CentreId == centreId, orderBy, paging);
+        }
+
+        public PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTaskBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskDataGrids(int organisationId, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTaskDataGrids(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)

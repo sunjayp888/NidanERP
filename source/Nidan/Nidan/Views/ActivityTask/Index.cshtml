@@ -1,22 +1,21 @@
 ﻿@using Nidan.Extensions
-
 @{
     ViewBag.Title = "Index";
 }
 
-<div ng-controller="ActivityController as model" ng-init="model.initialise()">
+<div ng-controller="ActivityTaskController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Activities <small></small>
+                Activity Tasks <small></small>
             </h3>
         </div>
         <div class="title_right">
             <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                 <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchActivity(searchField)" class="form-control" placeholder="Search for Activity...">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchActivityTask(searchField)" class="form-control" placeholder="Search for Activity Task...">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchActivity(searchField)" type="button">Go!</button>
+                        <button class="btn btn-default" ng-click="model.searchActivityTask(searchField)" type="button">Go!</button>
                     </span>
                 </div>
             </div>
@@ -26,7 +25,7 @@
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Activity")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "ActivityTask")">
                     Create
                 </a>
             </div>
@@ -74,7 +73,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <button type="button" ng-click="model.searchActivityByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                        <button type="button" ng-click="model.searchActivityTaskByDate(fromDate,toDate)" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -104,54 +103,55 @@
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
-                                    <tr role="row">
-                                        @*@if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                        }*@
-                                        <th ng-click="model.order('ActivityId')" ng-class="model.orderClass('ActivityId')">Activity Name</th>
-                                        <th ng-click="model.order('StartDate')" ng-class="model.orderClass('StartDate')">Start Date</th>
-                                        <th ng-click="model.order('EndDate')" ng-class="model.orderClass('EndDate')">End Date</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                        <tr role="row">
+                                            @*@if (User.IsInAnyRoles("SuperAdmin"))
+                                                {
+                                                    <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                                }*@
+                                            <th ng-click="model.order('ActivityId')" ng-class="model.orderClass('ActivityId')">Activity Name</th>
+                                            <th ng-click="model.order('ActivityTaskId')" ng-class="model.orderClass('ActivityTaskId')">Task Name</th>
+                                            <th ng-click="model.order('StartDate')" ng-class="model.orderClass('StartDate')">Start Date</th>
+                                            <th ng-click="model.order('EndDate')" ng-class="model.orderClass('EndDate')">End Date</th>
+                                            <th ng-click="model.order('AssignTo')" ng-class="model.orderClass('AssignTo')">Assign To</th>
+                                            <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('CreatedBy')">Assign By</th>
+                                            <th>Actions</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="activity in model.activities" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                        @*@if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <td><span ng-bind="mobilizer.CentreName"></span></td>
-                                        }*@
-                                        <td><span ng-bind="activity.Name"></span></td>
-                                        <td><span ng-bind="activity.StartDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="activity.EndDate|date : format : shortDate"></span></td>
-                                        <td>
-                                            <div class="btn-group pull-right">
-                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                    <i class="fa fa-chevron-down"></i>
-                                                </a>
-                                                <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                                    {
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Activity/Edit/{{activity.ActivityId}}">
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/Activity/View/{{activity.ActivityId}}">
-                                                                View
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a style="cursor: pointer;" ng-href="/ActivityTask/Create/{{activity.ActivityId}}">
-                                                                Create Task
-                                                            </a>
-                                                        </li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="activityTask in model.activityTasks" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            @*@if (User.IsInAnyRoles("SuperAdmin"))
+                                                {
+                                                    <td><span ng-bind="mobilizer.CentreName"></span></td>
+                                                }*@
+                                            <td><span ng-bind="activityTask.ActivityName"></span></td>
+                                            <td><span ng-bind="activityTask.Name"></span></td>
+                                            <td><span ng-bind="activityTask.StartDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="activityTask.EndDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="activityTask.AssignToName"></span></td>
+                                            <td><span ng-bind="activityTask.CreatedByName"></span></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/ActivityTask/Edit/{{activityTask.ActivityTaskId}}">
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/ActivityTask/View/{{activityTask.ActivityTaskId}}">
+                                                                    View
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -197,3 +197,5 @@
         });
     </script>
 }
+
+

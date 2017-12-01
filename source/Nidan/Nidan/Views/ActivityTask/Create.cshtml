@@ -1,14 +1,14 @@
-﻿@model Nidan.Models.ActivityViewModel
+﻿@model Nidan.Models.ActivityTaskViewModel
 
 @{
-    ViewBag.Title = "Create Activity";
+    ViewBag.Title = "Create Activity Task";
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create Activity <small></small></h2>
+                <h2>Create Activity Task <small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -24,7 +24,10 @@
                                 </div>
                             </div>
                         }
-                        @Html.Partial("_Activity", Model)
+                        @Html.HiddenFor(model => Model.ActivityTask.Activity.Remark)
+                        @Html.HiddenFor(model => Model.ActivityTask.Activity.StartTimeSpan)
+                        @Html.HiddenFor(model => Model.ActivityTask.Activity.EndTimeSpan)
+                        @Html.Partial("_ActivityTask", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
@@ -37,6 +40,7 @@
             </div>
         </div>
     </div>
+    @Html.Partial("_ActivityTaskByActivityId", Model)
 </div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
@@ -45,6 +49,41 @@
 </div>
 @section scripts {
     <script>
+        $(document).ready(function() {
+            @*$('#Activity_StartDate').val(@Model.Activity.StartDate);
+            $('#Activity_StartHour').val(@Model.Activity.StartDate);
+            $('#Activity_StartMinute').val(@Model.Activity.StartDate);
+            $('#Activity_StartDate').val(@Model.Activity.StartDate);
+            $('#Activity_StartDate').val(@Model.Activity.StartDate);
+            $('#Activity_StartDate').val(@Model.Activity.StartDate);
+            $('#Activity_StartDate').val(@Model.Activity.StartDate);
+            $('#Activity_StartDate').val(@Model.Activity.StartDate);*@
+        });
+        Activity_StartDate
+        $('#ActivityTask_CentreId').change(function () {
+            var centreId = $('#ActivityTask_CentreId :selected').val();
+            $.ajax({
+                url: '/ActivityTask/GetPersonnel',
+                type: 'POST',
+                data: JSON.stringify({ centreId: centreId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#ActivityTask_AssignTo").empty();
+                    $("#ActivityTask_AssignTo").append($("<option></option>").html("Select Assign To"));
+                    $.each(result, function (key, value) {
+                        $("#ActivityTask_AssignTo").append($("<option></option>").val(value.PersonnelId).html(value.Fullname));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
         var daterangepickerOptions = {
             autoApply: true,
             singleDatePicker: true,

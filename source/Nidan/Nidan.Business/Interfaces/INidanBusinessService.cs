@@ -72,8 +72,8 @@ namespace Nidan.Business.Interfaces
         FixAssetMapping CreateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
         BankDeposite CreateBankDeposite(int organisationId, BankDeposite bankDeposite);
         ActivityAssigneeGroup CreateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup);
-        Activity CreateActivity(int organisationId, Activity activity);
-        ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask);
+        Activity CreateActivity(int organisationId,int personnelId,int centreId, Activity activity);
+        ActivityTask CreateActivityTask(int organisationId, int personnelId, int centreId, ActivityTask activityTask);
         ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
         ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
         ModuleExamSet CreateModuleExamSet(int organisationId, ModuleExamSet moduleExamSet);
@@ -356,6 +356,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
         PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
+        PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskDataGrids(int organisationId, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

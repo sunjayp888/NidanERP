@@ -7,13 +7,12 @@ using Nidan.Entity;
 
 namespace Nidan.Models
 {
-    public class ActivityViewModel: BaseViewModel
+    public class ActivityTaskViewModel : BaseViewModel
     {
+        public ActivityTask ActivityTask { get; set; }
         public Activity Activity { get; set; }
-        public SelectList ActivityTypes { get; set; }
+        public SelectList AssignToList { get; set; }
         public SelectList Centres { get; set; }
-        public SelectList Projects { get; set; }
-        public SelectList ActivityAssigneeGroups { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
