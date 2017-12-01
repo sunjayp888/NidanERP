@@ -9,6 +9,10 @@ namespace Nidan.Entity
     [Table("ModuleExamQuestionSet")]
     public partial class ModuleExamQuestionSet
     {
+        public ModuleExamQuestionSet()
+        {
+            CreatedDate = DateTime.UtcNow.Date;
+        }
         public int ModuleExamQuestionSetId { get; set; }
 
         public int ModuleExamSetId { get; set; }
@@ -44,6 +48,7 @@ namespace Nidan.Entity
 
         public bool IsOptionD { get; set; }
 
+        [DataType(DataType.MultilineText)]
         [StringLength(500)]
         public string SubjectiveAnswer { get; set; }
 
@@ -55,5 +60,9 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public virtual QuestionType QuestionType { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
+
+        public virtual ModuleExamSet ModuleExamSet { get; set; }
     }
 }

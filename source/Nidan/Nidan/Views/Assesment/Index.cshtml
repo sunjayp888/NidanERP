@@ -1,30 +1,22 @@
 ﻿@using Nidan.Extensions
+
 @{
-    ViewBag.Title = "Module Exam Set";
+    ViewBag.Title = "Index";
 }
-<div ng-controller="ModuleExamSetController as model" ng-init="model.retrieveModuleExamSets()">
+
+<div ng-controller="AssesmentController as model" ng-init="model.retrieveAssesments()">
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Module Exam Sets  <small></small>
+                Assesments  <small></small>
             </h3>
         </div>
-        @*<div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchTrainer(searchField)" class="form-control" placeholder="Search for trainer...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchTrainer(searchField)" type="button">Go!</button>
-                    </span>
-                </div>
-            </div>
-        </div>*@
     </div>
     @if (User.IsInAnyRoles("SuperAdmin"))
     {
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "ModuleExamSet")">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Assesment")">
                     <i class="fa fa-user"></i> Create
                 </a>
             </div>
@@ -53,17 +45,23 @@
                                 <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
                                     <tr role="row">
-                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">CreatedDate</th>
-                                        <th ng-click="model.order('QuestionSetName')" ng-class="model.orderClass('QuestionSetName')">Question Set</th>
-                                        <th ng-click="model.order('SubjectId')" ng-class="model.orderClass('SubjectId')">Subject</th>
+                                        <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                        <th ng-click="model.order('BatchName')" ng-class="model.orderClass('BatchName')">Batch</th>
+                                        <th ng-click="model.order('AssesmentName')" ng-class="model.orderClass('AssesmentName')">Assesment Name</th>
+                                        <th ng-click="model.order('AssesmentTypeName')" ng-class="model.orderClass('AssesmentTypeName')">Assesment Type</th>
+                                        <th ng-click="model.order('AssesmentDate')" ng-class="model.orderClass('AssesmentDate')">Assesment Date</th>
+                                        <th ng-click="model.order('AssesmentTime')" ng-class="model.orderClass('AssesmentTime')">Assesment Time</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="moduleExamSet in model.moduleExamSets" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                        <td><span ng-bind="moduleExamSet.CreatedDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="moduleExamSet.QuestionSetName"></span></td>
-                                        <td><span ng-bind="moduleExamSet.Subject.Name"></span></td>
+                                    <tr ng-repeat="assesment in model.assesments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <td><span ng-bind="assesment.CentreName"></span></td>
+                                        <td><span ng-bind="assesment.BatchName"></span></td>
+                                        <td><span ng-bind="assesment.AssesmentName"></span></td>
+                                        <td><span ng-bind="assesment.AssesmentTypeName"></span></td>
+                                        <td><span ng-bind="assesment.AssesmentDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="assesment.AssesmentTime"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -73,12 +71,12 @@
                                                     @if (User.IsInAnyRoles("SuperAdmin"))
                                                     {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/ModuleExamSet/Edit/{{moduleExamSet.ModuleExamSetId}}">
-                                                                View Question
+                                                            <a style="cursor: pointer;" ng-href="/Assesment/Edit/{{assesment.AssesmentId}}">
+                                                                Assign Exam Set
                                                             </a>
                                                         </li>
                                                     }
-                                                    </ul>
+                                                </ul>
                                             </div>
                                         </td>
                                     </tr>
@@ -98,3 +96,4 @@
         </div>
     </div>
 </div>
+

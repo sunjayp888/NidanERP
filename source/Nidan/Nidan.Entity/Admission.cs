@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public Admission()
         {
             AdmissionDate = DateTime.UtcNow.Date;
+            CandidateAssesments = new HashSet<CandidateAssesment>();
         }
 
     public int AdmissionId { get; set; }
@@ -44,5 +45,8 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Personnel Personnel { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssesment> CandidateAssesments { get; set; }
     }
 }

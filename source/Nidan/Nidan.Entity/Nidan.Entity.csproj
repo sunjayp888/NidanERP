@@ -95,6 +95,9 @@
     <Compile Include="AdmissionGrid.cs" />
     <Compile Include="AdmissionSearchField.cs" />
     <Compile Include="AreaOfInterest.cs" />
+    <Compile Include="Assesment.cs" />
+    <Compile Include="AssesmentGrid.cs" />
+    <Compile Include="AssesmentType.cs" />
     <Compile Include="AssetClass.cs" />
     <Compile Include="AspNetRole.cs" />
     <Compile Include="AssetOutState.cs" />
@@ -119,6 +122,8 @@
     <Compile Include="BiometricAttendanceGrid.cs" />
     <Compile Include="Brainstorming.cs" />
     <Compile Include="Budget.cs" />
+    <Compile Include="CandidateAssesment.cs" />
+    <Compile Include="CandidateAssesmentGrid.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
@@ -200,6 +205,7 @@
     <Compile Include="MobilizationSearchField.cs" />
     <Compile Include="MobilizationType.cs" />
     <Compile Include="Module.cs" />
+    <Compile Include="ModuleExamQuestionAnswerGrid.cs" />
     <Compile Include="ModuleExamQuestionSet.cs" />
     <Compile Include="ModuleExamSet.cs" />
     <Compile Include="Occupation.cs" />
@@ -209,8 +215,11 @@
     <Compile Include="OtherFee.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Admission.cs" />
+    <Compile Include="Partials\Assesment.cs" />
     <Compile Include="Partials\BankDeposite.cs" />
     <Compile Include="Partials\Batch.cs" />
+    <Compile Include="Partials\CandidateAssesment.cs" />
+    <Compile Include="Partials\CandidateAssesmentGrid.cs" />
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />

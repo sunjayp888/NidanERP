@@ -4322,15 +4322,13 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<ModuleExamQuestionSet> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionSet, bool>> predicate, List<OrderBy> orderBy = null,
-                    Paging paging = null)
+        public PagedResult<ModuleExamQuestionAnswerGrid> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .ModuleExamQuestionSets
-                    .Include(p => p.ModuleExamSetId)
+                    .ModuleExamQuestionAnswerGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -4356,6 +4354,77 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.ModuleExamQuestionSetId == moduleExamQuestionSetId);
+            }
+        }
+
+        public Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Assesments
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.AssesmentId == assesmentId);
+            }
+        }
+
+        public PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .AssesmentGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AssesmentId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId, int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateAssesmentGrids
+                    .AsNoTracking()
+                    .Where(c => c.BatchId == batchId)
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateAssesments
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.CandidateAssesmentId == candidateAssesmentId);
             }
         }
 

@@ -1,0 +1,104 @@
+﻿@model Nidan.Models.AssesmentViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.CentreId, "Centre", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.CentreId, Model.Centres, "Select Centre", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Assesment.CentreId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.CourseId, "Course", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.CourseId, Model.Courses, "Select Course", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Assesment.CourseId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.BatchId, "Batch", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.BatchId, Model.Batches, "Select Batch", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Assesment.BatchId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Assesment.Name, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Assesment.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.AssesmentTypeId, "Type", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.AssesmentTypeId, Model.AssesmentTypes, "Select Assesment Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Assesment.AssesmentTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Assesment.AssesmentDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Assesment.AssesmentDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", ng_model = "model.AssesmentDate" })
+        <span class="form-control-feedback" aria-hidden="true"></span>
+        @Html.ValidationMessageFor(model => model.Assesment.AssesmentDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.StartTimeHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Assesment.StartTimeHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.StartTimeMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Assesment.StartTimeMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Assesment.StartTimeSpan, "AM", new { id = "rbAssesmentStartTimeSpanAM" })
+            AM
+        </label>
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Assesment.StartTimeSpan, "PM", new { id = "rbAssesmentStartTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">End Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.EndTimeHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Assesment.EndTimeHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Assesment.EndTimeMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Assesment.EndTimeMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Assesment.EndTimeSpan, "AM", new { id = "rbAssesmentEndTimeSpanAM" })
+            AM
+        </label>
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Assesment.EndTimeSpan, "PM", new { id = "rbAssesmentEndTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>

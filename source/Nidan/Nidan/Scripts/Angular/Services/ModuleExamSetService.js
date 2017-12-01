@@ -11,6 +11,7 @@
         var service = {
             retrieveModuleExamSets: retrieveModuleExamSets,
             searchModuleExamSet: searchModuleExamSet,
+            retrieveModuleExamQuestionSets: retrieveModuleExamQuestionSets
         };
 
         return service;
@@ -19,6 +20,18 @@
 
             var url = "/ModuleExamSet/List",
                 data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveModuleExamQuestionSets(moduleExamSetId, Paging, OrderBy) {
+
+            var url = "/ModuleExamSet/ModuleExamQuestion",
+                data = {
+                    moduleExamSetId: moduleExamSetId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

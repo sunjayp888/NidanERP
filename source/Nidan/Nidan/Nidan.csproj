@@ -246,6 +246,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
+    <Compile Include="Controllers\AssesmentController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BankDepositeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Models\CandidateFeeViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
+    <Compile Include="Models\AssesmentViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
@@ -1144,6 +1146,7 @@
     <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\ActivityAssigneeGroupController.js" />
     <Content Include="Scripts\Angular\Controllers\ActivityAssignPersonnelController.js" />
+    <Content Include="Scripts\Angular\Controllers\AssesmentController.js" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BankDepositeController.js" />
     <Content Include="Scripts\Angular\Controllers\BankDepositeDocumentController.js" />
@@ -1201,6 +1204,7 @@
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
     <Content Include="Scripts\Angular\Services\ActivityAssigneeGroupService.js" />
+    <Content Include="Scripts\Angular\Services\AssesmentService.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BankDepositeDocumentService.js" />
     <Content Include="Scripts\Angular\Services\BankDepositeService.js" />
@@ -1767,6 +1771,13 @@
     <Content Include="Views\ModuleExamSet\_ModuleExamSet.cshtml" />
     <Content Include="Views\ModuleExamSet\Edit.cshtml" />
     <Content Include="Views\ModuleExamSet\_ModuleExamQuestionSet.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamQuestionAnswer.cshtml" />
+    <Content Include="Views\Assesment\Index.cshtml" />
+    <Content Include="Views\Assesment\Create.cshtml" />
+    <Content Include="Views\Assesment\_Assesment.cshtml" />
+    <Content Include="Views\Assesment\Edit.cshtml" />
+    <Content Include="Views\Assesment\_AssignModuleExamSet.cshtml" />
+    <Content Include="Views\Assesment\_UpdateModuleExamSet.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
