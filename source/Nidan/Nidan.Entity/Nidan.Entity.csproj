@@ -89,6 +89,7 @@
     <Compile Include="ActivityAssignPersonnel.cs" />
     <Compile Include="ActivityDataGrid.cs" />
     <Compile Include="ActivityTask.cs" />
+    <Compile Include="ActivityTaskDataGrid.cs" />
     <Compile Include="ActivityTaskState.cs" />
     <Compile Include="ActivityType.cs" />
     <Compile Include="Admission.cs" />
@@ -214,6 +215,8 @@
     <Compile Include="Dto\Paging.cs" />
     <Compile Include="OtherFee.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
+    <Compile Include="Partials\Activity.cs" />
+    <Compile Include="Partials\ActivityTask.cs" />
     <Compile Include="Partials\Admission.cs" />
     <Compile Include="Partials\Assesment.cs" />
     <Compile Include="Partials\BankDeposite.cs" />

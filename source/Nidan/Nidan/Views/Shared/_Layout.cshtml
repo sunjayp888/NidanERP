@@ -171,18 +171,22 @@
                                         </ul>
                                     }
                                 </li>
-                                <li>
-                                    <a><i class="fa fa-gear"></i> Activity Management <span class="fa fa-chevron-down"></span></a>
-                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                    {
+                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-gear"></i> Activity Management <span class="fa fa-chevron-down"></span></a>
+
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "ActivityAssigneeGroup")'>Activity Assignee Group</a></li>
+                                            <li><a href='@Url.Action("Index", "Activity")'>Activity</a></li>
+                                            <li><a href='@Url.Action("Index", "ActivityTask")'>Activity Task</a></li>
                                         </ul>
-                                    }
-                                </li>
+
+                                    </li>
+                                }
                             </ul>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div>
             <!-- top navigation -->
@@ -196,7 +200,7 @@
                             <li>
                                 <a href="#">
                                     <h2 class="user-profile">
-                                        @Model.CentreName
+                                        @*@Model.CentreName*@
                                     </h2>
                                 </a>
                             </li>

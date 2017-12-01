@@ -39,6 +39,7 @@ namespace Nidan.Entity
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
+        [Required]
         [Column(TypeName = "date")]
         public DateTime EndDate { get; set; }
 

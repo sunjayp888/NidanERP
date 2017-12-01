@@ -171,13 +171,13 @@ namespace Nidan.Data.Models
         public virtual DbSet<TrainerSearchField> TrainerSearchFields { get; set; }
         public virtual DbSet<UserAuthorisationFilter> UserAuthorisationFilters { get; set; }
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
+        public virtual DbSet<ActivityTaskDataGrid> ActivityTaskDataGrids { get; set; }
         public virtual DbSet<ModuleExamQuestionAnswerGrid> ModuleExamQuestionAnswerGrids { get; set; }
         public virtual DbSet<Assesment> Assesments { get; set; }
         public virtual DbSet<AssesmentType> AssesmentTypes { get; set; }
         public virtual DbSet<AssesmentGrid> AssesmentGrids { get; set; }
         public virtual DbSet<CandidateAssesmentGrid> CandidateAssesmentGrids { get; set; }
         public virtual DbSet<CandidateAssesment> CandidateAssesments { get; set; }
-
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1393,42 +1393,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<BankDeposite>()
                 .Property(e => e.BankName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.ActivityTypeName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.ProjectName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.ActivityAssigneeGroupName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.StartTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.EndTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityDataGrid>()
-                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             modelBuilder.Entity<AdmissionGrid>()
@@ -2661,6 +2625,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<VoucherGrid>()
                 .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.ActivityName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.StartTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.EndTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()

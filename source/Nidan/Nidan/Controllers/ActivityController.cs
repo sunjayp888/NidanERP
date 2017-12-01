@@ -32,7 +32,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var activityAssigneeGroups = NidanBusinessService.RetrieveActivityAssigneeGroups(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList();
-            var projects = NidanBusinessService.RetrieveProjects(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList();
+            var projects = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == UserCentreId).Items.ToList();
             var activityTypes = NidanBusinessService.RetrieveActivityTypes(organisationId, e => true).Items.ToList();
             var viewModel = new ActivityViewModel()
             {
@@ -42,6 +42,8 @@ namespace Nidan.Controllers
                 ActivityTypes = new SelectList(activityTypes, "ActivityTypeId", "Name"),
                 Activity = new Activity()
             };
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -53,15 +55,17 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
                 activityViewModel.Activity.OrganisationId = organisationId;
-                activityViewModel.Activity = NidanBusinessService.CreateActivity(organisationId, activityViewModel.Activity);
+                activityViewModel.Activity = NidanBusinessService.CreateActivity(organisationId, personnelId, centreId, activityViewModel.Activity);
                 return RedirectToAction("Index");
             }
             activityViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
             activityViewModel.ActivityAssigneeGroups = new SelectList(NidanBusinessService.RetrieveActivityAssigneeGroups(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList());
-            activityViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList());
+            activityViewModel.Projects = new SelectList(NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == UserCentreId).Items.ToList());
             activityViewModel.ActivityTypes = new SelectList(NidanBusinessService.RetrieveActivityTypes(organisationId, e => true).Items.ToList());
             return View(activityViewModel);
         }
@@ -77,7 +81,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var activityAssigneeGroups = NidanBusinessService.RetrieveActivityAssigneeGroups(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList();
-            var projects = NidanBusinessService.RetrieveProjects(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList();
+            var projects = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == UserCentreId).Items.ToList();
             var activityTypes = NidanBusinessService.RetrieveActivityTypes(organisationId, e => true).Items.ToList();
             var activity = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
             if (activity == null)
@@ -92,6 +96,8 @@ namespace Nidan.Controllers
                 ActivityTypes = new SelectList(activityTypes, "ActivityTypeId", "Name"),
                 Activity = activity
             };
+            viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
+            viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
             return View(viewModel);
         }
 

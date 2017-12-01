@@ -244,6 +244,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivityAssigneeGroupController.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActivityTaskController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
     <Compile Include="Controllers\AssesmentController.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Models\AbsenceTypeViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActivityAssigneeGroupViewModel.cs" />
+    <Compile Include="Models\ActivityTaskViewModel.cs" />
     <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
@@ -1146,6 +1148,8 @@
     <Content Include="Registration.html" />
     <Content Include="Scripts\Angular\Controllers\ActivityAssigneeGroupController.js" />
     <Content Include="Scripts\Angular\Controllers\ActivityAssignPersonnelController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityTaskController.js" />
     <Content Include="Scripts\Angular\Controllers\AssesmentController.js" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BankDepositeController.js" />
@@ -1204,6 +1208,8 @@
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
     <Content Include="Scripts\Angular\Services\ActivityAssigneeGroupService.js" />
+    <Content Include="Scripts\Angular\Services\ActivityService.js" />
+    <Content Include="Scripts\Angular\Services\ActivityTaskService.js" />
     <Content Include="Scripts\Angular\Services\AssesmentService.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BankDepositeDocumentService.js" />
@@ -1771,6 +1777,12 @@
     <Content Include="Views\ModuleExamSet\_ModuleExamSet.cshtml" />
     <Content Include="Views\ModuleExamSet\Edit.cshtml" />
     <Content Include="Views\ModuleExamSet\_ModuleExamQuestionSet.cshtml" />
+    <Content Include="Views\Activity\_Activity.cshtml" />
+    <Content Include="Views\ActivityTask\Index.cshtml" />
+    <Content Include="Views\ActivityTask\_ActivityTask.cshtml" />
+    <Content Include="Views\ActivityTask\Create.cshtml" />
+    <Content Include="Views\ActivityTask\Edit.cshtml" />
+    <Content Include="Views\ActivityTask\_ActivityTaskByActivityId.cshtml" />
     <Content Include="Views\ModuleExamSet\_ModuleExamQuestionAnswer.cshtml" />
     <Content Include="Views\Assesment\Index.cshtml" />
     <Content Include="Views\Assesment\Create.cshtml" />
@@ -1836,7 +1848,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58524/</IISUrl>
+          <IISUrl>http://localhost:58525/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
