@@ -4169,6 +4169,7 @@ namespace Nidan.Data
                 return context
                     .ActivityTaskStates
                     .AsNoTracking()
+                    .Include(e=>e.TaskState)
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
@@ -4756,11 +4757,6 @@ namespace Nidan.Data
                     .FirstOrDefault(e => e.Guid == documentGuid);
 
             }
-        }
-
-        public PagedResult<Personnel> RetrievePersonnel(int organisationId, Func<Personnel, bool> predicate, List<OrderBy> orderBy, Paging paging)
-        {
-            throw new NotImplementedException();
         }
     }
 }

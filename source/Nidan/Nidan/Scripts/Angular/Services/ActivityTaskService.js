@@ -12,7 +12,12 @@
             retrieveActivityTasks: retrieveActivityTasks,
             searchActivityTask: searchActivityTask,
             searchActivityTaskByDate: searchActivityTaskByDate,
-            retrieveActivityTasksByActivityId: retrieveActivityTasksByActivityId
+            retrieveActivityTasksByActivityId: retrieveActivityTasksByActivityId,
+            deleteActivityTask: deleteActivityTask,
+            openAddTaskStatus: openAddTaskStatus,
+            retrieveTaskStates: retrieveTaskStates,
+            createTaskStatus: createTaskStatus,
+            retrieveActivityTaskStatesByActivityTaskId: retrieveActivityTaskStatesByActivityTaskId
         };
 
         return service;
@@ -40,6 +45,18 @@
             return $http.post(url, data);
         }
 
+        function retrieveActivityTaskStatesByActivityTaskId(activityTaskId, Paging, OrderBy) {
+
+            var url = "/ActivityTask/ActivityTaskStatesByActivityTaskId",
+                data = {
+                    activityTaskId: activityTaskId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
         function searchActivityTask(SearchKeyword, Paging, OrderBy) {
             var url = "/ActivityTask/Search",
                 data = {
@@ -60,6 +77,40 @@
                     orderBy: new Array(OrderBy)
                 };
 
+            return $http.post(url, data);
+        }
+
+        function deleteActivityTask(activityTaskId) {
+
+            var url = "/ActivityTask/Delete",
+                data = {
+                    activityTaskId: activityTaskId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function openAddTaskStatus(activityTaskId) {
+
+            var url = "/ActivityTask/AddTaskStatus",
+                data = {
+                    activityTaskId: activityTaskId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveTaskStates() {
+
+            var url = "/ActivityTask/GetTaskStates";
+            return $http.post(url);
+        }
+
+        function createTaskStatus(activityTaskState) {
+            var url = "/ActivityTask/CreateActivityTaskStatus",
+                data = {
+                    activityTaskState: activityTaskState
+                };
             return $http.post(url, data);
         }
     }

@@ -11,6 +11,8 @@
         /* jshint validthis:true */
         var vm = this;
         vm.activityTasks = [];
+        vm.taskStates = [];
+        vm.activityTaskStates = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -19,11 +21,18 @@
         vm.editActivityTask = editActivityTask;
         vm.searchActivityTask = searchActivityTask;
         vm.viewActivityTask = viewActivityTask;
+        vm.deleteActivityTask = deleteActivityTask;
         vm.searchActivityTaskByDate = searchActivityTaskByDate;
         vm.retrieveActivityTasksByActivityId = retrieveActivityTasksByActivityId;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
+        vm.openAddTaskStatus = openAddTaskStatus;
+        vm.activityTaskId;
+        vm.taskStateId;
+        vm.retrieveTaskStates = retrieveTaskStates;
+        vm.createTaskStatus = createTaskStatus;
+        vm.retrieveActivityTaskStatesByActivityTaskId = retrieveActivityTaskStatesByActivityTaskId;
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
@@ -53,6 +62,21 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.activityTasks.length === 0 ? "No Records Found" : "";
                     return vm.activityTasks;
+                });
+        }
+
+        function retrieveActivityTaskStatesByActivityTaskId(activityTaskId) {
+            vm.activityTaskId = activityTaskId;
+            vm.orderBy.property = "CompletedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return ActivityTaskService.retrieveActivityTaskStatesByActivityTaskId(vm.activityTaskId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.activityTaskStates = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.activityTaskStates.length === 0 ? "No Records Found" : "";
+                    return vm.activityTaskStates;
                 });
         }
 
@@ -110,6 +134,47 @@
 
         function viewActivityTask(activityTaskId) {
             $window.location.href = "/ActivityTask/View/" + activityTaskId;
+        }
+
+        function deleteActivityTask(activityTaskId,activityId) {
+            return ActivityTaskService.deleteActivityTask(activityTaskId).then(function () {
+                retrieveActivityTasksByActivityId(activityId);
+            });
+        }
+
+        function openAddTaskStatus(activityTaskId) {
+            vm.activityTaskId = activityTaskId;
+            return ActivityTaskService.openAddTaskStatus(vm.activityTaskId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    $('#dropStatus').val("Select Assign Type");
+                    $('#dropStatus').val();
+                    vm.taskStates = response.data;
+                    return vm.taskStates;
+                });
+        }
+
+        function retrieveTaskStates() {
+            return ActivityTaskService.retrieveTaskStates()
+                .then(function (response) {
+                    vm.taskStates = response.data;
+                    return vm.taskStates;
+                });
+        }
+
+        function createTaskStatus() {
+            //vm.fixAssetMappingId = fixAssetMappingId;
+            var activityTaskState = {
+                ActivityTaskId: vm.activityTaskId,
+                TaskStateId: $("#dropStatus").val(),
+                CompletedDate: $("#txtCompletedDate").val(),
+                Remark: $("#txtRemark").val(),
+                CentreId: $("#ActivityTask_CentreId").val()
+                // Remark: $("#txtRemark").val(),
+            }
+            return ActivityTaskService.createTaskStatus(activityTaskState)
+                .then(function () {
+                    retrieveActivityTaskStatesByActivityTaskId(vm.activityTaskId);
+                });
         }
     }
 })();

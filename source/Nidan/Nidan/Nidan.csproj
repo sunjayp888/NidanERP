@@ -311,6 +311,7 @@
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
+    <Compile Include="Models\CandidateAssesmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
@@ -1790,6 +1791,7 @@
     <Content Include="Views\Assesment\Edit.cshtml" />
     <Content Include="Views\Assesment\_AssignModuleExamSet.cshtml" />
     <Content Include="Views\Assesment\_UpdateModuleExamSet.cshtml" />
+    <Content Include="Views\ActivityTask\_AddTaskStatus.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

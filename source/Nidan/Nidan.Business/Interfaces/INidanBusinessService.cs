@@ -432,6 +432,7 @@ namespace Nidan.Business.Interfaces
         void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
         void DeleteExpenseProject(int organisationId, int expenseId, int projectId);
         void DeleteActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId,int personnelId);
+        void DeleteActivityTask(int organisationId, int activityTaskId);
 
         //Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);

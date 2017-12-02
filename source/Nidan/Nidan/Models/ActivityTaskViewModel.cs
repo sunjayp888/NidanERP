@@ -13,8 +13,10 @@ namespace Nidan.Models
         public Activity Activity { get; set; }
         public SelectList AssignToList { get; set; }
         public SelectList Centres { get; set; }
+        public SelectList TaskStates { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
+        public int ActivityTaskId { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
         {
             new HoursType() { Id = 01,Name = "01"},

@@ -37,7 +37,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.ActivityTask.StartDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.ActivityTask.StartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", ng_model = "model.StartDate" })
+        @Html.TextBoxFor(model => model.ActivityTask.StartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 activityTaskStartDate", ng_model = "model.StartDate" })
         <span class="form-control-feedback" aria-hidden="true"></span>
         @Html.ValidationMessageFor(model => model.ActivityTask.StartDate, "", new { @class = "help-block" })
     </div>
@@ -72,7 +72,7 @@
 <div class="form-group">
     @Html.LabelFor(model => model.ActivityTask.EndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.ActivityTask.EndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date required", ng_model = "model.EndDate" })
+        @Html.TextBoxFor(model => model.ActivityTask.EndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 activityTaskEndDate required", ng_model = "model.EndDate" })
         <span class="form-control-feedback" aria-hidden="true"></span>
         @Html.ValidationMessageFor(model => model.ActivityTask.EndDate, "", new { @class = "help-block" })
     </div>
@@ -123,7 +123,7 @@
     </div>
 </div>*@
 
-<div class="form-group">
+<div class="form-group activityTaskRemark">
     @Html.LabelFor(model => model.ActivityTask.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.EditorFor(model => model.ActivityTask.Remark, new { @class = "form-control col-md-7 col-xs-12" })

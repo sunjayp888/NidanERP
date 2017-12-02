@@ -1670,7 +1670,8 @@ namespace Nidan.Business
         public ActivityTask CreateActivityTask(int organisationId, int personnelId, int centreId, ActivityTask activityTask)
         {
             activityTask.CreatedBy = personnelId;
-            activityTask.CentreId = centreId;
+            //activityTask.CentreId = centreId;
+            activityTask.Activity = null;
             var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
             return data;
         }
@@ -1933,7 +1934,7 @@ namespace Nidan.Business
 
         public IEnumerable<Personnel> RetrieveUnassignedPersonnels(int organisationId, int centreId, int activityAssigneeGroupId)
         {
-            var data = _nidanDataService.RetrievePersonnel(organisationId, a => !a.ActivityAssignPersonnels.Any(d => d.CentreId == centreId && d.ActivityAssignPersonnelId == activityAssigneeGroupId) && a.CentreId==centreId, null, null).Items.ToList();
+            var data = _nidanDataService.RetrievePersonnels(organisationId, a => !a.ActivityAssignPersonnels.Any(d => d.CentreId == centreId && d.ActivityAssignPersonnelId == activityAssigneeGroupId) && a.CentreId==centreId, null, null).Items.ToList();
             return data;
         }
 
@@ -2010,7 +2011,7 @@ namespace Nidan.Business
         public PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy,
             Paging paging)
         {
-            return _nidanDataService.RetrievePersonnel(organisationId, p => p.CentreId == centreId, orderBy, paging);
+            return _nidanDataService.RetrievePersonnels(organisationId, p => p.CentreId == centreId, orderBy, paging);
         }
 
 
@@ -4578,6 +4579,11 @@ namespace Nidan.Business
         public void DeleteActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId)
         {
             _nidanDataService.Delete<ActivityAssignPersonnel>(organisationId, p => p.CentreId == centreId && p.ActivityAssigneeGroupId == activityAssigneeGroupId && p.PersonnelId == personnelId);
+        }
+
+        public void DeleteActivityTask(int organisationId, int activityTaskId)
+        {
+            _nidanDataService.Delete<ActivityTask>(organisationId,e=>e.ActivityTaskId==activityTaskId);
         }
 
         #endregion
