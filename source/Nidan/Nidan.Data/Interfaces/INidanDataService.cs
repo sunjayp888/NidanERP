@@ -260,10 +260,10 @@ namespace Nidan.Data.Interfaces
         ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
         PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskDataGrids(int organisationId, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate);
-        PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId,int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate);
+        Assessment RetrieveAssessment(int organisationId, int assessmentId, Expression<Func<Assessment, bool>> predicate);
+        PagedResult<AssessmentGrid> RetrieveAssessmentGrid(int organisationId, Expression<Func<AssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId,Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate);
       
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public ModuleExamQuestionSet()
         {
             CreatedDate = DateTime.UtcNow.Date;
+            CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
         }
         public int ModuleExamQuestionSetId { get; set; }
 
@@ -64,5 +65,8 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual ModuleExamSet ModuleExamSet { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
     }
 }

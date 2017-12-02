@@ -1704,14 +1704,19 @@ namespace Nidan.Business
             return _nidanDataService.Create<ModuleExamQuestionSet>(organisationId, moduleExamQuestionSet);
         }
 
-        public Assesment CreateAssesment(int organisationId, Assesment assesment)
+        public Assessment CreateAssessment(int organisationId, Assessment assessment)
         {
-            return _nidanDataService.Create<Assesment>(organisationId, assesment);
+            return _nidanDataService.Create<Assessment>(organisationId, assessment);
         }
 
-        public CandidateAssesment CreateCandidateAssesment(int organisationId, CandidateAssesment candidateAssesment)
+        public CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment)
         {
-            return _nidanDataService.Create<CandidateAssesment>(organisationId, candidateAssesment);
+            return _nidanDataService.Create<CandidateAssessment>(organisationId, candidateAssessment);
+        }
+
+        public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId,CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
+        {
+            return _nidanDataService.Create<CandidateAssessmentQuestionAnswer>(organisationId, candidateAssessmentQuestionAnswer);
         }
 
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
@@ -2026,25 +2031,24 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveActivityTaskDataGrids(organisationId, predicate, orderBy, paging);
         }
 
-        public Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate)
+        public Assessment RetrieveAssessment(int organisationId, int assessmentId, Expression<Func<Assessment, bool>> predicate)
         {
-            return _nidanDataService.RetrieveAssesment(organisationId, assesmentId, predicate);
+            return _nidanDataService.RetrieveAssessment(organisationId, assessmentId, predicate);
         }
 
-        public PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<AssessmentGrid> RetrieveAssessmentGrid(int organisationId, Expression<Func<AssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveAssesmentGrid(organisationId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveAssessmentGrid(organisationId, predicate, orderBy, paging);
         }
 
-        public List<AssesmentType> RetrieveAssesmentTypes(int organisationId, Expression<Func<AssesmentType, bool>> predicate)
+        public List<AssessmentType> RetrieveAssessmentTypes(int organisationId, Expression<Func<AssessmentType, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<AssesmentType>(organisationId, predicate);
+            return _nidanDataService.Retrieve<AssessmentType>(organisationId, predicate);
         }
 
-        public PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId, int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId, Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCandidateAssesmentGrid(organisationId, batchId, predicate);
+            return _nidanDataService.RetrieveCandidateAssessmentGrid(organisationId, predicate);
         }
 
         public List<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate)
@@ -2052,9 +2056,9 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<ModuleExamSet>(organisationId, predicate);
         }
 
-        public CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate)
+        public CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate)
         {
-            return _nidanDataService.RetrieveCandidateAssesment(organisationId, candidateAssesmentId, predicate);
+            return _nidanDataService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId, predicate);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4396,21 +4400,21 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityTaskState);
         }
 
-        public Assesment UpdateAssesment(int organisationId, Assesment assesment)
+        public Assessment UpdateAssessment(int organisationId, Assessment assessment)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, assesment);
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, assessment);
         }
 
-        public bool AssignModuleExamSet(int organisationId, int personnelId, int assesmentId, List<CandidateAssesment> assesments)
+        public bool AssignModuleExamSet(int organisationId, int personnelId, int assessmentId, List<CandidateAssessment> assessments)
         {
             try
             {
-                foreach (var assesment in assesments)
+                foreach (var assessment in assessments)
                 {
-                    var assesmentData = RetrieveAssesment(organisationId, assesmentId, e => true);
-                    assesment.AssesmentId = assesmentData.AssesmentId;
-                    assesment.CreatedBy = personnelId;
-                    CreateCandidateAssesment(organisationId, assesment);
+                    var assessmentData = RetrieveAssessment(organisationId, assessmentId, e => true);
+                    assessment.AssessmentId = assessmentData.AssessmentId;
+                    assessment.CreatedBy = personnelId;
+                    CreateCandidateAssessment(organisationId, assessment);
                 }
                 return true;
             }
@@ -4420,9 +4424,9 @@ namespace Nidan.Business
             }
         }
 
-        public CandidateAssesment UpdateCandidateAssesment(int organisationId, CandidateAssesment candidateAssesment)
+        public CandidateAssessment UpdateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssesment);
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessment);
         }
 
 

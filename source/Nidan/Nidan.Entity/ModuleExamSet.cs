@@ -13,7 +13,8 @@ namespace Nidan.Entity
         {
             CreatedDate = DateTime.UtcNow.Date;
             ModuleExamQuestionSets = new HashSet<ModuleExamQuestionSet>();
-            CandidateAssesments = new HashSet<CandidateAssesment>();
+            CandidateAssessments = new HashSet<CandidateAssessment>();
+            CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
         }
         public int ModuleExamSetId { get; set; }
 
@@ -38,6 +39,9 @@ namespace Nidan.Entity
         public virtual ICollection<ModuleExamQuestionSet> ModuleExamQuestionSets { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CandidateAssesment> CandidateAssesments { get; set; }
+        public virtual ICollection<CandidateAssessment> CandidateAssessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
     }
 }

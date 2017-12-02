@@ -173,11 +173,12 @@ namespace Nidan.Data.Models
         public virtual DbSet<VoucherGrid> VoucherGrids { get; set; }
         public virtual DbSet<ActivityTaskDataGrid> ActivityTaskDataGrids { get; set; }
         public virtual DbSet<ModuleExamQuestionAnswerGrid> ModuleExamQuestionAnswerGrids { get; set; }
-        public virtual DbSet<Assesment> Assesments { get; set; }
-        public virtual DbSet<AssesmentType> AssesmentTypes { get; set; }
-        public virtual DbSet<AssesmentGrid> AssesmentGrids { get; set; }
-        public virtual DbSet<CandidateAssesmentGrid> CandidateAssesmentGrids { get; set; }
-        public virtual DbSet<CandidateAssesment> CandidateAssesments { get; set; }
+        public virtual DbSet<Assessment> Assessments { get; set; }
+        public virtual DbSet<AssessmentType> AssessmentTypes { get; set; }
+        public virtual DbSet<AssessmentGrid> AssessmentGrids { get; set; }
+        public virtual DbSet<CandidateAssessmentGrid> CandidateAssessmentGrids { get; set; }
+        public virtual DbSet<CandidateAssessment> CandidateAssessments { get; set; }
+        public virtual DbSet<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2695,89 +2696,109 @@ namespace Nidan.Data.Models
                 .Property(e => e.CorrectAnswer)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Assesment>()
+            modelBuilder.Entity<Assessment>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Assesment>()
+            modelBuilder.Entity<Assessment>()
                 .Property(e => e.StartTimeSpan)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Assesment>()
+            modelBuilder.Entity<Assessment>()
                 .Property(e => e.EndTimeSpan)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentType>()
+            modelBuilder.Entity<AssessmentType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentType>()
-                .HasMany(e => e.Assesments)
-                .WithRequired(e => e.AssesmentType)
+            modelBuilder.Entity<AssessmentType>()
+                .HasMany(e => e.Assessments)
+                .WithRequired(e => e.AssessmentType)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
-                .Property(e => e.AssesmentName)
+            modelBuilder.Entity<AssessmentGrid>()
+                .Property(e => e.AssessmentName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
-                .Property(e => e.AssesmentTypeName)
+            modelBuilder.Entity<AssessmentGrid>()
+                .Property(e => e.AssessmentTypeName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
+            modelBuilder.Entity<AssessmentGrid>()
                 .Property(e => e.StartTimeSpan)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
+            modelBuilder.Entity<AssessmentGrid>()
                 .Property(e => e.EndTimeSpan)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
-                .Property(e => e.AssesmentTime)
+            modelBuilder.Entity<AssessmentGrid>()
+                .Property(e => e.AssessmentTime)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
+            modelBuilder.Entity<AssessmentGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
+            modelBuilder.Entity<AssessmentGrid>()
                 .Property(e => e.CourseName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<AssesmentGrid>()
+            modelBuilder.Entity<AssessmentGrid>()
                 .Property(e => e.BatchName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesment>()
+            modelBuilder.Entity<CandidateAssessment>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
+            modelBuilder.Entity<CandidateAssessmentGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
-                .Property(e => e.Name)
+            modelBuilder.Entity<CandidateAssessmentGrid>()
+                .Property(e => e.BatchName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
+            modelBuilder.Entity<CandidateAssessmentGrid>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
-                .Property(e => e.AssesmentName)
+            modelBuilder.Entity<CandidateAssessmentGrid>()
+                .Property(e => e.AssessmentName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
+            modelBuilder.Entity<CandidateAssessmentGrid>()
+                .Property(e => e.AssessmentTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAssessmentGrid>()
+                .Property(e => e.AssessmentTime)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAssessmentGrid>()
                 .Property(e => e.ExamSet)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
+            modelBuilder.Entity<CandidateAssessmentGrid>()
                 .Property(e => e.IsAssignExamSet)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidateAssesmentGrid>()
+            modelBuilder.Entity<CandidateAssessmentGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAssessmentQuestionAnswer>()
+                .Property(e => e.AnswerType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAssessmentQuestionAnswer>()
+                .Property(e => e.SubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAssessmentQuestionAnswer>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
