@@ -1,10 +1,11 @@
-﻿@model Nidan.Models.ActivityTaskViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.ActivityTaskViewModel
 
 @{
     ViewBag.Title = string.Format("Edit Activity Task ({0})", Model.ActivityTask.Name);
 }
 
-<div class="row">
+<div class="row" ng-controller="ActivityTaskController as model" ng-init="model.retrieveActivityTaskStatesByActivityTaskId(@Model.ActivityTask.ActivityTaskId)">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -26,16 +27,71 @@
 
                         }
                         @Html.HiddenFor(model => Model.ActivityTask.ActivityTaskId)
+
                         @Html.Partial("_ActivityTask", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button id="btnAddTaskStatus" type="button" class="btn btn-primary" ng-click="model.openAddTaskStatus(@Model.ActivityTask.ActivityTaskId)" data-toggle="modal" data-target="#addTaskStatus">Add Task Status</button>
+                                    <a href="@Url.Action("Index")" class="btn btn-success" role="button">
+                                        Finish
+                                    </a>
+                                    @Html.Partial("_AddTaskStatus", Model)
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Rooms<small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('CompletedDate')" ng-class="model.orderClass('CompletedDate')">Actioned Date</th>
+                                            <th ng-click="model.order('TaskStateId')" ng-class="model.orderClass('TaskStateId')">Status</th>
+                                            <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="activityTaskState in model.activityTaskStates" class="odd gradeX">
+                                            <td><span ng-bind="activityTaskState.CompletedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="activityTaskState.TaskState.Name"></span></td>
+                                            <td><span ng-bind="activityTaskState.Remark"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,6 +103,32 @@
 </div>
 @section scripts {
     <script>
+        $(document).ready(function () {
+            var startTimeSpan = "@Model.Activity.StartTimeSpan" == "AM" ? "AM" : "PM";
+            var endTimeSpan = "@Model.Activity.EndTimeSpan" == "AM" ? "AM" : "PM";
+            @*var numberOfDays = ("@Model.Activity.EndDate.Date" - "@Model.Activity.StartDate.Date").Days;*@
+            $("#ActivityTask_StartHour").val("@Model.Activity.StartHour");
+            $('#ActivityTask_StartMinute').val("@Model.Activity.StartMinute");
+            startTimeSpan == "AM" ? $("#rbActivityStartTimeSpanAM").prop("checked", true) : $("#rbActivityStartTimeSpanPM").prop("checked", true);
+            $('#ActivityTask_EndHour').val("@Model.Activity.EndHour");
+            $('#ActivityTask_EndMinute').val("@Model.Activity.EndMinute");
+            endTimeSpan == "AM" ? $("#rbActivityEndTimeSpanAM").prop("checked", true) : $("#rbActivityEndTimeSpanPM").prop("checked", true);
+            //Read Only
+            $('#ActivityTask_Name').attr("disabled", true);
+            $('#ActivityTask_CentreId').attr("disabled", true);
+            $('#ActivityTask_AssignTo').attr("disabled", true);
+            $('#ActivityTask_StartDate').attr("disabled", true);
+            $('#ActivityTask_StartHour').attr("disabled", true);
+            $('#ActivityTask_StartMinute').attr("disabled", true);
+            $('#ActivityTask_EndDate').attr("disabled", true);
+            $('#ActivityTask_EndHour').attr("disabled", true);
+            $('#ActivityTask_EndMinute').attr("disabled", true);
+            $('#rbActivityStartTimeSpanAM').attr("disabled", true);
+            $('#rbActivityStartTimeSpanPM').attr("disabled", true);
+            $('#rbActivityEndTimeSpanAM').attr("disabled", true);
+            $('#rbActivityEndTimeSpanPM').attr("disabled", true);
+            $('.activityTaskRemark').hide();
+        });
         var daterangepickerOptions = {
             autoApply: true,
             singleDatePicker: true,
@@ -55,18 +137,21 @@
             opens: 'left',
             //minDate: moment(),
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-            onSelect: function () {
-                selectedDate = moment().format('DD MMMM YYYY');
-            },
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
 
         jQuery(function () {
-            jQuery(".date").daterangepicker(daterangepickerOptions);
-            $('.date').val(moment().format('DD MMMM YYYY'));
-            $(".date").on('apply.daterangepicker', function (ev, picker) {
+            jQuery(".activityTaskStartDate").daterangepicker(daterangepickerOptions);
+            $('.activityTaskStartDate').val('@Model.ActivityTask.StartDate.ToString("dd MMMM yyyy")');
+            $(".activityTaskStartDate").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+
+            jQuery(".activityTaskEndDate").daterangepicker(daterangepickerOptions);
+            $('.activityTaskEndDate').val('@Model.ActivityTask.EndDate.ToString("dd MMMM yyyy")');
+            $(".activityTaskEndDate").on('apply.daterangepicker', function (ev, picker) {
                 $(this).val(picker.startDate.format('DD MMMM YYYY'));
             });
         });

@@ -312,6 +312,7 @@
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
+    <Compile Include="Models\CandidateAssesmentViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentQuestionAnswerViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
@@ -1787,6 +1788,13 @@
     <Content Include="Views\ActivityTask\Edit.cshtml" />
     <Content Include="Views\ActivityTask\_ActivityTaskByActivityId.cshtml" />
     <Content Include="Views\ModuleExamSet\_ModuleExamQuestionAnswer.cshtml" />
+    <Content Include="Views\Assesment\Index.cshtml" />
+    <Content Include="Views\Assesment\Create.cshtml" />
+    <Content Include="Views\Assesment\_Assesment.cshtml" />
+    <Content Include="Views\Assesment\Edit.cshtml" />
+    <Content Include="Views\Assesment\_AssignModuleExamSet.cshtml" />
+    <Content Include="Views\Assesment\_UpdateModuleExamSet.cshtml" />
+    <Content Include="Views\ActivityTask\_AddTaskStatus.cshtml" />
     <Content Include="Views\Assessment\Index.cshtml" />
     <Content Include="Views\Assessment\Create.cshtml" />
     <Content Include="Views\Assessment\_Assessment.cshtml" />
