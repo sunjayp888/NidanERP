@@ -68,8 +68,9 @@ namespace Nidan.Entity
             ActivityTaskStates=new HashSet<ActivityTaskState>();
             ActivityAssigneeGroups=new HashSet<ActivityAssigneeGroup>();
             ActivityTasks=new HashSet<ActivityTask>();
-            Assesments = new HashSet<Assesment>();
-            CandidateAssesments=new HashSet<CandidateAssesment>();
+            Assessments = new HashSet<Assessment>();
+            CandidateAssessments=new HashSet<CandidateAssessment>();
+            CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
         }
 
         public int CentreId { get; set; }
@@ -283,10 +284,13 @@ namespace Nidan.Entity
         public virtual ICollection<Activity> Activities { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assesment> Assesments { get; set; }
+        public virtual ICollection<Assessment> Assessments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CandidateAssesment> CandidateAssesments { get; set; }
+        public virtual ICollection<CandidateAssessment> CandidateAssessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
     }
 
 }

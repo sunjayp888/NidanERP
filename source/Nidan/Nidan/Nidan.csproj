@@ -247,7 +247,7 @@
     <Compile Include="Controllers\ActivityTaskController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
-    <Compile Include="Controllers\AssesmentController.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\BankDepositeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -255,6 +255,7 @@
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\BatchPlannerController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
+    <Compile Include="Controllers\CandidateAssessmentQuestionAnswerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CentrePettyCashController.cs" />
@@ -312,11 +313,13 @@
     <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateAssesmentViewModel.cs" />
+    <Compile Include="Models\CandidateAssessmentQuestionAnswerViewModel.cs" />
+    <Compile Include="Models\CandidateAssessmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
-    <Compile Include="Models\AssesmentViewModel.cs" />
+    <Compile Include="Models\AssessmentViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
@@ -1792,6 +1795,15 @@
     <Content Include="Views\Assesment\_AssignModuleExamSet.cshtml" />
     <Content Include="Views\Assesment\_UpdateModuleExamSet.cshtml" />
     <Content Include="Views\ActivityTask\_AddTaskStatus.cshtml" />
+    <Content Include="Views\Assessment\Index.cshtml" />
+    <Content Include="Views\Assessment\Create.cshtml" />
+    <Content Include="Views\Assessment\_Assessment.cshtml" />
+    <Content Include="Views\Assessment\Edit.cshtml" />
+    <Content Include="Views\Assessment\_AssignModuleExamSet.cshtml" />
+    <Content Include="Views\Assessment\_UpdateModuleExamSet.cshtml" />
+    <Content Include="Views\Assessment\AssesmentByUser.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\_CandidateAssessmentQuestionAnswer.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\Create.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

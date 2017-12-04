@@ -345,13 +345,16 @@ namespace Nidan.Entity
         public virtual ICollection<ModuleExamQuestionSet> ModuleExamQuestionSets { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AssesmentType> AssesmentTypes { get; set; }
+        public virtual ICollection<AssessmentType> AssessmentTypes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Assesment> Assesments { get; set; }
+        public virtual ICollection<Assessment> Assessments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CandidateAssesment> CandidateAssesments { get; set; }
+        public virtual ICollection<CandidateAssessment> CandidateAssessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
 
     }
 }

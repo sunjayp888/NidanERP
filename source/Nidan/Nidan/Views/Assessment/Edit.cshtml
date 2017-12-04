@@ -1,0 +1,176 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.AssessmentViewModel
+@{
+    ViewBag.Title = string.Format("Edit Assessment ({0})", Model.Assessment.Name);
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.Assessment.AssessmentId)
+                        @Html.Partial("_Assessment", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*//-------------------------------------------*@
+<div ng-controller="AssessmentController as model" ng-init="model.retrieveCandidateAssessmentByBatchId(@Model.Assessment.BatchId)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Candidate List <small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th></th>
+                                        <th ng-click="model.order('StudentCode')" ng-class="model.orderClass('StudentCode')">Student Code</th>
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                        <th ng-click="model.order('ExamSet')" ng-class="model.orderClass('ExamSet')">Exam Set</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="assessment in model.assessments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <td><input type="checkbox" id="chk" ng-disabled="assessment.IsAssignExamSet=='Yes'" ng-model="assessment.Ischecked" ng-click="model.canWeAssign()" /></td>
+                                        <td><span ng-bind="assessment.StudentCode"></span></td>
+                                        <td><span ng-bind="assessment.CandidateName"></span></td>
+                                        <td>
+                                            <button type="button" ng-if="assessment.ExamSet!=null" class="btn-success btn-xs"><span ng-bind="assessment.ExamSet"></span></button>
+                                            @*<button type="button" ng-if="assessment.ExamSet!=null" ng-click="model.openModuleExamSetByAssessmentId(assessment.CandidateAssessmentId)" data-target="#moduleUpdateExamSetModal" class="btn-info btn-xs">Change Set</button>*@
+                                            <button type="button" ng-if="assessment.ExamSet==null" class="btn-danger btn-xs">Not Yet Assign</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button id="btnAssignExamSet" type="submit" class="btn btn-warning" ng-click="model.openModuleExamSetModalPopUp(model.assessments)" ng-disabled="model.isAssignButtonEnable" data-toggle="modal" data-target="#moduleExamSetModal">Assign Exam Set</button>
+    </div>
+    @Html.Partial("_AssignModuleExamSet")
+    @Html.Partial("_UpdateModuleExamSet")
+</div>
+    <div>
+        <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+            <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+        </a>
+    </div>
+    @section scripts {
+        <script>
+            var daterangepickerOptions = {
+                autoApply: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showCustomRangeLabel: false,
+                opens: 'left',
+                //minDate: moment(),
+                //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+                onSelect: function () {
+                    selectedDate = moment().format('DD MMMM YYYY');
+                },
+                locale: {
+                    "format": "DD MMMM YYYY"
+                }
+            };
+
+            jQuery(function () {
+                jQuery(".date").daterangepicker(daterangepickerOptions);
+                $('.date').val(moment().format('DD MMMM YYYY'));
+                $(".date").on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
+            });
+
+            $('#Assessment_CentreId').change(function () {
+                var centreId = $('#Assessment_CentreId :selected').val();
+                $.ajax({
+                    url: '/Assessment/GetCourses',
+                    type: 'POST',
+                    data: JSON.stringify({ centreId: centreId }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    error: function (xhr) {
+                        alert('Error: ' + xhr.statusText);
+                    },
+                    success: function (result) {
+                        $("#Assessment_CourseId").empty();
+                        $("#Assessment_CourseId").append($("<option></option>").html("Select Course"));
+                        $.each(result, function (key, value) {
+                            $("#Assessment_CourseId").append($("<option></option>").val(value.CourseId).html(value.Name));
+
+                        });
+                    },
+                    async: true,
+                    processData: false
+                });
+            });
+
+            $('#Assessment_CourseId').change(function () {
+                var centreId = $('#Assessment_CentreId :selected').val();
+                var courseId = $('#Assessment_CourseId :selected').val();
+                $.ajax({
+                    url: '/Assessment/GetBatches',
+                    type: 'POST',
+                    data: JSON.stringify({ courseId: courseId, centreId: centreId }),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    error: function (xhr) {
+                        alert('Error: ' + xhr.statusText);
+                    },
+                    success: function (result) {
+                        $("#Assessment_BatchId").empty();
+                        $("#Assessment_BatchId").append($("<option></option>").html("Select Batch"));
+                        $.each(result, function (key, value) {
+                            $("#Assessment_BatchId").append($("<option></option>").val(value.BatchId).html(value.Name));
+
+                        });
+                    },
+                    async: true,
+                    processData: false
+                });
+            });
+        </script>
+    }

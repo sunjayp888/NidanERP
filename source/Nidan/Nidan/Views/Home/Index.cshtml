@@ -9,202 +9,235 @@
     var endOfWeek = startOfWeekDate.AddDays(6).ToShortDateString();
 }
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>
-                    Today's Count<small> (@DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToString("dddd"))</small>
-                </h2>
-                <div class="clearfix"></div>
+@*For Admin and Superadmin*@
+@if (User.IsInAnyRoles("Admin","SuperAdmin"))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Today's Count<small> (@DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToString("dddd"))</small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <a href='@Url.Action("TodaysMobilization", "Mobilization")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #b3ecff">
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="count">@Model.MobilizationCount</div>
+                            <h3>Mobilization</h3>
+                            <p>Today's Mobilization Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("TodaysEnquiry", "Enquiry")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #ffe4b3">
+                            <div class="icon">
+                                <i class="fa fa-clipboard"></i>
+                            </div>
+                            <div class="count">@Model.EnquiryCount</div>
+                            <h3>Enquiry</h3>
+                            <p>Today's Enquiry Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("TodaysRegistration", "Registration")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats"style="background: #ffcce7">
+                            <div class="icon">
+                                <i class="fa fa-check-square-o"></i>
+                            </div>
+                            <div class="count">@Model.RegistraionCount</div>
+                            <h3>Registration</h3>
+                            <p>Today's Registration Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("TodaysAdmission", "Admission")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats"style="background: #ccffb3">
+                            <div class="icon">
+                                <i class="fa fa-institution"></i>
+                            </div>
+                            <div class="count">@Model.AdmissionCount</div>
+                            <h3>Admission</h3>
+                            <p>Today's Admission Count</p>
+                        </div>
+                    </div>
+                </a>
+
             </div>
-            <a href='@Url.Action("TodaysMobilization","Mobilization")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background: #b3ecff">
-                        <div class="icon">
-                            <i class="fa fa-users"></i>
-                        </div>
-                        <div class="count">@Model.MobilizationCount</div>
-                        <h3>Mobilization</h3>
-                        <p>Today's Mobilization Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("TodaysEnquiry","Enquiry")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background:#ffe4b3">
-                        <div class="icon">
-                            <i class="fa fa-clipboard"></i>
-                        </div>
-                        <div class="count">@Model.EnquiryCount</div>
-                        <h3>Enquiry</h3>
-                        <p>Today's Enquiry Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("TodaysRegistration","Registration")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats"style="background:#ffcce7">
-                        <div class="icon">
-                            <i class="fa fa-check-square-o"></i>
-                        </div>
-                        <div class="count">@Model.RegistraionCount</div>
-                        <h3>Registration</h3>
-                        <p>Today's Registration Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("TodaysAdmission","Admission")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats"style="background:#ccffb3">
-                        <div class="icon">
-                            <i class="fa fa-institution"></i>
-                        </div>
-                        <div class="count">@Model.AdmissionCount</div>
-                        <h3>Admission</h3>
-                        <p>Today's Admission Count</p>
-                    </div>
-                </div>
-            </a>
-          
         </div>
     </div>
-</div>
 
 @*Follow-Up*@
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>
-                    Follow-Up Count<small></small>
-                </h2>
-                <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Follow-Up Count<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <a href='@Url.Action("Pending", "FollowUp")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #ffb3b3">
+                            <div class="icon">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                            <div class="count">@Model.PendingFollowUpCount</div>
+                            <h3>Pending</h3>
+                            <p>Pending Follow-Up Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("Todays", "FollowUp")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #c6ecd9">
+                            <div class="icon">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                            <div class="count">@Model.TodaysFollowUpCount</div>
+                            <h3>Today's</h3>
+                            <p>Today's Follow-Up Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("Tomorrows", "FollowUp")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #ffd1b3">
+                            <div class="icon">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                            <div class="count">@Model.TomorrowsFollowUpCount</div>
+                            <h3>Tomorrow's</h3>
+                            <p>Tomorrow's Follow-Up Count</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='@Url.Action("Upcoming", "FollowUp")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #d1d1e0">
+                            <div class="icon">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                            <div class="count">@Model.UpcomingFollowUpCount</div>
+                            <h3>Upcoming</h3>
+                            <p>Upcoming Follow-Up Count</p>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <a href='@Url.Action("Pending","FollowUp")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background: #ffb3b3">
-                        <div class="icon">
-                            <i class="fa fa-bar-chart"></i>
-                        </div>
-                        <div class="count">@Model.PendingFollowUpCount</div>
-                        <h3>Pending</h3>
-                        <p>Pending Follow-Up Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("Todays","FollowUp")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background:#c6ecd9">
-                        <div class="icon">
-                            <i class="fa fa-bar-chart"></i>
-                        </div>
-                        <div class="count">@Model.TodaysFollowUpCount</div>
-                        <h3>Today's</h3>
-                        <p>Today's Follow-Up Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("Tomorrows","FollowUp")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background:#ffd1b3">
-                        <div class="icon">
-                            <i class="fa fa-bar-chart"></i>
-                        </div>
-                        <div class="count">@Model.TomorrowsFollowUpCount</div>
-                        <h3>Tomorrow's</h3>
-                        <p>Tomorrow's Follow-Up Count</p>
-                    </div>
-                </div>
-            </a>
-            <a href='@Url.Action("Upcoming","FollowUp")'>
-                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="tile-stats" style="background:#d1d1e0">
-                        <div class="icon">
-                            <i class="fa fa-bar-chart"></i>
-                        </div>
-                        <div class="count">@Model.UpcomingFollowUpCount</div>
-                        <h3>Upcoming</h3>
-                        <p>Upcoming Follow-Up Count</p>
-                    </div>
-                </div>
-            </a>
         </div>
     </div>
-</div>
 
 
 @*</div>*@
-<!-- pie chart -->
-<div class="row">
-    <div ng-controller="HomeController as model">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2>
-                        Pie Chart<small>Monthly (@string.Format("{0} - {1}", DateTime.UtcNow.ToString("MMMM"), DateTime.UtcNow.Year))</small>
+    <!-- pie chart -->
+    <div class="row">
+        <div ng-controller="HomeController as model">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            Pie Chart<small>Monthly (@string.Format("{0} - {1}", DateTime.UtcNow.ToString("MMMM"), DateTime.UtcNow.Year))</small>
+                            @if (User.IsInAnyRoles("SuperAdmin"))
+                            {
+                                <!--<small><b>Centre</b></small>-->
+                            }
+                        </h2>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            <!--<small><b>Centre</b></small>-->
-                        }
-                    </h2>
-                    @if (User.IsInAnyRoles("SuperAdmin"))
-                    {
-                        <!-- <div id="pie" class="form-group">
-                            <div class="row">
-                                @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select id="pieCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.retrieveStatisticsByCentre(model.centreId)">
-                                        <option>Select Centre</option>
-                                        <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
-                                    </select>
+                            <!-- <div id="pie" class="form-group">
+                                <div class="row">
+                                    @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Payment Mode</label>*@
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <select id="pieCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.retrieveStatisticsByCentre(model.centreId)">
+                                            <option>Select Centre</option>
+                                            <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>-->
-                    }
-                    <div class="clearfix"></div>
+                            </div>-->
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content2">
+                        <div id="graph_donut" style="width: 100%; height: 300px;"></div>
+                        <div ng-show="model.NoRecord" class="alert alert-danger alert-dismissible fade in" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>No Data Found.</strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="x_content2">
-                    <div id="graph_donut" style="width:100%; height:300px;"></div>
-                    <div ng-show="model.NoRecord" class="alert alert-danger alert-dismissible fade in" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <strong>No Data Found.</strong>
+            </div>
+            <!-- bar charts group -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            Bar Chart<small>Weekly (@string.Format("{0} To {1}", startOfWeek, endOfWeek))</small>
+                            @if (User.IsInAnyRoles("SuperAdmin"))
+                            {
+                                <!--<small><b>Centre</b></small>-->
+                            }
+                        </h2>
+                        @if (User.IsInAnyRoles("SuperAdmin"))
+                        {
+                            <!--<div id="bar" class="form-group">
+                                <div class="row">
+                                    @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <select id="barCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.statisticsBarByCentre(model.centreId)">
+                                            <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>-->
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content1">
+                        <div id="graph_bar_group" style="width: 100%; height: 300px;"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- bar charts group -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+    </div>
+}
+
+@*For User*@
+@if (User.IsInAnyRoles("User"))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Bar Chart<small>Weekly (@string.Format("{0} To {1}", startOfWeek, endOfWeek))</small>
-                        @if (User.IsInAnyRoles("SuperAdmin"))
-                        {
-                            <!--<small><b>Centre</b></small>-->
-                        }
+                        Profile<small> </small>
                     </h2>
-                    @if (User.IsInAnyRoles("SuperAdmin"))
-                    {
-                        <!--<div id="bar" class="form-group">
-                            <div class="row">
-                                @*<label id="labelPaymentMode" class="control-label col-md-3 col-sm-3 col-xs-12">Select Centre</label>*@
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <select id="barCentres" ng-model="model.centreId" class="form-control col-md-7 col-xs-12" ng-change="model.statisticsBarByCentre(model.centreId)">
-                                        <option data-ng-repeat="t in model.centres" ng-model="model.centreId" value="{{t.CentreId}}">{{t.Name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>-->
-                    }
                     <div class="clearfix"></div>
                 </div>
-                <div class="x_content1">
-                    <div id="graph_bar_group" style="width:100%; height:300px;"></div>
-                </div>
+                <a href='@Url.Action("AssesmentByUser", "Assessment")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #b3ecff">
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="count">@Model.MobilizationCount</div>
+                            <h3>Assessment</h3>
+                            <p>Today's Assessment</p>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-</div>
+}

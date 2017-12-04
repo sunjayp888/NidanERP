@@ -3,27 +3,29 @@
 
     angular
         .module('Nidan')
-        .factory('AssesmentService', AssesmentService);
+        .factory('AssessmentService', AssessmentService);
 
-    AssesmentService.$inject = ['$http'];
+    AssessmentService.$inject = ['$http'];
 
-    function AssesmentService($http) {
+    function AssessmentService($http) {
         var service = {
-            retrieveAssesments: retrieveAssesments,
-            searchAssesment: searchAssesment,
-            retrieveCandidateAssesmentByBatchId: retrieveCandidateAssesmentByBatchId,
-            retrieveCandidateAssesmentList: retrieveCandidateAssesmentList,
+            retrieveAssessments: retrieveAssessments,
+            searchAssessment: searchAssessment,
+            retrieveCandidateAssessmentByBatchId: retrieveCandidateAssessmentByBatchId,
+            retrieveCandidateAssessmentList: retrieveCandidateAssessmentList,
             assignAssignModuleExamSet: assignAssignModuleExamSet,
             retrieveSubjects: retrieveSubjects,
             retrieveModuleExamSets: retrieveModuleExamSets,
-            updateModuleExamSet: updateModuleExamSet
+            updateModuleExamSet: updateModuleExamSet,
+            openModuleExamSetByAssessmentId: openModuleExamSetByAssessmentId,
+            retrieveCandidateAssessment: retrieveCandidateAssessment
         };
 
         return service;
 
-        function retrieveAssesments(Paging, OrderBy) {
+        function retrieveAssessments(Paging, OrderBy) {
 
-            var url = "/Assesment/List",
+            var url = "/Assessment/List",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)
@@ -32,8 +34,8 @@
             return $http.post(url, data);
         }
 
-        function searchAssesment(SearchKeyword, Paging, OrderBy) {
-            var url = "/Assesment/Search",
+        function searchAssessment(SearchKeyword, Paging, OrderBy) {
+            var url = "/Assessment/Search",
                 data = {
                     searchKeyword: SearchKeyword,
                     paging: Paging,
@@ -43,8 +45,8 @@
             return $http.post(url, data);
         }
 
-        function retrieveCandidateAssesmentByBatchId(batchId, Paging, OrderBy) {
-            var url = "/Assesment/CandidateAssesmentByBatchId",
+        function retrieveCandidateAssessmentByBatchId(batchId, Paging, OrderBy) {
+            var url = "/Assessment/CandidateAssessmentByBatchId",
                 data = {
                     batchId: batchId,
                     paging: Paging,
@@ -54,11 +56,11 @@
             return $http.post(url, data);
         }
 
-        function retrieveCandidateAssesmentList(assesments, Paging, OrderBy) {
+        function retrieveCandidateAssessmentList(assessments, Paging, OrderBy) {
 
-            var url = "/Assesment/CandidateAssesmentCheckedList",
+            var url = "/Assessment/CandidateAssessmentCheckedList",
                 data = {
-                    assesments: assesments,
+                    assessments: assessments,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
@@ -66,31 +68,55 @@
             return $http.post(url, data);
         }
 
-        function assignAssignModuleExamSet(assesments) {
-            var url = "/Assesment/AssignModuleExamSet",
+        function assignAssignModuleExamSet(assessments) {
+            var url = "/Assessment/AssignModuleExamSet",
                 data = {
-                    assesments: assesments
+                    assessments: assessments
                 };
             return $http.post(url, data);
         }
 
         function retrieveSubjects() {
 
-            var url = "/Assesment/Subject";
+            var url = "/Assessment/Subject";
             return $http.post(url);
         }
 
         function retrieveModuleExamSets() {
 
-            var url = "/Assesment/ModuleExamSet";
+            var url = "/Assessment/ModuleExamSet";
             return $http.post(url);
         }
 
-        function updateModuleExamSet(assesment) {
-            var url = "/Assesment/UpdateCandidateAssesment",
+        function updateModuleExamSet(candidateAssessment) {
+            var url = "/Assessment/UpdateCandidateAssessment",
                 data = {
-                    assesment: assesment
+                    candidateAssessment: candidateAssessment
                 };
+            return $http.post(url, data);
+        }
+
+        function openModuleExamSetByAssessmentId(candidateassessmentId, Paging, OrderBy) {
+
+            var url = "/Assessment/ModuleExamSetByAssessmentId",
+                data = {
+                    candidateassessmentId: candidateassessmentId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateAssessment(candidateAssessmentId, Paging, OrderBy) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/List",
+                data = {
+                    candidateAssessmentId:candidateAssessmentId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
             return $http.post(url, data);
         }
     }
