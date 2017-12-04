@@ -4407,33 +4407,33 @@ namespace Nidan.Data
             }
         }
 
-        public Assesment RetrieveAssesment(int organisationId, int assesmentId, Expression<Func<Assesment, bool>> predicate)
+        public Assessment RetrieveAssessment(int organisationId, int assessmentId, Expression<Func<Assessment, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .Assesments
+                    .Assessments
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(p => p.AssesmentId == assesmentId);
+                    .SingleOrDefault(p => p.AssessmentId == assessmentId);
             }
         }
 
-        public PagedResult<AssesmentGrid> RetrieveAssesmentGrid(int organisationId, Expression<Func<AssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<AssessmentGrid> RetrieveAssessmentGrid(int organisationId, Expression<Func<AssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .AssesmentGrids
+                    .AssessmentGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
                         new OrderBy
                         {
-                            Property = "AssesmentId",
+                            Property = "AssessmentId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -4441,17 +4441,15 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidateAssesmentGrid> RetrieveCandidateAssesmentGrid(int organisationId, int batchId, Expression<Func<CandidateAssesmentGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId, Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .CandidateAssesmentGrids
+                    .CandidateAssessmentGrids
                     .AsNoTracking()
-                    .Where(c => c.BatchId == batchId)
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
@@ -4465,16 +4463,17 @@ namespace Nidan.Data
             }
         }
 
-        public CandidateAssesment RetrieveCandidateAssesment(int organisationId, int candidateAssesmentId, Expression<Func<CandidateAssesment, bool>> predicate)
+        public CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
                 return context
-                    .CandidateAssesments
+                    .CandidateAssessments
+                    .Include(p=>p.Assessment)
                     .AsNoTracking()
                     .Where(predicate)
-                    .SingleOrDefault(p => p.CandidateAssesmentId == candidateAssesmentId);
+                    .SingleOrDefault(p => p.CandidateAssessmentId == candidateAssessmentId);
             }
         }
         

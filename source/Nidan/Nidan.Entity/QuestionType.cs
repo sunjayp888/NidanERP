@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public QuestionType()
         {
             ModuleExamQuestionSets = new HashSet<ModuleExamQuestionSet>();
+            CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
         }
 
         public int QuestionTypeId { get; set; }
@@ -25,5 +26,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ModuleExamQuestionSet> ModuleExamQuestionSets { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
     }
 }
