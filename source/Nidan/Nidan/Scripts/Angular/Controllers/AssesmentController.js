@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.assessments = [];
+        vm.candidateAssessments = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -42,6 +43,7 @@
         vm.assessmentId;
         vm.initialise = initialise;
         vm.retrieveCandidateAssessment = retrieveCandidateAssessment;
+        vm.createCandidateAssessmentQuestionAnswer = createCandidateAssessmentQuestionAnswer;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -209,15 +211,29 @@
             vm.orderBy.property = "CandidateAssessmentId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
+            vm.paging.pageSize = 1;
             return AssessmentService.retrieveCandidateAssessment(vm.candidateAssessmentId, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.assessments = response.data.Items;
+                    vm.candidateAssessments = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    return vm.assessments;
+                    return vm.candidateAssessments;
                 });
         }
 
+        //createCandidateAssessmentQuestionAnswer
+        function createCandidateAssessmentQuestionAnswer() {
+            for (var i = 0; i < vm.candidateAssessments.length; i++) {
+                vm.candidateAssessments[i].IsOptionA = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
+                vm.candidateAssessments[i].IsOptionB = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
+                vm.candidateAssessments[i].IsOptionC = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
+                vm.candidateAssessments[i].IsOptionD = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
+                vm.candidateAssessments[i].SubjectiveAnswer = $("#ModuleExamQuestionSet_SubjectiveAnswer").val();
+            }
+            return AssessmentService.createCandidateAssessmentQuestionAnswer(vm.candidateAssessments).then(function () {
+                retrieveCandidateAssessment(candidateAssessmentId);
+            });
+        }
     }
 
 })();

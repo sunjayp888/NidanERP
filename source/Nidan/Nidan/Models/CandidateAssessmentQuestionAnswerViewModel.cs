@@ -21,5 +21,6 @@ namespace Nidan.Models
         public string OptionB { get; set; }
         public string OptionC { get; set; }
         public string OptionD { get; set; }
+        public int CandidateAssessmentId { get; set; }
     }
 }

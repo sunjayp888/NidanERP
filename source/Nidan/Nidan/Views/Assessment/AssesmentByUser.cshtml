@@ -61,7 +61,7 @@
                                                         @if (User.IsInAnyRoles("User"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-click="model.retrieveCandidateAssessment(assessment.CandidateAssessmentId)">
+                                                                <a style="cursor: pointer;" ng-href="/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswer/{{assessment.CandidateAssessmentId}}">
                                                                     Start Exam
                                                                 </a>
                                                             </li>

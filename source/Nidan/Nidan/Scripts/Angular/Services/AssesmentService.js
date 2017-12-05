@@ -18,7 +18,8 @@
             retrieveModuleExamSets: retrieveModuleExamSets,
             updateModuleExamSet: updateModuleExamSet,
             openModuleExamSetByAssessmentId: openModuleExamSetByAssessmentId,
-            retrieveCandidateAssessment: retrieveCandidateAssessment
+            retrieveCandidateAssessment: retrieveCandidateAssessment,
+            createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer
         };
 
         return service;
@@ -110,11 +111,24 @@
 
         function retrieveCandidateAssessment(candidateAssessmentId, Paging, OrderBy) {
 
-            var url = "/CandidateAssessmentQuestionAnswer/List",
+            var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswerList",
                 data = {
                     candidateAssessmentId:candidateAssessmentId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        //createCandidateAssessmentQuestionAnswer
+        function createCandidateAssessmentQuestionAnswer(candidateAssessments) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswer",
+                data = {
+                    candidateAssessments: candidateAssessments
+                    //paging: Paging,
+                    //orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);
