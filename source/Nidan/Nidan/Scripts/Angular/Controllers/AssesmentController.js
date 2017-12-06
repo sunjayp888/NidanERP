@@ -227,20 +227,25 @@
         }
 
         //createCandidateAssessmentQuestionAnswer
-        function createCandidateAssessmentQuestionAnswer(candidateAssessmentId,assessmentId,moduleExamSetId,moduleExamQuestionSetId,questionTypeId,answerType,markPerQuestion) {
+        function createCandidateAssessmentQuestionAnswer(optionA, optionB, optionC, optionD, subjectAnswer, candidateAssessmentId, assessmentId, moduleExamSetId, moduleExamQuestionSetId, questionTypeId, answerType, markPerQuestion) {
+            var optionAanswer = $('#' + optionA).is(":checked");
+            var optionBanswer = $('#' + optionB).is(":checked");
+            var optionCanswer = $('#' + optionC).is(":checked");
+            var optionDanswer = $('#' + optionD).is(":checked");
+            var subjectivequestionanswer = $(subjectAnswer).val();
             var candidateAssessment = {
                 CandidateAssessmentId: candidateAssessmentId,
                 ModuleExamSetId: moduleExamSetId,
-                ModuleExamQuestionSetId:moduleExamQuestionSetId,
+                ModuleExamQuestionSetId: moduleExamQuestionSetId,
                 AssessmentId: assessmentId,
                 QuestionTypeId: questionTypeId,
                 AnswerType: answerType,
-                MarkPerQuestion:markPerQuestion,
-                IsOptionA: vm.IsOptionA,
-                IsOptionB: vm.IsOptionB,
-                IsOptionC: vm.IsOptionC,
-                IsOptionD: vm.IsOptionD,
-                SubjectiveAnswer: vm.SubjectiveAnswer
+                MarkPerQuestion: markPerQuestion,
+                IsOptionA: optionAanswer,
+                IsOptionB: optionBanswer,
+                IsOptionC: optionCanswer,
+                IsOptionD: optionDanswer,
+                SubjectiveAnswer: subjectivequestionanswer
             }
             return AssessmentService.createCandidateAssessmentQuestionAnswer(candidateAssessment)
                 .then(function (response) {

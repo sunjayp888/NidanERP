@@ -26,13 +26,13 @@
                             }
                             <div ng-repeat="candidateAssessment in model.candidateAssessments">
                                 @*<div class="form-group">
-                                    <div class="col-md-7 col-sm-3 col-xs-12">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <span ng-bind="candidateAssessment.QuestionDescription"></span>
+                                        <div class="col-md-7 col-sm-3 col-xs-12">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <span ng-bind="candidateAssessment.QuestionDescription"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>*@
-                                
+                                    </div>*@
+
                                 <div class="form-group">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-6 col-sm-6 col-xs-12">
@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-6 col-sm-6 col-xs-12">
-                                            <input id="{{candidateAssessment.ModuleExamQuestionSetId}}" name="{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-model="model.IsOptionA">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionA"></span>
                                         </label>
                                     </div>
@@ -54,7 +54,7 @@
                                 <div class="form-group">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-6 col-sm-6 col-xs-12">
-                                            <input type="checkbox" ng-model="model.IsOptionB">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionB"></span>
                                         </label>
                                     </div>
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-6 col-sm-6 col-xs-12">
-                                            <input type="checkbox" ng-model="model.IsOptionC">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionC"></span>
                                         </label>
                                     </div>
@@ -72,7 +72,7 @@
                                 <div class="form-group">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-6 col-sm-6 col-xs-12">
-                                            <input type="checkbox" ng-model="model.IsOptionD">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionD"></span>
                                         </label>
                                     </div>
@@ -81,14 +81,14 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Subjective Answer</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input type="text" ng-model="model.SubjectiveAnswer" class="col-md-8 col-sm-6 col-xs-12">
+                                        <input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12">
                                     </div>
                                 </div>
                                 @*Every Question should have submit button*@
                                 <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                                     <div class="form-group">
                                         <div>
-                                            <button type="button" ng-click="model.createCandidateAssessmentQuestionAnswer(candidateAssessment.CandidateAssessmentId,candidateAssessment.AssessmentId,candidateAssessment.ModuleExamSetId,candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.QuestionTypeId,candidateAssessment.AnswerType,candidateAssessment.MarkPerQuestion)" class="btn btn-success">Submit</button>
+                                            <button type="button" ng-click="model.createCandidateAssessmentQuestionAnswer('optionA'+candidateAssessment.ModuleExamQuestionSetId,'optionB'+candidateAssessment.ModuleExamQuestionSetId,'optionC'+candidateAssessment.ModuleExamQuestionSetId,'optionD'+candidateAssessment.ModuleExamQuestionSetId,'subjectAnswer'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentId,candidateAssessment.AssessmentId,candidateAssessment.ModuleExamSetId,candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.QuestionTypeId,candidateAssessment.AnswerType,candidateAssessment.MarkPerQuestion)" class="btn btn-success">Submit</button>
                                         </div>
                                     </div>
                                 </div>
