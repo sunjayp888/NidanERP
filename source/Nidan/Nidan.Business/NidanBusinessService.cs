@@ -4430,6 +4430,25 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessment);
         }
 
+        public bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int candidateAssessmentId, List<CandidateAssessmentQuestionAnswer> assessments)
+        {
+            try
+            {
+                foreach (var assessment in assessments)
+                {
+                    var candidateAssessmentData = RetrieveCandidateAssessment(organisationId, candidateAssessmentId, e => true);
+                    assessment.CandidateAssessment.AssessmentId = candidateAssessmentData.AssessmentId;
+                    assessment.CandidateAssessment.CreatedBy = personnelId;
+                    CreateCandidateAssessmentQuestionAnswer(organisationId, assessment);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {

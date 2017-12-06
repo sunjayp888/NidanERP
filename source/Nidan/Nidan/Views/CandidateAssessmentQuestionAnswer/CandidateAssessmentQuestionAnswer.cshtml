@@ -1,0 +1,112 @@
+﻿@using Nidan.Entity
+@model Nidan.Models.CandidateAssessmentQuestionAnswerViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div ng-controller="AssessmentController as model" ng-init="model.retrieveCandidateAssessment(@Model.CandidateAssessmentId)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
+                                </div>
+                            }
+                            <div ng-repeat="candidateAssessment in model.candidateAssessments">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.QuestionDescription, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @*@Html.LabelFor(model => model.ModuleExamQuestionSet.QuestionDescription, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })*@
+                                        <span ng-bind="candidateAssessment.QuestionDescription"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-6 col-sm-6 col-xs-12">
+                                            @Html.CheckBoxFor(model => model.CandidateAssessmentQuestionAnswer.IsOptionA, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                                            <span ng-bind="candidateAssessment.OptionA"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-6 col-sm-6 col-xs-12">
+                                            @Html.CheckBoxFor(model => model.CandidateAssessmentQuestionAnswer.IsOptionB, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                                            <span ng-bind="candidateAssessment.OptionB"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-6 col-sm-6 col-xs-12">
+                                            @Html.CheckBoxFor(model => model.CandidateAssessmentQuestionAnswer.IsOptionC, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                                            <span ng-bind="candidateAssessment.OptionC"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-6 col-sm-6 col-xs-12">
+                                            @Html.CheckBoxFor(model => model.CandidateAssessmentQuestionAnswer.IsOptionD, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                                            <span ng-bind="candidateAssessment.OptionD"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ModuleExamQuestionSet.SubjectiveAnswer, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.TextBoxFor(model => model.CandidateAssessmentQuestionAnswer.SubjectiveAnswer, null, new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.SubjectiveAnswer, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                                @*Every Question should have submit button*@
+                                @*<div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        <div class="form-group">
+                                            <div class="pull-right">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" ng-click="model.createCandidateAssessmentQuestionAnswer()" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("Pagination/_pagination")
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+
