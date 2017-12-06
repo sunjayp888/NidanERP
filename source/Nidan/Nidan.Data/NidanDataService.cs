@@ -4477,7 +4477,42 @@ namespace Nidan.Data
                     .SingleOrDefault(p => p.CandidateAssessmentId == candidateAssessmentId);
             }
         }
-        
+
+        public Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Partners
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.PartnerId == partnerId);
+            }
+        }
+
+        public PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Partners
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "PartnerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {

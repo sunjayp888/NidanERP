@@ -81,6 +81,7 @@ namespace Nidan.Business.Interfaces
         Assessment CreateAssessment(int organisationId, Assessment assessment);
         CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
         CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
+        Partner CreatePartner(int organisationId, Partner partner);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -366,6 +367,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId, Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate);
         CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate);
+        Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate);
+        PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
@@ -417,6 +420,7 @@ namespace Nidan.Business.Interfaces
         bool AssignModuleExamSet(int organisationId, int personnelId, int assessmentId, List<CandidateAssessment> assessments);
         CandidateAssessment UpdateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
         bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int candidateAssessmentId, List<CandidateAssessmentQuestionAnswer> assessments);
+        Partner UpdatePartner(int organisationId, Partner partner);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

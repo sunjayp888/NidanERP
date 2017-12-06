@@ -7,12 +7,11 @@ using Nidan.Entity;
 
 namespace Nidan.Models
 {
-    public class CentreViewModel : BaseViewModel
+    public class PartnerViewModel : BaseViewModel
     {
-        public Centre Centre { get; set; }
+        public Partner Partner { get; set; }
         public SelectList Talukas { get; set; }
         public SelectList Districts { get; set; }
         public SelectList States { get; set; }
-        public SelectList Partners { get; set; }
     }
 }
