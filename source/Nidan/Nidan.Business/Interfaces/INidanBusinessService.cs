@@ -419,6 +419,7 @@ namespace Nidan.Business.Interfaces
         Assessment UpdateAssessment(int organisationId, Assessment assessment);
         bool AssignModuleExamSet(int organisationId, int personnelId, int assessmentId, List<CandidateAssessment> assessments);
         CandidateAssessment UpdateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
+        bool CreateCandidateQuestionAnswer(int organisationId, int personnelId,int centreId, CandidateAssessmentQuestionAnswer candidateAssessment);
         bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int candidateAssessmentId, List<CandidateAssessmentQuestionAnswer> assessments);
         Partner UpdatePartner(int organisationId, Partner partner);
 

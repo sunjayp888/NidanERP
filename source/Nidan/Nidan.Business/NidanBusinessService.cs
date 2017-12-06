@@ -459,7 +459,7 @@ namespace Nidan.Business
             //Create Counselling
             // CreateCounselling(organisationId, personnelId, data, courseIds.FirstOrDefault());
             //Create FollowUp
-            CreateFollowUp(organisationId, data,personnelId);
+            CreateFollowUp(organisationId, data, personnelId);
             //Create EnquiryCourse
             CreateEnquiryCourse(organisationId, enquiry.CentreId, data.EnquiryId, courseIds);
             return data;
@@ -1314,7 +1314,7 @@ namespace Nidan.Business
                     CreatedDate = DateTime.UtcNow.Date,
                     CentreId = followUpData.CentreId,
                     OrganisationId = organisationId,
-                    FollowUpBy =personnelId
+                    FollowUpBy = personnelId
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
@@ -1715,7 +1715,7 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateAssessment>(organisationId, candidateAssessment);
         }
 
-        public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId,CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
+        public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
         {
             return _nidanDataService.Create<CandidateAssessmentQuestionAnswer>(organisationId, candidateAssessmentQuestionAnswer);
         }
@@ -1944,7 +1944,7 @@ namespace Nidan.Business
 
         public IEnumerable<Personnel> RetrieveUnassignedPersonnels(int organisationId, int centreId, int activityAssigneeGroupId)
         {
-            var data = _nidanDataService.RetrievePersonnels(organisationId, a => !a.ActivityAssignPersonnels.Any(d => d.CentreId == centreId && d.ActivityAssignPersonnelId == activityAssigneeGroupId) && a.CentreId==centreId, null, null).Items.ToList();
+            var data = _nidanDataService.RetrievePersonnels(organisationId, a => !a.ActivityAssignPersonnels.Any(d => d.CentreId == centreId && d.ActivityAssignPersonnelId == activityAssigneeGroupId) && a.CentreId == centreId, null, null).Items.ToList();
             return data;
         }
 
@@ -2482,13 +2482,13 @@ namespace Nidan.Business
         {
             return _nidanDataService.Retrieve<AssignType>(organisationId, predicate);
         }
-        
-           public List<AspNetRole> RetrieveAspNetRoles(int organisationId, Expression<Func<AspNetRole, bool>> predicate)
+
+        public List<AspNetRole> RetrieveAspNetRoles(int organisationId, Expression<Func<AspNetRole, bool>> predicate)
         {
             return _nidanDataService.Retrieve<AspNetRole>(organisationId, predicate);
         }
-        
-         public List<AssetOutState> RetrieveAssetOutStates(int organisationId, Expression<Func<AssetOutState, bool>> predicate)
+
+        public List<AssetOutState> RetrieveAssetOutStates(int organisationId, Expression<Func<AssetOutState, bool>> predicate)
         {
             return _nidanDataService.Retrieve<AssetOutState>(organisationId, predicate);
         }
@@ -2553,8 +2553,8 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCentres(organisationId).Items.ToList();
         }
-        
-         public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+
+        public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, predicate,
                 orderBy, paging);
@@ -4445,17 +4445,14 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessment);
         }
 
-        public bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int candidateAssessmentId, List<CandidateAssessmentQuestionAnswer> assessments)
+        public bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int centreId, CandidateAssessmentQuestionAnswer candidateAssessment)
         {
             try
             {
-                foreach (var assessment in assessments)
-                {
-                    var candidateAssessmentData = RetrieveCandidateAssessment(organisationId, candidateAssessmentId, e => true);
-                    assessment.CandidateAssessment.AssessmentId = candidateAssessmentData.AssessmentId;
-                    assessment.CandidateAssessment.CreatedBy = personnelId;
-                    CreateCandidateAssessmentQuestionAnswer(organisationId, assessment);
-                }
+                candidateAssessment.PersonnelId = personnelId;
+                candidateAssessment.OrganisationId = organisationId;
+                candidateAssessment.CentreId = centreId;
+                CreateCandidateAssessmentQuestionAnswer(organisationId, candidateAssessment);
                 return true;
             }
             catch (Exception e)
@@ -4626,7 +4623,7 @@ namespace Nidan.Business
 
         public void DeleteActivityTask(int organisationId, int activityTaskId)
         {
-            _nidanDataService.Delete<ActivityTask>(organisationId,e=>e.ActivityTaskId==activityTaskId);
+            _nidanDataService.Delete<ActivityTask>(organisationId, e => e.ActivityTaskId == activityTaskId);
         }
 
         #endregion

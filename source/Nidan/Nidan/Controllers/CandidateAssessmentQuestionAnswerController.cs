@@ -62,14 +62,13 @@ namespace Nidan.Controllers
             return this.JsonNet(moduleExamQuestionSet);
         }
 
-        //CandidateAssessmentQuestionAnswer
         [HttpPost]
-        public ActionResult CandidateAssessmentQuestionAnswer(List<CandidateAssessmentQuestionAnswer> candidateAssessments)
+        public ActionResult CandidateAssessmentQuestionAnswer(CandidateAssessmentQuestionAnswer candidateAssessment)
         {
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
-            var candidateAssessmentId = candidateAssessments.Select(e => e.CandidateAssessmentId).FirstOrDefault();
-            var data = NidanBusinessService.CreateCandidateQuestionAnswer(organisationId, personnelId, candidateAssessmentId, candidateAssessments);
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.CreateCandidateQuestionAnswer(organisationId, personnelId, centreId, candidateAssessment);
             return this.JsonNet(data);
         }
     }

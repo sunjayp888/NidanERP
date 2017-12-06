@@ -121,12 +121,11 @@
             return $http.post(url, data);
         }
 
-        //createCandidateAssessmentQuestionAnswer
-        function createCandidateAssessmentQuestionAnswer(candidateAssessments) {
+        function createCandidateAssessmentQuestionAnswer(candidateAssessment) {
 
             var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswer",
                 data = {
-                    candidateAssessments: candidateAssessments
+                    candidateAssessment: candidateAssessment
                     //paging: Paging,
                     //orderBy: new Array(OrderBy)
                 };

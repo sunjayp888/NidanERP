@@ -2661,46 +2661,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.QuestionSet)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.QuestionTypeName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.QuestionDescription)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.OptionA)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.OptionB)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.OptionC)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.OptionD)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.AnswerType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.SubjectiveAnswer)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
-                .Property(e => e.CorrectAnswer)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Assessment>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -2804,6 +2764,50 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateAssessmentQuestionAnswer>()
                 .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.AnswerType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.QuestionDescription)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.SubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.QuestionSet)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.QuestionTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.OptionA)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.OptionB)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.OptionC)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.OptionD)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionAnswerGrid>()
+                .Property(e => e.CorrectAnswer)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Partner>()
