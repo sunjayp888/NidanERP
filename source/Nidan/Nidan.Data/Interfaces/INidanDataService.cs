@@ -264,7 +264,9 @@ namespace Nidan.Data.Interfaces
         PagedResult<AssessmentGrid> RetrieveAssessmentGrid(int organisationId, Expression<Func<AssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId,Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate);
-      
+        Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate);
+        PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
         T UpdateOrganisationEntityEntry<T>(int organisationId, T t) where T : class;

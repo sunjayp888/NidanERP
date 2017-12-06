@@ -78,6 +78,11 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string CentreCode { get; set; }
 
+        [StringLength(50)]
+        public string CentreType { get; set; }
+
+        public int? PartnerId { get; set; }
+
         [Required]
         [StringLength(500)]
         public string Name { get; set; }
@@ -114,6 +119,8 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual State State { get; set; }
+
+        public virtual Partner Partner { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }
@@ -264,7 +271,7 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreItemSetting> CentreItemSettings { get; set; }
         
-                [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BankDeposite> BankDeposites { get; set; }
 
 

@@ -247,6 +247,7 @@
     <Compile Include="Partials\Subject.cs" />
     <Compile Include="Partials\Template.cs" />
     <Compile Include="Partials\Trainer.cs" />
+    <Compile Include="Partner.cs" />
     <Compile Include="PaymentMode.cs" />
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />

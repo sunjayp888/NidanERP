@@ -179,6 +179,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateAssessmentGrid> CandidateAssessmentGrids { get; set; }
         public virtual DbSet<CandidateAssessment> CandidateAssessments { get; set; }
         public virtual DbSet<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
+        public virtual DbSet<Partner> Partners { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -337,6 +338,10 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Centre>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreType)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Document>()
@@ -2799,6 +2804,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateAssessmentQuestionAnswer>()
                 .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Partner>()
+                .Property(e => e.EmailId)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
