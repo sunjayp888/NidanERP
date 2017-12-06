@@ -278,6 +278,7 @@
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\ModuleExamSetController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="Models\ModuleExamSetViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\ExpenseViewModel.cs" />
+    <Compile Include="Models\PartnerViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1336,6 +1338,7 @@
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
+    <Folder Include="Views\Partner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

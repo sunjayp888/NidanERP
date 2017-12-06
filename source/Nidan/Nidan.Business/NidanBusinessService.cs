@@ -1720,6 +1720,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateAssessmentQuestionAnswer>(organisationId, candidateAssessmentQuestionAnswer);
         }
 
+        public Partner CreatePartner(int organisationId, Partner partner)
+        {
+            return _nidanDataService.Create<Partner>(organisationId, partner);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2060,6 +2065,16 @@ namespace Nidan.Business
         public CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate)
         {
             return _nidanDataService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId, predicate);
+        }
+
+        public Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate)
+        {
+            return _nidanDataService.RetrievePartner(organisationId, partnerId, predicate);
+        }
+
+        public PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrievePartners(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4444,6 +4459,11 @@ namespace Nidan.Business
             {
                 return false;
             }
+        }
+
+        public Partner UpdatePartner(int organisationId, Partner partner)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, partner);
         }
 
 
