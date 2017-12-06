@@ -312,7 +312,6 @@
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
-    <Compile Include="Models\CandidateAssesmentViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentQuestionAnswerViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
