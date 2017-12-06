@@ -17,6 +17,8 @@ namespace Nidan.Models
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
         public int ActivityTaskId { get; set; }
+        public double NumberOfDays { get; set; }
+        public TimeSpan NumberOfHours { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
         {
             new HoursType() { Id = 01,Name = "01"},

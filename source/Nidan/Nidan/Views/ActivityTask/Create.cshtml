@@ -53,23 +53,23 @@
 </div>
 @section scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var startTimeSpan = "@Model.Activity.StartTimeSpan" == "AM" ? "AM" : "PM";
             var endTimeSpan = "@Model.Activity.EndTimeSpan" == "AM" ? "AM" : "PM";
-            @*var numberOfDays = ('@Model.Activity.EndDate.Date' - '@Model.Activity.StartDate.Date').Days;*@
-            @*var start= @Model.Activity.StartDate.Date;
-            var end= @Model.Activity.EndDate.Date;
-            var days = (end- start) / (1000 * 60 * 60 * 24);
-            alert(Math.round(days));*@
             $("#ActivityTask_StartHour").val("@Model.Activity.StartHour");
             $('#ActivityTask_StartMinute').val("@Model.Activity.StartMinute");
-            startTimeSpan == "AM" ? $("#rbActivityStartTimeSpanAM").prop("checked", true) : $("#rbActivityStartTimeSpanPM").prop("checked", true);
+            startTimeSpan == "AM"
+                ? $("#rbActivityStartTimeSpanAM").prop("checked", true)
+                : $("#rbActivityStartTimeSpanPM").prop("checked", true);
             $('#ActivityTask_EndHour').val("@Model.Activity.EndHour");
             $('#ActivityTask_EndMinute').val("@Model.Activity.EndMinute");
-            endTimeSpan == "AM" ? $("#rbActivityEndTimeSpanAM").prop("checked", true) : $("#rbActivityEndTimeSpanPM").prop("checked", true);
-
+            endTimeSpan == "AM"
+                ? $("#rbActivityEndTimeSpanAM").prop("checked", true)
+                : $("#rbActivityEndTimeSpanPM").prop("checked", true);
+            $('#txtNumberOfDays').val(@Model.NumberOfDays);
+            $('#txtNumberOfHours').val('@Model.NumberOfHours');
         });
-        $('#ActivityTask_CentreId').change(function () {
+        $('#ActivityTask_CentreId').change(function() {
             var centreId = $('#ActivityTask_CentreId :selected').val();
             var activityAssigneeGroupId = @Model.Activity.ActivityAssigneeGroupId;
             $.ajax({
@@ -78,47 +78,120 @@
                 data: JSON.stringify({ centreId: centreId, activityAssigneeGroupId: activityAssigneeGroupId }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
+                error: function(xhr) {
                     alert('Error: ' + xhr.statusText);
                 },
-                success: function (result) {
+                success: function(result) {
                     $("#ActivityTask_AssignTo").empty();
                     $("#ActivityTask_AssignTo").append($("<option></option>").html("Select Assign To"));
-                    $.each(result, function (key, value) {
-                        $("#ActivityTask_AssignTo").append($("<option></option>").val(value.Personnel.PersonnelId).html(value.Personnel.Fullname));
+                    $.each(result,
+                        function(key, value) {
+                            $("#ActivityTask_AssignTo").append($("<option></option>").val(value.Personnel.PersonnelId)
+                                .html(value.Personnel.Fullname));
 
-                    });
+                        });
                 },
                 async: true,
                 processData: false
             });
         });
 
-        var daterangepickerOptions = {
+        var daterangepickerOptionsStartDate = {
             autoApply: true,
             singleDatePicker: true,
             showDropdowns: true,
             showCustomRangeLabel: false,
             opens: 'left',
-            //minDate: moment(),
+            minDate: '@Model.Activity.StartDate.ToString("dd MMMM yyyy")',
             //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
             locale: {
                 "format": "DD MMMM YYYY"
             }
         };
 
-        jQuery(function () {
-            jQuery(".activityTaskStartDate").daterangepicker(daterangepickerOptions);
-            $('.activityTaskStartDate').val('@Model.Activity.StartDate.ToString("dd MMMM yyyy")');
-            $(".activityTaskStartDate").on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            });
+        var daterangepickerOptionsEndDate = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: '@Model.Activity.EndDate.ToString("dd MMMM yyyy")',
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
 
-            jQuery(".activityTaskEndDate").daterangepicker(daterangepickerOptions);
+        jQuery(function() {
+            jQuery(".activityTaskStartDate").daterangepicker(daterangepickerOptionsStartDate);
+            $('.activityTaskStartDate').val('@Model.Activity.StartDate.ToString("dd MMMM yyyy")');
+            $(".activityTaskStartDate").on('apply.daterangepicker',
+                function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+
+            jQuery(".activityTaskEndDate").daterangepicker(daterangepickerOptionsEndDate);
             $('.activityTaskEndDate').val('@Model.Activity.EndDate.ToString("dd MMMM yyyy")');
-            $(".activityTaskEndDate").on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            });
+            $(".activityTaskEndDate").on('apply.daterangepicker',
+                function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
         });
+
+        $('#ActivityTask_StartDate').change(function() {
+            dateDifference();
+        });
+
+        $('#ActivityTask_EndDate').change(function() {
+            dateDifference();
+        });
+
+        $('#ActivityTask_StartHour').change(function() {
+            timeSpanDifference();
+        });
+
+        $('#ActivityTask_StartMinute').change(function() {
+            timeSpanDifference();
+        });
+
+        $('#ActivityTask_EndHour').change(function() {
+            timeSpanDifference();
+        });
+
+        $('#ActivityTask_EndMinute').change(function() {
+            timeSpanDifference();
+        });
+
+        $("input[name='ActivityTask.StartTimeSpan']").change(function() {
+            timeSpanDifference();
+        });
+
+        $("input[name='ActivityTask.EndTimeSpan']").change(function() {
+            timeSpanDifference();
+        });
+
+        function timeSpanDifference() {
+            if (document.readyState === 'complete') {
+                var startTimeSpan = $("input[name='ActivityTask.StartTimeSpan']:checked").val();
+                var endTimeSpan = $("input[name='ActivityTask.EndTimeSpan']:checked").val();
+                var startTime = $('#ActivityTask_StartHour').val() +":" +$('#ActivityTask_StartMinute').val() +" " +startTimeSpan;
+                var endTime = $('#ActivityTask_EndHour').val() +":" +$('#ActivityTask_EndMinute').val() +" " +endTimeSpan;
+                var sDate = "1970-1-1 "+startTime;
+                var eDate = "1970-1-1 "+endTime;
+                var difference = new Date(new Date(eDate) - new Date(sDate)).toUTCString().split(" ")[4];
+                $('#txtNumberOfHours').val(difference);
+            }
+        }
+
+        function dateDifference() {
+            if (document.readyState === 'complete') {
+                var sDate = $('#ActivityTask_StartDate').val();
+                var eDate = $('#ActivityTask_EndDate').val();
+                var startDate = moment(sDate);
+                var endDate = moment(eDate);
+                var diff = endDate.diff(startDate, 'days');
+                $('#txtNumberOfDays').val(diff);
+            }
+        }
     </script>
 }
