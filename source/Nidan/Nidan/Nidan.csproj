@@ -1800,7 +1800,7 @@
     <Content Include="Views\Assessment\Edit.cshtml" />
     <Content Include="Views\Assessment\_AssignModuleExamSet.cshtml" />
     <Content Include="Views\Assessment\_UpdateModuleExamSet.cshtml" />
-    <Content Include="Views\Assessment\AssesmentByUser.cshtml" />
+    <Content Include="Views\Assessment\AssessmentByUser.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\_CandidateAssessmentQuestionAnswer.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswer.cshtml" />
     <None Include="Web.UAT.config">

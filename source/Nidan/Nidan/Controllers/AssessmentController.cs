@@ -26,8 +26,8 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        // GET: Assesment/AssesmentByUser
-        public ActionResult AssesmentByUser()
+        // GET: Assesment/AssessmentByUser
+        public ActionResult AssessmentByUser()
         {
             return View(new BaseViewModel());
         }

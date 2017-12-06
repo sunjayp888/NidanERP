@@ -44,6 +44,11 @@
         vm.initialise = initialise;
         vm.retrieveCandidateAssessment = retrieveCandidateAssessment;
         vm.createCandidateAssessmentQuestionAnswer = createCandidateAssessmentQuestionAnswer;
+        vm.IsOptionA;
+        vm.IsOptionB;
+        vm.IsOptionC;
+        vm.IsOptionD;
+        vm.SubjectiveAnswer;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -222,17 +227,25 @@
         }
 
         //createCandidateAssessmentQuestionAnswer
-        function createCandidateAssessmentQuestionAnswer() {
-            for (var i = 0; i < vm.candidateAssessments.length; i++) {
-                vm.candidateAssessments[i].IsOptionA = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
-                vm.candidateAssessments[i].IsOptionB = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
-                vm.candidateAssessments[i].IsOptionC = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
-                vm.candidateAssessments[i].IsOptionD = $("#CandidateAssessmentQuestionAnswer_IsOptionA").val();
-                vm.candidateAssessments[i].SubjectiveAnswer = $("#ModuleExamQuestionSet_SubjectiveAnswer").val();
+        function createCandidateAssessmentQuestionAnswer(candidateAssessmentId,assessmentId,moduleExamSetId,moduleExamQuestionSetId,questionTypeId,answerType,markPerQuestion) {
+            var candidateAssessment = {
+                CandidateAssessmentId: candidateAssessmentId,
+                ModuleExamSetId: moduleExamSetId,
+                ModuleExamQuestionSetId:moduleExamQuestionSetId,
+                AssessmentId: assessmentId,
+                QuestionTypeId: questionTypeId,
+                AnswerType: answerType,
+                MarkPerQuestion:markPerQuestion,
+                IsOptionA: vm.IsOptionA,
+                IsOptionB: vm.IsOptionB,
+                IsOptionC: vm.IsOptionC,
+                IsOptionD: vm.IsOptionD,
+                SubjectiveAnswer: vm.SubjectiveAnswer
             }
-            return AssessmentService.createCandidateAssessmentQuestionAnswer(vm.candidateAssessments).then(function () {
-                retrieveCandidateAssessment(candidateAssessmentId);
-            });
+            return AssessmentService.createCandidateAssessmentQuestionAnswer(candidateAssessment)
+                .then(function (response) {
+                    retrieveCandidateAssessment(vm.candidateAssessmentId);
+                });
         }
     }
 

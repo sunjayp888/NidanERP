@@ -9,12 +9,15 @@ namespace Nidan.Entity
     [Table("CandidateAssessmentQuestionAnswer")]
     public partial class CandidateAssessmentQuestionAnswer
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public CandidateAssessmentQuestionAnswer()
+        {
+            CreatedDate = DateTime.UtcNow.Date;
+        }
         public int CandidateAssessmentQuestionAnswerId { get; set; }
 
         public int CandidateAssessmentId { get; set; }
 
-        public int AssesmentId { get; set; }
+        public int AssessmentId { get; set; }
 
         public int ModuleExamSetId { get; set; }
 
@@ -48,7 +51,10 @@ namespace Nidan.Entity
         public string Remark { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime ExaminedDate { get; set; }
+        public DateTime? ExaminedDate { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime CreatedDate { get; set; }
 
         public int PersonnelId { get; set; }
 
