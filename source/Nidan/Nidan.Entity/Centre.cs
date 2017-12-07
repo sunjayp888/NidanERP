@@ -78,6 +78,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string CentreCode { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string CentreType { get; set; }
 

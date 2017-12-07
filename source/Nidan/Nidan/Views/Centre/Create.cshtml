@@ -176,5 +176,53 @@
                     $("#partnerDiv").hide();
                 }
             });
+
+        $('#Centre_StateId').change(function () {
+            var stateId = $('#Centre_StateId :selected').val();
+            $.ajax({
+                url: '/Centre/GetDistrict',
+                type: 'POST',
+                data: JSON.stringify({ stateId: stateId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Centre_DistrictId").empty();
+                    $("#Centre_DistrictId").append($("<option></option>").html("Select District"));
+                    $.each(result, function (key, value) {
+                        $("#Centre_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Centre_DistrictId').change(function () {
+            var districtId = $('#Centre_DistrictId :selected').val();
+            $.ajax({
+                url: '/Centre/GetTaluka',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Centre_TalukaId").empty();
+                    $("#Centre_TalukaId").append($("<option></option>").html("Select Taluka"));
+                    $.each(result, function (key, value) {
+                        $("#Centre_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
     </script>
 }

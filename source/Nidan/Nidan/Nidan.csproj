@@ -571,7 +571,7 @@
     <Content Include="bower_components\gentelella\src\js\custom.js" />
     <Content Include="bower_components\gentelella\src\js\helper.js" />
     <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
     <Content Include="bower_components\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Include="bower_components\jquery-validation\build\release.js" />
     <Content Include="bower_components\jquery-validation\dist\additional-methods.js" />
@@ -1193,6 +1193,7 @@
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
     <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
+    <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
@@ -1251,6 +1252,7 @@
     <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseService.js" />
+    <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
@@ -1338,7 +1340,6 @@
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
-    <Folder Include="Views\Partner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -1808,6 +1809,9 @@
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswer.cshtml" />
     <Content Include="Views\Assessment\AssessmentByTrainer.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentDetail.cshtml" />
+    <Content Include="Views\Partner\Index.cshtml" />
+    <Content Include="Views\Partner\Create.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

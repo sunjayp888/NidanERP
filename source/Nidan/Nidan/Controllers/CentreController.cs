@@ -221,5 +221,17 @@ namespace Nidan.Controllers
             NidanBusinessService.DeleteCentreCourseInstallment(UserOrganisationId, centreId, courseInstallmentId);
             return this.JsonNet("");
         }
+
+        [HttpPost]
+        public ActionResult GetTaluka(int districtId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult GetDistrict(int stateId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList());
+        }
     }
 }

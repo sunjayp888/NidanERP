@@ -55,6 +55,7 @@
                                     <thead>
                                         <tr role="row">
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Name</th>
+                                            <th ng-click="model.order('CentreType')" ng-class="model.orderClass('CentreType')">Type</th>
                                             <th ng-click="model.order('Email')" ng-class="model.orderClass('Email')">Email</th>
                                             <th ng-click="model.order('ContactNumber')" ng-class="model.orderClass('ContactNumber')">Contact Number</th>
                                             <th>Actions</th>
@@ -63,6 +64,7 @@
                                     <tbody>
                                         <tr ng-repeat="centre in model.centres" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewCentre(centre.CentreId)">
                                             <td><span ng-bind="centre.Name"></span></td>
+                                            <td><span ng-bind="centre.CentreType"></span></td>
                                             <td><span ng-bind="centre.EmailId"></span></td>
                                             <td><span ng-bind="centre.Telephone"></span></td>
                                             <td>
