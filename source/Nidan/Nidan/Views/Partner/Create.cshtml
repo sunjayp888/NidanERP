@@ -1,0 +1,199 @@
+﻿@model Nidan.Models.PartnerViewModel
+
+@{
+    ViewBag.Title = "Create Partner";
+}
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Partner <small>Create Partner and then manage</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Settings 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Settings 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        @using (@Html.BeginForm("Create", "Partner"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal form-label-left">
+
+                <div class="form-control-required-example"> = Required</div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Name, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Address1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Address1, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Address1, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Address2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Address2, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Address2, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Address3, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Address3, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Address3, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Address4, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Address4, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Address4, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Partner.StateId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Partner.StateId, Model.States, "Select State", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.StateId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Partner.DistrictId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Partner.DistrictId, Model.Districts, "Select District", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.DistrictId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.Partner.TalukaId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.DropDownListFor(model => model.Partner.TalukaId, Model.Talukas, "Select Taluka", new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.TalukaId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.PinCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.PinCode, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.PinCode, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.EmailId, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                <div class="item form-group">
+                    @Html.LabelFor(model => model.Partner.Telephone, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.TextBoxFor(model => model.Partner.Telephone, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Partner.Telephone, "", new { @class = "help-block" })
+                    </div>
+                </div>
+                @*<div class="ln_solid"></div>*@
+                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                    <div class="form-group">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
+        $("#Partner_PinCode").val("");
+        $("#Partner_Telephone").val("");
+        $("#partnerDiv").hide();
+
+        $('#Partner_StateId').change(function () {
+            var stateId = $('#Partner_StateId :selected').val();
+            $.ajax({
+                url: '/Partner/GetDistrict',
+                type: 'POST',
+                data: JSON.stringify({ stateId: stateId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Partner_DistrictId").empty();
+                    $("#Partner_DistrictId").append($("<option></option>").html("Select District"));
+                    $.each(result, function (key, value) {
+                        $("#Partner_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Partner_DistrictId').change(function () {
+            var districtId = $('#Partner_DistrictId :selected').val();
+            $.ajax({
+                url: '/Partner/GetTaluka',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Partner_TalukaId").empty();
+                    $("#Partner_TalukaId").append($("<option></option>").html("Select Taluka"));
+                    $.each(result, function (key, value) {
+                        $("#Partner_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+    </script>
+}

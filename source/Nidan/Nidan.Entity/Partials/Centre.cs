@@ -13,6 +13,9 @@ namespace Nidan.Entity
     {
         private class CentreMetadata
         {
+            [Display(Name = "Partner")]
+            public int PartnerId { get; set; }
+
             [Display(Name = "Address")]
             public string Address1 { get; set; }
 
