@@ -25,23 +25,14 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        //Get:CandidateAssessmentQuestionAnswer/create
-        //[Authorize(Roles = "User")]
-        //public ActionResult Create(int? id)
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    id = id ?? 0;
-        //    var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, id.Value, e => true);
-        //    var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
-        //    var moduleExamQuestionSet = NidanBusinessService.RetrieveModuleExamQuestionSets(organisationId, e => e.ModuleExamSetId == moduleExamSet.ModuleExamSetId);
-        //    var viewModel = new CandidateAssessmentQuestionAnswerViewModel()
-        //    {
-        //        CandidateAssessment = candidateAssessment,
-        //        ModuleExamSet = moduleExamSet,
-        //        ModuleExamQuestionAnswerGrid= moduleExamQuestionSet
-        //    };
-        //    return View(viewModel);
-        //}
+        public ActionResult CandidateAssessmentDetail(int? id)
+        {
+            return View(new CandidateAssessmentQuestionAnswerViewModel()
+            {
+                 BatchId= id.Value,
+                //ModuleExamSetId = assesmentId.Value 
+            });
+        }
 
         public ActionResult CandidateAssessmentQuestionAnswer(int? id)
         {
@@ -71,6 +62,16 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var data = NidanBusinessService.CreateCandidateQuestionAnswer(organisationId, personnelId, centreId, candidateAssessment);
             return this.JsonNet(data);
+        }
+
+        //CandidateAssessmentDetailByBatchIdAssessmentId
+        [HttpPost]
+        public ActionResult CandidateAssessmentDetailByBatchIdAssessmentId(int batchId,Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var candidateAssessmentDetail = NidanBusinessService.RetrieveCandidateAssessmentGrid(organisationId, e => e.BatchId==batchId);
+            return this.JsonNet(candidateAssessmentDetail);
         }
     }
 }

@@ -49,6 +49,9 @@
         vm.IsOptionC;
         vm.IsOptionD;
         vm.SubjectiveAnswer;
+        vm.retrieveCandidateAssessmentDetailByBatchIdAssessmentId = retrieveCandidateAssessmentDetailByBatchIdAssessmentId;
+        vm.batchId;
+        vm.assessmentId;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -250,6 +253,20 @@
             return AssessmentService.createCandidateAssessmentQuestionAnswer(candidateAssessment)
                 .then(function (response) {
                     retrieveCandidateAssessment(vm.candidateAssessmentId);
+                });
+        }
+
+        function retrieveCandidateAssessmentDetailByBatchIdAssessmentId(batchId) {
+            vm.batchId = batchId;
+            vm.orderBy.property = "CandidateAssessmentId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return AssessmentService.retrieveCandidateAssessmentDetailByBatchIdAssessmentId(vm.batchId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidateAssessments = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidateAssessments;
                 });
         }
     }

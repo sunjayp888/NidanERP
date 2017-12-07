@@ -571,7 +571,7 @@
     <Content Include="bower_components\gentelella\src\js\custom.js" />
     <Content Include="bower_components\gentelella\src\js\helper.js" />
     <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
     <Content Include="bower_components\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Include="bower_components\jquery-validation\build\release.js" />
     <Content Include="bower_components\jquery-validation\dist\additional-methods.js" />
@@ -1807,6 +1807,8 @@
     <Content Include="Views\Assessment\AssessmentByUser.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\_CandidateAssessmentQuestionAnswer.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswer.cshtml" />
+    <Content Include="Views\Assessment\AssessmentByTrainer.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentDetail.cshtml" />
     <Content Include="Views\Partner\Index.cshtml" />
     <Content Include="Views\Partner\Create.cshtml" />
     <Content Include="Views\Partner\Edit.cshtml" />
