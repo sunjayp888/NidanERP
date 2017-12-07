@@ -22,5 +22,6 @@ namespace Nidan.Models
         public string OptionC { get; set; }
         public string OptionD { get; set; }
         public int CandidateAssessmentId { get; set; }
+        public int BatchId { get; set; }
     }
 }

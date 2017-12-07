@@ -4513,6 +4513,30 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<BatchTrainer> RetrieveBatchTrainers(int organisationId, Expression<Func<BatchTrainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .BatchTrainers
+                    .Include(p=>p.Batch)
+                    .Include(p => p.Trainer)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchTrainerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {

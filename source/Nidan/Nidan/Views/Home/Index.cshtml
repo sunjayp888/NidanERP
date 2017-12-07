@@ -136,10 +136,11 @@
         </div>
     </div>
 
-
 @*</div>*@
     <!-- pie chart -->
-    <div class="row">
+
+
+<div class="row">
         <div ng-controller="HomeController as model">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -226,6 +227,32 @@
                     <div class="clearfix"></div>
                 </div>
                 <a href='@Url.Action("AssessmentByUser", "Assessment")'>
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats" style="background: #b3ecff">
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="count">@Model.MobilizationCount</div>
+                            <h3>Assessment</h3>
+                            <p>Today's Assessment</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+@*For User*@
+@if (User.IsInAnyRoles("Trainer"))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <a href='@Url.Action("AssessmentByTrainer", "Assessment")'>
                     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="tile-stats" style="background: #b3ecff">
                             <div class="icon">

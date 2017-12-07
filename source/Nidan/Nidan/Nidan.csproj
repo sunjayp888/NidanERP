@@ -1806,6 +1806,8 @@
     <Content Include="Views\Assessment\AssessmentByUser.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\_CandidateAssessmentQuestionAnswer.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswer.cshtml" />
+    <Content Include="Views\Assessment\AssessmentByTrainer.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentDetail.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

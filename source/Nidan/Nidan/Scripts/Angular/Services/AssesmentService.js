@@ -19,7 +19,8 @@
             updateModuleExamSet: updateModuleExamSet,
             openModuleExamSetByAssessmentId: openModuleExamSetByAssessmentId,
             retrieveCandidateAssessment: retrieveCandidateAssessment,
-            createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer
+            createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer,
+            retrieveCandidateAssessmentDetailByBatchIdAssessmentId: retrieveCandidateAssessmentDetailByBatchIdAssessmentId
         };
 
         return service;
@@ -128,6 +129,18 @@
                     candidateAssessment: candidateAssessment
                     //paging: Paging,
                     //orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateAssessmentDetailByBatchIdAssessmentId(batchId, Paging, OrderBy) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentDetailByBatchIdAssessmentId",
+                data = {
+                    batchId: batchId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);

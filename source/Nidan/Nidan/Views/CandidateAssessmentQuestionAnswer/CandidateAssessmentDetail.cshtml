@@ -1,0 +1,95 @@
+﻿@using Nidan.Entity
+@using Nidan.Extensions
+@model Nidan.Models.CandidateAssessmentQuestionAnswerViewModel
+@{
+    ViewBag.Title = "CandidateAssessmentDetail";
+}
+
+<div ng-controller="AssessmentController as model" ng-init="model.retrieveCandidateAssessmentDetailByBatchIdAssessmentId(@Model.BatchId)">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Assessments  <small></small>
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Trainers <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
+                                            <th ng-click="model.order('StudentCode')" ng-class="model.orderClass('StudentCode')">Student Code</th>
+                                            <th ng-click="model.order('AssessmentTypeName')" ng-class="model.orderClass('AssessmentTypeName')">AssessmentTypeName</th>
+                                            <th ng-click="model.order('AssessmentDate')" ng-class="model.orderClass('AssessmentDate')">Assessment Date</th>
+                                            <th ng-click="model.order('AssessmentTime')" ng-class="model.orderClass('AssessmentTime')">Assessment Time</th>
+                                            <th ng-click="model.order('ExamSet')" ng-class="model.orderClass('ExamSet')">Exam Set</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="candidateAssessment in model.candidateAssessments" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="candidateAssessment.CandidateName"></span></td>
+                                            <td><span ng-bind="candidateAssessment.StudentCode"></span></td>
+                                            <td><span ng-bind="candidateAssessment.AssessmentTypeName"></span></td>
+                                            <td><span ng-bind="candidateAssessment.AssessmentDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="candidateAssessment.AssessmentTime"></span></td>
+                                            <td><span ng-bind="candidateAssessment.ExamSet"></span></td>
+                                            <td>
+                                                <div class="btn-group pull-right">
+                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                        <i class="fa fa-chevron-down"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu slidedown">
+                                                        @if (User.IsInAnyRoles("Trainer"))
+                                                        {
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswer/{{assessment.CandidateAssessmentId}}">
+                                                                    Candidate Details
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+
