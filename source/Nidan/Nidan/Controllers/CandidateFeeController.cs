@@ -70,6 +70,7 @@ namespace Nidan.Controllers
                 var candidateInstallmentData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateFeeId > candidateFeeData.CandidateFeeId && e.CandidateInstallmentId == candidateFeeData.CandidateInstallmentId).Items.FirstOrDefault();
                 candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
                 candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
+                candidateFeeData.PaymentDate = candidateFeeViewModel.CandidateFee.PaymentDate;
                 candidateFeeData.FeeTypeId = (int)FeeType.Installment;
                 candidateFeeData.FiscalYear = DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
