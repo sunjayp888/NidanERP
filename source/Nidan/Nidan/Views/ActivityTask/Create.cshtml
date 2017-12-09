@@ -54,6 +54,8 @@
 @section scripts {
     <script>
         $(document).ready(function() {
+            $('#txtNumberOfDays').attr("disabled", true);
+            $('#txtNumberOfHours').attr("disabled", true);
             var startTimeSpan = "@Model.Activity.StartTimeSpan" == "AM" ? "AM" : "PM";
             var endTimeSpan = "@Model.Activity.EndTimeSpan" == "AM" ? "AM" : "PM";
             $("#ActivityTask_StartHour").val("@Model.Activity.StartHour");
@@ -67,7 +69,13 @@
                 ? $("#rbActivityEndTimeSpanAM").prop("checked", true)
                 : $("#rbActivityEndTimeSpanPM").prop("checked", true);
             $('#txtNumberOfDays').val(@Model.NumberOfDays);
-            $('#txtNumberOfHours').val('@Model.NumberOfHours');
+            var numberOfDays = @Model.NumberOfDays;
+            if (numberOfDays <= 0) {
+                $('#numberOfHours').show();
+                $('#txtNumberOfHours').val('@Model.NumberOfHours');
+            } else {
+                $('#numberOfHours').hide();
+            }
         });
         $('#ActivityTask_CentreId').change(function() {
             var centreId = $('#ActivityTask_CentreId :selected').val();

@@ -14,6 +14,9 @@ namespace Nidan.Entity
     {
         private class ActivityMetadata
         {
+            [Display(Name = "Activity Status")]
+            public int TaskStateId { get; set; }
+
             [Display(Name = "Activity Type")]
             public int ActivityTypeId { get; set; }
 

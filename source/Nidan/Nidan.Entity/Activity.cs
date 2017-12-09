@@ -59,9 +59,13 @@ namespace Nidan.Entity
 
         public int CreatedBy { get; set; }
 
+        public int TaskStateId { get; set; }
+
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public virtual TaskState TaskState { get; set; }
 
         public virtual Project Project { get; set; }
 
