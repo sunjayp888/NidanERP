@@ -121,7 +121,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult ModuleExamQuestion(int moduleExamSetId, Paging paging, List<OrderBy> orderBy)
         {
-            var data = NidanBusinessService.RetrieveModuleExamQuestionSets(UserOrganisationId, e => e.ModuleExamSetId == moduleExamSetId, orderBy, paging);
+            var data = NidanBusinessService.RetrieveModuleExamQuestionSetGrid(UserOrganisationId, e => e.ModuleExamSetId == moduleExamSetId, orderBy, paging);
             return this.JsonNet(data);
         }
     }

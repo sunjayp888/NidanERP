@@ -1,5 +1,5 @@
 ﻿@model Nidan.Models.ModuleExamQuestionSetViewModel
-    
+
 <div ng-controller="ModuleExamSetController as model" ng-init="model.retrieveModuleExamQuestionSets(@Model.ModuleExamSetId)">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -17,6 +17,19 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 @Html.Partial("Pagination/_pageSize")
+                                @*@Model.ModuleExamSet.TotalMark-@Model.ModuleExamSet.ModuleExamQuestionSets.Sum(e => e.MarkPerQuestion)*@
+                                <div>
+                                    @{
+                                        var totalmark = @Model.ModuleExamSet.TotalMark;
+                                        var markper = @Model.ModuleExamSet.ModuleExamQuestionSets.Sum(e => e.MarkPerQuestion);
+                                        var ans = (totalmark - markper);
+                                    }
+                                   Total Marks of Till Question = @ans
+                                </div>
+                            </div>
+                            <div>
+                                @*@Model.Sum(b => b.KwotaOplaty)*@
+
                             </div>
                         </div>
                         <div class="row">
@@ -70,4 +83,3 @@
         </div>
     </div>
 </div>
-

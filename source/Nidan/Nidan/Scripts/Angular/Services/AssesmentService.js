@@ -20,7 +20,8 @@
             openModuleExamSetByAssessmentId: openModuleExamSetByAssessmentId,
             retrieveCandidateAssessment: retrieveCandidateAssessment,
             createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer,
-            retrieveCandidateAssessmentDetailByBatchIdAssessmentId: retrieveCandidateAssessmentDetailByBatchIdAssessmentId
+            retrieveCandidateAssessmentDetailByBatchIdAssessmentId: retrieveCandidateAssessmentDetailByBatchIdAssessmentId,
+            retrieveCandidateAssessmentQuestionAnswer: retrieveCandidateAssessmentQuestionAnswer
         };
 
         return service;
@@ -139,6 +140,17 @@
             var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentDetailByBatchIdAssessmentId",
                 data = {
                     batchId: batchId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentQuestionAnswerId, Paging, OrderBy) {
+            var url = "/Assessment/CandidateAssessmentQuestionAnswerbyId",
+                data = {
+                    candidateAssessmentQuestionAnswerId: candidateAssessmentQuestionAnswerId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

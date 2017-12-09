@@ -86,7 +86,7 @@
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
-                                        <a><i class="fa fa-inr"></i> Assessment <span class="fa fa-chevron-down"></span></a>
+                                        <a><i class="fa fa-pencil-square-o"></i> Assessment <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "ModuleExamSet")'>Module Exam Set</a></li>
                                             <li><a href='@Url.Action("Index", "Assessment")'>Assessment</a></li>
@@ -98,9 +98,8 @@
                                     <li>
                                         <a><i class="fa fa-cogs"></i> Settings <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href='@Url.Action("Index", "Centre
+                                            <li><a href='@Url.Action("Index", "Centre")'>Centre</a></li>
                                             <li><a href='@Url.Action("Index", "Partner")'>Partner</a></li>
-                                            @*<li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>*@
                                             <li><a href='@Url.Action("Index", "Personnel")'>Personnel</a></li>
                                             <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>

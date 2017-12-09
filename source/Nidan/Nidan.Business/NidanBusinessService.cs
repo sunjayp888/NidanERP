@@ -3978,6 +3978,17 @@ namespace Nidan.Business
 
         //Update
 
+        public PagedResult<CandidateAssessmentQuestionAnswer> RetrieveCandidateAssessmentQuestionAnswers(int organisationId, Expression<Func<CandidateAssessmentQuestionAnswer, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, predicate, orderBy, paging);
+        }
+
+        public CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId,
+            int candidateAssessmentQuestionAnswerId)
+        {
+            return _nidanDataService.RetrieveCandidateAssessmentQuestionAnswer(organisationId,candidateAssessmentQuestionAnswerId);
+        }
 
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
         {
@@ -4452,11 +4463,23 @@ namespace Nidan.Business
 
         public bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int centreId, CandidateAssessmentQuestionAnswer candidateAssessment)
         {
+            var candiateAssessmentQuestionAnswerData = RetrieveCandidateAssessmentQuestionAnswers(organisationId, e => e.CandidateAssessmentId == candidateAssessment.CandidateAssessmentId && e.ModuleExamSetId == candidateAssessment.ModuleExamSetId && e.ModuleExamQuestionSetId == candidateAssessment.ModuleExamQuestionSetId).Items.FirstOrDefault();
             try
             {
                 candidateAssessment.PersonnelId = personnelId;
                 candidateAssessment.OrganisationId = organisationId;
                 candidateAssessment.CentreId = centreId;
+                candidateAssessment.IsAttempted = true;
+                if (candiateAssessmentQuestionAnswerData != null && candiateAssessmentQuestionAnswerData.IsAttempted)
+                {
+                    candiateAssessmentQuestionAnswerData.IsOptionA = candidateAssessment.IsOptionA;
+                    candiateAssessmentQuestionAnswerData.IsOptionB = candidateAssessment.IsOptionB;
+                    candiateAssessmentQuestionAnswerData.IsOptionC = candidateAssessment.IsOptionC;
+                    candiateAssessmentQuestionAnswerData.IsOptionD = candidateAssessment.IsOptionD;
+                    candiateAssessmentQuestionAnswerData.SubjectiveAnswer = candidateAssessment.SubjectiveAnswer;
+                    UpdateCandidateAssessmentQuestionAnswer(organisationId, candiateAssessmentQuestionAnswerData);
+                    return true;
+                }
                 CreateCandidateAssessmentQuestionAnswer(organisationId, candidateAssessment);
                 return true;
             }
@@ -4469,6 +4492,11 @@ namespace Nidan.Business
         public Partner UpdatePartner(int organisationId, Partner partner)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, partner);
+        }
+
+        public CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId,CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessmentQuestionAnswer);
         }
 
 
@@ -5154,6 +5182,13 @@ namespace Nidan.Business
                 _smsService.SendSMS(smsData);
             }
 
+        }
+
+        public PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId,
+            Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveModuleExamQuestionSetGrid(organisationId, predicate, orderBy, paging);
         }
 
     }

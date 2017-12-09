@@ -56,6 +56,7 @@
                                         <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">CreatedDate</th>
                                         <th ng-click="model.order('QuestionSetName')" ng-class="model.orderClass('QuestionSetName')">Question Set</th>
                                         <th ng-click="model.order('SubjectId')" ng-class="model.orderClass('SubjectId')">Subject</th>
+                                        <th ng-click="model.order('TotalMark')" ng-class="model.orderClass('TotalMark')">Total Marks</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -64,6 +65,7 @@
                                         <td><span ng-bind="moduleExamSet.CreatedDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="moduleExamSet.QuestionSetName"></span></td>
                                         <td><span ng-bind="moduleExamSet.Subject.Name"></span></td>
+                                        <td><span ng-bind="moduleExamSet.TotalMark"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

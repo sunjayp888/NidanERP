@@ -34,11 +34,23 @@ namespace Nidan.Controllers
             });
         }
 
-        public ActionResult CandidateAssessmentQuestionAnswer(int? id)
+        public ActionResult CandidateAssessmentQuestionAnswerSet(int? id)
         {
+            var organisationId = UserOrganisationId;
+            var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, id.Value, e => true);
+            var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
+            if (Session["Rem_Time"] == null)
+            {
+                Session["Rem_Time"] = DateTime.Now.AddMinutes(2).ToString("dd-MM-yyyy h:mm:ss tt");
+            }
+            ViewBag.Rem_Time = Session["Rem_Time"];
+
+            ViewBag.Message = "Modify this template to jump-start your MVC application.";
             return View(new CandidateAssessmentQuestionAnswerViewModel()
             {
-                CandidateAssessmentId = id.Value
+                CandidateAssessmentId = id.Value,
+                TotalMark=moduleExamSet.TotalMark??0,
+                AssessmentName = candidateAssessment.Assessment.Name,
             });
         }
 
@@ -50,7 +62,7 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId, e => true);
             var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
-            var moduleExamQuestionSet = NidanBusinessService.RetrieveModuleExamQuestionSets(organisationId, e => e.ModuleExamSetId == moduleExamSet.ModuleExamSetId && e.PersonnelId==personnelId);
+            var moduleExamQuestionSet = NidanBusinessService.RetrieveModuleExamQuestionSets(organisationId, e => e.ModuleExamSetId == moduleExamSet.ModuleExamSetId && e.PersonnelId==personnelId,orderBy,paging);
             return this.JsonNet(moduleExamQuestionSet);
         }
 
@@ -64,7 +76,6 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        //CandidateAssessmentDetailByBatchIdAssessmentId
         [HttpPost]
         public ActionResult CandidateAssessmentDetailByBatchIdAssessmentId(int batchId,Paging paging, List<OrderBy> orderBy)
         {
@@ -72,6 +83,16 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var candidateAssessmentDetail = NidanBusinessService.RetrieveCandidateAssessmentGrid(organisationId, e => e.BatchId==batchId);
             return this.JsonNet(candidateAssessmentDetail);
+        }
+
+        //CandidateAssessmentQuestionAnswerbyId
+        [HttpPost]
+        public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentQuestionAnswerId, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var candidateAssessmenbyId = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswer(organisationId, candidateAssessmentQuestionAnswerId);
+            return this.JsonNet(candidateAssessmenbyId);
         }
     }
 }

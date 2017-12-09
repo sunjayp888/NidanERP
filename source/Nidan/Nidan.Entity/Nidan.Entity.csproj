@@ -209,6 +209,7 @@
     <Compile Include="Module.cs" />
     <Compile Include="ModuleExamQuestionAnswerGrid.cs" />
     <Compile Include="ModuleExamQuestionSet.cs" />
+    <Compile Include="ModuleExamQuestionSetGrid.cs" />
     <Compile Include="ModuleExamSet.cs" />
     <Compile Include="Occupation.cs" />
     <Compile Include="Organisation.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Partials\FixAssetMappingcs.cs" />
     <Compile Include="Partials\FollowUp.cs" />
     <Compile Include="Partials\Mobilization.cs" />
+    <Compile Include="Partials\ModuleExamSet.cs" />
     <Compile Include="Partials\Organisation.cs" />
     <Compile Include="Partials\Host.cs" />
     <Compile Include="Partials\OtherFee.cs" />

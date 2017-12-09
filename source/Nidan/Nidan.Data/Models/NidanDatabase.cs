@@ -180,6 +180,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateAssessment> CandidateAssessments { get; set; }
         public virtual DbSet<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
         public virtual DbSet<Partner> Partners { get; set; }
+        public virtual DbSet<ModuleExamQuestionSetGrid> ModuleExamQuestionSetGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2832,6 +2833,46 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Partner>()
                 .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.ModuleExamSetName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.QuestionTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.QuestionDescription)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.OptionA)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.OptionB)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.OptionC)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.OptionD)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.AnswerType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.SubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ModuleExamQuestionSetGrid>()
+                .Property(e => e.CorrectAnswer)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
