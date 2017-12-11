@@ -571,7 +571,7 @@
     <Content Include="bower_components\gentelella\src\js\custom.js" />
     <Content Include="bower_components\gentelella\src\js\helper.js" />
     <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js"/>
+    <Content Include="bower_components\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
     <Content Include="bower_components\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Include="bower_components\jquery-validation\build\release.js" />
     <Content Include="bower_components\jquery-validation\dist\additional-methods.js" />
@@ -1791,12 +1791,6 @@
     <Content Include="Views\ActivityTask\Edit.cshtml" />
     <Content Include="Views\ActivityTask\_ActivityTaskByActivityId.cshtml" />
     <Content Include="Views\ModuleExamSet\_ModuleExamQuestionAnswer.cshtml" />
-    <Content Include="Views\Assesment\Index.cshtml" />
-    <Content Include="Views\Assesment\Create.cshtml" />
-    <Content Include="Views\Assesment\_Assesment.cshtml" />
-    <Content Include="Views\Assesment\Edit.cshtml" />
-    <Content Include="Views\Assesment\_AssignModuleExamSet.cshtml" />
-    <Content Include="Views\Assesment\_UpdateModuleExamSet.cshtml" />
     <Content Include="Views\ActivityTask\_AddTaskStatus.cshtml" />
     <Content Include="Views\Assessment\Index.cshtml" />
     <Content Include="Views\Assessment\Create.cshtml" />
@@ -1805,8 +1799,7 @@
     <Content Include="Views\Assessment\_AssignModuleExamSet.cshtml" />
     <Content Include="Views\Assessment\_UpdateModuleExamSet.cshtml" />
     <Content Include="Views\Assessment\AssessmentByUser.cshtml" />
-    <Content Include="Views\CandidateAssessmentQuestionAnswer\_CandidateAssessmentQuestionAnswer.cshtml" />
-    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswer.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswerSet.cshtml" />
     <Content Include="Views\Assessment\AssessmentByTrainer.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentDetail.cshtml" />
     <Content Include="Views\Partner\Index.cshtml" />

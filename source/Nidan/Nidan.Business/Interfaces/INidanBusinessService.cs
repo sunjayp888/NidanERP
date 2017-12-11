@@ -370,6 +370,9 @@ namespace Nidan.Business.Interfaces
         Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate);
         PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchTrainer> RetrieveBatchTrainers(int organisationId, Expression<Func<BatchTrainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId, Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateAssessmentQuestionAnswer> RetrieveCandidateAssessmentQuestionAnswers(int organisationId, Expression<Func<CandidateAssessmentQuestionAnswer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId, int candidateAssessmentQuestionAnswerId);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
@@ -422,8 +425,8 @@ namespace Nidan.Business.Interfaces
         bool AssignModuleExamSet(int organisationId, int personnelId, int assessmentId, List<CandidateAssessment> assessments);
         CandidateAssessment UpdateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
         bool CreateCandidateQuestionAnswer(int organisationId, int personnelId,int centreId, CandidateAssessmentQuestionAnswer candidateAssessment);
-        //bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int candidateAssessmentId, List<CandidateAssessmentQuestionAnswer> assessments);
         Partner UpdatePartner(int organisationId, Partner partner);
+        CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);

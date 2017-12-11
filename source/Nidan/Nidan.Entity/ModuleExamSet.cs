@@ -22,6 +22,8 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string QuestionSetName { get; set; }
 
+        public int? TotalMark { get; set; }
+
         public int SubjectId { get; set; }
 
         public int CreatedBy { get; set; }

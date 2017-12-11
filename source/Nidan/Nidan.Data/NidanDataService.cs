@@ -4297,6 +4297,7 @@ namespace Nidan.Data
                 return context
                     .ModuleExamSets
                     .AsNoTracking()
+                    .Include(e=>e.ModuleExamQuestionSets)
                     .Where(predicate)
                     .SingleOrDefault(p => p.ModuleExamSetId == moduleExamSetId);
             }
@@ -4704,6 +4705,44 @@ namespace Nidan.Data
 
         #region // Update
 
+        public PagedResult<CandidateAssessmentQuestionAnswer> RetrieveCandidateAssessmentQuestionAnswers(int organisationId, Expression<Func<CandidateAssessmentQuestionAnswer, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateAssessmentQuestionAnswers
+                    .Include(e=>e.ModuleExamQuestionSet)
+                    .Include(e => e.ModuleExamSet)
+                    .Include(e => e.CandidateAssessment)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "CandidateAssessmentQuestionAnswerId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
+        public CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId,
+            int candidateAssessmentQuestionAnswerId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateAssessmentQuestionAnswers
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CandidateAssessmentQuestionAnswerId == candidateAssessmentQuestionAnswerId);
+            }
+        }
 
         public T UpdateEntityEntry<T>(T t) where T : class
         {
@@ -4839,5 +4878,29 @@ namespace Nidan.Data
 
             }
         }
+
+        public PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId,Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ModuleExamQuestionSetGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "ModuleExamSetId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
+            }
+        }
+
+        }
     }
-}
+
