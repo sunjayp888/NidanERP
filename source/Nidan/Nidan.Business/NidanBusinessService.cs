@@ -1663,6 +1663,7 @@ namespace Nidan.Business
         {
             activity.CreatedBy = personnelId;
             activity.CentreId = centreId;
+            activity.TaskStateId = (int)Enum.TaskState.Created;
             var data = _nidanDataService.CreateActivity(organisationId, activity);
             return data;
         }
@@ -1937,7 +1938,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveActivityTypes(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<TaskState> RetrieveTaskStates(int organisationId, Expression<Func<TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<Entity.TaskState> RetrieveTaskStates(int organisationId, Expression<Func<Entity.TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveTaskStates(organisationId, predicate, orderBy, paging);
         }
@@ -2080,6 +2081,12 @@ namespace Nidan.Business
         public PagedResult<BatchTrainer> RetrieveBatchTrainers(int organisationId, Expression<Func<BatchTrainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveBatchTrainers(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventManagementGrid(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)

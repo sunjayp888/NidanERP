@@ -83,6 +83,7 @@ namespace Nidan.Controllers
             var activityAssigneeGroups = NidanBusinessService.RetrieveActivityAssigneeGroups(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).Items.ToList();
             var projects = NidanBusinessService.RetrieveProjects(organisationId, e => e.CentreId == UserCentreId).Items.ToList();
             var activityTypes = NidanBusinessService.RetrieveActivityTypes(organisationId, e => true).Items.ToList();
+            var taskStates = NidanBusinessService.RetrieveTaskStates(organisationId, e => true).Items.ToList();
             var activity = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
             if (activity == null)
             {
@@ -93,6 +94,7 @@ namespace Nidan.Controllers
                 Centres = new SelectList(centres, "CentreId", "Name"),
                 ActivityAssigneeGroups = new SelectList(activityAssigneeGroups, "ActivityAssigneeGroupId", "Name"),
                 Projects = new SelectList(projects, "ProjectId", "Name"),
+                TaskStates = new SelectList(taskStates, "TaskStateId", "Name"),
                 ActivityTypes = new SelectList(activityTypes, "ActivityTypeId", "Name"),
                 Activity = activity
             };
@@ -124,7 +126,8 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => isSuperAdmin || e.CentreId == UserCentreId, orderBy, paging));
+            var data = NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => isSuperAdmin || e.CentreId == UserCentreId, orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]

@@ -37,7 +37,7 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == centreId);
-            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId,centreId,activityData.ActivityAssigneeGroupId).Items.ToList();
+            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId,centreId,activityData.ActivityAssigneeGroupId).Items.Select(e=>e.Personnel).ToList();
             var startDate = activityData.StartDate;
             var endDate= activityData.EndDate;
             var numberOfDays = (endDate - startDate).TotalDays;
@@ -79,7 +79,7 @@ namespace Nidan.Controllers
                 return RedirectToAction("Create","ActivityTask",new {id=activityTaskViewModel.ActivityTask.ActivityId});
             }
             activityTaskViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
-            activityTaskViewModel.AssignToList = new SelectList(NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityTaskViewModel.Activity.ActivityAssigneeGroupId).Items.ToList());
+            activityTaskViewModel.AssignToList = new SelectList(NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityTaskViewModel.ActivityTask.Activity.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList());
             return View(activityTaskViewModel);
         }
 
@@ -100,7 +100,7 @@ namespace Nidan.Controllers
                 return HttpNotFound();
             }
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, activityTask.ActivityId, e => true);
-            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityData.ActivityAssigneeGroupId).Items.ToList();
+            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, activityTask.CentreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
             var startDate = activityData.StartDate;
             var endDate = activityData.EndDate;
             var numberOfDays = (endDate - startDate).TotalDays;

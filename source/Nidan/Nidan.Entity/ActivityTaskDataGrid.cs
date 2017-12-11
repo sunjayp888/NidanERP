@@ -19,96 +19,99 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ActivityId { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         [StringLength(1000)]
         public string ActivityName { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         public string Name { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AssignTo { get; set; }
 
-        [Key]
-        [Column(Order = 5)]
         [StringLength(202)]
         public string AssignToName { get; set; }
 
         [Key]
-        [Column(Order = 6, TypeName = "date")]
+        [Column(Order = 4, TypeName = "date")]
         public DateTime StartDate { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 5)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StartHour { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StartMinute { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 7)]
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
         [Key]
-        [Column(Order = 10, TypeName = "date")]
+        [Column(Order = 8, TypeName = "date")]
         public DateTime EndDate { get; set; }
 
         [Key]
-        [Column(Order = 11)]
+        [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EndHour { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 10)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EndMinute { get; set; }
 
         [Key]
-        [Column(Order = 13)]
+        [Column(Order = 11)]
         [StringLength(10)]
         public string EndTimeSpan { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 12)]
         public string Remark { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 13)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CreatedBy { get; set; }
 
-        [Key]
-        [Column(Order = 16)]
         [StringLength(202)]
         public string CreatedByName { get; set; }
 
+        public int? NumberOfDays { get; set; }
+
+        public int? LastTaskStateId { get; set; }
+
+        [StringLength(500)]
+        public string ActivityTaskStatus { get; set; }
+
+        public int? NumberOfDaysDelayed { get; set; }
+
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 14)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 18)]
+        [Column(Order = 15)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         [Key]
-        [Column(Order = 19, TypeName = "date")]
+        [Column(Order = 16, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [StringLength(100)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 20)]
+        [Column(Order = 17)]
         public string SearchField { get; set; }
     }
 }

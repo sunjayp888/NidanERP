@@ -106,7 +106,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
-            var brainStormingList = _nidanBusinessService.RetrieveEventBrainStormingGrid(UserOrganisationId, e => e.CentreId == eventResult.CentreId && e.EventId == eventId);
+            var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrid(UserOrganisationId, e => e.EventId == eventId && e.EventFunctionTypeId == 1);
             if (brainStormingList.Items.Any())
                 return this.JsonNet(brainStormingList);
             var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
