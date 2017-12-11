@@ -112,6 +112,12 @@
                                         <th ng-click="model.order('ActivityId')" ng-class="model.orderClass('ActivityId')">Activity Name</th>
                                         <th ng-click="model.order('StartDate')" ng-class="model.orderClass('StartDate')">Start Date</th>
                                         <th ng-click="model.order('EndDate')" ng-class="model.orderClass('EndDate')">End Date</th>
+                                        <th ng-click="model.order('NumberOfDays')" ng-class="model.orderClass('NumberOfDays')">No.Of Activity Days</th>
+                                        <th ng-click="model.order('NumberOfTask')" ng-class="model.orderClass('NumberOfTask')">No.Of Task</th>
+                                        <th ng-click="model.order('NumberOfTaskAssignees')" ng-class="model.orderClass('NumberOfTaskAssignees')">No.Of Task Assignees</th>
+                                        <th ng-click="model.order('ActivityStatus')" ng-class="model.orderClass('ActivityStatus')">Status</th>
+                                        <th ng-click="model.order('NumberOfDaysDelayed')" ng-class="model.orderClass('NumberOfDaysDelayed')">No.Of Days Delayed</th>
+                                        <th ng-click="model.order('ActivityAssigneeGroupName')" ng-class="model.orderClass('ActivityAssigneeGroupName')">Assignee Group</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -124,6 +130,12 @@
                                         <td><span ng-bind="activity.Name"></span></td>
                                         <td><span ng-bind="activity.StartDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="activity.EndDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="activity.NumberOfDays"></span></td>
+                                        <td><span ng-bind="activity.NumberOfTask"></span></td>
+                                        <td><span ng-bind="activity.NumberOfTaskAssignees"></span></td>
+                                        <td><span ng-bind="activity.ActivityStatus"></span></td>
+                                        <td><span ng-bind="activity.NumberOfDaysDelayed"></span></td>
+                                        <td><span ng-bind="activity.ActivityAssigneeGroupName"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -137,11 +149,11 @@
                                                                 Edit
                                                             </a>
                                                         </li>
-                                                        <li>
+                                                        @*<li>
                                                             <a style="cursor: pointer;" ng-href="/Activity/View/{{activity.ActivityId}}">
                                                                 View
                                                             </a>
-                                                        </li>
+                                                        </li>*@
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/ActivityTask/Create/{{activity.ActivityId}}">
                                                                 Create Task

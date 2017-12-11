@@ -11,6 +11,7 @@ namespace Nidan.Models
     {
         public Activity Activity { get; set; }
         public SelectList ActivityTypes { get; set; }
+        public SelectList TaskStates { get; set; }
         public SelectList Centres { get; set; }
         public SelectList Projects { get; set; }
         public SelectList ActivityAssigneeGroups { get; set; }

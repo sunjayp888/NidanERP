@@ -103,16 +103,30 @@
 </div>
 @section scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var startTimeSpan = "@Model.Activity.StartTimeSpan" == "AM" ? "AM" : "PM";
             var endTimeSpan = "@Model.Activity.EndTimeSpan" == "AM" ? "AM" : "PM";
             @*var numberOfDays = ("@Model.Activity.EndDate.Date" - "@Model.Activity.StartDate.Date").Days;*@
             $("#ActivityTask_StartHour").val("@Model.Activity.StartHour");
             $('#ActivityTask_StartMinute').val("@Model.Activity.StartMinute");
-            startTimeSpan == "AM" ? $("#rbActivityStartTimeSpanAM").prop("checked", true) : $("#rbActivityStartTimeSpanPM").prop("checked", true);
+            startTimeSpan == "AM"
+                ? $("#rbActivityStartTimeSpanAM").prop("checked", true)
+                : $("#rbActivityStartTimeSpanPM").prop("checked", true);
             $('#ActivityTask_EndHour').val("@Model.Activity.EndHour");
             $('#ActivityTask_EndMinute').val("@Model.Activity.EndMinute");
-            endTimeSpan == "AM" ? $("#rbActivityEndTimeSpanAM").prop("checked", true) : $("#rbActivityEndTimeSpanPM").prop("checked", true);
+            endTimeSpan == "AM"
+                ? $("#rbActivityEndTimeSpanAM").prop("checked", true)
+                : $("#rbActivityEndTimeSpanPM").prop("checked", true);
+            var numberOfDays = @Model.NumberOfDays;
+            if (numberOfDays <= 0) {
+                $('#numberOfHours').show();
+                $('#txtNumberOfHours').val('@Model.NumberOfHours');
+            } else {
+                $('#numberOfHours').hide();
+            }
+            $('#txtNumberOfDays').val(@Model.NumberOfDays);
+
+
             //Read Only
             $('#ActivityTask_Name').attr("disabled", true);
             $('#ActivityTask_CentreId').attr("disabled", true);
@@ -127,7 +141,9 @@
             $('#rbActivityStartTimeSpanPM').attr("disabled", true);
             $('#rbActivityEndTimeSpanAM').attr("disabled", true);
             $('#rbActivityEndTimeSpanPM').attr("disabled", true);
-            $('.activityTaskRemark').hide();
+            $('#ActivityTask_Remark').attr("disabled", true);
+            $('#txtNumberOfDays').attr("disabled", true);
+            $('#txtNumberOfHours').attr("disabled", true);
         });
         var daterangepickerOptions = {
             autoApply: true,
@@ -142,18 +158,40 @@
             }
         };
 
-        jQuery(function () {
+        var daterangepickerOptionsBackDateLock = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+
+        jQuery(function() {
             jQuery(".activityTaskStartDate").daterangepicker(daterangepickerOptions);
             $('.activityTaskStartDate').val('@Model.ActivityTask.StartDate.ToString("dd MMMM yyyy")');
-            $(".activityTaskStartDate").on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            });
+            $(".activityTaskStartDate").on('apply.daterangepicker',
+                function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
 
             jQuery(".activityTaskEndDate").daterangepicker(daterangepickerOptions);
             $('.activityTaskEndDate').val('@Model.ActivityTask.EndDate.ToString("dd MMMM yyyy")');
-            $(".activityTaskEndDate").on('apply.daterangepicker', function (ev, picker) {
-                $(this).val(picker.startDate.format('DD MMMM YYYY'));
-            });
+            $(".activityTaskEndDate").on('apply.daterangepicker',
+                function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
+
+            jQuery("#txtCompletedDate").daterangepicker(daterangepickerOptionsBackDateLock);
+            $('#txtCompletedDate').val(moment().format('DD MMMM YYYY'));
+            $("#txtCompletedDate").on('apply.daterangepicker',
+                function(ev, picker) {
+                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                });
         });
     </script>
 }

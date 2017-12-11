@@ -112,6 +112,9 @@
                                             <th ng-click="model.order('ActivityTaskId')" ng-class="model.orderClass('ActivityTaskId')">Task Name</th>
                                             <th ng-click="model.order('StartDate')" ng-class="model.orderClass('StartDate')">Start Date</th>
                                             <th ng-click="model.order('EndDate')" ng-class="model.orderClass('EndDate')">End Date</th>
+                                            <th ng-click="model.order('NumberOfDays')" ng-class="model.orderClass('NumberOfDays')">No.Of Days</th>
+                                            <th ng-click="model.order('ActivityTaskStatus')" ng-class="model.orderClass('ActivityTaskStatus')">Status</th>
+                                            <th ng-click="model.order('NumberOfDaysDelayed')" ng-class="model.orderClass('NumberOfDaysDelayed')">No.Of Days Delayed</th>
                                             <th ng-click="model.order('AssignTo')" ng-class="model.orderClass('AssignTo')">Assign To</th>
                                             <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('CreatedBy')">Assign By</th>
                                             <th>Actions</th>
@@ -127,6 +130,12 @@
                                             <td><span ng-bind="activityTask.Name"></span></td>
                                             <td><span ng-bind="activityTask.StartDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="activityTask.EndDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="activityTask.NumberOfDays"></span></td>
+                                            <td>
+                                                <span ng-if="activityTask.ActivityTaskStatus!=null" ng-bind="activityTask.ActivityTaskStatus"></span>
+                                                <span ng-if="activityTask.ActivityTaskStatus==null">Created</span>
+                                            </td>
+                                            <td><span ng-bind="activityTask.NumberOfDaysDelayed"></span></td>
                                             <td><span ng-bind="activityTask.AssignToName"></span></td>
                                             <td><span ng-bind="activityTask.CreatedByName"></span></td>
                                             <td>

@@ -117,6 +117,7 @@
     <Compile Include="Enum\AssignType.cs" />
     <Compile Include="Enum\FeeType.cs" />
     <Compile Include="Enum\Role.cs" />
+    <Compile Include="Enum\TaskState.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />

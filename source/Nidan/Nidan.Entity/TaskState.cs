@@ -13,6 +13,7 @@ namespace Nidan.Entity
         public TaskState()
         {
             ActivityTaskStates = new HashSet<ActivityTaskState>();
+            Activities = new HashSet<Activity>();
         }
 
         public int TaskStateId { get; set; }
@@ -23,5 +24,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActivityTaskState> ActivityTaskStates { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Activity> Activities { get; set; }
     }
 }

@@ -267,6 +267,7 @@ namespace Nidan.Data.Interfaces
         Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate);
         PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchTrainer> RetrieveBatchTrainers(int organisationId, Expression<Func<BatchTrainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
