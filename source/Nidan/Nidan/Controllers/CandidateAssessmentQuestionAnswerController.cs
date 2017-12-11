@@ -85,14 +85,30 @@ namespace Nidan.Controllers
             return this.JsonNet(candidateAssessmentDetail);
         }
 
-        //CandidateAssessmentQuestionAnswerbyId
+        public ActionResult CandidateAttemptedQuestionAnswer(int? id)
+        {
+            return View(new CandidateAssessmentQuestionAnswerViewModel()
+            {
+                CandidateAssessmentId = id.Value,
+                //ModuleExamSetId = assesmentId.Value 
+            });
+        }
+
         [HttpPost]
-        public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentQuestionAnswerId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult CandidateAttemptedAssessmentList(int candidateAssessmentId, Paging paging, List<OrderBy> orderBy)
         {
             var organisationId = UserOrganisationId;
-            var personnelId = UserPersonnelId;
-            var candidateAssessmenbyId = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswer(organisationId, candidateAssessmentQuestionAnswerId);
-            return this.JsonNet(candidateAssessmenbyId);
+            var candidateAssessmentQuestionAnswer = NidanBusinessService.RetrieveCandidateAttemptedQuestionAnswerGrid(organisationId, e => e.CandidateAssessmentId == candidateAssessmentId, orderBy, paging);
+            return this.JsonNet(candidateAssessmentQuestionAnswer);
         }
+
+
+        //[HttpPost]
+        //public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentId,int moduleExamQuestionSetId, Paging paging, List<OrderBy> orderBy)
+        //{
+        //    var organisationId = UserOrganisationId;
+        //    var candidateAssessmenbyId = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, e=>e.CandidateAssessmentId== candidateAssessmentId && e.ModuleExamQuestionSetId==moduleExamQuestionSetId,orderBy,paging);
+        //    return this.JsonNet(candidateAssessmenbyId);
+        //}
     }
 }

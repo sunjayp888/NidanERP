@@ -374,6 +374,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<CandidateAssessmentQuestionAnswer> RetrieveCandidateAssessmentQuestionAnswers(int organisationId, Expression<Func<CandidateAssessmentQuestionAnswer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId, int candidateAssessmentQuestionAnswerId);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);

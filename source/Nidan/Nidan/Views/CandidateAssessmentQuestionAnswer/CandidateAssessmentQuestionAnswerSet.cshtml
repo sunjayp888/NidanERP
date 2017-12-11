@@ -83,7 +83,7 @@
                                 </div>
 
                                 <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Subjective Answer</label>
+                                    <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12">
                                     </div>
@@ -91,8 +91,11 @@
 
                                 <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-6">
                                     <div class="form-group">
-                                        <div>
+                                        <div class="col-md-offset-3">
                                             <button type="button" ng-click="model.createCandidateAssessmentQuestionAnswer('optionA'+candidateAssessment.ModuleExamQuestionSetId,'optionB'+candidateAssessment.ModuleExamQuestionSetId,'optionC'+candidateAssessment.ModuleExamQuestionSetId,'optionD'+candidateAssessment.ModuleExamQuestionSetId,'subjectAnswer'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentId,candidateAssessment.AssessmentId,candidateAssessment.ModuleExamSetId,candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.QuestionTypeId,candidateAssessment.AnswerType,candidateAssessment.MarkPerQuestion)" class="btn btn-success">Submit</button>
+                                            <a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-href="/Assessment/AssessmentByUser">
+                                                Finish
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +139,7 @@
             document.getElementById('timecountdown').innerHTML = 'Secs:' + _seconds;
         }
         timer = setInterval(showRemaining(), 1000);*@
-
+    
     </script>
 }
 

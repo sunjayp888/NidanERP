@@ -126,6 +126,7 @@
     <Compile Include="CandidateAssessment.cs" />
     <Compile Include="CandidateAssessmentGrid.cs" />
     <Compile Include="CandidateAssessmentQuestionAnswer.cs" />
+    <Compile Include="CandidateAttemptedQuestionAnswerGrid.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
