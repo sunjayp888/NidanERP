@@ -21,7 +21,17 @@ namespace Nidan.Controllers
         // GET: Activity
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
+        }
+
+        // GET: Activity
+        public ActionResult ActivityTaskList(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(new ActivityViewModel() {ActivityId = id.Value});
         }
 
         // GET: Activity/Create
@@ -118,6 +128,25 @@ namespace Nidan.Controllers
             var viewModel = new ActivityViewModel
             {
                 Activity = activityViewModel.Activity
+            };
+            return View(viewModel);
+        }
+
+        public ActionResult ViewActivity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var activity = NidanBusinessService.RetrieveActivityDataGrids(organisationId, e => e.ActivityId == id.Value).Items.FirstOrDefault();
+            if (activity == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new ActivityTaskViewModel
+            {
+                ActivityDataGrid = activity
             };
             return View(viewModel);
         }

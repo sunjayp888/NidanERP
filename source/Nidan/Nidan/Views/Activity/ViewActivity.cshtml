@@ -1,0 +1,193 @@
+﻿@model Nidan.Models.ActivityTaskViewModel
+
+@{
+    ViewBag.Title = string.Format("View Activity {0}", Model.ActivityDataGrid.Name);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-pencil-square-o"></i> &nbsp;@Model.ActivityDataGrid.Name</button><small> View Activity </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Activity Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Activity</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Type</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.ActivityTypeName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Project</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.ProjectName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Assignee Group</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.ActivityAssigneeGroupName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Start Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.StartDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">End Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.EndDate" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.ActivityDataGrid.StartDate == Model.ActivityDataGrid.EndDate)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Start Time</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.ActivityDataGrid.StartHour,Model.ActivityDataGrid.StartMinute,Model.ActivityDataGrid.StartTimeSpan)" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">End Time</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.ActivityDataGrid.EndHour,Model.ActivityDataGrid.EndMinute,Model.ActivityDataGrid.EndTimeSpan)" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Remark</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.Remark" cla class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Status</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.ActivityStatus" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Days</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.NumberOfDays" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Days Delayed</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.NumberOfDaysDelayed" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Created By</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.CreatedByName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        @*<div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Number Of Days Delayed</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@Model.ActivityDataGrid.NumberOfDaysDelayed" class="form-control col-lg-4">
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

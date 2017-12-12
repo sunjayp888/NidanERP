@@ -13,7 +13,8 @@
             canDeleteEvent: canDeleteEvent,
             deleteEvent: deleteEvent,
             searchEvent: searchEvent,
-            retrieveQuestions: retrieveQuestions
+            retrieveQuestions: retrieveQuestions,
+            updateEventApproveState: updateEventApproveState
         };
 
         return service;
@@ -61,6 +62,16 @@
                 paging: Paging,
                 orderBy: new Array(OrderBy)
             };
+
+            return $http.post(url, data);
+        } 
+
+        function updateEventApproveState(eventId, approveState) {
+            var url = "/Event/UpdateEventApproveState",
+                data = {
+                    id: eventId,
+                    approveState: approveState
+                };
 
             return $http.post(url, data);
         }

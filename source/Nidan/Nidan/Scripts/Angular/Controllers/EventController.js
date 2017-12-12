@@ -24,7 +24,8 @@
         vm.retrieveQuestions = retrieveQuestions;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
+        vm.updateEventApproveState = updateEventApproveState;
 
         function initialise() {
             order("Name");
@@ -102,6 +103,9 @@
                 });
         }
 
+        function updateEventApproveState(eventId,approveState) {
+            return EventService.updateEventApproveState(eventId, approveState);
+        }
     }
 
 })();

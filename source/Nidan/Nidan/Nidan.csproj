@@ -1806,6 +1806,10 @@
     <Content Include="Views\Partner\Create.cshtml" />
     <Content Include="Views\Partner\Edit.cshtml" />
     <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAttemptedQuestionAnswer.cshtml" />
+    <Content Include="Views\ActivityTask\ViewTask.cshtml" />
+    <Content Include="Views\ActivityTask\ViewActivity.cshtml" />
+    <Content Include="Views\Activity\ViewActivity.cshtml" />
+    <Content Include="Views\Activity\ActivityTaskList.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

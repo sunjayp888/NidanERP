@@ -21,7 +21,7 @@ namespace Nidan.Controllers
         // GET: ActivityTask
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
         }
 
         // GET: ActivityTask/Create
@@ -37,9 +37,9 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == centreId);
-            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId,centreId,activityData.ActivityAssigneeGroupId).Items.Select(e=>e.Personnel).ToList();
+            var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
             var startDate = activityData.StartDate;
-            var endDate= activityData.EndDate;
+            var endDate = activityData.EndDate;
             var numberOfDays = (endDate - startDate).TotalDays;
             var startTime = activityData.StartHour + ":" + activityData.StartMinute + " " + activityData.StartTimeSpan;
             var endTime = activityData.EndHour + ":" + activityData.EndMinute + " " + activityData.EndTimeSpan;
@@ -76,7 +76,7 @@ namespace Nidan.Controllers
                 activityTaskViewModel.ActivityTask.OrganisationId = organisationId;
                 activityTaskViewModel.ActivityTask.ActivityId = activityTaskViewModel.ActivityTask.Activity.ActivityId;
                 activityTaskViewModel.ActivityTask = NidanBusinessService.CreateActivityTask(organisationId, personnelId, centreId, activityTaskViewModel.ActivityTask);
-                return RedirectToAction("Create","ActivityTask",new {id=activityTaskViewModel.ActivityTask.ActivityId});
+                return RedirectToAction("Create", "ActivityTask", new { id = activityTaskViewModel.ActivityTask.ActivityId });
             }
             activityTaskViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
             activityTaskViewModel.AssignToList = new SelectList(NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityTaskViewModel.ActivityTask.Activity.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList());
@@ -140,6 +140,44 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        public ActionResult ViewTask(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var activityTask = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => e.ActivityTaskId == id.Value).Items.FirstOrDefault();
+            if (activityTask == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new ActivityTaskViewModel
+            {
+                ActivityTaskDataGrid = activityTask
+            };
+            return View(viewModel);
+        }
+
+        public ActionResult ViewActivity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var activity = NidanBusinessService.RetrieveActivityDataGrids(organisationId, e => e.ActivityId == id.Value).Items.FirstOrDefault();
+            if (activity == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new ActivityTaskViewModel
+            {
+                ActivityDataGrid = activity
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
@@ -170,7 +208,7 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetPersonnel(int centreId,int activityAssigneeGroupId, Paging paging, List<OrderBy> orderBy)
+        public ActionResult GetPersonnel(int centreId, int activityAssigneeGroupId, Paging paging, List<OrderBy> orderBy)
         {
             var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(UserOrganisationId, centreId, activityAssigneeGroupId).Items.ToList();
             return this.JsonNet(assignTos);
@@ -216,7 +254,7 @@ namespace Nidan.Controllers
             }
 
         }
-        
+
         [HttpPost]
         public ActionResult ActivityTaskStatesByActivityTaskId(int activityTaskId, Paging paging, List<OrderBy> orderBy)
         {

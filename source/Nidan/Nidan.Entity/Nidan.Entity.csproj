@@ -169,6 +169,7 @@
     <Compile Include="EnquiryType.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventActivityType.cs" />
+    <Compile Include="EventApproveState.cs" />
     <Compile Include="EventBrainstorming.cs" />
     <Compile Include="EventBrainStormingGrid.cs" />
     <Compile Include="EventBudget.cs" />
