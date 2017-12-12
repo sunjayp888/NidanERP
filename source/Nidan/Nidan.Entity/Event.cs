@@ -19,7 +19,7 @@ namespace Nidan.Entity
             Eventdays = new HashSet<Eventday>();
             PostEvents = new HashSet<PostEvent>();
             EventBrainstormings = new HashSet<EventBrainstorming>();
-            CreatedDateTime=DateTime.UtcNow.Date;
+            CreatedDateTime = DateTime.UtcNow.Date;
             EventBudgets = new HashSet<EventBudget>();
             EventPlannings = new HashSet<EventPlanning>();
             EventPostEvents = new HashSet<EventPostEvent>();
@@ -30,14 +30,17 @@ namespace Nidan.Entity
         [StringLength(200)]
         public string Name { get; set; }
 
-        [StringLength(200)]
-        public string CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
 
         public DateTime? CreatedDateTime { get; set; }
 
         public int? ApprovedBy { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public int EventApproveStateId { get; set; }
+
+        public string Remark { get; set; }
 
         public int CentreId { get; set; }
 
@@ -48,6 +51,8 @@ namespace Nidan.Entity
         public DateTime? EventEndDate { get; set; }
 
         public virtual Organisation Organisation { get; set; }
+
+        public virtual EventApproveState EventApproveState { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mobilization> Mobilizations { get; set; }

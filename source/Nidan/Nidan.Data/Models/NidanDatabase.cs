@@ -182,6 +182,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Partner> Partners { get; set; }
         public virtual DbSet<ModuleExamQuestionSetGrid> ModuleExamQuestionSetGrids { get; set; }
         public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
+        public virtual DbSet<EventApproveState> EventApproveStates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -313,12 +314,12 @@ namespace Nidan.Data.Models
 
 
             //modelBuilder.Entity<CompanyBuilding>()
-            //.HasMany(e => e.Buildings)
-            //.WithRequired(e => e.CompanyBuilding)
-            //.WillCascadeOnDelete(false);
+            modelBuilder.Entity<Event>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Event>()
-              .Property(e => e.Name)
+              .Property(e => e.Remark)
               .IsUnicode(false);
            
 
@@ -380,9 +381,9 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Event>()
-                .Property(e => e.CreatedBy)
-                .IsUnicode(false);
+            //modelBuilder.Entity<Event>()
+            //    .Property(e => e.CreatedBy)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<Course>()
               .Property(e => e.Name)
@@ -2882,7 +2883,11 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
-                
+
+            modelBuilder.Entity<EventApproveState>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

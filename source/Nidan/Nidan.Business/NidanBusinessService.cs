@@ -780,6 +780,7 @@ namespace Nidan.Business
 
         public Event CreateEvent(int organisationId, Event eventplan)
         {
+            eventplan.EventApproveStateId = (int) Enum.EventApproveState.Created;
             return _nidanDataService.CreateEvent(organisationId, eventplan);
         }
 
@@ -1680,6 +1681,13 @@ namespace Nidan.Business
         public ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState)
         {
             var data = _nidanDataService.CreateActivityTaskState(organisationId, activityTaskState);
+            if (data.TaskStateId==(int)Enum.TaskState.InProgress)
+            {
+                var activityTask = RetrieveActivityTask(organisationId, data.ActivityTaskId, e => true);
+                var activityData = activityTask.Activity;
+                activityData.TaskStateId = (int) Enum.TaskState.InProgress;
+                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityData);
+            }
             return data;
         }
 

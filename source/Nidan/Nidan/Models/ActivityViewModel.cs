@@ -15,6 +15,7 @@ namespace Nidan.Models
         public SelectList Centres { get; set; }
         public SelectList Projects { get; set; }
         public SelectList ActivityAssigneeGroups { get; set; }
+        public int ActivityId { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
