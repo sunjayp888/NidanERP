@@ -11,6 +11,8 @@ namespace Nidan.Models
     {
         public ActivityTask ActivityTask { get; set; }
         public Activity Activity { get; set; }
+        public ActivityTaskDataGrid ActivityTaskDataGrid { get; set; }
+        public ActivityDataGrid ActivityDataGrid { get; set; }
         public SelectList AssignToList { get; set; }
         public SelectList Centres { get; set; }
         public SelectList TaskStates { get; set; }

@@ -1,0 +1,180 @@
+﻿@model Nidan.Models.ActivityTaskViewModel
+
+@{
+    ViewBag.Title = string.Format("View Task {0}", Model.ActivityTaskDataGrid.Name);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-pencil-square-o"></i> &nbsp;@Model.ActivityTaskDataGrid.Name</button><small> View Task </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Activity Task Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Activity</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.ActivityName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Task</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.Name" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Assign To</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.AssignToName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Assigned By</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.CreatedByName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Start Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.StartDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">End Date</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.EndDate.ToShortDateString()" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (Model.ActivityTaskDataGrid.StartDate == Model.ActivityTaskDataGrid.EndDate)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">Start Time</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.ActivityTaskDataGrid.StartHour,Model.ActivityTaskDataGrid.StartMinute,Model.ActivityTaskDataGrid.StartTimeSpan)" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-dark">End Time</button>
+                                                    </span>
+                                                    <input type="text" disabled="disabled" value="@string.Format("{0}:{1} {2}",Model.ActivityTaskDataGrid.EndHour,Model.ActivityTaskDataGrid.EndMinute,Model.ActivityTaskDataGrid.EndTimeSpan)" class="form-control col-lg-4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Remark</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.Remark" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Status</button>
+                                                </span>
+                                                @if (Model.ActivityTaskDataGrid.ActivityTaskStatus != null)
+                                                {
+                                                    <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.ActivityTaskStatus" class="form-control col-lg-4">
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" disabled="disabled" value="Created" class="form-control col-lg-4">
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Days</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.NumberOfDays" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Number Of Days Delayed</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.ActivityTaskDataGrid.NumberOfDaysDelayed" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

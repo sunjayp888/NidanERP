@@ -11,7 +11,8 @@ namespace Nidan.Entity
     {
         private class EventTypeMetadata
         {
-           
+            [DataType(DataType.MultilineText)]
+            public string Remark { get; set; }
         }
     }
 }

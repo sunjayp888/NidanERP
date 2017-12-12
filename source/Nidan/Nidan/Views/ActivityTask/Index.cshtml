@@ -151,16 +151,21 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                            @*<li>
-                                                                <a style="cursor: pointer;" ng-href="/ActivityTask/View/{{activityTask.ActivityTaskId}}">
-                                                                    View
-                                                                </a>
-                                                            </li>*@
                                                             <li>
+                                                                <a style="cursor: pointer;" ng-href="/ActivityTask/ViewTask/{{activityTask.ActivityTaskId}}">
+                                                                    View Task
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/ActivityTask/ViewActivity/{{activityTask.ActivityId}}">
+                                                                    View Activity
+                                                                </a>
+                                                            </li>
+                                                            @*<li>
                                                                 <a style="cursor: pointer;" ng-click="model.deleteActivityTask(activityTask.ActivityTaskId,activityTask.ActivityId)">
                                                                     Delete
                                                                 </a>
-                                                            </li>
+                                                            </li>*@
                                                         }
                                                     </ul>
                                                 </div>

@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.EventViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.EventViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -44,6 +45,36 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @Html.LabelFor(model => model.Event.CentreId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(model => model.Event.CentreId, Model.Centres, "Select Centre", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Event.CentreId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Event.EventStartDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Event.EventStartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 eventStartDate", ng_model = "model.EventStartDate" })
+                            <span class="form-control-feedback" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(model => model.Event.EventStartDate, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Event.EventEndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Event.EventEndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 eventEndDate", ng_model = "model.EventEndDate" })
+                            <span class="form-control-feedback" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(model => model.Event.EventEndDate, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Event.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.EditorFor(model => model.Event.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Event.Remark, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-6 col-md-offset-8">
                             <button id="send" type="submit" class="btn btn-success">Submit</button>
                         </div>
@@ -57,3 +88,33 @@
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
 </div>
+@section scripts {
+    <script>
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            //minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+
+        jQuery(function () {
+            jQuery(".eventStartDate").daterangepicker(daterangepickerOptions);
+            $('.eventStartDate').val(moment().format('DD MMMM YYYY'));
+            $(".eventStartDate").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+
+            jQuery(".eventEndDate").daterangepicker(daterangepickerOptions);
+            $('.eventEndDate').val(moment().format('DD MMMM YYYY'));
+            $(".eventEndDate").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+        });
+    </script>
+}

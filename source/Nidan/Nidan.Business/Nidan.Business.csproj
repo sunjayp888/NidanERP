@@ -115,6 +115,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="Enum\AssetOutStatus.cs" />
     <Compile Include="Enum\AssignType.cs" />
+    <Compile Include="Enum\EventApproveState.cs" />
     <Compile Include="Enum\FeeType.cs" />
     <Compile Include="Enum\Role.cs" />
     <Compile Include="Enum\TaskState.cs" />

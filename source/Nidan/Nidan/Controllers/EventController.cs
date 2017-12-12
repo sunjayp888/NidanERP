@@ -10,6 +10,7 @@ using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Extensions;
 using Nidan.Models;
+using EventApproveState = Nidan.Business.Enum.EventApproveState;
 
 namespace Nidan.Controllers
 {
@@ -33,12 +34,16 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var viewModel = new EventViewModel
             {
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 Event = new Event()
                 {
                     OrganisationId = UserOrganisationId,
-                },
+                }
             };
             return View(viewModel);
         }
@@ -47,30 +52,37 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Create(EventViewModel eventViewModel)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
                 eventViewModel.Event.CentreId = UserCentreId;
                 eventViewModel.Event.CreatedDateTime = _today;
+                eventViewModel.Event.CreatedBy = UserPersonnelId;
                 eventViewModel.Event = NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
+            eventViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
             return View(eventViewModel);
         }
 
         // GET: Event/Edit
         public ActionResult Edit(int? id)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var brainstorming = NidanBusinessService.RetrieveBrainstormings(organisationId, e => true).Items.ToList();
             var viewModel = new EventViewModel()
             {
                 Event = eventData,
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 //Brainstorming = brainstorming
             };
             return View(viewModel);
@@ -93,6 +105,23 @@ namespace Nidan.Controllers
                 Event = eventViewModel.Event
             };
             return View(viewModel);
+        }
+
+        public ActionResult UpdateEventApproveState(int? id ,bool approveState)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
+            if (eventData == null)
+            {
+                return HttpNotFound();
+            }
+            var result = approveState  ? eventData.EventApproveStateId = (int) EventApproveState.Approved : eventData.EventApproveStateId = (int) EventApproveState.Declined;
+            NidanBusinessService.UpdateEvent(organisationId, eventData);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
