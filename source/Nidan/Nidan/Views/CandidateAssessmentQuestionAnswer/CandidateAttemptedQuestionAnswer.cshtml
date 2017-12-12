@@ -36,9 +36,14 @@
                                             <span ng-bind="candidateAssessment.Question"></span>
                                             @*&nbsp;&nbsp;&nbsp;<span ng-bind="candidateAssessment.MarkPerQuestion"></span>&nbsp;Mark*@
                                         </label>
-                                        <label class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="col-md-2 col-sm-6 col-xs-12">
                                             <span ng-bind="candidateAssessment.MarkPerQuestion"></span> Mark
                                         </label>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            Mark Obtained <input type="text" id="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" name="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" max={{candidateAssessment.MarkPerQuestion}}>
+                                            @*@Html.ValidationMessageFor(model => model.BatchPlanner.CentreId, "", new { @class = "help-block" })*@
+                                            <label id="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" class = "help-block" ></label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -85,16 +90,20 @@
                                 <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2">
                                     <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @*<input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly">*@
-                                        <textarea id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly"></textarea>
+                                        <input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly">
+                                        @*<textarea id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly"></textarea>*@
+                                        @*<div id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" ng-value="candidateAssessment.CandidateSubjectiveAnswer" class="editor-wrapper placeholderText" contenteditable="true"></div>*@
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-6">
                                     <div class="form-group">
                                         <div class="col-md-offset-3">
-                                            <button type="button" ng-click="model.createCandidateAssessmentQuestionAnswer('optionA'+candidateAssessment.ModuleExamQuestionSetId,'optionB'+candidateAssessment.ModuleExamQuestionSetId,'optionC'+candidateAssessment.ModuleExamQuestionSetId,'optionD'+candidateAssessment.ModuleExamQuestionSetId,'subjectAnswer'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentId,candidateAssessment.AssessmentId,candidateAssessment.ModuleExamSetId,candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.QuestionTypeId,candidateAssessment.AnswerType,candidateAssessment.MarkPerQuestion)" class="btn btn-success">Submit</button>
-                                            <a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-href="/Assessment/AssessmentByUser">
+                                            <button type="button" ng-click="model.updateCandidateAssessmentQuestionAnswer('markObtained'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentQuestionAnswerId)" class="btn btn-success">Submit</button>
+                                            @*<a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-href="/Assessment/AssessmentByTrainer">
+                                                Finish
+                                            </a>*@
+                                            <a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-click="model.updateCandidateAssessmentTotalMarkObtained(candidateAssessment.CandidateAssessmentId)">
                                                 Finish
                                             </a>
                                         </div>

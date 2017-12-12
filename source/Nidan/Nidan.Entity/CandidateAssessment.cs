@@ -28,6 +28,8 @@ namespace Nidan.Entity
 
         public int? AdmissionId { get; set; }
 
+        public int? TotalMarkObtained { get; set; }
+
         public int PersonnelId { get; set; }
 
         public int CreatedBy { get; set; }

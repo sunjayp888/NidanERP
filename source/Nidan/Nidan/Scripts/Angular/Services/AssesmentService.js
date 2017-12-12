@@ -22,7 +22,9 @@
             createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer,
             retrieveCandidateAssessmentDetailByBatchIdAssessmentId: retrieveCandidateAssessmentDetailByBatchIdAssessmentId,
             retrieveCandidateAssessmentQuestionAnswer: retrieveCandidateAssessmentQuestionAnswer,
-            retrieveCandidateAttemptedAssessment: retrieveCandidateAttemptedAssessment
+            retrieveCandidateAttemptedAssessment: retrieveCandidateAttemptedAssessment,
+            updateCandidateAssessmentQuestionAnswer: updateCandidateAssessmentQuestionAnswer,
+            updateCandidateAssessmentTotalMarkObtained: updateCandidateAssessmentTotalMarkObtained
         };
 
         return service;
@@ -136,6 +138,18 @@
             return $http.post(url, data);
         }
 
+        function updateCandidateAssessmentQuestionAnswer(candidateAssessment) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/UpdateCandidateAssessmentQuestionAnswer",
+                data = {
+                    candidateAssessment: candidateAssessment
+                    //paging: Paging,
+                    //orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
         function retrieveCandidateAssessmentDetailByBatchIdAssessmentId(batchId, Paging, OrderBy) {
 
             var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentDetailByBatchIdAssessmentId",
@@ -155,6 +169,18 @@
                     candidateAssessmentId: candidateAssessmentId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function updateCandidateAssessmentTotalMarkObtained(candidateAssessmentId) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/UpdateCandidateAssessmentTotalMarkObtained",
+                data = {
+                    candidateAssessmentId: candidateAssessmentId
+                    //paging: Paging,
+                    //orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);

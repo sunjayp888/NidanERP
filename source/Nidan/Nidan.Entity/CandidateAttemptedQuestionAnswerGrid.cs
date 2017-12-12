@@ -86,11 +86,11 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string OptionD { get; set; }
 
-        public string SubjectiveAnswer { get; set; }
-
-        [StringLength(500)]
         public string CandidateSubjectiveAnswer { get; set; }
 
+        public string CandidateMCQAnswer { get; set; }
+
+        [StringLength(500)]
         public string CorrectAnswer { get; set; }
 
         [Key]
