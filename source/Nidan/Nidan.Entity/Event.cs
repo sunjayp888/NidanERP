@@ -13,16 +13,8 @@ namespace Nidan.Entity
         public Event()
         {
             Mobilizations = new HashSet<Mobilization>();
-            Brainstormings = new HashSet<Brainstorming>();
-            Plannings = new HashSet<Planning>();
-            Budgets = new HashSet<Budget>();
-            Eventdays = new HashSet<Eventday>();
-            PostEvents = new HashSet<PostEvent>();
-            EventBrainstormings = new HashSet<EventBrainstorming>();
+            EventManagements = new HashSet<EventManagement>();
             CreatedDateTime = DateTime.UtcNow.Date;
-            EventBudgets = new HashSet<EventBudget>();
-            EventPlannings = new HashSet<EventPlanning>();
-            EventPostEvents = new HashSet<EventPostEvent>();
         }
         public int EventId { get; set; }
 
@@ -58,31 +50,6 @@ namespace Nidan.Entity
         public virtual ICollection<Mobilization> Mobilizations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Brainstorming> Brainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Planning> Plannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Budget> Budgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Eventday> Eventdays { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostEvent> PostEvents { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBudget> EventBudgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPlanning> EventPlannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPostEvent> EventPostEvents { get; set; }
-
+        public virtual ICollection<EventManagement> EventManagements { get; set; }
     }
 }

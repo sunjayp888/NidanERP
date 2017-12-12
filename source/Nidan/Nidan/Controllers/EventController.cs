@@ -57,7 +57,7 @@ namespace Nidan.Controllers
             if (ModelState.IsValid)
             {
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
-                eventViewModel.Event.CentreId = UserCentreId;
+                //eventViewModel.Event.CentreId = UserCentreId;
                 eventViewModel.Event.CreatedDateTime = _today;
                 eventViewModel.Event.CreatedBy = UserPersonnelId;
                 eventViewModel.Event = NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
@@ -78,7 +78,6 @@ namespace Nidan.Controllers
             }
             var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
-            var brainstorming = NidanBusinessService.RetrieveBrainstormings(organisationId, e => true).Items.ToList();
             var viewModel = new EventViewModel()
             {
                 Event = eventData,
@@ -135,19 +134,19 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
-            var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrid(UserOrganisationId, e => e.EventId == eventId && e.EventFunctionTypeId == 1);
-            if (brainStormingList.Items.Any())
-                return this.JsonNet(brainStormingList);
-            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
-            return this.JsonNet(data);
+            //var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrid(UserOrganisationId, e => e.EventId == eventId && e.EventFunctionTypeId == 1);
+            //if (brainStormingList.Items.Any())
+            //    return this.JsonNet(brainStormingList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(null);
         }
 
         [HttpPost]
         public ActionResult BrainStormingQuestion()
         {
             var organisationId = UserOrganisationId;
-            var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
-            return this.JsonNet(data);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
+            return this.JsonNet(null);
         }
 
 
@@ -160,7 +159,5 @@ namespace Nidan.Controllers
         {
             return PartialView("_BrainStorming");
         }
-
-
     }
 }

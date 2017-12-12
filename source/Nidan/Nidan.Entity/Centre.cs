@@ -16,11 +16,6 @@ namespace Nidan.Entity
         {
             Enquiries = new HashSet<Enquiry>();
             Counsellings = new HashSet<Counselling>();
-            Brainstormings = new HashSet<Brainstorming>();
-            Plannings = new HashSet<Planning>();
-            Budgets = new HashSet<Budget>();
-            Eventdays = new HashSet<Eventday>();
-            PostEvents = new HashSet<PostEvent>();
             CourseInstallments = new HashSet<CourseInstallment>();
             Rooms = new HashSet<Room>();
             Batches = new HashSet<Batch>();
@@ -48,10 +43,6 @@ namespace Nidan.Entity
             Expenses = new HashSet<Expense>();
             Attendances = new HashSet<Attendance>();
             BatchAttendances = new HashSet<BatchAttendance>();
-            EventBrainstormings = new HashSet<EventBrainstorming>();
-            EventBudgets=new HashSet<EventBudget>();
-            EventPlannings = new HashSet<EventPlanning>();
-            EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
             StockIssues=new HashSet<StockIssue>();
@@ -131,21 +122,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Batch> Batches { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Brainstorming> Brainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Planning> Plannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Budget> Budgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Eventday> Eventdays { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostEvent> PostEvents { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
@@ -229,22 +205,8 @@ namespace Nidan.Entity
         public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBudget> EventBudgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
-        
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPlanning> EventPlannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPostEvent> EventPostEvents { get; set; }
-      
+ 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
@@ -299,6 +261,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventManagement> EventManagements { get; set; }
     }
 
 }

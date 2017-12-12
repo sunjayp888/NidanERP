@@ -181,6 +181,15 @@
                                         </ul>
                                     </li>
                                 }
+                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-gear"></i> Event Management <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Event")'>Event</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>

@@ -121,8 +121,6 @@
     <Compile Include="BatchTrainer.cs" />
     <Compile Include="BiometricAttendance.cs" />
     <Compile Include="BiometricAttendanceGrid.cs" />
-    <Compile Include="Brainstorming.cs" />
-    <Compile Include="Budget.cs" />
     <Compile Include="CandidateAssessment.cs" />
     <Compile Include="CandidateAssessmentGrid.cs" />
     <Compile Include="CandidateAssessmentQuestionAnswer.cs" />
@@ -168,16 +166,9 @@
     <Compile Include="EnquirySearchField.cs" />
     <Compile Include="EnquiryType.cs" />
     <Compile Include="Event.cs" />
-    <Compile Include="EventActivityType.cs" />
     <Compile Include="EventApproveState.cs" />
-    <Compile Include="EventBrainstorming.cs" />
-    <Compile Include="EventBrainStormingGrid.cs" />
-    <Compile Include="EventBudget.cs" />
-    <Compile Include="Eventday.cs" />
     <Compile Include="EventFunctionType.cs" />
-    <Compile Include="EventManagementGrid.cs" />
-    <Compile Include="EventPlanning.cs" />
-    <Compile Include="EventPostEvent.cs" />
+    <Compile Include="EventManagement.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseDataGrid.cs" />
@@ -257,8 +248,6 @@
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="PettyCashExpenseReport.cs" />
-    <Compile Include="Planning.cs" />
-    <Compile Include="Postevent.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
