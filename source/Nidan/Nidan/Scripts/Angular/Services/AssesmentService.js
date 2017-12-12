@@ -21,7 +21,8 @@
             retrieveCandidateAssessment: retrieveCandidateAssessment,
             createCandidateAssessmentQuestionAnswer: createCandidateAssessmentQuestionAnswer,
             retrieveCandidateAssessmentDetailByBatchIdAssessmentId: retrieveCandidateAssessmentDetailByBatchIdAssessmentId,
-            retrieveCandidateAssessmentQuestionAnswer: retrieveCandidateAssessmentQuestionAnswer
+            retrieveCandidateAssessmentQuestionAnswer: retrieveCandidateAssessmentQuestionAnswer,
+            retrieveCandidateAttemptedAssessment: retrieveCandidateAttemptedAssessment
         };
 
         return service;
@@ -147,10 +148,23 @@
             return $http.post(url, data);
         }
 
-        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentQuestionAnswerId, Paging, OrderBy) {
+        function retrieveCandidateAttemptedAssessment(candidateAssessmentId, Paging, OrderBy) {
+
+            var url = "/CandidateAssessmentQuestionAnswer/CandidateAttemptedAssessmentList",
+                data = {
+                    candidateAssessmentId: candidateAssessmentId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentId, moduleExamQuestionSetId, Paging, OrderBy) {
             var url = "/Assessment/CandidateAssessmentQuestionAnswerbyId",
                 data = {
-                    candidateAssessmentQuestionAnswerId: candidateAssessmentQuestionAnswerId,
+                    candidateAssessmentId: candidateAssessmentId,
+                    moduleExamQuestionSetId:moduleExamQuestionSetId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

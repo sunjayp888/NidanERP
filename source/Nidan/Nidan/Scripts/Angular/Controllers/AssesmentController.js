@@ -54,6 +54,7 @@
         vm.assessmentId;
         vm.retrieveCandidateAssessmentQuestionAnswer = retrieveCandidateAssessmentQuestionAnswer;
         vm.candidateAssessmentQuestionAnswerId;
+        vm.retrieveCandidateAttemptedAssessment=retrieveCandidateAttemptedAssessment;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -110,6 +111,9 @@
             var path = window.location.pathname.split('/');
             if (path[2] === "CandidateAssessmentQuestionAnswerSet") {
                 retrieveCandidateAssessment(vm.candidateAssessmentId);
+            }
+            if (path[2] === "CandidateAttemptedQuestionAnswer") {
+                retrieveCandidateAttemptedAssessment(vm.candidateAssessmentId);
             }
             else {
                 return retrieveAssessments();
@@ -258,7 +262,7 @@
             }
             return AssessmentService.createCandidateAssessmentQuestionAnswer(candidateAssessment)
                 .then(function (response) {
-                    retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentQuestionAnswerId);
+                    retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentId, vm.ModuleExamQuestionSetId);
                 });
         }
 
@@ -276,13 +280,29 @@
                 });
         }
 
-        //retrieveCandidateAssessmentQuestionAnswer
-        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentQuestionAnswerId) {
-            vm.candidateAssessmentQuestionAnswerId = candidateAssessmentQuestionAnswerId;
+        //retrieveCandidateAttemptedAssessment
+        function retrieveCandidateAttemptedAssessment(candidateAssessmentId) {
+            vm.candidateAssessmentId = candidateAssessmentId;
+            vm.orderBy.property = "CandidateAssessmentId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.paging.pageSize = 1;
+            return AssessmentService.retrieveCandidateAttemptedAssessment(vm.candidateAssessmentId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidateAssessments = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidateAssessments;
+                });
+        }
+
+        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentId,moduleExamQuestionSetId) {
+            vm.candidateAssessmentId = candidateAssessmentId;
+            vm.moduleExamQuestionSetId = moduleExamQuestionSetId;
             vm.orderBy.property = "candidateAssessmentQuestionAnswerId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            return AssessmentService.retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentQuestionAnswerId, vm.paging, vm.orderBy)
+            return AssessmentService.retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentId, vm.moduleExamQuestionSetId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.candidateAssessments = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

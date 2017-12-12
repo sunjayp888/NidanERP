@@ -182,6 +182,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Partner> Partners { get; set; }
         public virtual DbSet<ModuleExamQuestionSetGrid> ModuleExamQuestionSetGrids { get; set; }
         public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
+        public virtual DbSet<CandidateAttemptedQuestionAnswerGrid> CandidateAttemptedQuestionAnswerGrids { get; set; }
         public virtual DbSet<EventApproveState> EventApproveStates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -2882,6 +2883,62 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.AssessmentName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.Question)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.ModuleExamSetName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.QuestionTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.AnswerType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.OptionA)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.OptionB)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.OptionC)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.OptionD)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.SubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.CandidateSubjectiveAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.CorrectAnswer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventApproveState>()

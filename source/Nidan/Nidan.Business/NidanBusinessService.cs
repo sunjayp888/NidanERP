@@ -2097,6 +2097,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveEventManagementGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateAttemptedQuestionAnswerGrid(organisationId, predicate, orderBy, paging);
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);
