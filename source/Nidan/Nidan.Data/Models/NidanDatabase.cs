@@ -24,9 +24,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Mobilization> Mobilizations { get; set; }
 
-        public virtual DbSet<EventActivityType> EventActivityTypes { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<EventQuestion> EventQuestions { get; set; }
         public virtual DbSet<AreaOfInterest> AreaOfInterests { get; set; }
         public virtual DbSet<CasteCategory> CasteCategories { get; set; }
         public virtual DbSet<FollowUp> FollowUps { get; set; }
@@ -49,10 +47,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
         public virtual DbSet<EventFunctionType> EventFunctionTypes { get; set; }
-        public virtual DbSet<Brainstorming> Brainstormings { get; set; }
-        public virtual DbSet<Eventday> Eventdays { get; set; }
-        public virtual DbSet<Planning> Plannings { get; set; }
-        public virtual DbSet<PostEvent> PostEvents { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<Trainer> Trainers { get; set; }
         public virtual DbSet<Holiday> Holidays { get; set; }
@@ -91,12 +85,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<ExpenseProject> ExpenseProjects { get; set; }
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<BatchAttendance> BatchAttendances { get; set; }
-        public virtual DbSet<EventBrainstorming> EventBrainstormings { get; set; }
         public virtual DbSet<Gst> Gsts { get; set; }
-        public virtual DbSet<Budget> Budgets { get; set; }
-        public virtual DbSet<EventBudget> EventBudgets { get; set; }
-        public virtual DbSet<EventPlanning> EventPlannings { get; set; }
-        public virtual DbSet<EventPostEvent> EventPostEvents { get; set; }
         public virtual DbSet<CentreReceiptSetting> CentreReceiptSettings { get; set; }
         public virtual DbSet<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
         public virtual DbSet<BiometricAttendance> BiometricAttendances { get; set; }
@@ -149,7 +138,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<CourseSearchField> CourseSearchFields { get; set; }
         public virtual DbSet<EnquiryDataGrid> EnquiryDataGrids { get; set; }
         public virtual DbSet<EnquirySearchField> EnquirySearchFields { get; set; }
-        public virtual DbSet<EventBrainStormingGrid> EventBrainStormingGrids { get; set; }
         public virtual DbSet<ExpenseDataGrid> ExpenseDataGrids { get; set; }
         public virtual DbSet<FixAssetDataGrid> FixAssetDataGrids { get; set; }
         public virtual DbSet<FixAssetDetailGrid> FixAssetDetailGrids { get; set; }
@@ -181,9 +169,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
         public virtual DbSet<Partner> Partners { get; set; }
         public virtual DbSet<ModuleExamQuestionSetGrid> ModuleExamQuestionSetGrids { get; set; }
-        public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
         public virtual DbSet<CandidateAttemptedQuestionAnswerGrid> CandidateAttemptedQuestionAnswerGrids { get; set; }
         public virtual DbSet<EventApproveState> EventApproveStates { get; set; }
+        public virtual DbSet<EventQuestion> EventQuestions { get; set; }
+        public virtual DbSet<EventManagement> EventManagements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -326,12 +315,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Event>()
                 .Property(e => e.CreatedBy);
-
-           
-
-            modelBuilder.Entity<EventActivityType>()
-                .Property(e => e.Name)
-                .IsFixedLength();
 
             //modelBuilder.Entity<Enquiry>()
             //    .Property(e => e.QualificationId);
@@ -529,20 +512,12 @@ namespace Nidan.Data.Models
                .IsUnicode(false);
 
             modelBuilder.Entity<EventFunctionType>()
-                .HasMany(e => e.Questions)
+                .HasMany(e => e.EventQuestions)
                 .WithRequired(e => e.EventFunctionType)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Question>()
                 .Property(e => e.Description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Eventday>()
-                .Property(e => e.Completed)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Eventday>()
-                .Property(e => e.Comment)
                 .IsUnicode(false);
 
             modelBuilder.Entity<PaymentMode>()
@@ -1024,18 +999,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Direction)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Brainstorming>()
-                .Property(e => e.BeforePlanningAnswerDiscussTheseQuestion)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventBrainstorming>()
-                .Property(e => e.DisscussionCompletedYesNo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventBrainstorming>()
-                .Property(e => e.ReferenceDetailDocument)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Gst>()
                 .Property(e => e.GstNumber)
                 .IsUnicode(false);
@@ -1043,56 +1006,6 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Gst>()
                 .Property(e => e.Type)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Budget>()
-                .Property(e => e.MajorGroup)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Budget>()
-                .HasMany(e => e.EventBudgets)
-                .WithRequired(e => e.Budget)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<EventBudget>()
-                .Property(e => e.SpecificHead)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventBudget>()
-                .Property(e => e.EstimatedSubtotal)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Planning>()
-                .Property(e => e.MajorPoint)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Planning>()
-                .Property(e => e.Point)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventPlanning>()
-                .Property(e => e.Input)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventPlanning>()
-                .Property(e => e.Description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventPostEvent>()
-                .Property(e => e.Completed)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventPostEvent>()
-                .Property(e => e.RefernceDetail)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<PostEvent>()
-                .Property(e => e.Activity)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<PostEvent>()
-                .HasMany(e => e.EventPostEvents)
-                .WithRequired(e => e.PostEvent)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<CentreReceiptSetting>()
                 .Property(e => e.TaxYear)
@@ -2043,14 +1956,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EnquirySearchField>()
                 .Property(e => e.IsAdmissionDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventBrainStormingGrid>()
-                .Property(e => e.DisscussionCompletedYesNo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventBrainStormingGrid>()
-                .Property(e => e.ReferenceDetailDocument)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ExpenseDataGrid>()

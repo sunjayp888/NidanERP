@@ -780,33 +780,24 @@ namespace Nidan.Business
 
         public Event CreateEvent(int organisationId, Event eventplan)
         {
-            eventplan.EventApproveStateId = (int) Enum.EventApproveState.Created;
-            return _nidanDataService.CreateEvent(organisationId, eventplan);
-        }
-
-        public Brainstorming CreateBrainstorming(int organisationId, Brainstorming brainstorming)
-        {
-            return _nidanDataService.CreateBrainstorming(organisationId, brainstorming);
-        }
-
-        public Planning CreatePlanning(int organisationId, Planning planning)
-        {
-            return _nidanDataService.CreatePlanning(organisationId, planning);
-        }
-
-        public Budget CreateBudget(int organisationId, Budget budget)
-        {
-            return _nidanDataService.CreateBudget(organisationId, budget);
-        }
-
-        public Eventday CreateEventday(int organisationId, Eventday eventday)
-        {
-            return _nidanDataService.CreateEventday(organisationId, eventday);
-        }
-
-        public PostEvent CreatePostEvent(int organisationId, PostEvent postEvent)
-        {
-            return _nidanDataService.CreatePostEvent(organisationId, postEvent);
+            eventplan.EventApproveStateId = (int)Enum.EventApproveState.Created;
+            var data = _nidanDataService.CreateEvent(organisationId, eventplan);
+            var eventQuestions = RetrieveEventQuestions(organisationId, e => true).Items.ToList();
+            foreach (var question in eventQuestions)
+            {
+                var eventManagement = new EventManagement()
+                {
+                   EventQuestionId = question.EventQuestionId,
+                   EventId = data.EventId,
+                   EventFunctionTypeId = question.EventFunctionTypeId,
+                   EventQuestionAnswerCompleted = false,
+                   Description = String.Empty,
+                   CentreId = data.CentreId,
+                   OrganisationId = data.OrganisationId
+                };
+                CreateEventManagement(organisationId, eventManagement);
+            }
+            return data;
         }
 
         public Trainer CreatetTrainer(int organisationId, Trainer trainer)
@@ -1446,27 +1437,6 @@ namespace Nidan.Business
             return _nidanDataService.Create<BatchAttendance>(organisationId, batchAttendance);
         }
 
-        public bool CreateEventBrainstorming(int organisationId, int centreId, int eventId, List<EventBrainstorming> eventBrainstorming)
-        {
-            try
-            {
-                //Get EventBrainStroming
-                var eventBrainStorming = _nidanDataService.Retrieve<EventBrainstorming>(organisationId, e => e.CentreId == centreId && e.EventId == eventId);
-                if (eventBrainStorming.Any())
-                {
-                    //Delete EventBrainStroming    
-                    _nidanDataService.DeleteList<EventBrainstorming>(organisationId, e => e.EventId == eventId);
-                }
-                //Create EventBrainStroming
-                return _nidanDataService.CreateEventBrainstorming(organisationId, eventBrainstorming);
-
-            }
-            catch (Exception Ex)
-            {
-                return false;
-            }
-        }
-
         //public CandidateInstallment CreateCandidateInstallment(int organisationId, CandidateInstallment candidateInstallment)
         //{
         //    return _nidanDataService.Create<CandidateInstallment>(organisationId, candidateInstallment);
@@ -1552,16 +1522,6 @@ namespace Nidan.Business
             {
                 return false;
             }
-        }
-
-        public EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget)
-        {
-            return _nidanDataService.CreateEventBudget(organisationId, eventBudget);
-        }
-
-        public EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning)
-        {
-            return _nidanDataService.CreateEventPlanning(organisationId, eventPlanning);
         }
 
         public CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting)
@@ -1681,11 +1641,11 @@ namespace Nidan.Business
         public ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState)
         {
             var data = _nidanDataService.CreateActivityTaskState(organisationId, activityTaskState);
-            if (data.TaskStateId==(int)Enum.TaskState.InProgress)
+            if (data.TaskStateId == (int)Enum.TaskState.InProgress)
             {
                 var activityTask = RetrieveActivityTask(organisationId, data.ActivityTaskId, e => true);
                 var activityData = activityTask.Activity;
-                activityData.TaskStateId = (int) Enum.TaskState.InProgress;
+                activityData.TaskStateId = (int)Enum.TaskState.InProgress;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityData);
             }
             return data;
@@ -1732,6 +1692,11 @@ namespace Nidan.Business
         public Partner CreatePartner(int organisationId, Partner partner)
         {
             return _nidanDataService.Create<Partner>(organisationId, partner);
+        }
+
+        public EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement)
+        {
+            return _nidanDataService.CreateEventManagement(organisationId, eventManagement);
         }
 
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
@@ -2091,16 +2056,31 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveBatchTrainers(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEventManagementGrid(organisationId, predicate, orderBy, paging);
-        }
-
         public PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidateAttemptedQuestionAnswerGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public EventQuestion RetrieveEventQuestion(int organisationId, int eventQuestionId, Expression<Func<EventQuestion, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveEventQuestion(organisationId, eventQuestionId, predicate);
+        }
+
+        public PagedResult<EventQuestion> RetrieveEventQuestions(int organisationId, Expression<Func<EventQuestion, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventQuestions(organisationId, predicate, orderBy, paging);
+        }
+
+        public EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveEventManagement(organisationId, eventManagementId, predicate);
+        }
+
+        public PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventManagements(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -2394,11 +2374,6 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveQuestion(organisationId, questionId, predicate);
         }
 
-        public List<EventActivityType> RetrieveActivityTypes(int organisationId)
-        {
-            return _nidanDataService.Retrieve<EventActivityType>(organisationId, e => true);
-        }
-
         public List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Course>(organisationId, predicate);
@@ -2584,89 +2559,6 @@ namespace Nidan.Business
         {
             return _nidanDataService.RetrieveCounsellingBySearchKeyword(organisationId, searchKeyword, predicate,
                 orderBy, paging);
-        }
-
-        public Brainstorming RetrieveBrainstorming(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveBrainstorming(organisationId, id, p => true);
-        }
-
-        public Brainstorming RetrieveBrainstorming(int organisationId, int brainstormingId,
-            Expression<Func<Brainstorming, bool>> predicate)
-        {
-            var brainstorming = _nidanDataService.RetrieveBrainstorming(organisationId, brainstormingId, p => true);
-            return brainstorming;
-        }
-
-        public PagedResult<Brainstorming> RetrieveBrainstormings(int organisationId,
-            Expression<Func<Brainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveBrainstormings(organisationId, p => true, orderBy, paging);
-        }
-
-        public Planning RetrievePlanning(int organisationId, int id)
-        {
-            return _nidanDataService.RetrievePlanning(organisationId, id, p => true);
-        }
-
-        public Planning RetrievePlanning(int organisationId, int planningId, Expression<Func<Planning, bool>> predicate)
-        {
-            var planning = _nidanDataService.RetrievePlanning(organisationId, planningId, p => true);
-            return planning;
-        }
-
-        public PagedResult<Planning> RetrievePlannings(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrievePlannings(organisationId, p => true, orderBy, paging);
-        }
-
-        public Budget RetrieveBudget(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveBudget(organisationId, id, p => true);
-        }
-
-        public Budget RetrieveBudget(int organisationId, int budgetId, Expression<Func<Budget, bool>> predicate)
-        {
-            var budget = _nidanDataService.RetrieveBudget(organisationId, budgetId, p => true);
-            return budget;
-        }
-
-        public PagedResult<Budget> RetrieveBudgets(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveBudgets(organisationId, p => true, orderBy, paging);
-        }
-
-        public Eventday RetrieveEventday(int organisationId, int id)
-        {
-            return _nidanDataService.RetrieveEventday(organisationId, id, p => true);
-        }
-
-        public Eventday RetrieveEventday(int organisationId, int eventdayId, Expression<Func<Eventday, bool>> predicate)
-        {
-            var eventday = _nidanDataService.RetrieveEventday(organisationId, eventdayId, p => true);
-            return eventday;
-        }
-
-        public PagedResult<Eventday> RetrieveEventdays(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            //  return _nidanDataService.RetrieveEventdays(organisationId, p => true, orderBy, paging);
-            return null;
-        }
-
-        public PostEvent RetrievePostEvent(int organisationId, int postEventId,
-            Expression<Func<PostEvent, bool>> predicate)
-        {
-            var postevent = _nidanDataService.RetrievePostEvent(organisationId, postEventId, p => true);
-            return postevent;
-        }
-
-        public PagedResult<PostEvent> RetrievePostEvents(int organisationId, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrievePostEvents(organisationId, p => true, orderBy, paging);
         }
 
         public PagedResult<Registration> RetrieveRegistrations(int organisationId,
@@ -3371,19 +3263,6 @@ namespace Nidan.Business
             return _nidanDataService.RetrievePettyCashExpenseReports(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, int centreId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEventBrainstormings(organisationId, predicate, orderBy, paging);
-        }
-
-        public EventBrainstorming RetrieveEventBrainstorming(int organisationId, int centreId, int eventBrainstormingId,
-            Expression<Func<EventBrainstorming, bool>> predicate)
-        {
-            var eventBrainstorming = _nidanDataService.RetrieveEventBrainstorming(organisationId, eventBrainstormingId, p => true);
-            return eventBrainstorming;
-        }
-
         public PagedResult<Registration> RetrieveRegistrationSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<Registration, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
@@ -3561,30 +3440,6 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveGsts(organisationId, predicate, orderBy, paging);
         }
 
-        public EventBudget RetrieveEventBudget(int organisationId, int centreId, int eventBudgetId, Expression<Func<EventBudget, bool>> predicate)
-        {
-            var eventBudget = _nidanDataService.RetrieveEventBudget(organisationId, centreId, eventBudgetId, predicate);
-            return eventBudget;
-        }
-
-        public PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEventBudgets(organisationId, centreId, predicate, orderBy, paging);
-        }
-
-        public EventPlanning RetrieveEventPlanning(int organisationId, int centreId, int eventPlanningId, Expression<Func<EventPlanning, bool>> predicate)
-        {
-            var eventPlanning = _nidanDataService.RetrieveEventPlanning(organisationId, centreId, eventPlanningId, predicate);
-            return eventPlanning;
-        }
-
-        public PagedResult<EventPlanning> RetrieveEventPlannings(int organisationId, int centreId, Expression<Func<EventPlanning, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEventPlannings(organisationId, centreId, predicate, orderBy, paging);
-        }
-
         public CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate)
         {
             var centreReceiptSetting = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, predicate);
@@ -3613,11 +3468,6 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveBiometricAttendanceGrid(organisationId, predicate, orderBy, paging);
-        }
-
-        public PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveEventBrainStormingGrid(organisationId, predicate, orderBy, paging);
         }
 
         public PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null,
@@ -4008,7 +3858,7 @@ namespace Nidan.Business
         public CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId,
             int candidateAssessmentQuestionAnswerId)
         {
-            return _nidanDataService.RetrieveCandidateAssessmentQuestionAnswer(organisationId,candidateAssessmentQuestionAnswerId);
+            return _nidanDataService.RetrieveCandidateAssessmentQuestionAnswer(organisationId, candidateAssessmentQuestionAnswerId);
         }
 
         public Personnel UpdatePersonnel(int organisationId, Personnel personnel)
@@ -4515,9 +4365,14 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, partner);
         }
 
-        public CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId,CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
+        public CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessmentQuestionAnswer);
+        }
+
+        public EventManagement UpdateEventManagement(int organisationId, EventManagement eventManagement)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, eventManagement);
         }
 
 

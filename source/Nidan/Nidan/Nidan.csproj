@@ -281,7 +281,6 @@
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
-    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\StockIssueController.cs" />
@@ -342,7 +341,6 @@
     <Compile Include="Models\ExpenseViewModel.cs" />
     <Compile Include="Models\PartnerViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
-    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\RoomViewModel.cs" />
@@ -1338,7 +1336,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
-    <Folder Include="Views\EventBrainstorming\" />
     <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>
@@ -1607,8 +1604,6 @@
     <Content Include="Views\Event\_EventDay.cshtml" />
     <Content Include="Views\Event\_Planning.cshtml" />
     <Content Include="Views\Event\_PostEvent.cshtml" />
-    <Content Include="Views\Question\Create.cshtml" />
-    <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\AreaOfInterest\Index.cshtml" />
     <Content Include="Views\AreaOfInterest\Create.cshtml" />
     <Content Include="Views\AreaOfInterest\_AreaOfInterest.cshtml" />
@@ -1633,7 +1628,6 @@
     <Content Include="Views\Mobilization\Upload.cshtml" />
     <Content Include="Views\Counselling\Upload.cshtml" />
     <Content Include="Views\Shared\_Document.cshtml" />
-    <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Trainer\Index.cshtml" />
     <Content Include="Views\Trainer\Create.cshtml" />
     <Content Include="Views\Trainer\_Trainer.cshtml" />

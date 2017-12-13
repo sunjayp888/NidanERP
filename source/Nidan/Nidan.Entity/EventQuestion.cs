@@ -9,21 +9,24 @@ namespace Nidan.Entity
     [Table("EventQuestion")]
     public partial class EventQuestion
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public EventQuestion()
+        {
+            EventManagements = new HashSet<EventManagement>();
+        }
         public int EventQuestionId { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int QuestionId { get; set; }
+        [Required]
+        public string QuestionDescription { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int EventActivityId { get; set; }
+        public int EventFunctionTypeId { get; set; }
 
-        public virtual Question Question { get; set; }
+        public int OrganisationId { get; set; }
+
+        public virtual EventFunctionType EventFunctionType { get; set; }
+
+        public virtual Organisation Organisation { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventManagement> EventManagements { get; set; }
     }
 }

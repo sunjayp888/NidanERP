@@ -10,7 +10,6 @@ namespace Nidan.Models
     public class EventViewModel : BaseViewModel
     {
         public Event Event { get; set; }
-        public EventBrainstorming EventBrainstorming { get; set; }
         public SelectList Centres { get; set; }
     }
 }

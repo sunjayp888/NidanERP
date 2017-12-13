@@ -104,60 +104,6 @@ namespace Nidan.Data
             }
         }
 
-        public Brainstorming CreateBrainstorming(int organisationId, Brainstorming brainstorming)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                brainstorming = context.Brainstormings.Add(brainstorming);
-                context.SaveChanges();
-
-                return brainstorming;
-            }
-        }
-
-        public Planning CreatePlanning(int organisationId, Planning planning)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                planning = context.Plannings.Add(planning);
-                context.SaveChanges();
-
-                return planning;
-            }
-        }
-
-        public Budget CreateBudget(int organisationId, Budget budget)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                budget = context.Budgets.Add(budget);
-                context.SaveChanges();
-
-                return budget;
-            }
-        }
-
-        public Eventday CreateEventday(int organisationId, Eventday eventday)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                eventday = context.Eventdays.Add(eventday);
-                context.SaveChanges();
-
-                return eventday;
-            }
-        }
-
-        public PostEvent CreatePostEvent(int organisationId, PostEvent postEvent)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                postEvent = context.PostEvents.Add(postEvent);
-                context.SaveChanges();
-
-                return postEvent;
-            }
-        }
         //public RegistrationPaymentReceipt CreateRegistrationPaymentReceipt(int organisationId,
         //    RegistrationPaymentReceipt registrationPaymentReceipt)
         //{
@@ -190,17 +136,6 @@ namespace Nidan.Data
                 context.SaveChanges();
 
                 return courseInstallment;
-            }
-        }
-
-        public EventPostEvent CreateEventPostEvent(int organisationId, EventPostEvent eventPostEvent)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                eventPostEvent = context.EventPostEvents.Add(eventPostEvent);
-                context.SaveChanges();
-
-                return eventPostEvent;
             }
         }
 
@@ -327,42 +262,22 @@ namespace Nidan.Data
             }
         }
 
-        public bool CreateEventBrainstorming(int organisationId, List<EventBrainstorming> eventBrainstorming)
-        {
-            try
-            {
-                using (var context = _databaseFactory.Create(organisationId))
-                {
-                    context.EventBrainstormings.AddRange(eventBrainstorming);
-                    context.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                eventBudget = context.EventBudgets.Add(eventBudget);
-                context.SaveChanges();
-                return eventBudget;
-            }
-        }
-
-        public EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning)
-        {
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                eventPlanning = context.EventPlannings.Add(eventPlanning);
-                context.SaveChanges();
-                return eventPlanning;
-            }
-        }
+        //public bool CreateEventBrainstorming(int organisationId, List<EventBrainstorming> eventBrainstorming)
+        //{
+        //    try
+        //    {
+        //        using (var context = _databaseFactory.Create(organisationId))
+        //        {
+        //            context.EventBrainstormings.AddRange(eventBrainstorming);
+        //            context.SaveChanges();
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public BatchPlanner CreateBatchPlanner(int organisationId, BatchPlanner batchPlanner)
         {
@@ -422,6 +337,17 @@ namespace Nidan.Data
                 activityTaskState = context.ActivityTaskStates.Add(activityTaskState);
                 context.SaveChanges();
                 return activityTaskState;
+            }
+        }
+
+        public EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                eventManagement = context.EventManagements.Add(eventManagement);
+                context.SaveChanges();
+
+                return eventManagement;
             }
         }
 
@@ -1180,175 +1106,6 @@ namespace Nidan.Data
                     .Where(predicate)
                     .Paginate(paging);
                 return data;
-            }
-        }
-
-
-        public Brainstorming RetrieveBrainstorming(int organisationId, int brainstormingId, Expression<Func<Brainstorming, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .Brainstormings
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.BrainstormingId == brainstormingId);
-
-            }
-        }
-
-        public PagedResult<Brainstorming> RetrieveBrainstormings(int organisationId, Expression<Func<Brainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Brainstormings
-                    .Include(p => p.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "BrainstormingId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public Planning RetrievePlanning(int organisationId, int planningId, Expression<Func<Planning, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .Plannings
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.PlanningId == planningId);
-
-            }
-        }
-
-        public PagedResult<Planning> RetrievePlannings(int organisationId, Expression<Func<Planning, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Plannings
-                    .Include(p => p.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "PlanningId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public Budget RetrieveBudget(int organisationId, int budgetId, Expression<Func<Budget, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .Budgets
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.BudgetId == budgetId);
-
-            }
-        }
-
-        public PagedResult<Budget> RetrieveBudgets(int organisationId, Expression<Func<Budget, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Budgets
-                    .Include(p => p.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "BudgetId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public Eventday RetrieveEventday(int organisationId, int eventdayId, Expression<Func<Eventday, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .Eventdays
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.EventdayId == eventdayId);
-
-            }
-        }
-
-        public PagedResult<Eventday> RetrieveEventdays(int organisationId, Expression<Func<Eventday, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public PostEvent RetrievePostEvent(int organisationId, int postEventId, Expression<Func<PostEvent, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .PostEvents
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.PostEventId == postEventId);
-
-            }
-        }
-
-        public PagedResult<PostEvent> RetrievePostEvents(int organisationId, Expression<Func<PostEvent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                  .PostEvents
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "PostEventId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
             }
         }
 
@@ -2960,44 +2717,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventBrainstormings
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "EventBrainstormingId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public EventBrainstorming RetrieveEventBrainstorming(int organisationId, int eventBrainstormingId, Expression<Func<EventBrainstorming, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventBrainstormings
-                    .Include(e => e.Brainstorming)
-                    .Include(e => e.Event)
-                    .Include(e => e.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.EventBrainstormingId == eventBrainstormingId);
-            }
-        }
-
         public PagedResult<MobilizationCentreReportMonthWise> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, Expression<Func<MobilizationCentreReportMonthWise, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -3165,23 +2884,6 @@ namespace Nidan.Data
             }
         }
 
-        public EventBudget RetrieveEventBudget(int organisationId, int centreId, int eventBudgetId, Expression<Func<EventBudget, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventBudgets
-                    .Include(c => c.Budget)
-                    .Include(c => c.Event)
-                    .Include(c => c.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(predicate);
-
-            }
-        }
-
         public CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -3193,119 +2895,6 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(predicate);
-            }
-        }
-
-        public PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventBudgets
-                    .Include(e => e.Budget)
-                    .Include(e => e.Event)
-                    .Include(e => e.Centre)
-                    .Include(e => e.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "EventBudgetId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public EventPlanning RetrieveEventPlanning(int organisationId, int centreId, int eventPlanningId, Expression<Func<EventPlanning, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventPlannings
-                    .Include(c => c.Planning)
-                    .Include(c => c.Event)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(predicate);
-
-            }
-        }
-
-        public PagedResult<EventPlanning> RetrieveEventPlannings(int organisationId, int centreId, Expression<Func<EventPlanning, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventPlannings
-                    .Include(e => e.Planning)
-                    .Include(e => e.Event)
-                    .Include(e => e.Organisation)
-                    .Include(e => e.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "EventPlanningId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public EventPostEvent RetrieveEventPostEvent(int organisationId, int centreId, int eventPostEventId, Expression<Func<EventPostEvent, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventPostEvents
-                    .Include(c => c.Event)
-                    .Include(c => c.PostEvent)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Organisation)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(predicate);
-
-            }
-        }
-
-        public PagedResult<EventPostEvent> RetrieveEventPostEvents(int organisationId, int centreId, Expression<Func<EventPostEvent, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventPostEvents
-                    .Include(e => e.Event)
-                    .Include(e => e.PostEvent)
-                    .Include(e => e.Organisation)
-                    .Include(e => e.Centre)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "EventPostEventId",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
             }
         }
 
@@ -3533,28 +3122,6 @@ namespace Nidan.Data
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.ProjectId == projectId);
-            }
-        }
-
-        public PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .EventBrainStormingGrids
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "BrainstormingId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
             }
         }
 
@@ -4538,29 +4105,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<EventManagementGrid> RetrieveEventManagementGrid(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .EventManagementGrids
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "EventQuestionId",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
+ 
         public PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -4577,6 +4122,77 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "CandidateAssessmentQuestionAnswerId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public EventQuestion RetrieveEventQuestion(int organisationId, int eventQuestionId, Expression<Func<EventQuestion, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .EventQuestions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.EventQuestionId == eventQuestionId);
+            }
+        }
+
+        public PagedResult<EventQuestion> RetrieveEventQuestions(int organisationId, Expression<Func<EventQuestion, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .EventQuestions
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "EventQuestionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .EventManagements
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.EventManagementId == eventManagementId);
+            }
+        }
+
+        public PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .EventManagements
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "EventManagementId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
