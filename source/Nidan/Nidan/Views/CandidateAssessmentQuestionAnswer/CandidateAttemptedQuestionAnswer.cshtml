@@ -51,7 +51,7 @@
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
                                             <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionA">
-                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionA">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionA" onchange="valueChanged()">
                                             <span ng-bind="candidateAssessment.OptionA"></span>
                                         </label>
                                     </div>
@@ -61,7 +61,7 @@
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
                                             <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionB">
-                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionB">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionB" onchange="valueChanged()">
                                             <span ng-bind="candidateAssessment.OptionB"></span>
                                         </label>
                                     </div>
@@ -71,7 +71,7 @@
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
                                             <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionC">
-                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionC">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" data-parsley-multiple="gender" ng-checked="candidateAssessment.IsOptionC" >
                                             <span ng-bind="candidateAssessment.OptionC"></span>
                                         </label>
                                     </div>
@@ -81,7 +81,7 @@
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
                                             <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionD">
-                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionD">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" data-parsley-multiple="gender" ng-checked="candidateAssessment.IsOptionD">
                                             <span ng-bind="candidateAssessment.OptionD"></span>
                                         </label>
                                     </div>
@@ -118,4 +118,17 @@
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        //function valueChanged() {
+        //    if (document.getElementById($('#optionA')).checked == true) {
+        //        document.getElementById($('#optionA')).value = 1;
+        //        document.getElementById($('#optionB')).value = 0;
+        //    } else {
+        //        document.getElementById($('#optionA')).value = 0;
+        //        document.getElementById($('#optionB')).value = 1;
+        //    }
+        //}
+    </script> 
+}
 

@@ -242,7 +242,6 @@
                 });
         }
 
-        //createCandidateAssessmentQuestionAnswer
         function createCandidateAssessmentQuestionAnswer(optionA, optionB, optionC, optionD, subjectAnswer, candidateAssessmentId, assessmentId, moduleExamSetId, moduleExamQuestionSetId, questionTypeId, answerType, markPerQuestion) {
             var optionAanswer = $('#' + optionA).is(":checked");
             var optionBanswer = $('#' + optionB).is(":checked");
@@ -265,7 +264,7 @@
             }
             return AssessmentService.createCandidateAssessmentQuestionAnswer(candidateAssessment)
                 .then(function (response) {
-                    retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentId, vm.ModuleExamQuestionSetId);
+                    retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentId, moduleExamQuestionSetId);
                 });
         }
 
