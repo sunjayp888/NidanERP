@@ -2884,6 +2884,10 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
+            
+            modelBuilder.Entity<EventApproveState>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
                 .Property(e => e.AssessmentName)
@@ -2922,11 +2926,11 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
-                .Property(e => e.SubjectiveAnswer)
+                .Property(e => e.CandidateSubjectiveAnswer)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
-                .Property(e => e.CandidateSubjectiveAnswer)
+                .Property(e => e.CandidateMCQAnswer)
                 .IsUnicode(false);
 
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
@@ -2939,10 +2943,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
                 .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EventApproveState>()
-                .Property(e => e.Name)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

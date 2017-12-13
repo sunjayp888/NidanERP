@@ -87,10 +87,14 @@ namespace Nidan.Controllers
 
         public ActionResult CandidateAttemptedQuestionAnswer(int? id)
         {
-            return View(new CandidateAssessmentQuestionAnswerViewModel()
+            var organisationId = UserOrganisationId;
+            var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, id.Value, e => true);
+            var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
+            return View(new CandidateAssessmentQuestionAnswerViewModel
             {
                 CandidateAssessmentId = id.Value,
-                //ModuleExamSetId = assesmentId.Value 
+                TotalMark = moduleExamSet.TotalMark ?? 0,
+                AssessmentName = candidateAssessment.Assessment.Name,
             });
         }
 
@@ -102,6 +106,30 @@ namespace Nidan.Controllers
             return this.JsonNet(candidateAssessmentQuestionAnswer);
         }
 
+        [HttpPost]
+        public ActionResult UpdateCandidateAssessmentQuestionAnswer(CandidateAssessmentQuestionAnswer candidateAssessment)
+        {
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var candidateAssessmentQuestionAnswerData = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswer(organisationId, candidateAssessment.CandidateAssessmentQuestionAnswerId);
+            candidateAssessmentQuestionAnswerData.IsExamined = true;
+            candidateAssessmentQuestionAnswerData.ExaminedBy = personnelId;
+            candidateAssessmentQuestionAnswerData.ExaminedDate = DateTime.UtcNow;
+            candidateAssessmentQuestionAnswerData.MarkObtained = candidateAssessment.MarkObtained;
+            var data = NidanBusinessService.UpdateCandidateAssessmentQuestionAnswer(organisationId, candidateAssessmentQuestionAnswerData);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCandidateAssessmentTotalMarkObtained(int? candidateAssessmentId)
+        {
+            var organisationId = UserOrganisationId;
+            var candidateAssessmentQuestionAnswerData = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, e => e.CandidateAssessmentId == candidateAssessmentId);
+            var candidateAssessmentsData = NidanBusinessService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId.Value, e=>true);
+            candidateAssessmentsData.TotalMarkObtained =candidateAssessmentQuestionAnswerData.Items.Sum(e => e.MarkObtained);
+            var data = NidanBusinessService.UpdateCandidateAssessment(organisationId, candidateAssessmentsData);
+            return this.JsonNet(data);
+        }
 
         //[HttpPost]
         //public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentId,int moduleExamQuestionSetId, Paging paging, List<OrderBy> orderBy)

@@ -54,7 +54,10 @@
         vm.assessmentId;
         vm.retrieveCandidateAssessmentQuestionAnswer = retrieveCandidateAssessmentQuestionAnswer;
         vm.candidateAssessmentQuestionAnswerId;
-        vm.retrieveCandidateAttemptedAssessment=retrieveCandidateAttemptedAssessment;
+        vm.retrieveCandidateAttemptedAssessment = retrieveCandidateAttemptedAssessment;
+        vm.updateCandidateAssessmentQuestionAnswer = updateCandidateAssessmentQuestionAnswer;
+        vm.candidateAssessmentQuestionAnswerId;
+        vm.updateCandidateAssessmentTotalMarkObtained = updateCandidateAssessmentTotalMarkObtained;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -266,6 +269,19 @@
                 });
         }
 
+        function updateCandidateAssessmentQuestionAnswer(markObtained, candidateAssessmentQuestionAnswerId) {
+            var candidateMarkObtained = $('#' + markObtained).val();
+            vm.candidateAssessmentQuestionAnswerId = candidateAssessmentQuestionAnswerId;
+            var candidateAssessment = {
+                CandidateAssessmentQuestionAnswerId:vm.candidateAssessmentQuestionAnswerId,
+                MarkObtained: candidateMarkObtained
+            }
+            return AssessmentService.updateCandidateAssessmentQuestionAnswer(candidateAssessment)
+                .then(function (response) {
+                    retrieveCandidateAssessmentQuestionAnswer(vm.candidateAssessmentId, vm.ModuleExamQuestionSetId);
+                });
+        }
+
         function retrieveCandidateAssessmentDetailByBatchIdAssessmentId(batchId) {
             vm.batchId = batchId;
             vm.orderBy.property = "CandidateAssessmentId";
@@ -293,6 +309,15 @@
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.candidateAssessments;
+                });
+        }
+
+        //updateCandidateAssessmentTotalMarkObtained
+        function updateCandidateAssessmentTotalMarkObtained(candidateAssessmentId) {
+            vm.candidateAssessmentId = candidateAssessmentId;
+            return AssessmentService.updateCandidateAssessmentTotalMarkObtained(vm.candidateAssessmentId)
+                .then(function (response) {
+                    retrieveCandidateAssessmentDetailByBatchIdAssessmentId(vm.batchId);
                 });
         }
 
