@@ -785,17 +785,24 @@ namespace Nidan.Business
             var eventQuestions = RetrieveEventQuestions(organisationId, e => true).Items.ToList();
             foreach (var question in eventQuestions)
             {
-                var eventManagement = new EventManagement()
+                try
                 {
-                   EventQuestionId = question.EventQuestionId,
-                   EventId = data.EventId,
-                   EventFunctionTypeId = question.EventFunctionTypeId,
-                   EventQuestionAnswerCompleted = false,
-                   Description = String.Empty,
-                   CentreId = data.CentreId,
-                   OrganisationId = data.OrganisationId
-                };
-                CreateEventManagement(organisationId, eventManagement);
+                    var eventManagement = new EventManagement()
+                    {
+                        EventQuestionId = question.EventQuestionId,
+                        EventId = data.EventId,
+                        EventFunctionTypeId = question.EventFunctionTypeId,
+                        EventQuestionAnswerCompleted = false,
+                        Description = " ",
+                        CentreId = data.CentreId,
+                        OrganisationId = data.OrganisationId
+                    };
+                    CreateEventManagement(organisationId, eventManagement);
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
             }
             return data;
         }

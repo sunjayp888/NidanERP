@@ -173,6 +173,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventApproveState> EventApproveStates { get; set; }
         public virtual DbSet<EventQuestion> EventQuestions { get; set; }
         public virtual DbSet<EventManagement> EventManagements { get; set; }
+        public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

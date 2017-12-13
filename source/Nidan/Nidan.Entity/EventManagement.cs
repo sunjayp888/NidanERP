@@ -19,7 +19,6 @@ namespace Nidan.Entity
 
         public bool EventQuestionAnswerCompleted { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         public int? Createdby { get; set; }
