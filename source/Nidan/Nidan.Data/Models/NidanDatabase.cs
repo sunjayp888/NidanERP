@@ -2851,6 +2851,18 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<EventManagementGrid>()
+                .Property(e => e.EventFunctionTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventManagementGrid>()
+                .Property(e => e.EventName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EventManagementGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }
