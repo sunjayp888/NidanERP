@@ -247,6 +247,8 @@ namespace Nidan.Data.Interfaces
         PagedResult<EventQuestion> RetrieveEventQuestions(int organisationId, Expression<Func<EventQuestion, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate);
         PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Company RetrieveCompany(int organisationId, int companyId);
+        PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 

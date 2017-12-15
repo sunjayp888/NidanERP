@@ -62,6 +62,7 @@ namespace Nidan.Entity
             Assessments = new HashSet<Assessment>();
             CandidateAssessments=new HashSet<CandidateAssessment>();
             CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
+            Companies = new HashSet<Company>();
         }
 
         public int CentreId { get; set; }
@@ -264,6 +265,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventManagement> EventManagements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Company> Companies { get; set; }
     }
 
 }

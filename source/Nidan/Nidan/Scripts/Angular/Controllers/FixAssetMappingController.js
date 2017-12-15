@@ -154,25 +154,24 @@
             vm.fixAssetMappingId = fixAssetMappingId;
             return FixAssetMappingService.openfixAssetMappingId(vm.fixAssetMappingId, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    $('#dropStatus').val("Select Assign Type");
-                    $('#dropStatus').val();
-                    vm.fixAssetMappings = response.data;
-                    return vm.fixAssetMappings;
+                    //$('#dropStatus').val("Select Assign Type");
+                    //$('#dropStatus').val();
+                    retrieveFixAssetMappingbyAssetClassId(vm.assetClassId);
                 });
         }
 
         function updateFixAssetMapping() {
-            //vm.fixAssetMappingId = fixAssetMappingId;
+            vm.assetOutStatusId = $("#assetOutStatus").val();
             var fixAssetMapping = {
                 FixAssetMappingId: vm.fixAssetMappingId,
-                AssetOutStatusId: $("#dropStatus").val(),
+                AssetOutStatusId: $("#assetOutStatus").val(),
                 StatusDate: $("#txtStatusDate").val(),
                 Cost: $("#txtCost").val()
                 // Remark: $("#txtRemark").val(),
             }
             return FixAssetMappingService.updateFixAssetMapping(fixAssetMapping)
                 .then(function (response) {
-                    retrieveFixAssetMappings();
+                    retrieveFixAssetMappingbyAssetClassId(vm.assetClassId);
                 });
         }
 

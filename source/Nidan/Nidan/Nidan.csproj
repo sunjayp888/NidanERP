@@ -259,6 +259,7 @@
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CentrePettyCashController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseInstallmentController.cs" />
@@ -320,6 +321,7 @@
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\AssessmentViewModel.cs" />
+    <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
@@ -1169,6 +1171,7 @@
     <Content Include="Scripts\Angular\Controllers\CentrePettyCashController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSchemeController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSectorController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
@@ -1226,6 +1229,7 @@
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
     <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CentrePettyCashService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
@@ -1806,6 +1810,10 @@
     <Content Include="Views\ActivityTask\ViewActivity.cshtml" />
     <Content Include="Views\Activity\ViewActivity.cshtml" />
     <Content Include="Views\Activity\ActivityTaskList.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\_Company.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

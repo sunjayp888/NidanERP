@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label id="labelStatus" class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <select id="dropStatus" class="form-control col-md-7 col-sm-6 col-xs-12">
+                            <select id="assetOutStatus" class="form-control col-md-7 col-sm-6 col-xs-12">
                                 <option>Select Status</option>
                                 <option data-ng-repeat="t in model.assignOutStates" ng-model="model.assetOutStatusId" value="{{t.AssetOutStatusId}}">{{t.Name}}</option>
                             </select>
@@ -37,16 +37,6 @@
                         <br />
                         <br />
                     </div>
-                    @*</div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Remark</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <input id="txtRemark" type="text" class="form-control" />
-                            </div>
-                            <br />
-                            <br />
-                        </div>
-                    </div>*@
                     <div class="modal-footer">
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">

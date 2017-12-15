@@ -173,6 +173,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventApproveState> EventApproveStates { get; set; }
         public virtual DbSet<EventQuestion> EventQuestions { get; set; }
         public virtual DbSet<EventManagement> EventManagements { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -2850,6 +2851,19 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidateAttemptedQuestionAnswerGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
+
+
+            modelBuilder.Entity<Company>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Company>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Company>()
+                .Property(e => e.Location)
+                 .IsUnicode(false);
 
             modelBuilder.Entity<EventManagementGrid>()
                 .Property(e => e.EventFunctionType)

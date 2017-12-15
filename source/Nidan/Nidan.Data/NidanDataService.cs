@@ -4200,7 +4200,7 @@ namespace Nidan.Data
             }
         }
 
-        public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
+public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4236,6 +4236,39 @@ namespace Nidan.Data
             }
         }
 
+        public Company RetrieveCompany(int organisationId, int companyId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .Companies
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CompanyId == companyId);
+            }
+        }
+
+        public PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Companies
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
         public PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {

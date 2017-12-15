@@ -75,6 +75,7 @@ namespace Nidan.Business.Interfaces
         CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
         Partner CreatePartner(int organisationId, Partner partner);
         EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement);
+        Company CreateCompany(int organisationId, Company company);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -349,6 +350,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<EventQuestion> RetrieveEventQuestions(int organisationId, Expression<Func<EventQuestion, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate);
         PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Company RetrieveCompany(int organisationId, int companyId);
+        PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
@@ -405,6 +408,7 @@ namespace Nidan.Business.Interfaces
         Partner UpdatePartner(int organisationId, Partner partner);
         CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
         EventManagement UpdateEventManagement(int organisationId, EventManagement eventManagement);
+        Company UpdateCompany(int organisationId, Company company);
 
         //Delete
         void DeletePersonnel(int organisationId, int personnelId);
