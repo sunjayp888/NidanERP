@@ -25,7 +25,7 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EventFunctionTypeId { get; set; }
 
-        public string EventFunctionTypeName { get; set; }
+        public string EventFunctionType { get; set; }
 
         public int? EventId { get; set; }
 
@@ -41,7 +41,7 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string CentreName { get; set; }
 
-        public int? Createdby { get; set; }
+        public int? CreatedBy { get; set; }
 
         [StringLength(202)]
         public string CreatedByName { get; set; }
