@@ -2852,7 +2852,7 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventManagementGrid>()
-                .Property(e => e.EventFunctionTypeName)
+                .Property(e => e.EventFunctionType)
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventManagementGrid>()
