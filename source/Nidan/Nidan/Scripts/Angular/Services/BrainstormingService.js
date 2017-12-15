@@ -30,7 +30,7 @@
         }
 
         function createEventBrainstorming(eventId, eventBrainstormings) {
-            var url = "/EventBrainstorming/Create";
+            var url = "/EventManagement/Create";
             var data = { eventBrainstormings: eventBrainstormings, eventId: eventId }
             return $http.post(url, data);
         }

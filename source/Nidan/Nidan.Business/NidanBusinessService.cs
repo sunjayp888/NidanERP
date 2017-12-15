@@ -785,17 +785,24 @@ namespace Nidan.Business
             var eventQuestions = RetrieveEventQuestions(organisationId, e => true).Items.ToList();
             foreach (var question in eventQuestions)
             {
-                var eventManagement = new EventManagement()
+                try
                 {
-                   EventQuestionId = question.EventQuestionId,
-                   EventId = data.EventId,
-                   EventFunctionTypeId = question.EventFunctionTypeId,
-                   EventQuestionAnswerCompleted = false,
-                   Description = String.Empty,
-                   CentreId = data.CentreId,
-                   OrganisationId = data.OrganisationId
-                };
-                CreateEventManagement(organisationId, eventManagement);
+                    var eventManagement = new EventManagement()
+                    {
+                        EventQuestionId = question.EventQuestionId,
+                        EventId = data.EventId,
+                        EventFunctionTypeId = question.EventFunctionTypeId,
+                        EventQuestionAnswerCompleted = false,
+                        Description = " ",
+                        CentreId = data.CentreId,
+                        OrganisationId = data.OrganisationId
+                    };
+                    CreateEventManagement(organisationId, eventManagement);
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
             }
             return data;
         }
@@ -2098,6 +2105,17 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompanies(organisationId, predicate, orderBy, paging);
         }
 
+        public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveEventManagementGrid(organisationId, eventManagementId, predicate);
+        }
+
+        public PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveEventManagementGrids(organisationId, predicate, orderBy, paging);
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);
@@ -2472,10 +2490,9 @@ namespace Nidan.Business
         }
 
 
-        public List<EventFunctionType> RetrieveEventFunctionTypes(int organisationId,
-            Expression<Func<EventFunctionType, bool>> predicate)
+        public List<Entity.EventFunctionType> RetrieveEventFunctionTypes(int organisationId,Expression<Func<Entity.EventFunctionType, bool>> predicate)
         {
-            return _nidanDataService.Retrieve<EventFunctionType>(organisationId, e => true);
+            return _nidanDataService.Retrieve<Entity.EventFunctionType>(organisationId, e => true);
         }
 
         public List<PaymentMode> RetrievePaymentModes(int organisationId, Expression<Func<PaymentMode, bool>> predicate)

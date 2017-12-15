@@ -170,6 +170,7 @@
     <Compile Include="EventApproveState.cs" />
     <Compile Include="EventFunctionType.cs" />
     <Compile Include="EventManagement.cs" />
+    <Compile Include="EventManagementGrid.cs" />
     <Compile Include="EventQuestion.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseDataGrid.cs" />

@@ -11,6 +11,7 @@ using Nidan.Entity;
 using Nidan.Extensions;
 using Nidan.Models;
 using EventApproveState = Nidan.Business.Enum.EventApproveState;
+using EventFunctionType = Nidan.Business.Enum.EventFunctionType;
 
 namespace Nidan.Controllers
 {
@@ -106,7 +107,7 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
-        public ActionResult UpdateEventApproveState(int? id ,bool approveState)
+        public ActionResult UpdateEventApproveState(int? id, bool approveState)
         {
             if (id == null)
             {
@@ -118,7 +119,7 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var result = approveState  ? eventData.EventApproveStateId = (int) EventApproveState.Approved : eventData.EventApproveStateId = (int) EventApproveState.Declined;
+            var result = approveState ? eventData.EventApproveStateId = (int)EventApproveState.Approved : eventData.EventApproveStateId = (int)EventApproveState.Declined;
             NidanBusinessService.UpdateEvent(organisationId, eventData);
             return RedirectToAction("Index");
         }
@@ -133,12 +134,11 @@ namespace Nidan.Controllers
         public ActionResult EventBrainStormingList(int eventId)
         {
             var organisationId = UserOrganisationId;
-            var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
-            //var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrid(UserOrganisationId, e => e.EventId == eventId && e.EventFunctionTypeId == 1);
-            //if (brainStormingList.Items.Any())
-            //    return this.JsonNet(brainStormingList);
+            var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.BrainStorming);
+            if (brainStormingList.Items.Any())
+                return this.JsonNet(brainStormingList);
             //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
-            return this.JsonNet(null);
+            return this.JsonNet(brainStormingList);
         }
 
         [HttpPost]
