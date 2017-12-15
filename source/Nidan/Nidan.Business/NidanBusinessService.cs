@@ -1699,6 +1699,11 @@ namespace Nidan.Business
             return _nidanDataService.CreateEventManagement(organisationId, eventManagement);
         }
 
+        public Company CreateCompany(int organisationId, Company company)
+        {
+            return _nidanDataService.Create<Company>(organisationId, company);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2081,6 +2086,16 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveEventManagements(organisationId, predicate, orderBy, paging);
+        }
+
+        public Company RetrieveCompany(int organisationId, int companyId)
+        {
+            return _nidanDataService.RetrieveCompany(organisationId, companyId);
+        }
+
+        public PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanies(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4375,6 +4390,10 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, eventManagement);
         }
 
+        public Company UpdateCompany(int organisationId, Company company)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, company);
+        }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {

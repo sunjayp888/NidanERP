@@ -190,6 +190,15 @@
                                         </ul>
                                     </li>
                                 }
+                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-gear"></i>Placement<span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Company")'>Company</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
