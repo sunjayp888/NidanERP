@@ -4236,6 +4236,105 @@ public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int e
             }
         }
 
+        public CompanyBranch RetrieveCompanyBranch(int organisationId, int companyBranchId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CompanyBranches
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CompanyBranchId == companyBranchId);
+            }
+        }
+
+        public PagedResult<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CompanyBranchGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CompanyFollowUps
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CompanyFollowUpId == companyFollowUpId);
+            }
+        }
+
+        public PagedResult<CompanyFollowUp> RetrieveCompanyFollowUps(int organisationId, Expression<Func<CompanyFollowUp, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CompanyFollowUps
+                    .Include(c=>c.CompanyBranch)
+                    .Include(c => c.Company)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CompanyFollowUpHistory> RetrieveCompanyFollowUpHistories(int organisationId, Expression<Func<CompanyFollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CompanyFollowUpHistories
+                    .Include(c => c.CompanyFollowUp)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)

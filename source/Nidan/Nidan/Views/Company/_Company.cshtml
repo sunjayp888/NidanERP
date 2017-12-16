@@ -3,37 +3,33 @@
 <br />
 <br />
 <div class="form-group">
-    @Html.LabelFor(model => model.Company.Name, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-    <div class="col-md-12 col-sm-8 col-xs-12 name">
-        @Html.TextBoxFor(model => model.Company.Name, new { @class = "form-control has-feedback-left" })
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    @Html.LabelFor(model => model.Company.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.Company.Name, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Company.Name, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Company.Mobile, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-    <div class="col-md-12 col-sm-8 col-xs-12 name">
-        @Html.TextBoxFor(model => model.Company.Mobile, new { @class = "form-control has-feedback-left" })
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    @Html.LabelFor(model => model.Company.Mobile, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.Company.Mobile, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Company.Mobile, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Company.EmailId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-    <div class="col-md-12 col-sm-8 col-xs-12 name">
-        @Html.TextBoxFor(model => model.Company.EmailId, new { @class = "form-control has-feedback-left" })
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    @Html.LabelFor(model => model.Company.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.Company.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Company.EmailId, "", new { @class = "help-block" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Company.Location, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
-    <div class="col-md-12 col-sm-8 col-xs-12 name">
-        @Html.TextBoxFor(model => model.Company.Location, new { @class = "form-control has-feedback-left" })
-        <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+    @Html.LabelFor(model => model.Company.Location, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.Company.Location, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Company.Location, "", new { @class = "help-block" })
     </div>
 </div>

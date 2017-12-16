@@ -175,6 +175,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<EventManagement> EventManagements { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<EventManagementGrid> EventManagementGrids { get; set; }
+        public virtual DbSet<CompanyBranch> CompanyBranches { get; set; }
+        public virtual DbSet<CompanyBranchGrid> CompanyBranchGrids { get; set; }
+        public virtual DbSet<CompanyFollowUp> CompanyFollowUps { get; set; }
+        public virtual DbSet<CompanyFollowUpHistory> CompanyFollowUpHistories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2875,6 +2879,107 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EventManagementGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.City)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.HRName1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.HREmail1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.HRName2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.HREmail2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranch>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.CompanyName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.CompanyBranchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.Address)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.City)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.HRName1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.HREmail1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.HRName2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.HREmail2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.SectorName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyBranchGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUp>()
+                .Property(e => e.Remark)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CompanyFollowUp>()
+                .HasMany(e => e.CompanyFollowUpHistories)
+                .WithRequired(e => e.CompanyFollowUp)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CompanyFollowUpHistory>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
