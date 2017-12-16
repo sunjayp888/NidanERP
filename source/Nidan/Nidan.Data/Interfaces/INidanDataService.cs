@@ -255,6 +255,7 @@ namespace Nidan.Data.Interfaces
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
         T UpdateOrganisationEntityEntry<T>(int organisationId, T t) where T : class;
+        bool UpdateEventManagement(int organisationId,int centreId, int eventId, List<EventManagement> eventManagements);
         // Delete
         void Delete<T>(int organisationId, Expression<Func<T, bool>> predicate) where T : class;
         void DeleteList<T>(int organisationId, Expression<Func<T, bool>> predicate) where T : class;

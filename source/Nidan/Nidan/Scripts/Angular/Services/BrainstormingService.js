@@ -10,8 +10,8 @@
     function BrainstormingService($http) {
         var service = {
             retrieveBrainstormings: retrieveBrainstormings,
-            createEventBrainstorming: createEventBrainstorming,
-            retrieveBrainstormingQuestions: retrieveBrainstormingQuestions,
+            updateEventBrainstorming: updateEventBrainstorming,
+            retrieveBrainstormingQuestions: retrieveBrainstormingQuestions
         };
 
         return service;
@@ -29,8 +29,8 @@
             return $http.post(url, data);
         }
 
-        function createEventBrainstorming(eventId, eventBrainstormings) {
-            var url = "/EventManagement/Create";
+        function updateEventBrainstorming(eventId, eventBrainstormings) {
+            var url = "/EventManagement/UpdateEventBrainStorming";
             var data = { eventBrainstormings: eventBrainstormings, eventId: eventId }
             return $http.post(url, data);
         }

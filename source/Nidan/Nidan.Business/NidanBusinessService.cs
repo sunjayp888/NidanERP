@@ -4402,9 +4402,9 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateAssessmentQuestionAnswer);
         }
 
-        public EventManagement UpdateEventManagement(int organisationId, EventManagement eventManagement)
+        public bool UpdateEventManagement(int organisationId, int centreId, int eventId, List<EventManagement> eventManagement)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, eventManagement);
+            return _nidanDataService.UpdateEventManagement(organisationId, centreId, eventId, eventManagement);
         }
 
         public Company UpdateCompany(int organisationId, Company company)

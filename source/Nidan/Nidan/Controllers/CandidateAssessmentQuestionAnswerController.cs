@@ -131,12 +131,12 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        //[HttpPost]
-        //public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentId,int moduleExamQuestionSetId, Paging paging, List<OrderBy> orderBy)
-        //{
-        //    var organisationId = UserOrganisationId;
-        //    var candidateAssessmenbyId = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, e=>e.CandidateAssessmentId== candidateAssessmentId && e.ModuleExamQuestionSetId==moduleExamQuestionSetId,orderBy,paging);
-        //    return this.JsonNet(candidateAssessmenbyId);
-        //}
+        [HttpPost]
+        public ActionResult CandidateAssessmentQuestionAnswerbyId(int candidateAssessmentId, int moduleExamQuestionSetId, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var candidateAssessmenbyId = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, e => e.CandidateAssessmentId == candidateAssessmentId && e.ModuleExamQuestionSetId == moduleExamQuestionSetId, orderBy, paging);
+            return this.JsonNet(candidateAssessmenbyId);
+        }
     }
 }
