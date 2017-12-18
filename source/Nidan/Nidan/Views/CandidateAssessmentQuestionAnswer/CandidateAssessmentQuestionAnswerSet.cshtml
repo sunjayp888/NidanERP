@@ -42,45 +42,60 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
-                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionA"></span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
-                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionB"></span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Multiple'">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
-                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionC"></span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
-                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
                                             <span ng-bind="candidateAssessment.OptionD"></span>
                                         </label>
                                     </div>
                                 </div>
+
+                                <form name="myForm" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Multiple'">
+                                    <label>
+                                        <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionA">
+                                        <span ng-bind="candidateAssessment.OptionA"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionB">
+                                        <span ng-bind="candidateAssessment.OptionB"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionC">
+                                        <span ng-bind="candidateAssessment.OptionC"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionD">
+                                        <span ng-bind="candidateAssessment.OptionD"></span>
+                                    </label><br />
+                                </form>
 
                                 <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2">
                                     <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>

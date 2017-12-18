@@ -68,7 +68,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Event.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.EditorFor(model => model.Event.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.TextAreaFor(model => model.Event.Remark, new { @class = "form-control col-md-7 col-xs-12", @rows = 4 })
                                 @Html.ValidationMessageFor(model => model.Event.Remark, "", new { @class = "help-block" })
                             </div>
                         </div>

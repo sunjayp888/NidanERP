@@ -85,26 +85,24 @@
             //alert(blank ? "At least one group is blank" : "All groups are checked");
             if (!blank) {
                 var eventBrainStormingList = [];
-                retrieveBrainstormingQuestions().then(function (response) {
-                    $.each(vm.brainStormingQuestions, function (i) {
-                        var brainStormingDisscussionId = 'brainStormingDisscussion' + vm.brainStormingQuestions[i].BrainstormingId;
-                        var referenceDetailTextBoxId = 'referenceDetailTextBox' + vm.brainStormingQuestions[i].BrainstormingId;
-                        eventBrainStormingList.push({
-                            EventId: vm.eventId,
-                            BrainstormingId: vm.brainStormingQuestions[i].BrainstormingId,
-                            DisscussionCompletedYesNo: $(":radio[name=" + brainStormingDisscussionId + "]:checked").val(),
-                            ReferenceDetailDocument: $('#' + referenceDetailTextBoxId).val()
-                        });
+                $.each(vm.brainstormings, function (i) {
+                    var brainStormingDisscussionId = 'brainStormingDisscussion' + vm.brainstormings[i].EventManagementId;
+                    var referenceDetailTextBoxId = 'referenceDetailTextBox' + vm.brainstormings[i].EventManagementId;
+                    eventBrainStormingList.push({
+                        EventId: vm.eventId,
+                        EventManagementId: vm.brainstormings[i].EventManagementId,
+                        EventQuestionAnswerCompleted: $(":radio[name=" + brainStormingDisscussionId + "]:checked").val(),
+                        Description: $('#' + referenceDetailTextBoxId).val()
                     });
-                    BrainstormingService.createEventBrainstorming(vm.eventId, eventBrainStormingList).then(
-                        function (response) {
-                            if (response.data) {
-                                alert(response.data);
-                                var index = $('#tabs a[href="#tab_content_planning"]').parent().index();
-                                $('#tabs').tabs('select', index);
-                            };
-                        });
                 });
+                BrainstormingService.updateEventBrainstorming(vm.eventId, eventBrainStormingList).then(
+                       function (response) {
+                           if (response.data) {
+                               //var index = $('#tabs a[href="#tab_content_planning"]').parent().index();
+                               //$('#tabs').tabs('select', index);
+                               retrieveBrainstormings();
+                           };
+                       });
             } else {
                 alert("Please reply for all question and save.");
             }

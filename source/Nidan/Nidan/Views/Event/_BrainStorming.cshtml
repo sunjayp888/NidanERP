@@ -6,7 +6,7 @@
     </p>
 </div>
 
-<div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
+<div ng-cloak ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -19,7 +19,7 @@
                                     @Html.Partial("Pagination/_pageSize")
                                 </div>
                             </div>*@
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>

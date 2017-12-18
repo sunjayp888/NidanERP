@@ -23,17 +23,12 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(int eventId, List<EventManagement> eventBrainstormings)
+        public ActionResult UpdateEventBrainStorming(int eventId, List<EventManagement> eventBrainstormings)
         {
-            //var organisationId = UserOrganisationId;
-            //var centreId = UserCentreId;
-            //foreach (var item in eventBrainstormings)
-            //{
-            //    item.CentreId = centreId;
-            //    item.OrganisationId = organisationId;
-            //}
-           // var result = NidanBusinessService.CreateEventBrainstorming(organisationId, centreId, eventId, eventBrainstormings);
-            return this.JsonNet(null);
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, eventId, eventBrainstormings);
+            return this.JsonNet(result);
         }
     }
 }

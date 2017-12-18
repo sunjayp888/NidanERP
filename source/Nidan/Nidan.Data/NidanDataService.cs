@@ -12,6 +12,7 @@ using Nidan.Data.Extensions;
 using Nidan.Data.Interfaces;
 using Nidan.Entity.Dto;
 using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace Nidan.Data
 {
@@ -3721,7 +3722,7 @@ namespace Nidan.Data
                 return context
                     .ActivityTasks
                     .AsNoTracking()
-                    .Include(e=>e.Activity)
+                    .Include(e => e.Activity)
                     .Where(predicate)
                     .SingleOrDefault(p => p.ActivityTaskId == activityTaskId);
             }
@@ -3736,7 +3737,7 @@ namespace Nidan.Data
                 return context
                     .ActivityTaskStates
                     .AsNoTracking()
-                    .Include(e=>e.TaskState)
+                    .Include(e => e.TaskState)
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
                     {
@@ -3864,7 +3865,7 @@ namespace Nidan.Data
                 return context
                     .ModuleExamSets
                     .AsNoTracking()
-                    .Include(e=>e.ModuleExamQuestionSets)
+                    .Include(e => e.ModuleExamQuestionSets)
                     .Where(predicate)
                     .SingleOrDefault(p => p.ModuleExamSetId == moduleExamSetId);
             }
@@ -3927,8 +3928,8 @@ namespace Nidan.Data
             }
         }
 
-         public PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate,
-            List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate,
+           List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4039,7 +4040,7 @@ namespace Nidan.Data
             {
                 return context
                     .CandidateAssessments
-                    .Include(p=>p.Assessment)
+                    .Include(p => p.Assessment)
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.CandidateAssessmentId == candidateAssessmentId);
@@ -4089,7 +4090,7 @@ namespace Nidan.Data
 
                 return context
                     .BatchTrainers
-                    .Include(p=>p.Batch)
+                    .Include(p => p.Batch)
                     .Include(p => p.Trainer)
                     .AsNoTracking()
                     .Where(predicate)
@@ -4105,7 +4106,7 @@ namespace Nidan.Data
             }
         }
 
- 
+
         public PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
@@ -4200,7 +4201,7 @@ namespace Nidan.Data
             }
         }
 
-public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
+        public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4521,7 +4522,7 @@ public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int e
 
                 return context
                     .CandidateAssessmentQuestionAnswers
-                    .Include(e=>e.ModuleExamQuestionSet)
+                    .Include(e => e.ModuleExamQuestionSet)
                     .Include(e => e.ModuleExamSet)
                     .Include(e => e.CandidateAssessment)
                     .AsNoTracking()
@@ -4571,6 +4572,33 @@ public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int e
                 context.SaveChanges();
 
                 return t;
+            }
+        }
+
+        public bool UpdateEventManagement(int organisationId, int centreId, int eventId, List<EventManagement> eventManagements)
+        {
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                try
+                {
+                    var data = context.EventManagements.Where(e => e.EventId == eventId);
+                    foreach (var eventManagement in eventManagements)
+                    {
+                        var result = data.FirstOrDefault(e => e.EventId == eventId &&e.CentreId== centreId && e.EventManagementId == eventManagement.EventManagementId);
+                        if (result != null)
+                        {
+                            result.Description = eventManagement.Description;
+                            result.EventQuestionAnswerCompleted = eventManagement.EventQuestionAnswerCompleted;
+                        }
+                    }
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
             }
         }
 
@@ -4686,7 +4714,7 @@ public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int e
             }
         }
 
-        public PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId,Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null,Paging paging = null)
+        public PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId, Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4708,6 +4736,6 @@ public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int e
             }
         }
 
-        }
     }
+}
 
