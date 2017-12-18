@@ -77,6 +77,9 @@ namespace Nidan.Business.Interfaces
         Partner CreatePartner(int organisationId, Partner partner);
         EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement);
         Company CreateCompany(int organisationId, Company company);
+        CompanyBranch CreateCompanyBranch(int organisationId, CompanyBranch companyBranch);
+        CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
+        CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory);
         #endregion
 
         #region Retrieve
@@ -356,6 +359,11 @@ namespace Nidan.Business.Interfaces
         PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CompanyBranch RetrieveCompanyBranch(int organisationId, int companyBranchId);
+        PagedResult<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
+        PagedResult<CompanyFollowUp> RetrieveCompanyFollowUps(int organisationId, Expression<Func<CompanyFollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CompanyFollowUpHistory> RetrieveCompanyFollowUpHistories(int organisationId, Expression<Func<CompanyFollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         #endregion
 
@@ -413,6 +421,8 @@ namespace Nidan.Business.Interfaces
         CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
         bool UpdateEventManagement(int organisationId,int centreId ,int eventId, List<EventManagement> eventManagement);
         Company UpdateCompany(int organisationId, Company company);
+        CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
+        CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
 
         #endregion
 

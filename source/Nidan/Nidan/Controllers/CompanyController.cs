@@ -106,6 +106,29 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Company/Edit/{id}
+        public ActionResult AddBranch(int? id)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var company = _nidanBusinessService.RetrieveCompany(organisationId, id.Value);
+            if (company == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new CompanyViewModel()
+            {
+                Company = company,
+                Centres = new SelectList(centres, "CentreId", "Name"),
+            };
+            return View(viewModel);
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {

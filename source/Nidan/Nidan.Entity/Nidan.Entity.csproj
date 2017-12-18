@@ -147,6 +147,10 @@
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
     <Compile Include="Company.cs" />
+    <Compile Include="CompanyBranch.cs" />
+    <Compile Include="CompanyBranchGrid.cs" />
+    <Compile Include="CompanyFollowUp.cs" />
+    <Compile Include="CompanyFollowUpHistory.cs" />
     <Compile Include="Counselling.cs" />
     <Compile Include="CounsellingDataGrid.cs" />
     <Compile Include="CounsellingSearchField.cs" />

@@ -12,6 +12,8 @@ namespace Nidan.Entity
         public Company()
         {
             CreatedDate = DateTime.UtcNow.Date;
+            CompanyBranches = new HashSet<CompanyBranch>();
+            CompanyFollowUps = new HashSet<CompanyFollowUp>();
         }
         public int CompanyId { get; set; }
 
@@ -39,5 +41,11 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Centre Centre { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyBranch> CompanyBranches { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyFollowUp> CompanyFollowUps { get; set; }
     }
 }

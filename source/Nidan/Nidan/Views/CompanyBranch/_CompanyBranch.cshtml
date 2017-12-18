@@ -1,0 +1,123 @@
+﻿@model Nidan.Models.CompanyBranchViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.Company.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.Company.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Company.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.CompanyBranch.SectorId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CompanyBranch.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.SectorId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Address1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Address1, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Address1, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Address2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Address2, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Address2, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Address3, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Address3, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Address3, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Address4, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Address4, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Address4, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.City, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.City, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.City, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HRName1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HRName1, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HRName1, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HRContact1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HRContact1, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HRContact1, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HREmail1, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HREmail1, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HREmail1, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HRName2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HRName2, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HRName2, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HRContact2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HRContact2, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HRContact2, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.HREmail2, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.HREmail2, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.HREmail2, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CompanyBranch.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-8 col-xs-12 name">
+        @Html.TextBoxFor(model => model.CompanyBranch.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CompanyBranch.Remark, "", new { @class = "help-block" })
+    </div>
+</div>

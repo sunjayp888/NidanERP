@@ -11,6 +11,7 @@
         /* jshint validthis:true */
         var vm = this;
         vm.companies = [];
+        vm.companBranches = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -23,6 +24,8 @@
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
+        vm.retrieveCompanyBranchByCompanyId = retrieveCompanyBranchByCompanyId;
+        vm.companyId;
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
@@ -58,6 +61,21 @@
                 });
         }
 
+        function retrieveCompanyBranchByCompanyId(companyId) {
+            vm.companyId = companyId;
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return CompanyService.retrieveCompanyBranchByCompanyId(vm.companyId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.companBranches = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.companBranches.length === 0 ? "No Records Found" : "";
+                    return vm.companBranches;
+                });
+        }
+
         function searchCompanyByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
@@ -77,6 +95,10 @@
                 searchCompany(vm.searchKeyword);
             } else if (vm.fromDate && vm.toDate) {
                 searchCompanyByDate(vm.fromDate, vm.toDate);
+            }
+            var path = window.location.pathname.split('/');
+            if (path[2] === "Edit") {
+                retrieveCompanyBranchByCompanyId(vm.companyId);
             }
             else {
                 return retrieveCompanies();

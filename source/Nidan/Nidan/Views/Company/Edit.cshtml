@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.CompanyViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.CompanyViewModel
 @{
     ViewBag.Title = "Edit";
 }
@@ -25,6 +26,9 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
+                                    <a href="@Url.Action("Create", "CompanyBranch", new { id = Model.Company.CompanyId })" class="btn btn-info" role="button">
+                                        Add Branch
+                                    </a>
                                     <button type="submit" class="btn btn-success">Submit</button>
                                 </div>
                             </div>
@@ -39,5 +43,77 @@
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
     </a>
+</div>
+<div class="row" ng-controller="CompanyController as model" ng-init="model.retrieveCompanyBranchByCompanyId(@Model.Company.CompanyId)">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                </p>
+                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.Partial("Pagination/_pageSize")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                <tr role="row">
+                                    <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
+                                    <th>Sector</th>
+                                    <th ng-click="model.order('CompanyBranchName')" ng-class="model.orderClass('CompanyBranchName')">Branch Name</th>
+                                    <th>Address</th>
+                                    <th ng-click="model.order('City')" ng-class="model.orderClass('City')">City</th>
+                                    <th ng-click="model.order('HRName1')" ng-class="model.orderClass('HRName1')">HR Name 1</th>
+                                    <th ng-click="model.order('HREmail1')" ng-class="model.orderClass('HREmail1')">HR Email 1</th>
+                                    <th ng-click="model.order('HRContact1')" ng-class="model.orderClass('HRContact1')">HR Contact 1</th>
+                                    <th>Created By</th>
+                                    <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remark</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="companBranch in model.companBranches" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <td><span ng-bind="companBranch.CreatedDate|date : format : shortDate"></span></td>
+                                    <td><span ng-bind="companBranch.SectorName"></span></td>
+                                    <td><span ng-bind="companBranch.CompanyBranchName"></span></td>
+                                    <td><span ng-bind="companBranch.Address"></span></td>
+                                    <td><span ng-bind="companBranch.City"></span></td>
+                                    <td><span ng-bind="companBranch.HRName1"></span></td>
+                                    <td><span ng-bind="companBranch.HREmail1"></span></td>
+                                    <td><span ng-bind="companBranch.HRContact1"></span></td>
+                                    <td><span ng-bind="companBranch.CreatedByName"></span></td>
+                                    <td><span ng-bind="companBranch.Remark"></span></td>
+                                    <td>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu slidedown">
+                                                <li>
+                                                    <a style="cursor: pointer;" ng-href="/CompanyBranch/Edit/{{companBranch.CompanyBranchId}}">
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @Html.Partial("Pagination/_pagination")
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label ng-bind="model.searchMessage"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

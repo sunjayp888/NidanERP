@@ -12,6 +12,7 @@
             retrieveCompanies: retrieveCompanies,
             searchCompany: searchCompany,
             searchCompanyByDate: searchCompanyByDate,
+            retrieveCompanyBranchByCompanyId: retrieveCompanyBranchByCompanyId
         };
 
         return service;
@@ -44,6 +45,17 @@
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCompanyBranchByCompanyId(companyId, Paging, OrderBy) {
+            var url = "/CompanyBranch/CompanyBranchByCompanyId",
+                data = {
+                    companyId: companyId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

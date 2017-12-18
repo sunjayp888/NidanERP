@@ -259,7 +259,9 @@
     <Compile Include="Controllers\CandidateFeeController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CentrePettyCashController.cs" />
+    <Compile Include="Controllers\CompanyBranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CompanyFollowUpController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseInstallmentController.cs" />
@@ -321,6 +323,8 @@
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\AssessmentViewModel.cs" />
+    <Compile Include="Models\CompanyBranchViewModel.cs" />
+    <Compile Include="Models\CompanyFollowUpViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
@@ -1340,6 +1344,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CompanyFollowUp\" />
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventManagement\" />
     <Folder Include="Views\Graph\" />
@@ -1814,6 +1819,9 @@
     <Content Include="Views\Company\Create.cshtml" />
     <Content Include="Views\Company\_Company.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\CompanyBranch\Create.cshtml" />
+    <Content Include="Views\CompanyBranch\_CompanyBranch.cshtml" />
+    <Content Include="Views\CompanyBranch\Edit.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

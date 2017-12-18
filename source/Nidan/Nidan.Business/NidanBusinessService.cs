@@ -1711,6 +1711,52 @@ namespace Nidan.Business
             return _nidanDataService.Create<Company>(organisationId, company);
         }
 
+        public CompanyBranch CreateCompanyBranch(int organisationId, CompanyBranch companyBranch)
+        {
+            var data = _nidanDataService.Create<CompanyBranch>(organisationId, companyBranch);
+            //Create Company Follow Up and Company FollowUp History
+            CreateCompanyFollowUp(organisationId,data, data.CreatedBy);
+            return data;
+        }
+
+        private void CreateCompanyFollowUp(int organisationId, CompanyBranch companyBranch, int personnelId)
+        {
+            var companyFollowUp = new CompanyFollowUp
+            {
+                CompanyBranchId=companyBranch.CompanyBranchId,
+                CompanyId=companyBranch.CompanyId,
+                FollowUpDate= _today.AddDays(2),
+                IsClosed=false,
+                Remark=companyBranch.Remark??" ",
+                CreatedBy=personnelId,
+                CreatedDate=_today,
+                CentreId=companyBranch.CentreId,
+                OrganisationId=organisationId
+            };
+            var companyFollowUpData = _nidanDataService.Create<CompanyFollowUp>(organisationId, companyFollowUp);
+            var companyFollowUpHistory = new CompanyFollowUpHistory
+            {
+                CompanyFollowUpId = companyFollowUpData.CompanyFollowUpId,
+                Remark=companyFollowUpData.Remark,
+                FollowUpDate= companyFollowUpData.FollowUpDate,
+                IsClosed=false,
+                CentreId = companyFollowUpData.CentreId,
+                OrganisationId = organisationId,
+                CreatedBy = companyFollowUpData.CreatedBy
+            };
+            _nidanDataService.Create<CompanyFollowUpHistory>(organisationId, companyFollowUpHistory);
+        }
+
+        public CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp)
+        {
+            return _nidanDataService.Create<CompanyFollowUp>(organisationId, companyFollowUp);
+        }
+
+        public CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory)
+        {
+            return _nidanDataService.Create<CompanyFollowUpHistory>(organisationId, companyFollowUpHistory);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2114,6 +2160,33 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveEventManagementGrids(organisationId, predicate, orderBy, paging);
+        }
+
+        public CompanyBranch RetrieveCompanyBranch(int organisationId, int companyBranchId)
+        {
+            return _nidanDataService.RetrieveCompanyBranch(organisationId, companyBranchId);
+        }
+
+        public PagedResult<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanyBranches(organisationId, predicate, orderBy, paging);
+        }
+
+        public CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId)
+        {
+            return _nidanDataService.RetrieveCompanyFollowUp(organisationId, companyFollowUpId);
+        }
+
+        public PagedResult<CompanyFollowUp> RetrieveCompanyFollowUps(int organisationId, Expression<Func<CompanyFollowUp, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanyFollowUps(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CompanyFollowUpHistory> RetrieveCompanyFollowUpHistories(int organisationId, Expression<Func<CompanyFollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanyFollowUpHistories(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4410,6 +4483,16 @@ namespace Nidan.Business
         public Company UpdateCompany(int organisationId, Company company)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, company);
+        }
+
+        public CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyBranch);
+        }
+
+        public CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyFollowUp);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
