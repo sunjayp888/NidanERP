@@ -47,10 +47,10 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = centrePettyCashViewModel.CentrePettyCash.CentreId;
-            var personnel = NidanBusinessService.RetrievePersonnel(organisationId, centreId, null, null).Items.FirstOrDefault();
+            var personnel = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                var personnelId = personnel?.PersonnelId ?? 0;
+                var personnelId = personnel;
                 centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.CreateCentrePettyCash(organisationId, centreId, personnelId, centrePettyCashViewModel.CentrePettyCash);
                 return RedirectToAction("Index");
             }

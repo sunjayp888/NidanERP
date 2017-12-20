@@ -68,19 +68,22 @@
                                     </li>
                                 }
                                 @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
-                                {
-                                    <li>
-                                        <a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
-                                        </ul>
-                                    </li>
-                                }
+                                    {
+                                        <li>
+                                            <a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                                            <ul class="nav child_menu">
+                                                <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
+                                            </ul>
+                                        </li>
+                                    }
                                 <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href='@Url.Action("Index", "CandidateFee")'>Candidate Fee</a></li>
-                                        <li><a href='@Url.Action("Index", "BankDeposite")'>Bank Deposit</a></li>
+                                        @if (Model.CentreType != "Franchise")
+                                        {
+                                            <li><a href='@Url.Action("Index", "BankDeposite")'>Bank Deposit</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 @if (User.IsInAnyRoles("SuperAdmin"))
@@ -108,18 +111,21 @@
                                         </ul>
                                     </li>
                                 }
-                                <li>
-                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                        {
-                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
-                                            <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
-                                            <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
-                                        }
-                                        <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
-                                    </ul>
-                                </li>
+                                @if (Model.CentreType != "Franchise")
+                                {
+                                    <li>
+                                        <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                                                <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
+                                                <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
+                                            }
+                                            <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                        </ul>
+                                    </li>
+                                }
                                 <li>
                                     <a><i class="fa fa-file-excel-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -131,7 +137,7 @@
                                             <li><a href='@Url.Action("Registration", "Report")'>Registration</a></li>
                                             <li><a href='@Url.Action("Admission", "Report")'>Admission</a></li>
                                             <li><a href='@Url.Action("FollowUp", "Report")'>Follow-Up</a></li>
-                                            @*<li><a href='@Url.Action("Stock", "Report")'>Stock</a></li>*@
+                                            <li><a href='@Url.Action("Stock", "Report")'>Stock</a></li>
                                         }
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
@@ -151,7 +157,7 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            @*<li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>*@
+                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
                                         </ul>
                                     }
                                 </li>
@@ -216,7 +222,7 @@
                             <li>
                                 <a href="#">
                                     <h2 class="user-profile">
-                                        @*@Model.CentreName*@
+                                        @Model.CentreName
                                     </h2>
                                 </a>
                             </li>
