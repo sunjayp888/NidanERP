@@ -33,7 +33,5 @@ namespace Nidan.Entity
         public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        public virtual Personnel Personnel { get; set; }
     }
 }

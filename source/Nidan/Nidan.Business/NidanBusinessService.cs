@@ -1269,7 +1269,8 @@ namespace Nidan.Business
                 StudentCode = studentCode,
                 Remarks = registration.Remarks,
                 OrganisationId = organisationId,
-                RegistrationDate = registration.RegistrationDate
+                RegistrationDate = registration.RegistrationDate,
+                CreatedBy = personnelId
             };
             var data = _nidanDataService.Create<Registration>(organisationId, registrationData);
             var enquiry = RetrieveEnquiry(organisationId, registration.EnquiryId);

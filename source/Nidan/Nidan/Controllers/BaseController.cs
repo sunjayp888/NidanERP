@@ -69,10 +69,12 @@ namespace Nidan.Controllers
             if (viewModel != null)
             {
                 var organisation = UserManager.TenantOrganisation;
+                var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
                 viewModel.OrganisationName = organisation?.Name ?? string.Empty;
-                viewModel.CentreName = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId, e => true)?.Name ?? viewModel.OrganisationName;
+                viewModel.CentreName = centre?.Name ?? viewModel.OrganisationName ?? string.Empty;
                 viewModel.PersonnelId = UserPersonnelId;
                 viewModel.CentreId = UserCentreId;
+                viewModel.CentreType = centre?.CentreType ?? string.Empty;
                 // viewModel.EnquiryId = UserEnquiryId;
 
             }
