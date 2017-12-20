@@ -1,0 +1,86 @@
+﻿@model Nidan.Models.CompanyFollowUpViewModel
+@{
+    ViewBag.Title = string.Format("Edit Follow-Up ({0})", Model.CompanyFollowUp.CompanyBranch.Name);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0}", @Model.CompanyFollowUp.CompanyBranch.Name)</button>  Follow-Up Details<small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.CompanyFollowUp.CompanyFollowUpId)
+                        @Html.Partial("_CompanyFollowUp", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" id="btnsubmit" class="btn btn-success" disabled="disabled">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("_CompanyFollowUpHistory", Model)
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts{
+    <script>
+        $("#CompanyFollowUp_Remark").val("");
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment(),
+            //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
+            onSelect: function () {
+                selectedDate = moment().format('DD MMMM YYYY');
+            },
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('.date').val(moment().format('DD MMMM YYYY'));
+            $(".date").on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+            });
+        });
+
+        $('#CompanyFollowUp_Remark').keyup(function () {
+            var remark = $('#CompanyFollowUp_Remark').val();
+            if (remark == "") {
+                $('#btnsubmit').attr('disabled', true);
+            } else {
+                $('#btnsubmit').attr('disabled', false);
+            }
+        });
+    </script>
+}
+

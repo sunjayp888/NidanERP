@@ -179,6 +179,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CompanyBranchGrid> CompanyBranchGrids { get; set; }
         public virtual DbSet<CompanyFollowUp> CompanyFollowUps { get; set; }
         public virtual DbSet<CompanyFollowUpHistory> CompanyFollowUpHistories { get; set; }
+        public virtual DbSet<CompanyFollowUpGrid> CompanyFollowUpGrids { get; set; }
+        public virtual DbSet<CompanyFollowUpHistoryGrid> CompanyFollowUpHistoryGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2969,17 +2971,36 @@ namespace Nidan.Data.Models
                 .Property(e => e.Remark)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<CompanyFollowUpHistory>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CompanyFollowUp>()
                 .Property(e => e.Remark)
                 .IsFixedLength();
 
-            modelBuilder.Entity<CompanyFollowUp>()
-                .HasMany(e => e.CompanyFollowUpHistories)
-                .WithRequired(e => e.CompanyFollowUp)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CompanyBranchName)
+                .IsUnicode(false);
 
-            modelBuilder.Entity<CompanyFollowUpHistory>()
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CompanyName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
                 .Property(e => e.Remark)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpHistoryGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpHistoryGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

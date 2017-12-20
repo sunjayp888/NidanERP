@@ -1176,6 +1176,8 @@
     <Content Include="Scripts\Angular\Controllers\CentreSchemeController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSectorController.js" />
     <Content Include="Scripts\Angular\Controllers\CompanyController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyFollowUpController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyFollowUpHistoryController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
@@ -1233,6 +1235,8 @@
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
     <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CentrePettyCashService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyFollowUpHistoryService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyFollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CompanyService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
@@ -1344,7 +1348,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CompanyFollowUp\" />
     <Folder Include="Views\Document\" />
     <Folder Include="Views\EventManagement\" />
     <Folder Include="Views\Graph\" />
@@ -1822,6 +1825,10 @@
     <Content Include="Views\CompanyBranch\Create.cshtml" />
     <Content Include="Views\CompanyBranch\_CompanyBranch.cshtml" />
     <Content Include="Views\CompanyBranch\Edit.cshtml" />
+    <Content Include="Views\CompanyFollowUp\Index.cshtml" />
+    <Content Include="Views\CompanyFollowUp\_CompanyFollowUp.cshtml" />
+    <Content Include="Views\CompanyFollowUp\Edit.cshtml" />
+    <Content Include="Views\CompanyFollowUp\_CompanyFollowUpHistory.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

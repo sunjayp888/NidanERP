@@ -1727,7 +1727,7 @@ namespace Nidan.Business
                 CompanyId=companyBranch.CompanyId,
                 FollowUpDate= _today.AddDays(2),
                 IsClosed=false,
-                Remark=companyBranch.Remark??" ",
+                Remark=companyBranch.Remark??"yes",
                 CreatedBy=personnelId,
                 CreatedDate=_today,
                 CentreId=companyBranch.CentreId,
@@ -2177,16 +2177,14 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompanyFollowUp(organisationId, companyFollowUpId);
         }
 
-        public PagedResult<CompanyFollowUp> RetrieveCompanyFollowUps(int organisationId, Expression<Func<CompanyFollowUp, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCompanyFollowUps(organisationId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveCompanyFollowUpGrid(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<CompanyFollowUpHistory> RetrieveCompanyFollowUpHistories(int organisationId, Expression<Func<CompanyFollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCompanyFollowUpHistories(organisationId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveCompanyFollowUpHistoryGrid(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4492,7 +4490,27 @@ namespace Nidan.Business
 
         public CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp)
         {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyFollowUp);
+            var companyFollowUpData =_nidanDataService.RetrieveCompanyFollowUp(organisationId, companyFollowUp.CompanyFollowUpId);
+            var companyBranch = _nidanDataService.RetrieveCompanyBranch(organisationId, companyFollowUpData.CompanyBranchId);
+            companyBranch.Remark = companyFollowUp.Remark;
+            //_nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyFollowUp);
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyBranch);
+            var companyFollowUpHistory = new CompanyFollowUpHistory
+            {
+                CompanyFollowUpId = companyFollowUp.CompanyFollowUpId,
+                Remark = companyFollowUp.Remark,
+                IsClosed = companyFollowUp.IsClosed,
+                FollowUpDate = companyFollowUp.FollowUpDate,
+                CreatedDate = DateTime.UtcNow.Date,
+                CentreId = companyFollowUp.CentreId,
+                OrganisationId = organisationId,
+                CreatedBy = companyFollowUp.CreatedBy
+            };
+            companyFollowUp.CompanyBranchId = companyFollowUpData.CompanyBranchId;
+            companyFollowUp.CompanyId= companyFollowUpData.CompanyId;
+            var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyFollowUp);
+            _nidanDataService.Create<CompanyFollowUpHistory>(organisationId, companyFollowUpHistory);
+            return data;
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

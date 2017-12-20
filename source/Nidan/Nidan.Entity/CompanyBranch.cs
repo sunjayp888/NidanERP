@@ -68,6 +68,7 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         public virtual Organisation Organisation { get; set; }

@@ -4278,24 +4278,21 @@ namespace Nidan.Data
             {
                 return context
                     .CompanyFollowUps
+                    .Include(c=>c.CompanyBranch)
+                    .Include(c=>c.Company)
                     .AsNoTracking()
                     .SingleOrDefault(p => p.CompanyFollowUpId == companyFollowUpId);
             }
         }
 
-        public PagedResult<CompanyFollowUp> RetrieveCompanyFollowUps(int organisationId, Expression<Func<CompanyFollowUp, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .CompanyFollowUps
-                    .Include(c=>c.CompanyBranch)
-                    .Include(c => c.Company)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Organisation)
+                    .CompanyFollowUpGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -4310,18 +4307,14 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CompanyFollowUpHistory> RetrieveCompanyFollowUpHistories(int organisationId, Expression<Func<CompanyFollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .CompanyFollowUpHistories
-                    .Include(c => c.CompanyFollowUp)
-                    .Include(c => c.Centre)
-                    .Include(c => c.Organisation)
+                    .CompanyFollowUpHistoryGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
