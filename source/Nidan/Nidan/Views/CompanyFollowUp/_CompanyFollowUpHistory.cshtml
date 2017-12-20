@@ -1,0 +1,56 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.CompanyFollowUpViewModel
+
+<div ng-controller="CompanyFollowUpHistoryController as model">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Company Follow-Up History <small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
+                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Follow-Up Date</th>
+                                            <th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>
+                                            <th ng-click="model.order('FollowUpDate')" ng-class="model.orderClass('FollowUpDate')">Next Follow-Up Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="companyFollowUpHistory in model.companyFollowUpHistories| orderBy:'CompanyFollowUpHistoryId'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="companyFollowUpHistory.CreatedByName"></span></td>
+                                            <td><span ng-bind="companyFollowUpHistory.CreatedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="companyFollowUpHistory.Remark"></span></td>
+                                            <td><span ng-bind="companyFollowUpHistory.FollowUpDate|date : format : shortDate"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

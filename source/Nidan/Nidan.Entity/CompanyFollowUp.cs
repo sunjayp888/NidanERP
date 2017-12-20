@@ -9,13 +9,11 @@ namespace Nidan.Entity
     [Table("CompanyFollowUp")]
     public partial class CompanyFollowUp
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CompanyFollowUp()
         {
             CreatedDate = DateTime.UtcNow.Date;
             CompanyFollowUpHistories = new HashSet<CompanyFollowUpHistory>();
         }
-
         public int CompanyFollowUpId { get; set; }
 
         public int CompanyBranchId { get; set; }
@@ -31,7 +29,7 @@ namespace Nidan.Entity
         public DateTime CreatedDate { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [DataType(DataType.MultilineText)]
         public string Remark { get; set; }
 
         public int CreatedBy { get; set; }
