@@ -92,7 +92,8 @@
                         EventId: vm.eventId,
                         EventManagementId: vm.brainstormings[i].EventManagementId,
                         EventQuestionAnswerCompleted: $(":radio[name=" + brainStormingDisscussionId + "]:checked").val(),
-                        Description: $('#' + referenceDetailTextBoxId).val()
+                        Description: $('#' + referenceDetailTextBoxId).val(),
+                        CentreId: vm.brainstormings[i].CentreId
                     });
                 });
                 BrainstormingService.updateEventBrainstorming(vm.eventId, eventBrainStormingList).then(

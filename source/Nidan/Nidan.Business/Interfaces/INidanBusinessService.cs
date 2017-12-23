@@ -419,7 +419,7 @@ namespace Nidan.Business.Interfaces
         bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int centreId, CandidateAssessmentQuestionAnswer candidateAssessment);
         Partner UpdatePartner(int organisationId, Partner partner);
         CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
-        bool UpdateEventManagement(int organisationId,int centreId ,int eventId, List<EventManagement> eventManagement);
+        bool UpdateEventManagement(int organisationId, int centreId, int personnelId, int eventId, List<EventManagement> eventManagement);
         Company UpdateCompany(int organisationId, Company company);
         CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
         CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);

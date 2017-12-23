@@ -1189,6 +1189,7 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
     <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
+    <Content Include="Scripts\Angular\Controllers\EventDayController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseProjectController.js" />
@@ -1203,6 +1204,8 @@
     <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
     <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
+    <Content Include="Scripts\Angular\Controllers\PlanningController.js" />
+    <Content Include="Scripts\Angular\Controllers\PostEventController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Controllers\ReportController.js" />
@@ -1248,6 +1251,7 @@
     <Content Include="Scripts\Angular\Services\CounsellingService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
+    <Content Include="Scripts\Angular\Services\EventDayService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseDocumentService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
@@ -1266,6 +1270,8 @@
     <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
+    <Content Include="Scripts\Angular\Services\PlanningService.js" />
+    <Content Include="Scripts\Angular\Services\PostEventService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
     <Content Include="Scripts\Angular\Services\ReportService.js" />

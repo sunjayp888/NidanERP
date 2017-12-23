@@ -154,7 +154,7 @@ namespace Nidan.Controllers
                 var emailData = new EmailData()
                 {
                     BCCAddressList = new List<string> { "developer@nidantech.com" },
-                    Body = String.Format("Dear {0}.{1} {2}, Your Login Details For Nidan ERP Portal : User Id = {3} and Password = {4}",personnel.Title,personnel.Forenames,personnel.Surname,personnel.Email,password),
+                    Body = String.Format("Dear {0}.{1} {2},Nidan ERP Portal URL : batchmonitoring.nidantech.org And Your Login Details For Nidan ERP Portal : User Id = {3} and Password = {4}", personnel.Title,personnel.Forenames,personnel.Surname,personnel.Email,password),
                     Subject = "Login Details For NidanERP",
                     IsHtml = true,
                     ToAddressList = new List<string> { personnel.Email }
