@@ -1758,6 +1758,12 @@ namespace Nidan.Business
             return _nidanDataService.Create<CompanyFollowUpHistory>(organisationId, companyFollowUpHistory);
         }
 
+        public CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId,
+            CandidatePrePlacementActivity candidatePrePlacementActivity)
+        {
+            return _nidanDataService.Create<CandidatePrePlacementActivity>(organisationId, candidatePrePlacementActivity);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2186,6 +2192,18 @@ namespace Nidan.Business
         public PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCompanyFollowUpHistoryGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId,
+            int candidatePrePlacementActivityId)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementActivity(organisationId, candidatePrePlacementActivityId);
+        }
+
+        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementActivityGrid(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4512,6 +4530,11 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry(organisationId, companyFollowUp);
             _nidanDataService.Create<CompanyFollowUpHistory>(organisationId, companyFollowUpHistory);
             return data;
+        }
+
+        public CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId,CandidatePrePlacementActivity candidatePrePlacementActivity)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePrePlacementActivity);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

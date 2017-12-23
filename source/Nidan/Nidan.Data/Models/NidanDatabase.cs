@@ -181,6 +181,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<CompanyFollowUpHistory> CompanyFollowUpHistories { get; set; }
         public virtual DbSet<CompanyFollowUpGrid> CompanyFollowUpGrids { get; set; }
         public virtual DbSet<CompanyFollowUpHistoryGrid> CompanyFollowUpHistoryGrids { get; set; }
+        public virtual DbSet<CandidatePrePlacementActivity> CandidatePrePlacementActivities { get; set; }
+        public virtual DbSet<CandidatePrePlacementActivityGrid> CandidatePrePlacementActivityGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3000,6 +3002,26 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CompanyFollowUpHistoryGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivity>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 

@@ -65,7 +65,7 @@ namespace Nidan.Entity
             Companies = new HashSet<Company>();
             CompanyBranches = new HashSet<CompanyBranch>();
             CompanyFollowUps = new HashSet<CompanyFollowUp>();
-            CompanyFollowUps = new HashSet<CompanyFollowUp>();
+            CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
         }
 
         public int CentreId { get; set; }
@@ -280,6 +280,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CompanyFollowUpHistory> CompanyFollowUpHistories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePrePlacementActivity> CandidatePrePlacementActivities { get; set; }
     }
 
 }

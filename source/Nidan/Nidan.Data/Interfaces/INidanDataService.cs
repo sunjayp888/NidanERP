@@ -256,6 +256,8 @@ namespace Nidan.Data.Interfaces
         CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

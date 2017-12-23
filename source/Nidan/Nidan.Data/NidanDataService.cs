@@ -4329,6 +4329,46 @@ namespace Nidan.Data
             }
         }
 
+        public CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId,
+            int candidatePrePlacementActivityId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidatePrePlacementActivities
+                    .Include(c => c.Admission)
+                    .Include(c => c.Batch)
+                    .Include(c => c.Centre)
+                    .Include(c => c.Organisation)
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CandidatePrePlacementActivityId == candidatePrePlacementActivityId);
+            }
+        }
+
+        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidatePrePlacementActivityGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidatePrePlacementActivityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)

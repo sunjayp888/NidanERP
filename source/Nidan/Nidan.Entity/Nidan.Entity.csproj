@@ -131,6 +131,8 @@
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
+    <Compile Include="CandidatePrePlacementActivity.cs" />
+    <Compile Include="CandidatePrePlacementActivityGrid.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
