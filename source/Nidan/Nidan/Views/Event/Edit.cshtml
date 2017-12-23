@@ -74,7 +74,7 @@
                         </div>
                         @if (User.IsInAnyRoles("SuperAdmin"))
                         {
-                            if (Model.Event.EventApproveStateId==(int)EventApproveState.Created)
+                            if (Model.Event.EventApproveStateId == (int)EventApproveState.Created)
                             {
                                 <div ng-controller="EventController as model">
                                     <div class="control-label col-md-3 col-sm-3 col-xs-12"></div>
@@ -137,7 +137,7 @@
                                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                         <li role="presentation" class="active">
-                                            <a href="#tab_content_brainstorming" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Brain Storming</a>
+                                            <a href="#tab_content_brainstorming" id="profile_tab_brainstorming" role="tab" data-toggle="tab" aria-expanded="true">Brain Storming</a>
                                         </li>
                                         <li role="presentation" class="">
                                             <a href="#tab_content_planning" role="tab" id="profile_tab_planning" data-toggle="tab" aria-expanded="false">Planning</a>
@@ -166,16 +166,16 @@
                                             @Html.Partial("_BrainStorming", Model)
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content_planning" aria-labelledby="home-tab">
-                                            @Html.Partial("_Planning")
+                                            @Html.Partial("_Planning", Model)
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content_budget" aria-labelledby="home-tab">
-                                            @Html.Partial("_Budget")
+                                            @Html.Partial("_Budget", Model)
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content_eventday" aria-labelledby="home-tab">
-                                            @Html.Partial("_EventDay")
+                                            @Html.Partial("_EventDay", Model)
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content_postevent" aria-labelledby="home-tab">
-                                            @Html.Partial("_PostEvent")
+                                            @Html.Partial("_PostEvent", Model)
                                         </div>
                                     </div>
                                 </div>

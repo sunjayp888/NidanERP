@@ -4568,7 +4568,7 @@ namespace Nidan.Data
             }
         }
 
-        public bool UpdateEventManagement(int organisationId, int centreId, int eventId, List<EventManagement> eventManagements)
+        public bool UpdateEventManagement(int organisationId, int centreId, int personnelId, int eventId, List<EventManagement> eventManagements)
         {
             using (var context = _databaseFactory.Create(organisationId))
             {
@@ -4577,11 +4577,13 @@ namespace Nidan.Data
                     var data = context.EventManagements.Where(e => e.EventId == eventId);
                     foreach (var eventManagement in eventManagements)
                     {
-                        var result = data.FirstOrDefault(e => e.EventId == eventId &&e.CentreId== centreId && e.EventManagementId == eventManagement.EventManagementId);
+                        var result = data.FirstOrDefault(e => e.EventId == eventId &&e.CentreId== eventManagement.CentreId && e.EventManagementId == eventManagement.EventManagementId);
                         if (result != null)
                         {
                             result.Description = eventManagement.Description;
                             result.EventQuestionAnswerCompleted = eventManagement.EventQuestionAnswerCompleted;
+                            result.Createdby = personnelId;
+                            result.CreatedDateTime=DateTime.UtcNow;
                         }
                     }
                     context.SaveChanges();

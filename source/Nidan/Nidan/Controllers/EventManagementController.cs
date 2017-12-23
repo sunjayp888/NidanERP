@@ -27,7 +27,38 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, eventId, eventBrainstormings);
+            var personnelId = UserPersonnelId;
+            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, personnelId, eventId, eventBrainstormings);
+            return this.JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateEventPlanning(int eventId, List<EventManagement> eventPlannings)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, personnelId, eventId, eventPlannings);
+            return this.JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateEventDay(int eventId, List<EventManagement> eventDays)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, personnelId, eventId, eventDays);
+            return this.JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePostEvent(int eventId, List<EventManagement> postEvents)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            var result = NidanBusinessService.UpdateEventManagement(organisationId, centreId, personnelId, eventId, postEvents);
             return this.JsonNet(result);
         }
     }

@@ -1,3 +1,63 @@
-﻿<div ng-controller="EventController as model">
-    
+﻿@using Nidan.Extensions
+@model Nidan.Models.EventViewModel
+<div role="tabpanel" class="tab-pane fade active in" id="tab_content_planning" aria-labelledby="home-tab">
+    <p>
+        Planning
+    </p>
+</div>
+<div ng-controller="PlanningController as model" ng-init="model.initialise(@Model.Event.EventId)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        @*<div class="row">
+                                <div class="col-xs-12">
+                                    @Html.Partial("Pagination/_pageSize")
+                                </div>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Sr No.</th>
+                                            <th>Before Planning Answer/Discuss These Question</th>
+                                            <th>Disscussion Completed Y/N</th>
+                                            <th>Reference Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="planning in model.plannings" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="planning.EventQuestionId"></span></td>
+                                            <td><span ng-bind="planning.QuestionDescription"></span></td>
+                                            <td>
+                                                <input type="radio" class="radio" ng-model='planning.EventQuestionAnswerCompleted' id="planningDisscussion{{planning.EventManagementId}}" ng-value="true" name="planningDisscussion{{planning.EventManagementId}}">Yes
+                                                <input type="radio" class="radio" ng-model='planning.EventQuestionAnswerCompleted' id="planningDisscussion_{{planning.EventManagementId}}" ng-value="false" name="planningDisscussion{{planning.EventManagementId}}">No
+                                            </td>
+                                            <td>
+                                                <textarea ng-model='planning.Description' id="referenceDetailTextBox{{planning.EventManagementId}}" name="referenceDetailTextBox{{planning.EventManagementId}}"></textarea>
+                                            </td>
+                                    </tbody>
+                                </table>
+                                @*@Html.Partial("Pagination/_pagination")*@
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <div class="form-group">
+                                @*ng-if="model.paging.totalPages==model.paging.page"*@
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-success" ng-click="model.saveEventPlanning()">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

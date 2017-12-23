@@ -142,6 +142,39 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult EventPlanningList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var planningList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.Planning);
+            if (planningList.Items.Any())
+                return this.JsonNet(planningList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(planningList);
+        }
+
+        [HttpPost]
+        public ActionResult EventDayList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var eventDayList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.EventDay);
+            if (eventDayList.Items.Any())
+                return this.JsonNet(eventDayList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(eventDayList);
+        }
+
+        [HttpPost]
+        public ActionResult PostEventList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var postEventList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.PostEvent);
+            if (postEventList.Items.Any())
+                return this.JsonNet(postEventList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(postEventList);
+        }
+
+        [HttpPost]
         public ActionResult BrainStormingQuestion()
         {
             var organisationId = UserOrganisationId;
