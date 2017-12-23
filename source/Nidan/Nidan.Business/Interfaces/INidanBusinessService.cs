@@ -80,6 +80,7 @@ namespace Nidan.Business.Interfaces
         CompanyBranch CreateCompanyBranch(int organisationId, CompanyBranch companyBranch);
         CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
         CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory);
+        CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
         #endregion
 
         #region Retrieve
@@ -364,6 +365,8 @@ namespace Nidan.Business.Interfaces
         CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         #endregion
 
@@ -423,6 +426,7 @@ namespace Nidan.Business.Interfaces
         Company UpdateCompany(int organisationId, Company company);
         CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
         CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
+        CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
 
         #endregion
 
