@@ -365,7 +365,7 @@ namespace Nidan.Business.Interfaces
         CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
+        CandidatePrePlacementActivity RetrieveAdmission(int organisationId, int candidatePrePlacementActivityId);
         PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         #endregion

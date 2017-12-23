@@ -38,12 +38,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <br />
-                                <br />
-                                <br />
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <input type="button" ng-click="model.searchCandidatePrePlacementActivityByBatchId(item)" value="Search" class="btn btn-primary">
+                                        <input type="button" ng-click="model.retrieveCandidatePrePlacementActivityByBatchId(item)" value="Search" class="btn btn-primary">
                                     </div>
                                 </div>
                             </div>
@@ -74,28 +71,59 @@
                                         {
                                             <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
                                         }
-                                        <th ng-click="model.order('AttendanceDate')" ng-class="model.orderClass('AttendanceDate')">Attendance Date</th>
-                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
-                                        <th ng-click="model.order('InTime')" ng-class="model.orderClass('InTime')">In-Time</th>
-                                        <th ng-click="model.order('OutTime')" ng-class="model.orderClass('OutTime')">Out-Time</th>
-                                        <th ng-click="model.order('SessionName')" ng-class="model.orderClass('SessionName')">Session Name</th>
-                                        <th ng-click="model.order('IsPresent')" ng-class="model.orderClass('IsPresent')">Attendance</th>
+                                        <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate</th>
+                                        <th ng-click="model.order('IsSoftSkill')" ng-class="model.orderClass('IsSoftSkill')">Soft Skill</th>
+                                        <th ng-click="model.order('IsCvMaking')" ng-class="model.orderClass('IsCvMaking')">Cv Making</th>
+                                        <th ng-click="model.order('IsInterviewTechnique')" ng-class="model.orderClass('IsInterviewTechnique')">Interview Technique</th>
+                                        <th ng-click="model.order('IsTechnicaKnowledge')" ng-class="model.orderClass('IsTechnicaKnowledge')">Technical Knowledge</th>
+                                        <th ng-click="model.order('IsMockInterview')" ng-class="model.orderClass('IsMockInterview')">Mock Interview</th>
+                                        <th ng-click="model.order('IsIndustryVisit')" ng-class="model.orderClass('IsIndustryVisit')">Industry Visit</th>
+                                        <th ng-click="model.order('IsOjtOrLiveProject')" ng-class="model.orderClass('IsOjtOrLiveProject')">Ojt/LiveProject</th>
+                                        <th ng-click="model.order('IsCandidateProfiling')" ng-class="model.orderClass('IsCandidateProfiling')">Profiling</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bachtAttendance in model.batchAttendances" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <tr ng-repeat="candidatePrePlacementActivity in model.candidatePrePlacementActivities" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <td><span ng-bind="bachtAttendance.CentreName"></span></td>
                                         }
-                                        <td><span ng-bind="bachtAttendance.AttendanceDate|date : format : shortDate"></span></td>
-                                        <td><span ng-bind="bachtAttendance.CandidateName"></span></td>
-                                        <td><span ng-if="bachtAttendance.IsPresent" ><span ng-bind="bachtAttendance.InHour"></span> : <span ng-bind="bachtAttendance.InMinute"></span> <span ng-bind="bachtAttendance.InTimeSpan"></span></span></td>
-                                        <td><span ng-if="bachtAttendance.IsPresent" ><span ng-bind="bachtAttendance.OutHour"></span> : <span ng-bind="bachtAttendance.OutMinute"></span> <span ng-bind="bachtAttendance.OutTimeSpan"></span></span></td>
-                                        <td><span ng-bind="bachtAttendance.SessionName"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.CandidateName"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsSoftSkill"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsCvMaking"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsInterviewTechnique"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsTechnicaKnowledge"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsMockInterview"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsIndustryVisit"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsOjtOrLiveProject"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsCandidateProfiling"></span></td>
                                         <td>
-                                            <button ng-if="!bachtAttendance.IsPresent" type="button" class="btn btn-round btn-danger btn-xs">Absent</button>
-                                            <button ng-if="bachtAttendance.IsPresent" type="button" class="btn btn-round btn-success btn-xs">Present</button>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/PrePlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                                Pre-Placement
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/FinalPlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                                Final Placement
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/PrePlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                                Post Placement
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>

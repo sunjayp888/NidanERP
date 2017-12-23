@@ -2194,7 +2194,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompanyFollowUpHistoryGrid(organisationId, predicate, orderBy, paging);
         }
 
-        public CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId,
+        public CandidatePrePlacementActivity RetrieveAdmission(int organisationId,
             int candidatePrePlacementActivityId)
         {
             return _nidanDataService.RetrieveCandidatePrePlacementActivity(organisationId, candidatePrePlacementActivityId);
