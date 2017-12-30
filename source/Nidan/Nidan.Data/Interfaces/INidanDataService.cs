@@ -258,6 +258,12 @@ namespace Nidan.Data.Interfaces
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
         PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        AdmissionGrid RetrieveAdmissionGrid(int organisationId, int admissionId, Expression<Func<AdmissionGrid, bool>> predicate);
+        CandidateFinalPlacement RetrieveCandidateFinalPlacement(int organisationId, int candidateFinalPlacementId);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementGrid(int organisationId, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

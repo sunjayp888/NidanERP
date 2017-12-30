@@ -1,0 +1,145 @@
+﻿@model Nidan.Models.CandidatePrePlacementActivityViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Candidate Name</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.CandidateName" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Email</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.EmailId" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Mobile</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Mobile" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Course</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Course" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsSoftSkill, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Soft Skill
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsCvMaking, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        CV Making
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsInterviewTechnique, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Interview Technique
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsTechnicalKnowledge, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Technical Knowledge
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsMockInterview, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Mock Interview
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsIndustryVisit, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Industry Visit
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsOjtOrLiveProject, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Ojt / LiveProject
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-9 col-sm-3 col-xs-12">
+                    <label class="btn btn-info pull-right col-md-8">
+                        @Html.CheckBoxFor(model => model.CandidatePrePlacementActivity.IsCandidateProfiling, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                        Candidate Profiling
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

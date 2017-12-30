@@ -1764,6 +1764,17 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidatePrePlacementActivity>(organisationId, candidatePrePlacementActivity);
         }
 
+        public CandidateFinalPlacement CreateCandidateFinalPlacement(int organisationId,
+            CandidateFinalPlacement candidateFinalPlacement)
+        {
+            return _nidanDataService.Create<CandidateFinalPlacement>(organisationId, candidateFinalPlacement);
+        }
+
+        public CandidatePostPlacement CreateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement)
+        {
+            return _nidanDataService.Create<CandidatePostPlacement>(organisationId, candidatePostPlacement);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2194,7 +2205,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompanyFollowUpHistoryGrid(organisationId, predicate, orderBy, paging);
         }
 
-        public CandidatePrePlacementActivity RetrieveAdmission(int organisationId,
+        public CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId,
             int candidatePrePlacementActivityId)
         {
             return _nidanDataService.RetrieveCandidatePrePlacementActivity(organisationId, candidatePrePlacementActivityId);
@@ -2204,6 +2215,46 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidatePrePlacementActivityGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public AdmissionGrid RetrieveAdmissionGrid(int organisationId, int admissionId, Expression<Func<AdmissionGrid, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveAdmissionGrid(organisationId, admissionId, predicate);
+        }
+
+        public CandidateFinalPlacement RetrieveCandidateFinalPlacement(int organisationId, int candidateFinalPlacementId)
+        {
+            return _nidanDataService.RetrieveCandidateFinalPlacement(organisationId, candidateFinalPlacementId);
+        }
+
+        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementGrid(int organisationId, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateFinalPlacementGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public List<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate)
+        {
+            return _nidanDataService.RetrievePlacementStates(organisationId, predicate).Items.ToList();
+        }
+
+        public List<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCompanies(organisationId, predicate).Items.ToList();
+        }
+
+        public List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCompanyBranches(organisationId, predicate).Items.ToList();
+        }
+
+        public CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId)
+        {
+            return _nidanDataService.RetrieveCandidatePostPlacement(organisationId, candidatePostPlacementId);
+        }
+
+        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePostPlacements(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4535,6 +4586,17 @@ namespace Nidan.Business
         public CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId,CandidatePrePlacementActivity candidatePrePlacementActivity)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePrePlacementActivity);
+        }
+
+        public CandidateFinalPlacement UpdateCandidateFinalPlacement(int organisationId,
+            CandidateFinalPlacement candidateFinalPlacement)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidateFinalPlacement);
+        }
+
+        public CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePostPlacement);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

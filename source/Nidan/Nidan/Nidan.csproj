@@ -257,6 +257,8 @@
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateAssessmentQuestionAnswerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
+    <Compile Include="Controllers\CandidateFinalPlacementController.cs" />
+    <Compile Include="Controllers\CandidatePostPlacementController.cs" />
     <Compile Include="Controllers\CandidatePrePlacementActivityController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CentrePettyCashController.cs" />
@@ -321,6 +323,8 @@
     <Compile Include="Models\CandidateAssessmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
+    <Compile Include="Models\CandidateFinalPlacementViewModel.cs" />
+    <Compile Include="Models\CandidatePostPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePrePlacementActivityViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
@@ -1170,7 +1174,9 @@
     <Content Include="Scripts\Angular\Controllers\BatchPlannerController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidateFinalPlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidatePostPlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementActivityController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
@@ -1239,7 +1245,9 @@
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
+    <Content Include="Scripts\Angular\Services\CandidateFinalPlacementService.js" />
     <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
+    <Content Include="Scripts\Angular\Services\CandidatePostPlacementService.js" />
     <Content Include="Scripts\Angular\Services\CandidatePrePlacementActivityService.js" />
     <Content Include="Scripts\Angular\Services\CentrePettyCashService.js" />
     <Content Include="Scripts\Angular\Services\CompanyFollowUpHistoryService.js" />
@@ -1840,6 +1848,15 @@
     <Content Include="Views\CompanyFollowUp\Edit.cshtml" />
     <Content Include="Views\CompanyFollowUp\_CompanyFollowUpHistory.cshtml" />
     <Content Include="Views\CandidatePrePlacementActivity\Index.cshtml" />
+    <Content Include="Views\CandidatePrePlacementActivity\Create.cshtml" />
+    <Content Include="Views\CandidatePrePlacementActivity\_CandidatePrePlacementActivity.cshtml" />
+    <Content Include="Views\CandidatePrePlacementActivity\Edit.cshtml" />
+    <Content Include="Views\CandidateFinalPlacement\Create.cshtml" />
+    <Content Include="Views\CandidateFinalPlacement\_CandidateFinalPlacement.cshtml" />
+    <Content Include="Views\CandidateFinalPlacement\Index.cshtml" />
+    <Content Include="Views\CandidatePostPlacement\Index.cshtml" />
+    <Content Include="Views\CandidatePostPlacement\Create.cshtml" />
+    <Content Include="Views\CandidatePostPlacement\_CandidatePostPlacement.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

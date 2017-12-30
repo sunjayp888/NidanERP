@@ -7,10 +7,10 @@ using Nidan.Entity;
 
 namespace Nidan.Models
 {
-    public class CandidatePrePlacementActivityViewModel : BaseViewModel
+    public class CandidateFinalPlacementViewModel : BaseViewModel
     {
         public Admission Admission { get; set; }
-        public CandidatePrePlacementActivity CandidatePrePlacementActivity { get; set; }
+        public CandidateFinalPlacement CandidateFinalPlacement { get; set; }
         public Batch Batch { get; set; }
         public SelectList Batches { get; set; }
         public int AdmissionId { get; set; }
@@ -19,5 +19,8 @@ namespace Nidan.Models
         public long Mobile { get; set; }
         public string EmailId { get; set; }
         public string Course { get; set; }
+        public SelectList Companies { get; set; }
+        public SelectList CompanyBranches { get; set; }
+        public SelectList PlacementStates { get; set; }
     }
 }

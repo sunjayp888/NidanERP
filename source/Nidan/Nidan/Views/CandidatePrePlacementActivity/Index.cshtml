@@ -75,7 +75,7 @@
                                         <th ng-click="model.order('IsSoftSkill')" ng-class="model.orderClass('IsSoftSkill')">Soft Skill</th>
                                         <th ng-click="model.order('IsCvMaking')" ng-class="model.orderClass('IsCvMaking')">Cv Making</th>
                                         <th ng-click="model.order('IsInterviewTechnique')" ng-class="model.orderClass('IsInterviewTechnique')">Interview Technique</th>
-                                        <th ng-click="model.order('IsTechnicaKnowledge')" ng-class="model.orderClass('IsTechnicaKnowledge')">Technical Knowledge</th>
+                                        <th ng-click="model.order('IsTechnicalKnowledge')" ng-class="model.orderClass('IsTechnicalKnowledge')">Technical Knowledge</th>
                                         <th ng-click="model.order('IsMockInterview')" ng-class="model.orderClass('IsMockInterview')">Mock Interview</th>
                                         <th ng-click="model.order('IsIndustryVisit')" ng-class="model.orderClass('IsIndustryVisit')">Industry Visit</th>
                                         <th ng-click="model.order('IsOjtOrLiveProject')" ng-class="model.orderClass('IsOjtOrLiveProject')">Ojt/LiveProject</th>
@@ -87,13 +87,13 @@
                                     <tr ng-repeat="candidatePrePlacementActivity in model.candidatePrePlacementActivities" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <td><span ng-bind="bachtAttendance.CentreName"></span></td>
+                                            <td><span ng-bind="candidatePrePlacementActivity.CentreName"></span></td>
                                         }
                                         <td><span ng-bind="candidatePrePlacementActivity.CandidateName"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsSoftSkill"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsCvMaking"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsInterviewTechnique"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsTechnicaKnowledge"></span></td>
+                                        <td><span ng-bind="candidatePrePlacementActivity.IsTechnicalKnowledge"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsMockInterview"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsIndustryVisit"></span></td>
                                         <td><span ng-bind="candidatePrePlacementActivity.IsOjtOrLiveProject"></span></td>
@@ -107,17 +107,22 @@
                                                     @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/PrePlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementActivityId==null" ng-href="/CandidatePrePlacementActivity/Create/{{candidatePrePlacementActivity.AdmissionId}}">
                                                                 Pre-Placement
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/FinalPlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementActivityId!=null" ng-href="/CandidatePrePlacementActivity/Edit/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                                Pre-Placement
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/CandidateFinalPlacement/Create/{{candidatePrePlacementActivity.AdmissionId}}">
                                                                 Final Placement
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/CandidatePrePlacementActivity/PrePlacementActivity/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                            <a style="cursor: pointer;" ng-href="/CandidatePostPlacement/Create/{{candidatePrePlacementActivity.AdmissionId}}">
                                                                 Post Placement
                                                             </a>
                                                         </li>

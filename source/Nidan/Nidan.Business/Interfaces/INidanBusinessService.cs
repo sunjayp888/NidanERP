@@ -81,6 +81,8 @@ namespace Nidan.Business.Interfaces
         CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
         CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory);
         CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
+        CandidateFinalPlacement CreateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
+        CandidatePostPlacement CreateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         #endregion
 
         #region Retrieve
@@ -365,9 +367,16 @@ namespace Nidan.Business.Interfaces
         CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        CandidatePrePlacementActivity RetrieveAdmission(int organisationId, int candidatePrePlacementActivityId);
+        CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
         PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        AdmissionGrid RetrieveAdmissionGrid(int organisationId, int admissionId, Expression<Func<AdmissionGrid, bool>> predicate);
+        CandidateFinalPlacement RetrieveCandidateFinalPlacement(int organisationId, int candidateFinalPlacementId);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementGrid(int organisationId, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate);
+        List<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate);
+        List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate);
+        CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update
@@ -427,7 +436,8 @@ namespace Nidan.Business.Interfaces
         CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
         CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
         CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
-
+        CandidateFinalPlacement UpdateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
+        CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         #endregion
 
         #region Delete

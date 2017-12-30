@@ -1,4 +1,4 @@
-﻿@model Nidan.Models.CompanyViewModel
+﻿@model Nidan.Models.CandidatePrePlacementActivityViewModel
 @{
     ViewBag.Title = "Create";
 }
@@ -7,12 +7,14 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create Company <small></small></h2>
+                <h2>Create Candidate Pre-Placement Activity <small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
+                    @Html.HiddenFor(model => model.CandidatePrePlacementActivity.AdmissionId)
+                    @Html.HiddenFor(model => model.CandidatePrePlacementActivity.BatchId)
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -23,7 +25,7 @@
                                 </div>
                             </div>
                         }
-                        @Html.Partial("_Company", Model)
+                        @Html.Partial("_CandidatePrePlacementActivity", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
@@ -37,3 +39,4 @@
         </div>
     </div>
 </div>
+

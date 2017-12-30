@@ -1,0 +1,90 @@
+﻿@model Nidan.Models.CandidateFinalPlacementViewModel
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Candidate Name</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.CandidateName" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Email</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.EmailId" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Mobile</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Mobile" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Course</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Course" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.CandidateFinalPlacement.CompanyId, "Company", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CandidateFinalPlacement.CompanyId, Model.Companies, "Select Company", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFinalPlacement.CompanyId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.CandidateFinalPlacement.CompanyBranchId, "Company Branch", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CandidateFinalPlacement.CompanyBranchId, Model.CompanyBranches, "Select Company Branch", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFinalPlacement.CompanyBranchId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CandidateFinalPlacement.InterviewDate, "Interview Date", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.CandidateFinalPlacement.InterviewDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.CandidateFinalPlacement.InterviewDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group ">
+    @Html.LabelFor(model => model.CandidateFinalPlacement.PlacementStatusId, "Placement Status", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CandidateFinalPlacement.PlacementStatusId, Model.PlacementStates, "Select Placement Status", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFinalPlacement.PlacementStatusId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.Label("", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-7 col-sm-3 col-xs-12">
+        <label class="btn btn-info pull-right col-md-6">
+            @Html.CheckBoxFor(model => model.CandidateFinalPlacement.IsFinalPlacementDone, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+            Final Placement Done
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CandidateFinalPlacement.Remark, "Remark", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.EditorFor(model => model.CandidateFinalPlacement.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFinalPlacement.Remark, "", new { @class = "help-block" })
+    </div>
+</div>

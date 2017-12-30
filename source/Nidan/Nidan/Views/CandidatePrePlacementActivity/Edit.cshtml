@@ -1,15 +1,11 @@
-﻿@model Nidan.Models.CompanyViewModel
+﻿@model Nidan.Models.CandidatePrePlacementActivityViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Create Company <small></small></h2>
-                <div class="clearfix"></div>
-            </div>
             <div class="x_content">
                 @using (Html.BeginForm())
                 {
@@ -22,8 +18,12 @@
                                     @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
                                 </div>
                             </div>
+
                         }
-                        @Html.Partial("_Company", Model)
+                        @Html.HiddenFor(model => Model.CandidatePrePlacementActivity.CandidatePrePlacementActivityId)
+                        @Html.HiddenFor(model => model.CandidatePrePlacementActivity.AdmissionId)
+                        @Html.HiddenFor(model => model.CandidatePrePlacementActivity.BatchId)
+                        @Html.Partial("_CandidatePrePlacementActivity", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
@@ -36,4 +36,9 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
 </div>

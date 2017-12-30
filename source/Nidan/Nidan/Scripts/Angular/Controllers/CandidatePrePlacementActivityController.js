@@ -18,7 +18,6 @@
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
-        //vm.editCandidatePrePlacementActivity = editCandidatePrePlacementActivity;
         vm.searchCandidatePrePlacementActivity = searchCandidatePrePlacementActivity;
         vm.searchCandidatePrePlacementActivityByDate = searchCandidatePrePlacementActivityByDate;
         vm.searchKeyword = "";
@@ -29,16 +28,16 @@
         vm.batchId;
 
         function initialise() {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             retrieveBatches();
-            order("CreatedDate");
+            order("AdmissionId");
         }
 
         function retrieveCandidatePrePlacementActivityByBatchId(batchId) {
             vm.batchId = batchId;
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             return CandidatePrePlacementActivityService.retrieveCandidatePrePlacementActivityByBatchId(vm.batchId,vm.paging, vm.orderBy)

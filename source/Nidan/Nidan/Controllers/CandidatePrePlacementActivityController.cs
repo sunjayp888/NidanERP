@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
@@ -18,6 +19,7 @@ namespace Nidan.Controllers
         {
             _nidanBusinessService = nidanBusinessService;
         }
+
         // GET: CandidatePrePlacementActivity
         public ActionResult Index()
         {
@@ -29,42 +31,92 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
             id = id ?? 0;
-            var admission = NidanBusinessService.RetrieveAdmission(organisationId, id.Value);
+            var admission = _nidanBusinessService.RetrieveAdmissionGrid(organisationId, id.Value,e=>true);
             var viewModel = new CandidatePrePlacementActivityViewModel
             {
+                AdmissionId=id.Value,
+                BatchId=admission.BatchId??0,
+                CandidateName=admission.CandidateName,
+                Mobile=admission.Mobile,
+                EmailId=admission.EmailId,
+                Course=admission.CourseName,
                 CandidatePrePlacementActivity = new CandidatePrePlacementActivity()
                 {
-                    AdmissionId = admission.AdmissionId,
+                    AdmissionId =id.Value,
+                    BatchId=admission.BatchId??0
                 }
             };
             return View(viewModel);
         }
 
-        // POST: Counselling/Create
+        // POST: CandidatePrePlacementActivity/Create
         [Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CounsellingViewModel counsellingViewModel)
+        public ActionResult Create(CandidatePrePlacementActivityViewModel candidatePrePlacementActivityViewModel)
         {
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
+            var centreId = UserCentreId;
             if (ModelState.IsValid)
             {
-                counsellingViewModel.Counselling.OrganisationId = organisationId;
-                counsellingViewModel.Counselling.PersonnelId = personnelId;
-                counsellingViewModel.Counselling.CreatedBy = UserPersonnelId;
-                counsellingViewModel.Counselling.CentreId = UserCentreId;
-                counsellingViewModel.Counselling.CreatedBy = personnelId;
-                counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId, counsellingViewModel.Counselling);
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.OrganisationId = organisationId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.CreatedBy = personnelId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.CentreId = centreId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity = _nidanBusinessService.CreateCandidatePrePlacementActivity(organisationId, candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity);
                 return RedirectToAction("Index");
             }
-            counsellingViewModel.Courses = new SelectList(
-                NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
-            counsellingViewModel.Sectors = new SelectList(
-                NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
-            return View(counsellingViewModel);
+            return View(candidatePrePlacementActivityViewModel);
+        }
+
+        // GET: CandidatePrePlacementActivity/Edit/{id}
+        public ActionResult Edit(int? id)
+
+        {
+            var organisationId = UserOrganisationId;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var candidatePrePlacementActivity = _nidanBusinessService.RetrieveCandidatePrePlacementActivity(organisationId, id.Value);
+            if (candidatePrePlacementActivity == null)
+            {
+                return HttpNotFound();
+            }
+            var admission = _nidanBusinessService.RetrieveAdmissionGrid(organisationId,candidatePrePlacementActivity.AdmissionId, e => true);
+            var viewModel = new CandidatePrePlacementActivityViewModel()
+            {
+                CandidatePrePlacementActivity = candidatePrePlacementActivity,
+                CandidateName = admission.CandidateName,
+                Mobile = admission.Mobile,
+                EmailId = admission.EmailId,
+                Course = admission.CourseName,
+            };
+            return View(viewModel);
+        }
+
+        // POST: CandidatePrePlacementActivity/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CandidatePrePlacementActivityViewModel candidatePrePlacementActivityViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            if (ModelState.IsValid)
+            {
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.OrganisationId = organisationId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.CentreId = centreId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity.CreatedBy = personnelId;
+                candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity = NidanBusinessService.UpdateCandidatePrePlacementActivity(UserOrganisationId, candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity);
+                return RedirectToAction("Index");
+            }
+            var viewModel = new CandidatePrePlacementActivityViewModel
+            {
+                CandidatePrePlacementActivity = candidatePrePlacementActivityViewModel.CandidatePrePlacementActivity
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -77,14 +129,13 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
-        //CandidatePrePlacementActivityByBatchId
         [HttpPost]
         public ActionResult CandidatePrePlacementActivityByBatchId(int batchId, Paging paging, List<OrderBy> orderBy)
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCandidatePrePlacementActivityGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId)&& e.BatchId==batchId,orderBy,paging);
+            var data = NidanBusinessService.RetrieveCandidatePrePlacementActivityGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId==batchId,orderBy,paging);
             return this.JsonNet(data);
         }
     }
