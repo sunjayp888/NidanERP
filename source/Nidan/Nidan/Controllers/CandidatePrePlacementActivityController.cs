@@ -138,5 +138,15 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCandidatePrePlacementActivityGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId==batchId,orderBy,paging);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveCandidatePrePlacementActivityBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

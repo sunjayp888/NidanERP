@@ -87,5 +87,10 @@ namespace Nidan.Entity
         [Column(Order = 14)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
+
+        [Key]
+        [Column(Order = 15)]
+        [StringLength(1700)]
+        public string SearchField { get; set; }
     }
 }

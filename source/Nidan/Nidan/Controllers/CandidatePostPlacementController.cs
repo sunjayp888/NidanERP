@@ -103,5 +103,15 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCandidatePostPlacements(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionId == admissionId, orderBy, paging);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveCandidatePostPlacementBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

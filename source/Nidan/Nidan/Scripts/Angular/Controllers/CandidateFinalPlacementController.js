@@ -44,7 +44,7 @@
             vm.orderBy.class = "asc";
             return CandidateFinalPlacementService.retrieveCandidateFinalPlacementByBatchId(vm.batchId, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.candidateFinalPlacements = response.data.Items;
+                    vm.candidateFinalPlacements = response.data;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.candidateFinalPlacements.length === 0 ? "No Records Found" : "";
@@ -58,7 +58,7 @@
             vm.toDate = null;
             return CandidateFinalPlacementService.searchCandidateFinalPlacement(vm.searchKeyword, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.candidateFinalPlacements = response.data.Items;
+                    vm.candidateFinalPlacements = response.data;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.candidateFinalPlacements.length === 0 ? "No Records Found" : "";

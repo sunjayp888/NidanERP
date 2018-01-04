@@ -9,6 +9,16 @@
                 Candidate Post Placement<small></small>
             </h3>
         </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCandidatePrePlacementActivity(searchField)" class="form-control" placeholder="Search for Post Placement...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchCandidatePrePlacementActivity(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -76,7 +86,7 @@
                                         <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Feedback Date</th>
                                         <th ng-click="model.order('Feedback')" ng-class="model.orderClass('Feedback')">Feedback</th>
                                         <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('CreatedBy')">Created By</th>
-                                        <th>Action</th>
+                                        @*<th>Action</th>*@
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -90,7 +100,7 @@
                                         <td><span ng-bind="candidatePostPlacement.CreatedDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidatePostPlacement.Feedback"></span></td>
                                         <td><span ng-bind="candidatePostPlacement.CreatedBy"></span></td>
-                                        <td>
+                                        @*<td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
                                                     <i class="fa fa-chevron-down"></i>
@@ -106,7 +116,7 @@
                                                     }
                                                 </ul>
                                             </div>
-                                        </td>
+                                        </td>*@
                                     </tr>
                                     </tbody>
                                 </table>

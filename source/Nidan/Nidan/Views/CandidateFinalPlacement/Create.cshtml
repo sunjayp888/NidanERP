@@ -4,42 +4,47 @@
     ViewBag.Title = "Create";
 }
 
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Create Candidate Final Placement<small></small></h2>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                @using (Html.BeginForm())
-                {
-                    @Html.HiddenFor(model => model.CandidateFinalPlacement.AdmissionId)
-                    @Html.HiddenFor(model => model.CandidateFinalPlacement.BatchId)
-                    @Html.AntiForgeryToken()
-                    <div class="form-horizontal">
-                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
-                        {
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+@if (!Model.CandidateFinalPlacement.IsFinalPlacementDone)
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Create Candidate Final Placement<small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(model => model.CandidateFinalPlacement.AdmissionId)
+                        @*@Html.HiddenFor(model => model.CandidateFinalPlacement.)*@
+                        @Html.HiddenFor(model => model.CandidateFinalPlacement.BatchId)
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                        @Html.Partial("_CandidateFinalPlacement", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                            }
+                            @Html.Partial("_CandidateFinalPlacement", Model)
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" ng-disabled="disabled" class="btn btn-success">Submit</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
 @*Placement List*@
 <div class="row" ng-controller="CandidateFinalPlacementController as model" ng-init="model.retrieveCandidateFinalPlacementByAdmissionId(@Model.AdmissionId)">
     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -103,6 +108,7 @@
 </div>
 @section scripts {
     <script>
+        $('#CandidateFinalPlacement_Remark').val("");
         var daterangepickerOptions = {
             autoApply: true,
             singleDatePicker: true,
@@ -126,6 +132,8 @@
                         $(this).val(picker.startDate.format('DD MMMM YYYY'));
                     });
         });
+
+
     </script>
 }
 

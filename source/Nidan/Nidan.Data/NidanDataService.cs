@@ -4473,6 +4473,106 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidatePostPlacementGrid>("SearchCandidatePostPlacement @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidatePostPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidateFinalPlacementGrid>("SearchCandidateFinalPlacement @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFinalPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CandidateFinalPlacement> RetrieveCandidateFinalPlacements(int organisationId, Expression<Func<CandidateFinalPlacement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateFinalPlacements
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFinalPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword,Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidatePrePlacementActivityGrid>("SearchCandidatePrePlacementActivity @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidatePrePlacementActivityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)

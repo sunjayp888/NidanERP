@@ -264,6 +264,10 @@ namespace Nidan.Data.Interfaces
         PagedResult<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId);
         PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacement> RetrieveCandidateFinalPlacements(int organisationId, Expression<Func<CandidateFinalPlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

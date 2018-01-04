@@ -14,6 +14,7 @@ namespace Nidan.Models
         public Batch Batch { get; set; }
         public SelectList Batches { get; set; }
         public int AdmissionId { get; set; }
+        public int CandidateFinalPlacementId { get; set; }
         public int BatchId { get; set; }
         public string CandidateName { get; set; }
         public long Mobile { get; set; }

@@ -9,6 +9,16 @@
                 Candidate Preplacement Activity<small></small>
             </h3>
         </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCandidatePrePlacementActivity(searchField)" class="form-control" placeholder="Search for Pre Placement...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchCandidatePrePlacementActivity(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -90,14 +100,38 @@
                                             <td><span ng-bind="candidatePrePlacementActivity.CentreName"></span></td>
                                         }
                                         <td><span ng-bind="candidatePrePlacementActivity.CandidateName"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsSoftSkill"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsCvMaking"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsInterviewTechnique"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsTechnicalKnowledge"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsMockInterview"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsIndustryVisit"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsOjtOrLiveProject"></span></td>
-                                        <td><span ng-bind="candidatePrePlacementActivity.IsCandidateProfiling"></span></td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsSoftSkill">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsSoftSkill">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsCvMaking">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsCvMaking">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsInterviewTechnique">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsInterviewTechnique">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsTechnicalKnowledge">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsTechnicalKnowledge">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsMockInterview">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsMockInterview">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsIndustryVisit">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsIndustryVisit">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsOjtOrLiveProject">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsOjtOrLiveProject">No</span>
+                                        </td>
+                                        <td>
+                                            <span ng-if="candidatePrePlacementActivity.IsCandidateProfiling">Yes</span>
+                                            <span ng-if="!candidatePrePlacementActivity.IsCandidateProfiling">No</span>
+                                        </td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
@@ -122,7 +156,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/CandidatePostPlacement/Create/{{candidatePrePlacementActivity.AdmissionId}}">
+                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.IsPostPlacementDone=='No'" ng-href="/CandidatePostPlacement/Create/{{candidatePrePlacementActivity.AdmissionId}}">
                                                                 Post Placement
                                                             </a>
                                                         </li>

@@ -34,6 +34,19 @@ namespace Nidan.Controllers
             var companies = _nidanBusinessService.RetrieveCompanies(organisationId, e => true);
             var companyBranches = _nidanBusinessService.RetrieveCompanyBranches(organisationId, e => true);
             var placementStates = _nidanBusinessService.RetrievePlacementStates(organisationId, e => true);
+            var candidateFinalPlacementLastRecord = _nidanBusinessService.RetrieveCandidateFinalPlacements(organisationId, e => e.AdmissionId == id.Value).Items.LastOrDefault();
+            var candidatefinalPlacement = candidateFinalPlacementLastRecord.CandidateFinalPlacementId != null
+                ? new CandidateFinalPlacement()
+                {
+                    AdmissionId = id.Value,
+                    BatchId = admission.BatchId ?? 0,
+                    IsFinalPlacementDone=candidateFinalPlacementLastRecord.IsFinalPlacementDone
+                }
+                : new CandidateFinalPlacement()
+                {
+                    AdmissionId = id.Value,
+                    BatchId = admission.BatchId ?? 0
+                };
             var viewModel = new CandidateFinalPlacementViewModel
             {
                 AdmissionId = id.Value,
@@ -42,14 +55,11 @@ namespace Nidan.Controllers
                 Mobile = admission.Mobile,
                 EmailId = admission.EmailId,
                 Course = admission.CourseName,
+                //CandidateFinalPlacementId = candidateFinalPlacementLastRecord?.CandidateFinalPlacementId ?? 0,
                 Companies = new SelectList(companies, "CompanyId", "Name"),
                 CompanyBranches = new SelectList(companyBranches, "CompanyBranchId", "CompanyBranchName"),
                 PlacementStates = new SelectList(placementStates, "PlacementStatusId", "Name"),
-                CandidateFinalPlacement = new CandidateFinalPlacement()
-                {
-                    AdmissionId = id.Value,
-                    BatchId = admission.BatchId ?? 0
-                }
+                CandidateFinalPlacement = candidatefinalPlacement
             };
             return View(viewModel);
         }
@@ -93,8 +103,12 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId == batchId, orderBy, paging);
-            return this.JsonNet(data);
+            var data = NidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId == batchId, orderBy, paging).Items.LastOrDefault();
+            var result = new List<CandidateFinalPlacementGrid>
+            {
+                data
+            };
+            return this.JsonNet(result);
         }
 
         [HttpPost]
@@ -105,6 +119,20 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionId == admissionId, orderBy, paging);
             return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveCandidateFinalPlacementBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging).Items.LastOrDefault();
+            var result = new List<CandidateFinalPlacementGrid>
+            {
+                data
+            };
+            return this.JsonNet(result);
         }
     }
 }

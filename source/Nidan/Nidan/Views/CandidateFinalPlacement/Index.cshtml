@@ -9,6 +9,16 @@
                 Candidate Final Placement<small></small>
             </h3>
         </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchCandidateFinalPlacement(searchField)" class="form-control" placeholder="Search for Final Placement...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchCandidateFinalPlacement(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -107,7 +117,7 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/CandidatePostPlacement/Create/{{candidateFinalPlacement.AdmissionId}}">
+                                                                <a style="cursor: pointer;" ng-if="candidateFinalPlacement.IsPostPlacementDone=='No'" ng-href="/CandidatePostPlacement/Create/{{candidateFinalPlacement.AdmissionId}}">
                                                                     Post Placement
                                                                 </a>
                                                             </li>

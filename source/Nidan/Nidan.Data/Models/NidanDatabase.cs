@@ -2989,23 +2989,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidatePrePlacementActivity>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
-                .Property(e => e.BatchName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<AdmissionGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -3055,6 +3039,46 @@ namespace Nidan.Data.Models
                 .WithRequired(e => e.PlacementState)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<CandidatePostPlacement>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacement>()
+                .Property(e => e.Feedback)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.CompanyName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.CompanyBranchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.Feedback)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePostPlacementGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
             modelBuilder.Entity<CandidateFinalPlacementGrid>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
@@ -3087,40 +3111,36 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacement>()
-                .Property(e => e.StudentCode)
+            modelBuilder.Entity<CandidateFinalPlacementGrid>()
+                .Property(e => e.IsPostPlacementDone)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacement>()
-                .Property(e => e.Feedback)
+            modelBuilder.Entity<CandidateFinalPlacementGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
                 .Property(e => e.BatchName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
-                .Property(e => e.CompanyName)
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.StudentCode)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
-                .Property(e => e.CompanyBranchName)
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.CandidateName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
-                .Property(e => e.Feedback)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePostPlacementGrid>()
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.IsPostPlacementDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

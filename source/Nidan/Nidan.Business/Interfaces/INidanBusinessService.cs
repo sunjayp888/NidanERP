@@ -377,6 +377,10 @@ namespace Nidan.Business.Interfaces
         List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate);
         CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId);
         PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacement> RetrieveCandidateFinalPlacements(int organisationId, Expression<Func<CandidateFinalPlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update
