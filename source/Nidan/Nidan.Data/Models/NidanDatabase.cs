@@ -188,6 +188,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidateFinalPlacementGrid> CandidateFinalPlacementGrids { get; set; }
         public virtual DbSet<CandidatePostPlacement> CandidatePostPlacements { get; set; }
         public virtual DbSet<CandidatePostPlacementGrid> CandidatePostPlacementGrids { get; set; }
+        public virtual DbSet<CompanyGrid> CompanyGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2962,22 +2963,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Remark)
                 .IsFixedLength();
 
-            modelBuilder.Entity<CompanyFollowUpGrid>()
-                .Property(e => e.CompanyBranchName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CompanyFollowUpGrid>()
-                .Property(e => e.CompanyName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CompanyFollowUpGrid>()
-                .Property(e => e.Remark)
-                .IsFixedLength();
-
-            modelBuilder.Entity<CompanyFollowUpGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
             modelBuilder.Entity<CompanyFollowUpHistoryGrid>()
                 .Property(e => e.Remark)
                 .IsUnicode(false);
@@ -3141,6 +3126,38 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidatePrePlacementActivityGrid>()
                 .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CompanyBranchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CompanyName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.Remark)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CompanyFollowUpGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyGrid>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyGrid>()
+                .Property(e => e.Location)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CompanyGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

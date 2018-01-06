@@ -159,6 +159,7 @@
     <Compile Include="CompanyFollowUpGrid.cs" />
     <Compile Include="CompanyFollowUpHistory.cs" />
     <Compile Include="CompanyFollowUpHistoryGrid.cs" />
+    <Compile Include="CompanyGrid.cs" />
     <Compile Include="Counselling.cs" />
     <Compile Include="CounsellingDataGrid.cs" />
     <Compile Include="CounsellingSearchField.cs" />

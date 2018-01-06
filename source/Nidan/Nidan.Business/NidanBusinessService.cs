@@ -2164,9 +2164,9 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompany(organisationId, companyId);
         }
 
-        public PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CompanyGrid> RetrieveCompanyGrid(int organisationId, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveCompanies(organisationId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveCompanyGrid(organisationId, predicate, orderBy, paging);
         }
 
         public EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate)
@@ -2239,7 +2239,7 @@ namespace Nidan.Business
 
         public List<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate)
         {
-            return _nidanDataService.RetrieveCompanies(organisationId, predicate).Items.ToList();
+            return _nidanDataService.RetrieveCompanyGrid(organisationId, predicate).Items.ToList();
         }
 
         public List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate)
@@ -2277,6 +2277,18 @@ namespace Nidan.Business
             Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidatePrePlacementActivityBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyFollowUpGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanyFollowUpBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CompanyGrid> RetrieveCompanyBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCompanyBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
