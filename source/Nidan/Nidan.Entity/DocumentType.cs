@@ -37,6 +37,8 @@ namespace Nidan.Entity
 
         public bool IsBankDepositeDocument { get; set; }
 
+        public bool IsPlacement { get; set; }
+
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }

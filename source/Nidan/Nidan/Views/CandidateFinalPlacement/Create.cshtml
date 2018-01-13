@@ -17,7 +17,6 @@
                     @using (Html.BeginForm())
                     {
                         @Html.HiddenFor(model => model.CandidateFinalPlacement.AdmissionId)
-                        @*@Html.HiddenFor(model => model.CandidateFinalPlacement.)*@
                         @Html.HiddenFor(model => model.CandidateFinalPlacement.BatchId)
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
@@ -42,6 +41,12 @@
                 </div>
             </div>
         </div>
+    </div>
+}
+@if (Model.CandidateFinalPlacement.IsFinalPlacementDone)
+{
+    <div ng-controller="PlacementDocumentController as model" ng-init="model.initialise(@Model.CandidateFinalPlacement.AdmissionId)">
+        @Html.Partial("_PlacementDocument")
     </div>
 }
 

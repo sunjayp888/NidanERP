@@ -2239,7 +2239,7 @@ namespace Nidan.Business
 
         public List<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate)
         {
-            return _nidanDataService.RetrieveCompanyGrid(organisationId, predicate).Items.ToList();
+            return _nidanDataService.RetrieveCompanynies(organisationId, predicate).Items.ToList();
         }
 
         public List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate)
@@ -4943,6 +4943,26 @@ namespace Nidan.Business
         {
             var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
             var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsBankDepositeDocument);
+            var studentDocumentTypeList = new List<StudentDocument>();
+            foreach (var item in documentTypes)
+            {
+                var result = studentDocuments.FirstOrDefault(e => e.DocumentTypeId == item.DocumentTypeId);
+                studentDocumentTypeList.Add(new StudentDocument()
+                {
+                    DocumentTypeId = item.DocumentTypeId,
+                    Guid = result?.Guid,
+                    StudentCode = studentCode,
+                    IsPending = result == null,
+                    Name = item.Name
+                });
+            }
+            return studentDocumentTypeList;
+        }
+
+        public IEnumerable<StudentDocument> RetrievePlacementDocuments(int organisationId, int centreId, string studentCode)
+        {
+            var studentDocuments = RetrieveDocuments(organisationId, e => e.StudentCode == studentCode).Items.ToList();
+            var documentTypes = RetrieveDocumentTypes(organisationId).Where(e => e.IsPlacement);
             var studentDocumentTypeList = new List<StudentDocument>();
             foreach (var item in documentTypes)
             {

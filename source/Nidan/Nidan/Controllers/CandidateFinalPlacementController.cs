@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
+using Nidan.Document.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
 using Nidan.Extensions;
@@ -14,9 +15,11 @@ namespace Nidan.Controllers
     public class CandidateFinalPlacementController : BaseController
     {
         private readonly INidanBusinessService _nidanBusinessService;
-        public CandidateFinalPlacementController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
+        private readonly IDocumentService _documentService;
+        public CandidateFinalPlacementController(INidanBusinessService nidanBusinessService, IDocumentService documentService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
+            _documentService = documentService;
         }
         // GET: CandidateFinalPlacement
         public ActionResult Index()
@@ -93,7 +96,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveBatches(organisationId, e => isSuperAdmin || e.CentreId == centreId, null);
+            var data = _nidanBusinessService.RetrieveBatches(organisationId, e => isSuperAdmin || e.CentreId == centreId, null);
             return this.JsonNet(data);
         }
 
@@ -103,7 +106,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId == batchId, orderBy, paging).Items.LastOrDefault();
+            var data = _nidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchId == batchId, orderBy, paging).Items.LastOrDefault();
             var result = new List<CandidateFinalPlacementGrid>
             {
                 data
@@ -117,7 +120,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionId == admissionId, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidateFinalPlacementGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.AdmissionId == admissionId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -127,12 +130,39 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveCandidateFinalPlacementBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging).Items.LastOrDefault();
+            var data = _nidanBusinessService.RetrieveCandidateFinalPlacementBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging).Items.LastOrDefault();
             var result = new List<CandidateFinalPlacementGrid>
             {
                 data
             };
             return this.JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult DocumentList(string studentCode)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var data = _nidanBusinessService.RetrievePlacementDocuments(organisationId, centreId, studentCode);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public void CreateDocument(DocumentViewModel documentViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var palcementData = _nidanBusinessService.RetrieveCandidateFinalPlacements(organisationId, e => e.AdmissionId.ToString() == documentViewModel.StudentCode).Items.FirstOrDefault();
+            _documentService.Create(organisationId, centreId,
+                documentViewModel.DocumentTypeId, documentViewModel.StudentCode,
+                palcementData?.Centre.Name, "Placement Document", documentViewModel.Attachment.FileName,
+                documentViewModel.Attachment.InputStream.ToBytes());
+        }
+
+        public ActionResult DownloadDocument(Guid id)
+        {
+            var document = _nidanBusinessService.RetrieveDocument(UserOrganisationId, id);
+            return File(System.IO.File.ReadAllBytes(document.Location), "application/pdf", document.FileName);
         }
     }
 }

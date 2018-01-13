@@ -4534,6 +4534,7 @@ namespace Nidan.Data
 
                 return context
                     .CandidateFinalPlacements
+                    .Include(p=>p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -4622,6 +4623,28 @@ namespace Nidan.Data
                     })
                     .Paginate(paging);
                 return data;
+            }
+        }
+
+        public PagedResult<Company> RetrieveCompanynies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Companies
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
             }
         }
 

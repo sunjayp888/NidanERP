@@ -85,7 +85,7 @@
                                         <th ng-click="model.order('CompanyBranchName')" ng-class="model.orderClass('CompanyBranchName')">Company</th>
                                         <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Feedback Date</th>
                                         <th ng-click="model.order('Feedback')" ng-class="model.orderClass('Feedback')">Feedback</th>
-                                        <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('CreatedBy')">Created By</th>
+                                        <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                         @*<th>Action</th>*@
                                     </tr>
                                     </thead>
@@ -99,7 +99,7 @@
                                         <td><span ng-bind="candidatePostPlacement.CompanyBranchName"></span></td>
                                         <td><span ng-bind="candidatePostPlacement.CreatedDate|date : format : shortDate"></span></td>
                                         <td><span ng-bind="candidatePostPlacement.Feedback"></span></td>
-                                        <td><span ng-bind="candidatePostPlacement.CreatedBy"></span></td>
+                                        <td><span ng-bind="candidatePostPlacement.CreatedByName"></span></td>
                                         @*<td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

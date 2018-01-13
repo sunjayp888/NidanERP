@@ -477,6 +477,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<StudentDocument> RetrieveExpenseDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveFixAssetDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveBankDepositeDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrievePlacementDocuments(int organisationId, int centreId, string studentCode);
 
         #endregion
 

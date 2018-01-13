@@ -1213,6 +1213,7 @@
     <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
     <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
+    <Content Include="Scripts\Angular\Controllers\PlacementDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\PlanningController.js" />
     <Content Include="Scripts\Angular\Controllers\PostEventController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
@@ -1282,6 +1283,7 @@
     <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
+    <Content Include="Scripts\Angular\Services\PlacementDocumentService.js" />
     <Content Include="Scripts\Angular\Services\PlanningService.js" />
     <Content Include="Scripts\Angular\Services\PostEventService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
@@ -1857,6 +1859,7 @@
     <Content Include="Views\CandidatePostPlacement\Index.cshtml" />
     <Content Include="Views\CandidatePostPlacement\Create.cshtml" />
     <Content Include="Views\CandidatePostPlacement\_CandidatePostPlacement.cshtml" />
+    <Content Include="Views\CandidateFinalPlacement\_PlacementDocument.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
