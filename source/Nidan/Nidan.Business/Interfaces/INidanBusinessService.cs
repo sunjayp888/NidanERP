@@ -81,6 +81,8 @@ namespace Nidan.Business.Interfaces
         CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
         CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory);
         CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
+        CandidateFinalPlacement CreateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
+        CandidatePostPlacement CreateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         #endregion
 
         #region Retrieve
@@ -357,7 +359,7 @@ namespace Nidan.Business.Interfaces
         EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate);
         PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Company RetrieveCompany(int organisationId, int companyId);
-        PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CompanyGrid> RetrieveCompanyGrid(int organisationId, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate);
         PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CompanyBranch RetrieveCompanyBranch(int organisationId, int companyBranchId);
@@ -367,6 +369,20 @@ namespace Nidan.Business.Interfaces
         PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
         PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        AdmissionGrid RetrieveAdmissionGrid(int organisationId, int admissionId, Expression<Func<AdmissionGrid, bool>> predicate);
+        CandidateFinalPlacement RetrieveCandidateFinalPlacement(int organisationId, int candidateFinalPlacementId);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementGrid(int organisationId, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate);
+        List<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate);
+        List<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate);
+        CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFinalPlacement> RetrieveCandidateFinalPlacements(int organisationId, Expression<Func<CandidateFinalPlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CompanyGrid> RetrieveCompanyBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         #endregion
 
@@ -427,7 +443,8 @@ namespace Nidan.Business.Interfaces
         CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
         CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
         CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
-
+        CandidateFinalPlacement UpdateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
+        CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         #endregion
 
         #region Delete
@@ -460,6 +477,7 @@ namespace Nidan.Business.Interfaces
         IEnumerable<StudentDocument> RetrieveExpenseDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveFixAssetDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveBankDepositeDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrievePlacementDocuments(int organisationId, int centreId, string studentCode);
 
         #endregion
 

@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
 
-                                <form name="myForm" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Multiple'">
+                                <form name="myForm" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Single'">
                                     <label>
                                         <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionA">
                                         <span ng-bind="candidateAssessment.OptionA"></span>

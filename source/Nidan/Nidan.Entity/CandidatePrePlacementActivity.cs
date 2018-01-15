@@ -29,7 +29,7 @@ namespace Nidan.Entity
 
         public bool IsInterviewTechnique { get; set; }
 
-        public bool IsTechnicaKnowledge { get; set; }
+        public bool IsTechnicalKnowledge { get; set; }
 
         public bool IsMockInterview { get; set; }
 

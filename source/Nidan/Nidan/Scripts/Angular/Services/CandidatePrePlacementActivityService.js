@@ -58,6 +58,5 @@
             var url = "/CandidatePrePlacementActivity/GetBatches";
             return $http.post(url);
         }
-
     }
 })();

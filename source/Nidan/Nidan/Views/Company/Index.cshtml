@@ -63,7 +63,7 @@
                                         <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                         <th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>
                                         <th ng-click="model.order('Location')" ng-class="model.orderClass('Location')">Location</th>
-                                        <th ng-click="model.order('CreatedBy')" ng-class="model.orderClass('CreatedBy')">Created By</th>
+                                        <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -78,7 +78,7 @@
                                         <td><span ng-bind="company.Mobile"></span></td>
                                         <td><span ng-bind="company.EmailId"></span></td>
                                         <td><span ng-bind="company.Location"></span></td>
-                                        <td><span ng-bind="company.CreatedBy"></span></td>
+                                        <td><span ng-bind="company.CreatedByName"></span></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">

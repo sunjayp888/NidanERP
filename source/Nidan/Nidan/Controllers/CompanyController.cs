@@ -134,8 +134,17 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centreId = UserCentreId;
-            var data = _nidanBusinessService.RetrieveCompanies(UserOrganisationId,
+            var data = _nidanBusinessService.RetrieveCompanyGrid(UserOrganisationId,
                 p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = _nidanBusinessService.RetrieveCompanyBySearchKeyword(organisationId, searchKeyword,p => isSuperAdmin, orderBy, paging);
             return this.JsonNet(data);
         }
     }

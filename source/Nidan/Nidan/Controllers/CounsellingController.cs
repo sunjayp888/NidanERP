@@ -86,10 +86,8 @@ namespace Nidan.Controllers
                 counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
-            counsellingViewModel.Courses = new SelectList(
-               NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
-            counsellingViewModel.Sectors = new SelectList(
-               NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
+            counsellingViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
+            counsellingViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
             return View(counsellingViewModel);
         }
 

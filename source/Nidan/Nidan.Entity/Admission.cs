@@ -14,6 +14,9 @@ namespace Nidan.Entity
             AdmissionDate = DateTime.UtcNow.Date;
             CandidateAssessments = new HashSet<CandidateAssessment>();
             CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
+            CandidateFinalPlacements = new HashSet<CandidateFinalPlacement>();
+            CandidatePostPlacements = new HashSet<CandidatePostPlacement>();
+
         }
 
     public int AdmissionId { get; set; }
@@ -52,5 +55,11 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidatePrePlacementActivity> CandidatePrePlacementActivities { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateFinalPlacement> CandidateFinalPlacements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePostPlacement> CandidatePostPlacements { get; set; }
     }
 }
