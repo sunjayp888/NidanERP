@@ -87,6 +87,7 @@
         function searchFollowUpByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return FollowUpService.searchFollowUpByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.followUps = response.data.Items;
@@ -107,6 +108,8 @@
 
         function searchFollowUp(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return FollowUpService.searchFollowUp(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.followUps = response.data.Items;

@@ -39,6 +39,32 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Type", new { @class = "control-label col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-md-10 col-sm-6 col-xs-12">
+                                        <label class="btn btn-info col-md-5">
+                                            @Html.RadioButtonFor(model => model.Centre.CentreType, "Owned", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Centre.CentreType.Owned" })
+                                            Owned
+                                        </label>
+                                        <label class="btn btn-info col-md-5">
+                                            @Html.RadioButtonFor(model => model.Centre.CentreType, "Franchise", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "Centre.CentreType.Franchise" })
+                                            Franchise
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" id="partnerDiv">
+                                    @Html.LabelFor(model => model.Centre.PartnerId, "Partner", new { @class = "control-label col-md-2 col-sm-3 col-xs-12" })
+                                    <div class="col-md-10 col-sm-6 col-xs-12">
+                                        @Html.DropDownListFor(model => model.Centre.PartnerId, Model.Partners, "Select Partner", new { @class = "form-control col-md-7 col-xs-12" })
+                                        @Html.ValidationMessageFor(model => model.Centre.PartnerId, "", new { @class = "help-block" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-md-6">
                                 <div class="item form-group">
                                     @Html.LabelFor(model => model.Centre.Address1, new { @class = "control-label col-md-2 col-sm-6 col-xs-12" })
                                     <div class="col-md-10 col-sm-6 col-xs-12">
@@ -217,7 +243,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -371,7 +397,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -525,7 +551,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -679,7 +705,7 @@
                                             <th ng-click="model.order('MaximumCarryForward')" ng-class="model.orderClass('MaximumCarryForward')">Max Carry Over</th>
                                             <th ng-click="model.order('IsPaid')" ng-class="model.orderClass('IsPaid')">Is Paid</th>
                                             <th ng-click="model.order('IsUnplanned')" ng-class="model.orderClass('IsUnplanned')">UnPlanned</th>*@
-                                        @if (User.IsInAnyRoles("Admin","SuperAdmin"))
+                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                         {
                                             <th>Actions</th>
                                         }
@@ -806,6 +832,72 @@
                     $("#courseInstallmentDropdown").empty();
                     $.each(result, function (key, value) {
                         $("#courseInstallmentDropdown").append($("<option></option>").val(value.CourseInstallmentId).html(value.Name));
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('input:radio[name="Centre.CentreType"]').ready(
+            function () {
+                if (this.checked && this.value == 'Franchise') {
+                    $("#partnerDiv").show();
+                } else {
+                    $("#partnerDiv").hide();
+                }
+            });
+
+        $('input:radio[name="Centre.CentreType"]').change(
+            function () {
+                if (this.checked && this.value == 'Franchise') {
+                    $("#partnerDiv").show();
+                } else {
+                    $("#partnerDiv").hide();
+                }
+            });
+
+        $('#Centre_StateId').change(function () {
+            var stateId = $('#Centre_StateId :selected').val();
+            $.ajax({
+                url: '/Centre/GetDistrict',
+                type: 'POST',
+                data: JSON.stringify({ stateId: stateId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Centre_DistrictId").empty();
+                    $("#Centre_DistrictId").append($("<option></option>").html("Select District"));
+                    $.each(result, function (key, value) {
+                        $("#Centre_DistrictId").append($("<option></option>").val(value.DistrictId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Centre_DistrictId').change(function () {
+            var districtId = $('#Centre_DistrictId :selected').val();
+            $.ajax({
+                url: '/Centre/GetTaluka',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Centre_TalukaId").empty();
+                    $("#Centre_TalukaId").append($("<option></option>").html("Select Taluka"));
+                    $.each(result, function (key, value) {
+                        $("#Centre_TalukaId").append($("<option></option>").val(value.TalukaId).html(value.Name));
+
                     });
                 },
                 async: true,

@@ -10,6 +10,8 @@ using Nidan.Business.Interfaces;
 using Nidan.Entity;
 using Nidan.Extensions;
 using Nidan.Models;
+using EventApproveState = Nidan.Business.Enum.EventApproveState;
+using EventFunctionType = Nidan.Business.Enum.EventFunctionType;
 
 namespace Nidan.Controllers
 {
@@ -33,12 +35,16 @@ namespace Nidan.Controllers
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var viewModel = new EventViewModel
             {
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 Event = new Event()
                 {
                     OrganisationId = UserOrganisationId,
-                },
+                }
             };
             return View(viewModel);
         }
@@ -47,30 +53,36 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Create(EventViewModel eventViewModel)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
             if (ModelState.IsValid)
             {
                 eventViewModel.Event.OrganisationId = UserOrganisationId;
-                eventViewModel.Event.CentreId = UserCentreId;
+                //eventViewModel.Event.CentreId = UserCentreId;
                 eventViewModel.Event.CreatedDateTime = _today;
+                eventViewModel.Event.CreatedBy = UserPersonnelId;
                 eventViewModel.Event = NidanBusinessService.CreateEvent(UserOrganisationId, eventViewModel.Event);
                 return RedirectToAction("Index");
             }
+            eventViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
             return View(eventViewModel);
         }
 
         // GET: Event/Edit
         public ActionResult Edit(int? id)
         {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
-            var brainstorming = NidanBusinessService.RetrieveBrainstormings(organisationId, e => true).Items.ToList();
+            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
             var viewModel = new EventViewModel()
             {
                 Event = eventData,
+                Centres = new SelectList(centres, "CentreId", "Name"),
                 //Brainstorming = brainstorming
             };
             return View(viewModel);
@@ -95,6 +107,23 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        public ActionResult UpdateEventApproveState(int? id, bool approveState)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var organisationId = UserOrganisationId;
+            var eventData = NidanBusinessService.RetrieveEvent(organisationId, id.Value, e => true);
+            if (eventData == null)
+            {
+                return HttpNotFound();
+            }
+            var result = approveState ? eventData.EventApproveStateId = (int)EventApproveState.Approved : eventData.EventApproveStateId = (int)EventApproveState.Declined;
+            NidanBusinessService.UpdateEvent(organisationId, eventData);
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
@@ -105,20 +134,52 @@ namespace Nidan.Controllers
         public ActionResult EventBrainStormingList(int eventId)
         {
             var organisationId = UserOrganisationId;
-            var eventResult = _nidanBusinessService.RetrieveEvent(organisationId, eventId, e => true);
-            var brainStormingList = _nidanBusinessService.RetrieveEventBrainStormingGrid(UserOrganisationId, e => e.CentreId == eventResult.CentreId && e.EventId == eventId);
+            var brainStormingList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.BrainStorming);
             if (brainStormingList.Items.Any())
                 return this.JsonNet(brainStormingList);
-            var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
-            return this.JsonNet(data);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(brainStormingList);
+        }
+
+        [HttpPost]
+        public ActionResult EventPlanningList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var planningList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.Planning);
+            if (planningList.Items.Any())
+                return this.JsonNet(planningList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(planningList);
+        }
+
+        [HttpPost]
+        public ActionResult EventDayList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var eventDayList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.EventDay);
+            if (eventDayList.Items.Any())
+                return this.JsonNet(eventDayList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(eventDayList);
+        }
+
+        [HttpPost]
+        public ActionResult PostEventList(int eventId)
+        {
+            var organisationId = UserOrganisationId;
+            var postEventList = _nidanBusinessService.RetrieveEventManagementGrids(organisationId, e => e.EventId == eventId && e.EventFunctionTypeId == (int)EventFunctionType.PostEvent);
+            if (postEventList.Items.Any())
+                return this.JsonNet(postEventList);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(UserOrganisationId, e => true);
+            return this.JsonNet(postEventList);
         }
 
         [HttpPost]
         public ActionResult BrainStormingQuestion()
         {
             var organisationId = UserOrganisationId;
-            var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
-            return this.JsonNet(data);
+            //var data = _nidanBusinessService.RetrieveBrainstormings(organisationId, e => true);
+            return this.JsonNet(null);
         }
 
 
@@ -131,7 +192,5 @@ namespace Nidan.Controllers
         {
             return PartialView("_BrainStorming");
         }
-
-
     }
 }

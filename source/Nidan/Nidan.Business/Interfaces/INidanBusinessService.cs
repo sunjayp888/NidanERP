@@ -9,7 +9,8 @@ namespace Nidan.Business.Interfaces
 {
     public interface INidanBusinessService
     {
-        //Create
+
+        #region Create
         Personnel CreatePersonnel(int organisationId, Personnel personnel);
         Question CreateQuestion(int organisationId, Question personnel);
         Enquiry CreateEnquiry(int organisationId, int personnelId, Enquiry enquiry, List<int> courseIds);
@@ -26,11 +27,6 @@ namespace Nidan.Business.Interfaces
         Course CreateCourse(int organisationId, Course course);
         CourseInstallment CreateCourseInstallment(int organisationId, CourseInstallment courseInstallment);
         Event CreateEvent(int organisationId, Event eventplan);
-        Brainstorming CreateBrainstorming(int organisationId, Brainstorming brainstorming);
-        Planning CreatePlanning(int organisationId, Planning planning);
-        Budget CreateBudget(int organisationId, Budget budget);
-        Eventday CreateEventday(int organisationId, Eventday eventday);
-        PostEvent CreatePostEvent(int organisationId, PostEvent postEvent);
         Trainer CreatetTrainer(int organisationId, Trainer trainer);
         FollowUp CreateFollowUp(int organisationId, FollowUp followUp);
         Subject CreateSubject(int organisationId, Subject subject, List<int> courseIds, List<int> trainerIds);
@@ -59,12 +55,7 @@ namespace Nidan.Business.Interfaces
         ExpenseProject CreateExpenseProject(int organisationId, ExpenseProject expenseProject);
         Attendance CreateAttendance(int organisationId, int centreId, int personnelId, Attendance attendance);
         BatchAttendance CreateBatchAttendance(int organisationId, int centreId, int personnelId, BatchAttendance batchAttendance);
-        bool CreateEventBrainstorming(int organisationId, int centreId, int eventId, List<EventBrainstorming> eventBrainstorming);
         bool MarkAttendance(int organisationId, int centreId, int personnelId, List<StudentAttendance> attendances, int batchId, int subjectId, int sessionId);
-        bool MarkAsset(int organisationId, List<CentreFixAsset> centreFixAssets, int roomId, DateTime dateofuse);
-        bool MarkAttendance(int organisationId, int centreId, int personnelId, List<AttendanceGrid> attendances, int subjectId, int sessionId);
-        EventBudget CreateEventBudget(int organisationId, EventBudget eventBudget);
-        EventPlanning CreateEventPlanning(int organisationId, EventPlanning eventPlanning);
         CentreReceiptSetting CreateCentreReceiptSetting(int organisationId, CentreReceiptSetting centreReceiptSetting);
         StockPurchase CreateStockPurchase(int organisationId, StockPurchase stockPurchase);
         StockIssue CreateStockIssue(int organisationId, StockIssue stockIssue);
@@ -72,9 +63,27 @@ namespace Nidan.Business.Interfaces
         BatchPlannerDay CreateBatchPlannerDay(int organisationId, BatchPlannerDay batchPlannerDay);
         FixAsset CreateFixAsset(int organisationId, FixAsset fixAsset);
         FixAssetMapping CreateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
-       
+        BankDeposite CreateBankDeposite(int organisationId, BankDeposite bankDeposite);
+        ActivityAssigneeGroup CreateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup);
+        Activity CreateActivity(int organisationId, int personnelId, int centreId, Activity activity);
+        ActivityTask CreateActivityTask(int organisationId, int personnelId, int centreId, ActivityTask activityTask);
+        ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
+        ActivityAssignPersonnel CreateActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
+        ModuleExamSet CreateModuleExamSet(int organisationId, ModuleExamSet moduleExamSet);
+        ModuleExamQuestionSet CreateModuleExamQuestionSet(int organisationId, ModuleExamQuestionSet moduleExamQuestionSet);
+        Assessment CreateAssessment(int organisationId, Assessment assessment);
+        CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
+        CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
+        Partner CreatePartner(int organisationId, Partner partner);
+        EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement);
+        Company CreateCompany(int organisationId, Company company);
+        CompanyBranch CreateCompanyBranch(int organisationId, CompanyBranch companyBranch);
+        CompanyFollowUp CreateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
+        CompanyFollowUpHistory CreateCompanyFollowUpHistory(int organisationId, CompanyFollowUpHistory companyFollowUpHistory);
+        CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
+        #endregion
 
-        // Retrieve
+        #region Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate);
         AbsenceType RetrieveAbsenceType(int organisationId, int absenceTypeId);
@@ -83,13 +92,14 @@ namespace Nidan.Business.Interfaces
         Organisation RetrieveOrganisation(int organisationId);
         IAuthorisation RetrieveUserAuthorisation(string aspNetUserId);
         Permissions RetrievePersonnelPermissions(bool isAdmin, int organisationId, int userPersonnelId, int? personnelId = null);
-        PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
-        Personnel RetrievePersonnel(int organisationId, int id);
+        Personnel RetrievePersonnel(int organisationId, int personnelId, Expression<Func<Personnel, bool>> predicate);
+        //IEnumerable<Personnel> RetrievePersonnel(int organisationId, IEnumerable<int> companyIds, IEnumerable<int> departmentIds, IEnumerable<int> divisionIds);
+        PagedResult<Personnel> RetrievePersonnels(int organisationId, Expression<Func<Personnel, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Personnel RetrievePersonnel(int organisationId, int personnelId);
         PagedResult<PersonnelSearchField> RetrievePersonnelBySearchKeyword(int organisationId, string searchKeyword, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Question> RetrieveQuestions(int organisationId, Expression<Func<Question, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Question RetrieveQuestion(int organisationId, int questionId, Expression<Func<Question, bool>> predicate);
-        List<EventActivityType> RetrieveActivityTypes(int organisationId);
-        PagedResult<Enquiry> RetrieveEnquiries(int organisationId, Expression<Func<Enquiry, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<EnquiryDataGrid> RetrieveEnquiries(int organisationId, Expression<Func<EnquiryDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Enquiry RetrieveEnquiry(int organisationId, int enquiryId, Expression<Func<Enquiry, bool>> predicate);
         Mobilization RetrieveMobilization(int organisationId, int id);
         PagedResult<Mobilization> RetrieveMobilizations(int organisationId, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -99,6 +109,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<AreaOfInterest> RetrieveAreaOfInterests(int organisationId, List<OrderBy> orderBy, Paging paging);
         PagedResult<FollowUp> RetrieveFollowUps(int organisationId, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUp RetrieveFollowUp(int organisationId, int followUpId);
+        PagedResult<FollowUpSearchField> RetrieveFollowUpsData(int organisationId, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<Course> RetrieveCourses(int organisationId, Expression<Func<Course, bool>> predicate);
         List<CourseType> RetrieveCourseTypes(int organisationId, Expression<Func<CourseType, bool>> predicate);
         List<RoomType> RetrieveRoomTypes(int organisationId, Expression<Func<RoomType, bool>> predicate);
@@ -123,6 +134,7 @@ namespace Nidan.Business.Interfaces
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, Expression<Func<CourseInstallment, bool>> predicate);
         List<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate);
         List<AssignType> RetrieveAssignTypes(int organisationId, Expression<Func<AssignType, bool>> predicate);
+        List<AspNetRole> RetrieveAspNetRoles(int organisationId, Expression<Func<AspNetRole, bool>> predicate);
         List<AssetOutState> RetrieveAssetOutStates(int organisationId, Expression<Func<AssetOutState, bool>> predicate);
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -131,6 +143,7 @@ namespace Nidan.Business.Interfaces
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Centre RetrieveCentre(int organisationId, int id);
         PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CounsellingDataGrid> RetrieveCounsellingDataGrid(int organisationId, Expression<Func<CounsellingDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Counselling RetrieveCounselling(int organisationId, int counsellingId, Expression<Func<Counselling, bool>> predicate);
         Counselling RetrieveCounselling(int organisationId, int id);
         Batch RetrieveBatch(int organisationId, int id);
@@ -138,21 +151,8 @@ namespace Nidan.Business.Interfaces
         Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
         List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate);
-        PagedResult<Counselling> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        Brainstorming RetrieveBrainstorming(int organisationId, int id);
-        Brainstorming RetrieveBrainstorming(int organisationId, int brainstormingId, Expression<Func<Brainstorming, bool>> predicate);
-        PagedResult<Brainstorming> RetrieveBrainstormings(int organisationId, Expression<Func<Brainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        Planning RetrievePlanning(int organisationId, int id);
-        Planning RetrievePlanning(int organisationId, int planningId, Expression<Func<Planning, bool>> predicate);
-        PagedResult<Planning> RetrievePlannings(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
-        Budget RetrieveBudget(int organisationId, int id);
-        Budget RetrieveBudget(int organisationId, int budgetId, Expression<Func<Budget, bool>> predicate);
-        PagedResult<Budget> RetrieveBudgets(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
-        Eventday RetrieveEventday(int organisationId, int id);
-        Eventday RetrieveEventday(int organisationId, int eventdayId, Expression<Func<Eventday, bool>> predicate);
-        PagedResult<Eventday> RetrieveEventdays(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
-        PostEvent RetrievePostEvent(int organisationId, int postEventId, Expression<Func<PostEvent, bool>> predicate);
-        PagedResult<PostEvent> RetrievePostEvents(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        List<Centre> RetrieveCentres(int organisationId);
+        PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int id);
         PagedResult<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int trainerId, Expression<Func<Trainer, bool>> predicate);
@@ -178,6 +178,7 @@ namespace Nidan.Business.Interfaces
         Session RetrieveSession(int organisationId, int sessionId, Expression<Func<Session, bool>> predicate);
         Session RetrieveSession(int organisationId, int id);
         List<Subject> RetrieveSubjects(int organisationId, Expression<Func<Subject, bool>> predicate);
+        List<QuestionType> RetrieveQuestionTypes(int organisationId, Expression<Func<QuestionType, bool>> predicate);
         PagedResult<Room> RetrieveRooms(int organisationId, Expression<Func<Room, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Room RetrieveRoom(int organisationId, int roomId, Expression<Func<Room, bool>> predicate);
         Room RetrieveRoom(int organisationId, int id);
@@ -220,9 +221,9 @@ namespace Nidan.Business.Interfaces
         List<AssetClass> RetrieveAssetClasses(int organisationId, Expression<Func<AssetClass, bool>> predicate);
         List<Item> RetrieveItems(int organisationId, Expression<Func<Item, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int centreId, int registraionId);
-        PagedResult<FollowUpHistory> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistory, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FollowUpHistoryData> RetrieveFollowUpHistories(int organisationId, Expression<Func<FollowUpHistoryData, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FollowUpHistory RetrieveFollowUpHistory(int organisationId, int followUpHistoryId, Expression<Func<FollowUpHistory, bool>> predicate);
-        PagedResult<FollowUp> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUp, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FollowUpSearchField> RetrieveFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<FollowUpSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<RegistrationGrid> RetrieveRegistrationBySearchKeyword(int organisationId, Expression<Func<RegistrationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<AdmissionGrid> RetrieveAdmissionBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<AdmissionGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Module RetrieveModule(int organisationId, int id);
@@ -266,22 +267,24 @@ namespace Nidan.Business.Interfaces
         IEnumerable<ExpensePettyCashData> RetrieveExpensePettyCashDataByCentre(int organisationId, int centreId, DateTime startDate, DateTime endDate);
         PagedResult<MobilizationDataGrid> RetrieveMobilizationDataGrid(int organisationId, string searchKeyword, Expression<Func<MobilizationDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<PettyCashExpenseReport> RetrievePettyCashExpenseReports(int organisationId, Expression<Func<PettyCashExpenseReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<EventBrainstorming> RetrieveEventBrainstormings(int organisationId, int centreId, Expression<Func<EventBrainstorming, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        EventBrainstorming RetrieveEventBrainstorming(int organisationId, int centreId, int eventBrainstormingId, Expression<Func<EventBrainstorming, bool>> predicate);
+        PagedResult<Registration> RetrieveRegistrationSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<Registration, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<SummaryReport> RetrieveDownpaymentSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<SummaryReport> RetrieveInstallmentSummaryByDate(int organisationId, int centreId, DateTime date, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        CentreCandidateFeeSummaryReport RetriveCentreCandidateFeeByDate(int organisationId, int centreId, DateTime date);
+        PagedResult<BankDepositeSearchField> RetriveCentreBankDepositeByDate(int organisationId, int centreId, DateTime date);
         IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByDate(int organisationId, int centreId, int year, int month, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<BankDepositeSummaryReport> RetriveBankDepositeReportByDate(int organisationId, int centreId, int year, int month, List<OrderBy> orderBy = null, Paging paging = null);
         Gst RetrieveGst(int organisationId, Expression<Func<Gst, bool>> predicate);
         PagedResult<Gst> RetrieveGsts(int organisationId, Expression<Func<Gst, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        EventBudget RetrieveEventBudget(int organisationId, int centreId, int eventBudgetId, Expression<Func<EventBudget, bool>> predicate);
-        PagedResult<EventBudget> RetrieveEventBudgets(int organisationId, int centreId, Expression<Func<EventBudget, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        EventPlanning RetrieveEventPlanning(int organisationId, int centreId, int eventPlanningId, Expression<Func<EventPlanning, bool>> predicate);
-        PagedResult<EventPlanning> RetrieveEventPlannings(int organisationId, int centreId, Expression<Func<EventPlanning, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CentreReceiptSetting RetrieveCentreReceiptSetting(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate);
         PagedResult<CentreReceiptSetting> RetrieveCentreReceiptSettings(int organisationId, Expression<Func<CentreReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CentreEnrollmentReceiptSetting> RetrieveCentreEnrollmentReceiptSettings(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CentreEnrollmentReceiptSetting RetrieveCentreEnrollmentReceiptSetting(int organisationId, Expression<Func<CentreEnrollmentReceiptSetting, bool>> predicate);
         PagedResult<BiometricAttendanceGrid> RetrieveBiometricAttendanceGrid(int organisationId, Expression<Func<BiometricAttendanceGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<EventBrainStormingGrid> RetrieveEventBrainStormingGrid(int organisationId, Expression<Func<EventBrainStormingGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<StockPurchase> RetrieveStockPurchases(int organisationId, int centreId, Expression<Func<StockPurchase, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         StockPurchase RetrieveStockPurchase(int organisationId, int centreId, int stockPurchaseId, Expression<Func<StockPurchase, bool>> predicate);
         PagedResult<StockIssue> RetrieveStockIssues(int organisationId, int centreId, Expression<Func<StockIssue, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -300,19 +303,74 @@ namespace Nidan.Business.Interfaces
         FixAsset RetrieveFixAsset(int organisationId, int fixAssetId, Expression<Func<FixAsset, bool>> predicate);
         PagedResult<FixAssetDataGrid> RetrieveFixAssetDataGrid(int organisationId, Expression<Func<FixAssetDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<StudentKit> RetrieveStudentKits(int organisationId, Expression<Func<StudentKit, bool>> predicate);
-
         List<StudentAttendance> RetrieveStudentAttendanceByBatchId(int organisationId, int personnelId, int batchId, DateTime date);
         PagedResult<BatchAttendanceDataGrid> RetrieveBatchAttendanceDataGrid(int organisationId, Expression<Func<BatchAttendanceDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
         PagedResult<FixAsset> RetrieveFixAssets(int organisationId, Expression<Func<FixAsset, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId);
         PagedResult<FixAssetMapping> RetrieveFixAssetMappings(int organisationId, Expression<Func<FixAssetMapping, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         FixAssetMapping RetrieveFixAssetMapping(int organisationId, int fixAssetMappingId);
+        PagedResult<SummaryReport> RetrieveSummaryReports(int organisationId, int centreId, Expression<Func<SummaryReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ExpenseHeadLimit> RetrieveExpenseHeadLimits(int organisationId, int centreId, Expression<Func<ExpenseHeadLimit, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<AvailablePettyCashGrid> RetrieveAvailablePettyCashGrid(int organisationId, Expression<Func<AvailablePettyCashGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BankDepositeSearchField> RetrieveBankDeposites(int organisationId, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BankDeposite RetrieveBankDeposite(int organisationId, int bankDepositeId, Expression<Func<BankDeposite, bool>> predicate);
         PagedResult<FixAssetMappingCountByCentre> RetrieveFixAssetMappingCountByCentre(int organisationId, Expression<Func<FixAssetMappingCountByCentre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FixAssetDetailGrid> RetrieveFixAssetDetailGrid(int organisationId, Expression<Func<FixAssetDetailGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityAssigneeGroup> RetrieveActivityAssigneeGroups(int organisationId, Expression<Func<ActivityAssigneeGroup, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityAssigneeGroup RetrieveActivityAssigneeGroup(int organisationId, int activityAssigneeGroupId, Expression<Func<ActivityAssigneeGroup, bool>> predicate);
+        PagedResult<Activity> RetrieveActivities(int organisationId, Expression<Func<Activity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Activity RetrieveActivity(int organisationId, int activityId, Expression<Func<Activity, bool>> predicate);
+        PagedResult<ActivityTask> RetrieveActivityTasks(int organisationId, Expression<Func<ActivityTask, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityTask RetrieveActivityTask(int organisationId, int activityTaskId, Expression<Func<ActivityTask, bool>> predicate);
+        PagedResult<ActivityTaskState> RetrieveActivityTaskStates(int organisationId, Expression<Func<ActivityTaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ActivityTaskState RetrieveActivityTaskState(int organisationId, int activityTaskStateId, Expression<Func<ActivityTaskState, bool>> predicate);
+        PagedResult<ActivityType> RetrieveActivityTypes(int organisationId, Expression<Func<ActivityType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<TaskState> RetrieveTaskStates(int organisationId, Expression<Func<TaskState, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<Personnel> RetrieveUnassignedPersonnels(int organisationId, int centreId, int personnelId);
+        PagedResult<ActivityAssignPersonnel> RetrieveActivityAssignPersonnels(int organisationId, int centreId, int activityAssigneeGroupId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityDataGrid> RetrieveActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BankDepositeSearchField> RetrieveBankDepositeBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BankDepositeSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ModuleExamSet RetrieveModuleExamSet(int organisationId, int moduleExamSetId, Expression<Func<ModuleExamSet, bool>> predicate);
+        PagedResult<ModuleExamQuestionAnswerGrid> RetrieveModuleExamQuestionSets(int organisationId, Expression<Func<ModuleExamQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        ModuleExamQuestionSet RetrieveModuleExamQuestionSet(int organisationId, int moduleExamQuestionSetId, Expression<Func<ModuleExamQuestionSet, bool>> predicate);
+        PagedResult<Personnel> RetrievePersonnel(int organisationId, int centreId, List<OrderBy> orderBy, Paging paging);
+        PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityTaskDataGrid> RetrieveActivityTaskDataGrids(int organisationId, Expression<Func<ActivityTaskDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Assessment RetrieveAssessment(int organisationId, int assessmentId, Expression<Func<Assessment, bool>> predicate);
+        PagedResult<AssessmentGrid> RetrieveAssessmentGrid(int organisationId, Expression<Func<AssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<AssessmentType> RetrieveAssessmentTypes(int organisationId, Expression<Func<AssessmentType, bool>> predicate);
+        PagedResult<CandidateAssessmentGrid> RetrieveCandidateAssessmentGrid(int organisationId, Expression<Func<CandidateAssessmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<ModuleExamSet> RetrieveModuleExamSets(int organisationId, Expression<Func<ModuleExamSet, bool>> predicate);
+        CandidateAssessment RetrieveCandidateAssessment(int organisationId, int candidateAssessmentId, Expression<Func<CandidateAssessment, bool>> predicate);
+        Partner RetrievePartner(int organisationId, int partnerId, Expression<Func<Partner, bool>> predicate);
+        PagedResult<Partner> RetrievePartners(int organisationId, Expression<Func<Partner, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchTrainer> RetrieveBatchTrainers(int organisationId, Expression<Func<BatchTrainer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ModuleExamQuestionSetGrid> RetrieveModuleExamQuestionSetGrid(int organisationId, Expression<Func<ModuleExamQuestionSetGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateAssessmentQuestionAnswer> RetrieveCandidateAssessmentQuestionAnswers(int organisationId, Expression<Func<CandidateAssessmentQuestionAnswer, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidateAssessmentQuestionAnswer RetrieveCandidateAssessmentQuestionAnswer(int organisationId, int candidateAssessmentQuestionAnswerId);
+        PagedResult<CandidateAttemptedQuestionAnswerGrid> RetrieveCandidateAttemptedQuestionAnswerGrid(int organisationId, Expression<Func<CandidateAttemptedQuestionAnswerGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventQuestion RetrieveEventQuestion(int organisationId, int eventQuestionId, Expression<Func<EventQuestion, bool>> predicate);
+        PagedResult<EventQuestion> RetrieveEventQuestions(int organisationId, Expression<Func<EventQuestion, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventManagement RetrieveEventManagement(int organisationId, int eventManagementId, Expression<Func<EventManagement, bool>> predicate);
+        PagedResult<EventManagement> RetrieveEventManagements(int organisationId, Expression<Func<EventManagement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        Company RetrieveCompany(int organisationId, int companyId);
+        PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        EventManagementGrid RetrieveEventManagementGrid(int organisationId, int eventManagementId, Expression<Func<EventManagementGrid, bool>> predicate);
+        PagedResult<EventManagementGrid> RetrieveEventManagementGrids(int organisationId, Expression<Func<EventManagementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CompanyBranch RetrieveCompanyBranch(int organisationId, int companyBranchId);
+        PagedResult<CompanyBranchGrid> RetrieveCompanyBranches(int organisationId, Expression<Func<CompanyBranchGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CompanyFollowUp RetrieveCompanyFollowUp(int organisationId, int companyFollowUpId);
+        PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpGrid(int organisationId, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CompanyFollowUpHistoryGrid> RetrieveCompanyFollowUpHistoryGrid(int organisationId, Expression<Func<CompanyFollowUpHistoryGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacementActivity RetrieveCandidatePrePlacementActivity(int organisationId, int candidatePrePlacementActivityId);
+        PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityGrid(int organisationId, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
+        #endregion
 
-        // Update
+        #region Update
         //void UploadPhoto(int organisationId, int personnelId, byte[] photo);
         Personnel UpdatePersonnel(int organisationId, Personnel personnel);
         Enquiry UpdateEnquiry(int organisationId, Enquiry enquiry, List<int> courseIds);
@@ -353,8 +411,26 @@ namespace Nidan.Business.Interfaces
         BatchPlanner UpdateBatchPlanner(int organisationId, BatchPlanner batchPlanner, BatchPlannerDay batchPlannerDay);
         FixAssetMapping UpdateFixAssetMapping(int organisationId, FixAssetMapping fixAssetMapping);
         bool AssignFixAssetMapping(int organisationId, int personnelId, int centreId, List<FixAssetMapping> fixAssetMappings);
+        BankDeposite UpdateBankDeposite(int organisationId, BankDeposite bankDeposite);
+        ActivityAssigneeGroup UpdateActivityAssigneeGroup(int organisationId, ActivityAssigneeGroup activityAssigneeGroup);
+        Activity UpdateActivity(int organisationId, Activity activity);
+        ActivityTask UpdateActivityTask(int organisationId, ActivityTask activityTask);
+        ActivityTaskState UpdateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
+        Assessment UpdateAssessment(int organisationId, Assessment assessment);
+        bool AssignModuleExamSet(int organisationId, int personnelId, int assessmentId, List<CandidateAssessment> assessments);
+        CandidateAssessment UpdateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment);
+        bool CreateCandidateQuestionAnswer(int organisationId, int personnelId, int centreId, CandidateAssessmentQuestionAnswer candidateAssessment);
+        Partner UpdatePartner(int organisationId, Partner partner);
+        CandidateAssessmentQuestionAnswer UpdateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer);
+        bool UpdateEventManagement(int organisationId, int centreId, int personnelId, int eventId, List<EventManagement> eventManagement);
+        Company UpdateCompany(int organisationId, Company company);
+        CompanyBranch UpdateCompanyBranch(int organisationId, CompanyBranch companyBranch);
+        CompanyFollowUp UpdateCompanyFollowUp(int organisationId, CompanyFollowUp companyFollowUp);
+        CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
 
-        //Delete
+        #endregion
+
+        #region Delete
         void DeletePersonnel(int organisationId, int personnelId);
         void DeleteFollowUp(int organisationId, int followUpId);
 
@@ -369,8 +445,11 @@ namespace Nidan.Business.Interfaces
         void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId);
         void DeleteOtherFee(int organisationId, int centreId, int otherFeeId);
         void DeleteExpenseProject(int organisationId, int expenseId, int projectId);
+        void DeleteActivityAssignPersonnel(int organisationId, int centreId, int activityAssigneeGroupId, int personnelId);
+        void DeleteActivityTask(int organisationId, int activityTaskId);
+        #endregion
 
-        //Document
+        #region Document
         List<DocumentType> RetrieveDocumentTypes(int organisationId);
         PagedResult<Document> RetrieveDocuments(int organisationId, Expression<Func<Document, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<DocumentType> RetrieveDocumentTypes(int organisationId, Expression<Func<DocumentType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -380,11 +459,15 @@ namespace Nidan.Business.Interfaces
         IEnumerable<StudentDocument> RetrieveTrainerDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveExpenseDocuments(int organisationId, int centreId, string studentCode);
         IEnumerable<StudentDocument> RetrieveFixAssetDocuments(int organisationId, int centreId, string studentCode);
+        IEnumerable<StudentDocument> RetrieveBankDepositeDocuments(int organisationId, int centreId, string studentCode);
 
-        //Template
+        #endregion
+
+        #region Template
         byte[] CreateRegistrationRecieptBytes(int organisationId, int centreId, int registrationId);
         byte[] CreateEnrollmentBytes(int organisationId, int centreId, Admission admission, bool isCandidateAndCentre = true);
         byte[] CreateOtherFeeBytes(int organisationId, int centreId, Expense expense);
         byte[] CreateExpenseBytes(int organisationId, int centreId, Expense expense);
+        #endregion
     }
 }

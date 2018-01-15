@@ -22,18 +22,18 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
-        [HttpPost]
-        public ActionResult Create(int eventId, List<EventBrainstorming> eventBrainstormings)
-        {
-            var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            foreach (var item in eventBrainstormings)
-            {
-                item.CentreId = centreId;
-                item.OrganisationId = organisationId;
-            }
-            var result = NidanBusinessService.CreateEventBrainstorming(organisationId, centreId, eventId, eventBrainstormings);
-            return this.JsonNet(result);
-        }
+        //[HttpPost]
+        //public ActionResult Create(int eventId, List<EventBrainstorming> eventBrainstormings)
+        //{
+        //    var organisationId = UserOrganisationId;
+        //    var centreId = UserCentreId;
+        //    foreach (var item in eventBrainstormings)
+        //    {
+        //        item.CentreId = centreId;
+        //        item.OrganisationId = organisationId;
+        //    }
+        //    var result = NidanBusinessService.CreateEventBrainstorming(organisationId, centreId, eventId, eventBrainstormings);
+        //    return this.JsonNet(result);
+        //}
     }
 }

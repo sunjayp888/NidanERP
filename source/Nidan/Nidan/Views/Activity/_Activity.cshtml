@@ -1,0 +1,114 @@
+﻿@model Nidan.Models.ActivityViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Activity.Name, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Activity.Name, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.ActivityTypeId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-4 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.ActivityTypeId, Model.ActivityTypes, "Select Activity Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.ActivityTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.ProjectId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-4 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.ProjectId, Model.Projects, "Select Project", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.ProjectId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.ActivityAssigneeGroupId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-4 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.ActivityAssigneeGroupId, Model.ActivityAssigneeGroups, "Select Assignee Group", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.ActivityAssigneeGroupId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.StartDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Activity.StartDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 activityStartDate", ng_model = "model.StartDate" })
+        <span class="form-control-feedback" aria-hidden="true"></span>
+        @Html.ValidationMessageFor(model => model.Activity.StartDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.StartHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.StartHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.StartMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.StartMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Activity.StartTimeSpan, "AM", new { id = "rbActivityStartTimeSpanAM" })
+            AM
+        </label>
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Activity.StartTimeSpan, "PM", new { id = "rbActivityStartTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.EndDate, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.Activity.EndDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 activityEndDate required", ng_model = "model.EndDate" })
+        <span class="form-control-feedback" aria-hidden="true"></span>
+        @Html.ValidationMessageFor(model => model.Activity.EndDate, "", new { @class = "help-block" })
+    </div>
+</div>
+
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">End Time</label>
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.EndHour, Model.HoursList, "HH", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.EndHour, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.Activity.EndMinute, Model.MinutesList, "MM", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Activity.EndMinute, "", new { @class = "help-block" })
+    </div>
+
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Activity.EndTimeSpan, "AM", new { id = "rbActivityEndTimeSpanAM" })
+            AM
+        </label>
+    </div>
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
+            @Html.RadioButtonFor(model => model.Activity.EndTimeSpan, "PM", new { id = "rbActivityEndTimeSpanPM" })
+            PM
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Activity.Remark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.EditorFor(model => model.Activity.Remark, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.Activity.Remark, "", new { @class = "help-block" })
+    </div>
+</div>

@@ -1,13 +1,10 @@
-﻿@model Nidan.Models.ExpenseViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.ExpenseViewModel
 
 @{
     ViewBag.Title = "Create Other Fee";
 }
-
-
-
-
-<div class="row">
+<div class="row" ng-controller="ExpenseController as model">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
@@ -39,12 +36,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Submit</button>
                                     @if (Model.CashMemo != null)
                                     {
                                         <button type="button" class="btn btn-warning" ng-click="model.removeError()" data-toggle="modal" data-target="#otherFeeDocumentModal">Upload Document</button>
 
-                                        <a href="@Url.Action("Download", new { id = Model.Expense.ExpenseId })" class="btn btn-success" role="button">
+                                        <a href="@Url.Action("Download", new {id = Model.Expense.ExpenseId})" class="btn btn-success" role="button">
                                             <i class="fa fa-print"></i> Print
                                         </a>
                                     }
@@ -64,9 +60,9 @@
         @Html.Partial("_ExpenseDocument")
     </div>
     @*@Html.HiddenFor(m => m.CashMemo)
-    <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
-        @Html.Partial("_Expenses")
-    </div>*@
+        <div ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeesByCashMemo(@Model.CashMemo)">
+            @Html.Partial("_Expenses")
+        </div>*@
 }
 
 <div>
@@ -80,122 +76,85 @@
         $('#Expense_RupeesInWord').val("");
         $('#Expense_Particulars').val("");
 
-        $('#Expense_DebitAmount').keyup(function () {
-            numberToWords();
+        var userRole = "@User.IsInAnyRoles("SuperAdmin").ToString().ToLower()" == "true" ? "SuperAdmin" : "Admin";
+        if (userRole == "Admin") {
+            //alert(userRole);
+            $(function () {
+                var today = new Date();
+                var day = today.getDay();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                var daterangepickerOptions = {
+                    autoApply: true,
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    showCustomRangeLabel: false,
+                    opens: 'left',
+                    //minDate: moment(),
+                    @*@if (User.IsInAnyRoles("SuperAdmin"))
+                {
+                    minDate: moment(),
+                }*@
+                    minDate: day == 1 || day == 7
+                        ? moment().subtract('0', 'days').format('DD MMMM YYYY')
+                        : day == 2
+                        ? moment().subtract('1', 'days').format('DD MMMM YYYY')
+                        : day == 3
+                        ? moment().subtract('2', 'days').format('DD MMMM YYYY')
+                        : day == 4
+                        ? moment().subtract('3', 'days').format('DD MMMM YYYY')
+                        : day == 5
+                        ? moment().subtract('4', 'days').format('DD MMMM YYYY')
+                        : moment().subtract('5', 'days').format('DD MMMM YYYY'),
+                    maxDate: day == 1
+                        ? moment().add('5', 'days').format('DD MMMM YYYY')
+                        : day == 2
+                        ? moment().add('4', 'days').format('DD MMMM YYYY')
+                        : day == 3
+                        ? moment().add('3', 'days').format('DD MMMM YYYY')
+                        : day == 4
+                        ? moment().add('2', 'days').format('DD MMMM YYYY')
+                        : day == 5
+                        ? moment().add('1', 'days').format('DD MMMM YYYY')
+                        : day == 6
+                        ? moment().add('0', 'days').format('DD MMMM YYYY')
+                        : moment().add('6', 'days').format('DD MMMM YYYY'),
+                    onSelect: function () {
+                        selectedDate = moment().format('DD MMMM YYYY');
+                    },
+                    locale: {
+                        "format": "DD MMMM YYYY"
+                    }
+                };
+
+                jQuery(function () {
+                    jQuery(".date").daterangepicker(daterangepickerOptions);
+                    $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                    $(".generated .date").on('apply.daterangepicker',
+                        function (ev, picker) {
+                            $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                        });
+                });
+            });
+        }
+
+        if (userRole == "SuperAdmin") {
+            $('#Expense_ExpenseGeneratedDate').val("");
+            $("#Expense_ExpenseGeneratedDate").attr("placeholder", "yyyy-MM-dd").blur();
+        }
+
+        //---------------------------------------------------
+        //Expense Debit Amount Validation
+        $("#Expense_DebitAmount").keyup(function () {
+            var expenseAmount = $("#Expense_DebitAmount").val();
+            //numberToWords();
+            if (expenseAmount < 999) {
+                $('#btn_submit').attr('disabled', false);
+            } else {
+                $('#btn_submit').attr('disabled', true);
+                alert('Expense Voucher CAN NOT be above Rs.999/-');
+            }
         });
-
-        function numberToWords() {
-            var inputNumber = $('#Expense_DebitAmount').val();
-            var str = new String(inputNumber);
-            var splt = str.split("");
-            var rev = splt.reverse();
-            var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
-            var twos = [
-                'Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen',
-                ' Eighteen', ' Nineteen'
-            ];
-            var tens = [
-                '', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'
-            ];
-
-            var numLength = rev.length;
-            var word = new Array();
-            var j = 0;
-            var i;
-            for (i = 0; i < numLength; i++) {
-                switch (i) {
-                    case 0:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = '' + once[rev[i]];
-                        }
-                        word[j] = word[j];
-                        break;
-
-                    case 1:
-                        aboveTens();
-                        break;
-
-                    case 2:
-                        if (rev[i] == 0) {
-                            word[j] = '';
-                        } else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
-                            word[j] = once[rev[i]] + " Hundred ";
-                        } else {
-                            word[j] = once[rev[i]] + " Hundred and";
-                        }
-                        break;
-
-                    case 3:
-                        if (rev[i] == 0 || rev[i + 1] == 1) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
-                            word[j] = word[j] + " Thousand";
-                        }
-                        break;
-
-
-                    case 4:
-                        aboveTens();
-                        break;
-
-                    case 5:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Lakh";
-                        }
-
-                        break;
-
-                    case 6:
-                        aboveTens();
-                        break;
-
-                    case 7:
-                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
-                            word[j] = '';
-                        } else {
-                            word[j] = once[rev[i]];
-                        }
-                        if (rev[i + 1] !== '0' || rev[i] > '0') {
-                            word[j] = word[j] + " Crore";
-                        }
-                        break;
-
-                    case 8:
-                        aboveTens();
-                        break;
-                    default:
-                        break;
-                }
-                j++;
-            }
-
-            function aboveTens() {
-                if (rev[i] == 0) {
-                    word[j] = '';
-                } else if (rev[i] == 1) {
-                    word[j] = twos[rev[i - 1]];
-                } else {
-                    word[j] = tens[rev[i]];
-                }
-            }
-
-            word.reverse();
-            var finalOutput = '';
-            for (i = 0; i < numLength; i++) {
-                finalOutput = finalOutput + word[i];
-            }
-            $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
-        };
-        
-       </script>
+    </script>
 }

@@ -47,10 +47,10 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = centrePettyCashViewModel.CentrePettyCash.CentreId;
-            var personnel = NidanBusinessService.RetrievePersonnel(organisationId, centreId, null, null).Items.FirstOrDefault();
+            var personnel = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                var personnelId = personnel?.PersonnelId ?? 0;
+                var personnelId = personnel;
                 centrePettyCashViewModel.CentrePettyCash = NidanBusinessService.CreateCentrePettyCash(organisationId, centreId, personnelId, centrePettyCashViewModel.CentrePettyCash);
                 return RedirectToAction("Index");
             }
@@ -106,6 +106,15 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, UserCentreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrieveCentrePettyCashs(UserOrganisationId, centreId, e => isSuperAdmin && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
         }
     }
 }

@@ -1,0 +1,137 @@
+﻿@model Nidan.Models.ModuleExamQuestionSetViewModel
+<div class="form-control-required-example"> = Required</div>
+<br />
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamSet.QuestionSetName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.ModuleExamSet.QuestionSetName, null, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+        @Html.ValidationMessageFor(model => model.ModuleExamSet.QuestionSetName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamSet.SubjectId, "Module", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.ModuleExamSet.SubjectId, Model.Subjects, "Select Subject", new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
+        @Html.ValidationMessageFor(model => model.ModuleExamSet.SubjectId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamSet.TotalMark, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.ModuleExamSet.TotalMark, null, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
+        @Html.ValidationMessageFor(model => model.ModuleExamSet.TotalMark, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamQuestionSet.QuestionTypeId, "Question Type", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.ModuleExamQuestionSet.QuestionTypeId, Model.QuestionTypes, "Select Question Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.QuestionTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamQuestionSet.QuestionDescription, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.ModuleExamQuestionSet.QuestionDescription, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.QuestionDescription, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ModuleExamQuestionSet.MarkPerQuestion, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-5 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.ModuleExamQuestionSet.MarkPerQuestion, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.MarkPerQuestion, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div id="div_mcq">
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModuleExamQuestionSet.OptionA, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ModuleExamQuestionSet.OptionA, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.OptionA, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModuleExamQuestionSet.OptionB, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ModuleExamQuestionSet.OptionB, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.OptionB, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModuleExamQuestionSet.OptionC, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ModuleExamQuestionSet.OptionC, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.OptionC, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModuleExamQuestionSet.OptionD, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-5 col-sm-6 col-xs-12">
+            @Html.TextBoxFor(model => model.ModuleExamQuestionSet.OptionD, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.OptionD, "", new { @class = "help-block" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Answer Type", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-7 col-sm-3 col-xs-12 ">
+            <label class="btn btn-info col-md-3">
+                @Html.RadioButtonFor(model => model.ModuleExamQuestionSet.AnswerType, "Single", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "ModuleExamQuestionSet.AnswerTypeSingle" })
+                Single
+            </label>
+            <label class="btn btn-info col-md-3">
+                @Html.RadioButtonFor(model => model.ModuleExamQuestionSet.AnswerType, "Multiple", new { @class = "col-md-2 col-xs-12", autocomplete = "off", id = "ModuleExamQuestionSet.AnswerTypeMultiple" })
+                Multiple
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Correct Answer", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-7 col-sm-3 col-xs-12">
+            <label class="btn btn-info col-md-4">
+                @Html.CheckBoxFor(model => model.ModuleExamQuestionSet.IsOptionA, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                OptionA
+            </label>
+            <label class="btn btn-info col-md-4">
+                @Html.CheckBoxFor(model => model.ModuleExamQuestionSet.IsOptionB, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                OptionB
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label(" ", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-7 col-sm-3 col-xs-12">
+            <label class="btn btn-info col-md-4">
+                @Html.CheckBoxFor(model => model.ModuleExamQuestionSet.IsOptionC, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                OptionC
+            </label>
+            <label class="btn btn-info col-md-4">
+                @Html.CheckBoxFor(model => model.ModuleExamQuestionSet.IsOptionD, new { @class = "col-md-2 col-xs-12", autocomplete = "off" })
+                OptionD
+            </label>
+        </div>
+    </div>
+</div>
+
+<div id="div_subjective">
+    <div class="form-group">
+        @Html.LabelFor(model => model.ModuleExamQuestionSet.SubjectiveAnswer, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.EditorFor(model => model.ModuleExamQuestionSet.SubjectiveAnswer, null, new { @class = "form-control col-md-7 col-xs-12" })
+            @Html.ValidationMessageFor(model => model.ModuleExamQuestionSet.SubjectiveAnswer, "", new { @class = "help-block" })
+        </div>
+    </div>
+</div>

@@ -107,19 +107,20 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
+            var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var courseId = Convert.ToInt32(TempData["CourseId"]);
             TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
-                var data = NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId, orderBy, paging);
+                var data = NidanBusinessService.RetrieveCourseInstallments(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId, orderBy, paging);
                 return this.JsonNet(data);
             }
             else
             {
-                return
-                    this.JsonNet(NidanBusinessService.RetrieveCourseInstallments(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId),
-                        orderBy, paging));
+                var courseIds = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => (isSuperAdmin || e.CentreId == UserCentreId)).Select(e => e.CourseId).ToList();
+                var data = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => courseIds.Contains(e.CourseId), orderBy, paging);
+                return this.JsonNet(data);
             }
         }
 

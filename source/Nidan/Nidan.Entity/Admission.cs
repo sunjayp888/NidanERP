@@ -12,8 +12,14 @@ namespace Nidan.Entity
         public Admission()
         {
             AdmissionDate = DateTime.UtcNow.Date;
+            CandidateAssessments = new HashSet<CandidateAssessment>();
+            CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
         }
-        public int AdmissionId { get; set; }
+
+    public int AdmissionId { get; set; }
+
+        [StringLength(500)]
+        public string EnrollmentNumber { get; set; }
 
         public int RegistrationId { get; set; }
 
@@ -28,7 +34,8 @@ namespace Nidan.Entity
 
         public int? PersonnelId { get; set; }
 
-        public string EnrollmentNumber { get; set; }
+        public int CreatedBy { get; set; }
+
 
         public virtual Registration Registration { get; set; }
 
@@ -39,5 +46,11 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         public virtual Personnel Personnel { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessment> CandidateAssessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePrePlacementActivity> CandidatePrePlacementActivities { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Events";
 }
-<div ng-controller="EventController as model">
+<div ng-controller="EventController as model" ng-init="model.initialise()">
     <div class="page-title">
         <div class="title_left">
             <h3>

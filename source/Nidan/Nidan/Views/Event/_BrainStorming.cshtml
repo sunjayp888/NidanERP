@@ -6,7 +6,7 @@
     </p>
 </div>
 
-<div ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
+<div ng-cloak ng-controller="BrainstormingController as model" ng-init="model.initialise(@Model.Event.EventId)">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -19,7 +19,7 @@
                                     @Html.Partial("Pagination/_pageSize")
                                 </div>
                             </div>*@
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-xs-12">
                                 <table wt-responsive-table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
                                     <thead>
@@ -32,18 +32,14 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="brainstorming in model.brainstormings" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                            <td><span ng-bind="brainstorming.BrainstormingId"></span></td>
-                                            <td><span ng-bind="brainstorming.BeforePlanningAnswerDiscussTheseQuestion"></span></td>
+                                            <td><span ng-bind="brainstorming.EventQuestionId"></span></td>
+                                            <td><span ng-bind="brainstorming.QuestionDescription"></span></td>
                                             <td>
-                                                @*@Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "Yes")&nbsp; Yes &nbsp;
-                                                    @Html.RadioButtonFor(model => model.EventBrainstorming.Brainstorming.BeforePlanningAnswerDiscussTheseQuestion, "No") No*@
-
-                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion{{brainstorming.BrainstormingId}}" value="Yes" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}" >Yes
-                                                <input type="radio" class="radio" ng-model='brainstorming.DisscussionCompletedYesNo' id="brainStormingDisscussion_{{brainstorming.BrainstormingId}}" value="No" name="brainStormingDisscussion{{brainstorming.BrainstormingId}}">No
+                                                <input type="radio" class="radio" ng-model='brainstorming.EventQuestionAnswerCompleted' id="brainStormingDisscussion{{brainstorming.EventManagementId}}" ng-value="true" name="brainStormingDisscussion{{brainstorming.EventManagementId}}" >Yes
+                                                <input type="radio" class="radio" ng-model='brainstorming.EventQuestionAnswerCompleted' id="brainStormingDisscussion_{{brainstorming.EventManagementId}}" ng-value="false" name="brainStormingDisscussion{{brainstorming.EventManagementId}}">No
                                             </td>
                                             <td>
-                                                @*@Html.EditorFor(model => model.EventBrainstorming.RefernceDetailDocument)*@
-                                                <textarea ng-model='brainstorming.ReferenceDetailDocument' id="referenceDetailTextBox{{brainstorming.BrainstormingId}}" name="referenceDetailTextBox{{brainstorming.BrainstormingId}}"></textarea>
+                                                <textarea ng-model='brainstorming.Description' id="referenceDetailTextBox{{brainstorming.EventManagementId}}" name="referenceDetailTextBox{{brainstorming.EventManagementId}}"></textarea>
                                             </td>
                                     </tbody>
                                 </table>

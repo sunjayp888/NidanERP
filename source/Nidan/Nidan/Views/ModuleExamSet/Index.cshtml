@@ -1,0 +1,102 @@
+﻿@using Nidan.Extensions
+@{
+    ViewBag.Title = "Module Exam Set";
+}
+<div ng-controller="ModuleExamSetController as model" ng-init="model.retrieveModuleExamSets()">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                Module Exam Sets  <small></small>
+            </h3>
+        </div>
+        @*<div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchTrainer(searchField)" class="form-control" placeholder="Search for trainer...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="model.searchTrainer(searchField)" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+    </div>
+    @if (User.IsInAnyRoles("SuperAdmin"))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "ModuleExamSet")">
+                    <i class="fa fa-user"></i> Create
+                </a>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Trainers <small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">CreatedDate</th>
+                                        <th ng-click="model.order('QuestionSetName')" ng-class="model.orderClass('QuestionSetName')">Question Set</th>
+                                        <th ng-click="model.order('SubjectId')" ng-class="model.orderClass('SubjectId')">Subject</th>
+                                        <th ng-click="model.order('TotalMark')" ng-class="model.orderClass('TotalMark')">Total Marks</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="moduleExamSet in model.moduleExamSets" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <td><span ng-bind="moduleExamSet.CreatedDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="moduleExamSet.QuestionSetName"></span></td>
+                                        <td><span ng-bind="moduleExamSet.Subject.Name"></span></td>
+                                        <td><span ng-bind="moduleExamSet.TotalMark"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("SuperAdmin"))
+                                                    {
+                                                        <li>
+                                                            <a style="cursor: pointer;" ng-href="/ModuleExamSet/Edit/{{moduleExamSet.ModuleExamSetId}}">
+                                                                View Question
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

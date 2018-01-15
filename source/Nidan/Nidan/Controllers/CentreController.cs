@@ -35,11 +35,13 @@ namespace Nidan.Controllers
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
+            var partners = NidanBusinessService.RetrievePartners(organisationId, e => true).Items.ToList();
             var viewModel = new CentreViewModel
             {
                 Talukas = new SelectList(talukas, "TalukaId", "Name"),
                 Districts = new SelectList(districts, "DistrictId", "Name"),
                 States = new SelectList(states, "StateId", "Name"),
+                Partners = new SelectList(partners, "PartnerId", "Name"),
                 Centre = new Centre
                 {
                     OrganisationId = organisationId
@@ -64,6 +66,7 @@ namespace Nidan.Controllers
             centreViewModel.Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
             centreViewModel.Districts = new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
             centreViewModel.States = new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
+            centreViewModel.Partners = new SelectList(NidanBusinessService.RetrievePartners(organisationId, e => true).Items.ToList());
             return View(centreViewModel);
         }
 
@@ -78,6 +81,7 @@ namespace Nidan.Controllers
             var talukas = NidanBusinessService.RetrieveTalukas(organisationId, e => true);
             var districts = NidanBusinessService.RetrieveDistricts(organisationId, e => true);
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
+            var partners = NidanBusinessService.RetrievePartners(organisationId, e => true).Items.ToList();
             var centre = NidanBusinessService.RetrieveCentre(organisationId, id.Value);
             if (centre == null)
             {
@@ -88,6 +92,7 @@ namespace Nidan.Controllers
                 Talukas = new SelectList(talukas, "TalukaId", "Name"),
                 Districts = new SelectList(districts, "DistrictId", "Name"),
                 States = new SelectList(states, "StateId", "Name"),
+                Partners = new SelectList(partners, "PartnerId", "Name"),
                 Centre = centre
 
             };
@@ -215,6 +220,18 @@ namespace Nidan.Controllers
         {
             NidanBusinessService.DeleteCentreCourseInstallment(UserOrganisationId, centreId, courseInstallmentId);
             return this.JsonNet("");
+        }
+
+        [HttpPost]
+        public ActionResult GetTaluka(int districtId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult GetDistrict(int stateId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList());
         }
     }
 }

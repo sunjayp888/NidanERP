@@ -92,6 +92,10 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharedTypes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\SharedTypes.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -238,17 +242,27 @@
     <Compile Include="Constraints\TenantRouteConstraint.cs" />
     <Compile Include="Controllers\AbsenceTypeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityAssigneeGroupController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\ActivityTaskController.cs" />
     <Compile Include="Controllers\AdmissionController.cs" />
     <Compile Include="Controllers\AreaOfInterestController.cs" />
+    <Compile Include="Controllers\AssessmentController.cs" />
     <Compile Include="Controllers\AttendanceController.cs" />
+    <Compile Include="Controllers\BankDepositeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\BatchPlannerController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
+    <Compile Include="Controllers\CandidateAssessmentQuestionAnswerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
+    <Compile Include="Controllers\CandidatePrePlacementActivityController.cs" />
     <Compile Include="Controllers\CentreController.cs" />
     <Compile Include="Controllers\CentrePettyCashController.cs" />
+    <Compile Include="Controllers\CompanyBranchController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CompanyFollowUpController.cs" />
     <Compile Include="Controllers\CounsellingController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseInstallmentController.cs" />
@@ -257,6 +271,7 @@
     <Compile Include="Controllers\EnquiryCourseController.cs" />
     <Compile Include="Controllers\EventBrainstormingController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EventManagementController.cs" />
     <Compile Include="Controllers\ExpenseHeaderController.cs" />
     <Compile Include="Controllers\ExpenseProjectController.cs" />
     <Compile Include="Controllers\FixAssetController.cs" />
@@ -267,9 +282,10 @@
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
+    <Compile Include="Controllers\ModuleExamSetController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
-    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\StockIssueController.cs" />
@@ -290,17 +306,28 @@
     <Compile Include="Interfaces\ITenantsService.cs" />
     <Compile Include="Models\AbsenceTypeViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ActivityAssigneeGroupViewModel.cs" />
+    <Compile Include="Models\ActivityTaskViewModel.cs" />
+    <Compile Include="Models\ActivityViewModel.cs" />
     <Compile Include="Models\AdmissionViewModel.cs" />
     <Compile Include="Models\AreaOfInterestViewModel.cs" />
     <Compile Include="Models\AttendanceViewModel.cs" />
+    <Compile Include="Models\BankDepositeViewModel.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
+    <Compile Include="Models\CandidateAssessmentQuestionAnswerViewModel.cs" />
+    <Compile Include="Models\CandidateAssessmentViewModel.cs" />
     <Compile Include="Models\CandidateFeeModel.cs" />
     <Compile Include="Models\CandidateFeeViewModel.cs" />
+    <Compile Include="Models\CandidatePrePlacementActivityViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
+    <Compile Include="Models\AssessmentViewModel.cs" />
+    <Compile Include="Models\CompanyBranchViewModel.cs" />
+    <Compile Include="Models\CompanyFollowUpViewModel.cs" />
+    <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\CounsellingViewModel.cs" />
     <Compile Include="Models\CourseInstallmentViewModel.cs" />
     <Compile Include="Models\CourseViewModel.cs" />
@@ -317,10 +344,12 @@
     <Compile Include="Models\JsonNetResult.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MobilizationViewModel.cs" />
+    <Compile Include="Models\ModuleExamQuestionSetViewModel.cs" />
+    <Compile Include="Models\ModuleExamSetViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\ExpenseViewModel.cs" />
+    <Compile Include="Models\PartnerViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
-    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\RoomViewModel.cs" />
@@ -1129,18 +1158,29 @@
     <None Include="Content\less\Site.less" />
     <Content Include="Installment.html" />
     <Content Include="Registration.html" />
+    <Content Include="Scripts\Angular\Controllers\ActivityAssigneeGroupController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityAssignPersonnelController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityController.js" />
+    <Content Include="Scripts\Angular\Controllers\ActivityTaskController.js" />
+    <Content Include="Scripts\Angular\Controllers\AssesmentController.js" />
     <Content Include="Scripts\Angular\Controllers\AttendanceController.js" />
+    <Content Include="Scripts\Angular\Controllers\BankDepositeController.js" />
+    <Content Include="Scripts\Angular\Controllers\BankDepositeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchAttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchPlannerController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementActivityController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\CentrePettyCashController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSchemeController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreSectorController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyFollowUpController.js" />
+    <Content Include="Scripts\Angular\Controllers\CompanyFollowUpHistoryController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseController.js" />
     <Content Include="Scripts\Angular\Controllers\CourseInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\DocumentController.js" />
@@ -1152,6 +1192,7 @@
     <Content Include="Scripts\Angular\Controllers\EnquiryController.js" />
     <Content Include="Scripts\Angular\Controllers\EnquiryCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\EventController.js" />
+    <Content Include="Scripts\Angular\Controllers\EventDayController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseHeaderController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseProjectController.js" />
@@ -1163,7 +1204,11 @@
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
+    <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
+    <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
+    <Content Include="Scripts\Angular\Controllers\PlanningController.js" />
+    <Content Include="Scripts\Angular\Controllers\PostEventController.js" />
     <Content Include="Scripts\Angular\Controllers\ProjectController.js" />
     <Content Include="Scripts\Angular\Controllers\QuestionController.js" />
     <Content Include="Scripts\Angular\Controllers\ReportController.js" />
@@ -1182,14 +1227,24 @@
     <Content Include="Scripts\Angular\Directives\FileUpload.js" />
     <Content Include="Scripts\Angular\Directives\Inject.js" />
     <Content Include="Scripts\Angular\Controllers\FixAssetDocumentController.js" />
+    <Content Include="Scripts\Angular\Services\ActivityAssigneeGroupService.js" />
+    <Content Include="Scripts\Angular\Services\ActivityService.js" />
+    <Content Include="Scripts\Angular\Services\ActivityTaskService.js" />
+    <Content Include="Scripts\Angular\Services\AssesmentService.js" />
     <Content Include="Scripts\Angular\Services\AttendanceService.js" />
+    <Content Include="Scripts\Angular\Services\BankDepositeDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\BankDepositeService.js" />
     <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchPlannerService.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
     <Content Include="Scripts\Angular\Services\CandidateInstallmentService.js" />
+    <Content Include="Scripts\Angular\Services\CandidatePrePlacementActivityService.js" />
     <Content Include="Scripts\Angular\Services\CentrePettyCashService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyFollowUpHistoryService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyFollowUpService.js" />
+    <Content Include="Scripts\Angular\Services\CompanyService.js" />
     <Content Include="Scripts\Angular\Services\CourseInstallmentService.js" />
     <Content Include="Scripts\Angular\Services\CourseService.js" />
     <Content Include="Scripts\Angular\Services\DocumentService.js" />
@@ -1200,6 +1255,7 @@
     <Content Include="Scripts\Angular\Services\CounsellingService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryCourseService.js" />
     <Content Include="Scripts\Angular\Services\EnquiryService.js" />
+    <Content Include="Scripts\Angular\Services\EventDayService.js" />
     <Content Include="Scripts\Angular\Services\EventService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseDocumentService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseHeaderService.js" />
@@ -1212,10 +1268,14 @@
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
+    <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseService.js" />
+    <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
+    <Content Include="Scripts\Angular\Services\PlanningService.js" />
+    <Content Include="Scripts\Angular\Services\PostEventService.js" />
     <Content Include="Scripts\Angular\Services\ProjectService.js" />
     <Content Include="Scripts\Angular\Services\QuestionService.js" />
     <Content Include="Scripts\Angular\Services\ReportService.js" />
@@ -1299,7 +1359,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Document\" />
-    <Folder Include="Views\EventBrainstorming\" />
+    <Folder Include="Views\EventManagement\" />
     <Folder Include="Views\Graph\" />
   </ItemGroup>
   <ItemGroup>
@@ -1568,8 +1628,6 @@
     <Content Include="Views\Event\_EventDay.cshtml" />
     <Content Include="Views\Event\_Planning.cshtml" />
     <Content Include="Views\Event\_PostEvent.cshtml" />
-    <Content Include="Views\Question\Create.cshtml" />
-    <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\AreaOfInterest\Index.cshtml" />
     <Content Include="Views\AreaOfInterest\Create.cshtml" />
     <Content Include="Views\AreaOfInterest\_AreaOfInterest.cshtml" />
@@ -1594,7 +1652,6 @@
     <Content Include="Views\Mobilization\Upload.cshtml" />
     <Content Include="Views\Counselling\Upload.cshtml" />
     <Content Include="Views\Shared\_Document.cshtml" />
-    <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Trainer\Index.cshtml" />
     <Content Include="Views\Trainer\Create.cshtml" />
     <Content Include="Views\Trainer\_Trainer.cshtml" />
@@ -1705,6 +1762,84 @@
     <Content Include="Views\FixAsset\View.cshtml" />
     <Content Include="Views\FixAsset\_FixAssetDocument.cshtml" />
     <Content Include="Views\Report\FixAsset.cshtml" />
+    <Content Include="Views\BankDeposite\Create.cshtml" />
+    <Content Include="Views\BankDeposite\Edit.cshtml" />
+    <Content Include="Views\BankDeposite\Index.cshtml" />
+    <Content Include="Views\BankDeposite\View.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDeposite.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDepositeDocument.cshtml" />
+    <Content Include="Views\Expense\TermsAndCondition.cshtml" />
+    <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
+    <Content Include="Views\Admission\TodaysAdmission.cshtml" />
+    <Content Include="Views\Enquiry\TodaysEnquiry.cshtml" />
+    <Content Include="Views\Mobilization\TodaysMobilization.cshtml" />
+    <Content Include="Views\Registration\TodaysRegistration.cshtml" />
+    <Content Include="Views\Report\FeeSummaryByDate.cshtml" />
+    <Content Include="Views\BankDeposite\Index.cshtml" />
+    <Content Include="Views\BankDeposite\Create.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDeposite.cshtml" />
+    <Content Include="Views\BankDeposite\Edit.cshtml" />
+    <Content Include="Views\BankDeposite\View.cshtml" />
+    <Content Include="Views\BankDeposite\_BankDepositeDocument.cshtml" />
+    <Content Include="Views\Report\BankDepositeReport.cshtml" />
+    <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
+    <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
+    <Content Include="Views\Report\BankDepositeDetailByDate.cshtml" />
+    <Content Include="Views\Report\BankDepositeProcessReportByMonth.cshtml" />
+    <Content Include="Views\Report\BankDepositeReport.cshtml" />
+    <Content Include="Views\Report\BankDepositeReportByDate.cshtml" />
+    <Content Include="Views\Expense\TermsAndCondition.cshtml" />
+    <Content Include="Views\Report\CentrePettyCashByCentre.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Index.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\_ActivityAssigneeGroup.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Create.cshtml" />
+    <Content Include="Views\ActivityAssigneeGroup\Edit.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\Create.cshtml" />
+    <Content Include="Views\Activity\Edit.cshtml" />
+    <Content Include="Views\ModuleExamSet\Index.cshtml" />
+    <Content Include="Views\ModuleExamSet\Create.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamSet.cshtml" />
+    <Content Include="Views\ModuleExamSet\Edit.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamQuestionSet.cshtml" />
+    <Content Include="Views\Activity\_Activity.cshtml" />
+    <Content Include="Views\ActivityTask\Index.cshtml" />
+    <Content Include="Views\ActivityTask\_ActivityTask.cshtml" />
+    <Content Include="Views\ActivityTask\Create.cshtml" />
+    <Content Include="Views\ActivityTask\Edit.cshtml" />
+    <Content Include="Views\ActivityTask\_ActivityTaskByActivityId.cshtml" />
+    <Content Include="Views\ModuleExamSet\_ModuleExamQuestionAnswer.cshtml" />
+    <Content Include="Views\ActivityTask\_AddTaskStatus.cshtml" />
+    <Content Include="Views\Assessment\Index.cshtml" />
+    <Content Include="Views\Assessment\Create.cshtml" />
+    <Content Include="Views\Assessment\_Assessment.cshtml" />
+    <Content Include="Views\Assessment\Edit.cshtml" />
+    <Content Include="Views\Assessment\_AssignModuleExamSet.cshtml" />
+    <Content Include="Views\Assessment\_UpdateModuleExamSet.cshtml" />
+    <Content Include="Views\Assessment\AssessmentByUser.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentQuestionAnswerSet.cshtml" />
+    <Content Include="Views\Assessment\AssessmentByTrainer.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAssessmentDetail.cshtml" />
+    <Content Include="Views\Partner\Index.cshtml" />
+    <Content Include="Views\Partner\Create.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
+    <Content Include="Views\CandidateAssessmentQuestionAnswer\CandidateAttemptedQuestionAnswer.cshtml" />
+    <Content Include="Views\ActivityTask\ViewTask.cshtml" />
+    <Content Include="Views\ActivityTask\ViewActivity.cshtml" />
+    <Content Include="Views\Activity\ViewActivity.cshtml" />
+    <Content Include="Views\Activity\ActivityTaskList.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\_Company.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\CompanyBranch\Create.cshtml" />
+    <Content Include="Views\CompanyBranch\_CompanyBranch.cshtml" />
+    <Content Include="Views\CompanyBranch\Edit.cshtml" />
+    <Content Include="Views\CompanyFollowUp\Index.cshtml" />
+    <Content Include="Views\CompanyFollowUp\_CompanyFollowUp.cshtml" />
+    <Content Include="Views\CompanyFollowUp\Edit.cshtml" />
+    <Content Include="Views\CompanyFollowUp\_CompanyFollowUpHistory.cshtml" />
+    <Content Include="Views\CandidatePrePlacementActivity\Index.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1763,7 +1898,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58521/</IISUrl>
+          <IISUrl>http://localhost:58527/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

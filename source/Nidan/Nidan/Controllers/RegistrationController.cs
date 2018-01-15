@@ -16,7 +16,6 @@ namespace Nidan.Controllers
     {
         private readonly INidanBusinessService _nidanBusinessService;
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        private readonly DateTime _todayUtc = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public RegistrationController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
             _nidanBusinessService = nidanBusinessService;
@@ -25,6 +24,11 @@ namespace Nidan.Controllers
         // GET: RegistrationPaymentReceipt
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        public ActionResult TodaysRegistration()
         {
             return View(new BaseViewModel());
         }
@@ -93,7 +97,7 @@ namespace Nidan.Controllers
             {
                 return HttpNotFound();
             }
-            var courseInstallments = NidanBusinessService.RetrieveCourseInstallments(organisationId, centreId);
+            var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e => e.CourseInstallment).ToList();
             var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, registration.EnquiryId);
@@ -110,7 +114,6 @@ namespace Nidan.Controllers
                 CounsellingCourse = new SelectList(counsellingCourse, "CourseId", "Name"),
                 Enquiry = enquiry
             };
-
             return View(viewModel);
         }
 
@@ -173,8 +176,15 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId,
-                p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult TodaysRegistrationList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.RegistrationDate==_today, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -199,7 +209,7 @@ namespace Nidan.Controllers
         public ActionResult EnquiryList(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == false, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveEnquiries(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO", orderBy, paging));
         }
 
         [HttpPost]

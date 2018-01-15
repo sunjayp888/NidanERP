@@ -18,50 +18,80 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.ExpenseHeaderId, "Expense Head", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Expense.ExpenseHeaderId, "", new { @class = "help-block" })
+<div ng-controller="ExpenseController as model">
+    <div class="form-group" ng-init="model.expenseHeaderId='@Model.Expense.ExpenseHeaderId'">
+        @Html.LabelFor(model => model.Expense.ExpenseHeaderId, "Expense Head", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12", ng_model = "model.expenseHeaderId", ng_change = "model.expenseLimitCheck()" })
+            @Html.ValidationMessageFor(model => model.Expense.ExpenseHeaderId, "", new { @class = "help-block" })
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.CashMemoNumbers, "Cash Memo Numbers", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Expense.CashMemoNumbers, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Expense.CashMemoNumbers, "", new { @class = "help-block" })
+    <div ng-if="model.isExpenseLimitExceed=='True'">
+        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <strong><i class="fa fa-info-circle"></i> &nbsp;Limit Is Exceeded For Selected Head</strong>
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.DebitAmount, "Debit Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12"})
-        @Html.ValidationMessageFor(model => model.Expense.DebitAmount, "", new { @class = "help-block" })
-    </div>
-</div>
+    <div ng-if="model.isExpenseLimitExceed=='False'">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expense.CashMemoNumbers, "Cash Memo Numbers", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Expense.CashMemoNumbers, new { @class = "form-control col-md-7 col-xs-12" })
+                @Html.ValidationMessageFor(model => model.Expense.CashMemoNumbers, "", new { @class = "help-block" })
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.RupeesInWord, "Rupees In Word", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Expense.RupeesInWord, new { @class = "form-control col-md-7 col-xs-12", @readonly = true })
-        @Html.ValidationMessageFor(model => model.Expense.RupeesInWord, "", new { @class = "help-block" })
-    </div>
-</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expense.DebitAmount, "Debit Amount", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Expense.DebitAmount, new { @class = "form-control col-md-7 col-xs-12", @max = 999 })
+                @Html.ValidationMessageFor(model => model.Expense.DebitAmount, "", new { @class = "help-block" })
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.PaidTo, "Paid To", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Expense.PaidTo, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Expense.PaidTo, "", new { @class = "help-block" })
-    </div>
-</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expense.RupeesInWord, "Rupees In Word", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Expense.RupeesInWord, new { @class = "form-control col-md-7 col-xs-12" })
+                @Html.ValidationMessageFor(model => model.Expense.RupeesInWord, "", new { @class = "help-block" })
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Expense.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.EditorFor(model => model.Expense.Particulars, new { @class = "form-control col-md-7 col-xs-12 multi-line-text-area required" })
-        @Html.ValidationMessageFor(model => model.Expense.Particulars, "", new { @class = "help-block" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expense.PaidTo, "Paid To", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Expense.PaidTo, new { @class = "form-control col-md-7 col-xs-12" })
+                @Html.ValidationMessageFor(model => model.Expense.PaidTo, "", new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Expense.ExpenseGeneratedDate, "Generated Date", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextBoxFor(model => model.Expense.ExpenseGeneratedDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+                @Html.ValidationMessageFor(model => model.Expense.ExpenseGeneratedDate, "", new { @class = "help-block" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Expense.Particulars, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.EditorFor(model => model.Expense.Particulars, new { @class = "form-control col-md-7 col-xs-12 multi-line-text-area required" })
+                    @Html.ValidationMessageFor(model => model.Expense.Particulars, "", new { @class = "help-block" })
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                <div class="pull-right">
+                    <button id="btn_submit" type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: ExpenseHeader/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult Create()
         {
             var viewModel = new ExpenseHeaderViewModel

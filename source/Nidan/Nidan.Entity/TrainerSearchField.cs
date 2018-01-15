@@ -54,8 +54,8 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 7)]
-        [StringLength(12)]
-        public string PinCode { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int PinCode { get; set; }
 
         [Key]
         [Column(Order = 8)]
@@ -119,7 +119,7 @@ namespace Nidan.Entity
         [Column(Order = 17, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
-        [StringLength(3500)]
+        [StringLength(1300)]
         public string SearchField { get; set; }
     }
 }

@@ -29,11 +29,18 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int FollowUpId { get; set; }
 
+        public long? Mobile { get; set; }
+
+        [Key]
+        [Column(Order = 4)]
+        [StringLength(1000)]
+        public string InterestedCourse { get; set; }
+
         [StringLength(353)]
         public string CandidateName { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 5)]
         [StringLength(200)]
         public string FollowUpType { get; set; }
 
@@ -45,20 +52,21 @@ namespace Nidan.Entity
         public string ClosingRemarks { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 6)]
         public DateTime FollowUpDate { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 7)]
         public DateTime CreatedDate { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
-        //public virtual FollowUp FollowUp { get; set; }
-
-        //public virtual Course Course { get; set; }
+        [Key]
+        [Column(Order = 9)]
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
     }
 }

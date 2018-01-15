@@ -201,7 +201,7 @@ namespace Nidan.Controllers
         {
             var subjectId = Convert.ToInt32(TempData["SubjectId"]);
             TempData["SubjectId"] = subjectId;
-            bool isAdmin = User.IsInAnyRoles("Admin");
+            bool isAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveSessions(UserOrganisationId, p => (isAdmin) && p.SubjectId == subjectId, orderBy, paging));
         }
     }

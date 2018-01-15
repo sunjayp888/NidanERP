@@ -25,6 +25,7 @@ namespace Nidan.Entity
             Modules=new HashSet<Module>();
             MobilizationSearchFields=new HashSet<MobilizationSearchField>();
             BatchPlanners=new HashSet<BatchPlanner>();
+            Assessments = new HashSet<Assessment>();
         }
 
         public int CourseId { get; set; }
@@ -39,8 +40,8 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        [StringLength(50)]
-        public string CourseType { get; set; }
+          public int CourseTypeId { get; set; }
+
 
         [StringLength(1000)]
         public string Description { get; set; }
@@ -92,6 +93,8 @@ namespace Nidan.Entity
 
         public virtual Scheme Scheme { get; set; }
 
+        public virtual CourseType CourseType { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Module> Modules { get; set; }
 
@@ -100,5 +103,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BatchPlanner> BatchPlanners { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assessment> Assessments { get; set; }
     }
 }

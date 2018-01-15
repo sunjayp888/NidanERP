@@ -1,0 +1,134 @@
+﻿@using Nidan.Entity
+@model Nidan.Models.CandidateAssessmentQuestionAnswerViewModel
+@{
+    ViewBag.Title = "";
+}
+<div ng-controller="AssessmentController as model" ng-init="model.retrieveCandidateAttemptedAssessment(@Model.CandidateAssessmentId)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><small>Assessment Name: @Model.AssessmentName</small></h2>
+                    <h2><small>Total Marks: @Model.TotalMark</small></h2>
+                    <div class="float-right">
+                        <h2 id="timecountdown"></h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
+                                </div>
+                            }
+                            <div ng-repeat="candidateAssessment in model.candidateAssessments">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-3 col-xs-12">
+                                        <label class="col-md-6 col-sm-6 col-xs-12">
+                                            @*<input type="checkbox" ng-model="model.IsOptionA">*@
+                                            <span ng-bind="candidateAssessment.Question"></span>
+                                            @*&nbsp;&nbsp;&nbsp;<span ng-bind="candidateAssessment.MarkPerQuestion"></span>&nbsp;Mark*@
+                                        </label>
+                                        <label class="col-md-2 col-sm-6 col-xs-12">
+                                            <span ng-bind="candidateAssessment.MarkPerQuestion"></span> Mark
+                                        </label>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                            Mark Obtained <input type="text" id="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" name="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" max={{candidateAssessment.MarkPerQuestion}}>
+                                            @*@Html.ValidationMessageFor(model => model.BatchPlanner.CentreId, "", new { @class = "help-block" })*@
+                                            <label id="markObtained{{candidateAssessment.ModuleExamQuestionSetId}}" class = "help-block" ></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionA">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionA" onchange="valueChanged()">
+                                            <span ng-bind="candidateAssessment.OptionA"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionB">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-checked="candidateAssessment.IsOptionB" onchange="valueChanged()">
+                                            <span ng-bind="candidateAssessment.OptionB"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionC">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" data-parsley-multiple="gender" ng-checked="candidateAssessment.IsOptionC" >
+                                            <span ng-bind="candidateAssessment.OptionC"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Multiple'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox" ng-checked="candidateAssessment.IsOptionD">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" ng-if="candidateAssessment.AnswerType=='Single'" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" data-parsley-multiple="gender" ng-checked="candidateAssessment.IsOptionD">
+                                            <span ng-bind="candidateAssessment.OptionD"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2">
+                                    <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly">
+                                        @*<textarea id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12" ng-value="candidateAssessment.CandidateSubjectiveAnswer" readonly="readonly"></textarea>*@
+                                        @*<div id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" ng-value="candidateAssessment.CandidateSubjectiveAnswer" class="editor-wrapper placeholderText" contenteditable="true"></div>*@
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-6">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-3">
+                                            <button type="button" ng-click="model.updateCandidateAssessmentQuestionAnswer('markObtained'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentQuestionAnswerId)" class="btn btn-success">Submit</button>
+                                            @*<a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-href="/Assessment/AssessmentByTrainer">
+                                                Finish
+                                            </a>*@
+                                            <a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-click="model.updateCandidateAssessmentTotalMarkObtained(candidateAssessment.CandidateAssessmentId)">
+                                                Finish
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("Pagination/_pagination")
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        //function valueChanged() {
+        //    if (document.getElementById($('#optionA')).checked == true) {
+        //        document.getElementById($('#optionA')).value = 1;
+        //        document.getElementById($('#optionB')).value = 0;
+        //    } else {
+        //        document.getElementById($('#optionA')).value = 0;
+        //        document.getElementById($('#optionB')).value = 1;
+        //    }
+        //}
+    </script> 
+}
+

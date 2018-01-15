@@ -35,7 +35,8 @@
         vm.states = [];
         //vm.retrieveStates = retrieveStates;
         vm.retrieveSectors = retrieveSectors;
-        initialise();
+        vm.initialise = initialise;
+        vm.retrieveTodaysEnquiries = retrieveTodaysEnquiries;
 
         function initialise() {
             vm.orderBy.property = "ConversionProspect";
@@ -57,8 +58,23 @@
                 });
         }
 
+        function retrieveTodaysEnquiries() {
+            vm.orderBy.property = "ConversionProspect";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            return EnquiryService.retrieveTodaysEnquiries(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.enquiries = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.enquiries;
+                });
+        }
+
         function searchEnquiry(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return EnquiryService.searchEnquiry(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.enquiries = response.data.Items;
@@ -72,6 +88,7 @@
         function searchEnquiryByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return EnquiryService.searchEnquiryByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.enquiries = response.data.Items;

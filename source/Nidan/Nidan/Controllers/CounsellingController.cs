@@ -75,11 +75,14 @@ namespace Nidan.Controllers
         public ActionResult Create(CounsellingViewModel counsellingViewModel)
         {
             var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 counsellingViewModel.Counselling.OrganisationId = organisationId;
-                counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
+                counsellingViewModel.Counselling.PersonnelId = personnelId;
+                counsellingViewModel.Counselling.CreatedBy = UserPersonnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling.CreatedBy = personnelId;
                 counsellingViewModel.Counselling = NidanBusinessService.CreateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
             }
@@ -125,11 +128,13 @@ namespace Nidan.Controllers
         public ActionResult Edit(CounsellingViewModel counsellingViewModel)
         {
             var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
                 counsellingViewModel.Counselling.OrganisationId = organisationId;
-                counsellingViewModel.Counselling.PersonnelId = UserPersonnelId;
+                counsellingViewModel.Counselling.PersonnelId = personnelId;
                 counsellingViewModel.Counselling.CentreId = UserCentreId;
+                counsellingViewModel.Counselling.CreatedBy = personnelId;
                 counsellingViewModel.Counselling.FollowUpDate = DateTime.UtcNow.AddDays(2);
                 counsellingViewModel.Counselling = NidanBusinessService.UpdateCounselling(organisationId, counsellingViewModel.Counselling);
                 return RedirectToAction("Index");
@@ -214,7 +219,8 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveCounsellings(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Enquiry.IsRegistrationDone == false && p.Close != "Yes", orderBy, paging));
+            var data = NidanBusinessService.RetrieveCounsellingDataGrid(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.Close != "Yes",orderBy, paging);
+            return this.JsonNet(data);
         }
 
         [HttpPost]
@@ -231,7 +237,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCounsellings(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveCounsellingDataGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 

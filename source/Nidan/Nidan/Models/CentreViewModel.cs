@@ -13,5 +13,6 @@ namespace Nidan.Models
         public SelectList Talukas { get; set; }
         public SelectList Districts { get; set; }
         public SelectList States { get; set; }
+        public SelectList Partners { get; set; }
     }
 }

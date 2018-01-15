@@ -10,7 +10,8 @@
     function CentrePettyCashService($http) {
         var service = {
             retrieveCentrePettyCashs: retrieveCentrePettyCashs,
-            searchCentrePettyCash: searchCentrePettyCash
+            searchCentrePettyCash: searchCentrePettyCash,
+            searchCentrePettyCashByDate: searchCentrePettyCashByDate
         };
 
         return service;
@@ -32,6 +33,18 @@
                     searchKeyword: SearchKeyword,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchCentrePettyCashByDate(fromDate, toDate, paging, orderBy) {
+            var url = "/CentrePettyCash/SearchByDate",
+                data = {
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    paging: paging,
+                    orderBy: new Array(orderBy)
                 };
 
             return $http.post(url, data);

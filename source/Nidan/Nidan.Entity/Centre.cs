@@ -16,11 +16,6 @@ namespace Nidan.Entity
         {
             Enquiries = new HashSet<Enquiry>();
             Counsellings = new HashSet<Counselling>();
-            Brainstormings = new HashSet<Brainstorming>();
-            Plannings = new HashSet<Planning>();
-            Budgets = new HashSet<Budget>();
-            Eventdays = new HashSet<Eventday>();
-            PostEvents = new HashSet<PostEvent>();
             CourseInstallments = new HashSet<CourseInstallment>();
             Rooms = new HashSet<Room>();
             Batches = new HashSet<Batch>();
@@ -48,10 +43,6 @@ namespace Nidan.Entity
             Expenses = new HashSet<Expense>();
             Attendances = new HashSet<Attendance>();
             BatchAttendances = new HashSet<BatchAttendance>();
-            EventBrainstormings = new HashSet<EventBrainstorming>();
-            EventBudgets=new HashSet<EventBudget>();
-            EventPlannings = new HashSet<EventPlanning>();
-            EventPostEvents = new HashSet<EventPostEvent>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
             CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
             StockIssues=new HashSet<StockIssue>();
@@ -62,12 +53,31 @@ namespace Nidan.Entity
             CentreProductSettings=new HashSet<CentreProductSetting>();
             FixAssetMappings = new HashSet<FixAssetMapping>();
             CentreItemSettings=new HashSet<CentreItemSetting>();
+            BankDeposites = new HashSet<BankDeposite>();
+            ActivityAssignPersonnels=new HashSet<ActivityAssignPersonnel>();
+            Activities=new HashSet<Activity>();
+            ActivityTaskStates=new HashSet<ActivityTaskState>();
+            ActivityAssigneeGroups=new HashSet<ActivityAssigneeGroup>();
+            ActivityTasks=new HashSet<ActivityTask>();
+            Assessments = new HashSet<Assessment>();
+            CandidateAssessments=new HashSet<CandidateAssessment>();
+            CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
+            Companies = new HashSet<Company>();
+            CompanyBranches = new HashSet<CompanyBranch>();
+            CompanyFollowUps = new HashSet<CompanyFollowUp>();
+            CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
         }
 
         public int CentreId { get; set; }
 
         [StringLength(100)]
         public string CentreCode { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string CentreType { get; set; }
+
+        public int? PartnerId { get; set; }
 
         [Required]
         [StringLength(500)]
@@ -106,6 +116,8 @@ namespace Nidan.Entity
 
         public virtual State State { get; set; }
 
+        public virtual Partner Partner { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }
 
@@ -114,21 +126,6 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Batch> Batches { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Brainstorming> Brainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Planning> Plannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Budget> Budgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Eventday> Eventdays { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostEvent> PostEvents { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trainer> Trainers { get; set; }
@@ -212,22 +209,8 @@ namespace Nidan.Entity
         public virtual ICollection<BatchAttendance> BatchAttendances { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBrainstorming> EventBrainstormings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventBudget> EventBudgets { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
-        
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPlanning> EventPlannings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventPostEvent> EventPostEvents { get; set; }
-      
+ 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
@@ -254,7 +237,52 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreItemSetting> CentreItemSettings { get; set; }
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BankDeposite> BankDeposites { get; set; }
 
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivityTaskState> ActivityTaskStates { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivityAssignPersonnel> ActivityAssignPersonnels { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivityAssigneeGroup> ActivityAssigneeGroups { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActivityTask> ActivityTasks { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Activity> Activities { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assessment> Assessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessment> CandidateAssessments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateAssessmentQuestionAnswer> CandidateAssessmentQuestionAnswers { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventManagement> EventManagements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Company> Companies { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyBranch> CompanyBranches { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyFollowUp> CompanyFollowUps { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompanyFollowUpHistory> CompanyFollowUpHistories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePrePlacementActivity> CandidatePrePlacementActivities { get; set; }
     }
 
 }

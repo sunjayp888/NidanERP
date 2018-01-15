@@ -47,6 +47,8 @@
     <script>
         var courseDuration = 0;
         var courseFee = 0.00;
+        $("#BatchPlanner_CourseId").empty();
+        $("#BatchPlanner_RoomId").empty();
         $(function () {
             var daterangepickerOptions = {
                 autoApply: true,
@@ -151,22 +153,32 @@
                     },
                     success: function (result) {
                         courseDuration = result.Duration;
-                        var courseType = result.CourseType;
-                        $("#BatchPlanner_CourseType").val(result.CourseType);
-                        if (courseType == "Career") {
-                            $("#BatchPlanner_SlotType").val("Prime Slot");
-                        } else {
-                            $("#BatchPlanner_SlotType").val("General Slot");
-                        }
+                        //var courseType = result.CourseType;
+                        //$("#BatchPlanner_CourseType").val(result.CourseType);
+                        //if (courseType == "Career") {
+                        //    $("#BatchPlanner_SlotType").val("Prime Slot");
+                        //} else {
+                        //    $("#BatchPlanner_SlotType").val("General Slot");
+                        //}
                     },
                     async: true,
                     processData: false
                 });
             });
 
+        $("#BatchPlanner_CourseType").change(function() {
+            var courseType = $("#BatchPlanner_CourseType").val();
+            if (courseType == "Career") {
+                $("#BatchPlanner_SlotType").val("Prime Slot");
+            } else {
+                $("#BatchPlanner_SlotType").val("General Slot");
+            }
+        });
+
         $('input[type="checkbox"]').change(function () {
             var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            if (checkboxlength != 0) {
+            var room = $('#BatchPlanner_RoomId :selected').val();
+            if (checkboxlength != 0 && room != "Select Class Room" && room != "") {
                 BatchLogic();
                 NumberOfCandidateEngaged();
                 MinimumRevenue();
@@ -204,7 +216,7 @@
             var room = $('#BatchPlanner_RoomId :selected').val();
             var course = $('#BatchPlanner_CourseId :selected').val();
             var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            if (checkboxlength != 0 && room != "" && course != "" && endTimeHours != "") {
+            if (checkboxlength != 0 && room != "" && course != "" && endTimeHours != "" && room != "Select Class Room") {
                 BatchLogic();
                 NumberOfCandidateEngaged();
                 MinimumRevenue();
@@ -216,7 +228,7 @@
             var room = $('#BatchPlanner_RoomId :selected').val();
             var course = $('#BatchPlanner_CourseId :selected').val();
             var checkboxlength = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            if (checkboxlength != 0 && room != "" && course != "" && startTimeHours != "") {
+            if (checkboxlength != 0 && room != "" && course != "" && startTimeHours != "" && room != "Select Class Room") {
                 BatchLogic();
                 NumberOfCandidateEngaged();
                 MinimumRevenue();

@@ -11,7 +11,7 @@ namespace Nidan.Entity
     {
         public CentrePettyCash()
         {
-            CreatedDate = DateTime.UtcNow.Date;
+            CreatedDate=DateTime.UtcNow.Date;
         }
 
         public int CentrePettyCashId { get; set; }
@@ -33,7 +33,5 @@ namespace Nidan.Entity
         public virtual Centre Centre { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        public virtual Personnel Personnel { get; set; }
     }
 }

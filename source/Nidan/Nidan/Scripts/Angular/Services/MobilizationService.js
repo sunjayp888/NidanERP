@@ -13,7 +13,8 @@
             canDeleteMobilization: canDeleteMobilization,
             deleteMobilization: deleteMobilization,
             searchMobilization: searchMobilization,
-            searchMobilizationByDate: searchMobilizationByDate
+            searchMobilizationByDate: searchMobilizationByDate,
+            retrieveTodaysMobilizations : retrieveTodaysMobilizations
         };
 
         return service;
@@ -21,6 +22,17 @@
         function retrieveMobilizations(Paging, OrderBy) {
 
             var url = "/Mobilization/List",
+                data = {
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveTodaysMobilizations(Paging, OrderBy) {
+
+            var url = "/Mobilization/TodaysMobilizationList",
                 data = {
                     paging: Paging,
                     orderBy: new Array(OrderBy)

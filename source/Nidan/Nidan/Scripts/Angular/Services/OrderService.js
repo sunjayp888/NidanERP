@@ -18,8 +18,8 @@
 
         function order(orderBy, property) {
             var direction = orderBy.property === property && orderBy.direction === Order.Direction.Ascending.name
-                ? Order.Direction.Descending
-                : Order.Direction.Ascending;
+                ? Order.Direction.Ascending
+                : Order.Direction.Descending;
 
             orderBy.direction = direction.name;
             orderBy.class = direction.class;

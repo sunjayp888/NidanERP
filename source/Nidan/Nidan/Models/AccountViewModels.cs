@@ -86,7 +86,7 @@ namespace Nidan.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ResetPasswordViewModel
+    public class ResetPasswordViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]

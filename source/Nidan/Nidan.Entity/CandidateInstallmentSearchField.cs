@@ -11,13 +11,11 @@ namespace Nidan.Entity
     {
         public int? CandidateInstallmentId { get; set; }
 
-        [Key]
-        [Column(Order = 0)]
         [StringLength(353)]
         public string CandidateName { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 0)]
         [StringLength(500)]
         public string BatchName { get; set; }
 
@@ -28,26 +26,26 @@ namespace Nidan.Entity
         public decimal? PendingAmount { get; set; }
 
         [Key]
-        [Column(Order = 2, TypeName = "date")]
+        [Column(Order = 1, TypeName = "date")]
         public DateTime AdmissionDate { get; set; }
 
         [Key]
-        [Column(Order = 3)]
+        [Column(Order = 2)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AdmissionId { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 3)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 4)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 5)]
         [StringLength(350)]
         public string SearchField { get; set; }
     }

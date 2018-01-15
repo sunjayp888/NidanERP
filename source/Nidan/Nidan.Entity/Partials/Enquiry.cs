@@ -10,6 +10,8 @@ namespace Nidan.Entity
     [MetadataType(typeof(EnquiryMetadata))]
     public partial class Enquiry : IOrganisationFilterable
     {
+        [NotMapped]
+        public string Fullname => string.Join(" ", new string[] { Title.Trim(), FirstName.Trim(), MiddleName?.Trim() ?? string.Empty, LastName.Trim() }).Trim();
         private class EnquiryMetadata
         {
             [Display(Name = "First Name")]
@@ -59,7 +61,7 @@ namespace Nidan.Entity
 
             [Display(Name = "Pre-Training Status")]
             [StringLength(100)]
-            public string PreTrainingStatus { get; set; } 
+            public string PreTrainingStatus { get; set; }
 
             public string Gender { get; set; }
 
@@ -103,7 +105,7 @@ namespace Nidan.Entity
 
             [Display(Name = "Experience in Year(s)")]
             public int YearOfExperience { get; set; }
-                        
+
             [Display(Name = "Placement Needed")]
             [StringLength(100)]
             public string PlacementNeeded { get; set; }

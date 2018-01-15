@@ -59,7 +59,10 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string PsychomatricTest { get; set; }
 
-        public int? ConversionProspect { get; set; }
+        [Key]
+        [Column(Order = 7)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ConversionProspect { get; set; }
 
         [StringLength(5)]
         public string Close { get; set; }
@@ -69,8 +72,13 @@ namespace Nidan.Entity
         public string RemarkByBm { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 8)]
         [StringLength(3)]
         public string IsRegistrationDone { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
     }
 }

@@ -5,7 +5,7 @@
     ViewBag.Title = "Mobilization Process Report By Month";
 }
 
-<div ng-controller="ReportController as model">
+<div ng-controller="ReportController as model" ng-init="model.searchMobilizationCountReportByMonthAndYear(model.centreId,model.fromYear)">
     <div class="page-title">
         <div class="title_left">
             <h3>

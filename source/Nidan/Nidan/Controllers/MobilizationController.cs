@@ -20,13 +20,17 @@ namespace Nidan.Controllers
     public class MobilizationController : BaseController
     {
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
         public MobilizationController(INidanBusinessService hrBusinessService) : base(hrBusinessService)
         {
         }
         // GET: Mobilization
 
         public ActionResult Index()
+        {
+            return View(new BaseViewModel());
+        }
+
+        public ActionResult TodaysMobilization()
         {
             return View(new BaseViewModel());
         }
@@ -59,13 +63,17 @@ namespace Nidan.Controllers
         public ActionResult Create(MobilizationViewModel mobilizationViewModel)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.OrganisationId = organisationId;
+                mobilizationViewModel.Mobilization.CentreId = centreId;
+                mobilizationViewModel.Mobilization.PersonnelId = personnelId;
+                mobilizationViewModel.Mobilization.CreatedBy = personnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
+                mobilizationViewModel.Mobilization.CreatedBy = UserPersonnelId;
                 mobilizationViewModel.Mobilization = NidanBusinessService.CreateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
                 return RedirectToAction("Index");
             }
@@ -109,11 +117,15 @@ namespace Nidan.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MobilizationViewModel mobilizationViewModel)
         {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
             if (ModelState.IsValid)
             {
-                mobilizationViewModel.Mobilization.OrganisationId = UserOrganisationId;
-                mobilizationViewModel.Mobilization.CentreId = UserCentreId;
-                mobilizationViewModel.Mobilization.PersonnelId = UserPersonnelId;
+                mobilizationViewModel.Mobilization.OrganisationId = organisationId;
+                mobilizationViewModel.Mobilization.CentreId = centreId;
+                mobilizationViewModel.Mobilization.PersonnelId = personnelId;
+                mobilizationViewModel.Mobilization.CreatedBy = personnelId;
                 mobilizationViewModel.Mobilization.EventId = mobilizationViewModel.EventId;
                 mobilizationViewModel.Mobilization.Close = "No";
                 mobilizationViewModel.Mobilization = NidanBusinessService.UpdateMobilization(UserOrganisationId, mobilizationViewModel.Mobilization);
@@ -205,6 +217,13 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             return this.JsonNet(NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes", orderBy, paging));
+        }
+
+        [HttpPost]
+        public ActionResult TodaysMobilizationList(Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            return this.JsonNet(NidanBusinessService.RetrieveMobilizationDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.Close != "Yes" && p.CreatedDate==_today, orderBy, paging));
         }
 
         [HttpPost]

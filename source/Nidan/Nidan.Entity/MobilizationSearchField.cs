@@ -39,35 +39,33 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string FirstName { get; set; }
 
-        [Key]
-        [Column(Order = 6)]
         [StringLength(100)]
         public string MiddleName { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 6)]
         [StringLength(100)]
         public string LastName { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Mobile { get; set; }
 
         public long? AlternateMobile { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int InterestedCourseId { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int QualificationId { get; set; }
 
         [Key]
-        [Column(Order = 11, TypeName = "date")]
+        [Column(Order = 10, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [Column(TypeName = "date")]
@@ -78,11 +76,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string MobilizerStatus { get; set; }
 
-        [Key]
-        [Column("Mobilized By", Order = 12)]
-        [StringLength(100)]
-        public string Mobilized_By { get; set; }
-
         [StringLength(500)]
         public string StudentLocation { get; set; }
 
@@ -90,12 +83,12 @@ namespace Nidan.Entity
         public string OtherInterestedCourse { get; set; }
 
         [Key]
-        [Column(Order = 13)]
+        [Column(Order = 11)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MobilizationTypeId { get; set; }
 
         [Key]
-        [Column(Order = 14, TypeName = "date")]
+        [Column(Order = 12, TypeName = "date")]
         public DateTime GeneratedDate { get; set; }
 
         public int? PersonnelId { get; set; }
@@ -104,6 +97,11 @@ namespace Nidan.Entity
         public string Close { get; set; }
 
         public string ClosingRemark { get; set; }
+
+        [Key]
+        [Column(Order = 13)]
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
 
         [StringLength(4000)]
         public string SearchField { get; set; }

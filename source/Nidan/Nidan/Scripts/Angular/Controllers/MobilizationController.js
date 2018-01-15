@@ -22,14 +22,15 @@
         vm.searchMobilization = searchMobilization;
         vm.viewMobilization = viewMobilization;
         vm.searchMobilizationByDate = searchMobilizationByDate;
+        vm.retrieveTodaysMobilizations = retrieveTodaysMobilizations;
         vm.searchKeyword = "";
         vm.searchMessage = "";
-        initialise();
+        vm.initialise = initialise;
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
             vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "desc";
+            vm.orderBy.class = "asc";
             order("CreatedDate");
         }
 
@@ -43,8 +44,23 @@
                 });
         }
 
+        function retrieveTodaysMobilizations() {
+            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return MobilizationService.retrieveTodaysMobilizations(vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.mobilizations = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.mobilizations;
+                });
+        }
+
         function searchMobilization(searchKeyword) {
             vm.searchKeyword = searchKeyword;
+            vm.fromDate = null;
+            vm.toDate = null;
             return MobilizationService.searchMobilization(vm.searchKeyword, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.mobilizations = response.data.Items;
@@ -58,6 +74,7 @@
         function searchMobilizationByDate(fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.searchKeyword = null;
             return MobilizationService.searchMobilizationByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
               .then(function (response) {
                   vm.mobilizations = response.data.Items;
@@ -71,7 +88,10 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchMobilization(vm.searchKeyword);
-            } else {
+            } else if (vm.fromDate && vm.toDate) {
+                searchMobilizationByDate(vm.fromDate, vm.toDate);
+            }
+            else {
                 return retrieveMobilizations();
             }
         }

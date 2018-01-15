@@ -12,7 +12,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EventFunctionType()
         {
-            Questions = new HashSet<Question>();
+            EventQuestions = new HashSet<EventQuestion>();
+            EventManagements=new HashSet<EventManagement>();
         }
 
         public int EventFunctionTypeId { get; set; }
@@ -25,6 +26,9 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<EventQuestion> EventQuestions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EventManagement> EventManagements { get; set; }
     }
 }

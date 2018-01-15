@@ -10,10 +10,16 @@
     function ExpenseService($http) {
         var service = {
             retrieveExpenses: retrieveExpenses,
-            //canDeleteOtherFee: canDeleteOtherFee,
+            retrieveCentres:retrieveCentres,
             deleteExpense: deleteExpense,
             searchExpense: searchExpense,
-            retrieveExpensesByCashMemo: retrieveExpensesByCashMemo
+            retrieveExpensesByCashMemo: retrieveExpensesByCashMemo,
+            expenseLimitCheck: expenseLimitCheck,
+            dateInCurrentWeek: dateInCurrentWeek,
+            retrieveCentres: retrieveCentres,
+            searchExpenseByDateCentreId: searchExpenseByDateCentreId,
+            searchExpenseByDate: searchExpenseByDate
+
         };
 
         return service;
@@ -40,12 +46,17 @@
             return $http.post(url, data);
         }
 
-        //function canDeleteOtherFee(id) {
-        //    var url = "/OtherFee/CanDeleteOtherFee",
-        //        data = { id: id };
+        function searchExpenseByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Expense/SearchByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
-        //    return $http.post(url, data);
-        //}
+            return $http.post(url, data);
+        }
 
         function deleteExpense(centreId, expenseId, cashMemo) {
             var url = "/Expense/Delete",
@@ -69,5 +80,39 @@
             return $http.post(url, data);
         }
 
+        function expenseLimitCheck(expenseHeaderId) {
+            var url = "/Expense/ExpenseLimitCheck",
+                data = {
+                    expenseHeaderId: expenseHeaderId
+                };
+            return $http.post(url, data);
+        } 
+
+        function dateInCurrentWeek(expenseId) {
+            var url = "/Expense/IsDateInCurrentWeek",
+                data = {
+                    expenseId: expenseId
+                };
+            return $http.post(url, data);
+        }
+
+        function retrieveCentres() {
+
+            var url = "/Expense/GetCentres";
+            return $http.post(url);
+        }
+
+        function searchExpenseByDateCentreId(FromDate, ToDate, CentreId, Paging, OrderBy) {
+            var url = "/Expense/SearchByDateCentreId",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    centreId: CentreId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
     }
 })();

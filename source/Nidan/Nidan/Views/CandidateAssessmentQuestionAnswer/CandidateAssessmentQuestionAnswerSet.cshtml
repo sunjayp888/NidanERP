@@ -1,0 +1,160 @@
+﻿@using Nidan.Entity
+@model Nidan.Models.CandidateAssessmentQuestionAnswerViewModel
+@{
+    ViewBag.Title = "Create";
+}
+<div ng-controller="AssessmentController as model" ng-init="model.retrieveCandidateAssessment(@Model.CandidateAssessmentId)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><small>Assessment Name: @Model.AssessmentName</small></h2>
+                    <h2><small>Total Marks: @Model.TotalMark</small></h2>
+                    <div class="float-right">
+                        <h2 id="timecountdown"></h2>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+                            @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                        @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                    </div>
+                                </div>
+                            }
+                            <div ng-repeat="candidateAssessment in model.candidateAssessments">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-3 col-xs-12">
+                                        <label class="col-md-6 col-sm-6 col-xs-12">
+                                            @*<input type="checkbox" ng-model="model.IsOptionA">*@
+                                            <span ng-bind="candidateAssessment.QuestionDescription"></span>
+                                            @*&nbsp;&nbsp;&nbsp;<span ng-bind="candidateAssessment.MarkPerQuestion"></span>&nbsp;Mark*@
+                                        </label>
+                                        <label class="col-md-6 col-sm-6 col-xs-12">
+                                            <span ng-bind="candidateAssessment.MarkPerQuestion"></span> Mark
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionAName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
+                                            <span ng-bind="candidateAssessment.OptionA"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionBName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
+                                            <span ng-bind="candidateAssessment.OptionB"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Multiple'">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionCName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
+                                            <span ng-bind="candidateAssessment.OptionC"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==1  && candidateAssessment.AnswerType=='Multiple'">
+                                    <div class="col-md-7 col-sm-3 col-xs-12">
+                                        <label class="pull-right col-md-12 col-sm-6 col-xs-12">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" name="optionDName{{candidateAssessment.ModuleExamQuestionSetId}}" type="checkbox">
+                                            <span ng-bind="candidateAssessment.OptionD"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <form name="myForm" ng-if="candidateAssessment.QuestionTypeId==1 && candidateAssessment.AnswerType=='Multiple'">
+                                    <label>
+                                        <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionA">
+                                        <span ng-bind="candidateAssessment.OptionA"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionB">
+                                        <span ng-bind="candidateAssessment.OptionB"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionC">
+                                        <span ng-bind="candidateAssessment.OptionC"></span>
+                                    </label><br />
+                                    <label>
+                                        <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}"  type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionD">
+                                        <span ng-bind="candidateAssessment.OptionD"></span>
+                                    </label><br />
+                                </form>
+
+                                <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2">
+                                    <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" name="subjectAnswer{{candidateAssessment.ModuleExamQuestionSetId}}" class="col-md-8 col-sm-6 col-xs-12">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-6">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-3">
+                                            <button type="button" ng-click="model.createCandidateAssessmentQuestionAnswer('optionA'+candidateAssessment.ModuleExamQuestionSetId,'optionB'+candidateAssessment.ModuleExamQuestionSetId,'optionC'+candidateAssessment.ModuleExamQuestionSetId,'optionD'+candidateAssessment.ModuleExamQuestionSetId,'subjectAnswer'+candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.CandidateAssessmentId,candidateAssessment.AssessmentId,candidateAssessment.ModuleExamSetId,candidateAssessment.ModuleExamQuestionSetId,candidateAssessment.QuestionTypeId,candidateAssessment.AnswerType,candidateAssessment.MarkPerQuestion)" class="btn btn-success">Submit</button>
+                                            <a class="btn btn-danger" style="cursor: pointer;" ng-if="model.paging.page==model.paging.totalPages" ng-href="/Assessment/AssessmentByUser">
+                                                Finish
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("Pagination/_pagination")
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        @*var dt = '@ViewBag.Rem_Time';
+        var dateAr = dt.split('-');
+        var newDate = dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2];
+        var end = new Date(dateAr[1] + '/' + dateAr[0] + '/' + dateAr[2]);
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById('timecountdown').innerHTML = 'Count Down Ends !';
+                window.location.href = '/Assessment/AssessmentByUser';
+                return;
+            }
+
+            var days = Math.floor(distance / _day);
+            var _hours = Math.floor((distance % _day) / _hour);
+            var _minutes = Math.floor((distance % _hour) / _minute);
+            var _seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById('timecountdown').innerHTML = 'Hrs:' + _hours;
+            document.getElementById('timecountdown').innerHTML = 'Mins:' + _minutes;
+            document.getElementById('timecountdown').innerHTML = 'Secs:' + _seconds;
+        }
+        timer = setInterval(showRemaining(), 1000);*@
+
+    </script>
+}
+
