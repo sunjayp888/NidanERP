@@ -25,5 +25,6 @@ namespace Nidan.Models
         public int BatchId { get; set; }
         public int TotalMark { get; set; }
         public string AssessmentName { get; set; }
+        public string CandidateName { get; set; }
     }
 }

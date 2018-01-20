@@ -2257,12 +2257,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidatePostPlacements(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword,Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidatePostPlacementBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
-        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword,Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidateFinalPlacementBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
@@ -3560,11 +3560,12 @@ namespace Nidan.Business
             var startFiscalDate = new DateTime(year, 04, 01);
             var endFiscalDate = new DateTime(startFiscalDate.AddYears(1).Year, 03, 31);
             var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
-            var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId).Items.ToList();
+            var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId);
             var months = DateTimeExtensions.EachMonth(startFiscalDate, endFiscalDate);
             foreach (var item in months)
             {
-                var result = data.FirstOrDefault(e => e.Month == item.Month && e.Year == item.Year);
+                var result1 = data.Items.Where(e => e.Month == item.Month && e.Year == item.Year).ToList();
+                var result = data.Items.FirstOrDefault(e => e.Month == item.Month && e.Year == item.Year);
                 mobilizationSummaryReports.Add(new MobilizationSummaryReport()
                 {
                     CentreId = result?.CentreId ?? 0,
