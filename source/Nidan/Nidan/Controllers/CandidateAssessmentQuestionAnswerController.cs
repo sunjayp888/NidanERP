@@ -29,7 +29,7 @@ namespace Nidan.Controllers
         {
             return View(new CandidateAssessmentQuestionAnswerViewModel()
             {
-                 BatchId= id.Value,
+                BatchId = id.Value,
                 //ModuleExamSetId = assesmentId.Value 
             });
         }
@@ -38,6 +38,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, id.Value, e => true);
+            var enquiry = _nidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == candidateAssessment.StudentCode).FirstOrDefault();
             var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
             if (Session["Rem_Time"] == null)
             {
@@ -49,8 +50,9 @@ namespace Nidan.Controllers
             return View(new CandidateAssessmentQuestionAnswerViewModel()
             {
                 CandidateAssessmentId = id.Value,
-                TotalMark=moduleExamSet.TotalMark??0,
+                TotalMark = moduleExamSet.TotalMark ?? 0,
                 AssessmentName = candidateAssessment.Assessment.Name,
+                CandidateName = string.Format("{0} {1} {2} {3}", enquiry.Title, enquiry.FirstName, enquiry.MiddleName, enquiry.LastName)
             });
         }
 
@@ -62,7 +64,7 @@ namespace Nidan.Controllers
             var personnelId = UserPersonnelId;
             var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId, e => true);
             var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
-            var moduleExamQuestionSet = NidanBusinessService.RetrieveModuleExamQuestionSets(organisationId, e => e.ModuleExamSetId == moduleExamSet.ModuleExamSetId && e.PersonnelId==personnelId,orderBy,paging);
+            var moduleExamQuestionSet = NidanBusinessService.RetrieveModuleExamQuestionSets(organisationId, e => e.ModuleExamSetId == moduleExamSet.ModuleExamSetId && e.PersonnelId == personnelId, orderBy, paging);
             return this.JsonNet(moduleExamQuestionSet);
         }
 
@@ -77,11 +79,11 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult CandidateAssessmentDetailByBatchIdAssessmentId(int batchId,Paging paging, List<OrderBy> orderBy)
+        public ActionResult CandidateAssessmentDetailByBatchIdAssessmentId(int batchId, Paging paging, List<OrderBy> orderBy)
         {
             var organisationId = UserOrganisationId;
             var personnelId = UserPersonnelId;
-            var candidateAssessmentDetail = NidanBusinessService.RetrieveCandidateAssessmentGrid(organisationId, e => e.BatchId==batchId);
+            var candidateAssessmentDetail = NidanBusinessService.RetrieveCandidateAssessmentGrid(organisationId, e => e.BatchId == batchId);
             return this.JsonNet(candidateAssessmentDetail);
         }
 
@@ -90,11 +92,13 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var candidateAssessment = NidanBusinessService.RetrieveCandidateAssessment(organisationId, id.Value, e => true);
             var moduleExamSet = NidanBusinessService.RetrieveModuleExamSet(organisationId, candidateAssessment.ModuleExamSetId, e => true);
+            var enquiry = _nidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == candidateAssessment.StudentCode).FirstOrDefault();
             return View(new CandidateAssessmentQuestionAnswerViewModel
             {
                 CandidateAssessmentId = id.Value,
                 TotalMark = moduleExamSet.TotalMark ?? 0,
                 AssessmentName = candidateAssessment.Assessment.Name,
+                CandidateName = string.Format("{0} {1} {2} {3}", enquiry.Title, enquiry.FirstName, enquiry.MiddleName, enquiry.LastName)
             });
         }
 
@@ -125,8 +129,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var candidateAssessmentQuestionAnswerData = NidanBusinessService.RetrieveCandidateAssessmentQuestionAnswers(organisationId, e => e.CandidateAssessmentId == candidateAssessmentId);
-            var candidateAssessmentsData = NidanBusinessService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId.Value, e=>true);
-            candidateAssessmentsData.TotalMarkObtained =candidateAssessmentQuestionAnswerData.Items.Sum(e => e.MarkObtained);
+            var candidateAssessmentsData = NidanBusinessService.RetrieveCandidateAssessment(organisationId, candidateAssessmentId.Value, e => true);
+            candidateAssessmentsData.TotalMarkObtained = candidateAssessmentQuestionAnswerData.Items.Sum(e => e.MarkObtained);
             var data = NidanBusinessService.UpdateCandidateAssessment(organisationId, candidateAssessmentsData);
             return this.JsonNet(data);
         }
