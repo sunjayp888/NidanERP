@@ -79,7 +79,8 @@ namespace Nidan.Data.Interfaces
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Centre> RetrieveCentresPageResult(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<Centre> RetrieveCentres(int organisationId);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Course RetrieveCourse(int organisationId, int courseId, Expression<Func<Course, bool>> predicate);
         PagedResult<Course> RetrieveCourseBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Course, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);

@@ -904,35 +904,6 @@ namespace Nidan.Data
             }
         }
 
-
-        public PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Centres
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Enquiries)
-                    .Include(p => p.Mobilizations)
-                    .Include(p => p.Registrations)
-                    .Include(p => p.Admissions)
-                    .Include(p => p.Counsellings)
-                    .Include(p => p.State)
-                    .AsNoTracking()
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "Name",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
         public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -1286,11 +1257,11 @@ namespace Nidan.Data
                 return context
                     .Centres
                     .Include(p => p.Organisation)
-                    .Include(p => p.Enquiries)
-                    .Include(p => p.Mobilizations)
-                    .Include(p => p.Registrations)
-                    .Include(p => p.Admissions)
-                    .Include(p => p.Counsellings)
+                    //.Include(p => p.Enquiries)
+                    //.Include(p => p.Mobilizations)
+                    //.Include(p => p.Registrations)
+                    //.Include(p => p.Admissions)
+                    //.Include(p => p.Counsellings)
                     .Include(p => p.State)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1306,6 +1277,37 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<Centre> RetrieveCentresPageResult(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Centres
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public List<Centre> RetrieveCentres(int organisationId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context.Centres.ToList();
+            }
+        }
         public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -4278,8 +4280,8 @@ namespace Nidan.Data
             {
                 return context
                     .CompanyFollowUps
-                    .Include(c=>c.CompanyBranch)
-                    .Include(c=>c.Company)
+                    .Include(c => c.CompanyBranch)
+                    .Include(c => c.Company)
                     .AsNoTracking()
                     .SingleOrDefault(p => p.CompanyFollowUpId == companyFollowUpId);
             }
@@ -4534,7 +4536,7 @@ namespace Nidan.Data
 
                 return context
                     .CandidateFinalPlacements
-                    .Include(p=>p.Centre)
+                    .Include(p => p.Centre)
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -4549,7 +4551,7 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword,Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
@@ -4896,13 +4898,13 @@ namespace Nidan.Data
                     var data = context.EventManagements.Where(e => e.EventId == eventId);
                     foreach (var eventManagement in eventManagements)
                     {
-                        var result = data.FirstOrDefault(e => e.EventId == eventId &&e.CentreId== eventManagement.CentreId && e.EventManagementId == eventManagement.EventManagementId);
+                        var result = data.FirstOrDefault(e => e.EventId == eventId && e.CentreId == eventManagement.CentreId && e.EventManagementId == eventManagement.EventManagementId);
                         if (result != null)
                         {
                             result.Description = eventManagement.Description;
                             result.EventQuestionAnswerCompleted = eventManagement.EventQuestionAnswerCompleted;
                             result.Createdby = personnelId;
-                            result.CreatedDateTime=DateTime.UtcNow;
+                            result.CreatedDateTime = DateTime.UtcNow;
                         }
                     }
                     context.SaveChanges();

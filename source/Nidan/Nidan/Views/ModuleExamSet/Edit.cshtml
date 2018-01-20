@@ -26,13 +26,21 @@
                         @Html.HiddenFor(model => model.ModuleExamSet.ModuleExamSetId)
                         @Html.HiddenFor(model => model.ModuleExamQuestionSet.ModuleExamSetId)
                         @Html.Partial("_ModuleExamQuestionSet", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
-                            <div class="form-group">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-success">Add Question</button>
+                        @{
+                            var totalmark = @Model.ModuleExamSet.TotalMark;
+                            var markper = @Model.ModuleExamSet.ModuleExamQuestionSets.Sum(e => e.MarkPerQuestion);
+                            var ans = (totalmark - markper);
+                        }
+                        @if (!(@markper >= @totalmark))
+                        {
+                            <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-success">Add Question</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 }
             </div>
