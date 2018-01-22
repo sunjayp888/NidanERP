@@ -156,5 +156,22 @@
                 alert('Expense Voucher CAN NOT be above Rs.999/-');
             }
         });
+
+        //-----------------------------------------------------------
+        //submit button blur on once click
+        //$('#btn_submit').attr('disabled', true);
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
     </script>
 }

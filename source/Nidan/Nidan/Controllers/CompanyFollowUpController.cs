@@ -14,10 +14,12 @@ namespace Nidan.Controllers
 {
     public class CompanyFollowUpController : BaseController
     {
+        private readonly INidanBusinessService _nidanBusinessService;
         private readonly DateTime _today = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day);
         private readonly DateTime _tomorrow = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day).AddDays(1);
         public CompanyFollowUpController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
+            _nidanBusinessService = nidanBusinessService;
         }
         // GET: CompanyFollowUp
         public ActionResult Index()
@@ -34,7 +36,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var companyFollowUp = NidanBusinessService.RetrieveCompanyFollowUp(organisationId, id.Value);
+            var companyFollowUp = _nidanBusinessService.RetrieveCompanyFollowUp(organisationId, id.Value);
             if (companyFollowUp == null)
             {
                 return HttpNotFound();
@@ -66,7 +68,7 @@ namespace Nidan.Controllers
                 companyFollowUpViewModel.CompanyFollowUp.OrganisationId = organisationId;
                 companyFollowUpViewModel.CompanyFollowUp.CentreId = centreId;
                 companyFollowUpViewModel.CompanyFollowUp.CreatedBy = personnelId;
-                companyFollowUpViewModel.CompanyFollowUp = NidanBusinessService.UpdateCompanyFollowUp(organisationId, companyFollowUpViewModel.CompanyFollowUp);
+                companyFollowUpViewModel.CompanyFollowUp = _nidanBusinessService.UpdateCompanyFollowUp(organisationId, companyFollowUpViewModel.CompanyFollowUp);
                 return RedirectToAction("Index");
             }
             var viewModel = new CompanyFollowUpViewModel
@@ -82,7 +84,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCompanyFollowUpGrid(organisationId,p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCompanyFollowUpGrid(organisationId,p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -94,7 +96,16 @@ namespace Nidan.Controllers
             var centreId = UserCentreId;
             var companyFollowUpId = Convert.ToInt32(TempData["CompanyFollowUpId"]);
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCompanyFollowUpHistoryGrid(organisationId,e => (isSuperAdmin || e.CentreId == centreId) && e.CompanyFollowUpId == companyFollowUpId, orderBy,paging);
+            var data = _nidanBusinessService.RetrieveCompanyFollowUpHistoryGrid(organisationId,e => (isSuperAdmin || e.CentreId == centreId) && e.CompanyFollowUpId == companyFollowUpId, orderBy,paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = _nidanBusinessService.RetrieveCompanyFollowUpBySearchKeyword(organisationId, searchKeyword, p => isSuperAdmin, orderBy, paging);
             return this.JsonNet(data);
         }
     }

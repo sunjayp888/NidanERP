@@ -18,7 +18,6 @@
         vm.orderBy = new OrderBy;
         vm.order = order;
         vm.orderClass = orderClass;
-        vm.editCandidatePrePlacementActivity = editCandidatePrePlacementActivity;
         vm.searchCandidatePrePlacementActivity = searchCandidatePrePlacementActivity;
         vm.searchCandidatePrePlacementActivityByDate = searchCandidatePrePlacementActivityByDate;
         vm.searchKeyword = "";
@@ -26,17 +25,19 @@
         vm.initialise = initialise;
         vm.retrieveCandidatePrePlacementActivityByBatchId = retrieveCandidatePrePlacementActivityByBatchId;
         vm.candidatePrePlacementActivityId;
+        vm.batchId;
 
         function initialise() {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            order("CreatedDate");
+            retrieveBatches();
+            order("AdmissionId");
         }
 
         function retrieveCandidatePrePlacementActivityByBatchId(batchId) {
             vm.batchId = batchId;
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             return CandidatePrePlacementActivityService.retrieveCandidatePrePlacementActivityByBatchId(vm.batchId,vm.paging, vm.orderBy)
@@ -90,11 +91,18 @@
 
         function order(property) {
             vm.orderBy = OrderService.order(vm.orderBy, property);
-            return retrieveCandidatePrePlacementActivityByBatchId(batchId);
+            return retrieveCandidatePrePlacementActivityByBatchId(vm.batchId);
         }
 
         function orderClass(property) {
             return OrderService.orderClass(vm.orderBy, property);
+        }
+
+        function retrieveBatches() {
+            return CandidatePrePlacementActivityService.retrieveBatches().then(function (response) {
+                vm.batches = response.data.Items;
+                return vm.batches;
+            });
         }
     }
 

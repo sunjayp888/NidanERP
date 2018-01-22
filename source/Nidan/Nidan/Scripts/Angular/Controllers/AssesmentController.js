@@ -118,7 +118,7 @@
             if (path[2] === "CandidateAttemptedQuestionAnswer") {
                 retrieveCandidateAttemptedAssessment(vm.candidateAssessmentId);
             }
-            else {
+            if (path[2] === "AssessmentByUser") {
                 return retrieveAssessments();
             }
         }

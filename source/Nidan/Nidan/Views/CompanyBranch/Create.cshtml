@@ -38,4 +38,14 @@
         </div>
     </div>
 </div>
+<div>
+    <a href="@Url.Action("Edit","Company",new { id = Model.CompanyId })" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        $('#CompanyBranch_HRContact1').val("");
+    </script>
+}
 

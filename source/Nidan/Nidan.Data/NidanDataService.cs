@@ -904,35 +904,6 @@ namespace Nidan.Data
             }
         }
 
-
-        public PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-
-                return context
-                    .Centres
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Enquiries)
-                    .Include(p => p.Mobilizations)
-                    .Include(p => p.Registrations)
-                    .Include(p => p.Admissions)
-                    .Include(p => p.Counsellings)
-                    .Include(p => p.State)
-                    .AsNoTracking()
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "Name",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
         public Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate)
         {
             using (ReadUncommitedTransactionScope)
@@ -1286,11 +1257,11 @@ namespace Nidan.Data
                 return context
                     .Centres
                     .Include(p => p.Organisation)
-                    .Include(p => p.Enquiries)
-                    .Include(p => p.Mobilizations)
-                    .Include(p => p.Registrations)
-                    .Include(p => p.Admissions)
-                    .Include(p => p.Counsellings)
+                    //.Include(p => p.Enquiries)
+                    //.Include(p => p.Mobilizations)
+                    //.Include(p => p.Registrations)
+                    //.Include(p => p.Admissions)
+                    //.Include(p => p.Counsellings)
                     .Include(p => p.State)
                     .AsNoTracking()
                     .Where(predicate)
@@ -1306,6 +1277,37 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<Centre> RetrieveCentresPageResult(int organisationId, Expression<Func<Centre, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Centres
+                    .Include(p => p.Organisation)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "Name",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public List<Centre> RetrieveCentres(int organisationId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context.Centres.ToList();
+            }
+        }
         public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -4278,8 +4280,8 @@ namespace Nidan.Data
             {
                 return context
                     .CompanyFollowUps
-                    .Include(c=>c.CompanyBranch)
-                    .Include(c=>c.Company)
+                    .Include(c => c.CompanyBranch)
+                    .Include(c => c.Company)
                     .AsNoTracking()
                     .SingleOrDefault(p => p.CompanyFollowUpId == companyFollowUpId);
             }
@@ -4361,7 +4363,286 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
+                            Property = "AdmissionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public AdmissionGrid RetrieveAdmissionGrid(int organisationId, int admissionId, Expression<Func<AdmissionGrid, bool>> predicate)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .AdmissionGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .SingleOrDefault(p => p.AdmissionId == admissionId);
+            }
+        }
+
+        public CandidateFinalPlacement RetrieveCandidateFinalPlacement(int organisationId, int candidateFinalPlacementId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidateFinalPlacements
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CandidateFinalPlacementId == candidateFinalPlacementId);
+            }
+        }
+
+        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementGrid(int organisationId, Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateFinalPlacementGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "AdmissionId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<PlacementState> RetrievePlacementStates(int organisationId, Expression<Func<PlacementState, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .PlacementStates
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "PlacementStatusId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public CandidatePostPlacement RetrieveCandidatePostPlacement(int organisationId, int candidatePostPlacementId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .CandidatePostPlacements
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.CandidatePostPlacementId == candidatePostPlacementId);
+            }
+        }
+
+        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacements(int organisationId, Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidatePostPlacementGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidatePostPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CandidatePostPlacementGrid> RetrieveCandidatePostPlacementBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<CandidatePostPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidatePostPlacementGrid>("SearchCandidatePostPlacement @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidatePostPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CandidateFinalPlacementGrid> RetrieveCandidateFinalPlacementBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<CandidateFinalPlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidateFinalPlacementGrid>("SearchCandidateFinalPlacement @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFinalPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CandidateFinalPlacement> RetrieveCandidateFinalPlacements(int organisationId, Expression<Func<CandidateFinalPlacement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .CandidateFinalPlacements
+                    .Include(p => p.Centre)
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CandidateFinalPlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CandidatePrePlacementActivityGrid>("SearchCandidatePrePlacementActivity @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
                             Property = "CandidatePrePlacementActivityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyFollowUpGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CompanyFollowUpGrid>("SearchCompanyFollowUp @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CompanyFollowUpId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<CompanyGrid> RetrieveCompanyBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<CompanyGrid>("SearchCompany @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CompanyId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
+            }
+        }
+
+        public PagedResult<Company> RetrieveCompanynies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Companies
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -4381,14 +4662,14 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<Company> RetrieveCompanies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        public PagedResult<CompanyGrid> RetrieveCompanyGrid(int organisationId, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .Companies
+                    .CompanyGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -4617,13 +4898,13 @@ namespace Nidan.Data
                     var data = context.EventManagements.Where(e => e.EventId == eventId);
                     foreach (var eventManagement in eventManagements)
                     {
-                        var result = data.FirstOrDefault(e => e.EventId == eventId &&e.CentreId== eventManagement.CentreId && e.EventManagementId == eventManagement.EventManagementId);
+                        var result = data.FirstOrDefault(e => e.EventId == eventId && e.CentreId == eventManagement.CentreId && e.EventManagementId == eventManagement.EventManagementId);
                         if (result != null)
                         {
                             result.Description = eventManagement.Description;
                             result.EventQuestionAnswerCompleted = eventManagement.EventQuestionAnswerCompleted;
                             result.Createdby = personnelId;
-                            result.CreatedDateTime=DateTime.UtcNow;
+                            result.CreatedDateTime = DateTime.UtcNow;
                         }
                     }
                     context.SaveChanges();

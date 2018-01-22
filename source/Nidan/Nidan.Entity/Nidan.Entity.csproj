@@ -128,9 +128,13 @@
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
+    <Compile Include="CandidateFinalPlacement.cs" />
+    <Compile Include="CandidateFinalPlacementGrid.cs" />
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
+    <Compile Include="CandidatePostPlacement.cs" />
+    <Compile Include="CandidatePostPlacementGrid.cs" />
     <Compile Include="CandidatePrePlacementActivity.cs" />
     <Compile Include="CandidatePrePlacementActivityGrid.cs" />
     <Compile Include="CasteCategory.cs" />
@@ -155,6 +159,7 @@
     <Compile Include="CompanyFollowUpGrid.cs" />
     <Compile Include="CompanyFollowUpHistory.cs" />
     <Compile Include="CompanyFollowUpHistoryGrid.cs" />
+    <Compile Include="CompanyGrid.cs" />
     <Compile Include="Counselling.cs" />
     <Compile Include="CounsellingDataGrid.cs" />
     <Compile Include="CounsellingSearchField.cs" />
@@ -232,6 +237,7 @@
     <Compile Include="Partials\CandidateFee.cs" />
     <Compile Include="Partials\CandidateInstallment.cs" />
     <Compile Include="Partials\Centre.cs" />
+    <Compile Include="Partials\CompanyBranch.cs" />
     <Compile Include="Partials\Counselling.cs" />
     <Compile Include="Partials\Course.cs" />
     <Compile Include="Partials\CourseInstallment.cs" />
@@ -258,6 +264,7 @@
     <Compile Include="Personnel.cs" />
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="PettyCashExpenseReport.cs" />
+    <Compile Include="PlacementState.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

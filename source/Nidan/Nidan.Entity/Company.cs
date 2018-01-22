@@ -14,6 +14,8 @@ namespace Nidan.Entity
             CreatedDate = DateTime.UtcNow.Date;
             CompanyBranches = new HashSet<CompanyBranch>();
             CompanyFollowUps = new HashSet<CompanyFollowUp>();
+            CandidateFinalPlacements = new HashSet<CandidateFinalPlacement>();
+            CandidatePostPlacements = new HashSet<CandidatePostPlacement>();
         }
         public int CompanyId { get; set; }
 
@@ -47,5 +49,11 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CompanyFollowUp> CompanyFollowUps { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateFinalPlacement> CandidateFinalPlacements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePostPlacement> CandidatePostPlacements { get; set; }
     }
 }

@@ -19,7 +19,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Company.EmailId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    @Html.LabelFor(model => model.Company.EmailId,"Email Id", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
     <div class="col-md-6 col-sm-8 col-xs-12 name">
         @Html.TextBoxFor(model => model.Company.EmailId, new { @class = "form-control col-md-7 col-xs-12" })
         @Html.ValidationMessageFor(model => model.Company.EmailId, "", new { @class = "help-block" })

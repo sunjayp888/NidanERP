@@ -82,6 +82,7 @@ namespace Nidan.Controllers
             var viewModel = new CompanyBranchViewModel()
             {
                 Company = company,
+                CompanyId=companyBranch.CompanyId,
                 CompanyBranch = companyBranch,
                 Sectors = new SelectList(sectors, "SectorId", "Name")
             };
