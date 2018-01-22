@@ -125,7 +125,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            // var centre = NidanBusinessService.RetrieveCentres(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
+            // var centre = NidanBusinessService.RetrieveCentresPageresult(organisationId, e=>isSuperAdmin||e.CentreId==UserCentreId).ToList();
             var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             var graphData = new List<Graph>();

@@ -251,7 +251,7 @@ namespace Nidan.Controllers
         public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int year, Paging paging, List<OrderBy> orderBy)
         {
             var month = DateTime.Now.Month;
-            var fiscalYear = month == 1 || month == 2 || month == 3 ? year - 1 : year;
+            var fiscalYear = month <= 3 ? year - 1 : year;
             var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fiscalYear, orderBy);
             return this.JsonNet(data);
         }

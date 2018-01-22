@@ -121,7 +121,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveCentres(UserOrganisationId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveCentresPageresult(UserOrganisationId, orderBy, paging));
         }
 
         public ActionResult AssignCentreCourse(int centreId, int courseId)

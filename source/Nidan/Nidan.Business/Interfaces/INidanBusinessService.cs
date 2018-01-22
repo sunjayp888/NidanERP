@@ -141,7 +141,7 @@ namespace Nidan.Business.Interfaces
         PagedResult<Mobilization> RetrieveMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<Mobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<EnquirySearchField> RetrieveEnquiryBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<EnquirySearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<MobilizationType> RetrieveMobilizationTypes(int organisationId, Expression<Func<MobilizationType, bool>> predicate);
-        PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<Centre> RetrieveCentresPageresult(int organisationId, List<OrderBy> orderBy = null, Paging paging = null);
         Centre RetrieveCentre(int organisationId, int centreId, Expression<Func<Centre, bool>> predicate);
         Centre RetrieveCentre(int organisationId, int id);
         PagedResult<Counselling> RetrieveCounsellings(int organisationId, Expression<Func<Counselling, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -153,6 +153,7 @@ namespace Nidan.Business.Interfaces
         Batch RetrieveBatch(int organisationId, int batchId, Expression<Func<Batch, bool>> predicate);
         //List<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate);
         List<Centre> RetrieveCentres(int organisationId, Expression<Func<Centre, bool>> predicate);
+        List<Centre> RetrieveCentresStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         List<Centre> RetrieveCentres(int organisationId);
         PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Trainer RetrieveTrainer(int organisationId, int id);

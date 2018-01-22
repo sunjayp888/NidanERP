@@ -1814,7 +1814,7 @@ namespace Nidan.Business
             var date = _today.Date;
             var bankDepositeSummaryReports = new List<BankDepositeSummaryReport>();
             var data = _nidanDataService.RetriveBankDepositeCentreReportMonthWise(organisationId, e => e.Month == _today.Month && e.Year == _today.Year).Items.ToList();
-            var centres = _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
+            var centres = _nidanDataService.RetrieveCentres(organisationId);
             foreach (var centre in centres)
             {
                 var result = data.FirstOrDefault(e => e.CentreId == centre.CentreId);
@@ -1836,7 +1836,7 @@ namespace Nidan.Business
 
         public IEnumerable<AvailablePettyCashReport> RetriveAvailablePettyCashReport(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var centres = RetrieveCentres(organisationId, e => true);
+            var centres = RetrieveCentres(organisationId);
             var data = _nidanDataService.RetrieveAvailablePettyCashGrid(organisationId, e => true, orderBy, paging).Items.ToList();
             var availablePettyCashReport = new List<AvailablePettyCashReport>();
             foreach (var centre in centres)
@@ -2732,10 +2732,10 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<MobilizationType>(organisationId, predicate);
         }
 
-        public PagedResult<Centre> RetrieveCentres(int organisationId, List<OrderBy> orderBy = null,
+        public PagedResult<Centre> RetrieveCentresPageresult(int organisationId, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveCentres(organisationId, p => true, orderBy, paging);
+            return _nidanDataService.RetrieveCentresPageResult(organisationId, p => true, orderBy, paging);
         }
 
         public PagedResult<Batch> RetrieveBatches(int organisationId, Expression<Func<Batch, bool>> predicate,
@@ -2757,9 +2757,14 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCentres(organisationId, predicate).Items.ToList();
         }
 
+        public List<Centre> RetrieveCentresStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCentres(organisationId, predicate).Items.ToList();
+        }
+
         public List<Centre> RetrieveCentres(int organisationId)
         {
-            return _nidanDataService.RetrieveCentres(organisationId).Items.ToList();
+            return _nidanDataService.RetrieveCentres(organisationId);
         }
 
         public PagedResult<CounsellingSearchField> RetrieveCounsellingBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CounsellingSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
@@ -3040,7 +3045,7 @@ namespace Nidan.Business
         {
             var month = DateTime.UtcNow.Month;
             var year = DateTime.UtcNow.Year;
-            var centre = RetrieveCentres(organisationId, predicate).ToList();
+            var centre = RetrieveCentresStatistics(organisationId, predicate).ToList();
             var graphData = new List<Graph>();
             foreach (var item in centre)
             {
@@ -3075,7 +3080,6 @@ namespace Nidan.Business
 
         public List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
         {
-            var centre = RetrieveCentres(organisationId, predicate).ToList();
             var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
             var endOfWeekDate = startOfWeekDate.AddDays(6);
             var graphData = new List<Graph>();
@@ -3500,10 +3504,9 @@ namespace Nidan.Business
 
         public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthWise(int organisationId, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var _today = DateTime.UtcNow;
-            var date = _today.Date;
+            var utcNow = DateTime.UtcNow;
             var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
-            var data = _nidanDataService.RetriveMobilizationCountReportByMonthWise(organisationId, e => e.Month == _today.Month && e.Year == _today.Year).Items.ToList();
+            var data = _nidanDataService.RetriveMobilizationCountReportByMonthWise(organisationId, e => e.Month == utcNow.Month && e.Year == utcNow.Year).Items.ToList();
             var centres = _nidanDataService.RetrieveCentres(organisationId, e => true).Items.ToList();
             foreach (var centre in centres)
             {
@@ -3519,7 +3522,7 @@ namespace Nidan.Business
                     CounsellingCount = result?.CounsellingCount ?? 0,
                     CourseBooking = result?.CourseBooking ?? 0,
                     FeeCollected = result?.FeeCollected ?? 0,
-                    Year = _today.Year
+                    Year = utcNow.Year
                 });
             }
             mobilizationSummaryReports.Add(new MobilizationSummaryReport()
