@@ -501,7 +501,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
                 ConversionProspect = enquiry.ConversionProspect,
-                SectorId = enquiry.SectorId,
+                SectorId = enquiry.SectorId??0,
                 Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
@@ -2291,6 +2291,16 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCompanyBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
+        public List<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveLeadSources(organisationId, predicate).Items.ToList();
+        }
+
+        public List<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCities(organisationId, predicate).Items.ToList();
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);
@@ -3019,9 +3029,7 @@ namespace Nidan.Business
 
         public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int centreId)
         {
-            return
-                _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId),
-                    null, null).Items.ToList();
+            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId),null, null).Items.ToList();
         }
 
         public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId,

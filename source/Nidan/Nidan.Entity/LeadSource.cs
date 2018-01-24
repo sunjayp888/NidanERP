@@ -6,10 +6,16 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Sector")]
-    public partial class Sector
+    [Table("LeadSource")]
+    public partial class LeadSource
     {
-        public int SectorId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public LeadSource()
+        {
+            Enquiries = new HashSet<Enquiry>();
+        }
+
+        public int LeadSourceId { get; set; }
 
         [Required]
         [StringLength(500)]
@@ -17,13 +23,9 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        public int SchemeId { get; set; }
-
-        public virtual Scheme Scheme { get; set; }
-
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentreSector> CentreSectors { get; set; }
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
     }
 }

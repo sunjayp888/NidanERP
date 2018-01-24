@@ -53,11 +53,9 @@ namespace Nidan.Controllers
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
-            var enquiryFromMobilization = id.Value != 0
-                ? NidanBusinessService.CreateEnquiryFromMobilization(organisationId, UserCentreId, id.Value)
-                : new Enquiry();
-
-
+            var leadSources = NidanBusinessService.RetrieveLeadSources(organisationId, e => true);
+            var cities = NidanBusinessService.RetrieveCities(organisationId, e => true);
+            var enquiryFromMobilization = id.Value != 0 ? NidanBusinessService.CreateEnquiryFromMobilization(organisationId, UserCentreId, id.Value) : new Enquiry();
             var viewModel = new EnquiryViewModel
             {
                 CreateEnquiryFromMobilizationFollowUpId = followUp?.FollowUpId ?? 0,
@@ -77,6 +75,8 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                LeadSources = new SelectList(leadSources, "LeadSourceId", "Name"),
+                Cities = new SelectList(cities, "CityId", "Name"),
                 SelectedCourseIds = new List<int>(),
             };
 
@@ -136,6 +136,8 @@ namespace Nidan.Controllers
             enquiryViewModel.Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
             enquiryViewModel.Districts = new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
             enquiryViewModel.States = new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
+            enquiryViewModel.LeadSources = new SelectList(NidanBusinessService.RetrieveLeadSources(organisationId, e => true).ToList());
+            enquiryViewModel.Cities = new SelectList(NidanBusinessService.RetrieveCities(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 

@@ -18,6 +18,7 @@ namespace Nidan.Entity
             Trainers = new HashSet<Trainer>();
             Gsts = new HashSet<Gst>();
             Partners = new HashSet<Partner>();
+            Cities = new HashSet<City>();
         }
 
         public int StateId { get; set; }
@@ -49,5 +50,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partner> Partners { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

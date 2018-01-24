@@ -384,7 +384,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<CandidatePrePlacementActivityGrid> RetrieveCandidatePrePlacementActivityBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CandidatePrePlacementActivityGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyGrid> RetrieveCompanyBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        List<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate);
+        List<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate);
         #endregion
 
         #region Update

@@ -272,7 +272,8 @@ namespace Nidan.Data.Interfaces
         PagedResult<CompanyFollowUpGrid> RetrieveCompanyFollowUpBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyFollowUpGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CompanyGrid> RetrieveCompanyBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<CompanyGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<Company> RetrieveCompanynies(int organisationId, Expression<Func<Company, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        PagedResult<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
         T UpdateOrganisationEntityEntry<T>(int organisationId, T t) where T : class;
