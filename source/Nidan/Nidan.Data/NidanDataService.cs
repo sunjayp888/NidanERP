@@ -530,7 +530,7 @@ namespace Nidan.Data
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
-                   // .Include(p => p.Enquiry.Course)
+                   .Include(p => p.Enquiry.Course)
                     .Include(p => p.Registration.Course)
                     .Include(p => p.Course)
                     .Include(p => p.Centre)

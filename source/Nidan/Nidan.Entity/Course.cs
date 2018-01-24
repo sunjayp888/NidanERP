@@ -13,7 +13,7 @@ namespace Nidan.Entity
         public Course()
         {
             FollowUps = new HashSet<FollowUp>();
-            //Enquiries = new HashSet<Enquiry>();
+            Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
             Counsellings = new HashSet<Counselling>();
             CourseInstallments = new HashSet<CourseInstallment>();
@@ -49,8 +49,8 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FollowUp> FollowUps { get; set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<Enquiry> Enquiries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mobilization> Mobilizations { get; set; }

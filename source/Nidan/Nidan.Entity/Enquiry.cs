@@ -191,11 +191,11 @@ namespace Nidan.Entity
 
         public virtual Occupation Occupation { get; set; }
 
-       // public virtual Qualification Qualification { get; set; }
+       public virtual Qualification Qualification { get; set; }
 
         public virtual Religion Religion { get; set; }
 
-       // public virtual Course Course { get; set; }
+       public virtual Course Course { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
