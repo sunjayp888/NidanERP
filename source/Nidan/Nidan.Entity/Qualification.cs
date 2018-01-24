@@ -14,7 +14,7 @@ namespace Nidan.Entity
         {
             Enquiries = new HashSet<Enquiry>();
             Mobilizations = new HashSet<Mobilization>();
-            MobilizationSearchFields=new HashSet<MobilizationSearchField>();
+            MobilizationSearchFields = new HashSet<MobilizationSearchField>();
         }
 
         public int QualificationId { get; set; }

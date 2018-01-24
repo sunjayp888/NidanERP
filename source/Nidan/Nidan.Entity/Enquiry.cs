@@ -17,7 +17,6 @@ namespace Nidan.Entity
             EnquiryDate = DateTime.UtcNow.Date;
             FollowUpDate = DateTime.UtcNow.AddDays(2);
         }
-
         public int EnquiryId { get; set; }
 
         [Required]
@@ -62,13 +61,14 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string Address4 { get; set; }
 
+        public int CityId { get; set; }
+
         public int TalukaId { get; set; }
 
         public int StateId { get; set; }
 
         public int DistrictId { get; set; }
 
-        //[RegularExpression(@"^\d{6,}$", ErrorMessage = "Not a valid Pin Code")]
         public int PinCode { get; set; }
 
         [StringLength(500)]
@@ -76,7 +76,7 @@ namespace Nidan.Entity
 
         public long? GuardianContactNo { get; set; }
 
-        public int OccupationId { get; set; }
+        public int? OccupationId { get; set; }
 
         public int ReligionId { get; set; }
 
@@ -86,7 +86,7 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string Gender { get; set; }
 
-        public int EducationalQualificationId { get; set; }
+        public int? EducationalQualificationId { get; set; }
 
         [StringLength(100)]
         public string YearOfPassOut { get; set; }
@@ -96,7 +96,7 @@ namespace Nidan.Entity
 
         public int IntrestedCourseId { get; set; }
 
-        public int HowDidYouKnowAboutId { get; set; }
+        public int? HowDidYouKnowAboutId { get; set; }
 
         [StringLength(100)]
         public string PreTrainingStatus { get; set; } = "Fresher";
@@ -124,22 +124,22 @@ namespace Nidan.Entity
 
         public string EmployerAddress { get; set; }
 
-        public int AnnualIncome { get; set; }
+        public int? AnnualIncome { get; set; }
 
-        public int SchemeId { get; set; }
+        public int? SchemeId { get; set; }
 
-        public int EnquiryTypeId { get; set; }
+        public int? EnquiryTypeId { get; set; }
 
-        public int StudentTypeId { get; set; }
+        public int? StudentTypeId { get; set; }
 
-        public int SectorId { get; set; }
+        public int? SectorId { get; set; }
 
-        public int BatchTimePreferId { get; set; }
+        public int? BatchTimePreferId { get; set; }
 
         [StringLength(500)]
         public string AppearingQualification { get; set; }
 
-        public int YearOfExperience { get; set; }
+        public int? YearOfExperience { get; set; }
 
         [StringLength(100)]
         public string PlacementNeeded { get; set; }
@@ -148,7 +148,7 @@ namespace Nidan.Entity
 
         public DateTime? FollowUpDate { get; set; }
 
-        public int PreferredMonthForJoining { get; set; }
+        public int? PreferredMonthForJoining { get; set; }
 
         [StringLength(5)]
         public string Close { get; set; }
@@ -174,6 +174,11 @@ namespace Nidan.Entity
 
         public int CreatedBy { get; set; }
 
+        public int LeadSourceId { get; set; }
+
+        [StringLength(500)]
+        public string Description { get; set; }
+
         public virtual CasteCategory CasteCategory { get; set; }
 
         public virtual Centre Centre { get; set; }
@@ -186,11 +191,11 @@ namespace Nidan.Entity
 
         public virtual Occupation Occupation { get; set; }
 
-        public virtual Qualification Qualification { get; set; }
+       public virtual Qualification Qualification { get; set; }
 
         public virtual Religion Religion { get; set; }
 
-        public virtual Course Course { get; set; }
+       public virtual Course Course { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
@@ -210,6 +215,9 @@ namespace Nidan.Entity
 
         public virtual State State { get; set; }
 
+        public virtual LeadSource LeadSource { get; set; }
+
+        public virtual City City { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Counselling> Counsellings { get; set; }

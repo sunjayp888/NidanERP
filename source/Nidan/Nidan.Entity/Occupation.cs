@@ -9,12 +9,6 @@ namespace Nidan.Entity
     [Table("Occupation")]
     public partial class Occupation
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Occupation()
-        {
-            Enquiries = new HashSet<Enquiry>();
-        }
-
         public int OccupationId { get; set; }
 
         [Required]
@@ -24,8 +18,5 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
     }
 }

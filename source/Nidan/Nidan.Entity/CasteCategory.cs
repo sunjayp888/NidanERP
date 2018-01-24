@@ -9,12 +9,6 @@ namespace Nidan.Entity
     [Table("CasteCategory")]
     public partial class CasteCategory
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CasteCategory()
-        {
-            Enquiries = new HashSet<Enquiry>();
-        }
-
         public int CasteCategoryId { get; set; }
 
         [Required]
@@ -23,7 +17,6 @@ namespace Nidan.Entity
 
         public int OrganisationId { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
+        public virtual Organisation Organisation { get; set; }
     }
 }

@@ -149,6 +149,7 @@
     <Compile Include="CentreScheme.cs" />
     <Compile Include="CentreSector.cs" />
     <Compile Include="CentreVoucherNumber.cs" />
+    <Compile Include="City.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="AspNetUsersAlertSchedule.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Interfaces\IOrganisationFilterable.cs" />
     <Compile Include="Dto\OrderBy.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="LeadSource.cs" />
     <Compile Include="Mobilization.cs" />
     <Compile Include="MobilizationCentreReport.cs" />
     <Compile Include="MobilizationCentreReportMonthWise.cs" />

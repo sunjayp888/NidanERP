@@ -9,12 +9,6 @@ namespace Nidan.Entity
     [Table("HowDidYouKnowAbout")]
     public partial class HowDidYouKnowAbout
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HowDidYouKnowAbout()
-        {
-            Enquiries = new HashSet<Enquiry>();
-        }
-
         public int HowDidYouKnowAboutId { get; set; }
 
         [Required]
@@ -24,8 +18,5 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
     }
 }

@@ -530,7 +530,7 @@ namespace Nidan.Data
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
-                    .Include(p => p.Enquiry.Course)
+                   .Include(p => p.Enquiry.Course)
                     .Include(p => p.Registration.Course)
                     .Include(p => p.Course)
                     .Include(p => p.Centre)
@@ -4650,6 +4650,50 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .LeadSources
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "LeadSourceId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Cities
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)
@@ -4708,7 +4752,6 @@ namespace Nidan.Data
                 return data;
             }
         }
-
 
         public PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
