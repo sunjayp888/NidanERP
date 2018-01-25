@@ -26,8 +26,13 @@ namespace Nidan.Data.Models
 
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<AreaOfInterest> AreaOfInterests { get; set; }
+        public virtual DbSet<CasteCategory> CasteCategories { get; set; }
         public virtual DbSet<FollowUp> FollowUps { get; set; }
         public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<HowDidYouKnowAbout> HowDidYouKnowAbouts { get; set; }
+        public virtual DbSet<Qualification> Qualifications { get; set; }
+        public virtual DbSet<Religion> Religions { get; set; }
+        public virtual DbSet<Occupation> Occupations { get; set; }
         public virtual DbSet<MobilizationType> MobilizationTypes { get; set; }
         public virtual DbSet<Scheme> Schemes { get; set; }
         public virtual DbSet<BatchTimePrefer> BatchTimePrefers { get; set; }
@@ -184,17 +189,12 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidatePostPlacement> CandidatePostPlacements { get; set; }
         public virtual DbSet<CandidatePostPlacementGrid> CandidatePostPlacementGrids { get; set; }
         public virtual DbSet<CompanyGrid> CompanyGrids { get; set; }
-        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<LeadSource> LeadSources { get; set; }
-        public virtual DbSet<CasteCategory> CasteCategories { get; set; }
-        public virtual DbSet<HowDidYouKnowAbout> HowDidYouKnowAbouts { get; set; }
-        public virtual DbSet<Occupation> Occupations { get; set; }
-        public virtual DbSet<Qualification> Qualifications { get; set; }
-        public virtual DbSet<Religion> Religions { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<Alert>()
                 .HasMany(e => e.AspNetUsersAlertSchedules)
                 .WithRequired(e => e.Alert)
@@ -203,6 +203,40 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Colour>()
                 .Property(e => e.Hex)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            ////modelBuilder.Entity<Course>()
+            ////    .Property(e => e.CourseType)
+            ////    .IsUnicode(false);
+            //    .HasMany(e => e.FollowUps)
+            //    .WithRequired(e => e.Course)
+            //    .HasForeignKey(e => e.IntrestedCourseId)
+            //    .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.FollowUps)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.IntrestedCourseId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.Counsellings)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.CourseOfferedId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Sector>()
+                .HasMany(e => e.Courses)
+                .WithRequired(e => e.Sector)
+                .HasForeignKey(e => e.SectorId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Registration>()
                 .Property(e => e.Remarks)
@@ -227,12 +261,12 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidateFee>()
                 .Property(e => e.FiscalYear)
                 .IsUnicode(false);
-           
+
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Alerts)
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
-            
+
             modelBuilder.Entity<Organisation>()
                 .HasMany(e => e.Hosts)
                 .WithRequired(e => e.Organisation)
@@ -242,7 +276,7 @@ namespace Nidan.Data.Models
                 .HasMany(e => e.Personnels)
                 .WithRequired(e => e.Organisation)
                 .WillCascadeOnDelete(false);
-            
+
             modelBuilder.Entity<Personnel>()
                 .Property(e => e.Telephone)
                 .IsUnicode(false);
@@ -293,12 +327,27 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Event>()
-              .Property(e => e.Remark)
-              .IsUnicode(false);
-           
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
 
             modelBuilder.Entity<Event>()
                 .Property(e => e.CreatedBy);
+
+            //modelBuilder.Entity<Enquiry>()
+            //    .Property(e => e.QualificationId);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreType)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Document>()
                 .Property(e => e.FileName)
@@ -338,15 +387,94 @@ namespace Nidan.Data.Models
             //    .Property(e => e.CreatedBy)
             //    .IsUnicode(false);
 
+            modelBuilder.Entity<Course>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.IntrestedCourseId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Course>()
+                .HasMany(e => e.Mobilizations)
+                .WithRequired(e => e.Course)
+                .HasForeignKey(e => e.InterestedCourseId)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<AreaOfInterest>()
-                    .Property(e => e.Name)
-                    .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CasteCategory>()
+                .Property(e => e.Caste)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CasteCategory>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.CasteCategory)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.Centre)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Colour>()
                 .Property(e => e.Hex)
                 .IsUnicode(false);
 
-           modelBuilder.Entity<MobilizationType>()
+            modelBuilder.Entity<HowDidYouKnowAbout>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<HowDidYouKnowAbout>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.HowDidYouKnowAbout)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Occupation>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Occupation>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.Occupation)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Qualification>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Qualification>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.Qualification)
+                .HasForeignKey(e => e.EducationalQualificationId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Religion>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Religion>()
+                .HasMany(e => e.Enquiries)
+                .WithRequired(e => e.Religion)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Course>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
@@ -358,9 +486,13 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Sector>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
             modelBuilder.Entity<EnquiryType>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<StudentType>()
                 .Property(e => e.Name)
@@ -394,8 +526,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<EventFunctionType>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<EventFunctionType>()
                 .HasMany(e => e.EventQuestions)
@@ -407,13 +539,13 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<PaymentMode>()
-                 .Property(e => e.Name)
-                 .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
 
             modelBuilder.Entity<Holiday>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Holiday>()
                 .Property(e => e.WeekDay)
@@ -448,8 +580,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Room>()
-               .Property(e => e.Description)
-               .IsUnicode(false);
+                .Property(e => e.Description)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Room>()
                 .Property(e => e.OccupiedStartTime)
@@ -461,8 +593,8 @@ namespace Nidan.Data.Models
 
 
             modelBuilder.Entity<RoomType>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Batch>()
                 .Property(e => e.Name)
@@ -481,8 +613,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<CourseInstallment>()
-               .Property(e => e.Name)
-               .IsUnicode(false);
+                .Property(e => e.Name)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Counselling>()
                 .Property(e => e.Title)
@@ -529,8 +661,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
-               .Property(e => e.Title)
-               .IsUnicode(false);
+                .Property(e => e.Title)
+                .IsUnicode(false);
 
             modelBuilder.Entity<FollowUp>()
                 .Property(e => e.FirstName)
@@ -565,8 +697,8 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Mobilization>()
-               .Property(e => e.Title)
-               .IsUnicode(false);
+                .Property(e => e.Title)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Mobilization>()
                 .Property(e => e.FirstName)
@@ -651,18 +783,18 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<Trainer>()
                 .Property(e => e.CertificationNo)
                 .IsUnicode(false);
-          
+
             modelBuilder.Entity<Registration>()
-               .Property(e => e.Remarks)
-               .IsUnicode(false);
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CandidateInstallment>()
-               .Property(e => e.StudentCode)
-               .IsUnicode(false);
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
 
             modelBuilder.Entity<CandidateInstallment>()
-              .Property(e => e.PaymentMethod)
-              .IsUnicode(false);
+                .Property(e => e.PaymentMethod)
+                .IsUnicode(false);
 
             modelBuilder.Entity<FollowUpHistory>()
                 .Property(e => e.FollowUpType)
@@ -816,7 +948,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<StockType>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<BatchPlanner>()
                 .Property(e => e.SlotType)
                 .IsUnicode(false);
@@ -824,12 +956,12 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<BatchPlanner>()
                 .Property(e => e.CourseType)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<Product>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-           modelBuilder.Entity<CentrePettyCash>()
+            modelBuilder.Entity<CentrePettyCash>()
                 .Property(e => e.Particulars)
                 .IsUnicode(false);
 
@@ -1438,274 +1570,6 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CourseSearchField>()
                 .Property(e => e.SearchField)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.EmailId)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Address1)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Address2)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Address3)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Address4)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Taluka)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.State)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.District)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.GuardianName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Occupation)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Religion)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Caste_Category)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Gender)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Qualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.YearOfPassOut)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Marks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Scheme)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Sector)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.How_Did_You_Know_About_Us)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.PreTrainingStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.EmploymentStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Promotional)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.EnquiryStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Enquiry_Type)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Student_Type)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Batch_Time_Prefer)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.AppearingQualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.PlacementNeeded)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.OtherInterestedCourse)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.ClosingRemark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.IsCounsellingDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.IsRegistrationDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquiryDataGrid>()
-                .Property(e => e.IsAdmissionDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EmailId)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Address1)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Address2)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Address3)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Address4)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.GuardianName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Gender)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.YearOfPassOut)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Marks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.PreTrainingStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EmploymentStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Promotional)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EnquiryStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EmployerName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EmployerContactNo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.EmployerAddress)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.AppearingQualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.PlacementNeeded)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.ClosingRemark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.OtherInterestedCourse)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.RemarkByBranchManager)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.IsCounsellingDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.IsRegistrationDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<EnquirySearchField>()
-                .Property(e => e.IsAdmissionDone)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ExpenseDataGrid>()
@@ -2539,7 +2403,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<EventApproveState>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -2611,7 +2475,7 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Company>()
                 .Property(e => e.Location)
-                 .IsUnicode(false);
+                .IsUnicode(false);
 
             modelBuilder.Entity<EventManagementGrid>()
                 .Property(e => e.EventFunctionType)
@@ -2732,7 +2596,7 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CandidatePrePlacementActivity>()
                 .Property(e => e.StudentCode)
                 .IsUnicode(false);
-            
+
             modelBuilder.Entity<AdmissionGrid>()
                 .Property(e => e.CandidateName)
                 .IsUnicode(false);
@@ -2918,84 +2782,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<City>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<City>()
-                .HasMany(e => e.Enquiries)
-                .WithRequired(e => e.City)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<LeadSource>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<LeadSource>()
-                .HasMany(e => e.Enquiries)
-                .WithRequired(e => e.LeadSource)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<CasteCategory>()
-                .Property(e => e.Caste)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.CentreCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.CentreType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Address1)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Address2)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Address3)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Address4)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.EmailId)
-                .IsUnicode(false);
-
-           modelBuilder.Entity<HowDidYouKnowAbout>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Occupation>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Religion>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Sector>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Course>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Course>()
-                .Property(e => e.Description)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Enquiry>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -3112,8 +2898,272 @@ namespace Nidan.Data.Models
                 .Property(e => e.Description)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Qualification>()
-                .Property(e => e.Name)
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.GuardianName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.YearOfPassOut)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Marks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Promotional)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EnquiryStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerContactNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.EmployerAddress)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.AppearingQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.PlacementNeeded)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsCounsellingDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquirySearchField>()
+                .Property(e => e.IsAdmissionDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Taluka)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.State)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.District)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.GuardianName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Occupation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Religion)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Caste_Category)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Qualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.YearOfPassOut)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Marks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Scheme)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Sector)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.How_Did_You_Know_About_Us)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Promotional)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.EnquiryStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Enquiry_Type)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Student_Type)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Batch_Time_Prefer)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.AppearingQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.PlacementNeeded)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.IsCounsellingDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.IsRegistrationDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<EnquiryDataGrid>()
+                .Property(e => e.IsAdmissionDone)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

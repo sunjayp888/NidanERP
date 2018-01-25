@@ -34,7 +34,6 @@ namespace Nidan.Entity
         [StringLength(100)]
         public string LastName { get; set; }
 
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone number")]
         public long Mobile { get; set; }
 
         public long? AlternateMobile { get; set; }
@@ -99,10 +98,10 @@ namespace Nidan.Entity
         public int? HowDidYouKnowAboutId { get; set; }
 
         [StringLength(100)]
-        public string PreTrainingStatus { get; set; } = "Fresher";
+        public string PreTrainingStatus { get; set; }
 
         [StringLength(100)]
-        public string EmploymentStatus { get; set; } = "UnEmployed";
+        public string EmploymentStatus { get; set; }
 
         [StringLength(100)]
         public string Promotional { get; set; }
@@ -183,19 +182,15 @@ namespace Nidan.Entity
 
         public virtual Centre Centre { get; set; }
 
-        //public virtual Enquiry Enquiry1 { get; set; }
-
-        //public virtual Enquiry Enquiry2 { get; set; }
-
-        public virtual HowDidYouKnowAbout HowDidYouKnowAbout { get; set; }
+       public virtual HowDidYouKnowAbout HowDidYouKnowAbout { get; set; }
 
         public virtual Occupation Occupation { get; set; }
 
-       public virtual Qualification Qualification { get; set; }
+        public virtual Qualification Qualification { get; set; }
 
         public virtual Religion Religion { get; set; }
 
-       public virtual Course Course { get; set; }
+        public virtual Course Course { get; set; }
 
         public virtual Organisation Organisation { get; set; }
 
