@@ -4133,9 +4133,7 @@ namespace Nidan.Business
                 CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
-
-
-
+        
         public Mobilization UpdateMobilization(int organisationId, Mobilization mobilization)
         {
             //update follow Up

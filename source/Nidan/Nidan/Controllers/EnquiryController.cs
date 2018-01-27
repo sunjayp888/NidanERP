@@ -166,7 +166,8 @@ namespace Nidan.Controllers
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
-
+            var leadSource = NidanBusinessService.RetrieveLeadSources(organisationId, e => true);
+            var cities = NidanBusinessService.RetrieveCities(organisationId, e => true);
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -188,6 +189,8 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                LeadSources = new SelectList(leadSource, "LeadSourceId", "Name"),
+                Cities= new SelectList(cities, "CityId", "Name"),
                 SelectedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
