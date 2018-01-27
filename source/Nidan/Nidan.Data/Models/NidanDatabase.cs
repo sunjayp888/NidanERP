@@ -616,50 +616,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Name)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.FirstName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.MiddleName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.LastName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.PreferTiming)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.RemarkByBranchManager)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.PsychomatricTest)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.ClosingRemark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Counselling>()
-                .Property(e => e.RemarkByBranchManager)
-                .IsUnicode(false);
-
             modelBuilder.Entity<FollowUp>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -3164,6 +3120,94 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EnquiryDataGrid>()
                 .Property(e => e.IsAdmissionDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.PreferTiming)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.RemarkByBranchManager)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.PsychomatricTest)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.RemarkByBm)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.GuardianName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.YearOfPassOut)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Marks)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.AppearingQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.PlacementNeeded)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.PreTrainingStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.EmploymentStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.Promotional)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.EmployerName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.EmployerContactNo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Counselling>()
+                .Property(e => e.EmployerAddress)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

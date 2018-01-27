@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public Occupation()
         {
             Enquiries = new HashSet<Enquiry>();
+            Counsellings = new HashSet<Counselling>();
         }
         public int OccupationId { get; set; }
 
@@ -25,5 +26,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Counselling> Counsellings { get; set; }
     }
 }

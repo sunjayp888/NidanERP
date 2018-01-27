@@ -38,14 +38,17 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             id = id ?? 0;
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
-            //var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId,UserCentreId,id.Value).Select(e=>e.CourseId).ToList();
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
-            //var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId);
             var enquiryCourses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => e.CentreId == centreId);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var viewModel = new CounsellingViewModel
             {
                 Enquiry = enquiry,
@@ -53,6 +56,10 @@ namespace Nidan.Controllers
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 EnquiryCourses = new SelectList(enquiryCourses, "CourseId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Counselling = new Counselling()
                 {
                     Title = enquiry.Title,
@@ -65,6 +72,7 @@ namespace Nidan.Controllers
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -88,6 +96,10 @@ namespace Nidan.Controllers
             }
             counsellingViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
             counsellingViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
+            counsellingViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());
+            counsellingViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
+            counsellingViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
+            counsellingViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             return View(counsellingViewModel);
         }
 
