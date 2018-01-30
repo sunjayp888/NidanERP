@@ -41,7 +41,6 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string PreferTiming { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         [Column(TypeName = "date")]
@@ -76,7 +75,7 @@ namespace Nidan.Entity
 
         public long? GuardianContactNo { get; set; }
 
-        public int? OccupationId { get; set; }
+        public int OccupationId { get; set; }
 
         public int EducationalQualificationId { get; set; }
 
@@ -101,10 +100,10 @@ namespace Nidan.Entity
         public int SchemeId { get; set; }
 
         [StringLength(100)]
-        public string PreTrainingStatus { get; set; }
+        public string PreTrainingStatus { get; set; } = "Fresher";
 
         [StringLength(100)]
-        public string EmploymentStatus { get; set; }
+        public string EmploymentStatus { get; set; } = "UnEmployed";
 
         [StringLength(100)]
         public string Promotional { get; set; }
@@ -131,12 +130,10 @@ namespace Nidan.Entity
 
         public virtual Personnel Personnel { get; set; }
 
+        public virtual BatchTimePrefer BatchTimePrefer { get; set; }
+
         public virtual Occupation Occupation { get; set; }
 
-        //public virtual Qualification Qualification { get; set; }
-
         public virtual Scheme Scheme { get; set; }
-
-        public virtual BatchTimePrefer BatchTimePrefer { get; set; }
     }
 }

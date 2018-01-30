@@ -121,11 +121,19 @@ namespace Nidan.Controllers
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, counselling.EnquiryId);
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => e.CentreId == centreId);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name")
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name")
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
@@ -166,15 +174,14 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            //var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
-            var counselling = NidanBusinessService.RetrieveCounselling(organisationId, id.Value);
-            if (counselling == null)
+            var counsellingDataGrid = NidanBusinessService.RetrieveCounsellingDataGrid(organisationId, e=>e.CounsellingId==id.Value).Items.FirstOrDefault();
+            if (counsellingDataGrid == null)
             {
                 return HttpNotFound();
             }
             var viewModel = new CounsellingViewModel
             {
-                Counselling = counselling
+                CounsellingDataGrid = counsellingDataGrid
             };
             return View(viewModel);
         }

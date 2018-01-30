@@ -700,6 +700,26 @@ namespace Nidan.Business
             }
             enquiryData.EnquiryStatus = "Counselling";
             enquiryData.IsCounsellingDone = true;
+            enquiryData.AnnualIncome = data.AnnualIncome;
+            enquiryData.AppearingQualification = data.AppearingQualification;
+            enquiryData.BatchTimePreferId = data.BatchTimePreferId;
+            enquiryData.EducationalQualificationId = data.EducationalQualificationId;
+            enquiryData.EmployerAddress = data.EmployerAddress;
+            enquiryData.EmployerContactNo = data.EmployerContactNo;
+            enquiryData.EmployerName = data.EmployerName;
+            enquiryData.EmploymentStatus = data.EmploymentStatus;
+            enquiryData.GuardianContactNo = data.GuardianContactNo;
+            enquiryData.GuardianName = data.GuardianName;
+            enquiryData.Marks = data.Marks;
+            enquiryData.OccupationId = data.OccupationId;
+            enquiryData.PlacementNeeded = data.PlacementNeeded;
+            enquiryData.PreferredMonthForJoining = data.PreferredMonthForJoining;
+            enquiryData.PreTrainingStatus = data.PreTrainingStatus;
+            enquiryData.Promotional = data.Promotional;
+            enquiryData.SchemeId = data.SchemeId;
+            enquiryData.SectorId = data.SectorId;
+            enquiryData.YearOfExperience = data.YearOfExperience;
+            enquiryData.YearOfPassOut = data.YearOfPassOut;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
             return data;
         }

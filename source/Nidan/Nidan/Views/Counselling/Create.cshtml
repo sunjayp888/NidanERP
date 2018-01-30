@@ -58,9 +58,18 @@
                         @Html.HiddenFor(model => Model.Counselling.Enquiry.Mobile)
                         @Html.HiddenFor(model => Model.Counselling.EnquiryId)
                         @Html.HiddenFor(model => model.Counselling.Enquiry.EmailId)
+                    @*@Html.HiddenFor(model => model.Counselling.Enquiry.LeadSource.Name)*@
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="col-lg-6">
+                                @*<div class="col-lg-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-dark">Lead Source</button>
+                                        </span>
+                                        <input type="text" disabled="disabled" value="@Model.Enquiry.LeadSource.Name" class="form-control col-lg-4">
+                                    </div>
+                                </div>*@
+                                <div class="col-lg-4">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-dark">Mobile</button>
@@ -68,7 +77,7 @@
                                         <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-dark">Email</button>
@@ -78,22 +87,22 @@
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="col-lg-6">
+                                @*<div class="col-lg-6">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-dark">Interested Scheme</button>
                                         </span>
                                         <input type="text" disabled="disabled" value="@Model.Enquiry.Scheme.Name" class="form-control col-lg-4">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div>*@
+                                @*<div class="col-lg-6">
                                     <div class="input-group">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-dark">Interested Sector</button>
                                         </span>
                                         <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                             <div class="col-lg-12">
                                 <div class="col-lg-12">
@@ -122,7 +131,7 @@
                                 </div>
                             }
                         </div>
-                        <div class="row">
+                        @*<div class="row">*@
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
@@ -130,8 +139,8 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="x_content">
-                                        <div class="form-horizontal">
-                                            @*<div class="form-group">
+                                    <div class="form-horizontal">
+                                        @*<div class="form-group">
                                                     @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                         @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
@@ -145,44 +154,41 @@
                                                         @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
                                                     </div>
                                                 </div>*@
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
-                                            </div>
-                                        </div>
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            @Html.LabelFor(model => model.Counselling.GuardianName, new { @class = "control-label col-md-2 col-sm-6 col-xs-12" })
-                                                            <div class="col-md-10 col-sm-6 col-xs-12">
-                                                                @Html.TextBoxFor(model => model.Counselling.GuardianName, new { @class = "form-control" })
-                                                                @Html.ValidationMessageFor(model => model.Counselling.GuardianName, "", new { @class = "help-block" })
-                                                            </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.Counselling.GuardianName, new { @class = "control-label col-md-2 col-sm-6 col-xs-12" })
+                                                        <div class="col-md-10 col-sm-6 col-xs-12">
+                                                            @Html.TextBoxFor(model => model.Counselling.GuardianName, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.Counselling.GuardianName, "", new { @class = "help-block" })
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <div class="col-md-12 col-sm-6 col-xs-12">
-                                                                @Html.DropDownListFor(model => model.Counselling.OccupationId, Model.Occupations, "Select Occupation", new { @class = "form-control" })
-                                                                @Html.ValidationMessageFor(model => model.Counselling.OccupationId, "", new { @class = "help-block" })
-                                                            </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-6 col-xs-12">
+                                                            @Html.DropDownListFor(model => model.Counselling.OccupationId, Model.Occupations, "Select Occupation", new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.Counselling.OccupationId, "", new { @class = "help-block" })
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <div class="col-md-12 col-sm-8 col-xs-12">
-                                                                @Html.TextBoxFor(model => model.Counselling.GuardianContactNo, new { @class = "form-control", @placeholder = "Parent's No" })
-                                                                <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
-                                                                @Html.ValidationMessageFor(model => model.Counselling.GuardianContactNo, "", new { @class = "help-block" })
-                                                            </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-sm-8 col-xs-12">
+                                                            @Html.TextBoxFor(model => model.Counselling.GuardianContactNo, new { @class = "form-control", @placeholder = "Parent's No" })
+                                                            <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                                            @Html.ValidationMessageFor(model => model.Counselling.GuardianContactNo, "", new { @class = "help-block" })
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @*</div>*@
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div class="x_panel">
                                                     <div class="x_title">
@@ -466,11 +472,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                        
+                        
                     </div>
                 }
             </div>
@@ -501,5 +504,38 @@
                 });
             }
         });
+
+        jQuery(function () {
+            if ($('#Counselling_PreTrainingStatus').is(':checked')) {
+                $('.experience-year-textbox').hide();
+            } else {
+                $('.experience-year-textbox').show();
+            }
+
+            $('#experienceRadioButton').click(function () {
+                $('.experience-year-textbox').show();
+            });
+
+            $('#fresherRadioButton').click(function () {
+                $('.experience-year-textbox').hide();
+            });
+
+            if (!$('#Counselling_EmploymentStatus').is(':checked')) {
+                $('.employment-status-textbox').hide();
+            } else {
+                $('.employment-status-textbox').show();
+            }
+
+            $('#employedRadioButton').click(function () {
+                $('.employment-status-textbox').show();
+            });
+
+            $('#unemployedRadioButton').click(function () {
+                $('.employment-status-textbox').hide();
+            });
+
+            });
+
+        $("#Counselling_SectorId").empty().append("Select Sector");
     </script>
 }

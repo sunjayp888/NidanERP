@@ -30,6 +30,24 @@ namespace Nidan.Entity
 
             [Display(Name = "Remarks By Branch Manager")]
             public string RemarkByBranchManager { get; set; }
+
+            [Display(Name = "Father Name")]
+            public string GuardianName { get; set; }
+
+            [Display(Name = "Parent's Contact No")]
+            public long? GuardianContactNo { get; set; }
+
+            [Display(Name = "Occupation")]
+            public int OccupationId { get; set; }
+
+            [Display(Name = " Scheme")]
+            public int SchemeId { get; set; }
+
+            [Display(Name = "Batch Time Prefer")]
+            public int BatchTimePreferId { get; set; }
+
+            [Display(Name = " Preferred Month For Joining")]
+            public int PreferredMonthForJoining { get; set; }
         }
     }
 }
