@@ -1,12 +1,12 @@
 ﻿@model Nidan.Models.EnquiryViewModel
 @{
-    ViewBag.Title = string.Format("Edit Enquiry ({0})", Model.Enquiry.FirstName);
+    ViewBag.Title = string.Format("Edit Lead ({0})", Model.Enquiry.FirstName);
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>@string.Format("{0} {1} {2} {3}", Model.Enquiry.Title, Model.Enquiry.FirstName,Model.Enquiry.MiddleName,Model.Enquiry.LastName)<small>Edit Enquiry</small></h2>
+                <h2>@string.Format("{0} {1} {2} {3}", Model.Enquiry.Title, Model.Enquiry.FirstName,Model.Enquiry.MiddleName,Model.Enquiry.LastName)<small>Edit Lead</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -29,7 +29,7 @@
                         @Html.HiddenFor(model => Model.Enquiry.IsCounsellingDone)
                         @Html.HiddenFor(model => Model.Enquiry.IsRegistrationDone)
                         @Html.Partial("_Enquiry", Model)
-                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                        @*<div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                            
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Enquiry.RemarkByBranchManager, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
@@ -38,7 +38,7 @@
                                     @Html.ValidationMessageFor(model => model.Enquiry.RemarkByBranchManager, "", new { @class = "help-block" })
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
 
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3 pull-right">
                             <div class="form-group">
@@ -50,12 +50,12 @@
                                             Create Counselling
                                         </a>
                                     }
-                                    @if (!Model.Enquiry.IsRegistrationDone)
+                                    @*@if (!Model.Enquiry.IsRegistrationDone)
                                     {
                                         <a href="@Url.Action("Create", "Registration", new { id = Model.Enquiry.EnquiryId })" class="btn btn-info" role="button">
                                             Create Registration
                                         </a>
-                                    }
+                                    }*@
                                     
                                 </div>
                             </div>
@@ -184,28 +184,28 @@
             });
         });
 
-        $('#Enquiry_SchemeId').change(function () {
-            var schemeId = $('#Enquiry_SchemeId :selected').val();
-            $.ajax({
-                url: '/Enquiry/GetSector',
-                type: 'POST',
-                data: JSON.stringify({ schemeId: schemeId }),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    $("#Enquiry_SectorId").empty();
-                    $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
-                    $.each(result, function (key, value) {
-                        $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
-                    });
-                },
-                async: true,
-                processData: false
-            });
-        });
+        //$('#Enquiry_SchemeId').change(function () {
+        //    var schemeId = $('#Enquiry_SchemeId :selected').val();
+        //    $.ajax({
+        //        url: '/Enquiry/GetSector',
+        //        type: 'POST',
+        //        data: JSON.stringify({ schemeId: schemeId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#Enquiry_SectorId").empty();
+        //            $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
+        //            $.each(result, function (key, value) {
+        //                $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //});
 
     </script>
 }

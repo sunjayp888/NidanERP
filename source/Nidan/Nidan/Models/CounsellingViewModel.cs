@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Nidan.Entity;
 
 namespace Nidan.Models
@@ -12,6 +13,7 @@ namespace Nidan.Models
         public Counselling Counselling { get; set; }
         public CounsellingDataGrid CounsellingDataGrid { get; set; }
         public Enquiry Enquiry { get; set; }
+        public EnquiryDataGrid EnquiryDataGrid { get; set; }
         public SelectList Courses { get; set; }
         public SelectList EnquiryCourses { get; set; }
         public SelectList Sectors { get; set; }

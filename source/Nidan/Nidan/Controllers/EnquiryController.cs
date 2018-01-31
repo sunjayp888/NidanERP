@@ -272,9 +272,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetCourse(int sectorId)
+        public ActionResult GetCourse()
         {
-            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.Course.SectorId == sectorId && e.CentreId == UserCentreId).ToList();
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e =>  e.CentreId == UserCentreId).ToList();
             return this.JsonNet(data);
         }
 

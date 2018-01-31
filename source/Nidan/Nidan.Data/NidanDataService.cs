@@ -819,10 +819,10 @@ namespace Nidan.Data
                 var data = context
                     .Enquiries
                     .Include(e => e.Counsellings)
+                    .Include(e => e.LeadSource)
                     .Include(e => e.EnquiryCourses)
                     .Include(e => e.Sector)
                     .Include(e => e.Scheme)
-                    //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EnquiryId == enquiryId);
@@ -1044,6 +1044,8 @@ namespace Nidan.Data
                 return context
                     .Counsellings
                     .Include(e => e.Enquiry)
+                    .Include(e => e.Enquiry.EnquiryCourses)
+                    .Include(e => e.Enquiry.LeadSource)
                     .Include(e => e.Course)
                     .Include(e => e.Personnel)
                     .AsNoTracking()

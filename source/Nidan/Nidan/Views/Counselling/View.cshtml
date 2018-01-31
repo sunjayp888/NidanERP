@@ -1,7 +1,8 @@
-﻿@model Nidan.Models.CounsellingViewModel
+﻿@using System.Globalization
+@model Nidan.Models.CounsellingViewModel
 
 @{
-    ViewBag.Title = string.Format("View Counselling ({0} {1} {2} {3})", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName);
+    ViewBag.Title = string.Format("View Counselling ({0})", Model.CounsellingDataGrid.CandidateName);
 }
 
 <div class="row">
@@ -9,7 +10,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>
-                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName)</button><small> View Counselling </small>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0}", Model.CounsellingDataGrid.CandidateName)</button><small> View Counselling </small>
                 </h2>
                 <div class="clearfix"></div>
             </div>
@@ -62,7 +63,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Lead Source</button>
                                                 </span>
-                                                @*<input type="text" disabled="disabled" value="@Model.Counselling.Enquiry.LeadSource.Name" class="form-control col-lg-4">*@
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.LeadSourceName" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -188,19 +189,19 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Sector</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Sector.Name" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.SectorName" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Course</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Course.Name" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.CourseOffered" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +213,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Batch Time Prefer</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.BatchTimePrefer.Name" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.BatchTimePreferName" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -220,7 +221,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Preferred joining Month</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PreferredMonthForJoining" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.CounsellingDataGrid.PreferredMonthForJoining)" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -232,7 +233,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">PreTraining Status</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PreTrainingStatus" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.PreTrainingStatus" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -240,27 +241,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Year Of Experience</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.YearOfExperience" class="form-control col-lg-4">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-6">
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">PreTraining Status</button>
-                                                </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PreTrainingStatus" class="form-control col-lg-4">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">Year Of Experience</button>
-                                                </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.YearOfExperience" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.YearOfExperience" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -272,7 +253,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Employment Status</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.EmploymentStatus" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.EmploymentStatus" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -280,7 +261,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Employer Detail</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.EmployerName+ +@Model.Counselling.EmployerContactNo" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@string.Format("{0} {1}",Model.CounsellingDataGrid.EmployerName,Model.CounsellingDataGrid.EmployerContactNo)" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -292,7 +273,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Employer Address</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.EmployerAddress" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.EmployerAddress" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -300,7 +281,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Annual Income</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.AnnualIncome" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.AnnualIncome" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -312,7 +293,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Psychomatric Test</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PsychomatricTest" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.PsychomatricTest" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -320,19 +301,19 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Conversion Prospect</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.ConversionProspect" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.ConversionProspect" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Remarks</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Remarks" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.Remarks" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -346,8 +327,8 @@
     </div>
 </div>
 <div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
-    @Html.Partial("_Document")
-</div>
+        @Html.Partial("_Document")
+    </div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list

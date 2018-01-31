@@ -19,6 +19,9 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EnquiryId { get; set; }
 
+        [StringLength(100)]
+        public string StudentCode { get; set; }
+
         [StringLength(353)]
         public string CandidateName { get; set; }
 

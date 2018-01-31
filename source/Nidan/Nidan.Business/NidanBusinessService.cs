@@ -720,6 +720,7 @@ namespace Nidan.Business
             enquiryData.SectorId = data.SectorId;
             enquiryData.YearOfExperience = data.YearOfExperience;
             enquiryData.YearOfPassOut = data.YearOfPassOut;
+            enquiryData.IsCounsellingDone = true;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
             return data;
         }

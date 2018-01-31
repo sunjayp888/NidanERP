@@ -2,13 +2,13 @@
 @model Nidan.Models.EnquiryViewModel
 
 @{
-    ViewBag.Title = "Create Enquiry";
+    ViewBag.Title = "Create Lead";
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create Enquiry <small></small></h2>
+                <h2>Create Lead <small></small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -276,29 +276,29 @@
         //    });
         //});
 
-        $('#Enquiry_SchemeId').change(function () {
-            var schemeId = $('#Enquiry_SchemeId :selected').val();
-            if (schemeId === "") return;
-            $.ajax({
-                url: '/Enquiry/GetSector',
-                type: 'POST',
-                data: JSON.stringify({ schemeId: schemeId }),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    alert('Error: ' + xhr.statusText);
-                },
-                success: function (result) {
-                    $("#Enquiry_SectorId").empty();
-                    $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
-                    $.each(result, function (key, value) {
-                        $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
-                    });
-                },
-                async: true,
-                processData: false
-            });
-        });
+        //$('#Enquiry_SchemeId').change(function () {
+        //    var schemeId = $('#Enquiry_SchemeId :selected').val();
+        //    if (schemeId === "") return;
+        //    $.ajax({
+        //        url: '/Enquiry/GetSector',
+        //        type: 'POST',
+        //        data: JSON.stringify({ schemeId: schemeId }),
+        //        dataType: 'json',
+        //        contentType: 'application/json; charset=utf-8',
+        //        error: function (xhr) {
+        //            alert('Error: ' + xhr.statusText);
+        //        },
+        //        success: function (result) {
+        //            $("#Enquiry_SectorId").empty();
+        //            $("#Enquiry_SectorId").append($("<option></option>").html("Select Sector"));
+        //            $.each(result, function (key, value) {
+        //                $("#Enquiry_SectorId").append($("<option></option>").val(value.SectorId).html(value.Name));
+        //            });
+        //        },
+        //        async: true,
+        //        processData: false
+        //    });
+        //});
 
     </script>
 }

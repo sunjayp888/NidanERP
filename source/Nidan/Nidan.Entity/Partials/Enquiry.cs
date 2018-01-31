@@ -35,22 +35,31 @@ namespace Nidan.Entity
 
             public int Age { get; set; }
 
+            [Display(Name = "Address1")]
             public string Address1 { get; set; }
 
+            [Display(Name = "Address2")]
             public string Address2 { get; set; }
 
+            [Display(Name = "Address3")]
             public string Address3 { get; set; }
 
+            [Display(Name = "Location")]
             public string Address4 { get; set; }
 
+            [Display(Name = "City")]
             public int CityId { get; set; }
 
+            [Display(Name = "Taluka")]
             public int TalukaId { get; set; }
 
+            [Display(Name = "State")]
             public int StateId { get; set; }
 
+            [Display(Name = "District")]
             public int DistrictId { get; set; }
 
+            [Display(Name = "Pin Code")]
             public int PinCode { get; set; }
 
             [Display(Name = "Father Name")]
@@ -128,6 +137,7 @@ namespace Nidan.Entity
 
             //public string ClosingRemark { get; set; }
 
+            [Display(Name = "Conversion Prospect")]
             public int ConversionProspect { get; set; }
 
             //public string OtherInterestedCourse { get; set; }
