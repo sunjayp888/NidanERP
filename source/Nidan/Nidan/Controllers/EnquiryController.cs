@@ -292,6 +292,12 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetCity(int talukaId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCities(UserOrganisationId, e => e.Taluka.TalukaId == talukaId).ToList());
+        }
+
+        [HttpPost]
         public ActionResult GetDistrict(int stateId)
         {
             return this.JsonNet(NidanBusinessService.RetrieveDistricts(UserOrganisationId, e => e.State.StateId == stateId).ToList());

@@ -252,6 +252,29 @@
             });
         });
 
+        $('#Enquiry_TalukaId').change(function () {
+            var districtId = $('#Enquiry_TalukaId :selected').val();
+            $.ajax({
+                url: '/Enquiry/GetCity',
+                type: 'POST',
+                data: JSON.stringify({ districtId: districtId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Enquiry_CityId").empty();
+                    $("#Enquiry_CityId").append($("<option></option>").html("Select Taluka"));
+                    $.each(result, function (key, value) {
+                        $("#Enquiry_CityId").append($("<option></option>").val(value.CityId).html(value.Name));
+
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
 
         //$('#Enquiry_SectorId').change(function () {
         //    var sectorId = $('#Enquiry_SectorId :selected').val();

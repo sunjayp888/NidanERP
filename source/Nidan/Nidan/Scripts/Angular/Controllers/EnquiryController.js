@@ -30,6 +30,8 @@
         vm.retrieveCourses = retrieveCourses;
         vm.talukas = [];
         vm.retrieveTalukas = retrieveTalukas;
+        vm.cities = [];
+        vm.retrieveCities = retrieveCities;
         vm.districts = [];
         vm.retrieveDistricts = retrieveDistricts;
         vm.states = [];
@@ -154,6 +156,12 @@
         function retrieveTalukas(districtId) {
             return EnquiryService.retrieveTalukas(districtId).then(function () {
                 vm.talukas = response.data;
+            });
+        };
+
+        function retrieveCities(talukaId) {
+            return EnquiryService.retrieveCities(talukaId).then(function () {
+                vm.cities = response.data;
             });
         };
 
