@@ -613,5 +613,30 @@
                 processData: false
             });
         });
+
+        $('#Counselling_SectorId').change(function () {
+            var sectorId = $('#Counselling_SectorId :selected').val();
+            if (sectorId === "") return;
+            $.ajax({
+                url: '/Counselling/GetCourse',
+                type: 'POST',
+                data: JSON.stringify({ sectorId: sectorId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function (result) {
+                    $("#Counselling_CourseOfferedId").empty();
+                    $("#Counselling_CourseOfferedId").append($("<option></option>").html("Select Course"));
+                    $.each(result, function (key, value) {
+                        $("#Counselling_CourseOfferedId").append($("<option></option>").val(value.CourseId).html(value.Name));
+                    });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
     </script>
 }

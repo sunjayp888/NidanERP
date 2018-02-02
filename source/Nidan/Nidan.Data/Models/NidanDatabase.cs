@@ -1484,30 +1484,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.VoucherNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.ExpenseHeader)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.CashMemoNumbers)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.PaidTo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ExpenseDataGrid>()
-                .Property(e => e.Particulars)
-                .IsUnicode(false);
-
             modelBuilder.Entity<FixAssetDataGrid>()
                 .Property(e => e.AssetCode)
                 .IsUnicode(false);
@@ -3296,6 +3272,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<EnquiryDataGrid>()
                 .Property(e => e.IsAdmissionDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.VoucherNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.ExpenseHeader)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.CashMemoNumbers)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.RupeesInWord)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.PaidTo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseDataGrid>()
+                .Property(e => e.Particulars)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

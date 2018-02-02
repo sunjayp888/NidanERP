@@ -404,10 +404,10 @@ namespace Nidan.Controllers
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
-                NidanBusinessService.RetrieveAdmissionGrid(UserOrganisationId,
+                NidanBusinessService.RetrieveExpenseDataGrid(UserOrganisationId,
                     p =>
-                        (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
-                        p.AdmissionDate <= toDate).Items.ToList();
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.ExpenseGeneratedDate >= fromDate &&
+                        p.ExpenseGeneratedDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_ExpenseReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }
