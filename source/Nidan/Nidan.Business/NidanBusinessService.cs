@@ -3589,8 +3589,8 @@ namespace Nidan.Business
 
         public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var startFiscalDate = new DateTime(year, 04, 01);
-            var endFiscalDate = new DateTime(startFiscalDate.AddYears(1).Year, 03, 31);
+            var startFiscalDate = new DateTime(year, 01, 01);
+            var endFiscalDate = new DateTime(year, 12, 31);
             var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
             var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId);
             var months = DateTimeExtensions.EachMonth(startFiscalDate, endFiscalDate);
