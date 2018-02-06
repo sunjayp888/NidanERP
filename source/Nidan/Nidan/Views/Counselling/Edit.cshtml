@@ -32,6 +32,7 @@
                         @Html.HiddenFor(model => model.Counselling.LastName)
                         @Html.HiddenFor(model => model.Counselling.CreatedDate)
                         @Html.HiddenFor(model => model.Counselling.Enquiry.EmailId)
+                        @Html.HiddenFor(model => model.Counselling.CounsellingId)
                         @Html.AntiForgeryToken()
                         <div class="form-horizontal">
                             @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
@@ -73,12 +74,10 @@
             </div>
         </div>
     </div>
-    <div ng-controller="DocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
-        @Html.Partial("_Document")
-    </div>
 </div>
-
-
+<div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
+    @Html.Partial("_Document")
+</div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
@@ -87,19 +86,21 @@
 @section scripts {
     <script>
         //Submit Button Blur after Click
-        $(document).on('submit', 'form', function () {
-            var buttons = $(this).find('[type="submit"]');
-            if ($(this).valid()) {
-                buttons.each(function (btn) {
-                    $(buttons[btn]).prop('disabled', true);
-                });
-            } else {
-                buttons.each(function (btn) {
-                    $(buttons[btn]).prop('disabled', false);
-                });
-            }
-        });
-        $(function () {
+        $(document).on('submit',
+            'form',
+            function() {
+                var buttons = $(this).find('[type="submit"]');
+                if ($(this).valid()) {
+                    buttons.each(function(btn) {
+                        $(buttons[btn]).prop('disabled', true);
+                    });
+                } else {
+                    buttons.each(function(btn) {
+                        $(buttons[btn]).prop('disabled', false);
+                    });
+                }
+            });
+        $(function() {
 
             if (!$('#Counselling_Close').is(':checked')) {
                 $('.closing-remarks-textbox').hide();
@@ -107,11 +108,11 @@
                 $('.closing-remarks-textbox').show();
             }
 
-            $('#yesRadioButton').click(function () {
+            $('#yesRadioButton').click(function() {
                 $('.closing-remarks-textbox').show();
             });
 
-            $('#noRadioButton').click(function () {
+            $('#noRadioButton').click(function() {
                 $('.closing-remarks-textbox').hide();
             });
 
@@ -132,7 +133,7 @@
                 opens: 'left',
                 minDate: moment(),
                 //maxDate: moment().add('2', 'days').format('DD MMMM YYYY'),
-                onSelect: function () {
+                onSelect: function() {
                     selectedDate = moment().format('DD MMMM YYYY');
                 },
                 locale: {
@@ -148,24 +149,25 @@
             //    $('#quickActions').hide();
             //});
 
-            jQuery(function () {
+            jQuery(function() {
                 jQuery(".date").daterangepicker(daterangepickerOptions);
                 $('#FollowUpDate').val(moment().format('DD MMMM YYYY'));
-                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
-                });
+                $(".generated .date").on('apply.daterangepicker',
+                    function(ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
             });
 
             $("#uploadDocument").click(function() {
-                window.location.href="/Counselling/Upload/"+@Model.Counselling.EnquiryId;
+                window.location.href = "/Counselling/Upload/" + @Model.Counselling.EnquiryId;
             });
         });
 
-        $('#closeYes').click(function () {
+        $('#closeYes').click(function() {
             $('.close-textbox').show();
         });
 
-        $('#closeNo').click(function () {
+        $('#closeNo').click(function() {
             $('.close-textbox').hide();
         });
 
@@ -175,7 +177,32 @@
             $('.close-textbox').show();
         }
 
-        $('#Counselling_SectorId').change(function () {
+        $('#Counselling_SchemeId').change(function() {
+            var schemeId = $('#Counselling_SchemeId :selected').val();
+            $.ajax({
+                url: '/Counselling/GetSector',
+                type: 'POST',
+                data: JSON.stringify({ schemeId: schemeId }),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function(xhr) {
+                    alert('Error: ' + xhr.statusText);
+                },
+                success: function(result) {
+                    $("#Counselling_SectorId").empty();
+                    $("#Counselling_SectorId").append($("<option></option>").html("Select Sector"));
+                    $.each(result,
+                        function(key, value) {
+                            $("#Counselling_SectorId")
+                                .append($("<option></option>").val(value.SectorId).html(value.Name));
+                        });
+                },
+                async: true,
+                processData: false
+            });
+        });
+
+        $('#Counselling_SectorId').change(function() {
             var sectorId = $('#Counselling_SectorId :selected').val();
             $.ajax({
                 url: '/Counselling/GetCourse',
@@ -183,18 +210,65 @@
                 data: JSON.stringify({ sectorId: sectorId }),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
+                error: function(xhr) {
                     alert('Error: ' + xhr.statusText);
                 },
-                success: function (result) {
+                success: function(result) {
                     $("#Counselling_CourseOfferedId").empty();
-                    $.each(result, function (key, value) {
-                        $("#Counselling_CourseOfferedId").append($("<option></option>").val(value.CourseId).html(value.Name));
+                    $.each(result,
+                        function(key, value) {
+                            $("#Counselling_CourseOfferedId")
+                                .append($("<option></option>").val(value.CourseId).html(value.Name));
 
-                    });
+                        });
                 },
                 async: true,
                 processData: false
+            });
+        });
+
+        jQuery(function() {
+
+            if (!$('#Enquiry_Close').is(':checked')) {
+                $('.closing-remarks-textbox').hide();
+            } else {
+                $('.closing-remarks-textbox').show();
+            }
+
+            $('#yesRadioButton').click(function() {
+                $('.closing-remarks-textbox').show();
+            });
+
+            $('#noRadioButton').click(function() {
+                $('.closing-remarks-textbox').hide();
+            });
+
+            if ($('#Enquiry_PreTrainingStatus').is(':checked')) {
+                $('.experience-year-textbox').hide();
+            } else {
+                $('.experience-year-textbox').show();
+            }
+
+            $('#experienceRadioButton').click(function() {
+                $('.experience-year-textbox').show();
+            });
+
+            $('#fresherRadioButton').click(function() {
+                $('.experience-year-textbox').hide();
+            });
+
+            if (!$('#Enquiry_EmploymentStatus').is(':checked')) {
+                $('.employment-status-textbox').hide();
+            } else {
+                $('.employment-status-textbox').show();
+            }
+
+            $('#employedRadioButton').click(function() {
+                $('.employment-status-textbox').show();
+            });
+
+            $('#unemployedRadioButton').click(function() {
+                $('.employment-status-textbox').hide();
             });
         });
     </script>

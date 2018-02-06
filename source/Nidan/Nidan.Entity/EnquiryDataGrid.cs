@@ -34,6 +34,19 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 4)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int LeadSourceId { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
+        [StringLength(500)]
+        public string LeadSourceName { get; set; }
+
+        [StringLength(500)]
+        public string Description { get; set; }
+
+        [Key]
+        [Column(Order = 6)]
         [StringLength(500)]
         public string EmailId { get; set; }
 
@@ -41,12 +54,12 @@ namespace Nidan.Entity
         public DateTime? DateOfBirth { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 7)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Age { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 8)]
         [StringLength(500)]
         public string Address1 { get; set; }
 
@@ -60,22 +73,32 @@ namespace Nidan.Entity
         public string Address4 { get; set; }
 
         [Key]
-        [Column(Order = 7)]
+        [Column(Order = 9)]
         [StringLength(100)]
         public string Taluka { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 10)]
         [StringLength(100)]
         public string State { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 11)]
         [StringLength(100)]
         public string District { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 12)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CityId { get; set; }
+
+        [Key]
+        [Column(Order = 13)]
+        [StringLength(50)]
+        public string City { get; set; }
+
+        [Key]
+        [Column(Order = 14)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PinCode { get; set; }
 
@@ -91,12 +114,12 @@ namespace Nidan.Entity
         public string Religion { get; set; }
 
         [Key]
-        [Column("Caste Category", Order = 11)]
+        [Column("Caste Category", Order = 15)]
         [StringLength(500)]
         public string Caste_Category { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 16)]
         [StringLength(100)]
         public string Gender { get; set; }
 
@@ -129,7 +152,7 @@ namespace Nidan.Entity
         public string Promotional { get; set; }
 
         [Key]
-        [Column(Order = 13, TypeName = "date")]
+        [Column(Order = 17, TypeName = "date")]
         public DateTime EnquiryDate { get; set; }
 
         [StringLength(100)]
@@ -157,7 +180,7 @@ namespace Nidan.Entity
         public string PlacementNeeded { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 18)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ConversionProspect { get; set; }
 
@@ -176,22 +199,22 @@ namespace Nidan.Entity
         public string ClosingRemark { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 19)]
         [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [Key]
-        [Column(Order = 16)]
+        [Column(Order = 20)]
         [StringLength(3)]
         public string IsCounsellingDone { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 21)]
         [StringLength(3)]
         public string IsRegistrationDone { get; set; }
 
         [Key]
-        [Column(Order = 18)]
+        [Column(Order = 22)]
         [StringLength(3)]
         public string IsAdmissionDone { get; set; }
     }

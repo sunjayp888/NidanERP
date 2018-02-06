@@ -68,6 +68,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/Expense
+        public ActionResult ExpenseDetailReport()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/BankDeposite
         public ActionResult BankDepositeDetailByDate()
         {
@@ -240,6 +246,15 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+
+        [HttpPost]
+        public ActionResult SearchExpenseDetailReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveExpenseDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.ExpenseGeneratedDate >= fromDate && p.ExpenseGeneratedDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
         [HttpPost]
         public ActionResult AvailablePettyCashReport(Paging paging, List<OrderBy> orderBy)
         {
@@ -251,7 +266,8 @@ namespace Nidan.Controllers
         public ActionResult MobilizationCountReportByMonthAndYear(int centreId, int year, Paging paging, List<OrderBy> orderBy)
         {
             var month = DateTime.Now.Month;
-            var fiscalYear = month <= 3 ? year - 1 : year;
+            //var fiscalYear = month <= 3 ? year - 1 : year;
+            var fiscalYear = year;
             var data = NidanBusinessService.RetriveMobilizationCountReportByMonthAndYear(UserOrganisationId, centreId, fiscalYear, orderBy);
             return this.JsonNet(data);
         }
@@ -404,10 +420,10 @@ namespace Nidan.Controllers
             var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
             var centreName = isSuperAdmin ? string.Empty : centre.Name;
             var data =
-                NidanBusinessService.RetrieveAdmissionGrid(UserOrganisationId,
+                NidanBusinessService.RetrieveExpenseDataGrid(UserOrganisationId,
                     p =>
-                        (isSuperAdmin || p.CentreId == UserCentreId) && p.AdmissionDate >= fromDate &&
-                        p.AdmissionDate <= toDate).Items.ToList();
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.ExpenseGeneratedDate >= fromDate &&
+                        p.ExpenseGeneratedDate <= toDate).Items.ToList();
             var csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_ExpenseReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
         }

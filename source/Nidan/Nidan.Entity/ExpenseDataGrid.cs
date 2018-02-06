@@ -14,17 +14,17 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ExpenseId { get; set; }
 
+        [StringLength(500)]
+        public string VoucherNumber { get; set; }
+
         [Key]
         [Column(Order = 1)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 2)]
-        public DateTime CreatedDate { get; set; }
-
-        [StringLength(500)]
-        public string VoucherNumber { get; set; }
+        [Column(Order = 2, TypeName = "date")]
+        public DateTime ExpenseGeneratedDate { get; set; }
 
         [Key]
         [Column(Order = 3)]
@@ -43,19 +43,24 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 6)]
         [StringLength(500)]
-        public string PaidTo { get; set; }
+        public string RupeesInWord { get; set; }
 
         [Key]
         [Column(Order = 7)]
-        public string Particulars { get; set; }
+        [StringLength(500)]
+        public string PaidTo { get; set; }
 
         [Key]
         [Column(Order = 8)]
+        public string Particulars { get; set; }
+
+        [Key]
+        [Column(Order = 9)]
         [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 10)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
     }

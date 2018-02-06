@@ -29,9 +29,9 @@
                         @Html.HiddenFor(model => Model.CentrePettyCash.CreatedDate)
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.CentrePettyCash.CentreId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            @Html.LabelFor(model => model.CentrePettyCash.CentreId, "Centre", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.DropDownListFor(model => model.CentrePettyCash.CentreId, Model.Centres, "Select Centre", new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.DropDownListFor(model => model.CentrePettyCash.CentreId, Model.Centres, "Select Centre", new { @class = "form-control col-md-7 col-xs-12", @disabled = "disabled" })
                                 @Html.ValidationMessageFor(model => model.CentrePettyCash.CentreId, "", new { @class = "help-block" })
                             </div>
                         </div>

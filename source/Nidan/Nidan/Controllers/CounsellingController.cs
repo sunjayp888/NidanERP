@@ -38,21 +38,30 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             id = id ?? 0;
             var sectors = NidanBusinessService.RetrieveSectors(organisationId, e => true);
-            //var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId,UserCentreId,id.Value).Select(e=>e.CourseId).ToList();
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
+            var enquiryDataGrid = NidanBusinessService.RetrieveEnquiryDataGrid(organisationId, e => e.EnquiryId == id.Value).Items.FirstOrDefault();
             var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
-            //var courses = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => interestedCourseIds.Contains(e.CourseId));
             var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId);
             var enquiryCourses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId).Where(e => interestedCourseIds.Contains(e.CourseId));
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => e.CentreId == centreId);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var viewModel = new CounsellingViewModel
             {
                 Enquiry = enquiry,
+                EnquiryDataGrid=enquiryDataGrid,
                 EnquiryId = id.Value,
                 Sectors = new SelectList(sectors, "SectorId", "Name"),
                 Courses = new SelectList(courses, "CourseId", "Name"),
                 EnquiryCourses = new SelectList(enquiryCourses, "CourseId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
                 Counselling = new Counselling()
                 {
                     Title = enquiry.Title,
@@ -65,6 +74,7 @@ namespace Nidan.Controllers
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -88,6 +98,10 @@ namespace Nidan.Controllers
             }
             counsellingViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
             counsellingViewModel.Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name");
+            counsellingViewModel.Occupations = new SelectList(NidanBusinessService.RetrieveOccupations(organisationId, e => true).ToList());
+            counsellingViewModel.Schemes = new SelectList(NidanBusinessService.RetrieveSchemes(organisationId, e => true).ToList());
+            counsellingViewModel.BatchTimePrefers = new SelectList(NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true).ToList());
+            counsellingViewModel.EducationalQualifications = new SelectList(NidanBusinessService.RetrieveQualifications(organisationId, e => true).ToList());
             return View(counsellingViewModel);
         }
 
@@ -107,16 +121,28 @@ namespace Nidan.Controllers
                 return HttpNotFound();
             }
             var enquiry = NidanBusinessService.RetrieveEnquiry(organisationId, counselling.EnquiryId);
-            var interestedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
+            var enquiryCourseIds = counselling.Enquiry.EnquiryCourses.Select(e => e.CourseId);
+            var enquiryCourses = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => e.CentreId == UserCentreId).Where(e => enquiryCourseIds.Contains(e.CourseId));
             var courses = NidanBusinessService.RetrieveCentreCourses(organisationId, centreId, e => e.CentreId == centreId);
+            var occupations = NidanBusinessService.RetrieveOccupations(organisationId, e => true);
+            var schemes = NidanBusinessService.RetrieveCentreSchemes(organisationId, centreId, e => e.CentreId == centreId);
+            var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
+            var educationalQualifications = NidanBusinessService.RetrieveQualifications(organisationId, e => true);
             var viewModel = new CounsellingViewModel
             {
                 Counselling = counselling,
                 Courses = new SelectList(courses, "CourseId", "Name"),
-                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name")
+                EnquiryCourses = new SelectList(enquiryCourses, "CourseId", "Name"),
+                Sectors = new SelectList(NidanBusinessService.RetrieveSectors(organisationId, e => true).ToList(), "SectorId", "Name"),
+                Occupations = new SelectList(occupations, "OccupationId", "Name"),
+                Schemes = new SelectList(schemes, "SchemeId", "Name"),
+                BatchTimePrefers = new SelectList(batchTimePrefers, "BatchTimePreferId", "Name"),
+                EducationalQualifications = new SelectList(educationalQualifications, "QualificationId", "Name"),
+                Enquiry = enquiry,
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
             viewModel.TitleList = new SelectList(viewModel.TitleType, "Value", "Name");
+            viewModel.PreferredMonthForJoiningList = new SelectList(viewModel.PreferredMonthForJoiningType, "Id", "Name");
             return View(viewModel);
         }
 
@@ -154,14 +180,15 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            //var mobilizationDataGrid = NidanBusinessService.RetrieveCounsellingGrid(organisationId, e => e.CounsellingId == id).Items.FirstOrDefault();
             var counselling = NidanBusinessService.RetrieveCounselling(organisationId, id.Value);
-            if (counselling == null)
+            var counsellingDataGrid = NidanBusinessService.RetrieveCounsellingDataGrid(organisationId, e => e.CounsellingId == id.Value).Items.FirstOrDefault();
+            if (counsellingDataGrid == null)
             {
                 return HttpNotFound();
             }
             var viewModel = new CounsellingViewModel
             {
+                CounsellingDataGrid = counsellingDataGrid,
                 Counselling = counselling
             };
             return View(viewModel);
@@ -217,7 +244,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveCounsellingDataGrid(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.Close != "Yes",orderBy, paging);
+            var data = NidanBusinessService.RetrieveCounsellingDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsRegistrationDone == "NO" && p.Close != "Yes", orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -242,7 +269,14 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse(int sectorId)
         {
-            var data = NidanBusinessService.RetrieveCourses(UserOrganisationId, e => e.Sector.SectorId == sectorId).ToList();
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.Course.SectorId == sectorId && e.CentreId == UserCentreId).ToList();
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult GetSector(int schemeId)
+        {
+            var data = NidanBusinessService.RetrieveCentreSectors(UserOrganisationId, UserCentreId, e => e.Sector.SchemeId == schemeId && e.CentreId == UserCentreId).ToList();
             return this.JsonNet(data);
         }
 

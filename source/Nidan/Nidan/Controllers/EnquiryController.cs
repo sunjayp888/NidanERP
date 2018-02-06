@@ -272,9 +272,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetCourse(int sectorId)
+        public ActionResult GetCourse()
         {
-            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.Course.SectorId == sectorId && e.CentreId == UserCentreId).ToList();
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e =>  e.CentreId == UserCentreId).ToList();
             return this.JsonNet(data);
         }
 
@@ -289,6 +289,12 @@ namespace Nidan.Controllers
         public ActionResult GetTaluka(int districtId)
         {
             return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult GetCity(int talukaId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCities(UserOrganisationId, e => e.Taluka.TalukaId == talukaId).ToList());
         }
 
         [HttpPost]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using Nidan.Entity;
 
 namespace Nidan.Models
@@ -12,6 +13,7 @@ namespace Nidan.Models
         public Counselling Counselling { get; set; }
         public CounsellingDataGrid CounsellingDataGrid { get; set; }
         public Enquiry Enquiry { get; set; }
+        public EnquiryDataGrid EnquiryDataGrid { get; set; }
         public SelectList Courses { get; set; }
         public SelectList EnquiryCourses { get; set; }
         public SelectList Sectors { get; set; }
@@ -23,6 +25,11 @@ namespace Nidan.Models
         public double ConversionProspect { get; set; }
         public IEnumerable<SelectListItem> ConversionProspectList { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
+        public SelectList Occupations { get; set; }
+        public SelectList Schemes { get; set; }
+        public SelectList BatchTimePrefers { get; set; }
+        public SelectList EducationalQualifications { get; set; }
+        public IEnumerable<SelectListItem> PreferredMonthForJoiningList { get; set; }
 
         public List<ConversionProspectType> ConversionProspectType => new List<ConversionProspectType>()
         {
@@ -40,6 +47,22 @@ namespace Nidan.Models
             new TitleType() {Name = "Mr.",Value = "Mr."},
             new TitleType() {Name = "Ms.",Value = "Ms."},
             new TitleType() {Name = "Mrs.",Value = "Mrs."}
+        };
+
+        public List<PreferredMonthForJoiningType> PreferredMonthForJoiningType => new List<PreferredMonthForJoiningType>()
+        {
+            new PreferredMonthForJoiningType() {Id = 01,Name = "January"},
+            new PreferredMonthForJoiningType() {Id = 02,Name = "February"},
+            new PreferredMonthForJoiningType() {Id = 03,Name = "March"},
+            new PreferredMonthForJoiningType() {Id = 04,Name = "April"},
+            new PreferredMonthForJoiningType() {Id = 05,Name = "May"},
+            new PreferredMonthForJoiningType() {Id = 06,Name = "June"},
+            new PreferredMonthForJoiningType() {Id = 07,Name = "July"},
+            new PreferredMonthForJoiningType() {Id = 08,Name = "August"},
+            new PreferredMonthForJoiningType() {Id = 09,Name = "September"},
+            new PreferredMonthForJoiningType() {Id = 10,Name = "October"},
+            new PreferredMonthForJoiningType() {Id = 11,Name = "November"},
+            new PreferredMonthForJoiningType() {Id = 12,Name = "December"}
         };
     }
 }
