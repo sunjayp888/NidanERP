@@ -1711,6 +1711,7 @@ namespace Nidan.Business
         public CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment)
         {
             return _nidanDataService.Create<CandidateAssessment>(organisationId, candidateAssessment);
+            // Add data in [CandidateAssessmentQuestionAnswer]
         }
 
         public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
