@@ -86,6 +86,7 @@
         vm.retrieveInstallmentSummaryByDate = retrieveInstallmentSummaryByDate;
         vm.retrieveCentrePettyCashByCentreId = retrieveCentrePettyCashByCentreId;
         vm.viewCentrePettyCashByCentreId = viewCentrePettyCashByCentreId;
+        vm.searchExpenseDetailReportByDate = searchExpenseDetailReportByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -570,6 +571,22 @@
             vm.centreId = centreId;
             vm.fromYear = fromYear;
             window.location.href = "/Report/BankDepositeProcessReportByMonth?centreId=" + centreId + "&year=" + fromYear;
+        }
+
+        function searchExpenseDetailReportByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "ExpenseGeneratedDate";
+            vm.orderBy.class = "asc";
+            order("ExpenseGeneratedDate");
+            return ReportService.searchExpenseDetailReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
         }
     }
 

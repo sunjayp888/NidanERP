@@ -12,6 +12,7 @@
         var vm = this;
         vm.expenses = [];
         vm.centres = [];
+        vm.expenseHeaders = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -39,6 +40,7 @@
         vm.centreId;
         vm.searchExpenseByDateCentreId = searchExpenseByDateCentreId;
         vm.searchExpenseByDate = searchExpenseByDate;
+        vm.searchExpenseHeaderGridByDate = searchExpenseHeaderGridByDate;
 
         function initialise() {
             vm.orderBy.property = "ExpenseGeneratedDate";
@@ -115,6 +117,22 @@
                     vm.paging.totalResults = response.data.TotalResults;
                     vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
                     return vm.expenses;
+                });
+        }
+
+        function searchExpenseHeaderGridByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "ExpenseHeaderId";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
+            return ExpenseService.searchExpenseHeaderGridByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.expenseHeaders = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.expenseHeaders.length === 0 ? "No Records Found" : "";
+                    return vm.expenseHeaders;
                 });
         }
 

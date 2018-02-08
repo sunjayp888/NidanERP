@@ -2664,7 +2664,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CreatedDate",
+                            Property = "ExpenseGeneratedDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -4689,6 +4689,29 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "CityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ExpenseHeaderGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ExpenseHeaderId",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })

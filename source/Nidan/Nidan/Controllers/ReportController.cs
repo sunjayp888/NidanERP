@@ -594,5 +594,21 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetriveMobilizationCountReportByMonthWise(UserOrganisationId);
             return this.JsonNet(data);
         }
+
+        [HttpPost]
+        public ActionResult DownloadExpenseDetailReportCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data =
+                NidanBusinessService.RetrieveExpenseDataGrid(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.ExpenseGeneratedDate >= fromDate &&
+                        p.ExpenseGeneratedDate <= toDate).Items.ToList();
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_Expense-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
     }
 }
