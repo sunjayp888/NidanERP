@@ -116,7 +116,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="expenseHeader in model.expenseHeaders | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <tr ng-repeat="expenseHeader in model.expenseHeaders" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             <td><span ng-bind="expenseHeader.ExpenseHeaderName"></span></td>
                                             <td><span ng-bind="expenseHeader.TotalExpenseAmount"></span></td>
                                         </tr>
@@ -172,7 +172,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="expense in model.expenses | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        <tr ng-repeat="expense in model.expenses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="expense.Centre.CentreCode"></span></td>

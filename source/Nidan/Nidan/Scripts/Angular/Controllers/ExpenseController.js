@@ -61,7 +61,7 @@
         }
 
         function retrieveExpensesByCashMemo(cashMemo) {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ExpenseGeneratedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
             vm.cashMemo = cashMemo == undefined ? $("#Expense_CashMemoNumbers").val() : cashMemo;
@@ -137,7 +137,13 @@
         }
 
         function pageChanged() {
-            return retrieveExpenses();
+            //return retrieveExpenses();
+            if (vm.fromDate && vm.toDate) {
+                searchExpenseByDate(vm.fromDate, vm.toDate);
+            }
+            else {
+                return retrieveExpenses();
+            }
         }
 
         function order(property) {

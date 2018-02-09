@@ -3308,10 +3308,6 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<ExpenseHeaderGrid>()
-                .Property(e => e.TotalExpenseAmount)
-                .HasPrecision(38, 2);
-
-            modelBuilder.Entity<ExpenseHeaderGrid>()
                 .Property(e => e.CentreName)
                 .IsUnicode(false);
 

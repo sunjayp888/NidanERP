@@ -17,15 +17,21 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string ExpenseHeaderName { get; set; }
 
-        public decimal? TotalExpenseAmount { get; set; }
+        [Key]
+        [Column(Order = 1, TypeName = "date")]
+        public DateTime ExpenseGeneratedDate { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 2)]
+        public decimal DebitAmount { get; set; }
+
+        [Key]
+        [Column(Order = 3)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 2)]
+        [Column(Order = 4)]
         [StringLength(500)]
         public string CentreName { get; set; }
     }

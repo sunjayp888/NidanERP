@@ -3003,7 +3003,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CreatedDate",
+                            Property = "ExpenseGeneratedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
