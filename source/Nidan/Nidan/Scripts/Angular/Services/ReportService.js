@@ -45,7 +45,8 @@
             retrieveRegistrationSummaryByDate: retrieveRegistrationSummaryByDate,
             retrieveDownPaymentSummaryByDate: retrieveDownPaymentSummaryByDate,
             retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
-            retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId
+            retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId,
+            searchExpenseDetailReportByDate: searchExpenseDetailReportByDate
 
         };
 
@@ -414,6 +415,18 @@
                 data = {
                     centreId: centreId,
                     date: date
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchExpenseDetailReportByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchExpenseDetailReportByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
                 };
 
             return $http.post(url, data);

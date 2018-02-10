@@ -2323,6 +2323,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCities(organisationId, predicate).Items.ToList();
         }
 
+        public PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, predicate,orderBy,paging);
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);

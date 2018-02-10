@@ -191,6 +191,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CompanyGrid> CompanyGrids { get; set; }
         public virtual DbSet<LeadSource> LeadSources { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<ExpenseHeaderGrid> ExpenseHeaderGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3300,6 +3301,14 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ExpenseDataGrid>()
                 .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseHeaderGrid>()
+                .Property(e => e.ExpenseHeaderName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExpenseHeaderGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
