@@ -9,6 +9,7 @@ using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Business.Models;
+using Nidan.Data.Extensions;
 using Nidan.Data.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -501,7 +502,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
                 ConversionProspect = enquiry.ConversionProspect,
-                SectorId = enquiry.SectorId??0,
+                SectorId = enquiry.SectorId ?? 0,
                 Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
@@ -2325,7 +2326,33 @@ namespace Nidan.Business
         public PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, predicate,orderBy,paging);
+            return _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public IEnumerable<ExpenseHeaderSummaryReport> RetriveExpenseHeaderSummaryReportByDate(int organisationId, int centreId, DateTime fromDate, DateTime toDate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            //var firstDayOfMonth = new DateTime(year, month, 1);
+            //var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var expenseHeaderSummaryReports = new List<ExpenseHeaderSummaryReport>();
+            //var days = DateTimeExtensions.EachDay(fromDate, toDate);
+            var data = _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, e => e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate && e.CentreId == centreId, orderBy, paging).Items.ToList();
+            var expenseHeaders = _nidanDataService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
+            foreach (var item in expenseHeaders)
+            {
+                var result = data.Where(e => e.ExpenseHeaderId == item.ExpenseHeaderId).Sum(e => e.TotalExpense);
+                expenseHeaderSummaryReports.Add(new ExpenseHeaderSummaryReport()
+                {
+                    ExpenseHeaderName = item.Name,
+                    TotalExpense = result ?? 0
+                });
+            }
+            expenseHeaderSummaryReports.Add(new ExpenseHeaderSummaryReport()
+            {
+                ExpenseHeaderName = "Total",
+                TotalExpense = expenseHeaderSummaryReports.Sum(e => e.TotalExpense)
+            });
+            return expenseHeaderSummaryReports;
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -3056,7 +3083,7 @@ namespace Nidan.Business
 
         public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int centreId)
         {
-            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId),null, null).Items.ToList();
+            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId), null, null).Items.ToList();
         }
 
         public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId,
@@ -3333,7 +3360,22 @@ namespace Nidan.Business
             Expression<Func<Expense, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveExpenses(organisationId, centreId, predicate, orderBy, paging);
+            var data = _nidanDataService.RetrieveExpenses(organisationId, centreId, predicate, orderBy, paging);
+            //var expenseList = new List<Expense>();
+            //foreach (var item in data.Items)
+            //{
+            //    expenseList.Add(new Expense
+            //    {
+            //        CashMemoNumbers = item.CashMemoNumbers,
+            //        CentreId = item.CentreId,
+            //        CreatedDate = item.CreatedDate,
+            //        DebitAmount = item.DebitAmount
+            //    });
+            //}
+            //var sumOfDebitAmount = expenseList.Sum(e => e.DebitAmount);
+            //expenseList.AddRange(new List<Expense> { new Expense { Total = sumOfDebitAmount } });
+            //var dataPaged =  expenseList.AsQueryable<Expense>().Paginate(paging);
+            return data;
         }
 
         public Expense RetrieveExpense(int organisationId, int centreId, int expenseId,
@@ -4160,7 +4202,7 @@ namespace Nidan.Business
                 CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
-        
+
         public Mobilization UpdateMobilization(int organisationId, Mobilization mobilization)
         {
             //update follow Up

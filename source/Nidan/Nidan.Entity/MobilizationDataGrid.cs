@@ -32,7 +32,7 @@ namespace Nidan.Entity
         [Key]
         [Column(Order = 4)]
         [StringLength(500)]
-        public string MobilizationType { get; set; }
+        public string MobilizationTypeName { get; set; }
 
         [StringLength(200)]
         public string EventName { get; set; }

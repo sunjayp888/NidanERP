@@ -2398,7 +2398,7 @@ namespace Nidan.Data
                       {
                         new OrderBy
                         {
-                            Property = "MobilizationId",
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                       })
@@ -2683,7 +2683,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<MobilizationDataGrid>("SearchMobilization @SearchKeyword", category).ToList();
 
-                //var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e => e.MobilizationType).Include(e => e.Centre);
+                //var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e => e.MobilizationTypeName).Include(e => e.Centre);
 
                 var data = searchData.ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>

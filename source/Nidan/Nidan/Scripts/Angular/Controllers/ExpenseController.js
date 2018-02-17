@@ -41,6 +41,8 @@
         vm.searchExpenseByDateCentreId = searchExpenseByDateCentreId;
         vm.searchExpenseByDate = searchExpenseByDate;
         vm.searchExpenseHeaderGridByDate = searchExpenseHeaderGridByDate;
+        vm.setTotals = setTotals;
+        vm.totalDebitAmount = 0;
 
         function initialise() {
             vm.orderBy.property = "ExpenseGeneratedDate";
@@ -48,6 +50,10 @@
             vm.orderBy.class = "desc";
             order("ExpenseGeneratedDate");
             retrieveCentres();
+        }
+
+        function setTotals(expense) {
+            vm.totalDebitAmount = vm.totalDebitAmount + expense.DebitAmount;
         }
 
         function retrieveExpenses() {
@@ -128,10 +134,10 @@
             vm.orderBy.class = "desc";
             return ExpenseService.searchExpenseHeaderGridByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.expenseHeaders = response.data.Items;
-                    vm.paging.totalPages = response.data.TotalPages;
-                    vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.expenseHeaders.length === 0 ? "No Records Found" : "";
+                    vm.expenseHeaders = response.data;
+                    //vm.paging.totalPages = response.data.TotalPages;
+                    //vm.paging.totalResults = response.data.TotalResults;
+                    //vm.searchMessage = vm.expenseHeaders.length === 0 ? "No Records Found" : "";
                     return vm.expenseHeaders;
                 });
         }
