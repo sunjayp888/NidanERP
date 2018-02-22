@@ -190,7 +190,7 @@ namespace Nidan.Controllers
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
                 LeadSources = new SelectList(leadSource, "LeadSourceId", "Name"),
-                Cities= new SelectList(cities, "CityId", "Name"),
+                Cities = new SelectList(cities, "CityId", "Name"),
                 SelectedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
@@ -227,13 +227,14 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var enquiryDataGrid = NidanBusinessService.RetrieveEnquiryDataGrid(organisationId, e => e.EnquiryId == id).Items.FirstOrDefault();
-            var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId, UserCentreId, id.Value).Select(e => e.CourseId).ToList();
-            var courseName = NidanBusinessService.RetrieveCourses(organisationId, e => courseIds.Contains(e.CourseId)).Select(e => e.Name).ToList();
             if (enquiryDataGrid == null)
             {
                 return HttpNotFound();
             }
+            var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId, enquiryDataGrid.CentreId, id.Value).Select(e => e.CourseId).ToList();
+            var courseName = NidanBusinessService.RetrieveCourses(organisationId, e => courseIds.Contains(e.CourseId)).Select(e => e.Name).ToList();
             var viewModel = new EnquiryViewModel
             {
                 EnquiryDataGrid = enquiryDataGrid,
@@ -274,7 +275,7 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult GetCourse()
         {
-            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e =>  e.CentreId == UserCentreId).ToList();
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId).ToList();
             return this.JsonNet(data);
         }
 

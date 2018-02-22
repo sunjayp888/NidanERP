@@ -82,7 +82,7 @@
                                         }
                                         @if (User.IsInAnyRoles("Admin"))
                                         {
-                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate); model.searchExpenseHeaderGridByDate(fromDate,toDate);" value="Search" class="btn btn-primary">
+                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
                                         }
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="expense in model.expenses track by $index" ng-init="model.setTotals(expense)" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <tr ng-repeat="expense in model.expenses track by $index" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
                                             <td><span ng-bind="expense.Centre.CentreCode"></span></td>
