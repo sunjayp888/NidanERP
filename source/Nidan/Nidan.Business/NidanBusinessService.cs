@@ -1406,7 +1406,7 @@ namespace Nidan.Business
         {
             var centre = RetrieveCentre(organisationId, centreId);
             var centreVoucherNumber = RetrieveCentreVoucherNumber(organisationId, centreId, e => true);
-            expense.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"),
+            expense.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, expense.ExpenseGeneratedDate.ToString("MMMM"),
                 centreVoucherNumber.Number);
             var data = _nidanDataService.Create<Expense>(organisationId, expense);
             CreateExpenseProject(organisationId, expense.CentreId, data.ExpenseId, projectIds);
