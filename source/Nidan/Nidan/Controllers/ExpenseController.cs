@@ -307,7 +307,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveExpenseHeaderGrid(organisationId, e=>e.CentreId==centreId && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate, orderBy, paging);
+            var data = NidanBusinessService.RetriveExpenseHeaderSummaryReportByDate(organisationId, centreId, fromDate,toDate, orderBy, paging);
             return this.JsonNet(data);
         }
     }

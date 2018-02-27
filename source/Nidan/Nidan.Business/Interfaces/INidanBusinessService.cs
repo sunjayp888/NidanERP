@@ -387,6 +387,7 @@ namespace Nidan.Business.Interfaces
         List<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate);
         List<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate);
         PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<ExpenseHeaderSummaryReport> RetriveExpenseHeaderSummaryReportByDate(int organisationId, int centreId, DateTime fromDate, DateTime toDate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update

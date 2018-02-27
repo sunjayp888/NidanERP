@@ -82,7 +82,7 @@
                                         }
                                         @if (User.IsInAnyRoles("Admin"))
                                         {
-                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate); model.searchExpenseHeaderGridByDate(fromDate,toDate);" value="Search" class="btn btn-primary">
+                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
                                         }
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
                                     <tbody>
                                         <tr ng-repeat="expenseHeader in model.expenseHeaders" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                             <td><span ng-bind="expenseHeader.ExpenseHeaderName"></span></td>
-                                            <td><span ng-bind="expenseHeader.TotalExpenseAmount"></span></td>
+                                            <td><span ng-bind="expenseHeader.TotalExpense"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -172,49 +172,54 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="expense in model.expenses" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <td><span ng-bind="expense.Centre.CentreCode"></span></td>
-                                            }
-                                            <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="expense.ExpenseHeader.Name"></span></td>
-                                            <td><span ng-bind="expense.VoucherNumber"></span></td>
-                                            <td><span ng-bind="expense.CashMemoNumbers"></span></td>
-                                            <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
-                                            <td><span ng-bind="expense.PaidTo"></span></td>
-                                            <td>
-                                                <div class="btn-group pull-right">
-                                                    <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down" ng-click="model.dateInCurrentWeek(expense.ExpenseId)"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                                        {
-                                                            <li>
-                                                                <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                        }
-                                                        @if (User.IsInAnyRoles("Admin"))
-                                                        {
-                                                            <li ng-if="model.isDateInCurrentWeek">
-                                                                @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
-                                                                <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                        }
+                                    <tr ng-repeat="expense in model.expenses track by $index" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="expense.Centre.CentreCode"></span></td>
+                                        }
+                                        <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="expense.ExpenseHeader.Name"></span></td>
+                                        <td><span ng-bind="expense.VoucherNumber"></span></td>
+                                        <td><span ng-bind="expense.CashMemoNumbers"></span></td>
+                                        <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
+                                        <td><span ng-bind="expense.PaidTo"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down" ng-click="model.dateInCurrentWeek(expense.ExpenseId)"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("SuperAdmin"))
+                                                    {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
-                                                                Download
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                                                Edit
                                                             </a>
                                                         </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    }
+                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    {
+                                                        <li ng-if="model.isDateInCurrentWeek">
+                                                            @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    <li>
+                                                        <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
+                                                            Download
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                            
+                                            
+                                    </tr>
+                                    <tr>
+                                        <td><span ng-bind="model.totalDebitAmount"></span></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

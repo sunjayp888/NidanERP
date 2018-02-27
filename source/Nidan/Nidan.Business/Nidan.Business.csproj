@@ -143,6 +143,7 @@
     <Compile Include="Models\CentreBankDepositeReport.cs" />
     <Compile Include="Models\CentreCandidateFeeSummaryReport.cs" />
     <Compile Include="Models\ExpenseData.cs" />
+    <Compile Include="Models\ExpenseHeaderSummaryReport.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\MobilizationCountData.cs" />
     <Compile Include="Models\ExpenseReceipt.cs" />

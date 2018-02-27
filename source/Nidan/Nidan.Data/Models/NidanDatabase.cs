@@ -1677,50 +1677,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.FeeCollected)
                 .HasPrecision(38, 2);
 
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.MobilizationType)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.EventName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.InterestedCourse)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.Qualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.StudentLocation)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.OtherInterestedCourse)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.Close)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<MobilizationDataGrid>()
-                .Property(e => e.ClosingRemark)
-                .IsUnicode(false);
-
             modelBuilder.Entity<MobilizationSearchField>()
                 .Property(e => e.Title)
                 .IsUnicode(false);
@@ -3308,7 +3264,55 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<ExpenseHeaderGrid>()
+                .Property(e => e.TotalExpense)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<ExpenseHeaderGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.MobilizationTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.EventName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.InterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Qualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.StudentLocation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.OtherInterestedCourse)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.Close)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<MobilizationDataGrid>()
+                .Property(e => e.ClosingRemark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

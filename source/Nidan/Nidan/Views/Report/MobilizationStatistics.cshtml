@@ -46,7 +46,6 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="report in model.reports" ng-class='report.MonthName=="Total"?"row-total-background":""' ng-click='report.MonthName!="Total"? $event.originalEvent.ngClickHandled || model.viewMobilizationReportByMonthWise(report.CentreId,report.Year):"#"'>
-
                                         <td><span ng-bind="report.CentreName"></span></td>
                                         <td><span ng-bind="report.MobilizationCount"></span></td>
                                         <td><span ng-bind="report.EnquiryCount"></span></td>

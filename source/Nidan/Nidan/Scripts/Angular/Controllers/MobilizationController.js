@@ -29,8 +29,8 @@
 
         function initialise() {
             vm.orderBy.property = "CreatedDate";
-            vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "asc";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
             order("CreatedDate");
         }
 
@@ -46,8 +46,8 @@
 
         function retrieveTodaysMobilizations() {
             vm.orderBy.property = "CreatedDate";
-            vm.orderBy.direction = "Ascending";
-            vm.orderBy.class = "asc";
+            vm.orderBy.direction = "Descending";
+            vm.orderBy.class = "desc";
             return MobilizationService.retrieveTodaysMobilizations(vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.mobilizations = response.data.Items;

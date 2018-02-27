@@ -249,7 +249,7 @@ namespace Nidan.Controllers
         public ActionResult GetCentres()
         {
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var data = NidanBusinessService.RetrieveCentres(organisationId, e => e.CentreType== "Owned");
             return this.JsonNet(data);
         }
 

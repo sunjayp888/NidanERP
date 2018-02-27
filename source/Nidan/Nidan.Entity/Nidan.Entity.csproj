@@ -246,6 +246,7 @@
     <Compile Include="Partials\CourseInstallment.cs" />
     <Compile Include="Partials\Event.cs" />
     <Compile Include="Partials\Enquiry.cs" />
+    <Compile Include="Partials\Expense.cs" />
     <Compile Include="Partials\FixAsset.cs" />
     <Compile Include="Partials\FixAssetMappingcs.cs" />
     <Compile Include="Partials\FollowUp.cs" />
