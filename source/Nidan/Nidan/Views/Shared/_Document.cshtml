@@ -91,7 +91,7 @@
                                                 <button ng-if="documentsType.IsPending" type="button" class="btn btn-round btn-danger btn-xs">Pending</button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-warning btn-xs" ng-click="model.removeError(documentsType.DocumentTypeId)" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
+                                                <button type="button" class="btn btn-warning btn-xs" ng-if="documentsType.IsPending" ng-click="model.removeError(documentsType.DocumentTypeId)" data-toggle="modal" data-target="#counsellingDocumentModal">Upload Document</button>
                                                 <a style="cursor: pointer;" ng-if="!documentsType.IsPending" ng-href="/Counselling/DownloadDocument/{{documentsType.Guid}}" class="btn btn-success btn-xs">
                                                     Download
                                                 </a>

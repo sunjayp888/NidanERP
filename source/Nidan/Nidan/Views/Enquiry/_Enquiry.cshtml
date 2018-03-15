@@ -645,7 +645,7 @@
                             </div>*@
                         @Html.LabelFor(model => model.Enquiry.Remarks, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
                         <div class="col-md-8 col-sm-4 col-xs-12">
-                            @Html.EditorFor(model => model.Enquiry.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.EditorFor(model => model.Enquiry.Remarks, new { @class = "form-control col-md-7 col-xs-12" ,@row=2})
                             @Html.ValidationMessageFor(model => model.Enquiry.Remarks, "", new { @class = "help-block" })
                         </div>
                     </div>
