@@ -57,7 +57,7 @@
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
                                             <li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
-                                            <li><a href='@Url.Action("Index", "Enquiry")'>Enquiry</a></li>
+                                            <li><a href='@Url.Action("Index", "Enquiry")'>Lead</a></li>
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
                                             <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
@@ -67,7 +67,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                     {
                                         <li>
                                             <a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
@@ -75,7 +75,7 @@
                                                 <li><a href='@Url.Action("Index", "BatchAttendance")'>Attendance</a></li>
                                             </ul>
                                         </li>
-                                    }
+                                    }*@
                                 <li>
                                     <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -157,7 +157,7 @@
                                             <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
                                             <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
                                             <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            <li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>
+                                            @*<li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>*@
                                         </ul>
                                     }
                                 </li>
@@ -196,7 +196,7 @@
                                         </ul>
                                     </li>
                                 }
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-graduation-cap"></i>Placement<span class="fa fa-chevron-down"></span></a>
@@ -208,7 +208,7 @@
                                             <li><a href='@Url.Action("Index", "CandidatePostPlacement")'>Post Placement</a></li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                             </ul>
                         </div>
                     </div>

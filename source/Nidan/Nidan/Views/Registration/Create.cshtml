@@ -166,7 +166,22 @@
         //Registration Amount Validation
         $("#Registration_CandidateFee_PaidAmount").keyup(function() {
             var registrationFee = $("#Registration_CandidateFee_PaidAmount").val();
-            if (registrationFee < 1000) {
+            var course = $('#Registration_CourseId :selected').text();
+            if (course == "Website Designing Workshop") {
+                if (registrationFee < 499) {
+                    $('#btn_submit').attr('disabled', true);
+                } else {
+                    $('#btn_submit').attr('disabled', false);
+                }
+            }
+            else if (course == "Psychometric Test") {
+                if (registrationFee < 500) {
+                    $('#btn_submit').attr('disabled', true);
+                } else {
+                    $('#btn_submit').attr('disabled', false);
+                }
+            }
+            else if (registrationFee < 1000) {
                 $('#btn_submit').attr('disabled', true);
             } else {
                 $('#btn_submit').attr('disabled', false);

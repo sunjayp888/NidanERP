@@ -225,7 +225,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="col-lg-12">
+                        @*<div class="col-lg-12">*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-2 col-sm-4 col-xs-12" })
                             <div class="col-md-10 col-sm-6 col-xs-12">
@@ -233,7 +233,7 @@
                                 @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
                             </div>
                         </div>
-                        </div>
+                        @*</div>*@
                     </div>
                 </div>
             </div>
@@ -396,8 +396,8 @@
             <div class="col-lg-12">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="control-label col-md-4 col-sm-3 col-xs-12">Psychometric Test Done</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Psychometric Test</label>
+                        <div class="col-md-8 col-sm-4 col-xs-12">
                             <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
                                 <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
                                     @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
@@ -413,8 +413,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Counselling.ConversionProspect, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        @Html.LabelFor(model => model.Counselling.ConversionProspect, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
                             @Html.DropDownListFor(model => model.Counselling.ConversionProspect, Model.ConversionProspectList, null, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Counselling.ConversionProspect, "", new { @class = "help-block" })
                         </div>
