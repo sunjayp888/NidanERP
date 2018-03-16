@@ -4,88 +4,86 @@
 }
 
 <div ng-controller="ExpenseController as model" ng-init="model.initialise()">
-<div class="page-title">
-    <div class="title_left">
-        <h3>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
                 Expenses<small></small>
-        </h3>
-    </div>
-</div>
-    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
-{
-    <div class="row">
-        <div class="col-xs-12">
-            <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Expense")">
-                <i class="fa fa-inr"></i> Create
-            </a>
+            </h3>
         </div>
     </div>
-}
-   
+    @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+    {
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>
-                            Search<small></small>
-                        </h2>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <p class="text-muted font-13 m-b-30">
-                        </p>
-                        <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                    {
-                                        <div class="col-lg-1">
-                                            <div class="form-group">
-                                                <label>Centre</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <div class="form-group">
-                                                <select id="dropCentre" class="form-control col-md-7 col-xs-12" ng-model="item">
-                                                    <option value="0">Select Centre</option>
-                                                    <option data-ng-repeat="centre in model.centres" ng-model="model.centreId" value="{{centre.CentreId}}">{{centre.Name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="col-lg-1">
-                                        <div class="form-group">
-                                            <label>From Date</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="form-group">
-                                            <label>To Date</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
-                                        </div>
-                                    </div>
+            <div class="col-xs-12">
+                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Expense")">
+                    <i class="fa fa-inr"></i> Create
+                </a>
+            </div>
+        </div>
+    }
 
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Search<small></small>
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                {
                                     <div class="col-lg-1">
                                         <div class="form-group">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <input type="button" ng-click="model.searchExpenseByDateCentreId(fromDate,toDate,model.centreId)" value="Search" class="btn btn-primary">
-                                            }
-                                            @if (User.IsInAnyRoles("Admin"))
-                                            {
-                                                <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
-                                            }
-                                            
+                                            <label>Centre</label>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <select id="dropCentre" class="form-control col-md-7 col-xs-12" ng-model="item">
+                                                <option value="0">Select Centre</option>
+                                                <option data-ng-repeat="centre in model.centres" ng-model="model.centreId" value="{{centre.CentreId}}">{{centre.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-1">
+                                    <div class="form-group">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <input type="button" ng-click="model.searchExpenseByDateCentreId(fromDate,toDate,model.centreId)" value="Search" class="btn btn-primary">
+                                        }
+                                        @if (User.IsInAnyRoles("Admin"))
+                                        {
+                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -94,121 +92,167 @@
                 </div>
             </div>
         </div>
-    
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            @*<div class="x_title">
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
                         <h2>
                             Rooms<small></small>
                         </h2>
                         <div class="clearfix"></div>
                     </div>*@
-            <div class="x_content">
-                <p class="text-muted font-13 m-b-30">
-                </p>
-                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th ng-click="model.order('ExpenseHeaderName')" ng-class="model.orderClass('ExpenseHeaderName')">Expense Header</th>
+                                            <th ng-click="model.order('TotalExpenseAmount')" ng-class="model.orderClass('TotalExpenseAmount')">Total Expense Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="expenseHeader in model.expenseHeaders" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                            <td><span ng-bind="expenseHeader.ExpenseHeaderName"></span></td>
+                                            <td><span ng-bind="expenseHeader.TotalExpense"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            @Html.Partial("Pagination/_pageSize")
+                            <label ng-bind="model.searchMessage"></label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
-                                <thead>
-                                <tr role="row">
-                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                    {
-                                        <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
-                                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @*<div class="x_title">
+                        <h2>
+                            Rooms<small></small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>*@
+                <div class="x_content">
+                    <p class="text-muted font-13 m-b-30">
+                    </p>
+                    <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("Pagination/_pageSize")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                    <thead>
+                                        <tr role="row">
+                                            @if (User.IsInAnyRoles("SuperAdmin"))
+                                            {
+                                                <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                            }
                                             <th ng-click="model.order('ExpenseGeneratedDate')" ng-class="model.orderClass('ExpenseGeneratedDate')">Generated Date</th>
                                             <th ng-click="model.order('ExpenseHeaderId')" ng-class="model.orderClass('ExpenseHeaderId')">Expense Head</th>
-                                    <th ng-click="model.order('VoucherNumber')" ng-class="model.orderClass('VoucherNumber')">Voucher Number</th>
-                                    <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
-                                    <th ng-click="model.order('TotalDebitAmount')" ng-class="model.orderClass('TotalDebitAmount')">Debit Amount</th>
-                                    <th ng-click="model.order('PaidTo')" ng-class="model.orderClass('PaidTo')">Paid To</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                        <tr ng-repeat="expense in model.expenses | orderBy:'CreatedDate'" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
-                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                    {
-                                                <td><span ng-bind="expense.Centre.CentreCode"></span></td>
-                                    }
-                                            <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="expense.ExpenseHeader.Name"></span></td>
-                                    <td><span ng-bind="expense.VoucherNumber"></span></td>
-                                    <td><span ng-bind="expense.CashMemoNumbers"></span></td>
-                                    <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
-                                    <td><span ng-bind="expense.PaidTo"></span></td>
-                                    <td>
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
-                                                        <i class="fa fa-chevron-down" ng-click="model.dateInCurrentWeek(expense.ExpenseId)"></i>
-                                            </a>
-                                            <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("SuperAdmin"))
-                                                {
-                                                    <li>
-                                                        <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                        }
-                                                        @if (User.IsInAnyRoles("Admin"))
-                                                        {
-                                                            <li ng-if="model.isDateInCurrentWeek">
-                                                                @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
-                                                                <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
-                                                                    Edit
-                                                                </a>
-                                                            </li>
-                                                        }
+                                            <th ng-click="model.order('VoucherNumber')" ng-class="model.orderClass('VoucherNumber')">Voucher Number</th>
+                                            <th ng-click="model.order('CashMemo')" ng-class="model.orderClass('CashMemo')">Cash Memo</th>
+                                            <th ng-click="model.order('TotalDebitAmount')" ng-class="model.orderClass('TotalDebitAmount')">Debit Amount</th>
+                                            <th ng-click="model.order('PaidTo')" ng-class="model.orderClass('PaidTo')">Paid To</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="expense in model.expenses track by $index" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <td><span ng-bind="expense.Centre.CentreCode"></span></td>
+                                        }
+                                        <td><span ng-bind="expense.ExpenseGeneratedDate|date : format : shortDate"></span></td>
+                                        <td><span ng-bind="expense.ExpenseHeader.Name"></span></td>
+                                        <td><span ng-bind="expense.VoucherNumber"></span></td>
+                                        <td><span ng-bind="expense.CashMemoNumbers"></span></td>
+                                        <td><span class="fa fa-inr" ng-bind="expense.DebitAmount"></span></td>
+                                        <td><span ng-bind="expense.PaidTo"></span></td>
+                                        <td>
+                                            <div class="btn-group pull-right">
+                                                <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                    <i class="fa fa-chevron-down" ng-click="model.dateInCurrentWeek(expense.ExpenseId)"></i>
+                                                </a>
+                                                <ul class="dropdown-menu slidedown">
+                                                    @if (User.IsInAnyRoles("SuperAdmin"))
+                                                    {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
-                                                                Download
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                                                Edit
                                                             </a>
                                                         </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                                    }
+                                                    @if (User.IsInAnyRoles("Admin"))
+                                                    {
+                                                        <li ng-if="model.isDateInCurrentWeek">
+                                                            @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    <li>
+                                                        <a style="cursor: pointer;" ng-href="/Expense/Download/{{expense.ExpenseId}}">
+                                                            Download
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                            
+                                            
+                                    </tr>
+                                    <tr>
+                                        <td><span ng-bind="model.totalDebitAmount"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @Html.Partial("Pagination/_pagination")
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label ng-bind="model.searchMessage"></label>
                         </div>
                     </div>
-                    @Html.Partial("Pagination/_pagination")
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label ng-bind="model.searchMessage"></label>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Confirmation</h2>
-            </div>
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Confirmation</h2>
+                </div>
 
-            <div class="modal-body">
-                <input type="hidden" ng-model='model.ExpenseId' />
-                Are you sure, you want to delete Expense <span ng-bind="model.ExpenseId"></span> ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
-                <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                <div class="modal-body">
+                    <input type="hidden" ng-model='model.ExpenseId' />
+                    Are you sure, you want to delete Expense <span ng-bind="model.ExpenseId"></span> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="model.modalOk()" id="btnOK" class="btn btn-success" style="margin-bottom: 0">Ok</button>
+                    <button type="button" id="btnCancel" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>
 @section scripts {

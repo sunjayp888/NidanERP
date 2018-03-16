@@ -28,7 +28,8 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult StudentDocument(string studentCode, Paging paging, List<OrderBy> orderBy)
         {
-            return this.JsonNet(NidanBusinessService.RetrieveDocuments(UserOrganisationId, e => e.CentreId == UserCentreId && e.StudentCode == studentCode, orderBy, paging));
+            var data = NidanBusinessService.RetrieveDocuments(UserOrganisationId, e => e.CentreId == UserCentreId && e.StudentCode == studentCode, orderBy, paging);
+            return this.JsonNet(data);
         }
         [HttpPost]
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
@@ -53,11 +54,11 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId,e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            var studentData = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.CentreId == centreId && e.StudentCode == documentViewModel.StudentCode).ToList().FirstOrDefault();
 
-            var trainerData =NidanBusinessService.RetrieveTrainers(organisationId,e => e.CentreId == centreId && e.TrainerId.ToString() == documentViewModel.StudentCode).ToList().FirstOrDefault();
+            var trainerData = NidanBusinessService.RetrieveTrainers(organisationId, e => e.CentreId == centreId && e.TrainerId.ToString() == documentViewModel.StudentCode).ToList().FirstOrDefault();
 
-            var expenseData = NidanBusinessService.RetrieveExpenses(organisationId,centreId,e => e.CentreId == centreId && e.CashMemoNumbers == documentViewModel.StudentCode).Items.ToList().FirstOrDefault();
+            var expenseData = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.CashMemoNumbers == documentViewModel.StudentCode).Items.ToList().FirstOrDefault();
 
             if (documentViewModel.DocumentTypeId == 2)
             {

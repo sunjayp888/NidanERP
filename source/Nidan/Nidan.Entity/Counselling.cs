@@ -14,7 +14,6 @@ namespace Nidan.Entity
             CreatedDate = DateTime.UtcNow.Date;
             FollowUpDate = DateTime.UtcNow.AddDays(2);
         }
-
         public int CounsellingId { get; set; }
 
         public int EnquiryId { get; set; }
@@ -42,7 +41,6 @@ namespace Nidan.Entity
         [StringLength(500)]
         public string PreferTiming { get; set; }
 
-        [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
 
         [Column(TypeName = "date")]
@@ -72,6 +70,54 @@ namespace Nidan.Entity
 
         public int CreatedBy { get; set; }
 
+        [StringLength(500)]
+        public string GuardianName { get; set; }
+
+        public long? GuardianContactNo { get; set; }
+
+        public int OccupationId { get; set; }
+
+        public int EducationalQualificationId { get; set; }
+
+        [StringLength(100)]
+        public string YearOfPassOut { get; set; }
+
+        [StringLength(100)]
+        public string Marks { get; set; }
+
+        [StringLength(500)]
+        public string AppearingQualification { get; set; }
+
+        public int? YearOfExperience { get; set; }
+
+        [StringLength(100)]
+        public string PlacementNeeded { get; set; }
+
+        public int PreferredMonthForJoining { get; set; }
+
+        public int BatchTimePreferId { get; set; }
+
+        public int SchemeId { get; set; }
+
+        [StringLength(100)]
+        public string PreTrainingStatus { get; set; } = "Fresher";
+
+        [StringLength(100)]
+        public string EmploymentStatus { get; set; } = "UnEmployed";
+
+        [StringLength(100)]
+        public string Promotional { get; set; }
+
+        [StringLength(500)]
+        public string EmployerName { get; set; }
+
+        [StringLength(50)]
+        public string EmployerContactNo { get; set; }
+
+        public string EmployerAddress { get; set; }
+
+        public int AnnualIncome { get; set; }
+
         public virtual Organisation Organisation { get; set; }
 
         public virtual Enquiry Enquiry { get; set; }
@@ -83,5 +129,11 @@ namespace Nidan.Entity
         public virtual Sector Sector { get; set; }
 
         public virtual Personnel Personnel { get; set; }
+
+        public virtual BatchTimePrefer BatchTimePrefer { get; set; }
+
+        public virtual Occupation Occupation { get; set; }
+
+        public virtual Scheme Scheme { get; set; }
     }
 }

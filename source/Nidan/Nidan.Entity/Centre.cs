@@ -44,23 +44,23 @@ namespace Nidan.Entity
             Attendances = new HashSet<Attendance>();
             BatchAttendances = new HashSet<BatchAttendance>();
             CentreReceiptSettings = new HashSet<CentreReceiptSetting>();
-            CentreEnrollmentReceiptSettings=new HashSet<CentreEnrollmentReceiptSetting>();
-            StockIssues=new HashSet<StockIssue>();
-            StockPurchases=new HashSet<StockPurchase>();
-            FixAssets=new HashSet<FixAsset>();
-            BatchPlanners=new HashSet<BatchPlanner>();
-            BatchPlannerDays=new HashSet<BatchPlannerDay>();
-            CentreProductSettings=new HashSet<CentreProductSetting>();
+            CentreEnrollmentReceiptSettings = new HashSet<CentreEnrollmentReceiptSetting>();
+            StockIssues = new HashSet<StockIssue>();
+            StockPurchases = new HashSet<StockPurchase>();
+            FixAssets = new HashSet<FixAsset>();
+            BatchPlanners = new HashSet<BatchPlanner>();
+            BatchPlannerDays = new HashSet<BatchPlannerDay>();
+            CentreProductSettings = new HashSet<CentreProductSetting>();
             FixAssetMappings = new HashSet<FixAssetMapping>();
-            CentreItemSettings=new HashSet<CentreItemSetting>();
+            CentreItemSettings = new HashSet<CentreItemSetting>();
             BankDeposites = new HashSet<BankDeposite>();
-            ActivityAssignPersonnels=new HashSet<ActivityAssignPersonnel>();
-            Activities=new HashSet<Activity>();
-            ActivityTaskStates=new HashSet<ActivityTaskState>();
-            ActivityAssigneeGroups=new HashSet<ActivityAssigneeGroup>();
-            ActivityTasks=new HashSet<ActivityTask>();
+            ActivityAssignPersonnels = new HashSet<ActivityAssignPersonnel>();
+            Activities = new HashSet<Activity>();
+            ActivityTaskStates = new HashSet<ActivityTaskState>();
+            ActivityAssigneeGroups = new HashSet<ActivityAssigneeGroup>();
+            ActivityTasks = new HashSet<ActivityTask>();
             Assessments = new HashSet<Assessment>();
-            CandidateAssessments=new HashSet<CandidateAssessment>();
+            CandidateAssessments = new HashSet<CandidateAssessment>();
             CandidateAssessmentQuestionAnswers = new HashSet<CandidateAssessmentQuestionAnswer>();
             Companies = new HashSet<Company>();
             CompanyBranches = new HashSet<CompanyBranch>();
@@ -212,7 +212,7 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreEnrollmentReceiptSetting> CentreEnrollmentReceiptSettings { get; set; }
- 
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreReceiptSetting> CentreReceiptSettings { get; set; }
 
@@ -239,7 +239,7 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreItemSetting> CentreItemSettings { get; set; }
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BankDeposite> BankDeposites { get; set; }
 

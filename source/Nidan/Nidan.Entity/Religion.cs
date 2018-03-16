@@ -9,12 +9,10 @@ namespace Nidan.Entity
     [Table("Religion")]
     public partial class Religion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Religion()
         {
             Enquiries = new HashSet<Enquiry>();
         }
-
         public int ReligionId { get; set; }
 
         [Required]

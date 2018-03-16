@@ -38,6 +38,8 @@ namespace Nidan.Models
         public string PreferredMonthForJoining { get; set; }
         public IEnumerable<SelectListItem> PreferredMonthForJoiningList { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
+        public SelectList LeadSources { get; set; }
+        public SelectList Cities { get; set; }
         //public Month Month { get; set; }
 
         //  public Counselling Counselling { get; set; }

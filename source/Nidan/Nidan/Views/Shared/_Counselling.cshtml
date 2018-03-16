@@ -1,61 +1,433 @@
 ﻿@using Nidan.Extensions
 @model Nidan.Models.CounsellingViewModel
-<div class="form-control-required-example"> = Required</div>
 
 @Html.HiddenFor(m => m.Counselling.CounsellingId)
-@Html.HiddenFor(m => m.Counselling.EnquiryId)
+@*@Html.HiddenFor(m => m.Counselling.EnquiryId)*@
 
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-dark">Lead Source</button>
+                    </span>
+                    <input type="text" disabled="disabled" value="@Model.Enquiry.LeadSource.Name" class="form-control col-lg-4">
+                </div>
+            </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Mobile</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Enquiry.Mobile" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Email</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Enquiry.EmailId" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        @*<div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-dark">Interested Scheme</button>
+                    </span>
+                    <input type="text" disabled="disabled" value="@Model.Enquiry.Scheme.Name" class="form-control col-lg-4">
+                </div>
+            </div>*@
+        @*<div class="col-lg-6">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-dark">Interested Sector</button>
+                    </span>
+                    <input type="text" disabled="disabled" value="@Model.Enquiry.Sector.Name" class="form-control col-lg-4">
+                </div>
+            </div>*@
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Interested Course(s)</button>
+                </span>
+                @foreach (var course in Model.EnquiryCourses)
+                {
+                    <input type="text" disabled="disabled" value="@course.Text" class="form-control col-lg-4">
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.Enquiry.OtherInterestedCourse != null)
+    {
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-dark">Other Interested Course</button>
+                    </span>
+                    <input type="text" disabled="disabled" value="@Model.Enquiry.OtherInterestedCourse" class="form-control col-lg-4">
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@*<div class="row">*@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="form-control-required-example"> = Required</div>
+        <br>
+        <div class="x_title">
+            <h2>Create Counselling <small></small>
+            </h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="form-horizontal">
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.Counselling.PreferTiming, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Counselling.GuardianName, new {@class = "control-label col-md-2 col-sm-6 col-xs-12"})
+                                <div class="col-md-10 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Counselling.GuardianName, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Counselling.GuardianName, "", new {@class = "help-block"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-6 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Counselling.OccupationId, Model.Occupations, "Select Occupation", new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(model => model.Counselling.OccupationId, "", new {@class = "help-block"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-8 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Counselling.GuardianContactNo, new {@class = "form-control", @placeholder = "Parent's No"})
+                                    <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                                    @Html.ValidationMessageFor(model => model.Counselling.GuardianContactNo, "", new {@class = "help-block"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="form-group">
-    @Html.LabelFor(model => model.Counselling.PreferTiming, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.TextBoxFor(model => model.Counselling.PreferTiming, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Counselling.PreferTiming, "", new { @class = "help-block" })
-    </div>
-</div>
-<div class="form-group">
-    <label class="control-label col-md-3 col-sm-3 col-xs-12">Psychomatric Test Done</label>
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
-            <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
-                <input type="radio" name="psychomatricTest" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
-            </label>
-            <label id="psychomatricTestNo" class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "No")
-                <input type="radio" name="psychomatricTest" value="No" data-parsley-multiple="gender"> No
-            </label>
+@*</div>*@
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Academic Information <small>fill academic information</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Counselling.EducationalQualificationId, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                @Html.DropDownListFor(model => model.Counselling.EducationalQualificationId, Model.EducationalQualifications, "Select Highest Qualification", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Counselling.EducationalQualificationId, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Counselling.YearOfPassOut, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Counselling.YearOfPassOut, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Counselling.YearOfPassOut, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Counselling.Marks, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Counselling.Marks, new { @class = "form-control col-md-7 col-xs-12" })
+                                @Html.ValidationMessageFor(model => model.Counselling.Marks, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Counselling.AppearingQualification, new { @class = "control-label col-md-4 col-sm-6 col-xs-12" })
+                            <div class="col-md-8 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.Counselling.AppearingQualification, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Counselling.AppearingQualification, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Counselling.ConversionProspect, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.DropDownListFor(model => model.Counselling.ConversionProspect, Model.ConversionProspectList, null, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Counselling.ConversionProspect, "", new { @class = "help-block" })
-    </div>
-</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><i class="fa fa-bars"></i> Area Of Interest <small>fill area of interest</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div ng-controller="CourseController as model" ng-init="model.setDefaultSector(@Model.Counselling.SectorId)">
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Counselling.SchemeId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Counselling.SchemeId, Model.Schemes, "Select Scheme", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Counselling.SchemeId, "", new { @class = "help-block" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Counselling.SectorId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                                <div class="col-md-8 col-sm-4 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Counselling.SectorId, Model.Sectors, "Select Sector", new { @class = "form-control", ng_model = "model.type", ng_change = "model.retrieveCourseBySectorId()" })
+                                    @Html.ValidationMessageFor(model => model.Counselling.SectorId, "", new { @class = "help-block" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @*<div class="col-lg-12">*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Counselling.CourseOfferedId, new { @class = "control-label col-md-2 col-sm-4 col-xs-12" })
+                            <div class="col-md-10 col-sm-6 col-xs-12">
+                                @Html.DropDownListFor(model => model.Counselling.CourseOfferedId, Model.Courses, "Select Course", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Counselling.CourseOfferedId, "", new { @class = "help-block" })
+                            </div>
+                        </div>
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Counselling.BatchTimePreferId, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(model => model.Counselling.BatchTimePreferId, Model.BatchTimePrefers, "Select Batch Time Prefer", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Counselling.BatchTimePreferId, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Counselling.PreferredMonthForJoining, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(model => model.Counselling.PreferredMonthForJoining, Model.PreferredMonthForJoiningList, "Select Preferred Month For Joining", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Counselling.PreferredMonthForJoining, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Counselling.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.EditorFor(model => model.Counselling.Remarks, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Counselling.Remarks, "", new { @class = "help-block" })
-    </div>
-</div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Placement Needed</label>
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            <div id="placementneeded" class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PlacementNeeded, "Yes")
+                                    <input type="radio" name="placementneeded" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                </label>
+                                <label class="btn btn-default" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PlacementNeeded, "No")
+                                    <input type="radio" name="placementneeded" value="No" data-parsley-multiple="gender"> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Pre-Training Status</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div id="pretrainingstatus" class="btn-group" data-toggle="buttons">
+                                <label id="fresherRadioButton" class='@(Model.Counselling.PreTrainingStatus == "Fresher" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PreTrainingStatus, "Fresher")
+                                    <input type="radio" name="pretrainingstatus" value="Fresher" data-parsley-multiple="gender"> &nbsp; Fresher &nbsp;
+                                </label>
+                                <label id="experienceRadioButton" class='@(Model.Counselling.PreTrainingStatus == "Experience" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PreTrainingStatus, "Experience")
+                                    <input type="radio" name="pretrainingstatus" value="Experience" data-parsley-multiple="gender"> Experience
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Counselling.RemarkByBranchManager, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12">
-        @Html.EditorFor(model => model.Counselling.RemarkByBranchManager, new { @class = "form-control col-md-7 col-xs-12" })
-        @Html.ValidationMessageFor(model => model.Counselling.RemarkByBranchManager, "", new { @class = "help-block" })
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group experience-year-textbox">
+                        @Html.LabelFor(model => model.Counselling.YearOfExperience, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(model => model.Counselling.YearOfExperience, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Counselling.YearOfExperience, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">E-mails / Newsletter / SMS</label>
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            <div id="promotional" class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.Promotional, "Yes")
+                                    <input type="radio" name="promotional" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                </label>
+                                <label class="btn btn-default" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.Promotional, "No")
+                                    <input type="radio" name="promotional" value="No" data-parsley-multiple="gender"> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Employment Status</label>
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            <div id="employmentstatus" class="btn-group" data-toggle="buttons">
+                                <label id="employedRadioButton" class='@(Model.Counselling.EmploymentStatus == "Employed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.EmploymentStatus, "Employed")
+                                    <input type="radio" name="employmentstatus" value="Employed" data-parsley-multiple="gender"> &nbsp; Employed &nbsp;
+                                </label>
+                                <label id="unemployedRadioButton" class='@(Model.Counselling.EmploymentStatus == "UnEmployed" ? "btn btn-primary active" : "btn btn-default")' data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.EmploymentStatus, "UnEmployed")
+                                    <input type="radio" name="employmentstatus" value="UnEmployed" data-parsley-multiple="gender"> UnEmployed
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group employment-status-textbox">
+                        @Html.LabelFor(model => model.Counselling.EmployerContactNo, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(model => model.Counselling.EmployerContactNo, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Counselling.EmployerContactNo, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group employment-status-textbox">
+                        @Html.LabelFor(model => model.Counselling.EmployerAddress, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(model => model.Counselling.EmployerAddress, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Counselling.EmployerAddress, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group employment-status-textbox">
+                        @Html.LabelFor(model => model.Counselling.AnnualIncome, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(model => model.Counselling.AnnualIncome, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.ValidationMessageFor(model => model.Counselling.AnnualIncome, "", new { @class = "helpclos-block" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12">Psychometric Test</label>
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            <div id="psychomatricTest" class="btn-group" data-toggle="buttons">
+                                <label id="psychomatricTestYes" class='@(Model.Counselling.PsychomatricTest == "Yes" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "Yes")
+                                    <input type="radio" name="psychomatricTest" value="Yes" data-parsley-multiple="gender"> &nbsp; Yes &nbsp;
+                                </label>
+                                <label id="psychomatricTestNo" class='@(Model.Counselling.PsychomatricTest == "No" ? "btn btn-primary active" : "btn btn-default")' data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                    @Html.RadioButtonFor(model => model.Counselling.PsychomatricTest, "No")
+                                    <input type="radio" name="psychomatricTest" value="No" data-parsley-multiple="gender"> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Counselling.ConversionProspect, new { @class = "control-label col-md-4 col-sm-4 col-xs-12" })
+                        <div class="col-md-8 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(model => model.Counselling.ConversionProspect, Model.ConversionProspectList, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Counselling.ConversionProspect, "", new { @class = "help-block" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Counselling.Remarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                @Html.TextAreaFor(model => model.Counselling.Remarks, new { @class = "form-control col-md-7 col-xs-12", @row = 2 })
+                @Html.ValidationMessageFor(model => model.Counselling.Remarks, "", new { @class = "help-block" })
+            </div>
+        </div>
     </div>
 </div>

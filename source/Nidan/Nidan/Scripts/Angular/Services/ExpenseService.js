@@ -10,16 +10,15 @@
     function ExpenseService($http) {
         var service = {
             retrieveExpenses: retrieveExpenses,
-            retrieveCentres:retrieveCentres,
+            retrieveCentres: retrieveCentres,
             deleteExpense: deleteExpense,
             searchExpense: searchExpense,
             retrieveExpensesByCashMemo: retrieveExpensesByCashMemo,
             expenseLimitCheck: expenseLimitCheck,
             dateInCurrentWeek: dateInCurrentWeek,
-            retrieveCentres: retrieveCentres,
             searchExpenseByDateCentreId: searchExpenseByDateCentreId,
-            searchExpenseByDate: searchExpenseByDate
-
+            searchExpenseByDate: searchExpenseByDate,
+            searchExpenseHeaderGridByDate:searchExpenseHeaderGridByDate
         };
 
         return service;
@@ -53,6 +52,21 @@
                     toDate: ToDate,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
+
+
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchExpenseHeaderGridByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Expense/SearchExpenseHeaderGridByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                    
                 };
 
             return $http.post(url, data);
@@ -86,7 +100,7 @@
                     expenseHeaderId: expenseHeaderId
                 };
             return $http.post(url, data);
-        } 
+        }
 
         function dateInCurrentWeek(expenseId) {
             var url = "/Expense/IsDateInCurrentWeek",

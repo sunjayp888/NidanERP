@@ -53,11 +53,9 @@ namespace Nidan.Controllers
             var states = NidanBusinessService.RetrieveStates(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
-            var enquiryFromMobilization = id.Value != 0
-                ? NidanBusinessService.CreateEnquiryFromMobilization(organisationId, UserCentreId, id.Value)
-                : new Enquiry();
-
-
+            var leadSources = NidanBusinessService.RetrieveLeadSources(organisationId, e => true);
+            var cities = NidanBusinessService.RetrieveCities(organisationId, e => true);
+            var enquiryFromMobilization = id.Value != 0 ? NidanBusinessService.CreateEnquiryFromMobilization(organisationId, UserCentreId, id.Value) : new Enquiry();
             var viewModel = new EnquiryViewModel
             {
                 CreateEnquiryFromMobilizationFollowUpId = followUp?.FollowUpId ?? 0,
@@ -77,6 +75,8 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                LeadSources = new SelectList(leadSources, "LeadSourceId", "Name"),
+                Cities = new SelectList(cities, "CityId", "Name"),
                 SelectedCourseIds = new List<int>(),
             };
 
@@ -136,6 +136,8 @@ namespace Nidan.Controllers
             enquiryViewModel.Talukas = new SelectList(NidanBusinessService.RetrieveTalukas(organisationId, e => true).ToList());
             enquiryViewModel.Districts = new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
             enquiryViewModel.States = new SelectList(NidanBusinessService.RetrieveStates(organisationId, e => true).ToList());
+            enquiryViewModel.LeadSources = new SelectList(NidanBusinessService.RetrieveLeadSources(organisationId, e => true).ToList());
+            enquiryViewModel.Cities = new SelectList(NidanBusinessService.RetrieveCities(organisationId, e => true).ToList());
             return View(enquiryViewModel);
         }
 
@@ -164,7 +166,8 @@ namespace Nidan.Controllers
             var batchTimePrefers = NidanBusinessService.RetrieveBatchTimePrefers(organisationId, e => true);
             var enquiryTypes = NidanBusinessService.RetrieveEnquiryTypes(organisationId, e => true);
             var studentTypes = NidanBusinessService.RetrieveStudentTypes(organisationId, e => true);
-
+            var leadSource = NidanBusinessService.RetrieveLeadSources(organisationId, e => true);
+            var cities = NidanBusinessService.RetrieveCities(organisationId, e => true);
             if (enquiry == null)
             {
                 return HttpNotFound();
@@ -186,6 +189,8 @@ namespace Nidan.Controllers
                 StudentTypes = new SelectList(studentTypes, "StudentTypeId", "Name"),
                 EnquiryTypes = new SelectList(enquiryTypes, "EnquiryTypeId", "Name"),
                 HowDidYouKnowAbouts = new SelectList(howDidYouKnowAbouts, "HowDidYouKnowAboutId", "Name"),
+                LeadSources = new SelectList(leadSource, "LeadSourceId", "Name"),
+                Cities = new SelectList(cities, "CityId", "Name"),
                 SelectedCourseIds = enquiry.EnquiryCourses.Select(e => e.CourseId).ToList()
             };
             viewModel.ConversionProspectList = new SelectList(viewModel.ConversionProspectType, "Id", "Name");
@@ -222,13 +227,14 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
             var enquiryDataGrid = NidanBusinessService.RetrieveEnquiryDataGrid(organisationId, e => e.EnquiryId == id).Items.FirstOrDefault();
-            var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId, UserCentreId, id.Value).Select(e => e.CourseId).ToList();
-            var courseName = NidanBusinessService.RetrieveCourses(organisationId, e => courseIds.Contains(e.CourseId)).Select(e => e.Name).ToList();
             if (enquiryDataGrid == null)
             {
                 return HttpNotFound();
             }
+            var courseIds = NidanBusinessService.RetrieveEnquiryCourses(organisationId, enquiryDataGrid.CentreId, id.Value).Select(e => e.CourseId).ToList();
+            var courseName = NidanBusinessService.RetrieveCourses(organisationId, e => courseIds.Contains(e.CourseId)).Select(e => e.Name).ToList();
             var viewModel = new EnquiryViewModel
             {
                 EnquiryDataGrid = enquiryDataGrid,
@@ -267,9 +273,9 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetCourse(int sectorId)
+        public ActionResult GetCourse()
         {
-            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.Course.SectorId == sectorId && e.CentreId == UserCentreId).ToList();
+            var data = NidanBusinessService.RetrieveCentreCourses(UserOrganisationId, UserCentreId, e => e.CentreId == UserCentreId).ToList();
             return this.JsonNet(data);
         }
 
@@ -284,6 +290,12 @@ namespace Nidan.Controllers
         public ActionResult GetTaluka(int districtId)
         {
             return this.JsonNet(NidanBusinessService.RetrieveTalukas(UserOrganisationId, e => e.District.DistrictId == districtId).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult GetCity(int talukaId)
+        {
+            return this.JsonNet(NidanBusinessService.RetrieveCities(UserOrganisationId, e => e.Taluka.TalukaId == talukaId).ToList());
         }
 
         [HttpPost]

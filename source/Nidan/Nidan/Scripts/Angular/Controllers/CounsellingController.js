@@ -26,6 +26,7 @@
         vm.searchMessage = "";
         vm.courses = [];
         vm.retrieveCourses = retrieveCourses;
+        vm.retrieveSectors = retrieveSectors;
         initialise();
 
         function initialise() {
@@ -106,6 +107,12 @@
         function retrieveCourses(sectorId) {
             return CounsellingService.retrieveCourses(sectorId).then(function () {
                 vm.courses = response.data;
+            });
+        };
+
+        function retrieveSectors(schemeId) {
+            return CounsellingService.retrieveSectors(schemeId).then(function () {
+                vm.sectors = response.data;
             });
         };
     }

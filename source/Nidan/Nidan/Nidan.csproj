@@ -1860,6 +1860,7 @@
     <Content Include="Views\CandidatePostPlacement\Create.cshtml" />
     <Content Include="Views\CandidatePostPlacement\_CandidatePostPlacement.cshtml" />
     <Content Include="Views\CandidateFinalPlacement\_PlacementDocument.cshtml" />
+    <Content Include="Views\Report\ExpenseDetailReport.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1918,7 +1919,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58511</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58527/</IISUrl>
+          <IISUrl>http://localhost:58528/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

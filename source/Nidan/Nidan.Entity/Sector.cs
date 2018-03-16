@@ -11,16 +11,9 @@ namespace Nidan.Entity
     {
         public Sector()
         {
+            Enquiries = new HashSet<Enquiry>();
             Courses = new HashSet<Course>();
-            Enquiries=new HashSet<Enquiry>();
-            Counsellings=new HashSet<Counselling>();
-            Courses=new HashSet<Course>();
-            Trainers=new HashSet<Trainer>();
-            CentreSectors=new HashSet<CentreSector>();
-            StockPurchases=new HashSet<StockPurchase>();
-            CompanyBranches = new HashSet<CompanyBranch>();
         }
-
         public int SectorId { get; set; }
 
         [Required]
@@ -31,29 +24,17 @@ namespace Nidan.Entity
 
         public int SchemeId { get; set; }
 
-        public virtual Organisation Organisation { get; set; }
-
         public virtual Scheme Scheme { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Enquiry> Enquiries { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Counselling> Counsellings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Course> Courses { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Trainer> Trainers { get; set; }
+        public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentreSector> CentreSectors { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockPurchase> StockPurchases { get; set; }
+        public virtual ICollection<Enquiry> Enquiries { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CompanyBranch> CompanyBranches { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

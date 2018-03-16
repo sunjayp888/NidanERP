@@ -35,7 +35,7 @@
 
         function initialise() {
             vm.orderBy.property = "AdmissionId";
-            vm.orderBy.direction = "Ascending";
+            vm.orderBy.direction = "Descending";
             vm.orderBy.class = "asc";
             order("AdmissionId");
         }

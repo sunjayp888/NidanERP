@@ -9,6 +9,7 @@ using Nidan.Business.Enum;
 using Nidan.Business.Extensions;
 using Nidan.Business.Interfaces;
 using Nidan.Business.Models;
+using Nidan.Data.Extensions;
 using Nidan.Data.Interfaces;
 using Nidan.Entity;
 using Nidan.Entity.Dto;
@@ -501,7 +502,7 @@ namespace Nidan.Business
                 OrganisationId = organisationId,
                 PersonnelId = personnelId,
                 ConversionProspect = enquiry.ConversionProspect,
-                SectorId = enquiry.SectorId,
+                SectorId = enquiry.SectorId ?? 0,
                 Close = enquiry.Close
             };
             _nidanDataService.Create<Counselling>(organisationId, conselling);
@@ -699,6 +700,27 @@ namespace Nidan.Business
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
             enquiryData.EnquiryStatus = "Counselling";
+            enquiryData.IsCounsellingDone = true;
+            enquiryData.AnnualIncome = data.AnnualIncome;
+            enquiryData.AppearingQualification = data.AppearingQualification;
+            enquiryData.BatchTimePreferId = data.BatchTimePreferId;
+            enquiryData.EducationalQualificationId = data.EducationalQualificationId;
+            enquiryData.EmployerAddress = data.EmployerAddress;
+            enquiryData.EmployerContactNo = data.EmployerContactNo;
+            enquiryData.EmployerName = data.EmployerName;
+            enquiryData.EmploymentStatus = data.EmploymentStatus;
+            enquiryData.GuardianContactNo = data.GuardianContactNo;
+            enquiryData.GuardianName = data.GuardianName;
+            enquiryData.Marks = data.Marks;
+            enquiryData.OccupationId = data.OccupationId;
+            enquiryData.PlacementNeeded = data.PlacementNeeded;
+            enquiryData.PreferredMonthForJoining = data.PreferredMonthForJoining;
+            enquiryData.PreTrainingStatus = data.PreTrainingStatus;
+            enquiryData.Promotional = data.Promotional;
+            enquiryData.SchemeId = data.SchemeId;
+            enquiryData.SectorId = data.SectorId;
+            enquiryData.YearOfExperience = data.YearOfExperience;
+            enquiryData.YearOfPassOut = data.YearOfPassOut;
             enquiryData.IsCounsellingDone = true;
             _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiryData);
             return data;
@@ -1384,7 +1406,7 @@ namespace Nidan.Business
         {
             var centre = RetrieveCentre(organisationId, centreId);
             var centreVoucherNumber = RetrieveCentreVoucherNumber(organisationId, centreId, e => true);
-            expense.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"),
+            expense.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, expense.ExpenseGeneratedDate.ToString("MMMM"),
                 centreVoucherNumber.Number);
             var data = _nidanDataService.Create<Expense>(organisationId, expense);
             CreateExpenseProject(organisationId, expense.CentreId, data.ExpenseId, projectIds);
@@ -1690,6 +1712,7 @@ namespace Nidan.Business
         public CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment)
         {
             return _nidanDataService.Create<CandidateAssessment>(organisationId, candidateAssessment);
+            // Add data in [CandidateAssessmentQuestionAnswer]
         }
 
         public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)
@@ -2289,6 +2312,48 @@ namespace Nidan.Business
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveCompanyBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public List<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveLeadSources(organisationId, predicate).Items.ToList();
+        }
+
+        public List<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveCities(organisationId, predicate).Items.ToList();
+        }
+
+        public PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public IEnumerable<ExpenseHeaderSummaryReport> RetriveExpenseHeaderSummaryReportByDate(int organisationId, int centreId, DateTime fromDate, DateTime toDate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            //var firstDayOfMonth = new DateTime(year, month, 1);
+            //var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var expenseHeaderSummaryReports = new List<ExpenseHeaderSummaryReport>();
+            //var days = DateTimeExtensions.EachDay(fromDate, toDate);
+            var data = _nidanDataService.RetrieveExpenseHeaderGrid(organisationId, e => e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate && e.CentreId == centreId, orderBy, paging).Items.ToList();
+            var expenseHeaders = _nidanDataService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList();
+            foreach (var item in expenseHeaders)
+            {
+                var result = data.Where(e => e.ExpenseHeaderId == item.ExpenseHeaderId).Sum(e => e.TotalExpense);
+                expenseHeaderSummaryReports.Add(new ExpenseHeaderSummaryReport()
+                {
+                    ExpenseHeaderName = item.Name,
+                    TotalExpense = result ?? 0
+                });
+            }
+            expenseHeaderSummaryReports.Add(new ExpenseHeaderSummaryReport()
+            {
+                ExpenseHeaderName = "Total",
+                TotalExpense = expenseHeaderSummaryReports.Sum(e => e.TotalExpense)
+            });
+            return expenseHeaderSummaryReports;
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -3019,9 +3084,7 @@ namespace Nidan.Business
 
         public IEnumerable<Sector> RetrieveUnassignedCentreSectors(int organisationId, int centreId)
         {
-            return
-                _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId),
-                    null, null).Items.ToList();
+            return _nidanDataService.RetrieveSectors(organisationId, a => !a.CentreSectors.Any(d => d.CentreId == centreId), null, null).Items.ToList();
         }
 
         public PagedResult<CentreSector> RetrieveCentreSectors(int organisationId, int centreId,
@@ -3298,7 +3361,22 @@ namespace Nidan.Business
             Expression<Func<Expense, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)
         {
-            return _nidanDataService.RetrieveExpenses(organisationId, centreId, predicate, orderBy, paging);
+            var data = _nidanDataService.RetrieveExpenses(organisationId, centreId, predicate, orderBy, paging);
+            //var expenseList = new List<Expense>();
+            //foreach (var item in data.Items)
+            //{
+            //    expenseList.Add(new Expense
+            //    {
+            //        CashMemoNumbers = item.CashMemoNumbers,
+            //        CentreId = item.CentreId,
+            //        CreatedDate = item.CreatedDate,
+            //        DebitAmount = item.DebitAmount
+            //    });
+            //}
+            //var sumOfDebitAmount = expenseList.Sum(e => e.DebitAmount);
+            //expenseList.AddRange(new List<Expense> { new Expense { Total = sumOfDebitAmount } });
+            //var dataPaged =  expenseList.AsQueryable<Expense>().Paginate(paging);
+            return data;
         }
 
         public Expense RetrieveExpense(int organisationId, int centreId, int expenseId,
@@ -3560,8 +3638,8 @@ namespace Nidan.Business
 
         public IEnumerable<MobilizationSummaryReport> RetriveMobilizationCountReportByMonthAndYear(int organisationId, int centreId, int year, List<OrderBy> orderBy = null, Paging paging = null)
         {
-            var startFiscalDate = new DateTime(year, 04, 01);
-            var endFiscalDate = new DateTime(startFiscalDate.AddYears(1).Year, 03, 31);
+            var startFiscalDate = new DateTime(year, 01, 01);
+            var endFiscalDate = new DateTime(year, 12, 31);
             var mobilizationSummaryReports = new List<MobilizationSummaryReport>();
             var data = _nidanDataService.RetriveMobilizationCountReportByMonthAndYear(organisationId, centreId, e => e.CentreId == centreId);
             var months = DateTimeExtensions.EachMonth(startFiscalDate, endFiscalDate);
@@ -4125,8 +4203,6 @@ namespace Nidan.Business
                 CreateEnquiryCourse(organisationId, enquiry.CentreId, enquiry.EnquiryId, courseIds);
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, enquiry);
         }
-
-
 
         public Mobilization UpdateMobilization(int organisationId, Mobilization mobilization)
         {

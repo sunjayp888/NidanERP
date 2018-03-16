@@ -530,7 +530,7 @@ namespace Nidan.Data
                 return context
                     .FollowUps
                     .Include(p => p.Organisation)
-                    .Include(p => p.Enquiry.Course)
+                   .Include(p => p.Enquiry.Course)
                     .Include(p => p.Registration.Course)
                     .Include(p => p.Course)
                     .Include(p => p.Centre)
@@ -819,10 +819,10 @@ namespace Nidan.Data
                 var data = context
                     .Enquiries
                     .Include(e => e.Counsellings)
+                    .Include(e => e.LeadSource)
                     .Include(e => e.EnquiryCourses)
                     .Include(e => e.Sector)
                     .Include(e => e.Scheme)
-                    //  .Include(e => e.EnquiryCourses.Select(c => c.Course))
                     .AsNoTracking()
                     .Where(predicate)
                     .SingleOrDefault(p => p.EnquiryId == enquiryId);
@@ -1044,6 +1044,8 @@ namespace Nidan.Data
                 return context
                     .Counsellings
                     .Include(e => e.Enquiry)
+                    .Include(e => e.Enquiry.EnquiryCourses)
+                    .Include(e => e.Enquiry.LeadSource)
                     .Include(e => e.Course)
                     .Include(e => e.Personnel)
                     .AsNoTracking()
@@ -2396,7 +2398,7 @@ namespace Nidan.Data
                       {
                         new OrderBy
                         {
-                            Property = "MobilizationId",
+                            Property = "CreatedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                       })
@@ -2662,7 +2664,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CreatedDate",
+                            Property = "ExpenseGeneratedDate",
                             Direction = System.ComponentModel.ListSortDirection.Ascending
                         }
                     })
@@ -2681,7 +2683,7 @@ namespace Nidan.Data
                 var searchData = context.Database
                     .SqlQuery<MobilizationDataGrid>("SearchMobilization @SearchKeyword", category).ToList();
 
-                //var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e => e.MobilizationType).Include(e => e.Centre);
+                //var mobilizations = context.Mobilizations.Include(e => e.Course).Include(e => e.Qualification).Include(e => e.MobilizationTypeName).Include(e => e.Centre);
 
                 var data = searchData.ToList().AsQueryable().
                     OrderBy(orderBy ?? new List<OrderBy>
@@ -3001,7 +3003,7 @@ namespace Nidan.Data
                     {
                         new OrderBy
                         {
-                            Property = "CreatedDate",
+                            Property = "ExpenseGeneratedDate",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })
@@ -4650,6 +4652,73 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .LeadSources
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "LeadSourceId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .Cities
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "CityId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ExpenseHeaderGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "ExpenseHeaderId",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)
@@ -4708,7 +4777,6 @@ namespace Nidan.Data
                 return data;
             }
         }
-
 
         public PagedResult<ActivityDataGrid> RetrieveActivityDataGrids(int organisationId, Expression<Func<ActivityDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
             Paging paging = null)

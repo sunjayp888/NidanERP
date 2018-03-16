@@ -1,7 +1,8 @@
-﻿@model Nidan.Models.CounsellingViewModel
+﻿@using System.Globalization
+@model Nidan.Models.CounsellingViewModel
 
 @{
-    ViewBag.Title = string.Format("View Counselling ({0} {1} {2} {3})", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName);
+    ViewBag.Title = string.Format("View Counselling ({0})", Model.CounsellingDataGrid.CandidateName);
 }
 
 <div class="row">
@@ -9,7 +10,7 @@
         <div class="x_panel">
             <div class="x_title">
                 <h2>
-                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0} {1} {2} {3}", Model.Counselling.Enquiry.Title, Model.Counselling.Enquiry.FirstName, Model.Counselling.Enquiry.MiddleName, Model.Counselling.Enquiry.LastName)</button><small> View Counselling </small>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@string.Format("{0}", Model.CounsellingDataGrid.CandidateName)</button><small> View Counselling </small>
                 </h2>
                 <div class="clearfix"></div>
             </div>
@@ -30,22 +31,10 @@
                             <div class="x_panel">
                                 <div class="x_title">
                                     <h2>
-                                        <i class="fa fa-bars"></i> Counselling Details
+                                        <i class="fa fa-bars"></i> Candidate Basic Details
                                     </h2>
                                     <ul class="nav navbar-right panel_toolbox"></ul>
                                     <div class="clearfix"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="col-lg-12">
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">Course Offered</button>
-                                                </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Course.Name" class="form-control col-lg-4">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -54,7 +43,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Counselling Date</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.CreatedDate.ToShortDateString()" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.CreatedDate.ToShortDateString()" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -62,7 +51,94 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Counselling By</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Personnel.Fullname" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.CreatedByName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Lead Source</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.LeadSourceName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Mobile</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.Mobile" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">EmailId</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.EmailId" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Guardian Name</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.GuardianName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Occupation</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.OccupationName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Guardian Contact</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.GuardianContactNo" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Academic Info
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Qualification</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.QualificationName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Year of PassOut</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.YearOfPassOut" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -72,37 +148,172 @@
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">Prefer Timing</button>
+                                                    <button type="button" class="btn btn-dark">Marks</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PreferTiming" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.Marks" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">Psychomatric Test Done</button>
+                                                    <button type="button" class="btn btn-dark">Appearing Qualification</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.PsychomatricTest" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.AppearingQualification" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Area of Interest
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Scheme</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.SchemeName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Sector</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.SectorName" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Course</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.CourseOffered" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Batch Time Prefer</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.BatchTimePreferName" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Preferred joining Month</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Model.CounsellingDataGrid.PreferredMonthForJoining)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">PreTraining Status</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.PreTrainingStatus" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Year Of Experience</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.YearOfExperience" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Employment Status</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.EmploymentStatus" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Employer Detail</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@string.Format("{0} {1}",Model.CounsellingDataGrid.EmployerName,Model.CounsellingDataGrid.EmployerContactNo)" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Employer Address</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.EmployerAddress" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Annual Income</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.AnnualIncome" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark">Psychomatric Test</button>
+                                                </span>
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.PsychomatricTest" class="form-control col-lg-4">
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Conversion Prospect</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.ConversionProspect" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.ConversionProspect" class="form-control col-lg-4">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
                                             <div class="input-group">
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-dark">CounsellingClosed</button>
+                                                    <button type="button" class="btn btn-dark">Remarks</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Counselling.Close" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.CounsellingDataGrid.Remarks" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +327,8 @@
     </div>
 </div>
 <div ng-controller="StudentCounsellingDocumentController as model" ng-init="model.initialise(@Model.Counselling.Enquiry.StudentCode)">
-    @Html.Partial("_Document")
-</div>
+        @Html.Partial("_Document")
+    </div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list
