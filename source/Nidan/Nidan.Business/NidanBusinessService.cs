@@ -1073,9 +1073,9 @@ namespace Nidan.Business
             }
 
             //Email
-            //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
-            //SendAdmissionSms(admissionData);
+            SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -1230,9 +1230,9 @@ namespace Nidan.Business
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1797,6 +1797,11 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidatePostPlacement>(organisationId, candidatePostPlacement);
         }
 
+        public BatchPrePlacement CreateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement)
+        {
+            return _nidanDataService.Create<BatchPrePlacement>(organisationId, batchPrePlacement);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2353,6 +2358,23 @@ namespace Nidan.Business
                 TotalExpense = expenseHeaderSummaryReports.Sum(e => e.TotalExpense)
             });
             return expenseHeaderSummaryReports;
+        }
+
+        public PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPrePlacementSearchFields(organisationId,centreId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId, int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPrePlacements(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId)
+        {
+            return _nidanDataService.RetrieveBatchPrePlacement(organisationId, batchPrePlacementId);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4411,10 +4433,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            //SendInstallmetnSms(candidateFee);
+            SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -4710,6 +4732,11 @@ namespace Nidan.Business
         public CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePostPlacement);
+        }
+
+        public BatchPrePlacement UpdateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchPrePlacement);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

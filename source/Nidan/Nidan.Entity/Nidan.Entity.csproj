@@ -117,6 +117,8 @@
     <Compile Include="BatchPlanner.cs" />
     <Compile Include="BatchPlannerDay.cs" />
     <Compile Include="BatchPlannerGrid.cs" />
+    <Compile Include="BatchPrePlacement.cs" />
+    <Compile Include="BatchPrePlacementSearchField.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />
     <Compile Include="BiometricAttendance.cs" />

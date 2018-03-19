@@ -68,6 +68,7 @@ namespace Nidan.Entity
             CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
             CandidateFinalPlacements = new HashSet<CandidateFinalPlacement>();
             CandidatePostPlacements = new HashSet<CandidatePostPlacement>();
+            BatchPrePlacements = new HashSet<BatchPrePlacement>();
         }
 
         public int CentreId { get; set; }
@@ -291,6 +292,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidatePostPlacement> CandidatePostPlacements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPrePlacement> BatchPrePlacements { get; set; }
     }
 
 }

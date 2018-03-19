@@ -4719,6 +4719,64 @@ namespace Nidan.Data
             }
         }
 
+        public PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .BatchPrePlacementSearchFields
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchPrePlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId, int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .BatchPrePlacements
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "BatchPrePlacementId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .BatchPrePlacements
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.BatchPrePlacementId == batchPrePlacementId);
+            }
+        }
+
         public Company RetrieveCompany(int organisationId, int companyId)
         {
             using (ReadUncommitedTransactionScope)

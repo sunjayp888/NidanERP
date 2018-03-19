@@ -83,6 +83,7 @@ namespace Nidan.Business.Interfaces
         CandidatePrePlacementActivity CreateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
         CandidateFinalPlacement CreateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
         CandidatePostPlacement CreateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
+        BatchPrePlacement CreateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement);
         #endregion
 
         #region Retrieve
@@ -388,6 +389,9 @@ namespace Nidan.Business.Interfaces
         List<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate);
         PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         IEnumerable<ExpenseHeaderSummaryReport> RetriveExpenseHeaderSummaryReportByDate(int organisationId, int centreId, DateTime fromDate, DateTime toDate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId, int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId);
         #endregion
 
         #region Update
@@ -449,6 +453,7 @@ namespace Nidan.Business.Interfaces
         CandidatePrePlacementActivity UpdateCandidatePrePlacementActivity(int organisationId, CandidatePrePlacementActivity candidatePrePlacementActivity);
         CandidateFinalPlacement UpdateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
         CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
+        BatchPrePlacement UpdateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement);
         #endregion
 
         #region Delete

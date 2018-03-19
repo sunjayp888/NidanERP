@@ -275,7 +275,9 @@ namespace Nidan.Data.Interfaces
         PagedResult<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId,int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId);
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
         T UpdateOrganisationEntityEntry<T>(int organisationId, T t) where T : class;

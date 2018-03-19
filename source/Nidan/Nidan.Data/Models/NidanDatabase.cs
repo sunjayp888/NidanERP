@@ -192,6 +192,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<LeadSource> LeadSources { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<ExpenseHeaderGrid> ExpenseHeaderGrids { get; set; }
+        public virtual DbSet<BatchPrePlacement> BatchPrePlacements { get; set; }
+        public virtual DbSet<BatchPrePlacementSearchField> BatchPrePlacementSearchFields { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3313,6 +3315,30 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<MobilizationDataGrid>()
                 .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
