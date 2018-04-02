@@ -138,7 +138,6 @@ namespace Nidan.Controllers
                 candidate.InstallmentAmount = amount;
                 NidanBusinessService.UpdateCandidateFee(UserOrganisationId, candidate);
             }
-
         }
 
         [HttpPost]

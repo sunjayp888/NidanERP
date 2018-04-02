@@ -11,6 +11,10 @@
         /* jshint validthis:true */
         var vm = this;
         vm.batchPrePlacements = [];
+        vm.candidatePrePlacements = [];
+        vm.batchPrePlacementId;
+        vm.prePlacementActivityId;
+        vm.candidatePrePlacementId;
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -20,6 +24,10 @@
         vm.searchBatchPrePlacement = searchBatchPrePlacement;
         vm.viewBatchPrePlacement = viewBatchPrePlacement;
         vm.searchBatchPrePlacementByDate = searchBatchPrePlacementByDate;
+        vm.retrieveCandidatePrePlacementByBatchPrePlacementId = retrieveCandidatePrePlacementByBatchPrePlacementId;
+        vm.openCandidatePrePlacementActivityModalPopUp = openCandidatePrePlacementActivityModalPopUp;
+        vm.saveCandidatePrePlacementActivity = saveCandidatePrePlacementActivity;
+        vm.openCandidatePrePlacementUpdateModalPopUp = openCandidatePrePlacementUpdateModalPopUp;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
@@ -95,8 +103,46 @@
 
        function viewBatchPrePlacement(batchPrePlacementId) {
             $window.location.href = "/BatchPrePlacement/View/" + batchPrePlacementId;
-        }
+       }
 
+       function retrieveCandidatePrePlacementByBatchPrePlacementId(batchPrePlacementId) {
+           vm.orderBy.property = "ScheduledStartDate";
+           vm.orderBy.direction = "Ascending";
+           vm.orderBy.class = "asc";
+           vm.batchPrePlacementId = batchPrePlacementId;
+           return BatchPrePlacementService.retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidatePrePlacements = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidatePrePlacements;
+                });
+       }
+
+       function openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId) {
+           vm.batchPrePlacementId = batchPrePlacementId;
+           return BatchPrePlacementService.openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId);
+       }
+
+       function saveCandidatePrePlacementActivity() {
+           var candidatePrePlacement = {
+               CandidatePrePlacementId:vm.candidatePrePlacementId===0?0:vm.candidatePrePlacementId,
+               BatchPrePlacementId: vm.batchPrePlacementId,
+               PrePlacementActivityId: $("#CandidatePrePlacement_PrePlacementActivityId").val(),
+               ScheduledStartDate: $("#txtScheduledStartDate").val(),
+               ScheduledEndDate: $("#txtScheduledEndDate").val(),
+               Remark: $("#txtRemark").val()
+                }
+           return BatchPrePlacementService.saveCandidatePrePlacementActivity(candidatePrePlacement)
+                    .then(function (response) {
+                   retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId);
+               });
+       }
+
+       function openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId) {
+           vm.candidatePrePlacementId = candidatePrePlacementId;
+           return BatchPrePlacementService.openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId);
+        }
     }
 
 })();

@@ -12,6 +12,10 @@
             retrieveBatchPrePlacements: retrieveBatchPrePlacements,
             searchBatchPrePlacement: searchBatchPrePlacement,
             searchBatchPrePlacementByDate: searchBatchPrePlacementByDate,
+            retrieveCandidatePrePlacementByBatchPrePlacementId: retrieveCandidatePrePlacementByBatchPrePlacementId,
+            openCandidatePrePlacementActivityModalPopUp: openCandidatePrePlacementActivityModalPopUp,
+            saveCandidatePrePlacementActivity: saveCandidatePrePlacementActivity,
+            openCandidatePrePlacementUpdateModalPopUp: openCandidatePrePlacementUpdateModalPopUp
         };
 
         return service;
@@ -50,5 +54,38 @@
             return $http.post(url, data);
         }
 
+        function retrieveCandidatePrePlacementByBatchPrePlacementId(batchPrePlacementId, Paging, OrderBy) {
+
+            var url = "/BatchPrePlacement/RetrieveCandidatePrePlacementByBatchPrePlacementId",
+                data = {
+                    batchPrePlacementId: batchPrePlacementId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
         }
+
+        function openCandidatePrePlacementActivityModalPopUp(id) {
+
+            var url = "/BatchPrePlacement/GetBatchPrePlacement/" + id;
+            return $http.post(url);
+        }
+
+        //saveCandidatePrePlacementActivity
+        function saveCandidatePrePlacementActivity(candidatePrePlacement) {
+            var url = "/BatchPrePlacement/SaveCandidatePrePlacementActivity",
+                data = {
+                    candidatePrePlacement: candidatePrePlacement
+                };
+            return $http.post(url, data);
+        }
+
+        //openCandidatePrePlacementUpdateModalPopUp
+        function openCandidatePrePlacementUpdateModalPopUp(id) {
+
+            var url = "/BatchPrePlacement/GetCandidatePrePlacement/" + id;
+            return $http.post(url);
+        }
+    }
 })();

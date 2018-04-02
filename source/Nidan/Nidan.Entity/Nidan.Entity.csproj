@@ -137,8 +137,11 @@
     <Compile Include="CandidateInstallmentSearchField.cs" />
     <Compile Include="CandidatePostPlacement.cs" />
     <Compile Include="CandidatePostPlacementGrid.cs" />
+    <Compile Include="CandidatePrePlacement.cs" />
     <Compile Include="CandidatePrePlacementActivity.cs" />
     <Compile Include="CandidatePrePlacementActivityGrid.cs" />
+    <Compile Include="CandidatePrePlacementGrid.cs" />
+    <Compile Include="CandidatePrePlacementReport.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
@@ -237,6 +240,7 @@
     <Compile Include="Partials\Assessment.cs" />
     <Compile Include="Partials\BankDeposite.cs" />
     <Compile Include="Partials\Batch.cs" />
+    <Compile Include="Partials\BatchPrePlacement.cs" />
     <Compile Include="Partials\CandidateAssessment.cs" />
     <Compile Include="Partials\CandidateAssessmentGrid.cs" />
     <Compile Include="Partials\CandidateFee.cs" />
@@ -271,6 +275,7 @@
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="PettyCashExpenseReport.cs" />
     <Compile Include="PlacementState.cs" />
+    <Compile Include="PrePlacementActivity.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

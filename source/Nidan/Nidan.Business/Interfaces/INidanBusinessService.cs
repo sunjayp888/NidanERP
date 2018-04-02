@@ -84,6 +84,9 @@ namespace Nidan.Business.Interfaces
         CandidateFinalPlacement CreateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
         CandidatePostPlacement CreateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         BatchPrePlacement CreateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement);
+        CandidatePrePlacement CreateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement, List<int> admissionIds);
+        CandidatePrePlacementReport CreateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
+
         #endregion
 
         #region Retrieve
@@ -219,7 +222,7 @@ namespace Nidan.Business.Interfaces
         List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<Trainer, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId);
-        List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
+        List<Graph> RetrievePieGraphStatistics(int organisationId, int month, int year, int? centreId);
         Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         List<AssetClass> RetrieveAssetClasses(int organisationId, Expression<Func<AssetClass, bool>> predicate);
@@ -392,6 +395,13 @@ namespace Nidan.Business.Interfaces
         PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId, int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId);
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementGrid> RetrieveCandidatePrePlacementGrids(int organisationId, int centreId, Expression<Func<CandidatePrePlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacement> RetrieveCandidatePrePlacements(int organisationId, int centreId, Expression<Func<CandidatePrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacement RetrieveCandidatePrePlacement(int organisationId, int candidatePrePlacementId);
+        List<PrePlacementActivity> RetrievePrePlacementActivities(int organisationId, Expression<Func<PrePlacementActivity, bool>> predicate);
+        CandidatePrePlacementReport RetrieveCandidatePrePlacementReport(int organisationId, int candidatePrePlacementReportId);
+        PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update
@@ -454,6 +464,9 @@ namespace Nidan.Business.Interfaces
         CandidateFinalPlacement UpdateCandidateFinalPlacement(int organisationId, CandidateFinalPlacement candidateFinalPlacement);
         CandidatePostPlacement UpdateCandidatePostPlacement(int organisationId, CandidatePostPlacement candidatePostPlacement);
         BatchPrePlacement UpdateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement);
+        CandidatePrePlacement UpdateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement);
+        CandidatePrePlacementReport UpdateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
+
         #endregion
 
         #region Delete

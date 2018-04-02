@@ -1073,9 +1073,9 @@ namespace Nidan.Business
             }
 
             //Email
-            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
-            SendAdmissionSms(admissionData);
+            //SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -1230,9 +1230,9 @@ namespace Nidan.Business
 
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            SendRegistrationSms(registrationData);
+            //SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1802,6 +1802,40 @@ namespace Nidan.Business
             return _nidanDataService.Create<BatchPrePlacement>(organisationId, batchPrePlacement);
         }
 
+        public CandidatePrePlacement CreateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement, List<int> admissionIds)
+        {
+            var data = _nidanDataService.Create<CandidatePrePlacement>(organisationId, candidatePrePlacement);
+            CreateCandidatePrePlacementScheduledReport(organisationId, data.CentreId, data.CreatedBy, data.CandidatePrePlacementId, admissionIds);
+            return data;
+
+        }
+
+        public CandidatePrePlacementReport CreateCandidatePrePlacementReport(int organisationId,
+             CandidatePrePlacementReport candidatePrePlacementReport)
+        {
+            var data = _nidanDataService.Create<CandidatePrePlacementReport>(organisationId, candidatePrePlacementReport);
+            return data;
+        }
+
+        private void CreateCandidatePrePlacementScheduledReport(int organisationId, int centreId, int personnelId, int candidatePrePlacementId, List<int> admissionIds)
+        {
+            var candidatePrePlacementReportList = new List<CandidatePrePlacementReport>();
+            foreach (var item in admissionIds)
+            {
+                candidatePrePlacementReportList.Add(new CandidatePrePlacementReport()
+                {
+                    CandidatePrePlacementId = candidatePrePlacementId,
+                    IsDocumentUploaded = false,
+                    CentreId = centreId,
+                    CreatedBy = personnelId,
+                    OrganisationId = organisationId,
+                    AdmissionId = item,
+                    StudentCode=item.ToString()
+                });
+            }
+            _nidanDataService.Create<CandidatePrePlacementReport>(organisationId, candidatePrePlacementReportList);
+        }
+
         public CentreItemSetting RetrieveCentreItemSetting(int organisationId, int centreId, int itemId)
         {
             var data = _nidanDataService.RetrieveCentreItemSetting(organisationId, centreId, itemId);
@@ -2363,7 +2397,7 @@ namespace Nidan.Business
         public PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate,
             List<OrderBy> orderBy = null, Paging paging = null)
         {
-            return _nidanDataService.RetrieveBatchPrePlacementSearchFields(organisationId,centreId, predicate, orderBy, paging);
+            return _nidanDataService.RetrieveBatchPrePlacementSearchFields(organisationId, centreId, predicate, orderBy, paging);
         }
 
         public PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId, int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null,
@@ -2375,6 +2409,45 @@ namespace Nidan.Business
         public BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId)
         {
             return _nidanDataService.RetrieveBatchPrePlacement(organisationId, batchPrePlacementId);
+        }
+
+        public PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BatchPrePlacementSearchField, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveBatchPrePlacementBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CandidatePrePlacementGrid> RetrieveCandidatePrePlacementGrids(int organisationId, int centreId, Expression<Func<CandidatePrePlacementGrid, bool>> predicate,
+            List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementGrids(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CandidatePrePlacement> RetrieveCandidatePrePlacements(int organisationId, int centreId, Expression<Func<CandidatePrePlacement, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacements(organisationId, centreId, predicate, orderBy, paging);
+        }
+
+        public CandidatePrePlacement RetrieveCandidatePrePlacement(int organisationId, int candidatePrePlacementId)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacement(organisationId, candidatePrePlacementId);
+        }
+
+        public List<PrePlacementActivity> RetrievePrePlacementActivities(int organisationId, Expression<Func<PrePlacementActivity, bool>> predicate)
+        {
+            return _nidanDataService.RetrievePrePlacementActivities(organisationId, predicate).Items.ToList();
+        }
+
+        public CandidatePrePlacementReport RetrieveCandidatePrePlacementReport(int organisationId, int candidatePrePlacementReportId)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementReport(organisationId, candidatePrePlacementReportId);
+        }
+
+        public PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementReports(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -3125,11 +3198,29 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
         }
 
-        public List<Graph> RetrievePieGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
+        public List<Graph> RetrievePieGraphStatistics(int organisationId, int month1, int year1, int? centreId)
         {
             var month = DateTime.UtcNow.Month;
             var year = DateTime.UtcNow.Year;
-            var centre = RetrieveCentresStatistics(organisationId, predicate).ToList();
+            var centre = centreId.HasValue ? RetrieveCentres(organisationId, e => e.CentreId == centreId).ToList() :
+                RetrieveCentres(organisationId, e => true).ToList();
+            var mobilizationCount = centreId.HasValue
+                ? RetrieveMobilizations(organisationId, e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year && e.CentreId == centreId)
+                : RetrieveMobilizations(organisationId, e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year);
+            var admissionCount = centreId.HasValue
+                ? RetrieveAdmissions(organisationId,
+                    e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year && e.CentreId == centreId)
+                : RetrieveAdmissions(organisationId,
+                    e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year);
+            var registrationCount = centreId.HasValue
+                ? RetrieveRegistrations(organisationId, e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year && e.CentreId == centreId)
+                : RetrieveRegistrations(organisationId, e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year);
+            var enquiryCount = centreId.HasValue
+                ? RetrieveEnquiries(organisationId, e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year && e.CentreId == centreId)
+                : RetrieveEnquiries(organisationId, e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year);
+            var counsellingCount = centreId.HasValue
+                ? RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year && e.CentreId == centreId)
+                : RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year);
             var graphData = new List<Graph>();
             foreach (var item in centre)
             {
@@ -3137,26 +3228,15 @@ namespace Nidan.Business
                 {
                     CentreId = item.CentreId,
                     CentreName = item.Name,
-                    MobilizationCount =
-                        item.Mobilizations.Count(
-                            e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year),
+                    MobilizationCount = mobilizationCount.Items.Count(),
                     AdmissionCount =
-                        item.Admissions.Count(e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year),
+                        admissionCount.Items.Count(),
                     EnquiryCount =
-                        item.Enquiries.Count(
-                            e =>
-                                e.IsRegistrationDone == false && e.EnquiryDate.Month == month &&
-                                e.EnquiryDate.Year == year),
+                       enquiryCount.Count,
                     RegistrationCount =
-                        item.Registrations.Count(
-                            e =>
-                                e.IsAdmissionDone == false && e.RegistrationDate.Month == month &&
-                                e.RegistrationDate.Year == year),
+                        registrationCount.Items.Count(),
                     CounsellingCount =
-                        item.Counsellings.Count(
-                            e =>
-                                e.IsRegistrationDone == false && e.CreatedDate.Month == month &&
-                                e.CreatedDate.Year == year)
+                        counsellingCount.Items.Count()
                 });
             }
             return graphData;
@@ -4433,10 +4513,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            SendInstallmetnSms(candidateFee);
+            //SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -4737,6 +4817,17 @@ namespace Nidan.Business
         public BatchPrePlacement UpdateBatchPrePlacement(int organisationId, BatchPrePlacement batchPrePlacement)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, batchPrePlacement);
+        }
+
+        public CandidatePrePlacement UpdateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePrePlacement);
+        }
+
+        public CandidatePrePlacementReport UpdateCandidatePrePlacementReport(int organisationId,
+            CandidatePrePlacementReport candidatePrePlacementReport)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePrePlacementReport);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

@@ -49,6 +49,7 @@ namespace Nidan.Data.Interfaces
         ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask);
         ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
         EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement);
+        CandidatePrePlacementReport CreateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -278,6 +279,14 @@ namespace Nidan.Data.Interfaces
         PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId,int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId);
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementGrid> RetrieveCandidatePrePlacementGrids(int organisationId, int centreId, Expression<Func<CandidatePrePlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacement> RetrieveCandidatePrePlacements(int organisationId, int centreId, Expression<Func<CandidatePrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacement RetrieveCandidatePrePlacement(int organisationId, int candidatePrePlacementId);
+        PagedResult<PrePlacementActivity> RetrievePrePlacementActivities(int organisationId, Expression<Func<PrePlacementActivity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacementReport RetrieveCandidatePrePlacementReport(int organisationId, int candidatePrePlacementReportId);
+        PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;
         T UpdateOrganisationEntityEntry<T>(int organisationId, T t) where T : class;

@@ -194,6 +194,10 @@ namespace Nidan.Data.Models
         public virtual DbSet<ExpenseHeaderGrid> ExpenseHeaderGrids { get; set; }
         public virtual DbSet<BatchPrePlacement> BatchPrePlacements { get; set; }
         public virtual DbSet<BatchPrePlacementSearchField> BatchPrePlacementSearchFields { get; set; }
+        public virtual DbSet<CandidatePrePlacement> CandidatePrePlacements { get; set; }
+        public virtual DbSet<PrePlacementActivity> PrePlacementActivities { get; set; }
+        public virtual DbSet<CandidatePrePlacementGrid> CandidatePrePlacementGrids { get; set; }
+        public virtual DbSet<CandidatePrePlacementReport> CandidatePrePlacementReports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3338,6 +3342,47 @@ namespace Nidan.Data.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacement>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PrePlacementActivity>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PrePlacementActivity>()
+                .HasMany(e => e.CandidatePrePlacements)
+                .WithRequired(e => e.PrePlacementActivity)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.BatchPrePlacementName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.PrePlacementActivityName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementReport>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementReport>()
                 .Property(e => e.Remark)
                 .IsUnicode(false);
 

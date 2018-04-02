@@ -328,6 +328,7 @@
     <Compile Include="Models\CandidateFinalPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePostPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePrePlacementActivityViewModel.cs" />
+    <Compile Include="Models\CandidatePrePlacementViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\AssessmentViewModel.cs" />
@@ -1181,6 +1182,7 @@
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidatePostPlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementActivityController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
@@ -1866,6 +1868,11 @@
     <Content Include="Views\CandidateFinalPlacement\_PlacementDocument.cshtml" />
     <Content Include="Views\Report\ExpenseDetailReport.cshtml" />
     <Content Include="Views\BatchPrePlacement\Index.cshtml" />
+    <Content Include="Views\BatchPrePlacement\Create.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_BatchPrePlacement.cshtml" />
+    <Content Include="Views\BatchPrePlacement\Edit.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementActivity.cshtml" />
+    <Content Include="Views\BatchPrePlacement\View.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

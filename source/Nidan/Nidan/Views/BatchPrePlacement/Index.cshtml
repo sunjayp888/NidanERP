@@ -20,19 +20,16 @@
             </div>
         </div>
     </div>
-    @*@if (User.IsInAnyRoles("Admin"))
+    @if (User.IsInAnyRoles("Admin"))
         {
             <div class="row">
                 <div class="col-xs-12">
-                    <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Mobilization")">
+                    <a class="btn btn-success btn-lg" href="@Url.Action("Create", "BatchPrePlacement")">
                         <i class="fa fa-user"></i> Create
-                    </a>
-                    <a class="btn btn-warning btn-lg" href="@Url.Action("Upload", "Mobilization")">
-                        <i class="fa fa-upload"></i> Upload
                     </a>
                 </div>
             </div>
-        }*@
+        }
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -122,8 +119,8 @@
                                             <td><span ng-bind="batchPrePlacement.CreatedByName"></span></td>
                                             <td><span ng-bind="batchPrePlacement.Name"></span></td>
                                             <td><span ng-bind="batchPrePlacement.BatchName"></span></td>
-                                            <td><span ng-bind="batchPrePlacement.ScheduledStartDate|date : format : shortDate"></span> <span ng-bind="batchPrePlacement.ScheduledEndDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="batchPrePlacement.CreatedDate|date : format : shortDate"></span></td>
+                                            <td><span ng-bind="batchPrePlacement.ScheduledStartDate|date : 'dd/MMM/yyyy'"></span> To <span ng-bind="batchPrePlacement.ScheduledEndDate|date : 'dd/MMM/yyyy'"></span></td>
+                                            <td><span ng-bind="batchPrePlacement.CreatedDate|date : 'dd/MMM/yyyy'"></span></td>
                                             <td><span ng-bind="batchPrePlacement.Remark"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">

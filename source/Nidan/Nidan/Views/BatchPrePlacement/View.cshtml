@@ -1,0 +1,83 @@
+﻿@model Nidan.Models.BatchPrePlacementViewModel
+
+@{
+    ViewBag.Title = string.Format("View Placement ({0})", Model.BatchPrePlacement.Name);
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.BatchPrePlacement.Name</button><small> View Pre-Placement </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Batch Pre-Placement Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark">Created Date</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.BatchPrePlacement.CreatedDate.ToShortDateString()" class="form-control col-lg-4">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark">Batch</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.BatchPrePlacement.Batch.Name" class="form-control col-lg-4">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark">Scheduled Start Date</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.BatchPrePlacement.ScheduledStartDate.ToShortDateString()" class="form-control col-lg-4">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark">Scheduled End Date</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.BatchPrePlacement.ScheduledEndDate.ToShortDateString()" class="form-control col-lg-4">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-dark">Remarks</button>
+                                            </span>
+                                            <input type="text" disabled="disabled" value="@Model.BatchPrePlacement.Remark" class="form-control col-lg-4">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
