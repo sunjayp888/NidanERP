@@ -31,8 +31,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var centres = _nidanBusinessService.RetrieveCentres(organisationId, e=>true);
-            var batches = _nidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId==centreId);
+            var centres = _nidanBusinessService.RetrieveCentres(organisationId, e => true);
+            var batches = _nidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == centreId);
             var viewModel = new BatchPrePlacementViewModel
             {
                 BatchPrePlacement = new BatchPrePlacement(),
@@ -78,8 +78,8 @@ namespace Nidan.Controllers
             var centres = _nidanBusinessService.RetrieveCentres(organisationId, e => true);
             var batches = _nidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == centreId);
             var batchPrePlacement = _nidanBusinessService.RetrieveBatchPrePlacement(organisationId, id.Value);
-            var candidatePrePlacements= _nidanBusinessService.RetrieveCandidatePrePlacements(organisationId,centreId,e=>e.BatchPrePlacementId==id.Value).Items.Select(e=>e.PrePlacementActivityId).ToList();
-            var prePlacementActivities =_nidanBusinessService.RetrievePrePlacementActivities(organisationId, e => true);
+            var candidatePrePlacements = _nidanBusinessService.RetrieveCandidatePrePlacements(organisationId, centreId, e => e.BatchPrePlacementId == id.Value).Items.Select(e => e.PrePlacementActivityId).ToList();
+            var prePlacementActivities = _nidanBusinessService.RetrievePrePlacementActivities(organisationId, e => true);
             if (batchPrePlacement == null)
             {
                 return HttpNotFound();
@@ -88,10 +88,10 @@ namespace Nidan.Controllers
             {
                 BatchPrePlacement = batchPrePlacement,
                 Centres = new SelectList(centres, "CentreId", "Name"),
-                CentreId=batchPrePlacement.CentreId,
+                CentreId = batchPrePlacement.CentreId,
                 Batches = new SelectList(batches, "BatchId", "Name"),
-                BatchId=batchPrePlacement.BatchId,
-                PrePlacementActivities=new SelectList(prePlacementActivities, "PrePlacementActivityId","Name")
+                BatchId = batchPrePlacement.BatchId,
+                PrePlacementActivities = new SelectList(prePlacementActivities, "PrePlacementActivityId", "Name")
             };
             return View(viewModel);
         }
@@ -128,14 +128,15 @@ namespace Nidan.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var organisationId = UserOrganisationId;
-            var batchPrePlacement = _nidanBusinessService.RetrieveBatchPrePlacement(organisationId,id.Value);
+            var batchPrePlacement = _nidanBusinessService.RetrieveBatchPrePlacement(organisationId, id.Value);
             if (batchPrePlacement == null)
             {
                 return HttpNotFound();
             }
             var viewModel = new BatchPrePlacementViewModel
             {
-                BatchPrePlacement = batchPrePlacement
+                BatchPrePlacement = batchPrePlacement,
+                BatchPrePlacementId = batchPrePlacement.BatchPrePlacementId
             };
             return View(viewModel);
         }
@@ -146,7 +147,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = _nidanBusinessService.RetrieveBatchPrePlacementSearchFields(organisationId, centreId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = _nidanBusinessService.RetrieveBatchPrePlacementSearchFields(organisationId, centreId, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -166,7 +167,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = _nidanBusinessService.RetrieveBatchPrePlacementSearchFields(organisationId,centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.ScheduledStartDate>= fromDate && e.ScheduledStartDate <= toDate, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveBatchPrePlacementSearchFields(organisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.ScheduledStartDate >= fromDate && e.ScheduledStartDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -177,7 +178,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = _nidanBusinessService.RetrieveCandidatePrePlacementGrids(organisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId)&& e.BatchPrePlacementId==batchPrePlacementId, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidatePrePlacementGrids(organisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchPrePlacementId == batchPrePlacementId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -202,12 +203,12 @@ namespace Nidan.Controllers
                 int id = candidatePrePlacementViewModel.CandidatePrePlacement.CandidatePrePlacementId;
                 if (id != 0)
                 {
-                    candidatePrePlacementViewModel.CandidatePrePlacement = _nidanBusinessService.UpdateCandidatePrePlacement(organisationId,candidatePrePlacementViewModel.CandidatePrePlacement);
+                    candidatePrePlacementViewModel.CandidatePrePlacement = _nidanBusinessService.UpdateCandidatePrePlacement(organisationId, candidatePrePlacementViewModel.CandidatePrePlacement);
                     return this.JsonNet(true);
                 }
                 var batchPrePlacement = _nidanBusinessService.RetrieveBatchPrePlacement(organisationId, candidatePrePlacementViewModel.CandidatePrePlacement.BatchPrePlacementId);
                 var admissionIds = _nidanBusinessService.RetrieveAdmissions(organisationId, e => e.BatchId == batchPrePlacement.BatchId).Items.Select(e => e.AdmissionId).ToList();
-                candidatePrePlacementViewModel.CandidatePrePlacement =_nidanBusinessService.CreateCandidatePrePlacement(organisationId,candidatePrePlacementViewModel.CandidatePrePlacement, admissionIds);
+                candidatePrePlacementViewModel.CandidatePrePlacement = _nidanBusinessService.CreateCandidatePrePlacement(organisationId, candidatePrePlacementViewModel.CandidatePrePlacement, admissionIds);
                 return this.JsonNet(true);
             }
             catch (Exception e)
@@ -215,7 +216,6 @@ namespace Nidan.Controllers
                 return this.JsonNet(false);
             }
         }
-
 
         [Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult GetCandidatePrePlacement(int id)
@@ -225,5 +225,17 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [HttpPost]
+        public ActionResult RetrieveCandidatePrePlacementReportByBatchPrePlacementId(int batchPrePlacementId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var batchPrePlacementData =_nidanBusinessService.RetrieveBatchPrePlacement(organisationId, batchPrePlacementId);
+            var candidatePrePlacementData = _nidanBusinessService.RetrieveCandidatePrePlacements(organisationId,centreId, e => e.BatchPrePlacementId == batchPrePlacementId);
+
+            var data = _nidanBusinessService.RetrieveCandidatePrePlacementGrids(organisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchPrePlacementId == batchPrePlacementId, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

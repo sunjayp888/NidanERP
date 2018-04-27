@@ -34,7 +34,14 @@ namespace Nidan.Models
         public int BatchTimePreferId { get; set; }
         public IEnumerable<SelectListItem> TitleList { get; set; }
         public IEnumerable<SelectListItem> DiscountList { get; set; }
+        public int EnquiryId { get; set; }
+        public SelectList CounsellingCourse { get; set; }
+        public SelectList FeeTypes { get; set; }
+        public Enquiry Enquiry { get; set; }
         public IEnumerable<string> TrainerName { get; set; }
+        public CandidateInstallment CandidateInstallment { get; set; }
+        public decimal PaidAmount { get; set; }
+        public decimal TotalRegistrationAmount { get; set; }
         public List<TitleType> TitleType => new List<TitleType>()
         {
             new TitleType() {Name = "Mr.",Value = "Mr."},

@@ -113,6 +113,7 @@
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchAttendanceDataGrid.cs" />
+    <Compile Include="BatchCandidate.cs" />
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchPlanner.cs" />
     <Compile Include="BatchPlannerDay.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="ExpenseHeadLimit.cs" />
     <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="FeeType.cs" />
     <Compile Include="FixAsset.cs" />
     <Compile Include="FixAssetDataGrid.cs" />
     <Compile Include="FixAssetDetailGrid.cs" />

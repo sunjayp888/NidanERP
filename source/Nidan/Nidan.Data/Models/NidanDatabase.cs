@@ -198,6 +198,8 @@ namespace Nidan.Data.Models
         public virtual DbSet<PrePlacementActivity> PrePlacementActivities { get; set; }
         public virtual DbSet<CandidatePrePlacementGrid> CandidatePrePlacementGrids { get; set; }
         public virtual DbSet<CandidatePrePlacementReport> CandidatePrePlacementReports { get; set; }
+        public virtual DbSet<BatchCandidate> BatchCandidates { get; set; }
+        public virtual DbSet<FeeType> FeeTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3321,30 +3323,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.ClosingRemark)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<BatchPrePlacement>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BatchPrePlacement>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BatchPrePlacementSearchField>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BatchPrePlacementSearchField>()
-                .Property(e => e.BatchName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BatchPrePlacementSearchField>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<BatchPrePlacementSearchField>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
             modelBuilder.Entity<CandidatePrePlacement>()
                 .Property(e => e.Remark)
                 .IsUnicode(false);
@@ -3384,6 +3362,58 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidatePrePlacementReport>()
                 .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FeeType>()
+                .Property(e => e.Name)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

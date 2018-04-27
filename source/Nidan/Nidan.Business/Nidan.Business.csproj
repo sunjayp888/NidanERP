@@ -118,6 +118,7 @@
     <Compile Include="Enum\EventApproveState.cs" />
     <Compile Include="Enum\EventFunctionType.cs" />
     <Compile Include="Enum\FeeType.cs" />
+    <Compile Include="Enum\PrePlacement.cs" />
     <Compile Include="Enum\Role.cs" />
     <Compile Include="Enum\TaskState.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Models\BatchMonth.cs" />
     <Compile Include="Models\CandidateEnrollment.cs" />
     <Compile Include="Models\CandidateFeeReceipt.cs" />
+    <Compile Include="Models\CandidatePrePlacementSchedule.cs" />
     <Compile Include="Models\CentreBankDepositeReport.cs" />
     <Compile Include="Models\CentreCandidateFeeSummaryReport.cs" />
     <Compile Include="Models\ExpenseData.cs" />

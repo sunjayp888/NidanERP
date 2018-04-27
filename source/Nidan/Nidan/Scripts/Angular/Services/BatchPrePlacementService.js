@@ -15,7 +15,8 @@
             retrieveCandidatePrePlacementByBatchPrePlacementId: retrieveCandidatePrePlacementByBatchPrePlacementId,
             openCandidatePrePlacementActivityModalPopUp: openCandidatePrePlacementActivityModalPopUp,
             saveCandidatePrePlacementActivity: saveCandidatePrePlacementActivity,
-            openCandidatePrePlacementUpdateModalPopUp: openCandidatePrePlacementUpdateModalPopUp
+            openCandidatePrePlacementUpdateModalPopUp: openCandidatePrePlacementUpdateModalPopUp,
+            retrieveCandidatePrePlacementReportByBatchPrePlacementId: retrieveCandidatePrePlacementReportByBatchPrePlacementId
         };
 
         return service;
@@ -86,6 +87,19 @@
 
             var url = "/BatchPrePlacement/GetCandidatePrePlacement/" + id;
             return $http.post(url);
+        }
+
+        //retrieveCandidatePrePlacementReportByBatchPrePlacementId
+        function retrieveCandidatePrePlacementReportByBatchPrePlacementId(batchPrePlacementId, Paging, OrderBy) {
+
+            var url = "/BatchPrePlacement/RetrieveCandidatePrePlacementReportByBatchPrePlacementId",
+                data = {
+                    batchPrePlacementId: batchPrePlacementId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
         }
     }
 })();

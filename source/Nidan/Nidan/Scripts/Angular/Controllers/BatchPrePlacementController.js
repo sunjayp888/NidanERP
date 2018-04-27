@@ -28,15 +28,16 @@
         vm.openCandidatePrePlacementActivityModalPopUp = openCandidatePrePlacementActivityModalPopUp;
         vm.saveCandidatePrePlacementActivity = saveCandidatePrePlacementActivity;
         vm.openCandidatePrePlacementUpdateModalPopUp = openCandidatePrePlacementUpdateModalPopUp;
+        vm.retrieveCandidatePrePlacementReportByBatchPrePlacementId =retrieveCandidatePrePlacementReportByBatchPrePlacementId;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
 
         function initialise() {
-            vm.orderBy.property = "CreatedDate";
+            vm.orderBy.property = "ScheduledStartDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
-            order("CreatedDate");
+            order("ScheduledStartDate");
         }
 
         function retrieveBatchPrePlacements() {
@@ -142,6 +143,20 @@
        function openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId) {
            vm.candidatePrePlacementId = candidatePrePlacementId;
            return BatchPrePlacementService.openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId);
+       }
+
+       function retrieveCandidatePrePlacementReportByBatchPrePlacementId(batchPrePlacementId) {
+            vm.orderBy.property = "ScheduledStartDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.batchPrePlacementId = batchPrePlacementId;
+            return BatchPrePlacementService.retrieveCandidatePrePlacementReportByBatchPrePlacementId(vm.batchPrePlacementId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidatePrePlacements = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidatePrePlacements;
+                });
         }
     }
 

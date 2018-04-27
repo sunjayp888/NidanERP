@@ -21,5 +21,8 @@ namespace Nidan.Models
         public SelectList Courses { get; set; }
         public SelectList CourseInstallments { get; set; }
         public SelectList BatchTimePrefers { get; set; }
+        public SelectList FeeTypes { get; set; }
+        public decimal PaidAmount { get; set; }
+        public Course Course { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Nidan.Models
         public SelectList PrePlacementActivities { get; set; }
         public int CentreId { get; set; }
         public int BatchId { get; set; }
+        public int BatchPrePlacementId { get; set; }
         public CandidatePrePlacement CandidatePrePlacement { get; set; }
     }
 }

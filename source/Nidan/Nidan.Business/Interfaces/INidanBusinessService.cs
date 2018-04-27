@@ -402,6 +402,9 @@ namespace Nidan.Business.Interfaces
         List<PrePlacementActivity> RetrievePrePlacementActivities(int organisationId, Expression<Func<PrePlacementActivity, bool>> predicate);
         CandidatePrePlacementReport RetrieveCandidatePrePlacementReport(int organisationId, int candidatePrePlacementReportId);
         PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        IEnumerable<CandidatePrePlacementSchedule> RetriveCandidatePrePlacementSchedule(int organisationId, int centreId,int batchPrePlacementId, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchCandidate> RetrieveBatchCandidates(int organisationId, Expression<Func<BatchCandidate, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        List<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate);
         #endregion
 
         #region Update
