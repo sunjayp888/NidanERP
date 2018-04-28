@@ -200,6 +200,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<CandidatePrePlacementReport> CandidatePrePlacementReports { get; set; }
         public virtual DbSet<BatchCandidate> BatchCandidates { get; set; }
         public virtual DbSet<FeeType> FeeTypes { get; set; }
+        public virtual DbSet<CandidateFeeReport> CandidateFeeReports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3414,6 +3415,54 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<FeeType>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CourseName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.PaymentModeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.FeeTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.FiscalYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ReferenceReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ReceiptNumber)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

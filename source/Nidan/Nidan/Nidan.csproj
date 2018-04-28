@@ -1873,6 +1873,11 @@
     <Content Include="Views\BatchPrePlacement\Edit.cshtml" />
     <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementActivity.cshtml" />
     <Content Include="Views\BatchPrePlacement\View.cshtml" />
+    <Content Include="Views\Registration\OtherFee.cshtml" />
+    <Content Include="Views\Registration\_OtherFeeRegistration.cshtml" />
+    <Content Include="Views\Admission\OtherFee.cshtml" />
+    <Content Include="Views\Admission\_OtherFeeAdmission.cshtml" />
+    <Content Include="Views\Report\CandidateFee.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

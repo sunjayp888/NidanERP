@@ -68,6 +68,75 @@
         </div>
     </div>
 </div>
+<div class="row" ng-controller="AdmissionController as model" ng-init="model.retrieveCandidateFees(@Model.CandidateInstallmentId)">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            @*<div class="x_title">*@
+            @*<h2>
+                        Centres <small></small>
+                    </h2>*@
+            <div class="clearfix"></div>
+            @*</div>*@
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                </p>
+                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.Partial("Pagination/_pageSize")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                <tr role="row">
+                                    <th>Payment Date</th>
+                                    <th>Fee Type</th>
+                                    <th>Paid Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="otherFee in model.OtherFees" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <td><span ng-bind="otherFee.PaymentDate|date : format : shortDate"></span></td>
+                                    <td ng-if="otherFee.FeeTypeId==1">Registration</td>
+                                    <td ng-if="otherFee.FeeTypeId==2">Admission</td>
+                                    <td ng-if="otherFee.FeeTypeId==3">Installment</td>
+                                    <td ng-if="otherFee.FeeTypeId==4">Prospectus Fee</td>
+                                    <td ng-if="otherFee.FeeTypeId==5">Exam Fee</td>
+                                    <td ng-if="otherFee.FeeTypeId==6">Registration Post Payment</td>
+                                    <td><i class="fa fa-inr"></i> <span ng-bind="otherFee.PaidAmount"></span></td>
+                                    <td>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu slidedown">
+                                                <li>
+                                                    <a style="cursor: pointer;" ng-href="/Admission/DownloadOtherFee/{{otherFee.CandidateFeeId}}">
+                                                        Download
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @Html.Partial("Pagination/_pagination")
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label ng-bind="model.searchMessage"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
         <span class="fa fa-chevron-left"></span>&nbsp;Back to list

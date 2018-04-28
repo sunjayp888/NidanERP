@@ -24,5 +24,6 @@ namespace Nidan.Models
         public SelectList FeeTypes { get; set; }
         public decimal PaidAmount { get; set; }
         public Course Course { get; set; }
+        public int CandidateInstallmentId { get; set; }
     }
 }

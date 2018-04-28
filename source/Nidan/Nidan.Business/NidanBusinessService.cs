@@ -992,8 +992,7 @@ namespace Nidan.Business
             var receiptNumber = string.Format("{0}/{1}/{2}", centreEnrollmentRecieptsettingData.TaxYear, centreEnrollmentRecieptsettingData.Centre.CentreCode, centreEnrollmentRecieptsettingData.EnrollmentNumber);
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
-            var candidateInstallment = RetrieveCandidateInstallment(organisationId,
-                registrationData.CandidateInstallmentId, e => true);
+            var candidateInstallment = RetrieveCandidateInstallment(organisationId,registrationData.CandidateInstallmentId, e => true);
             admission.Registration.StudentCode = registrationData.StudentCode;
             admission.CreatedBy = personnelId;
             var batchData = new Batch();
@@ -1072,7 +1071,6 @@ namespace Nidan.Business
                 };
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
-
             //Email
             //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
@@ -1087,6 +1085,8 @@ namespace Nidan.Business
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
+            var totalRegistrationAmount = candidateFeeDetail.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
             var candidateFeeData = new CandidateFee
             {
                 CandidateInstallmentId = candidateInstallment.CandidateInstallmentId,
@@ -1101,7 +1101,7 @@ namespace Nidan.Business
                 PersonnelId = personnelId,
                 IsPaymentDone = true,
                 StudentCode = admission.Registration.StudentCode,
-                PaidAmount = candidateInstallment.LumpsumAmount - registration.CandidateFee.PaidAmount,
+                PaidAmount = candidateInstallment.LumpsumAmount - totalRegistrationAmount,
                 PaymentDate = DateTime.UtcNow,
                 ReceiptNumber = receiptNumber
             };
@@ -1124,6 +1124,8 @@ namespace Nidan.Business
             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             var installmentDate = new DateTime(DateTime.UtcNow.Year, DateTime.Now.Month, 5, 0, 0, 0);
             var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
+            var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
+            var totalRegistrationAmount = candidateFeeDetail.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
             var candidateFees = new List<CandidateFee>();
             var candidateFeeData = new CandidateFee
             {
@@ -1139,9 +1141,9 @@ namespace Nidan.Business
                 PersonnelId = personnelId,
                 IsPaymentDone = true,
                 StudentCode = admission.Registration.StudentCode,
-                PaidAmount = candidateFee.IsPaidAmountOverride ? candidateFee.PaidAmount : candidateInstallment.DownPayment <= registration.CandidateFee.PaidAmount
+                PaidAmount = candidateFee.IsPaidAmountOverride ? candidateFee.PaidAmount : candidateInstallment.DownPayment <= totalRegistrationAmount
                     ? 0
-                    : (candidateInstallment.DownPayment - registration.CandidateFee.PaidAmount),
+                    : (candidateInstallment.DownPayment - totalRegistrationAmount),
                 PaymentDate = DateTime.UtcNow,
                 ReceiptNumber = receiptNumber
             };
@@ -2506,6 +2508,12 @@ namespace Nidan.Business
         public List<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate)
         {
             return _nidanDataService.RetrieveFeeTypes(organisationId,  predicate).Items.ToList();
+        }
+
+        public PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateFeeReports(organisationId, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -5286,6 +5294,18 @@ namespace Nidan.Business
             else if (value == 3)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Installment");
+            }
+            else if (value == 6)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
+            }
+            else if (value == 4)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
+            }
+            else if (value == 5)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
             }
             else
             {

@@ -288,6 +288,7 @@ namespace Nidan.Data.Interfaces
         PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BatchCandidate> RetrieveBatchCandidates(int organisationId, Expression<Func<BatchCandidate, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

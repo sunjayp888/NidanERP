@@ -130,6 +130,7 @@
     <Compile Include="CandidateAttemptedQuestionAnswerGrid.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
+    <Compile Include="CandidateFeeReport.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateFinalPlacement.cs" />
     <Compile Include="CandidateFinalPlacementGrid.cs" />

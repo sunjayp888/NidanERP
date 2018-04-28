@@ -86,6 +86,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/CandidateFee
+        public ActionResult CandidateFee()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/BankDepositeReports
         public ActionResult BankDepositeReport()
         {
@@ -245,7 +251,6 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCounsellingGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CreatedDate >= fromDate && p.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
-
 
         [HttpPost]
         public ActionResult SearchExpenseDetailReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
@@ -608,6 +613,29 @@ namespace Nidan.Controllers
                         p.ExpenseGeneratedDate <= toDate).Items.ToList();
             string csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_Expense-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadCandidateFeeCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data =
+                NidanBusinessService.RetrieveCandidateFeeReports(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.PaymentDate >= fromDate &&
+                        p.PaymentDate <= toDate).Items.ToList();
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_CandidateFeeReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult SearchCandidateFeeReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveCandidateFeeReports(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.PaymentDate >= fromDate && p.PaymentDate <= toDate && p.PaidAmount!=null, orderBy, paging);
+            return this.JsonNet(data);
         }
 
     }

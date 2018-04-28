@@ -215,7 +215,7 @@ namespace Nidan.Controllers
                 lastName = admissionData?.Registration.Enquiry.LastName;
                 admission = admissionData;
             }
-            var data = feeTypeId == 1 || feeTypeId == 3 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
+            var data = feeTypeId == 1 || feeTypeId == 3 || feeTypeId == 4 || feeTypeId == 5 || feeTypeId == 6 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
                 : NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} {2}.pdf", firstName, lastName, feeType.ToString()));
         }

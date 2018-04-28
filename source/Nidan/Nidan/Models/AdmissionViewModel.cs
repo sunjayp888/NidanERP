@@ -42,6 +42,7 @@ namespace Nidan.Models
         public CandidateInstallment CandidateInstallment { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal TotalRegistrationAmount { get; set; }
+        public int CandidateInstallmentId { get; set; }
         public List<TitleType> TitleType => new List<TitleType>()
         {
             new TitleType() {Name = "Mr.",Value = "Mr."},

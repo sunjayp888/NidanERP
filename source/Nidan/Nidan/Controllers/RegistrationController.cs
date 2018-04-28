@@ -211,7 +211,8 @@ namespace Nidan.Controllers
                 CounsellingCourse = new SelectList(counsellingCourse, "CourseId", "Name"),
                 FeeTypes = new SelectList(feeTypes, "FeeTypeId", "Name"),
                 Enquiry = enquiry,
-                PaidAmount = paidAmount.Value
+                PaidAmount = paidAmount.Value,
+                CandidateInstallmentId=registration.CandidateInstallmentId
             };
             return View(viewModel);
         }
@@ -239,7 +240,7 @@ namespace Nidan.Controllers
         }
 
         [HttpPost]
-        public ActionResult List(Paging paging, List<OrderBy> orderBy)
+        public ActionResult List(Paging paging, List<OrderBy>orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
@@ -313,6 +314,23 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);
             return File(data, ".pdf", "Registration Reciept.pdf");
+        }
+
+        [HttpPost]
+        public ActionResult RetrieveCandidateFees(int candidateInstallmentId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var data = NidanBusinessService.RetrieveCandidateFees(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId==candidateInstallmentId, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        //  [HttpPost]
+        public ActionResult DownloadOtherFee(int? id)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);
+            return File(data, ".pdf", "Other Fee Reciept.pdf");
         }
     }
 }
