@@ -222,7 +222,7 @@ namespace Nidan.Business.Interfaces
         List<Trainer> RetrieveTrainers(int organisationId, int centreId, Expression<Func<Trainer, bool>> predicate);
         Registration RetrieveRegistration(int organisationId, int id);
         List<CourseInstallment> RetrieveCourseInstallments(int organisationId, int centreId);
-        List<Graph> RetrievePieGraphStatistics(int organisationId, int month, int year, int? centreId);
+        List<Graph> RetrievePieGraphStatistics(int organisationId,bool isSuperAdmin, int month, int year, int? centreId);
         Registration CreateCandidateRegistration(int organisationId, int centreId, int personnelId, string studentCode, Registration registration);
         List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate);
         List<AssetClass> RetrieveAssetClasses(int organisationId, Expression<Func<AssetClass, bool>> predicate);

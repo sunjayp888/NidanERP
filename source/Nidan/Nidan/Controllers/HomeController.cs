@@ -89,7 +89,9 @@ namespace Nidan.Controllers
         [HttpPost]
         public ActionResult Statistics()
         {
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, DateTime.Now.Month, DateTime.Now.Year, null);
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var centreId = UserCentreId;
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, isSuperAdmin, DateTime.Now.Month, DateTime.Now.Year, centreId);
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
@@ -105,7 +107,7 @@ namespace Nidan.Controllers
         public ActionResult StatisticsByCentre(int? id)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, DateTime.Now.Month, DateTime.Now.Year, id).ToList();
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, isSuperAdmin, DateTime.Now.Month, DateTime.Now.Year, id).ToList();
             var graphData = new List<PieGraph>()
             {
                 new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},

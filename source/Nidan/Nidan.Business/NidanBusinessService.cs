@@ -3270,27 +3270,27 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
         }
 
-        public List<Graph> RetrievePieGraphStatistics(int organisationId, int month1, int year1, int? centreId)
+        public List<Graph> RetrievePieGraphStatistics(int organisationId, bool isSuperAdmin, int month1, int year1, int? centreId)
         {
             var month = DateTime.UtcNow.Month;
             var year = DateTime.UtcNow.Year;
-            var centre = centreId.HasValue ? RetrieveCentres(organisationId, e => e.CentreId == centreId).ToList() :
+            var centre = !isSuperAdmin ? RetrieveCentres(organisationId, e => e.CentreId == centreId).ToList() :
                 RetrieveCentres(organisationId, e => true).ToList();
-            var mobilizationCount = centreId.HasValue
+            var mobilizationCount = !isSuperAdmin
                 ? RetrieveMobilizations(organisationId, e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year && e.CentreId == centreId)
                 : RetrieveMobilizations(organisationId, e => e.Close == "No" && e.CreatedDate.Month == month && e.CreatedDate.Year == year);
-            var admissionCount = centreId.HasValue
+            var admissionCount = !isSuperAdmin
                 ? RetrieveAdmissions(organisationId,
                     e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year && e.CentreId == centreId)
                 : RetrieveAdmissions(organisationId,
                     e => e.AdmissionDate.Month == month && e.AdmissionDate.Year == year);
-            var registrationCount = centreId.HasValue
+            var registrationCount = !isSuperAdmin
                 ? RetrieveRegistrations(organisationId, e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year && e.CentreId == centreId)
                 : RetrieveRegistrations(organisationId, e => e.IsAdmissionDone == false && e.RegistrationDate.Month == month && e.RegistrationDate.Year == year);
-            var enquiryCount = centreId.HasValue
+            var enquiryCount = !isSuperAdmin
                 ? RetrieveEnquiries(organisationId, e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year && e.CentreId == centreId)
                 : RetrieveEnquiries(organisationId, e => e.IsRegistrationDone == false && e.EnquiryDate.Month == month && e.EnquiryDate.Year == year);
-            var counsellingCount = centreId.HasValue
+            var counsellingCount = !isSuperAdmin
                 ? RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year && e.CentreId == centreId)
                 : RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year);
             var graphData = new List<Graph>();
