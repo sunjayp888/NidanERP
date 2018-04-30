@@ -102,11 +102,15 @@
         }
 
         function pageChanged() {
+            var path = window.location.pathname.split('/');
             if (vm.searchKeyword) {
                 searchAdmission(vm.searchKeyword);
             } else if (vm.fromDate && vm.toDate) {
                 searchAdmissionByDate(vm.fromDate, vm.toDate);
-            } else {
+            } else if (path[2] == "TodaysAdmission") {
+                retrieveTodaysAdmissions();
+            }
+            else {
                 return retrieveAdmissions();
             }
         }

@@ -201,6 +201,7 @@ namespace Nidan.Controllers
             var counsellingCourse = NidanBusinessService.RetrieveCourses(organisationId, e => true).Where(e => e.CourseId == counsellingData?.CourseOfferedId);
             var candidateFeeData = _nidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == registration.CandidateInstallmentId);
             var paidAmount = candidateFeeData.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
+            var candidateInstallment = NidanBusinessService.RetrieveCandidateInstallment(organisationId,registration.CandidateInstallmentId,e=>centreId==registration.CentreId);
             var viewModel = new RegistrationViewModel()
             {
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
@@ -212,7 +213,8 @@ namespace Nidan.Controllers
                 FeeTypes = new SelectList(feeTypes, "FeeTypeId", "Name"),
                 Enquiry = enquiry,
                 PaidAmount = paidAmount.Value,
-                CandidateInstallmentId=registration.CandidateInstallmentId
+                CandidateInstallmentId=registration.CandidateInstallmentId,
+                CandidateInstallment= candidateInstallment
             };
             return View(viewModel);
         }
@@ -243,7 +245,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy>orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidateRegistrationFee(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -251,7 +253,7 @@ namespace Nidan.Controllers
         public ActionResult TodaysRegistrationList(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.RegistrationDate == _today, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidateRegistrationFee(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.RegistrationDate == _today, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -283,7 +285,7 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationBySearchKeyword(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.SearchField.Trim().ToLower().Contains(searchKeyword.Trim().ToLower()), orderBy, paging);
+            var data = NidanBusinessService.RetrieveCandidateRegistrationFee(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.IsAdmissionDone == false && p.SearchField.Trim().ToLower().Contains(searchKeyword.Trim().ToLower()), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -291,7 +293,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveRegistrationGrid(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidateRegistrationFee(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.RegistrationDate >= fromDate && e.RegistrationDate <= toDate && e.IsAdmissionDone == false, orderBy, paging);
             return this.JsonNet(data);
         }
 

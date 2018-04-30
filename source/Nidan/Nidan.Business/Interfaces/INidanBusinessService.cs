@@ -406,6 +406,8 @@ namespace Nidan.Business.Interfaces
         PagedResult<BatchCandidate> RetrieveBatchCandidates(int organisationId, Expression<Func<BatchCandidate, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate);
         PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateRegistrationFee> RetrieveCandidateRegistrationFee(int organisationId, Expression<Func<CandidateRegistrationFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+
         #endregion
 
         #region Update

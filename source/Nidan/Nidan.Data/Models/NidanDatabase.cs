@@ -201,6 +201,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BatchCandidate> BatchCandidates { get; set; }
         public virtual DbSet<FeeType> FeeTypes { get; set; }
         public virtual DbSet<CandidateFeeReport> CandidateFeeReports { get; set; }
+        public virtual DbSet<CandidateRegistrationFee> CandidateRegistrationFees { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3463,6 +3464,22 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateFeeReport>()
                 .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.RegistrationFeePaid)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.SearchField)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
