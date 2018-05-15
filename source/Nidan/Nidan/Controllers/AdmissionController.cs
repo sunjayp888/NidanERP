@@ -366,7 +366,7 @@ namespace Nidan.Controllers
             var admission = _nidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
             var registration = _nidanBusinessService.RetrieveRegistration(organisationId, centreId, admission.RegistrationId);
             var paymentModes = _nidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-            var feeTypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId ==5);
+            var feeTypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId ==5 || e.FeeTypeId==8);
             var admissionGrid = _nidanBusinessService.RetrieveAdmissionGrid(organisationId, e => e.AdmissionId == id.Value).Items.FirstOrDefault();
             if (registration == null)
             {
@@ -526,7 +526,7 @@ namespace Nidan.Controllers
                 lastName = admissionData?.Registration.Enquiry.LastName;
                 admission = admissionData;
             }
-            var data = feeTypeId == 1 || feeTypeId == 3 || feeTypeId == 4 || feeTypeId == 5 || feeTypeId == 6 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
+            var data = feeTypeId == 1 || feeTypeId == 3 || feeTypeId == 4 || feeTypeId == 5 || feeTypeId == 6 || feeTypeId == 8 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
                 : NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} {2}.pdf", firstName, lastName, feeType.ToString()));
         }

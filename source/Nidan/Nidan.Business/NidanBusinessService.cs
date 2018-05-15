@@ -1400,31 +1400,6 @@ namespace Nidan.Business
             return _nidanDataService.Create<CandidateFee>(organisationId, candidateFeeData);
         }
 
-
-        public OtherFee CreateOtherFee(int organisationId, int centreId, OtherFee otherFee)
-        {
-            var centre = RetrieveCentre(organisationId, centreId);
-            var voucherData = new Voucher();
-            var vouchers =
-                RetrieveVouchers(organisationId, centreId, e => e.CashMemo == otherFee.CashMemo).Items.ToList();
-            if (!vouchers.Any(e => e.CashMemo == otherFee.CashMemo))
-            {
-                voucherData.CashMemo = otherFee.CashMemo;
-                voucherData.CentreId = centreId;
-                voucherData.OrganisationId = organisationId;
-                voucherData.CreatedDate = DateTime.UtcNow;
-                voucherData = _nidanDataService.Create<Voucher>(organisationId, voucherData);
-                voucherData.VoucherNumber = String.Format("{0}/{1}/{2}", centre.Name, DateTime.UtcNow.ToString("MMMM"),
-                    voucherData.VoucherId);
-                _nidanDataService.UpdateOrganisationEntityEntry(organisationId, voucherData);
-            }
-            otherFee.VoucherId = voucherData.VoucherId == 0
-                ? vouchers.FirstOrDefault().VoucherId
-                : voucherData.VoucherId;
-            var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
-            return data;
-        }
-
         public Expense CreateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds)
         {
             var centre = RetrieveCentre(organisationId, centreId);
@@ -1837,6 +1812,20 @@ namespace Nidan.Business
              CandidatePrePlacementReport candidatePrePlacementReport)
         {
             var data = _nidanDataService.Create<CandidatePrePlacementReport>(organisationId, candidatePrePlacementReport);
+            return data;
+        }
+
+        public OtherFee CreateOtherFee(int organisationId, OtherFee otherFee)
+        {
+            var rupeesinwords=ConvertNumbertoWords((int) otherFee.PaidAmount);
+            otherFee.RupeesInWords = rupeesinwords;
+            var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == otherFee.CentreId);
+            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            otherFee.ReceiptNumber = receiptNumber;
+            //Receipt Number increment by one
+            centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.ReceiptNumber + 1;
+            _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centreRecieptsettingData);
+            var data = _nidanDataService.Create<OtherFee>(organisationId, otherFee);
             return data;
         }
 
@@ -2522,6 +2511,21 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateRegistrationFee(organisationId, predicate, orderBy, paging);
         }
 
+        public OtherFee RetrieveOtherFee(int organisationId, int otherFeeId)
+        {
+            return _nidanDataService.RetrieveOtherFee(organisationId, otherFeeId);
+        }
+
+        public PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveOtherFees(organisationId, predicate, orderBy, paging);
+        }
+
+        public List<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveOnlineExams(organisationId, predicate).Items.ToList();
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);
@@ -2831,11 +2835,6 @@ namespace Nidan.Business
         public List<Trainer> RetrieveTrainers(int organisationId, Expression<Func<Trainer, bool>> predicate)
         {
             return _nidanDataService.Retrieve<Trainer>(organisationId, predicate);
-        }
-
-        public List<OtherFee> RetrieveOtherFees(int organisationId, Expression<Func<OtherFee, bool>> predicate)
-        {
-            return _nidanDataService.Retrieve<OtherFee>(organisationId, predicate);
         }
 
         public List<Qualification> RetrieveQualifications(int organisationId,
@@ -3516,18 +3515,6 @@ namespace Nidan.Business
             Expression<Func<ExpenseHeader, bool>> predicate)
         {
             return _nidanDataService.RetrieveExpenseHeader(organisationId, expenseHeaderId, predicate);
-        }
-
-        public PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId,
-            Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            return _nidanDataService.RetrieveOtherFees(organisationId, centreId, predicate, orderBy, paging);
-        }
-
-        public OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId,
-            Expression<Func<OtherFee, bool>> predicate)
-        {
-            return _nidanDataService.RetrieveOtherFee(organisationId, centreId, otherFeeId, predicate);
         }
 
         public PagedResult<Expense> RetrieveExpenses(int organisationId, int centreId,
@@ -4622,12 +4609,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
-        public OtherFee UpdateOtherFee(int organisationId, int centreId, OtherFee otherFee)
-        {
-            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
-        }
-
-        public Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds)
+       public Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds)
         {
             if (!expense.ExpenseProjects.Any() && projectIds.Any())
                 CreateExpenseProject(organisationId, expense.CentreId, expense.ExpenseId, projectIds);
@@ -4905,6 +4887,11 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, candidatePrePlacementReport);
         }
 
+        public OtherFee UpdateOtherFee(int organisationId, OtherFee otherFee)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
+        }
+
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)
         {
             if (admission.BatchId != null)
@@ -5042,11 +5029,6 @@ namespace Nidan.Business
         public void DeleteCentreCourseInstallment(int organisationId, int centreId, int courseInstallmentId)
         {
             _nidanDataService.Delete<CentreCourseInstallment>(organisationId, p => p.CentreId == centreId && p.CourseInstallmentId == courseInstallmentId);
-        }
-
-        public void DeleteOtherFee(int organisationId, int centreId, int otherFeeId)
-        {
-            _nidanDataService.Delete<OtherFee>(organisationId, p => p.CentreId == centreId && p.OtherFeeId == otherFeeId);
         }
 
         public void DeleteExpenseProject(int organisationId, int expenseId, int projectId)
@@ -5291,7 +5273,7 @@ namespace Nidan.Business
                 BankName = candidateFeeData.BankName != "null" ? candidateFeeData.BankName : "-",
                 ChequeNumber = candidateFeeData.ChequeNumber != "null" ? candidateFeeData.ChequeNumber : "-",
                 ChequeDate = candidateFeeData.ChequeDate?.ToShortDateString(),
-                RupeesInWords = rupeesinword + "RUPEES ONLY"
+                RupeesInWords = rupeesinword + " RUPEES ONLY"
             };
             if (value == 1)
             {
@@ -5301,17 +5283,13 @@ namespace Nidan.Business
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Installment");
             }
-            else if (value == 6)
+            else if (value == 6 || value == 5 || value == 8)
             {
-                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "CandidateOtherFee");
             }
-            else if (value == 4)
+            else if (value == 4||value==7)
             {
-                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
-            }
-            else if (value == 5)
-            {
-                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "OtherFee");
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "LeadOtherFee");
             }
             else
             {
@@ -5454,7 +5432,46 @@ namespace Nidan.Business
             expenseReceipt.RupeesInWords = expense.RupeesInWord;
             expenseReceipt.Particulars = expense.Particulars;
             var expenseData = expenseReceipt;
-            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(expenseReceipt), "OtherFee");
+            return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(expenseReceipt), "Expense");
+        }
+
+        public byte[] CreateOtherFeeRecieptBytes(int organisationId, int centreId, int otherFeeId)
+        {
+            var otherFeeData = _nidanDataService.RetrieveOtherFee(organisationId, otherFeeId);
+            var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == otherFeeData.StudentCode).FirstOrDefault();
+            var centre = RetrieveCentre(organisationId, otherFeeData.CentreId);
+            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            int value = otherFeeData.FeeTypeId;
+            var rupeesinword = otherFeeData.RupeesInWords;
+            //var feeType = (Enum.FeeType)value;
+            var otherFeeReceipt = new OtherFeeReceipt()
+            {
+                OrganisationName = otherFeeData.Organisation.Name,
+                EmailId = enquiry?.EmailId,
+                PaymentDate = otherFeeData.PaymentDate.ToShortDateString(),
+                CandidateAddress =string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
+                // ReSharper disable once PossiblyMistakenUseOfParamsMethod
+                CandidateName = string.Concat(enquiry.Title , " " , enquiry.FirstName , " " , enquiry.MiddleName , " " +enquiry.LastName),
+                CentreName = otherFeeData.Centre.Name,
+                CentreAddress = string.Concat(centre.Address1,centre.Address2, centre.Address3, centre.Address4),
+                FeeTypeName = otherFeeData.FeeType.Name,
+                InvoiceNumber = otherFeeData.ReceiptNumber,
+                RecievedAmount = otherFeeData.PaidAmount.ToString(),
+                MobileNumber = enquiry.Mobile.ToString(),
+                State = otherFeeData.Centre.State.Name,
+                Gstin = gstnumber.GstNumber,
+                GstStateCode = centre.State.GstStateCode.ToString(),
+                FatherName = enquiry.MiddleName + " " + enquiry.LastName,
+                RupeesInWords = rupeesinword + " RUPEES ONLY"
+            };
+            if (value == 4|| value == 7|| value == 8)
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFeeReceipt), "LeadOtherFee");
+            }
+            else
+            {
+                return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFeeReceipt), "LeadOtherFee");
+            }
         }
 
         //RupeesInWords

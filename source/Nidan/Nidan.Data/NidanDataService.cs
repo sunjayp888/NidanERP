@@ -2341,46 +2341,6 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .OtherFees
-                    .Include(p => p.Organisation)
-                    .Include(p => p.Project)
-                    .Include(p => p.Centre)
-                    .Include(p => p.ExpenseHeader)
-                    .Include(p => p.Voucher)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .OrderBy(orderBy ?? new List<OrderBy>
-                    {
-                        new OrderBy
-                        {
-                            Property = "CreatedDate",
-                            Direction = System.ComponentModel.ListSortDirection.Descending
-                        }
-                    })
-                    .Paginate(paging);
-            }
-        }
-
-        public OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate)
-        {
-            using (ReadUncommitedTransactionScope)
-            using (var context = _databaseFactory.Create(organisationId))
-            {
-                return context
-                    .OtherFees
-                    .Include(p => p.Project)
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
-            }
-        }
-
         public PagedResult<CandidateFeeGrid> RetrieveCandidateFeeGrid(int organisationId, Expression<Func<CandidateFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
@@ -5026,6 +4986,66 @@ namespace Nidan.Data
                         new OrderBy
                         {
                             Property = "RegistrationDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public OtherFee RetrieveOtherFee(int organisationId, int otherFeeId)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                return context
+                    .OtherFees
+                    .Include(p=>p.Organisation)
+                    .Include(p => p.Centre)
+                    .Include(p=>p.Centre.State)
+                    .Include(p=>p.FeeType)
+                    .AsNoTracking()
+                    .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
+            }
+        }
+
+        public PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .OtherFeeGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "PaymentDate",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+            }
+        }
+
+        public PagedResult<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .OnlineExams
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "OnlineExamId",
                             Direction = System.ComponentModel.ListSortDirection.Descending
                         }
                     })

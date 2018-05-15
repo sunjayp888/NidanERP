@@ -6,10 +6,10 @@ namespace Nidan.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ExpenseHeader")]
-    public partial class ExpenseHeader
+    [Table("OnlineExam")]
+    public partial class OnlineExam
     {
-        public int ExpenseHeaderId { get; set; }
+        public int OnlineExamId { get; set; }
 
         [Required]
         [StringLength(500)]
@@ -20,6 +20,6 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Expense> Expenses { get; set; }
+        public virtual ICollection<OtherFee> OtherFees { get; set; }
     }
 }

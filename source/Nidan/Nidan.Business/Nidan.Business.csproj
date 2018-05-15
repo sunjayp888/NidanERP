@@ -150,6 +150,7 @@
     <Compile Include="Models\MobilizationCountData.cs" />
     <Compile Include="Models\ExpenseReceipt.cs" />
     <Compile Include="Models\MobilizationSummaryReport.cs" />
+    <Compile Include="Models\OtherFeeReceipt.cs" />
     <Compile Include="Models\PettyCashReport.cs" />
     <Compile Include="Models\RegistrationReciept.cs" />
     <Compile Include="Models\StudentAttendance.cs" />

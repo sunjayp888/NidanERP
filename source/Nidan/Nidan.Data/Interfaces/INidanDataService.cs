@@ -146,8 +146,6 @@ namespace Nidan.Data.Interfaces
         PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
-        PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate);
         PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
         PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -290,6 +288,9 @@ namespace Nidan.Data.Interfaces
         PagedResult<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateRegistrationFee> RetrieveCandidateRegistrationFee(int organisationId, Expression<Func<CandidateRegistrationFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        OtherFee RetrieveOtherFee(int organisationId, int otherFeeId);
+        PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

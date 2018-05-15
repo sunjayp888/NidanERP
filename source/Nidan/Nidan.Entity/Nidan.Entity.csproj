@@ -233,10 +233,12 @@
     <Compile Include="ModuleExamQuestionSetGrid.cs" />
     <Compile Include="ModuleExamSet.cs" />
     <Compile Include="Occupation.cs" />
+    <Compile Include="OnlineExam.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
     <Compile Include="OtherFee.cs" />
+    <Compile Include="OtherFeeGrid.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Activity.cs" />
     <Compile Include="Partials\ActivityTask.cs" />

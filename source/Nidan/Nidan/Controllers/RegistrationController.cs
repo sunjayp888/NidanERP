@@ -187,12 +187,13 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var registration = _nidanBusinessService.RetrieveRegistration(organisationId, id.Value);
+            var candidateRegistrationFee = _nidanBusinessService.RetrieveCandidateRegistrationFee(organisationId, e=>e.RegistrationId==id.Value).Items.FirstOrDefault();
             var paymentModes = _nidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-            var feeTypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId !=1 && e.FeeTypeId != 2 && e.FeeTypeId != 3 && e.FeeTypeId != 5);
             if (registration == null)
             {
                 return HttpNotFound();
             }
+            var feetypes = new List<FeeType>();
             var courseInstallments = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId).Items.Select(e => e.CourseInstallment).ToList();
             var interestedCourseIds = registration.Enquiry.EnquiryCourses.Select(e => e.CourseId).ToList();
             var courses = NidanBusinessService.RetrieveCourses(organisationId, p => true).Where(e => interestedCourseIds.Contains(e.CourseId));
@@ -202,6 +203,14 @@ namespace Nidan.Controllers
             var candidateFeeData = _nidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == registration.CandidateInstallmentId);
             var paidAmount = candidateFeeData.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
             var candidateInstallment = NidanBusinessService.RetrieveCandidateInstallment(organisationId,registration.CandidateInstallmentId,e=>centreId==registration.CentreId);
+            if (candidateInstallment.DownPayment <= candidateRegistrationFee?.RegistrationFeePaid)
+            {
+                feetypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId == 8);
+            }
+            else
+            {
+                feetypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId != 1 && e.FeeTypeId != 2 && e.FeeTypeId != 3 && e.FeeTypeId != 4 && e.FeeTypeId != 5 && e.FeeTypeId != 7);
+            }
             var viewModel = new RegistrationViewModel()
             {
                 PaymentModes = new SelectList(paymentModes, "PaymentModeId", "Name"),
@@ -210,7 +219,7 @@ namespace Nidan.Controllers
                 Registration = registration,
                 CourseInstallments = new SelectList(courseInstallments, "CourseInstallmentId", "Name"),
                 CounsellingCourse = new SelectList(counsellingCourse, "CourseId", "Name"),
-                FeeTypes = new SelectList(feeTypes, "FeeTypeId", "Name"),
+                FeeTypes = new SelectList(feetypes, "FeeTypeId", "Name"),
                 Enquiry = enquiry,
                 PaidAmount = paidAmount.Value,
                 CandidateInstallmentId=registration.CandidateInstallmentId,
@@ -326,13 +335,5 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCandidateFees(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId==candidateInstallmentId, orderBy, paging);
             return this.JsonNet(data);
         }
-
-        //  [HttpPost]
-        public ActionResult DownloadOtherFee(int? id)
-        {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.CreateRegistrationRecieptBytes(UserOrganisationId, UserCentreId, id.Value);
-            return File(data, ".pdf", "Other Fee Reciept.pdf");
         }
-    }
 }

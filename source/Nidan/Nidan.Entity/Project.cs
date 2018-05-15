@@ -11,7 +11,6 @@ namespace Nidan.Entity
     {
         public Project()
         {
-            OtherFees=new HashSet<OtherFee>();
             ExpenseProjects=new HashSet<ExpenseProject>();
             Activities=new HashSet<Activity>();
             BankDeposites = new HashSet<BankDeposite>();
@@ -27,9 +26,6 @@ namespace Nidan.Entity
         public int OrganisationId { get; set; }
 
         public virtual Organisation Organisation { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OtherFee> OtherFees { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExpenseProject> ExpenseProjects { get; set; }

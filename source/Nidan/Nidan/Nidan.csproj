@@ -286,6 +286,7 @@
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\ModuleExamSetController.cs" />
+    <Compile Include="Controllers\OtherFeeController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="Models\ModuleExamSetViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\ExpenseViewModel.cs" />
+    <Compile Include="Models\OtherFeeViewModel.cs" />
     <Compile Include="Models\PartnerViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1216,6 +1218,7 @@
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
     <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
+    <Content Include="Scripts\Angular\Controllers\OtherFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\PlacementDocumentController.js" />
@@ -1286,6 +1289,7 @@
     <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseService.js" />
+    <Content Include="Scripts\Angular\Services\OtherFeeService.js" />
     <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
@@ -1878,6 +1882,9 @@
     <Content Include="Views\Admission\OtherFee.cshtml" />
     <Content Include="Views\Admission\_OtherFeeAdmission.cshtml" />
     <Content Include="Views\Report\CandidateFee.cshtml" />
+    <Content Include="Views\OtherFee\Index.cshtml" />
+    <Content Include="Views\OtherFee\Create.cshtml" />
+    <Content Include="Views\OtherFee\_OtherFee.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
