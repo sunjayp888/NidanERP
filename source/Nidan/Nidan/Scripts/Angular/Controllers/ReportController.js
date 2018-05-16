@@ -88,6 +88,7 @@
         vm.viewCentrePettyCashByCentreId = viewCentrePettyCashByCentreId;
         vm.searchExpenseDetailReportByDate = searchExpenseDetailReportByDate;
         vm.searchCandidateFeeReportByDate = searchCandidateFeeReportByDate;
+        vm.searchCandidateOtherFeeReportByDate = searchCandidateOtherFeeReportByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -600,6 +601,22 @@
             vm.orderBy.class = "asc";
             order("PaymentDate");
             return ReportService.searchCandidateFeeReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function searchCandidateOtherFeeReportByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "StudentCodeNumber";
+            vm.orderBy.class = "asc";
+            order("StudentCodeNumber");
+            return ReportService.searchCandidateOtherFeeReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

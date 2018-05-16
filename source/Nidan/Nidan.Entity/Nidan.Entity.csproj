@@ -137,6 +137,7 @@
     <Compile Include="CandidateInstallment.cs" />
     <Compile Include="CandidateInstallmentGrid.cs" />
     <Compile Include="CandidateInstallmentSearchField.cs" />
+    <Compile Include="CandidateOtherFeeReport.cs" />
     <Compile Include="CandidatePostPlacement.cs" />
     <Compile Include="CandidatePostPlacementGrid.cs" />
     <Compile Include="CandidatePrePlacement.cs" />

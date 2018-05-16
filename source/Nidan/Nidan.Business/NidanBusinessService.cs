@@ -2526,6 +2526,12 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveOnlineExams(organisationId, predicate).Items.ToList();
         }
 
+        public PagedResult<CandidateOtherFeeReport> RetrieveCandidateOtherFeeReport(int organisationId, Expression<Func<CandidateOtherFeeReport, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidateOtherFeeReport(organisationId, predicate, orderBy, paging);
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);

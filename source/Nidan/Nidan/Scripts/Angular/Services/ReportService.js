@@ -47,7 +47,8 @@
             retrieveInstallmentSummaryByDate: retrieveInstallmentSummaryByDate,
             retrieveCentrePettyCashByCentreId: retrieveCentrePettyCashByCentreId,
             searchExpenseDetailReportByDate: searchExpenseDetailReportByDate,
-            searchCandidateFeeReportByDate: searchCandidateFeeReportByDate
+            searchCandidateFeeReportByDate: searchCandidateFeeReportByDate,
+            searchCandidateOtherFeeReportByDate: searchCandidateOtherFeeReportByDate
         };
 
         return service;
@@ -434,6 +435,18 @@
 
         function searchCandidateFeeReportByDate(FromDate, ToDate, Paging, OrderBy) {
             var url = "/Report/SearchCandidateFeeReportByDate",
+                data = {
+                    fromDate: FromDate,
+                    toDate: ToDate,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchCandidateOtherFeeReportByDate(FromDate, ToDate, Paging, OrderBy) {
+            var url = "/Report/SearchCandidateOtherFeeReportByDate",
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,
