@@ -33,7 +33,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                             <strong><i class="fa fa-info-circle"></i> &nbsp;@string.Format("{0} {1}", @Model.Admission.Registration.Enquiry.FirstName, @Model.Admission.Registration.Enquiry.LastName)</strong>
-                            has been enrolled for course @Model.Admission.Registration.Course.Name and paid Rs @Model.Admission.Registration.CandidateInstallment.CandidateFees.Sum(e=>e.PaidAmount) out of total Amount
+                            has been enrolled for course @Model.Admission.Registration.Course.Name and paid Rs @Model.PaidAmount out of total Amount
                             @Model.Admission.Registration.CandidateInstallment.CourseFee
                         </div>
                         @*-----------------------------------------Candidate Details-----------------------------------------*@
@@ -130,7 +130,7 @@
                                                 <span class="input-group-btn">
                                                     <button type="button" class="btn btn-dark">Registration Fee Paid</button>
                                                 </span>
-                                                <input type="text" disabled="disabled" value="@Model.Admission.Registration.CandidateFee.PaidAmount" class="form-control col-lg-4">
+                                                <input type="text" disabled="disabled" value="@Model.TotalRegistrationAmount" class="form-control col-lg-4">
                                             </div>
                                         </div>
                                     </div>

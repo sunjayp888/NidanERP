@@ -1,0 +1,164 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.BatchPrePlacementViewModel
+@{
+    ViewBag.Title = string.Format("Edit Batch Pre-Placement ({0})", Model.BatchPrePlacement.Name);
+}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+
+                        }
+                        @Html.HiddenFor(model => Model.BatchPrePlacement.BatchPrePlacementId)
+
+                        @Html.Partial("_BatchPrePlacement", Model)
+                        
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @*---Candidate Scheduled Pre Placement---*@
+   <div ng-controller="BatchPrePlacementController as model" ng-init="model.retrieveCandidatePrePlacementByBatchPrePlacementId(@Model.BatchPrePlacement.BatchPrePlacementId)">
+       <div class="col-md-12 col-sm-12 col-xs-12">
+           <div class="form-group">
+               @Html.LabelFor(model => model.CandidatePrePlacement.PrePlacementActivityId, "Pre-Placement Activity", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+               <div class="col-md-6 col-sm-6 col-xs-12">
+                   @Html.DropDownListFor(model => model.CandidatePrePlacement.PrePlacementActivityId, Model.PrePlacementActivities,null, new { @class = "form-control col-md-7 col-xs-12" })
+                   @Html.ValidationMessageFor(model => model.CandidatePrePlacement.PrePlacementActivityId, "", new { @class = "help-block" })
+               </div>
+               <button id="btnAddPrePlacementActivity" type="button" class="btn btn-info" ng-click="model.openCandidatePrePlacementActivityModalPopUp(@Model.BatchPrePlacement.BatchPrePlacementId)" data-toggle="modal" data-target="#candidatePrePlacementActivityModal">Add</button>
+           </div>
+           <br/>
+           <br/>
+           <div class="x_panel">
+               <div class="x_content">
+                   <p class="text-muted font-13 m-b-30">
+                   </p>
+                   <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                       <div class="row">
+                           <div class="col-xs-12">
+                               @Html.Partial("Pagination/_pageSize")
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-xs-12">
+                               <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                   <thead>
+                                   <tr role="row">
+                                       <th ng-click="model.order('PrePlacementActivityName')" ng-class="model.orderClass('PrePlacementActivityName')">Pre-Placement Activity</th>
+                                       <th ng-click="model.order('ScheduledStartDate')" ng-class="model.orderClass('ScheduledStartDate')">Scheduled Date</th>
+                                       <th ng-click="model.order('ScheduledEndDate')" ng-class="model.orderClass('ScheduledEndDate')">Scheduled End Date</th>
+                                       <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remark</th>
+                                       <th>Actions</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   <tr ng-repeat="candidatePrePlacement in model.candidatePrePlacements" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                       <td><span ng-bind="candidatePrePlacement.PrePlacementActivityName"></span></td>
+                                       <td><span ng-bind="candidatePrePlacement.ScheduledStartDate|date : format : shortDate"></span></td>
+                                       <td><span ng-bind="candidatePrePlacement.ScheduledEndDate|date : format : shortDate"></span></td>
+                                       <td><span ng-bind="candidatePrePlacement.Remark"></span></td>
+                                       <td>
+                                           <div class="btn-group pull-right">
+                                               <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                   <i class="fa fa-chevron-down"></i>
+                                               </a>
+                                               <ul class="dropdown-menu slidedown">
+                                                   @if (User.IsInAnyRoles("Admin"))
+                                                   {
+                                                       <li>
+                                                           <a style="cursor: pointer;" ng-click="model.openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacement.CandidatePrePlacementId)" data-toggle="modal" data-target="#candidatePrePlacementActivityModal">
+                                                               Edit
+                                                           </a>
+                                                       </li>
+                                                   }
+                                               </ul>
+                                           </div>
+                                       </td>
+                                   </tr>
+                                   </tbody>
+                               </table>
+                           </div>
+                       </div>
+                       @Html.Partial("Pagination/_pagination")
+                   </div>
+                   <div class="row">
+                       <div class="col-xs-12">
+                           <label ng-bind="model.searchMessage"></label>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       @Html.Partial("_CandidatePrePlacementActivity")
+   </div> 
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        $('#txtRemark').val("");
+
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
+        });
+
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
+            daysOfTheWeek: ['M', 'T', 'W', 'T', 'F'],
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+        moment.weekdays(true);
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('#BankDeposite_DepositedDate').val(moment().format('DD MMMM YYYY'));
+            $('#BankDeposite_DepositedDate').val(moment().format('DD MMMM YYYY'));
+            $(".date")
+                .on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
+        });
+
+    </script>
+}

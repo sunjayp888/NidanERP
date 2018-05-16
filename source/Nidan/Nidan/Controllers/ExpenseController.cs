@@ -216,7 +216,7 @@ namespace Nidan.Controllers
             var expense = NidanBusinessService.RetrieveExpense(UserOrganisationId, centreId, id.Value, e => true);
             var data = NidanBusinessService.CreateExpenseBytes(UserOrganisationId, centreId, expense);
             var voucherNumber = expense.VoucherNumber;
-            return File(data, ".pdf", string.Format("{0} Other Fee.pdf", voucherNumber));
+            return File(data, ".pdf", string.Format("{0} Expense.pdf", voucherNumber));
         }
 
         [HttpPost]

@@ -13,6 +13,7 @@
         vm.Registrations = [];
         vm.enquiries = [];
         vm.candidateFees = [];
+        vm.OtherFees = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -27,10 +28,12 @@
         vm.searchRegistrationByDate = searchRegistrationByDate;
         vm.retrieveTodaysRegistrations = retrieveTodaysRegistrations,
         vm.retrieveEnquiries = retrieveEnquiries;
+        vm.retrieveCandidateFees = retrieveCandidateFees;
         vm.searchEnquiry = searchEnquiry;
         vm.searchKeyword = "";
         vm.searchMessage = "";
         vm.initialise = initialise;
+        vm.candidateInstallmentId;
 
         function initialise() {
             vm.orderBy.property = "RegistrationId";
@@ -162,9 +165,20 @@
             $window.location.href = "/Registration/Create/" + enquiryId;
         }
 
-        //function viewCandidateFee(candidateInstallmentId) {
-        //    $window.location.href = "/CandidateFee/Detail/" + candidateInstallmentId;
-        //}
+        function retrieveCandidateFees(candidateInstallmentId) {
+            vm.candidateInstallmentId = candidateInstallmentId;
+            vm.orderBy.property = "CandidateFeeId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return RegistrationService.retrieveCandidateFees(vm.candidateInstallmentId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.OtherFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.OtherFees.length === 0 ? "No Records Found" : "";
+                    return vm.OtherFees;
+                });
+        }
 
     }
 

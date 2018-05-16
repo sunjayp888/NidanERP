@@ -71,7 +71,7 @@ namespace Nidan.Controllers
                 candidateFeeViewModel.CandidateFee.OrganisationId = organisationId;
                 candidateFeeViewModel.CandidateFee.CentreId = UserCentreId;
                 candidateFeeData.PaymentDate = candidateFeeViewModel.CandidateFee.PaymentDate;
-                candidateFeeData.FeeTypeId = (int)FeeType.Installment;
+                candidateFeeData.FeeTypeId = (int)Business.Enum.FeeType.Installment;
                 candidateFeeData.FiscalYear = DateTime.UtcNow.FiscalYear();
                 candidateFeeData.IsPaymentDone = true;
                 candidateFeeData.BankName = candidateFeeViewModel.CandidateFee.BankName;
@@ -128,7 +128,7 @@ namespace Nidan.Controllers
 
         public void AdjustInstallment(int? candidateInstallmentId, decimal? advancedAmount, decimal? balanceAmount)
         {
-            var candidateFees = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, e => e.CandidateInstallmentId == candidateInstallmentId && e.FeeTypeId == (int)FeeType.Installment && !e.IsPaymentDone);
+            var candidateFees = NidanBusinessService.RetrieveCandidateFees(UserOrganisationId, e => e.CandidateInstallmentId == candidateInstallmentId && e.FeeTypeId == (int)Business.Enum.FeeType.Installment && !e.IsPaymentDone);
             //for advancedAmount => we are passing 0 to balanceAmount & for balanceAmount => passing 0 to advancedAmount
             var amount = advancedAmount != 0 ?
                 (candidateFees.Items.Sum(e => e.InstallmentAmount) - advancedAmount) / candidateFees.Items.Count()
@@ -138,7 +138,6 @@ namespace Nidan.Controllers
                 candidate.InstallmentAmount = amount;
                 NidanBusinessService.UpdateCandidateFee(UserOrganisationId, candidate);
             }
-
         }
 
         [HttpPost]
@@ -156,10 +155,11 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCandidateInstallment(organisationId, id.Value, e => true);
             var enquiry = NidanBusinessService.RetrieveEnquiries(organisationId, e => e.StudentCode == data.StudentCode).ToList().FirstOrDefault();
             //var candidateFeeData = NidanBusinessService.RetrieveCandidateFees(organisationId, e => e.CandidateInstallmentId == id.Value);
-            var candidateFeeData = NidanBusinessService.RetrieveCandidateFeeGrid(organisationId, e => e.CandidateInstallmentId == id.Value);
-            var totalPaid = candidateFeeData.Items.Sum(e => e.PaidAmount);
-            var courseFee = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee : data.LumpsumAmount;
-            var balanceAmount = data.PaymentMethod == "MonthlyInstallment" ? data.CourseFee - totalPaid : data.LumpsumAmount - totalPaid;
+            //var candidateFeeData = NidanBusinessService.RetrieveCandidateFeeGrid(organisationId, e => e.CandidateInstallmentId == id.Value);
+            var candidateInstallmentGrid = NidanBusinessService.RetrieveCandidateInstallmentGrid(organisationId,e => e.CandidateInstallmentId == id.Value).Items.FirstOrDefault();
+            var totalPaid = candidateInstallmentGrid.PaidAmount;
+            var courseFee = candidateInstallmentGrid.TotalFee;
+            var balanceAmount = candidateInstallmentGrid.PendingAmount;
             var candidateFeeModel = new CandidateFeeViewModel
             {
                 CandidateName = String.Format("{0} {1} {2} {3}", enquiry?.Title, enquiry?.FirstName, enquiry?.MiddleName, enquiry?.LastName),
@@ -206,7 +206,7 @@ namespace Nidan.Controllers
             var feeTypeId = candidateFee.FeeTypeId;
             string firstName = "";
             string lastName = "";
-            FeeType feeType = (FeeType)feeTypeId;
+            Business.Enum.FeeType feeType = (Business.Enum.FeeType)feeTypeId;
             if (feeTypeId == 2)
             {
                 var registration = NidanBusinessService.RetrieveRegistrations(organisationId, e => e.StudentCode == candidateFee.StudentCode).Items.FirstOrDefault();
@@ -215,7 +215,7 @@ namespace Nidan.Controllers
                 lastName = admissionData?.Registration.Enquiry.LastName;
                 admission = admissionData;
             }
-            var data = feeTypeId == 1 || feeTypeId == 3 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
+            var data = feeTypeId == 1 || feeTypeId == 3 || feeTypeId == 4 || feeTypeId == 5 || feeTypeId == 6 ? NidanBusinessService.CreateRegistrationRecieptBytes(organisationId, centreId, id.Value)
                 : NidanBusinessService.CreateEnrollmentBytes(organisationId, centreId, admission);
             return File(data, ".pdf", string.Format("{0} {1} {2}.pdf", firstName, lastName, feeType.ToString()));
         }

@@ -369,3 +369,8 @@
   background: #73879C !important;
   color: white !important;
 }
+.wordwrap {
+  table-layout: fixed;
+  word-wrap: break-word;
+  max-width: 300px;
+}

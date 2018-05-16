@@ -113,10 +113,13 @@
     <Compile Include="Batch.cs" />
     <Compile Include="BatchAttendance.cs" />
     <Compile Include="BatchAttendanceDataGrid.cs" />
+    <Compile Include="BatchCandidate.cs" />
     <Compile Include="BatchDay.cs" />
     <Compile Include="BatchPlanner.cs" />
     <Compile Include="BatchPlannerDay.cs" />
     <Compile Include="BatchPlannerGrid.cs" />
+    <Compile Include="BatchPrePlacement.cs" />
+    <Compile Include="BatchPrePlacementSearchField.cs" />
     <Compile Include="BatchTimePrefer.cs" />
     <Compile Include="BatchTrainer.cs" />
     <Compile Include="BiometricAttendance.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="CandidateAttemptedQuestionAnswerGrid.cs" />
     <Compile Include="CandidateFee.cs" />
     <Compile Include="CandidateFeeGrid.cs" />
+    <Compile Include="CandidateFeeReport.cs" />
     <Compile Include="CandidateFeeSearchField.cs" />
     <Compile Include="CandidateFinalPlacement.cs" />
     <Compile Include="CandidateFinalPlacementGrid.cs" />
@@ -135,8 +139,12 @@
     <Compile Include="CandidateInstallmentSearchField.cs" />
     <Compile Include="CandidatePostPlacement.cs" />
     <Compile Include="CandidatePostPlacementGrid.cs" />
+    <Compile Include="CandidatePrePlacement.cs" />
     <Compile Include="CandidatePrePlacementActivity.cs" />
     <Compile Include="CandidatePrePlacementActivityGrid.cs" />
+    <Compile Include="CandidatePrePlacementGrid.cs" />
+    <Compile Include="CandidatePrePlacementReport.cs" />
+    <Compile Include="CandidateRegistrationFee.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />
     <Compile Include="CentreCourse.cs" />
@@ -193,6 +201,7 @@
     <Compile Include="ExpenseHeadLimit.cs" />
     <Compile Include="ExpenseProject.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="FeeType.cs" />
     <Compile Include="FixAsset.cs" />
     <Compile Include="FixAssetDataGrid.cs" />
     <Compile Include="FixAssetDetailGrid.cs" />
@@ -224,10 +233,12 @@
     <Compile Include="ModuleExamQuestionSetGrid.cs" />
     <Compile Include="ModuleExamSet.cs" />
     <Compile Include="Occupation.cs" />
+    <Compile Include="OnlineExam.cs" />
     <Compile Include="Organisation.cs" />
     <Compile Include="Dto\PagedResult.cs" />
     <Compile Include="Dto\Paging.cs" />
     <Compile Include="OtherFee.cs" />
+    <Compile Include="OtherFeeGrid.cs" />
     <Compile Include="Partials\AbsenceType.cs" />
     <Compile Include="Partials\Activity.cs" />
     <Compile Include="Partials\ActivityTask.cs" />
@@ -235,6 +246,7 @@
     <Compile Include="Partials\Assessment.cs" />
     <Compile Include="Partials\BankDeposite.cs" />
     <Compile Include="Partials\Batch.cs" />
+    <Compile Include="Partials\BatchPrePlacement.cs" />
     <Compile Include="Partials\CandidateAssessment.cs" />
     <Compile Include="Partials\CandidateAssessmentGrid.cs" />
     <Compile Include="Partials\CandidateFee.cs" />
@@ -269,6 +281,7 @@
     <Compile Include="PersonnelSearchField.cs" />
     <Compile Include="PettyCashExpenseReport.cs" />
     <Compile Include="PlacementState.cs" />
+    <Compile Include="PrePlacementActivity.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

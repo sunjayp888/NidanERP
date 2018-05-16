@@ -12,6 +12,7 @@
         var vm = this;
         vm.admissions = [];
         vm.documentsTypes = [];
+        vm.OtherFees = [];
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -29,6 +30,7 @@
         vm.searchMessage = "";
         vm.searchAdmissionByDate = searchAdmissionByDate;
         vm.retrieveTodaysAdmissions = retrieveTodaysAdmissions;
+        vm.retrieveCandidateFees = retrieveCandidateFees;
         vm.isDisabled = false;
         vm.disableButton = disableButton;
         vm.initialise = initialise;
@@ -100,11 +102,15 @@
         }
 
         function pageChanged() {
+            var path = window.location.pathname.split('/');
             if (vm.searchKeyword) {
                 searchAdmission(vm.searchKeyword);
             } else if (vm.fromDate && vm.toDate) {
                 searchAdmissionByDate(vm.fromDate, vm.toDate);
-            } else {
+            } else if (path[2] == "TodaysAdmission") {
+                retrieveTodaysAdmissions();
+            }
+            else {
                 return retrieveAdmissions();
             }
         }
@@ -146,6 +152,21 @@
 
         function disableButton() {
             vm.isDisabled = true;
+        }
+
+        function retrieveCandidateFees(candidateInstallmentId) {
+            vm.candidateInstallmentId = candidateInstallmentId;
+            vm.orderBy.property = "CandidateFeeId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return AdmissionService.retrieveCandidateFees(vm.candidateInstallmentId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.OtherFees = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.OtherFees.length === 0 ? "No Records Found" : "";
+                    return vm.OtherFees;
+                });
         }
     }
 

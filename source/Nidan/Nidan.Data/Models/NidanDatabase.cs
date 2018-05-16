@@ -76,7 +76,6 @@ namespace Nidan.Data.Models
         public virtual DbSet<TrainerAvailable> TrainerAvailables { get; set; }
         public virtual DbSet<RoomAvailable> RoomAvailables { get; set; }
         public virtual DbSet<ExpenseHeader> ExpenseHeaders { get; set; }
-        public virtual DbSet<OtherFee> OtherFees { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<CentrePettyCash> CentrePettyCashes { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
@@ -192,6 +191,19 @@ namespace Nidan.Data.Models
         public virtual DbSet<LeadSource> LeadSources { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<ExpenseHeaderGrid> ExpenseHeaderGrids { get; set; }
+        public virtual DbSet<BatchPrePlacement> BatchPrePlacements { get; set; }
+        public virtual DbSet<BatchPrePlacementSearchField> BatchPrePlacementSearchFields { get; set; }
+        public virtual DbSet<CandidatePrePlacement> CandidatePrePlacements { get; set; }
+        public virtual DbSet<PrePlacementActivity> PrePlacementActivities { get; set; }
+        public virtual DbSet<CandidatePrePlacementGrid> CandidatePrePlacementGrids { get; set; }
+        public virtual DbSet<CandidatePrePlacementReport> CandidatePrePlacementReports { get; set; }
+        public virtual DbSet<BatchCandidate> BatchCandidates { get; set; }
+        public virtual DbSet<FeeType> FeeTypes { get; set; }
+        public virtual DbSet<CandidateFeeReport> CandidateFeeReports { get; set; }
+        public virtual DbSet<CandidateRegistrationFee> CandidateRegistrationFees { get; set; }
+        public virtual DbSet<OnlineExam> OnlineExams { get; set; }
+        public virtual DbSet<OtherFee> OtherFees { get; set; }
+        public virtual DbSet<OtherFeeGrid> OtherFeeGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -800,27 +812,6 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ExpenseHeader>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.CashMemo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.Description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.RupeesInWord)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.PaidTo)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OtherFee>()
-                .Property(e => e.Particulars)
-                .IsUnicode(false);
-
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.Name)
@@ -3313,6 +3304,239 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<MobilizationDataGrid>()
                 .Property(e => e.ClosingRemark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacement>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PrePlacementActivity>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<PrePlacementActivity>()
+                .HasMany(e => e.CandidatePrePlacements)
+                .WithRequired(e => e.PrePlacementActivity)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.BatchPrePlacementName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.PrePlacementActivityName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementReport>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementReport>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacement>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.BatchName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchPrePlacementSearchField>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.Title)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.MiddleName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BatchCandidate>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<FeeType>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CourseName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.PaymentModeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.FeeTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.Particulars)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.FiscalYear)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ReferenceReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateFeeReport>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.RegistrationFeePaid)
+                .HasPrecision(38, 2);
+
+            modelBuilder.Entity<CandidateRegistrationFee>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.RupeesInWords)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFee>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OnlineExam>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.FeeTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.ExamName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.PaymentModeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.RupeesInWords)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OtherFeeGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -35,7 +35,6 @@ namespace Nidan.Entity
             RoomAvailables = new HashSet<RoomAvailable>();
             TrainerAvailables = new HashSet<TrainerAvailable>();
             Holidays = new HashSet<Holiday>();
-            OtherFees = new HashSet<OtherFee>();
             CentrePettyCashes = new HashSet<CentrePettyCash>();
             Vouchers = new HashSet<Voucher>();
             CentreVoucherNumbers = new HashSet<CentreVoucherNumber>();
@@ -68,6 +67,9 @@ namespace Nidan.Entity
             CandidatePrePlacementActivities = new HashSet<CandidatePrePlacementActivity>();
             CandidateFinalPlacements = new HashSet<CandidateFinalPlacement>();
             CandidatePostPlacements = new HashSet<CandidatePostPlacement>();
+            BatchPrePlacements = new HashSet<BatchPrePlacement>();
+            CandidatePrePlacementReports = new HashSet<CandidatePrePlacementReport>();
+            OtherFees = new HashSet<OtherFee>();
         }
 
         public int CentreId { get; set; }
@@ -187,9 +189,6 @@ namespace Nidan.Entity
         public virtual ICollection<Holiday> Holidays { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OtherFee> OtherFees { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentrePettyCash> CentrePettyCashes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -291,6 +290,15 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidatePostPlacement> CandidatePostPlacements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPrePlacement> BatchPrePlacements { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidatePrePlacementReport> CandidatePrePlacementReports { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OtherFee> OtherFees { get; set; }
     }
 
 }
