@@ -21,7 +21,7 @@ namespace Nidan.Controllers
         // GET: ActivityAssigneeGroup
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
         }
 
         // GET: ActivityAssigneeGroup/Create

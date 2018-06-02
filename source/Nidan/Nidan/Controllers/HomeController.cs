@@ -94,11 +94,11 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, isSuperAdmin, DateTime.Now.Month, DateTime.Now.Year, centreId);
             var graphData = new List<PieGraph>()
             {
-                new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
-                new PieGraph() {Label = "Enquiry",Value = data.Sum(e => e.EnquiryCount).ToString()},
-                new PieGraph() {Label = "Admission",Value = data.Sum(e => e.AdmissionCount).ToString()},
-                new PieGraph() {Label = "Registration",Value = data.Sum(e => e.RegistrationCount).ToString()},
-                new PieGraph() {Label = "Counselling",Value = data.Sum(e => e.CounsellingCount).ToString()}
+                new PieGraph() {Label = "Mobilization",Value = data.MobilizationCount.ToString()},
+                new PieGraph() {Label = "Enquiry",Value = data.EnquiryCount.ToString()},
+                new PieGraph() {Label = "Admission",Value = data.AdmissionCount.ToString()},
+                new PieGraph() {Label = "Registration",Value = data.RegistrationCount.ToString()},
+                new PieGraph() {Label = "Counselling",Value = data.CounsellingCount.ToString()}
             };
             return this.JsonNet(graphData);
         }
@@ -107,14 +107,14 @@ namespace Nidan.Controllers
         public ActionResult StatisticsByCentre(int? id)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, isSuperAdmin, DateTime.Now.Month, DateTime.Now.Year, id).ToList();
+            var data = NidanBusinessService.RetrievePieGraphStatistics(UserOrganisationId, isSuperAdmin, DateTime.Now.Month, DateTime.Now.Year, id);
             var graphData = new List<PieGraph>()
             {
-                new PieGraph() {Label = "Mobilization",Value = data.Sum(e => e.MobilizationCount).ToString()},
-                new PieGraph() {Label = "Enquiry",Value = data.Sum(e => e.EnquiryCount).ToString()},
-                new PieGraph() {Label = "Admission",Value = data.Sum(e => e.AdmissionCount).ToString()},
-                new PieGraph() {Label = "Registration",Value = data.Sum(e => e.RegistrationCount).ToString()},
-                new PieGraph() {Label = "Counselling",Value = data.Sum(e => e.CounsellingCount).ToString()}
+                new PieGraph() {Label = "Mobilization",Value = data.MobilizationCount.ToString()},
+                new PieGraph() {Label = "Enquiry",Value = data.EnquiryCount.ToString()},
+                new PieGraph() {Label = "Admission",Value = data.AdmissionCount.ToString()},
+                new PieGraph() {Label = "Registration",Value = data.RegistrationCount.ToString()},
+                new PieGraph() {Label = "Counselling",Value = data.CounsellingCount.ToString()}
             };
             return this.JsonNet(graphData);
         }
