@@ -92,6 +92,12 @@ namespace Nidan.Controllers
             return View(new BaseViewModel());
         }
 
+        // GET: Report/CandidateOtherFee
+        public ActionResult CandidateOtherFeeReport()
+        {
+            return View(new BaseViewModel());
+        }
+
         // GET: Report/BankDepositeReports
         public ActionResult BankDepositeReport()
         {
@@ -638,5 +644,27 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [HttpPost]
+        public ActionResult DownloadCandidateOtherFeeReportCSVByDate(DateTime fromDate, DateTime toDate)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var centreName = isSuperAdmin ? string.Empty : centre.Name;
+            var data =
+                NidanBusinessService.RetrieveCandidateOtherFeeReport(UserOrganisationId,
+                    p =>
+                        (isSuperAdmin || p.CentreId == UserCentreId) && p.PaymentDate >= fromDate &&
+                        p.PaymentDate <= toDate).Items.ToList();
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_CandidateFeeReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult SearchCandidateOtherFeeReportByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var data = NidanBusinessService.RetrieveCandidateOtherFeeReport(UserOrganisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.PaymentDate >= fromDate && p.PaymentDate <= toDate && p.PaidAmount != null, orderBy, paging);
+            return this.JsonNet(data);
+        }
     }
 }

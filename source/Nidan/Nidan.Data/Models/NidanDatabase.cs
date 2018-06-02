@@ -204,6 +204,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<OnlineExam> OnlineExams { get; set; }
         public virtual DbSet<OtherFee> OtherFees { get; set; }
         public virtual DbSet<OtherFeeGrid> OtherFeeGrids { get; set; }
+        public virtual DbSet<CandidateOtherFeeReport> CandidateOtherFeeReports { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3537,6 +3538,46 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<OtherFeeGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.StudentCodeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.CourseName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.FeeTypeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.IsPaymentDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.PaymentModeName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.ChequeNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.BankName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidateOtherFeeReport>()
+                .Property(e => e.ReceiptNumber)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

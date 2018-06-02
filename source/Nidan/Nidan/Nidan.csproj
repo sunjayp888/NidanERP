@@ -1885,6 +1885,7 @@
     <Content Include="Views\OtherFee\Index.cshtml" />
     <Content Include="Views\OtherFee\Create.cshtml" />
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
+    <Content Include="Views\Report\CandidateOtherFeeReport.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
