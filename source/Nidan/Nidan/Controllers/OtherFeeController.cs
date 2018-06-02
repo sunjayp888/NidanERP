@@ -70,7 +70,7 @@ namespace Nidan.Controllers
                 otherFeeViewModel.OtherFee.CentreId = centreId;
                 otherFeeViewModel.OtherFee.CreatedBy = personnelId;
                 otherFeeViewModel.OtherFee = _nidanBusinessService.CreateOtherFee(organisationId, otherFeeViewModel.OtherFee);
-                return RedirectToAction("Index","Enquiry");
+                return RedirectToAction("Index", "Enquiry");
             }
             otherFeeViewModel.OnlineExams = new SelectList(_nidanBusinessService.RetrieveOnlineExams(organisationId, e => true));
             otherFeeViewModel.FeeTypes = new SelectList(_nidanBusinessService.RetrieveFeeTypes(organisationId, e => true));

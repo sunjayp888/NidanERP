@@ -992,7 +992,7 @@ namespace Nidan.Business
             var receiptNumber = string.Format("{0}/{1}/{2}", centreEnrollmentRecieptsettingData.TaxYear, centreEnrollmentRecieptsettingData.Centre.CentreCode, centreEnrollmentRecieptsettingData.EnrollmentNumber);
             var registrationData = RetrieveRegistration(organisationId, admission.RegistrationId);
             var enquiryData = RetrieveEnquiry(organisationId, registrationData.EnquiryId);
-            var candidateInstallment = RetrieveCandidateInstallment(organisationId,registrationData.CandidateInstallmentId, e => true);
+            var candidateInstallment = RetrieveCandidateInstallment(organisationId, registrationData.CandidateInstallmentId, e => true);
             admission.Registration.StudentCode = registrationData.StudentCode;
             admission.CreatedBy = personnelId;
             var batchData = new Batch();
@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1818,7 +1818,7 @@ namespace Nidan.Business
 
         public OtherFee CreateOtherFee(int organisationId, OtherFee otherFee)
         {
-            var rupeesinwords=ConvertNumbertoWords((int) otherFee.PaidAmount);
+            var rupeesinwords = ConvertNumbertoWords((int)otherFee.PaidAmount);
             otherFee.RupeesInWords = rupeesinwords;
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == otherFee.CentreId);
             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
@@ -1845,7 +1845,7 @@ namespace Nidan.Business
                     CreatedBy = personnelId,
                     OrganisationId = organisationId,
                     AdmissionId = item,
-                    StudentCode=registrationData.StudentCode
+                    StudentCode = registrationData.StudentCode
                 });
             }
             _nidanDataService.Create<CandidatePrePlacementReport>(organisationId, candidatePrePlacementReportList);
@@ -2133,7 +2133,7 @@ namespace Nidan.Business
 
         #endregion
 
-   
+
 
         #region // Retrieve
 
@@ -2468,22 +2468,22 @@ namespace Nidan.Business
             List<OrderBy> orderBy = null, Paging paging = null)
         {
             var candidatePrePlacementActivityReportData = _nidanDataService.RetrieveCandidatePrePlacementReports(organisationId, e => e.CandidatePrePlacement.BatchPrePlacementId == batchPrePlacementId).Items.ToList();
-            var batchStudents = _nidanDataService.RetrieveBatchCandidates(organisationId,e=>e.BatchId== candidatePrePlacementActivityReportData.Select(p=>p.CandidatePrePlacement.BatchPrePlacement.BatchId).FirstOrDefault()).Items.ToList();
+            var batchStudents = _nidanDataService.RetrieveBatchCandidates(organisationId, e => e.BatchId == candidatePrePlacementActivityReportData.Select(p => p.CandidatePrePlacement.BatchPrePlacement.BatchId).FirstOrDefault()).Items.ToList();
 
             var candidatePrePlacementSchedule = new List<CandidatePrePlacementSchedule>();
             foreach (var item in batchStudents)
             {
                 //var candidateName = _nidanDataService.RetrieveEnquiries(organisationId, e => e.StudentCode == item.StudentCode).Items.FirstOrDefault();
-                var IsCV = candidatePrePlacementActivityReportData.FirstOrDefault(e => e.StudentCode == item.StudentCode && e.CandidatePrePlacement.PrePlacementActivityId ==(int)PrePlacement.CVMaking);
+                var IsCV = candidatePrePlacementActivityReportData.FirstOrDefault(e => e.StudentCode == item.StudentCode && e.CandidatePrePlacement.PrePlacementActivityId == (int)PrePlacement.CVMaking);
                 var IsInterviewTechnique = candidatePrePlacementActivityReportData.FirstOrDefault(e => e.StudentCode == item.StudentCode && e.CandidatePrePlacement.PrePlacementActivityId == (int)PrePlacement.InterviewTechnique);
                 var IsTechnicalKnowledge = candidatePrePlacementActivityReportData.FirstOrDefault(e => e.StudentCode == item.StudentCode && e.CandidatePrePlacement.PrePlacementActivityId == (int)PrePlacement.TechnicalKnowledge);
 
                 candidatePrePlacementSchedule.Add(new CandidatePrePlacementSchedule()
                 {
                     IsCVMakingDone = IsCV != null && IsCV.MarkObtained != null,
-                    IsInterviewTechniqueDone= IsInterviewTechnique!=null && IsInterviewTechnique.MarkObtained!=null,
-                    IsTechnicalKnowledgeDone=IsTechnicalKnowledge!=null && IsTechnicalKnowledge.MarkObtained!=null,
-                    CandidateName=string.Format(item.Title+' '+item.FirstName+' '+item.MiddleName+' '+item.LastName)
+                    IsInterviewTechniqueDone = IsInterviewTechnique != null && IsInterviewTechnique.MarkObtained != null,
+                    IsTechnicalKnowledgeDone = IsTechnicalKnowledge != null && IsTechnicalKnowledge.MarkObtained != null,
+                    CandidateName = string.Format(item.Title + ' ' + item.FirstName + ' ' + item.MiddleName + ' ' + item.LastName)
                 });
             }
             return null;
@@ -2497,7 +2497,7 @@ namespace Nidan.Business
 
         public List<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate)
         {
-            return _nidanDataService.RetrieveFeeTypes(organisationId,  predicate).Items.ToList();
+            return _nidanDataService.RetrieveFeeTypes(organisationId, predicate).Items.ToList();
         }
 
         public PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null,
@@ -3276,7 +3276,7 @@ namespace Nidan.Business
             return _nidanDataService.Retrieve<CourseInstallment>(organisationId, c => c.CentreId == centreId).ToList();
         }
 
-        public List<Graph> RetrievePieGraphStatistics(int organisationId, bool isSuperAdmin, int month1, int year1, int? centreId)
+        public Graph RetrievePieGraphStatistics(int organisationId, bool isSuperAdmin, int month1, int year1, int? centreId)
         {
             var month = DateTime.UtcNow.Month;
             var year = DateTime.UtcNow.Year;
@@ -3300,24 +3300,18 @@ namespace Nidan.Business
                 ? RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year && e.CentreId == centreId)
                 : RetrieveCounsellings(organisationId, e => e.IsRegistrationDone == false && e.CreatedDate.Month == month && e.CreatedDate.Year == year);
             var graphData = new List<Graph>();
-            foreach (var item in centre)
+            return new Graph
             {
-                graphData.Add(new Graph
-                {
-                    CentreId = item.CentreId,
-                    CentreName = item.Name,
-                    MobilizationCount = mobilizationCount.Items.Count(),
-                    AdmissionCount =
-                        admissionCount.Items.Count(),
-                    EnquiryCount =
-                       enquiryCount.Count,
-                    RegistrationCount =
-                        registrationCount.Items.Count(),
-                    CounsellingCount =
-                        counsellingCount.Items.Count()
-                });
-            }
-            return graphData;
+                MobilizationCount = mobilizationCount.Items.Count(),
+                AdmissionCount =
+                    admissionCount.Items.Count(),
+                EnquiryCount =
+                    enquiryCount.Count,
+                RegistrationCount =
+                    registrationCount.Items.Count(),
+                CounsellingCount =
+                    counsellingCount.Items.Count()
+            };
         }
 
         public List<Graph> RetrieveBarGraphStatistics(int organisationId, Expression<Func<Centre, bool>> predicate)
@@ -4468,7 +4462,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, centre);
         }
 
-        public Counselling  UpdateCounselling(int organisationId, Counselling counselling)
+        public Counselling UpdateCounselling(int organisationId, Counselling counselling)
         {
             var enquiryFollowUp =
                 _nidanDataService.RetrieveFollowUps(organisationId, e => e.EnquiryId == counselling.EnquiryId)
@@ -4572,7 +4566,14 @@ namespace Nidan.Business
         {
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == candidateFee.CentreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var currentDate = DateTime.UtcNow.Day;
+            var currentMonth = DateTime.UtcNow.Month;
+            var fiscalYear = DateTime.UtcNow.FiscalYear();
+            if (currentDate == 1 && currentMonth == 4)
+            {
+                centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.TaxYear != fiscalYear ? 1 : centreRecieptsettingData.ReceiptNumber;
+            }
+             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             candidateFee.ReceiptNumber = receiptNumber;
             // Increment RecieptNo by and Update.
             centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.ReceiptNumber + 1;
@@ -4582,10 +4583,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            //SendInstallmetnSms(candidateFee);
+            SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -4616,7 +4617,7 @@ namespace Nidan.Business
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, expenseHeader);
         }
 
-       public Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds)
+        public Expense UpdateExpense(int organisationId, int centreId, Expense expense, List<int> projectIds)
         {
             if (!expense.ExpenseProjects.Any() && projectIds.Any())
                 CreateExpenseProject(organisationId, expense.CentreId, expense.ExpenseId, projectIds);
@@ -5294,7 +5295,7 @@ namespace Nidan.Business
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "CandidateOtherFee");
             }
-            else if (value == 4||value==7)
+            else if (value == 4 || value == 7)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "LeadOtherFee");
             }
@@ -5456,11 +5457,11 @@ namespace Nidan.Business
                 OrganisationName = otherFeeData.Organisation.Name,
                 EmailId = enquiry?.EmailId,
                 PaymentDate = otherFeeData.PaymentDate.ToShortDateString(),
-                CandidateAddress =string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
+                CandidateAddress = string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-                CandidateName = string.Concat(enquiry.Title , " " , enquiry.FirstName , " " , enquiry.MiddleName , " " +enquiry.LastName),
+                CandidateName = string.Concat(enquiry.Title, " ", enquiry.FirstName, " ", enquiry.MiddleName, " " + enquiry.LastName),
                 CentreName = otherFeeData.Centre.Name,
-                CentreAddress = string.Concat(centre.Address1,centre.Address2, centre.Address3, centre.Address4),
+                CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 FeeTypeName = otherFeeData.FeeType.Name,
                 InvoiceNumber = otherFeeData.ReceiptNumber,
                 RecievedAmount = otherFeeData.PaidAmount.ToString(),
@@ -5471,7 +5472,7 @@ namespace Nidan.Business
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 RupeesInWords = rupeesinword + " RUPEES ONLY"
             };
-            if (value == 4|| value == 7|| value == 8)
+            if (value == 4 || value == 7 || value == 8)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(otherFeeReceipt), "LeadOtherFee");
             }
