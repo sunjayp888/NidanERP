@@ -4976,7 +4976,6 @@ namespace Nidan.Data
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
-
                 return context
                     .CandidateRegistrationFees
                     .AsNoTracking()

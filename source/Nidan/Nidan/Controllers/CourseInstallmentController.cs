@@ -110,16 +110,18 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var courseId = Convert.ToInt32(TempData["CourseId"]);
+            var centreId = UserCentreId;
             TempData["CourseId"] = courseId;
             if (courseId != 0)
             {
-                var data = NidanBusinessService.RetrieveCourseInstallments(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CourseId == courseId, orderBy, paging);
+                var courseInstallmentIds = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging).Items.Select(e => e.CourseInstallmentId).ToList();
+                var data = isSuperAdmin ? NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true, orderBy, paging) : NidanBusinessService.RetrieveCourseInstallments(organisationId, e => courseInstallmentIds.Contains(e.CourseInstallmentId), orderBy, paging);
                 return this.JsonNet(data);
             }
             else
             {
-                var courseIds = NidanBusinessService.RetrieveCentreCourses(organisationId, UserCentreId, e => (isSuperAdmin || e.CentreId == UserCentreId)).Select(e => e.CourseId).ToList();
-                var data = NidanBusinessService.RetrieveCourseInstallments(organisationId, e => courseIds.Contains(e.CourseId), orderBy, paging);
+                var courseInstallmentIds = NidanBusinessService.RetrieveCentreCourseInstallments(organisationId, centreId, orderBy, paging).Items.Select(e => e.CourseInstallmentId).ToList();
+                var data = isSuperAdmin ? NidanBusinessService.RetrieveCourseInstallments(organisationId, e => true, orderBy, paging) : NidanBusinessService.RetrieveCourseInstallments(organisationId, e => courseInstallmentIds.Contains(e.CourseInstallmentId), orderBy, paging);
                 return this.JsonNet(data);
             }
         }
