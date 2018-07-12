@@ -8,9 +8,10 @@ using Nidan.Entity;
 
 namespace Nidan.Models
 {
-    public class ExpenseViewModel:BaseViewModel
+    public class ExpenseViewModel : BaseViewModel
     {
         public Expense Expense { get; set; }
+        public int CentreId { get; set; }
         public string CashMemo { get; set; }
         public decimal AvailablePettyCash { get; set; }
         public SelectList ExpenseHeaders { get; set; }

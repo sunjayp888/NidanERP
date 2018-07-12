@@ -1072,9 +1072,9 @@ namespace Nidan.Business
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
             //Email
-            //SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
             //send SMS
-            //SendAdmissionSms(admissionData);
+            SendAdmissionSms(admissionData);
             return admissionData;
         }
 
@@ -5429,7 +5429,7 @@ namespace Nidan.Business
                 projectName = projectName == "" ? projectData.Name : projectName + " " + projectData.Name; ;
             }
             expenseReceipt.CentreName = expense.Centre.Name;
-            expenseReceipt.VoucherCreatedDate = expense.CreatedDate.ToShortDateString();
+            expenseReceipt.VoucherCreatedDate = expense.ExpenseGeneratedDate.ToShortDateString();
             expenseReceipt.VoucherNumber = expense.VoucherNumber;
             expenseReceipt.CashMemo = expense.CashMemoNumbers;
             expenseReceipt.PaidTo = expense.PaidTo;

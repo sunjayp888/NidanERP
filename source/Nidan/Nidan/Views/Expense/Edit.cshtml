@@ -1,4 +1,5 @@
-﻿@model Nidan.Models.ExpenseViewModel
+﻿@using Nidan.Extensions
+@model Nidan.Models.ExpenseViewModel
 
 @{
     ViewBag.Title = string.Format("Edit Other Fee ({0})", Model.Expense.ExpenseId);
@@ -185,36 +186,109 @@
             $('#Expense_RupeesInWord').val(finalOutput + " Rupees Only");
         };
 
-        $(function () {
-            var today = new Date();
-            var day = today.getDay();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1; //January is 0!
-            var yyyy = today.getFullYear();
-            var daterangepickerOptions = {
-                autoApply: true,
-                singleDatePicker: true,
-                showDropdowns: true,
-                showCustomRangeLabel: false,
-                opens: 'left',
-                //minDate: moment(),
-                minDate: day == 1 || day == 7 ? moment().subtract('0', 'days').format('DD MMMM YYYY') : day == 2 ? moment().subtract('1', 'days').format('DD MMMM YYYY') : day == 3 ? moment().subtract('2', 'days').format('DD MMMM YYYY') : day == 4 ? moment().subtract('3', 'days').format('DD MMMM YYYY') : day == 5 ? moment().subtract('4', 'days').format('DD MMMM YYYY') : moment().subtract('5', 'days').format('DD MMMM YYYY'),
-                maxDate: day == 1 ? moment().add('5', 'days').format('DD MMMM YYYY') : day == 2 ? moment().add('4', 'days').format('DD MMMM YYYY') : day == 3 ? moment().add('3', 'days').format('DD MMMM YYYY') : day == 4 ? moment().add('2', 'days').format('DD MMMM YYYY') : day == 5 ? moment().add('1', 'days').format('DD MMMM YYYY') : day == 6 ? moment().add('0', 'days').format('DD MMMM YYYY') : moment().add('6', 'days').format('DD MMMM YYYY'),
-                onSelect: function () {
-                    selectedDate = moment().format('DD MMMM YYYY');
-                },
-                locale: {
-                    "format": "DD MMMM YYYY"
-                }
-            };
+        var userRole = "@User.IsInAnyRoles("SuperAdmin").ToString().ToLower()" == "true" ? "SuperAdmin" : "Admin";
+        if (userRole == "Admin") {
+            if (@Model.CentreId != 15) {
+                //alert(userRole);
+                $(function () {
+                    var today = new Date();
+                    var day = today.getDay();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; //January is 0!
+                    var yyyy = today.getFullYear();
+                    var daterangepickerOptions = {
+                        autoApply: true,
+                        singleDatePicker: true,
+                        showDropdowns: true,
+                        showCustomRangeLabel: false,
+                        opens: 'left',
+                        //minDate: moment(),
+                        @*@if (User.IsInAnyRoles("SuperAdmin"))
+                    {
+                        minDate: moment(),
+                    }*@
+                        minDate: day == 1 || day == 7
+                            ? moment().subtract('0', 'days').format('DD MMMM YYYY')
+                            : day == 2
+                            ? moment().subtract('1', 'days').format('DD MMMM YYYY')
+                            : day == 3
+                            ? moment().subtract('2', 'days').format('DD MMMM YYYY')
+                            : day == 4
+                            ? moment().subtract('3', 'days').format('DD MMMM YYYY')
+                            : day == 5
+                            ? moment().subtract('4', 'days').format('DD MMMM YYYY')
+                            : moment().subtract('5', 'days').format('DD MMMM YYYY'),
+                        maxDate: day == 1
+                            ? moment().add('5', 'days').format('DD MMMM YYYY')
+                            : day == 2
+                            ? moment().add('4', 'days').format('DD MMMM YYYY')
+                            : day == 3
+                            ? moment().add('3', 'days').format('DD MMMM YYYY')
+                            : day == 4
+                            ? moment().add('2', 'days').format('DD MMMM YYYY')
+                            : day == 5
+                            ? moment().add('1', 'days').format('DD MMMM YYYY')
+                            : day == 6
+                            ? moment().add('0', 'days').format('DD MMMM YYYY')
+                            : moment().add('6', 'days').format('DD MMMM YYYY'),
+                        onSelect: function () {
+                            selectedDate = moment().format('DD MMMM YYYY');
+                        },
+                        locale: {
+                            "format": "DD MMMM YYYY"
+                        }
+                    };
 
-            jQuery(function () {
-                jQuery(".date").daterangepicker(daterangepickerOptions);
-                $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
-                $(".generated .date").on('apply.daterangepicker', function (ev, picker) {
-                    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    jQuery(function () {
+                        jQuery(".date").daterangepicker(daterangepickerOptions);
+                        $('#GeneratedDate').val(moment().format('DD MMMM YYYY'));
+                        $(".generated .date").on('apply.daterangepicker',
+                            function (ev, picker) {
+                                $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                            });
+                    });
                 });
-            });
+            }
+        }
+
+        if (userRole == "SuperAdmin") {
+            $('#Expense_ExpenseGeneratedDate').val("");
+            $("#Expense_ExpenseGeneratedDate").attr("placeholder", "yyyy-MM-dd").blur();
+        }
+
+        if (@Model.CentreId == 15) {
+            $('#Expense_ExpenseGeneratedDate').val("@Model.Expense.ExpenseGeneratedDate.Year"+"-"+"@Model.Expense.ExpenseGeneratedDate.Month"+"-"+"@Model.Expense.ExpenseGeneratedDate.Day");
+            $("#Expense_ExpenseGeneratedDate").attr("placeholder", "yyyy-MM-dd").blur();
+        }
+
+        //---------------------------------------------------
+        //Expense Debit Amount Validation
+        $("#Expense_DebitAmount").keyup(function () {
+            var expenseAmount = $("#Expense_DebitAmount").val();
+            //numberToWords();
+            if (expenseAmount < 999) {
+                $('#btn_submit').attr('disabled', false);
+            } else {
+                $('#btn_submit').attr('disabled', true);
+                alert('Expense Voucher CAN NOT be above Rs.999/-');
+            }
+        });
+
+        //-----------------------------------------------------------
+        //submit button blur on once click
+        //$('#btn_submit').attr('disabled', true);
+        //Submit Button Blur after Click
+        $(document).on('submit', 'form', function () {
+            var buttons = $(this).find('[type="submit"]');
+            if ($(this).valid()) {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', true);
+                });
+            } else {
+                buttons.each(function (btn) {
+                    $(buttons[btn]).prop('disabled', false);
+                });
+            }
         });
     </script>
 }

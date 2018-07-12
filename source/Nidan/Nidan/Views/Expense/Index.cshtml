@@ -199,7 +199,13 @@
                                                     }
                                                     @if (User.IsInAnyRoles("Admin"))
                                                     {
-                                                        <li ng-if="model.isDateInCurrentWeek">
+                                                        <li ng-if="model.isDateInCurrentWeek && expense.CentreId!=15">
+                                                            @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
+                                                            <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li ng-if="expense.CentreId==15">
                                                             @*ng-if="expense.CreatedDate >= {{@startOfWeekDate}} && expense.CreatedDate <= {{@endOfWeekDate}}"*@
                                                             <a style="cursor: pointer;" ng-href="/Expense/Edit/{{expense.ExpenseId}}">
                                                                 Edit
