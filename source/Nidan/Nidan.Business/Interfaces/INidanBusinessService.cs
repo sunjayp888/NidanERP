@@ -86,6 +86,7 @@ namespace Nidan.Business.Interfaces
         CandidatePrePlacement CreateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement, List<int> admissionIds);
         CandidatePrePlacementReport CreateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
         OtherFee CreateOtherFee(int organisationId, OtherFee otherFee);
+        GovernmentMobilization CreateGovernmentMobilization(int organisationId, GovernmentMobilization governmentMobilization);
 
         #endregion
 
@@ -408,7 +409,10 @@ namespace Nidan.Business.Interfaces
         PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate);
         PagedResult<CandidateOtherFeeReport> RetrieveCandidateOtherFeeReport(int organisationId, Expression<Func<CandidateOtherFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-
+        PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        GovernmentMobilization RetrieveGovernmentMobilization(int organisationId, int governmentMobilizationId);
+        List<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate);
+        List<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate);
         #endregion
 
         #region Update
@@ -473,6 +477,7 @@ namespace Nidan.Business.Interfaces
         CandidatePrePlacement UpdateCandidatePrePlacement(int organisationId, CandidatePrePlacement candidatePrePlacement);
         CandidatePrePlacementReport UpdateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
         OtherFee UpdateOtherFee(int organisationId, OtherFee otherFee);
+        GovernmentMobilization UpdateGovernmentMobilization(int organisationId, GovernmentMobilization governmentMobilization);
 
         #endregion
 

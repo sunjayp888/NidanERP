@@ -280,6 +280,7 @@
     <Compile Include="Controllers\FixAssetController.cs" />
     <Compile Include="Controllers\FixAssetMappingController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
+    <Compile Include="Controllers\GovernmentMobilizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobilizationController.cs" />
@@ -347,6 +348,7 @@
     <Compile Include="Models\FixAssetMappingViewModel.cs" />
     <Compile Include="Models\FixAssetViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
+    <Compile Include="Models\GovernmentMobilizationViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Authorization\IdentityModels.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
@@ -1214,6 +1216,7 @@
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
+    <Content Include="Scripts\Angular\Controllers\GovernmentMobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
@@ -1284,6 +1287,7 @@
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\GovernmentMobilizationService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
@@ -1886,6 +1890,9 @@
     <Content Include="Views\OtherFee\Create.cshtml" />
     <Content Include="Views\OtherFee\_OtherFee.cshtml" />
     <Content Include="Views\Report\CandidateOtherFeeReport.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Index.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Create.cshtml" />
+    <Content Include="Views\GovernmentMobilization\_GovernmentMobilization.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

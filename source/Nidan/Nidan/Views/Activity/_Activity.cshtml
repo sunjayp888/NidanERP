@@ -45,17 +45,17 @@
 
 <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Time</label>
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.Activity.StartHour, Model.HoursList, "HH", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Activity.StartHour, "", new { @class = "help-block" })
     </div>
 
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.Activity.StartMinute, Model.MinutesList, "MM", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Activity.StartMinute, "", new { @class = "help-block" })
     </div>
 
-    <div class="col-md-1 col-sm-6 col-xs-12">
+    @*<div class="col-md-1 col-sm-6 col-xs-12">
         <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
             @Html.RadioButtonFor(model => model.Activity.StartTimeSpan, "AM", new { id = "rbActivityStartTimeSpanAM" })
             AM
@@ -66,7 +66,7 @@
             @Html.RadioButtonFor(model => model.Activity.StartTimeSpan, "PM", new { id = "rbActivityStartTimeSpanPM" })
             PM
         </label>
-    </div>
+    </div>*@
 </div>
 
 <div class="form-group">
@@ -81,17 +81,17 @@
 
 <div class="form-group">
     <label class="control-label col-md-3 col-sm-3 col-xs-12">End Time</label>
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.Activity.EndHour, Model.HoursList, "HH", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Activity.EndHour, "", new { @class = "help-block" })
     </div>
 
-    <div class="col-md-2 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-6 col-xs-12">
         @Html.DropDownListFor(model => model.Activity.EndMinute, Model.MinutesList, "MM", new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Activity.EndMinute, "", new { @class = "help-block" })
     </div>
 
-    <div class="col-md-1 col-sm-6 col-xs-12">
+    @*<div class="col-md-1 col-sm-6 col-xs-12">
         <label class="btn btn-info col-md-12 col-sm-6 col-xs-12">
             @Html.RadioButtonFor(model => model.Activity.EndTimeSpan, "AM", new { id = "rbActivityEndTimeSpanAM" })
             AM
@@ -102,7 +102,7 @@
             @Html.RadioButtonFor(model => model.Activity.EndTimeSpan, "PM", new { id = "rbActivityEndTimeSpanPM" })
             PM
         </label>
-    </div>
+    </div>*@
 </div>
 
 <div class="form-group">

@@ -32,7 +32,6 @@ namespace Nidan.Entity
 
         public int StartMinute { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
@@ -43,7 +42,6 @@ namespace Nidan.Entity
 
         public int EndMinute { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string EndTimeSpan { get; set; }
 
