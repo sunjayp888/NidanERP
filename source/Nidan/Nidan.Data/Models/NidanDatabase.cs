@@ -205,6 +205,9 @@ namespace Nidan.Data.Models
         public virtual DbSet<OtherFee> OtherFees { get; set; }
         public virtual DbSet<OtherFeeGrid> OtherFeeGrids { get; set; }
         public virtual DbSet<CandidateOtherFeeReport> CandidateOtherFeeReports { get; set; }
+        public virtual DbSet<BlockPanchayat> BlockPanchayats { get; set; }
+        public virtual DbSet<DistrictBlock> DistrictBlocks { get; set; }
+        public virtual DbSet<GovernmentMobilization> GovernmentMobilizations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3578,6 +3581,61 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidateOtherFeeReport>()
                 .Property(e => e.ReceiptNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BlockPanchayat>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BlockPanchayat>()
+                .HasMany(e => e.GovernmentMobilizations)
+                .WithRequired(e => e.BlockPanchayat)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DistrictBlock>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<DistrictBlock>()
+                .HasMany(e => e.BlockPanchayats)
+                .WithRequired(e => e.DistrictBlock)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DistrictBlock>()
+                .HasMany(e => e.GovernmentMobilizations)
+                .WithRequired(e => e.DistrictBlock)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.ParentMobile)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.OtherQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.SubCaste)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.MaritalStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

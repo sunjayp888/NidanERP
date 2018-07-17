@@ -70,6 +70,7 @@ namespace Nidan.Entity
             BatchPrePlacements = new HashSet<BatchPrePlacement>();
             CandidatePrePlacementReports = new HashSet<CandidatePrePlacementReport>();
             OtherFees = new HashSet<OtherFee>();
+            GovernmentMobilizations = new HashSet<GovernmentMobilization>();
         }
 
         public int CentreId { get; set; }
@@ -299,6 +300,9 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OtherFee> OtherFees { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GovernmentMobilization> GovernmentMobilizations { get; set; }
     }
 
 }

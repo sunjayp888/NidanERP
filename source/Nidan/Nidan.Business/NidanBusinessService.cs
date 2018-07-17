@@ -1830,6 +1830,12 @@ namespace Nidan.Business
             return data;
         }
 
+        public GovernmentMobilization CreateGovernmentMobilization(int organisationId, GovernmentMobilization governmentMobilization)
+        {
+            var data = _nidanDataService.Create<GovernmentMobilization>(organisationId, governmentMobilization);
+            return data;
+        }
+
         private void CreateCandidatePrePlacementScheduledReport(int organisationId, int centreId, int personnelId, int candidatePrePlacementId, List<int> admissionIds)
         {
             var candidatePrePlacementReportList = new List<CandidatePrePlacementReport>();
@@ -2531,6 +2537,27 @@ namespace Nidan.Business
             Paging paging = null)
         {
             return _nidanDataService.RetrieveCandidateOtherFeeReport(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveGovernmentMobilizations(organisationId, predicate, orderBy, paging);
+        }
+
+        public GovernmentMobilization RetrieveGovernmentMobilization(int organisationId, int governmentMobilizationId)
+        {
+            return _nidanDataService.RetrieveGovernmentMobilization(organisationId, governmentMobilizationId);
+        }
+
+        public List<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveDistrictBlocks(organisationId, predicate).Items.ToList();
+        }
+
+        public List<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate)
+        {
+            return _nidanDataService.RetrieveBlockPanchayats(organisationId, predicate).Items.ToList();
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
@@ -4898,6 +4925,11 @@ namespace Nidan.Business
         public OtherFee UpdateOtherFee(int organisationId, OtherFee otherFee)
         {
             return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, otherFee);
+        }
+
+        public GovernmentMobilization UpdateGovernmentMobilization(int organisationId, GovernmentMobilization governmentMobilization)
+        {
+            return _nidanDataService.UpdateOrganisationEntityEntry(organisationId, governmentMobilization);
         }
 
         public void AssignBatch(int organisationId, int centreId, int personnelId, Admission admission)

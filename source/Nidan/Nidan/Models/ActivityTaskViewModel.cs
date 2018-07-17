@@ -34,7 +34,19 @@ namespace Nidan.Models
             new HoursType() { Id = 09,Name = "09"},
             new HoursType() { Id = 10,Name = "10"},
             new HoursType() { Id = 11,Name = "11"},
-            new HoursType() { Id = 12,Name = "12"}
+            new HoursType() { Id = 12,Name = "12"},
+            new HoursType() { Id = 13,Name = "13"},
+            new HoursType() { Id = 14,Name = "14"},
+            new HoursType() { Id = 15,Name = "15"},
+            new HoursType() { Id = 16,Name = "16"},
+            new HoursType() { Id = 17,Name = "17"},
+            new HoursType() { Id = 18,Name = "18"},
+            new HoursType() { Id = 19,Name = "19"},
+            new HoursType() { Id = 20,Name = "20"},
+            new HoursType() { Id = 21,Name = "21"},
+            new HoursType() { Id = 22,Name = "22"},
+            new HoursType() { Id = 23,Name = "23"},
+            new HoursType() { Id = 24,Name = "24"}
         };
 
         public List<MinutesType> MinutesType => new List<MinutesType>()

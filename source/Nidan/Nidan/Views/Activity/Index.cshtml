@@ -142,8 +142,6 @@
                                                     <i class="fa fa-chevron-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu slidedown">
-                                                    @if (User.IsInAnyRoles("SuperAdmin"))
-                                                    {
                                                         <li>
                                                             <a style="cursor: pointer;" ng-href="/Activity/Edit/{{activity.ActivityId}}">
                                                                 Edit
@@ -164,7 +162,6 @@
                                                                 Create Task
                                                             </a>
                                                         </li>
-                                                    }
                                                 </ul>
                                             </div>
                                         </td>

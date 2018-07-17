@@ -124,6 +124,7 @@
     <Compile Include="BatchTrainer.cs" />
     <Compile Include="BiometricAttendance.cs" />
     <Compile Include="BiometricAttendanceGrid.cs" />
+    <Compile Include="BlockPanchayat.cs" />
     <Compile Include="CandidateAssessment.cs" />
     <Compile Include="CandidateAssessmentGrid.cs" />
     <Compile Include="CandidateAssessmentQuestionAnswer.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="CourseSubject.cs" />
     <Compile Include="CourseType.cs" />
     <Compile Include="District.cs" />
+    <Compile Include="DistrictBlock.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="DocumentType.cs" />
     <Compile Include="Dto\Permissions.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="FollowUpHistory.cs" />
     <Compile Include="FollowUpHistoryData.cs" />
     <Compile Include="FollowUpSearchField.cs" />
+    <Compile Include="GovernmentMobilization.cs" />
     <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
