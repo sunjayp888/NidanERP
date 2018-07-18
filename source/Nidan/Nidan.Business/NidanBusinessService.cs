@@ -2538,8 +2538,7 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveCandidateOtherFeeReport(organisationId, predicate, orderBy, paging);
         }
 
-        public PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             return _nidanDataService.RetrieveGovernmentMobilizations(organisationId, predicate, orderBy, paging);
         }
@@ -2557,6 +2556,12 @@ namespace Nidan.Business
         public List<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate)
         {
             return _nidanDataService.RetrieveBlockPanchayats(organisationId, predicate).Items.ToList();
+        }
+
+        public PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveGovernmentMobilizationBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)

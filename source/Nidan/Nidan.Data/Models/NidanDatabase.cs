@@ -208,6 +208,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<BlockPanchayat> BlockPanchayats { get; set; }
         public virtual DbSet<DistrictBlock> DistrictBlocks { get; set; }
         public virtual DbSet<GovernmentMobilization> GovernmentMobilizations { get; set; }
+        public virtual DbSet<GovernmentMobilizationGrid> GovernmentMobilizationGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -3636,6 +3637,70 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<GovernmentMobilization>()
                 .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.ParentMobile)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.DistrictName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.DistrictBlockName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.BlockPanchayatName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.UserCurrentLocation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.QualificationName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.OtherQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.ReligionName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.CasteCategoryName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.SubCaste)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.MaritalStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilizationGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

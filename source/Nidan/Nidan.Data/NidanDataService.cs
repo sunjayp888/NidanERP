@@ -5075,15 +5075,14 @@ namespace Nidan.Data
             }
         }
 
-        public PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null,
-            Paging paging = null)
+        public PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
         {
             using (ReadUncommitedTransactionScope)
             using (var context = _databaseFactory.Create(organisationId))
             {
 
                 return context
-                    .GovernmentMobilizations
+                    .GovernmentMobilizationGrids
                     .AsNoTracking()
                     .Where(predicate)
                     .OrderBy(orderBy ?? new List<OrderBy>
@@ -5152,6 +5151,32 @@ namespace Nidan.Data
                         }
                     })
                     .Paginate(paging);
+            }
+        }
+
+        public PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword,
+            Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+                var category = new SqlParameter("@SearchKeyword", searchKeyword);
+
+                var searchData = context.Database
+                    .SqlQuery<GovernmentMobilizationGrid>("SearchGovernmentMobilization @SearchKeyword", category).ToList();
+
+                var data = searchData.ToList().AsQueryable()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                    {
+                        new OrderBy
+                        {
+                            Property = "GovernmentMobilizationId",
+                            Direction = System.ComponentModel.ListSortDirection.Descending
+                        }
+                    })
+                    .Paginate(paging);
+                return data;
             }
         }
 

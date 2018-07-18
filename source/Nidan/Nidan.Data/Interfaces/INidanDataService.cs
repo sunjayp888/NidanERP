@@ -292,10 +292,11 @@ namespace Nidan.Data.Interfaces
         PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<CandidateOtherFeeReport> RetrieveCandidateOtherFeeReport(int organisationId, Expression<Func<CandidateOtherFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         GovernmentMobilization RetrieveGovernmentMobilization(int organisationId, int governmentMobilizationId);
         PagedResult<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

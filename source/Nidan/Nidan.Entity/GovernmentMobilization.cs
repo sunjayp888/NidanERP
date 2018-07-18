@@ -35,6 +35,9 @@ namespace Nidan.Entity
 
         public int BlockPanchayatId { get; set; }
 
+        [StringLength(1000)]
+        public string UserCurrentLocation { get; set; }
+
         public int QualificationId { get; set; }
 
         [StringLength(500)]

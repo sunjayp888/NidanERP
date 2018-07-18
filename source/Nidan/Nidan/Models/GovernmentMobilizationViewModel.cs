@@ -22,5 +22,6 @@ namespace Nidan.Models
         public int QualificationId { get; set; }
         public int ReligionId { get; set; }
         public int CasteCategoryId { get; set; }
+        public GovernmentMobilizationGrid GovernmentMobilizationGrid { get; set; }
     }
 }

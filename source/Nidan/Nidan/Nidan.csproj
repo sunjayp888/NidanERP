@@ -1893,6 +1893,9 @@
     <Content Include="Views\GovernmentMobilization\Index.cshtml" />
     <Content Include="Views\GovernmentMobilization\Create.cshtml" />
     <Content Include="Views\GovernmentMobilization\_GovernmentMobilization.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Edit.cshtml" />
+    <Content Include="Views\Shared\_MobilizerLayout.cshtml" />
+    <Content Include="Views\GovernmentMobilization\View.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

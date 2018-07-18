@@ -22,6 +22,11 @@
         vm.searchGovernmentMobilizationByDate = searchGovernmentMobilizationByDate;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        //vm.districts = [];
+        //vm.districtBlocks = [];
+        //vm.retrieveDistrictBlocks = retrieveDistrictBlocks;
+        //vm.districtBlockPanchayats = [];
+        //vm.retrieveBlockPanchayats = retrieveBlockPanchayats;
         vm.initialise = initialise;
 
         function initialise() {
@@ -97,6 +102,16 @@
             $window.location.href = "/GovernmentMobilization/View/" + governmentMobilizationId;
         }
 
-    }
+        //function retrieveDistrictBlocks(districtId) {
+        //    return GovernmentMobilizationService.retrieveDistrictBlocks(districtId).then(function () {
+        //        vm.districtBlocks = response.data;
+        //    });
+        //};
 
+        //function retrieveBlockPanchayats(districtBlockId) {
+        //    return GovernmentMobilizationService.retrieveBlockPanchayats(districtBlockId).then(function () {
+        //        vm.blockPanchayats = response.data;
+        //    });
+        //};
+    }
 })();

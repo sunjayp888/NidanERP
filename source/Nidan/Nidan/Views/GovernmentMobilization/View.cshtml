@@ -1,0 +1,146 @@
+﻿@model Nidan.Models.GovernmentMobilizationViewModel
+
+@{
+    ViewBag.Title = string.Format("View Govt Mobilization ({0})", Model.GovernmentMobilizationGrid.Name);
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.GovernmentMobilizationGrid.Name</button><small> View Govt Mobilization </small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>
+                                        <i class="fa fa-bars"></i> Govt Mobilization Details
+                                    </h2>
+                                    <ul class="nav navbar-right panel_toolbox"></ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Mobile</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.Mobile" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Father Name</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.FatherName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Parent Mobile</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.ParentMobile" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Date of Birth</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.DateofBirth.ToShortDateString()" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Age</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.Age" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Gender</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.Gender" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Marital Status</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.MaritalStatus" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">District</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.DistrictName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Block</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.DistrictBlockName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Panchayat</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.BlockPanchayatName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Qualification</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.QualificationName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Other Qualification</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.OtherQualification" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Religion</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.ReligionName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Caste Category</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.CasteCategoryName" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Sub Caste</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.SubCaste" class="form-control col-lg-4">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-dark">Remarks</button>
+                                    </span>
+                                    <input type="text" disabled="disabled" value="@Model.GovernmentMobilizationGrid.Remark" class="form-control col-lg-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>

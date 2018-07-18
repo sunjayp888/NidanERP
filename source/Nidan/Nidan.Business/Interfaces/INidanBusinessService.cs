@@ -409,10 +409,11 @@ namespace Nidan.Business.Interfaces
         PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         List<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate);
         PagedResult<CandidateOtherFeeReport> RetrieveCandidateOtherFeeReport(int organisationId, Expression<Func<CandidateOtherFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        PagedResult<GovernmentMobilization> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilization, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         GovernmentMobilization RetrieveGovernmentMobilization(int organisationId, int governmentMobilizationId);
         List<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate);
         List<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update

@@ -216,6 +216,7 @@
     <Compile Include="FollowUpHistoryData.cs" />
     <Compile Include="FollowUpSearchField.cs" />
     <Compile Include="GovernmentMobilization.cs" />
+    <Compile Include="GovernmentMobilizationGrid.cs" />
     <Compile Include="Gst.cs" />
     <Compile Include="Holiday.cs" />
     <Compile Include="Host.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="Partials\FixAsset.cs" />
     <Compile Include="Partials\FixAssetMappingcs.cs" />
     <Compile Include="Partials\FollowUp.cs" />
+    <Compile Include="Partials\GovernmentMobilization.cs" />
     <Compile Include="Partials\Mobilization.cs" />
     <Compile Include="Partials\ModuleExamSet.cs" />
     <Compile Include="Partials\Organisation.cs" />

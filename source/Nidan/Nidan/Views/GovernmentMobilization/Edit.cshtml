@@ -1,12 +1,12 @@
 ﻿@model Nidan.Models.GovernmentMobilizationViewModel
 @{
-    ViewBag.Title = "Create Govt Mobilization";
+    ViewBag.Title = string.Format("Edit Govt Mobilization ({0})", Model.GovernmentMobilization.Name);
 }
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Create Govt Mobilization <small></small></h2>
+                <h2>@string.Format("{0}", Model.GovernmentMobilization.Name)<small>Edit Govt Mobilization</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -21,7 +21,9 @@
                                     @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
                                 </div>
                             </div>
+
                         }
+                        @Html.HiddenFor(model => Model.GovernmentMobilization.GovernmentMobilizationId)
                         @Html.Partial("_GovernmentMobilization", Model)
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
@@ -56,7 +58,7 @@
                 });
             }
         });
-        $('#GovernmentMobilization_Mobile').val("");
+
         $('#publicHolidayErrorSummary').hide();
         var daterangepickerOptions = {
             autoApply: true,
@@ -79,41 +81,18 @@
             $(this).val(picker.startDate.format('DD MMMM YYYY'));
         });
 
-        $(function () {
-            $('.name')
-                .keypress(function (e) {
-                    var txt = String.fromCharCode(e.which);
-                    console.log(txt + ' : ' + e.which);
-                    if (!txt.match(/[A-Za-z+#.]/)) //+#-.
-                    {
-                        return false;
-                    }
-                });
-        });
+            function phoneno() {
+            $('#phone').keypress(function (e) {
+                var a = [];
+                var k = e.which;
 
-        function phoneno() {
-            $('#phone')
-                .keypress(function (e) {
-                    var a = [];
-                    var k = e.which;
+                for (i = 48; i < 58; i++)
+                    a.push(i);
 
-                    for (i = 48; i < 58; i++)
-                        a.push(i);
-
-                    if (!(a.indexOf(k) >= 0))
-                        e.preventDefault();
-                });
-        }
-
-        $('.otherQualification').hide();
-        $("#GovernmentMobilization_QualificationId")
-            .change(function () {
-                if ($('#GovernmentMobilization_QualificationId :selected').text() == "Others") {
-                    $('.otherQualification').show();
-                } else {
-                    $('.otherQualification').hide();
-                }
+                if (!(a.indexOf(k) >= 0))
+                    e.preventDefault();
             });
+            }
 
         $('#GovernmentMobilization_DistrictId').change(function () {
             var districtId = $('#GovernmentMobilization_DistrictId :selected').val();
@@ -138,8 +117,8 @@
                 processData: false
             });
         });
-        $("#GovernmentMobilization_DistrictBlockId").empty().append("Select Block");
-        $("#GovernmentMobilization_BlockPanchayatId").empty().append("Select Panchayat");
+        //$("#GovernmentMobilization_DistrictBlockId").empty().append("Select Block");
+        //$("#GovernmentMobilization_BlockPanchayatId").empty().append("Select Panchayat");
         $('#GovernmentMobilization_DistrictBlockId').change(function () {
             var districtBlockId = $('#GovernmentMobilization_DistrictBlockId :selected').val();
             $.ajax({
@@ -163,5 +142,5 @@
                 processData: false
             });
         });
-    </script>
+        </script>
 }
