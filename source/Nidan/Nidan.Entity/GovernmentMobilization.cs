@@ -35,6 +35,9 @@ namespace Nidan.Entity
 
         public int BlockPanchayatId { get; set; }
 
+        [StringLength(1000)]
+        public string UserCurrentLocation { get; set; }
+
         public int QualificationId { get; set; }
 
         [StringLength(500)]
@@ -54,7 +57,7 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime DateofBirth { get; set; }
 
-        public int Age { get; set; }
+        public int? Age { get; set; } = 0;
 
         [Required]
         [StringLength(100)]
@@ -89,3 +92,4 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
     }
 }
+

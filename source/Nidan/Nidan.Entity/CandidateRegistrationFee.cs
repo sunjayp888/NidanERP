@@ -46,6 +46,11 @@ namespace Nidan.Entity
 
         [Key]
         [Column(Order = 4)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CandidateFeeId { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
         [StringLength(970)]
         public string SearchField { get; set; }
     }

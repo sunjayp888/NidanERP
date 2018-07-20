@@ -4,32 +4,35 @@
 }
 <div ng-controller="GovernmentMobilizationController as model" ng-init="model.initialise()">
     <div class="page-title">
-        <div class="title_left">
-            <h3>
-                Govt Mobilizations <small></small>
-            </h3>
-        </div>
-        <div class="title_right">
-            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                <div class="input-group">
-                    <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchGovernmentMobilization(searchField)" class="form-control" placeholder="Search for mobilizer...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="model.searchGovernmentMobilization(searchField)" type="button">Go!</button>
-                    </span>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="title_left">
+                    <h3>
+                        Mobilizations <small></small>
+                    </h3>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group pull-right top_search">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchField" ng-keyup="$event.keyCode == 13 && model.searchGovernmentMobilization(searchField)" class="form-control" placeholder="Search..">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="model.searchGovernmentMobilization(searchField)" type="button">Go!</button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    @if (User.IsInAnyRoles("Admin"))
-    {
-        <div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-success btn-lg" href="@Url.Action("Create", "GovernmentMobilization")">
-                    <i class="fa fa-user"></i> Create
-                </a>
-            </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <a class="btn btn-success btn-lg" href="@Url.Action("Create", "GovernmentMobilization")">
+                <i class="fa fa-user"></i> Create
+            </a>
         </div>
-    }
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -100,12 +103,13 @@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                                <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                             }
-                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Mobilized Date</th>
-                                            <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
+                                            <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                            <th ng-click="model.order('Qualification')" ng-class="model.orderClass('Qualification')">Qualification</th>
+                                            <th ng-click="model.order('QualificationName')" ng-class="model.orderClass('QualificationName')">Qualification</th>
+                                            <th ng-click="model.order('CasteCategoryName')" ng-class="model.orderClass('CasteCategoryName')">Caste Category</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -114,27 +118,28 @@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="governmentMobilization.CentreName"></span></td>
+                                                <td><span ng-bind="governmentMobilization.CreatedByName"></span></td>
                                             }
                                             <td><span ng-bind="governmentMobilization.CreatedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="governmentMobilization.CreatedByName"></span></td>
-                                            <td><span ng-bind="governmentMobilization.CandidateName"></span></td>
+                                            <td><span ng-bind="governmentMobilization.Name"></span></td>
                                             <td><span ng-bind="governmentMobilization.Mobile"></span></td>
-                                            <td><span ng-bind="governmentMobilization.Qualification"></span></td>
+                                            <td><span ng-bind="governmentMobilization.QualificationName"></span></td>
+                                            <td><span ng-bind="governmentMobilization.CasteCategoryName"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Mobilizer", "SuperAdmin"))
                                                         {
                                                             <li>
-                                                                <a style="cursor: pointer;" ng-href="/GovernmentMobilization/View/{{governmentMobilization.GovernmentMobilizationId}}">
-                                                                    View
-                                                                </a>
-                                                            </li>
+                                                                    <a style="cursor: pointer;" ng-href="/GovernmentMobilization/View/{{governmentMobilization.GovernmentMobilizationId}}">
+                                                                        View
+                                                                    </a>
+                                                                </li>
                                                         }
-                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        @if (User.IsInAnyRoles("Mobilizer"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/GovernmentMobilization/Edit/{{governmentMobilization.GovernmentMobilizationId}}">
