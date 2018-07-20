@@ -3607,38 +3607,6 @@ namespace Nidan.Data.Models
                 .WithRequired(e => e.DistrictBlock)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.FatherName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.ParentMobile)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.OtherQualification)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.SubCaste)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.Gender)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.MaritalStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GovernmentMobilization>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
             modelBuilder.Entity<GovernmentMobilizationGrid>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -3701,6 +3669,42 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<GovernmentMobilizationGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.FatherName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.ParentMobile)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.UserCurrentLocation)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.OtherQualification)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.SubCaste)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Gender)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.MaritalStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<GovernmentMobilization>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -57,7 +57,7 @@ namespace Nidan.Entity
         [Column(TypeName = "date")]
         public DateTime DateofBirth { get; set; }
 
-        public int Age { get; set; }
+        public int? Age { get; set; } = 0;
 
         [Required]
         [StringLength(100)]
@@ -92,3 +92,4 @@ namespace Nidan.Entity
         public virtual Organisation Organisation { get; set; }
     }
 }
+

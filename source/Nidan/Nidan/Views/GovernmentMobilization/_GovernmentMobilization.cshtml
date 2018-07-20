@@ -36,21 +36,21 @@
 
 <div class="form-group">
     @Html.LabelFor(model => model.GovernmentMobilization.DateofBirth, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-    <div class="col-md-6 col-sm-6 col-xs-12 dob">
-        @Html.TextBoxFor(model => model.GovernmentMobilization.DateofBirth, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date", @placeholder = "Date Of Birth" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.GovernmentMobilization.DateofBirth, "{0:yyyy-MM-dd}", new { @class = "form-control col-md-7 col-xs-12", @placeholder = "yyyy-mm-dd" })
         <span class="fa fa-birthday-cake form-control-feedback right" aria-hidden="true"></span>
         @Html.ValidationMessageFor(model => model.GovernmentMobilization.DateofBirth, "", new { @class = "help-block" })
     </div>
 </div>
 
-<div class="form-group">
+@*<div class="form-group">
     @Html.LabelFor(model => model.GovernmentMobilization.Age, new { @class = "control-label col-md-3 col-sm-6 col-xs-12" })
     <div class="col-md-6 col-sm-6 col-xs-12">
         @Html.TextBoxFor(model => model.GovernmentMobilization.Age, new { @class = "form-control", @placeholder = "Age" })
         <span class="fa fa-star form-control-feedback right" aria-hidden="true"></span>
         @Html.ValidationMessageFor(model => model.GovernmentMobilization.Age, "", new { @class = "help-block" })
     </div>
-</div>
+</div>*@
 
 <label class="control-label col-md-3 col-sm-6 col-xs-12">Gender</label>
 <div class="col-md-8 col-sm-8 col-xs-12">

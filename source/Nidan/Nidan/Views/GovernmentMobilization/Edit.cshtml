@@ -58,28 +58,29 @@
                 });
             }
         });
+        var date = $('#GovernmentMobilization_DateofBirth').val();
+        
+        //$('#publicHolidayErrorSummary').hide();
+        //var daterangepickerOptions = {
+        //    autoApply: true,
+        //    singleDatePicker: true,
+        //    showDropdowns: true,
+        //    showCustomRangeLabel: false,
+        //    opens: 'left',
+        //    minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
+        //    maxDate: moment().format('DD MMMM YYYY'),
+        //    onSelect: function () {
+        //        selectedDate = moment().format('DD MMMM YYYY');
+        //    },
+        //    locale: {
+        //        "format": "DD MMMM YYYY"
+        //    }
+        //};
 
-        $('#publicHolidayErrorSummary').hide();
-        var daterangepickerOptions = {
-            autoApply: true,
-            singleDatePicker: true,
-            showDropdowns: true,
-            showCustomRangeLabel: false,
-            opens: 'left',
-            minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
-            maxDate: moment().format('DD MMMM YYYY'),
-            onSelect: function () {
-                selectedDate = moment().format('DD MMMM YYYY');
-            },
-            locale: {
-                "format": "DD MMMM YYYY"
-            }
-        };
-
-        jQuery(".date").daterangepicker(daterangepickerOptions);
-        $(".date").on('apply.daterangepicker', function (ev, picker) {
-            $(this).val(picker.startDate.format('DD MMMM YYYY'));
-        });
+        //jQuery(".date").daterangepicker(daterangepickerOptions);
+        //$(".date").on('apply.daterangepicker', function (ev, picker) {
+        //    $(this).val(picker.startDate.format('DD MMMM YYYY'));
+        //});
 
             function phoneno() {
             $('#phone').keypress(function (e) {

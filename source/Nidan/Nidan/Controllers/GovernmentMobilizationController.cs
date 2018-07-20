@@ -24,7 +24,7 @@ namespace Nidan.Controllers
         }
 
         // GET: GovernmentMobilization/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Mobilizer")]
         public ActionResult Create()
         {
             var organisationId = UserOrganisationId;
@@ -48,7 +48,7 @@ namespace Nidan.Controllers
         }
 
         // POST: GovernmentMobilization/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Mobilizer")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(GovernmentMobilizationViewModel governmentMobilizationViewModel)
@@ -62,7 +62,7 @@ namespace Nidan.Controllers
                 governmentMobilizationViewModel.GovernmentMobilization.CentreId = centreId;
                 governmentMobilizationViewModel.GovernmentMobilization.CreatedBy = personnelId;
                 governmentMobilizationViewModel.GovernmentMobilization = NidanBusinessService.CreateGovernmentMobilization(UserOrganisationId, governmentMobilizationViewModel.GovernmentMobilization);
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             governmentMobilizationViewModel.Districts = new SelectList(NidanBusinessService.RetrieveDistricts(organisationId, e => true).ToList());
             governmentMobilizationViewModel.DistrictBlocks = new SelectList(NidanBusinessService.RetrieveDistrictBlocks(organisationId, e => true).ToList());
@@ -146,7 +146,7 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveGovernmentMobilizations(UserOrganisationId,p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveGovernmentMobilizations(UserOrganisationId,p => (isSuperAdmin || p.CreatedBy == UserPersonnelId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -169,8 +169,8 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveGovernmentMobilizationBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == centreId), orderBy, paging);
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveGovernmentMobilizationBySearchKeyword(organisationId, searchKeyword, p => (isSuperAdmin || p.CreatedBy == personnelId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -179,8 +179,8 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
-            var data = NidanBusinessService.RetrieveGovernmentMobilizations(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging);
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveGovernmentMobilizations(organisationId, e => (isSuperAdmin || e.CreatedBy == personnelId) && e.CreatedDate >= fromDate && e.CreatedDate <= toDate, orderBy, paging);
             return this.JsonNet(data);
         }
     }

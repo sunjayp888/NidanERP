@@ -25,8 +25,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <div class="row">
         <div class="col-xs-12">
@@ -105,12 +103,13 @@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <th ng-click="model.order('CentreName')" ng-class="model.orderClass('CentreName')">Centre</th>
+                                                <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                             }
                                             <th ng-click="model.order('CreatedDate')" ng-class="model.orderClass('CreatedDate')">Created Date</th>
-                                            <th ng-click="model.order('CreatedByName')" ng-class="model.orderClass('CreatedByName')">Created By</th>
                                             <th ng-click="model.order('Name')" ng-class="model.orderClass('Name')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
                                             <th ng-click="model.order('QualificationName')" ng-class="model.orderClass('QualificationName')">Qualification</th>
+                                            <th ng-click="model.order('CasteCategoryName')" ng-class="model.orderClass('CasteCategoryName')">Caste Category</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -119,19 +118,20 @@
                                             @if (User.IsInAnyRoles("SuperAdmin"))
                                             {
                                                 <td><span ng-bind="governmentMobilization.CentreName"></span></td>
+                                                <td><span ng-bind="governmentMobilization.CreatedByName"></span></td>
                                             }
                                             <td><span ng-bind="governmentMobilization.CreatedDate|date : format : shortDate"></span></td>
-                                            <td><span ng-bind="governmentMobilization.CreatedByName"></span></td>
                                             <td><span ng-bind="governmentMobilization.Name"></span></td>
                                             <td><span ng-bind="governmentMobilization.Mobile"></span></td>
                                             <td><span ng-bind="governmentMobilization.QualificationName"></span></td>
+                                            <td><span ng-bind="governmentMobilization.CasteCategoryName"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
                                                     <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
                                                         <i class="fa fa-chevron-down"></i>
                                                     </a>
                                                     <ul class="dropdown-menu slidedown">
-                                                        @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                                        @if (User.IsInAnyRoles("Mobilizer", "SuperAdmin"))
                                                         {
                                                             <li>
                                                                     <a style="cursor: pointer;" ng-href="/GovernmentMobilization/View/{{governmentMobilization.GovernmentMobilizationId}}">
@@ -139,7 +139,7 @@
                                                                     </a>
                                                                 </li>
                                                         }
-                                                        @if (User.IsInAnyRoles("Admin"))
+                                                        @if (User.IsInAnyRoles("Mobilizer"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/GovernmentMobilization/Edit/{{governmentMobilization.GovernmentMobilizationId}}">
