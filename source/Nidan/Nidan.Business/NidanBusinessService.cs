@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            SendRegistrationSms(registrationData);
+            //SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -5290,6 +5290,8 @@ namespace Nidan.Business
             int value = candidateFeeData.FeeTypeId;
             var rupeesinword = ConvertNumbertoWords((Int32)candidateFeeData.PaidAmount);
             Enum.FeeType feeType = (Enum.FeeType)value;
+            decimal paidAmount = (decimal)candidateFeeData.PaidAmount;
+            decimal totalAmountGst = (decimal) candidateFeeData.PaidAmount / 100 * 18;
             var candidateFeeReceipt = new CandidateFeeReceipt()
             {
                 OrganisationName = candidateFeeData.Organisation.Name,
@@ -5299,6 +5301,7 @@ namespace Nidan.Business
                     string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.Title + " " + enquiry.FirstName + " " + enquiry.MiddleName + " " + enquiry.LastName,
                 CentreName = candidateFeeData.Centre.Name,
+                CentreTelephone=candidateFeeData.Centre.Telephone.ToString(),
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
                 CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
@@ -5309,9 +5312,14 @@ namespace Nidan.Business
                 TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
                 TotalInstallment = totalInstallment,
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
-                State = candidateFeeData.Centre.State.Name,
-                Gstin = gstnumber.GstNumber,
-                GstStateCode = centre.State.GstStateCode.ToString(),
+                State = gstnumber == null ? "MAHARASHTRA":candidateFeeData.Centre.State.Name,
+                Gstin = gstnumber==null? "27AABCI4337E1ZT":gstnumber.GstNumber,
+                Cgst = gstnumber == null ? 0 :(decimal)candidateFeeData.PaidAmount / 100 * 9,
+                Sgst = gstnumber == null ? 0 : (decimal)candidateFeeData.PaidAmount/100*9,
+                Igst = gstnumber == null ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
+                TotalAmountGst=totalAmountGst,
+                TotalAmountBeforeTax= paidAmount-totalAmountGst,
+                GstStateCode = gstnumber == null ? "27":centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 PaymentMode = candidateFeeData.PaymentMode.Name,
                 BankName = candidateFeeData.BankName != "null" ? candidateFeeData.BankName : "-",

@@ -26,6 +26,11 @@ namespace Nidan.Business.Models
         public string InstallmentNumber { get; set; }
         public string State { get; set; }
         public string Gstin { get; set; }
+        public decimal Cgst { get; set; }
+        public decimal Sgst { get; set; }
+        public decimal Igst { get; set; }
+        public decimal TotalAmountGst { get; set; }
+        public decimal TotalAmountBeforeTax { get; set; }
         public string GstStateCode { get; set; }
         public string FatherName { get; set; }
         public string PaymentMode { get; set; }
@@ -33,5 +38,6 @@ namespace Nidan.Business.Models
         public string ChequeDate { get; set; }
         public string ChequeNumber { get; set; }
         public string RupeesInWords { get; set; }
+        public string CentreTelephone { get; set; }
     }
 }
