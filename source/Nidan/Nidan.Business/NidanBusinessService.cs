@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -5300,8 +5300,9 @@ namespace Nidan.Business
                 CandidateAddress =
                     string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.Title + " " + enquiry.FirstName + " " + enquiry.MiddleName + " " + enquiry.LastName,
-                CentreName = candidateFeeData.Centre.Name,
-                CentreTelephone=candidateFeeData.Centre.Telephone.ToString(),
+                CentreName = centre.Name,
+                CentreTelephone=centre.Telephone.ToString(),
+                CentreEmail = centre.EmailId,
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
                 CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
@@ -5411,6 +5412,8 @@ namespace Nidan.Business
                     string.Format("{0} {1} {2} {3} {4}", centre.Address1, centre.Address2,
                         centre.Address3, centre.Address4, centre.PinCode),
                 CentreName = centre.Name,
+                CentreTelephone = centre.Telephone.ToString(),
+                CentreEmail= centre.EmailId,
                 CourseDuration = admission.Registration.CourseInstallment.Course.Duration.ToString(),
                 CourseName = admission.Registration.CourseInstallment.Course.Name,
                 EmailId = admission.Registration.Enquiry.EmailId,
@@ -5495,7 +5498,8 @@ namespace Nidan.Business
             var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
             int value = otherFeeData.FeeTypeId;
             var rupeesinword = otherFeeData.RupeesInWords;
-            //var feeType = (Enum.FeeType)value;
+            decimal totalAmountGst = otherFeeData.PaidAmount / 100 * 18;
+            decimal paidAmount = otherFeeData.PaidAmount;
             var otherFeeReceipt = new OtherFeeReceipt()
             {
                 OrganisationName = otherFeeData.Organisation.Name,
@@ -5504,15 +5508,22 @@ namespace Nidan.Business
                 CandidateAddress = string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 // ReSharper disable once PossiblyMistakenUseOfParamsMethod
                 CandidateName = string.Concat(enquiry.Title, " ", enquiry.FirstName, " ", enquiry.MiddleName, " " + enquiry.LastName),
-                CentreName = otherFeeData.Centre.Name,
+                CentreName = centre.Name,
+                CentreTelephone=centre.Telephone.ToString(),
+                CentreEmail=centre.EmailId,
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 FeeTypeName = otherFeeData.FeeType.Name,
                 InvoiceNumber = otherFeeData.ReceiptNumber,
                 RecievedAmount = otherFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
-                State = otherFeeData.Centre.State.Name,
-                Gstin = gstnumber.GstNumber,
-                GstStateCode = centre.State.GstStateCode.ToString(),
+                State = gstnumber == null ? "MAHARASHTRA" : otherFeeData.Centre.State.Name,
+                Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
+                Cgst = gstnumber == null ? 0 : otherFeeData.PaidAmount / 100 * 9,
+                Sgst = gstnumber == null ? 0 : otherFeeData.PaidAmount / 100 * 9,
+                Igst = gstnumber == null ? otherFeeData.PaidAmount / 100 * 18 : 0,
+                TotalAmountGst = totalAmountGst,
+                TotalAmountBeforeTax = paidAmount - totalAmountGst,
+                GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 RupeesInWords = rupeesinword + " RUPEES ONLY"
             };

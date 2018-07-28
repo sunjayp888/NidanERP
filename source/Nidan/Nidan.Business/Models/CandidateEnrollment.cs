@@ -12,6 +12,8 @@ namespace Nidan.Business.Models
         public string CandidateName { get; set; }
         public string EmailId { get; set; }
         public string CandidateAddress { get; set; }
+        public string CentreTelephone { get; set; }
+        public string CentreEmail { get; set; }
         public string MobileNumber { get; set; }
         public string CourseName { get; set; }
         public string FeeTypeName { get; set; }
@@ -29,6 +31,11 @@ namespace Nidan.Business.Models
         public string TotalAmountPaid { get; set; }
         public string BalanceFee { get; set; }
         public string State { get; set; }
+        public decimal Cgst { get; set; }
+        public decimal Sgst { get; set; }
+        public decimal Igst { get; set; }
+        public decimal TotalAmountGst { get; set; }
+        public decimal TotalAmountBeforeTax { get; set; }
         public string Gstin { get; set; }
         public string GstStateCode { get; set; }
         public string FatherName { get; set; }

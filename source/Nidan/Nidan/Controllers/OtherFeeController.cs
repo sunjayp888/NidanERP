@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Nidan.Business.Interfaces;
 using Nidan.Entity;
@@ -30,7 +27,6 @@ namespace Nidan.Controllers
         public ActionResult Create(int? id)
         {
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
             id = id ?? 0;
             var enquiry = _nidanBusinessService.RetrieveEnquiry(organisationId, id.Value);
             var onlineExams = _nidanBusinessService.RetrieveOnlineExams(organisationId, e => true);
@@ -87,11 +83,14 @@ namespace Nidan.Controllers
 
         public ActionResult DownloadOtherFee(int? id)
         {
-            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var data = NidanBusinessService.CreateOtherFeeRecieptBytes(organisationId, centreId, id.Value);
-            return File(data, ".pdf", "Other Fee Reciept.pdf");
+            if (id != null)
+            {
+                var data = NidanBusinessService.CreateOtherFeeRecieptBytes(organisationId, centreId, id.Value);
+                return File(data, ".pdf", "Other Fee Reciept.pdf");
+            }
+            return null;
         }
     }
 }
