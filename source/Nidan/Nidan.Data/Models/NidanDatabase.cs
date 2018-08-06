@@ -354,19 +354,7 @@ namespace Nidan.Data.Models
 
             //modelBuilder.Entity<Enquiry>()
             //    .Property(e => e.QualificationId);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.CentreCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.CentreType)
-                .IsUnicode(false);
-
+            
             modelBuilder.Entity<Document>()
                 .Property(e => e.FileName)
                 .IsUnicode(false);
@@ -432,19 +420,6 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<CasteCategory>()
                 .HasMany(e => e.Enquiries)
                 .WithRequired(e => e.CasteCategory)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.CentreCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Centre>()
-                .HasMany(e => e.Enquiries)
-                .WithRequired(e => e.Centre)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Colour>()
@@ -3705,6 +3680,38 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<GovernmentMobilization>()
                 .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.CentreType)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Address1)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Address2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Address3)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.Address4)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Centre>()
+                .Property(e => e.EmailId)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

@@ -1271,11 +1271,6 @@ namespace Nidan.Data
                 return context
                     .Centres
                     .Include(p => p.Organisation)
-                    //.Include(p => p.Enquiries)
-                    //.Include(p => p.Mobilizations)
-                    //.Include(p => p.Registrations)
-                    //.Include(p => p.Admissions)
-                    //.Include(p => p.Counsellings)
                     .Include(p => p.State)
                     .AsNoTracking()
                     .Where(predicate)

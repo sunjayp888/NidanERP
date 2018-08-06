@@ -1,5 +1,3 @@
-using System.Web;
-
 namespace Nidan.Entity
 {
     using System;
@@ -72,7 +70,6 @@ namespace Nidan.Entity
             OtherFees = new HashSet<OtherFee>();
             GovernmentMobilizations = new HashSet<GovernmentMobilization>();
         }
-
         public int CentreId { get; set; }
 
         [StringLength(100)]
@@ -304,5 +301,4 @@ namespace Nidan.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GovernmentMobilization> GovernmentMobilizations { get; set; }
     }
-
 }

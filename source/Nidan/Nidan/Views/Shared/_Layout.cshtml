@@ -83,7 +83,7 @@
                                             </ul>
                                         </li>
                                 *@
-                                @if (User.IsSuperAdmin())
+                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
@@ -134,11 +134,20 @@
                                                 <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                             }
-                                            <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                            @*<li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>*@
                                         </ul>
                                     </li>
-
                                 }
+                                
+                            @if (User.IsInAnyRoles("Admin") && Model.CentreType != "Franchise")
+                            {
+                                <li>
+                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                    </ul>
+                                </li>
+                            }
 
                                 @if (User.IsInAnyRoles("SuperAdmin", "Admin"))
                                 {

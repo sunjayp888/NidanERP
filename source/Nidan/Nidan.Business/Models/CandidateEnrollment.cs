@@ -9,6 +9,7 @@ namespace Nidan.Business.Models
         public string OrganisationName { get; set; }
         public string CentreAddress { get; set; }
         public string CentreName { get; set; }
+        public string CentreCode { get; set; }
         public string CandidateName { get; set; }
         public string EmailId { get; set; }
         public string CandidateAddress { get; set; }
