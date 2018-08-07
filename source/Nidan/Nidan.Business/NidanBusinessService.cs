@@ -5292,6 +5292,7 @@ namespace Nidan.Business
             Enum.FeeType feeType = (Enum.FeeType)value;
             decimal paidAmount = (decimal)candidateFeeData.PaidAmount;
             decimal totalAmountGst = (decimal)candidateFeeData.PaidAmount / 100 * 18;
+            var course = RetrieveCourse(organisationId,candidateFeeData.CandidateInstallment.CourseInstallment.CourseId);
             var candidateFeeReceipt = new CandidateFeeReceipt()
             {
                 OrganisationName = candidateFeeData.Organisation.Name,
@@ -5304,8 +5305,8 @@ namespace Nidan.Business
                 CentreTelephone = centre.Telephone.ToString(),
                 CentreEmail = centre.EmailId,
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
-                CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
-                CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
+                CourseDuration = course.Duration.ToString(),
+                CourseName = course.Name,
                 FeeTypeName = feeType.ToString(),
                 InvoiceNumber = candidateFeeData.ReceiptNumber,
                 RecievedAmount = candidateFeeData.PaidAmount.ToString(),
@@ -5315,18 +5316,19 @@ namespace Nidan.Business
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
                 State = gstnumber == null ? "MAHARASHTRA" : candidateFeeData.Centre.State.Name,
                 Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
-                Cgst = gstnumber == null || centre.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
-                Sgst = gstnumber == null || centre.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
-                Igst = gstnumber == null || centre.IsExampted ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
-                TotalAmountGst = centre.IsExampted ? 0 : totalAmountGst,
-                TotalAmountBeforeTax = centre.IsExampted ? paidAmount : paidAmount - totalAmountGst,
+                Cgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
+                Sgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
+                Igst = gstnumber == null || course.IsExampted ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
+                TotalAmountGst = course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
                 GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 PaymentMode = candidateFeeData.PaymentMode.Name,
                 BankName = candidateFeeData.BankName != "null" ? candidateFeeData.BankName : "-",
                 ChequeNumber = candidateFeeData.ChequeNumber != "null" ? candidateFeeData.ChequeNumber : "-",
                 ChequeDate = candidateFeeData.ChequeDate?.ToShortDateString(),
-                RupeesInWords = rupeesinword + " RUPEES ONLY"
+                RupeesInWords = rupeesinword + " RUPEES ONLY",
+                IsExampted = course.IsExampted? "Exempted services as per Notification No. 12/2017 Sr.No.69." : " ",
             };
             if (value == 1)
             {
@@ -5395,6 +5397,9 @@ namespace Nidan.Business
             }
             var recievedAmount = candidateFee.Where(e => e.FeeTypeId == 2).Select(a => a.PaidAmount).FirstOrDefault();
             var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var course = RetrieveCourse(organisationId, admission.Registration.CourseId);
+            decimal paidAmount = (decimal)recievedAmount;
+            decimal totalAmountGst = (decimal)recievedAmount / 100 * 18;
             var enrollmentData = new CandidateEnrollment
             {
                 EnrollmentDate = admission.AdmissionDate.ToShortDateString(),
@@ -5415,8 +5420,8 @@ namespace Nidan.Business
                 CentreCode = centre.CentreCode,
                 CentreTelephone = centre.Telephone.ToString(),
                 CentreEmail = centre.EmailId,
-                CourseDuration = admission.Registration.CourseInstallment.Course.Duration.ToString(),
-                CourseName = admission.Registration.CourseInstallment.Course.Name,
+                CourseDuration = course.Duration.ToString(),
+                CourseName = course.Name,
                 EmailId = admission.Registration.Enquiry.EmailId,
                 MobileNumber = admission.Registration.Enquiry.Mobile.ToString(),
                 OrganisationName = organisationName.Name,
@@ -5426,11 +5431,17 @@ namespace Nidan.Business
                 TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
                 BalanceFee = admission.Registration.CandidateInstallment.PaymentMethod != "LumpsumAmount" ? (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
                             : (admission.Registration.CandidateInstallment.LumpsumAmount - candidateFee.Sum(e => e.PaidAmount)).ToString(),
-                State = centre.State.Name,
-                Gstin = gstnumber?.GstNumber,
-                GstStateCode = centre.State.GstStateCode.ToString(),
+                State = gstnumber == null ? "MAHARASHTRA" : admission.Centre.State.Name,
+                Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
+                Cgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
+                Sgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
+                Igst = gstnumber == null || course.IsExampted ? paidAmount / 100 * 18 : 0,
+                TotalAmountGst = course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
+                GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
                 RecievedAmount = recievedAmount.ToString(),
-                FatherName = String.Format("{0} {1}", admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName)
+                FatherName = String.Format("{0} {1}", admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName),
+                IsExampted = course.IsExampted ? "Exempted services as per Notification No. 12/2017 Sr.No.69." : " ",
             };
 
             var termsAndCondition = _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(string.Empty), "FeeTermsAndConditions");

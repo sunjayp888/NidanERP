@@ -41,6 +41,7 @@ namespace Nidan.Business.Models
         public string GstStateCode { get; set; }
         public string FatherName { get; set; }
         public string EnrollmentDate { get; set; }
+        public string IsExampted { get; set; }
     }
 
     public class FeeDetail

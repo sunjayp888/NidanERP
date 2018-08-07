@@ -41,5 +41,6 @@ namespace Nidan.Business.Models
         public string ChequeNumber { get; set; }
         public string RupeesInWords { get; set; }
         public string CentreTelephone { get; set; }
+        public string IsExampted { get; set; }
     }
 }
