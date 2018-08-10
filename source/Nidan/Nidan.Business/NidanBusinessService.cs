@@ -5338,11 +5338,11 @@ namespace Nidan.Business
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Installment");
             }
-            else if (value == 6 || value == 5 || value == 8)
+            else if (value == 6)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "CandidateOtherFee");
             }
-            else if (value == 4 || value == 7)
+            else if (value == 4 || value == 7 || value == 5 || value == 8)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "LeadOtherFee");
             }
