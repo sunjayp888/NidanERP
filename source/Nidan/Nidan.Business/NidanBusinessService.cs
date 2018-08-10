@@ -5286,7 +5286,7 @@ namespace Nidan.Business
             var totalInstallment = RetrieveCandidateInstallment(organisationId, candidateFeeData.CandidateInstallmentId ?? 0, e => true).NumberOfInstallment.ToString();
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
             var centre = RetrieveCentre(organisationId, candidateFeeData.CentreId);
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
             int value = candidateFeeData.FeeTypeId;
             var rupeesinword = ConvertNumbertoWords((Int32)candidateFeeData.PaidAmount);
             Enum.FeeType feeType = (Enum.FeeType)value;
@@ -5314,14 +5314,15 @@ namespace Nidan.Business
                 TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
                 TotalInstallment = totalInstallment,
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
-                State = gstnumber == null ? "MAHARASHTRA" : candidateFeeData.Centre.State.Name,
-                Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
+                State = candidateFeeData.Centre.State.Name,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
                 Cgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
                 Sgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
-                Igst = gstnumber == null || course.IsExampted ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
-                TotalAmountGst = course.IsExampted ? 0 : totalAmountGst,
-                TotalAmountBeforeTax = course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
-                GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
+                Igst = 0,
+                //Igst = gstnumber == null || course.IsExampted ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
+                TotalAmountGst = gstnumber == null || course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = gstnumber == null || course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
+                GstStateCode = centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 PaymentMode = candidateFeeData.PaymentMode.Name,
                 BankName = candidateFeeData.BankName != "null" ? candidateFeeData.BankName : "-",
@@ -5396,7 +5397,7 @@ namespace Nidan.Business
                 });
             }
             var recievedAmount = candidateFee.Where(e => e.FeeTypeId == 2).Select(a => a.PaidAmount).FirstOrDefault();
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
             var course = RetrieveCourse(organisationId, admission.Registration.CourseId);
             decimal paidAmount = (decimal)recievedAmount;
             decimal totalAmountGst = (decimal)recievedAmount / 100 * 18;
@@ -5431,14 +5432,14 @@ namespace Nidan.Business
                 TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
                 BalanceFee = admission.Registration.CandidateInstallment.PaymentMethod != "LumpsumAmount" ? (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
                             : (admission.Registration.CandidateInstallment.LumpsumAmount - candidateFee.Sum(e => e.PaidAmount)).ToString(),
-                State = gstnumber == null ? "MAHARASHTRA" : admission.Centre.State.Name,
-                Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
+                State = admission.Centre.State.Name,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
                 Cgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
                 Sgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
-                Igst = gstnumber == null || course.IsExampted ? paidAmount / 100 * 18 : 0,
-                TotalAmountGst = course.IsExampted ? 0 : totalAmountGst,
-                TotalAmountBeforeTax = course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
-                GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
+                Igst = 0,
+                TotalAmountGst = gstnumber == null || course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = gstnumber == null || course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
+                GstStateCode = centre.State.GstStateCode.ToString(),
                 RecievedAmount = recievedAmount.ToString(),
                 FatherName = String.Format("{0} {1}", admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName),
                 IsExampted = course.IsExampted ? "Exempted services as per Notification No. 12/2017 Sr.No.69." : " ",
@@ -5507,10 +5508,10 @@ namespace Nidan.Business
             var otherFeeData = _nidanDataService.RetrieveOtherFee(organisationId, otherFeeId);
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == otherFeeData.StudentCode).FirstOrDefault();
             var centre = RetrieveCentre(organisationId, otherFeeData.CentreId);
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
             int value = otherFeeData.FeeTypeId;
             var rupeesinword = otherFeeData.RupeesInWords;
-            decimal totalAmountGst = otherFeeData.PaidAmount / 100 * 18;
+            decimal totalAmountGst = 0;
             decimal paidAmount = otherFeeData.PaidAmount;
             var otherFeeReceipt = new OtherFeeReceipt()
             {
@@ -5529,14 +5530,14 @@ namespace Nidan.Business
                 InvoiceNumber = otherFeeData.ReceiptNumber,
                 RecievedAmount = otherFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
-                State = gstnumber == null ? "MAHARASHTRA" : otherFeeData.Centre.State.Name,
-                Gstin = gstnumber == null ? "27AABCI4337E1ZT" : gstnumber.GstNumber,
-                Cgst = gstnumber == null ? 0 : otherFeeData.PaidAmount / 100 * 9,
-                Sgst = gstnumber == null ? 0 : otherFeeData.PaidAmount / 100 * 9,
-                Igst = gstnumber == null ? otherFeeData.PaidAmount / 100 * 18 : 0,
+                State = otherFeeData.Centre.State.Name,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
+                Cgst = 0,
+                Sgst = 0,
+                Igst = 0,
                 TotalAmountGst = totalAmountGst,
-                TotalAmountBeforeTax = paidAmount - totalAmountGst,
-                GstStateCode = gstnumber == null ? "27" : centre.State.GstStateCode.ToString(),
+                TotalAmountBeforeTax = paidAmount,
+                GstStateCode = centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 RupeesInWords = rupeesinword + " RUPEES ONLY"
             };

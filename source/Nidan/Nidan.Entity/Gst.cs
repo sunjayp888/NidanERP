@@ -21,6 +21,10 @@ namespace Nidan.Entity
         [StringLength(50)]
         public string Type { get; set; }
 
+        public int CentreId { get; set; }
+
         public virtual State State { get; set; }
+
+        public virtual Centre Centre { get; set; }
     }
 }

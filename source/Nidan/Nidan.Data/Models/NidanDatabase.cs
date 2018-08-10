@@ -833,14 +833,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Direction)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Gst>()
-                .Property(e => e.GstNumber)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Gst>()
-                .Property(e => e.Type)
-                .IsUnicode(false);
-
             modelBuilder.Entity<CentreReceiptSetting>()
                 .Property(e => e.TaxYear)
                 .IsUnicode(false);
@@ -3712,6 +3704,14 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Centre>()
                 .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Gst>()
+                .Property(e => e.GstNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Gst>()
+                .Property(e => e.Type)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);
