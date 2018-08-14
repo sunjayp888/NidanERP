@@ -1084,7 +1084,7 @@ namespace Nidan.Business
         {
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"EN", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
             var totalRegistrationAmount = candidateFeeDetail.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
             var candidateFeeData = new CandidateFee
@@ -1121,7 +1121,7 @@ namespace Nidan.Business
         {
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"EN", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             var installmentDate = new DateTime(DateTime.UtcNow.Year, DateTime.Now.Month, 5, 0, 0, 0);
             var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
             var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            SendRegistrationSms(registrationData);
+            //SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1371,7 +1371,7 @@ namespace Nidan.Business
 
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"Reg", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
 
             var candidateFeeData = new CandidateFee()
             {
@@ -4614,10 +4614,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            SendInstallmetnSms(candidateFee);
+            //SendInstallmetnSms(candidateFee);
             return data;
         }
 

@@ -56,19 +56,21 @@
                                 {
                                     Html.RenderPartial("_MobilizerLayout");
                                 }
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @if (User.IsAdmin())
+                                {
+                                    Html.RenderPartial("_AdminLayout");
+                                }
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-user"></i> Mobilization <span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
                                             <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
                                             <li><a href='@Url.Action("Index", "Mobilization")'>Mobilization</a></li>
-                                            @*<li><a href='@Url.Action("Index", "GovernmentMobilization")'>Govt Mobilization</a></li>*@
                                             <li><a href='@Url.Action("Index", "Enquiry")'>Lead</a></li>
                                             <li><a href='@Url.Action("Index", "Counselling")'>Counselling</a></li>
                                             <li><a href='@Url.Action("Index", "Registration")'>Registration</a></li>
                                             <li><a href='@Url.Action("Index", "Admission")'>Admission</a></li>
-
                                             <li><a href='@Url.Action("Index", "Batch")'>Batch</a></li>
                                             <li><a href='@Url.Action("Index", "Trainer")'>Trainer</a></li>
                                         </ul>
@@ -83,7 +85,7 @@
                                             </ul>
                                         </li>
                                 *@
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-inr"></i> Fee <span class="fa fa-chevron-down"></span></a>
@@ -134,22 +136,21 @@
                                                 <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
                                             }
-                                            @*<li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>*@
                                         </ul>
                                     </li>
                                 }
-                                
-                            @if (User.IsInAnyRoles("Admin") && Model.CentreType != "Franchise")
-                            {
-                                <li>
-                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
-                                    </ul>
-                                </li>
-                            }
 
-                                @if (User.IsInAnyRoles("SuperAdmin", "Admin"))
+                                @if (Model.CentreType != "Franchise")
+                                {
+                                    <li>
+                                        <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                        </ul>
+                                    </li>
+                                }
+
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                         <a><i class="fa fa-file-excel-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
@@ -174,20 +175,6 @@
                                         </ul>
                                     </li>
                                 }
-                                <li>
-                                    @if (User.IsInAnyRoles("Admin"))
-                                    {
-                                        <a><i class="fa fa-gear"></i> Masters <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-
-                                            <li><a href='@Url.Action("Index", "Course")'>Course</a></li>
-                                            <li><a href='@Url.Action("Index", "CourseInstallment")'>Course Installment</a></li>
-                                            <li><a href='@Url.Action("Index", "Subject")'>Course Module</a></li>
-                                            <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
-                                            @*<li><a href='@Url.Action("Index", "StockPurchase")'>Stock Management</a></li>*@
-                                        </ul>
-                                    }
-                                </li>
                                 @*<li>
                                         <a><i class="fa fa-gear"></i> Fixed Asset <span class="fa fa-chevron-down"></span></a>
                                         @if (User.IsInAnyRoles("Admin"))
@@ -223,7 +210,7 @@
                                             </ul>
                                         </li>*@
                                 }
-                                @if (User.IsInAnyRoles("Admin", "SuperAdmin"))
+                                @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     @*<li>
                                             <a><i class="fa fa-graduation-cap"></i>Placement<span class="fa fa-chevron-down"></span></a>
