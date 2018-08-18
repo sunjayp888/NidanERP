@@ -144,6 +144,8 @@
             $('#ActivityTask_Remark').attr("disabled", true);
             $('#txtNumberOfDays').attr("disabled", true);
             $('#txtNumberOfHours').attr("disabled", true);
+            $('#ActivityTask_MonitoredById').attr("disabled", true);
+            $('#txtEscalateTo').attr("disabled", true);
         });
         var daterangepickerOptions = {
             autoApply: true,
@@ -192,6 +194,17 @@
                 function(ev, picker) {
                     $(this).val(picker.startDate.format('DD MMMM YYYY'));
                 });
+        });
+
+        // For Escalate Textbox on off
+        $('#divEscalate').hide();
+        $("#dropStatus").change(function() {
+            if ($('#dropStatus :selected').text() == "Escalate") {
+                $('#divEscalate').show();
+                $('#txtEscalateTo').val("@Model.MonitoredByName");
+            } else {
+                $('#divEscalate').hide();
+            }
         });
     </script>
 }

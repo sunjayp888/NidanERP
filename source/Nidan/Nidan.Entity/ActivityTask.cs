@@ -48,6 +48,13 @@ namespace Nidan.Entity
         [Required]
         public string Remark { get; set; }
 
+        public string Problem { get; set; }
+
+        public string Solution { get; set; }
+
+        [Required]
+        public string TaskPriority { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
@@ -56,6 +63,8 @@ namespace Nidan.Entity
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public int MonitoredById { get; set; }
 
         public virtual Activity Activity { get; set; }
 

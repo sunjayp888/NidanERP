@@ -38,6 +38,7 @@ namespace Nidan.Controllers
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == centreId);
             var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
+            var monitoredByIds = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
             var startDate = activityData.StartDate;
             var endDate = activityData.EndDate;
             var numberOfDays = (endDate - startDate).TotalDays;
@@ -50,6 +51,7 @@ namespace Nidan.Controllers
                 NumberOfHours = numberOfHours,
                 Centres = new SelectList(centres, "CentreId", "Name"),
                 AssignToList = new SelectList(assignTos, "PersonnelId", "FullName"),
+                MonitoredByList = new SelectList(monitoredByIds, "PersonnelId", "FullName"),
                 Activity = activityData,
                 ActivityTask = new ActivityTask()
                 {
@@ -58,6 +60,7 @@ namespace Nidan.Controllers
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
+            viewModel.TaskPriorityList = new SelectList(viewModel.TaskPriority, "Value", "Name");
             return View(viewModel);
         }
 
@@ -101,23 +104,29 @@ namespace Nidan.Controllers
             }
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, activityTask.ActivityId, e => true);
             var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, activityTask.CentreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
+            var monitoredByIds = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
             var startDate = activityData.StartDate;
             var endDate = activityData.EndDate;
             var numberOfDays = (endDate - startDate).TotalDays;
             var startTime = activityData.StartHour + ":" + activityData.StartMinute + " " + activityData.StartTimeSpan;
             var endTime = activityData.EndHour + ":" + activityData.EndMinute + " " + activityData.EndTimeSpan;
             var numberOfHours = DateTime.Parse(endTime).Subtract(DateTime.Parse(startTime));
+            var monitoredBy = NidanBusinessService.RetrievePersonnel(organisationId, activityData.CreatedBy);
             var viewModel = new ActivityTaskViewModel
             {
                 NumberOfDays = numberOfDays,
                 NumberOfHours = numberOfHours,
                 Centres = new SelectList(centres, "CentreId", "Name"),
                 AssignToList = new SelectList(assignTos, "PersonnelId", "FullName"),
+                MonitoredByList = new SelectList(monitoredByIds, "PersonnelId", "FullName"),
                 ActivityTask = activityTask,
-                Activity = activityData
+                Activity = activityData,
+                MonitoredById = monitoredBy.PersonnelId,
+                MonitoredByName = monitoredBy.Fullname
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
+            viewModel.TaskPriorityList = new SelectList(viewModel.TaskPriority, "Value", "Name");
             return View(viewModel);
         }
 

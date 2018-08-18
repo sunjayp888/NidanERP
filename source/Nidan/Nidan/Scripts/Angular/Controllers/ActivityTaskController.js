@@ -174,6 +174,11 @@
             return ActivityTaskService.createTaskStatus(activityTaskState)
                 .then(function () {
                     retrieveActivityTaskStatesByActivityTaskId(vm.activityTaskId);
+                    $("#txtProblem").val("");
+                    $("#txtSolution").val("");
+                    $("#txtNumberOfHours").val("");
+                    $("#txtNumberOfMinutes").val("");
+                    $("#txtRemark").val("");
                 });
         }
     }
