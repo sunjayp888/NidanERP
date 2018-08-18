@@ -61,6 +61,20 @@ namespace Nidan.Controllers
                 governmentMobilizationViewModel.GovernmentMobilization.OrganisationId = organisationId;
                 governmentMobilizationViewModel.GovernmentMobilization.CentreId = centreId;
                 governmentMobilizationViewModel.GovernmentMobilization.CreatedBy = personnelId;
+                var currentDate = DateTime.Parse(DateTime.Now.Date.ToShortDateString());
+                Console.WriteLine(currentDate);
+                var birthdate = governmentMobilizationViewModel.GovernmentMobilization.DateofBirth;
+                var age = currentDate.Year - birthdate.Year;
+                if (currentDate.Month < birthdate.Month)
+                {
+                    age--;
+                }
+                else if ((currentDate.Month >= birthdate.Month)
+                         && (currentDate.Day < birthdate.Day))
+                {
+                    age--;
+                }
+                   governmentMobilizationViewModel.GovernmentMobilization.Age = age;
                 governmentMobilizationViewModel.GovernmentMobilization = NidanBusinessService.CreateGovernmentMobilization(UserOrganisationId, governmentMobilizationViewModel.GovernmentMobilization);
                 return RedirectToAction("Create");
             }

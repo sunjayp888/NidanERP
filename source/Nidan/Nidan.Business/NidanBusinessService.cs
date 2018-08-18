@@ -1084,7 +1084,7 @@ namespace Nidan.Business
         {
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"EN", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
             var totalRegistrationAmount = candidateFeeDetail.Items.Where(e => e.FeeTypeId == 1 || e.FeeTypeId == 6).Sum(e => e.PaidAmount);
             var candidateFeeData = new CandidateFee
@@ -1121,7 +1121,7 @@ namespace Nidan.Business
         {
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"EN", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             var installmentDate = new DateTime(DateTime.UtcNow.Year, DateTime.Now.Month, 5, 0, 0, 0);
             var batch = RetrieveBatch(organisationId, admission.BatchId ?? 0);
             var candidateFeeDetail = RetrieveCandidateFees(organisationId, e => e.StudentCode == registration.StudentCode);
@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            SendRegistrationSms(registrationData);
+            //SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1371,7 +1371,7 @@ namespace Nidan.Business
 
             // Retrieve CentreRecieptsetting where centreId = 
             var centreRecieptsettingData = _nidanDataService.RetrieveCentreReceiptSetting(organisationId, e => e.CentreId == centreId);
-            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}/{3}", centreRecieptsettingData.TaxYear,"Reg", centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
 
             var candidateFeeData = new CandidateFee()
             {
@@ -4620,7 +4620,7 @@ namespace Nidan.Business
             {
                 centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.TaxYear != fiscalYear ? 1 : centreRecieptsettingData.ReceiptNumber;
             }
-             var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
+            var receiptNumber = string.Format("{0}/{1}/{2}", centreRecieptsettingData.TaxYear, centreRecieptsettingData.Centre.CentreCode, centreRecieptsettingData.ReceiptNumber);
             candidateFee.ReceiptNumber = receiptNumber;
             // Increment RecieptNo by and Update.
             centreRecieptsettingData.ReceiptNumber = centreRecieptsettingData.ReceiptNumber + 1;
@@ -4630,10 +4630,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            SendInstallmetnSms(candidateFee);
+            //SendInstallmetnSms(candidateFee);
             return data;
         }
 
@@ -5302,22 +5302,27 @@ namespace Nidan.Business
             var totalInstallment = RetrieveCandidateInstallment(organisationId, candidateFeeData.CandidateInstallmentId ?? 0, e => true).NumberOfInstallment.ToString();
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == candidateFeeData.StudentCode).FirstOrDefault();
             var centre = RetrieveCentre(organisationId, candidateFeeData.CentreId);
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
             int value = candidateFeeData.FeeTypeId;
             var rupeesinword = ConvertNumbertoWords((Int32)candidateFeeData.PaidAmount);
             Enum.FeeType feeType = (Enum.FeeType)value;
+            decimal paidAmount = (decimal)candidateFeeData.PaidAmount;
+            decimal totalAmountGst = (decimal)candidateFeeData.PaidAmount / 100 * 18;
+            var course = RetrieveCourse(organisationId,candidateFeeData.CandidateInstallment.CourseInstallment.CourseId);
             var candidateFeeReceipt = new CandidateFeeReceipt()
             {
                 OrganisationName = candidateFeeData.Organisation.Name,
                 EmailId = enquiry?.EmailId,
                 PaymentDate = candidateFeeData.PaymentDate.Value.ToShortDateString(),
-                CandidateAddress =
-                    string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
+                CandidateAddress = string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 CandidateName = enquiry.Title + " " + enquiry.FirstName + " " + enquiry.MiddleName + " " + enquiry.LastName,
-                CentreName = candidateFeeData.Centre.Name,
+                CentreName = centre.Name,
+                CentreCode = centre.CentreCode,
+                CentreTelephone = centre.Telephone.ToString(),
+                CentreEmail = centre.EmailId,
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
-                CourseDuration = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Duration.ToString(),
-                CourseName = candidateFeeData.CandidateInstallment.CourseInstallment.Course.Name,
+                CourseDuration = course.Duration.ToString(),
+                CourseName = course.Name,
                 FeeTypeName = feeType.ToString(),
                 InvoiceNumber = candidateFeeData.ReceiptNumber,
                 RecievedAmount = candidateFeeData.PaidAmount.ToString(),
@@ -5326,14 +5331,21 @@ namespace Nidan.Business
                 TotalInstallment = totalInstallment,
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
                 State = candidateFeeData.Centre.State.Name,
-                Gstin = gstnumber.GstNumber,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
+                Cgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
+                Sgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
+                Igst = 0,
+                //Igst = gstnumber == null || course.IsExampted ? (decimal)candidateFeeData.PaidAmount / 100 * 18 : 0,
+                TotalAmountGst = gstnumber == null || course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = gstnumber == null || course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
                 GstStateCode = centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 PaymentMode = candidateFeeData.PaymentMode.Name,
                 BankName = candidateFeeData.BankName != "null" ? candidateFeeData.BankName : "-",
                 ChequeNumber = candidateFeeData.ChequeNumber != "null" ? candidateFeeData.ChequeNumber : "-",
                 ChequeDate = candidateFeeData.ChequeDate?.ToShortDateString(),
-                RupeesInWords = rupeesinword + " RUPEES ONLY"
+                RupeesInWords = rupeesinword + " RUPEES ONLY",
+                IsExampted = course.IsExampted? "Exempted services as per Notification No. 12/2017 Sr.No.69." : " ",
             };
             if (value == 1)
             {
@@ -5343,11 +5355,11 @@ namespace Nidan.Business
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "Installment");
             }
-            else if (value == 6 || value == 5 || value == 8)
+            else if (value == 6)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "CandidateOtherFee");
             }
-            else if (value == 4 || value == 7)
+            else if (value == 4 || value == 7 || value == 5 || value == 8)
             {
                 return _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(candidateFeeReceipt), "LeadOtherFee");
             }
@@ -5401,7 +5413,10 @@ namespace Nidan.Business
                 });
             }
             var recievedAmount = candidateFee.Where(e => e.FeeTypeId == 2).Select(a => a.PaidAmount).FirstOrDefault();
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
+            var course = RetrieveCourse(organisationId, admission.Registration.CourseId);
+            decimal paidAmount = (decimal)recievedAmount;
+            decimal totalAmountGst = (decimal)recievedAmount / 100 * 18;
             var enrollmentData = new CandidateEnrollment
             {
                 EnrollmentDate = admission.AdmissionDate.ToShortDateString(),
@@ -5419,8 +5434,11 @@ namespace Nidan.Business
                     string.Format("{0} {1} {2} {3} {4}", centre.Address1, centre.Address2,
                         centre.Address3, centre.Address4, centre.PinCode),
                 CentreName = centre.Name,
-                CourseDuration = admission.Registration.CourseInstallment.Course.Duration.ToString(),
-                CourseName = admission.Registration.CourseInstallment.Course.Name,
+                CentreCode = centre.CentreCode,
+                CentreTelephone = centre.Telephone.ToString(),
+                CentreEmail = centre.EmailId,
+                CourseDuration = course.Duration.ToString(),
+                CourseName = course.Name,
                 EmailId = admission.Registration.Enquiry.EmailId,
                 MobileNumber = admission.Registration.Enquiry.Mobile.ToString(),
                 OrganisationName = organisationName.Name,
@@ -5430,11 +5448,17 @@ namespace Nidan.Business
                 TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
                 BalanceFee = admission.Registration.CandidateInstallment.PaymentMethod != "LumpsumAmount" ? (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
                             : (admission.Registration.CandidateInstallment.LumpsumAmount - candidateFee.Sum(e => e.PaidAmount)).ToString(),
-                State = centre.State.Name,
-                Gstin = gstnumber?.GstNumber,
+                State = admission.Centre.State.Name,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
+                Cgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
+                Sgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
+                Igst = 0,
+                TotalAmountGst = gstnumber == null || course.IsExampted ? 0 : totalAmountGst,
+                TotalAmountBeforeTax = gstnumber == null || course.IsExampted ? paidAmount : paidAmount - totalAmountGst,
                 GstStateCode = centre.State.GstStateCode.ToString(),
                 RecievedAmount = recievedAmount.ToString(),
-                FatherName = String.Format("{0} {1}", admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName)
+                FatherName = String.Format("{0} {1}", admission.Registration.Enquiry.MiddleName, admission.Registration.Enquiry.LastName),
+                IsExampted = course.IsExampted ? "Exempted services as per Notification No. 12/2017 Sr.No.69." : " ",
             };
 
             var termsAndCondition = _templateService.CreatePDF(organisationId, JsonConvert.SerializeObject(string.Empty), "FeeTermsAndConditions");
@@ -5500,10 +5524,11 @@ namespace Nidan.Business
             var otherFeeData = _nidanDataService.RetrieveOtherFee(organisationId, otherFeeId);
             var enquiry = RetrieveEnquiries(organisationId, e => e.StudentCode == otherFeeData.StudentCode).FirstOrDefault();
             var centre = RetrieveCentre(organisationId, otherFeeData.CentreId);
-            var gstnumber = RetrieveGsts(organisationId, e => e.StateId == centre.StateId).Items.FirstOrDefault();
+            var gstnumber = RetrieveGsts(organisationId, e => e.CentreId == centreId).Items.FirstOrDefault();
             int value = otherFeeData.FeeTypeId;
             var rupeesinword = otherFeeData.RupeesInWords;
-            //var feeType = (Enum.FeeType)value;
+            decimal totalAmountGst = 0;
+            decimal paidAmount = otherFeeData.PaidAmount;
             var otherFeeReceipt = new OtherFeeReceipt()
             {
                 OrganisationName = otherFeeData.Organisation.Name,
@@ -5512,14 +5537,22 @@ namespace Nidan.Business
                 CandidateAddress = string.Concat(enquiry.Address1, enquiry.Address2, enquiry.Address3, enquiry.Address4),
                 // ReSharper disable once PossiblyMistakenUseOfParamsMethod
                 CandidateName = string.Concat(enquiry.Title, " ", enquiry.FirstName, " ", enquiry.MiddleName, " " + enquiry.LastName),
-                CentreName = otherFeeData.Centre.Name,
+                CentreName = centre.Name,
+                CentreCode = centre.CentreCode,
+                CentreTelephone = centre.Telephone.ToString(),
+                CentreEmail = centre.EmailId,
                 CentreAddress = string.Concat(centre.Address1, centre.Address2, centre.Address3, centre.Address4),
                 FeeTypeName = otherFeeData.FeeType.Name,
                 InvoiceNumber = otherFeeData.ReceiptNumber,
                 RecievedAmount = otherFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
                 State = otherFeeData.Centre.State.Name,
-                Gstin = gstnumber.GstNumber,
+                Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
+                Cgst = 0,
+                Sgst = 0,
+                Igst = 0,
+                TotalAmountGst = totalAmountGst,
+                TotalAmountBeforeTax = paidAmount,
                 GstStateCode = centre.State.GstStateCode.ToString(),
                 FatherName = enquiry.MiddleName + " " + enquiry.LastName,
                 RupeesInWords = rupeesinword + " RUPEES ONLY"
