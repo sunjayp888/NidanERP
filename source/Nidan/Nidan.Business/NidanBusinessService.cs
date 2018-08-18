@@ -1663,6 +1663,21 @@ namespace Nidan.Business
             //activityTask.CentreId = centreId;
             activityTask.Activity = null;
             var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
+            //var emailData = new EmailData()
+            //{
+            //    BCCAddressList = new List<string> { "developer@nidantech.com" },
+            //    Body = String.Format("Dear {0}, We are in receipt of your payment of Rs.{1}, towards your instalment number-{2} and for the month of {3}.Please find attached your receipt for the like amount. ", enquiryData.FirstName, candidateFee.PaidAmount, candidateFee.InstallmentNumber, candidateFee.PaymentDate.Value.ToString("MMMM")),
+            //    //"For your information, your next instalment date is {4} and the amount is {5}.Your pending balance is {6}.We trust you find the same in order."
+            //    Subject = "Greetings From NEST",
+            //    IsHtml = true,
+            //    ToAddressList = new List<string> { enquiryData.EmailId }
+            //};
+
+            //var installmentReciept = new Dictionary<string, byte[]>
+            //{
+            //    //{enquiryData.FirstName + " " +enquiryData.LastName+" Installment Detail.pdf",document}
+            //};
+            //_emailService.SendEmail(emailData, installmentReciept);
             return data;
         }
 
@@ -1710,6 +1725,7 @@ namespace Nidan.Business
         public CandidateAssessment CreateCandidateAssessment(int organisationId, CandidateAssessment candidateAssessment)
         {
             return _nidanDataService.Create<CandidateAssessment>(organisationId, candidateAssessment);
+            // Add data in [CandidateAssessmentQuestionAnswer]
         }
 
         public CandidateAssessmentQuestionAnswer CreateCandidateAssessmentQuestionAnswer(int organisationId, CandidateAssessmentQuestionAnswer candidateAssessmentQuestionAnswer)

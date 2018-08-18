@@ -58,6 +58,7 @@
         vm.updateCandidateAssessmentQuestionAnswer = updateCandidateAssessmentQuestionAnswer;
         vm.candidateAssessmentQuestionAnswerId;
         vm.updateCandidateAssessmentTotalMarkObtained = updateCandidateAssessmentTotalMarkObtained;
+        vm.selectedAnswer;
 
         function initialise() {
             vm.orderBy.property = "AssessmentId";
@@ -236,6 +237,10 @@
             return AssessmentService.retrieveCandidateAssessment(vm.candidateAssessmentId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.candidateAssessments = response.data.Items;
+                    vm.selectedAnswer = vm.candidateAssessments[0].IsOptionA ? vm.candidateAssessments[0].OptionA :
+                                        vm.candidateAssessments[0].IsOptionB ? vm.candidateAssessments[0].OptionB :
+                                        vm.candidateAssessments[0].IsOptionC ? vm.candidateAssessments[0].OptionC :
+                                        vm.candidateAssessments[0].IsOptionD ? vm.candidateAssessments[0].OptionD : "";
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.candidateAssessments;
@@ -247,7 +252,7 @@
             var optionBanswer = $('#' + optionB).is(":checked");
             var optionCanswer = $('#' + optionC).is(":checked");
             var optionDanswer = $('#' + optionD).is(":checked");
-            var subjectivequestionanswer = $('#' + subjectAnswer).val();
+            var subjectivequestionanswer = $('#' + subjectAnswer).val() === undefined ? "" : $('#' + subjectAnswer).val();
             var candidateAssessment = {
                 CandidateAssessmentId: candidateAssessmentId,
                 ModuleExamSetId: moduleExamSetId,
@@ -272,7 +277,7 @@
             var candidateMarkObtained = $('#' + markObtained).val();
             vm.candidateAssessmentQuestionAnswerId = candidateAssessmentQuestionAnswerId;
             var candidateAssessment = {
-                CandidateAssessmentQuestionAnswerId:vm.candidateAssessmentQuestionAnswerId,
+                CandidateAssessmentQuestionAnswerId: vm.candidateAssessmentQuestionAnswerId,
                 MarkObtained: candidateMarkObtained
             }
             return AssessmentService.updateCandidateAssessmentQuestionAnswer(candidateAssessment)
@@ -320,7 +325,7 @@
                 });
         }
 
-        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentId,moduleExamQuestionSetId) {
+        function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentId, moduleExamQuestionSetId) {
             vm.candidateAssessmentId = candidateAssessmentId;
             vm.moduleExamQuestionSetId = moduleExamQuestionSetId;
             vm.orderBy.property = "candidateAssessmentQuestionAnswerId";
