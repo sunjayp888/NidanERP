@@ -1025,6 +1025,18 @@ namespace Nidan.Data.Models
                 .Property(e => e.Remark)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<ActivityTask>()
+                .Property(e => e.Problem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTask>()
+                .Property(e => e.Solution)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTask>()
+                .Property(e => e.TaskPriority)
+                .IsUnicode(false);
+
             modelBuilder.Entity<ActivityTaskState>()
                 .Property(e => e.Remark)
                 .IsUnicode(false);

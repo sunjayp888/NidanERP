@@ -187,7 +187,7 @@
         }
 
         function retrieveCandidateAssessmentQuestionAnswer(candidateAssessmentId, moduleExamQuestionSetId, Paging, OrderBy) {
-            var url = "/Assessment/CandidateAssessmentQuestionAnswerbyId",
+            var url = "/CandidateAssessmentQuestionAnswer/CandidateAssessmentQuestionAnswerbyId",
                 data = {
                     candidateAssessmentId: candidateAssessmentId,
                     moduleExamQuestionSetId:moduleExamQuestionSetId,

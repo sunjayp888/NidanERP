@@ -14,6 +14,8 @@
                     </h2>
                     <h2>
                         <small>Total Marks: @Model.TotalMark</small>
+                        
+                        Timer 3: <timer> minutes,  seconds.</timer>
                     </h2>
 
                     <div class="float-right">
@@ -81,33 +83,30 @@
                                 <div ng-if="candidateAssessment.AnswerType=='Single'">
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" ng-value="candidateAssessment.IsOptionA">
+                                            <input id="optionA{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="model.selectedAnswer" value="{{candidateAssessment.OptionA}}">
                                             <span ng-bind="candidateAssessment.OptionA"></span>
                                         </label>
                                     </div>
                                     <br />
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionB">
+                                            <input id="optionB{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="model.selectedAnswer" value="{{candidateAssessment.OptionB}}">
                                             <span ng-bind="candidateAssessment.OptionB"></span>
-                                        </label><br /> 
+                                        </label><br />
                                     </div>
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionC">
+                                            <input id="optionC{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="model.selectedAnswer" value="{{candidateAssessment.OptionC}}">
                                             <span ng-bind="candidateAssessment.OptionC"></span>
                                         </label><br />
                                     </div>
                                     <div class="col-md-7 col-sm-3 col-xs-12">
                                         <label class="pull-right col-md-12 col-sm-6 col-xs-12">
-                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="candidateAssessment.ModuleExamQuestionSetId" value="optionD">
+                                            <input id="optionD{{candidateAssessment.ModuleExamQuestionSetId}}" type="radio" ng-model="model.selectedAnswer" value="{{candidateAssessment.OptionD}}">
                                             <span ng-bind="candidateAssessment.OptionD"></span>
                                         </label><br />
                                     </div>
-                                        
-                                       
-                                        
-                                    </div>
+                                </div>
 
                                 <div class="form-group" ng-if="candidateAssessment.QuestionTypeId==2 && candidateAssessment.AnswerType==null">
                                     <label class="control-label col-md-1 col-sm-3 col-xs-12">Answer</label>

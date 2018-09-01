@@ -16,9 +16,13 @@ namespace Nidan.Models
         public SelectList AssignToList { get; set; }
         public SelectList Centres { get; set; }
         public SelectList TaskStates { get; set; }
+        public SelectList MonitoredByList { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
+        public IEnumerable<SelectListItem> TaskPriorityList { get; set; }
         public int ActivityTaskId { get; set; }
+        public int MonitoredById { get; set; }
+        public string MonitoredByName { get; set; }
         public double NumberOfDays { get; set; }
         public TimeSpan NumberOfHours { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
@@ -112,7 +116,19 @@ namespace Nidan.Models
             new MinutesType() {Id = 58,Name = "58"},
             new MinutesType() {Id = 59,Name = "59"},
             new MinutesType() {Id = 60,Name = "60"}
-
         };
+
+        public List<TaskPriority> TaskPriority => new List<TaskPriority>()
+        {
+            new TaskPriority() {Name = "High",Value = "High"},
+            new TaskPriority() {Name = "Medium",Value = "Medium"},
+            new TaskPriority() {Name = "Low",Value = "Low"}
+        };
+    }
+
+    public class TaskPriority
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

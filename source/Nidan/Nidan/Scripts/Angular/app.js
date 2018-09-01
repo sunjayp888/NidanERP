@@ -13,7 +13,8 @@
         'wt.responsive',
         'ngBootbox',
         'moment-module',
-        'ui.select'
+        'ui.select',
+        'timer'
     ]);
 
 
