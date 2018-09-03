@@ -101,13 +101,13 @@
 
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
-                                    @*<li>
+                                    <li>
                                             <a><i class="fa fa-pencil-square-o"></i> Assessment <span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li><a href='@Url.Action("Index", "ModuleExamSet")'>Module Exam Set</a></li>
                                                 <li><a href='@Url.Action("Index", "Assessment")'>Assessment</a></li>
                                             </ul>
-                                        </li>*@
+                                        </li>
                                 }
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
