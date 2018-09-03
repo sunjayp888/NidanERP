@@ -20,6 +20,8 @@ namespace Nidan.Models
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
         public IEnumerable<SelectListItem> TaskPriorityList { get; set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
         public int ActivityTaskId { get; set; }
         public int MonitoredById { get; set; }
         public string MonitoredByName { get; set; }

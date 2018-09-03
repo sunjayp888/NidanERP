@@ -31,11 +31,11 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(new ActivityViewModel() {ActivityId = id.Value});
+            return View(new ActivityViewModel() { ActivityId = id.Value });
         }
 
         // GET: Activity/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create()
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
@@ -58,7 +58,7 @@ namespace Nidan.Controllers
         }
 
         // POST: Activity/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ActivityViewModel activityViewModel)
@@ -155,7 +155,9 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => isSuperAdmin || e.CentreId == UserCentreId, orderBy, paging);
+            var organisationId = UserOrganisationId;
+            var activityIds = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging).Items.Select(e=>e.ActivityId);
+            var data = NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => isSuperAdmin || activityIds.Contains(e.ActivityId) || e.CreatedBy==UserPersonnelId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -163,7 +165,9 @@ namespace Nidan.Controllers
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveActivityBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var organisationId = UserOrganisationId;
+            var activityIds = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging).Items.Select(e => e.ActivityId);
+            var data = NidanBusinessService.RetrieveActivityBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || activityIds.Contains(p.ActivityId) || p.CreatedBy == UserPersonnelId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -171,7 +175,9 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
+            var organisationId = UserOrganisationId;
+            var activityIds = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging).Items.Select(e => e.ActivityId);
+            return this.JsonNet(NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => (isSuperAdmin || activityIds.Contains(e.ActivityId) || e.CreatedBy == UserPersonnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
         }
     }
 }

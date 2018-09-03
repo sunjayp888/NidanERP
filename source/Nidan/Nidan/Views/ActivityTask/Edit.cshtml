@@ -71,6 +71,10 @@
                                         <tr role="row">
                                             <th ng-click="model.order('CompletedDate')" ng-class="model.orderClass('CompletedDate')">Actioned Date</th>
                                             <th ng-click="model.order('TaskStateId')" ng-class="model.orderClass('TaskStateId')">Status</th>
+                                            <th ng-click="model.order('Problem')" ng-class="model.orderClass('Problem')">Problem</th>
+                                            <th ng-click="model.order('Solution')" ng-class="model.orderClass('Solution')">Solution</th>
+                                            <th ng-click="model.order('NumberOfHours')" ng-class="model.orderClass('NumberOfHours')">Number Of Hours</th>
+                                            <th ng-click="model.order('NumberOfMinutes')" ng-class="model.orderClass('NumberOfMinutes')">Number Of Minutes</th>
                                             <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remark</th>
                                         </tr>
                                     </thead>
@@ -78,6 +82,10 @@
                                         <tr ng-repeat="activityTaskState in model.activityTaskStates" class="odd gradeX">
                                             <td><span ng-bind="activityTaskState.CompletedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="activityTaskState.TaskState.Name"></span></td>
+                                            <td><span ng-bind="activityTaskState.Problem"></span></td>
+                                            <td><span ng-bind="activityTaskState.Solution"></span></td>
+                                            <td><span ng-bind="activityTaskState.NumberOfHours"></span></td>
+                                            <td><span ng-bind="activityTaskState.NumberOfMinutes"></span></td>
                                             <td><span ng-bind="activityTaskState.Remark"></span></td>
                                         </tr>
                                     </tbody>
@@ -146,6 +154,7 @@
             $('#txtNumberOfHours').attr("disabled", true);
             $('#ActivityTask_MonitoredById').attr("disabled", true);
             $('#txtEscalateTo').attr("disabled", true);
+            $('#ActivityTask_TaskPriority').attr("disabled", true);
         });
         var daterangepickerOptions = {
             autoApply: true,

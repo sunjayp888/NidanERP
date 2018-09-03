@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: ActivityTask/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -65,7 +65,7 @@ namespace Nidan.Controllers
         }
 
         // POST: ActivityTask/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ActivityTaskViewModel activityTaskViewModel)
@@ -191,14 +191,14 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => isSuperAdmin || e.CentreId == UserCentreId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveActivityTaskBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.CentreId == UserCentreId), orderBy, paging);
+            var data = NidanBusinessService.RetrieveActivityTaskBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.AssignTo == UserPersonnelId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -206,14 +206,14 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == UserPersonnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult ActivityTaskByActivityId(int activityId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.CentreId == UserCentreId) && e.ActivityId == activityId, orderBy, paging));
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == UserPersonnelId) && e.ActivityId == activityId, orderBy, paging));
         }
 
         [HttpPost]
