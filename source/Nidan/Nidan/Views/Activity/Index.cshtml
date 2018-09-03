@@ -22,8 +22,8 @@
             </div>
         </div>
     </div>
-    @if (User.IsInAnyRoles("SuperAdmin"))
-    {
+    @*@if (User.IsInAnyRoles("SuperAdmin"))
+    {*@
         <div class="row">
             <div class="col-xs-12">
                 <a class="btn btn-success btn-lg" href="@Url.Action("Create", "Activity")">
@@ -31,7 +31,7 @@
                 </a>
             </div>
         </div>
-    }
+    @*}*@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">

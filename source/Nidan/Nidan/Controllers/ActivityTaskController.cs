@@ -25,7 +25,7 @@ namespace Nidan.Controllers
         }
 
         // GET: ActivityTask/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -65,7 +65,7 @@ namespace Nidan.Controllers
         }
 
         // POST: ActivityTask/Create
-        [Authorize(Roles = "Admin , SuperAdmin")]
+        //[Authorize(Roles = "Admin , SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ActivityTaskViewModel activityTaskViewModel)
