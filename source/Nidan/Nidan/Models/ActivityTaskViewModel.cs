@@ -25,6 +25,7 @@ namespace Nidan.Models
         public int ActivityTaskId { get; set; }
         public int MonitoredById { get; set; }
         public string MonitoredByName { get; set; }
+        public string ActivityTaskStatus { get; set; }
         public double NumberOfDays { get; set; }
         public TimeSpan NumberOfHours { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()

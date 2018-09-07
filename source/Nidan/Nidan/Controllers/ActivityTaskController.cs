@@ -36,7 +36,7 @@ namespace Nidan.Controllers
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, id.Value, e => true);
-            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == centreId);
+            var centres = isSuperAdmin || centreId == 7 ? NidanBusinessService.RetrieveCentres(organisationId, e => true) : NidanBusinessService.RetrieveCentres(organisationId, e => e.CentreId == centreId);
             var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
             var monitoredByIds = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
             var startDate = activityData.StartDate;
@@ -81,7 +81,8 @@ namespace Nidan.Controllers
                 activityTaskViewModel.ActivityTask = NidanBusinessService.CreateActivityTask(organisationId, personnelId, centreId, activityTaskViewModel.ActivityTask);
                 return RedirectToAction("Create", "ActivityTask", new { id = activityTaskViewModel.ActivityTask.ActivityId });
             }
-            activityTaskViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
+            var centres = isSuperAdmin || centreId == 7 ? NidanBusinessService.RetrieveCentres(organisationId, e => true) : NidanBusinessService.RetrieveCentres(organisationId, e => e.CentreId == centreId);
+            activityTaskViewModel.Centres = new SelectList(centres);
             activityTaskViewModel.AssignToList = new SelectList(NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, centreId, activityTaskViewModel.ActivityTask.Activity.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList());
             return View(activityTaskViewModel);
         }
@@ -96,12 +97,13 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == centreId);
+            var centres = isSuperAdmin || centreId == 7 ? NidanBusinessService.RetrieveCentres(organisationId, e => true) : NidanBusinessService.RetrieveCentres(organisationId, e => e.CentreId == centreId);
             var activityTask = NidanBusinessService.RetrieveActivityTask(organisationId, id.Value, e => true);
             if (activityTask == null)
             {
                 return HttpNotFound();
             }
+            var activityTaskDataGrid = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId,e => e.ActivityTaskId == activityTask.ActivityTaskId).Items.FirstOrDefault();
             var activityData = NidanBusinessService.RetrieveActivity(organisationId, activityTask.ActivityId, e => true);
             var assignTos = NidanBusinessService.RetrieveActivityAssignPersonnels(organisationId, activityTask.CentreId, activityData.ActivityAssigneeGroupId).Items.Select(e => e.Personnel).ToList();
             var monitoredByIds = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
@@ -122,7 +124,8 @@ namespace Nidan.Controllers
                 ActivityTask = activityTask,
                 Activity = activityData,
                 MonitoredById = monitoredBy.PersonnelId,
-                MonitoredByName = monitoredBy.Fullname
+                MonitoredByName = monitoredBy.Fullname,
+                ActivityTaskStatus = activityTaskDataGrid?.ActivityTaskStatus
             };
             viewModel.HoursList = new SelectList(viewModel.HoursType, "Id", "Name");
             viewModel.MinutesList = new SelectList(viewModel.MinutesType, "Id", "Name");
@@ -191,14 +194,16 @@ namespace Nidan.Controllers
         public ActionResult List(Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging));
+            var personnelId = UserPersonnelId;
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult Search(string searchKeyword, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var data = NidanBusinessService.RetrieveActivityTaskBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.AssignTo == UserPersonnelId), orderBy, paging);
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveActivityTaskBySearchKeyword(UserOrganisationId, searchKeyword, p => (isSuperAdmin || p.AssignTo == personnelId || p.CreatedBy == personnelId), orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -206,14 +211,16 @@ namespace Nidan.Controllers
         public ActionResult SearchByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == UserPersonnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
+            var personnelId = UserPersonnelId;
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging));
         }
 
         [HttpPost]
         public ActionResult ActivityTaskByActivityId(int activityId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == UserPersonnelId) && e.ActivityId == activityId, orderBy, paging));
+            var personnelId = UserPersonnelId;
+            return this.JsonNet(NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId) && e.ActivityId == activityId, orderBy, paging));
         }
 
         [HttpPost]

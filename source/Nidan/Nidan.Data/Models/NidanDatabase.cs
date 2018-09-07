@@ -209,6 +209,7 @@ namespace Nidan.Data.Models
         public virtual DbSet<DistrictBlock> DistrictBlocks { get; set; }
         public virtual DbSet<GovernmentMobilization> GovernmentMobilizations { get; set; }
         public virtual DbSet<GovernmentMobilizationGrid> GovernmentMobilizationGrids { get; set; }
+        public virtual DbSet<ActivityTaskStateDataGrid> ActivityTaskStateDataGrids { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -2192,12 +2193,17 @@ namespace Nidan.Data.Models
             modelBuilder.Entity<ActivityDataGrid>()
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
+
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.ActivityName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ActivityTaskDataGrid>()
                 .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.TaskPriority)
                 .IsUnicode(false);
 
             modelBuilder.Entity<ActivityTaskDataGrid>()
@@ -3724,6 +3730,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<Gst>()
                 .Property(e => e.Type)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+               .Property(e => e.ActivityName)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.ActivityTaskName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.TaskPriority)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.TaskStateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Problem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Solution)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Remark)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

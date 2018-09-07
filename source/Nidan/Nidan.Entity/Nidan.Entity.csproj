@@ -91,6 +91,7 @@
     <Compile Include="ActivityTask.cs" />
     <Compile Include="ActivityTaskDataGrid.cs" />
     <Compile Include="ActivityTaskState.cs" />
+    <Compile Include="ActivityTaskStateDataGrid.cs" />
     <Compile Include="ActivityType.cs" />
     <Compile Include="Admission.cs" />
     <Compile Include="AdmissionGrid.cs" />
