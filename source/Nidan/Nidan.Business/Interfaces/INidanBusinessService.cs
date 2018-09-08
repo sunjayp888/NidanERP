@@ -414,6 +414,8 @@ namespace Nidan.Business.Interfaces
         List<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate);
         List<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate);
         PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementReportGrid> RetrieveCandidatePrePlacementReportGrid(int organisationId, Expression<Func<CandidatePrePlacementReportGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementDataGrid> RetrieveCandidatePrePlacementDataGrid(int organisationId, Expression<Func<CandidatePrePlacementDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         #endregion
 
         #region Update
