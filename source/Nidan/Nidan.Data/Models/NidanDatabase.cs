@@ -2196,42 +2196,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.SearchField)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.ActivityName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.TaskPriority)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.StartTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.EndTimeSpan)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.ActivityTaskStatus)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskDataGrid>()
-                .Property(e => e.SearchField)
-                .IsUnicode(false);
-
             modelBuilder.Entity<EventApproveState>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -3734,34 +3698,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.Type)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-               .Property(e => e.ActivityName)
-               .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.ActivityTaskName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.TaskPriority)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.TaskStateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.Problem)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.Solution)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ActivityTaskStateDataGrid>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
             modelBuilder.Entity<CandidatePrePlacementReportGrid>()
                 .Property(e => e.Studentcode)
                 .IsUnicode(false);
@@ -3812,6 +3748,110 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<CandidatePrePlacementDataGrid>()
                 .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+               .Property(e => e.ActivityName)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.AssignToEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.TaskPriority)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.StartTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.EndTimeSpan)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.CreatedByEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.MonitoredByEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.ActivityAssigneeGroupName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.HeadEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.ActivityTaskStatus)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.CentreName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskDataGrid>()
+                .Property(e => e.SearchField)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.ActivityName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.ActivityTaskName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.TaskPriority)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.TaskStateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Problem)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Solution)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.AssignToEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.CreatedByEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.HeadEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.MonitoredByEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ActivityTaskStateDataGrid>()
+                .Property(e => e.ActivityAssigneeGroupName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

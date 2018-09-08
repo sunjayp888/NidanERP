@@ -1,4 +1,5 @@
-﻿<li>
+﻿@using Nidan.Extensions
+<li>
     <a><i class="fa fa-user"></i> Mobilization <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         <li><a href='@Url.Action("Index", "FollowUp")'>Follow-Up</a></li>
@@ -25,7 +26,7 @@
         </ul>
     </li>*@
 <li>
-    @if (Model.CentreType != "Franchise")
+    @if (Model.CentreType != "Franchise" && !User.IsInAnyRoles("User") && !User.IsSuperAdmin())
     {
         <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
@@ -56,9 +57,9 @@
         <li><a href='@Url.Action("Index", "Room")'>Class Room</a></li>
     </ul>
 </li>
-<li>
+@*<li>
     <a><i class="fa fa-gear"></i> Fixed Asset <span class="fa fa-chevron-down"></span></a>
     <ul class="nav child_menu">
         <li><a href='@Url.Action("Index", "FixAssetMapping")'>Infra Equipment</a></li>
     </ul>
-</li>
+</li>*@
