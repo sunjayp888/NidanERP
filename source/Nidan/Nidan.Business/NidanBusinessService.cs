@@ -2580,6 +2580,18 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveGovernmentMobilizationBySearchKeyword(organisationId, searchKeyword, predicate, orderBy, paging);
         }
 
+        public PagedResult<CandidatePrePlacementReportGrid> RetrieveCandidatePrePlacementReportGrid(int organisationId, Expression<Func<CandidatePrePlacementReportGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementReportGrid(organisationId, predicate, orderBy, paging);
+        }
+
+        public PagedResult<CandidatePrePlacementDataGrid> RetrieveCandidatePrePlacementDataGrid(int organisationId, Expression<Func<CandidatePrePlacementDataGrid, bool>> predicate, List<OrderBy> orderBy = null,
+            Paging paging = null)
+        {
+            return _nidanDataService.RetrieveCandidatePrePlacementDataGrid(organisationId, predicate, orderBy, paging);
+        }
+
         public Event RetrieveEvent(int organisationId, int eventId, Expression<Func<Event, bool>> predicate)
         {
             return _nidanDataService.RetrieveEvent(organisationId, eventId, predicate);

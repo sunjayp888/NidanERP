@@ -331,6 +331,7 @@
     <Compile Include="Models\CandidateFinalPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePostPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePrePlacementActivityViewModel.cs" />
+    <Compile Include="Models\CandidatePrePlacementReportViewModel.cs" />
     <Compile Include="Models\CandidatePrePlacementViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
@@ -1898,6 +1899,8 @@
     <Content Include="Views\Shared\_MobilizerLayout.cshtml" />
     <Content Include="Views\GovernmentMobilization\View.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\BatchPrePlacement\CandidatePrePlacementData.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementReport.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

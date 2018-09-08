@@ -297,6 +297,8 @@ namespace Nidan.Data.Interfaces
         PagedResult<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementReportGrid> RetrieveCandidatePrePlacementReportGrid(int organisationId, Expression<Func<CandidatePrePlacementReportGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementDataGrid> RetrieveCandidatePrePlacementDataGrid(int organisationId, Expression<Func<CandidatePrePlacementDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

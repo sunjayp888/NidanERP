@@ -144,8 +144,10 @@
     <Compile Include="CandidatePrePlacement.cs" />
     <Compile Include="CandidatePrePlacementActivity.cs" />
     <Compile Include="CandidatePrePlacementActivityGrid.cs" />
+    <Compile Include="CandidatePrePlacementDataGrid.cs" />
     <Compile Include="CandidatePrePlacementGrid.cs" />
     <Compile Include="CandidatePrePlacementReport.cs" />
+    <Compile Include="CandidatePrePlacementReportGrid.cs" />
     <Compile Include="CandidateRegistrationFee.cs" />
     <Compile Include="CasteCategory.cs" />
     <Compile Include="Centre.cs" />

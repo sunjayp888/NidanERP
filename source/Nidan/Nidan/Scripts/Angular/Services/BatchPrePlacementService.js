@@ -16,7 +16,10 @@
             openCandidatePrePlacementActivityModalPopUp: openCandidatePrePlacementActivityModalPopUp,
             saveCandidatePrePlacementActivity: saveCandidatePrePlacementActivity,
             openCandidatePrePlacementUpdateModalPopUp: openCandidatePrePlacementUpdateModalPopUp,
-            retrieveCandidatePrePlacementReportByBatchPrePlacementId: retrieveCandidatePrePlacementReportByBatchPrePlacementId
+            retrieveCandidatePrePlacementReportByBatchPrePlacementId: retrieveCandidatePrePlacementReportByBatchPrePlacementId,
+            searchCandidatePrePlacementData: searchCandidatePrePlacementData,
+            openCandidatePrePlacementReportUpdateModalPopUp: openCandidatePrePlacementReportUpdateModalPopUp,
+            saveCandidatePrePlacementReport: saveCandidatePrePlacementReport
         };
 
         return service;
@@ -73,11 +76,26 @@
             return $http.post(url);
         }
 
+        function openCandidatePrePlacementReportUpdateModalPopUp(id) {
+
+            var url = "/BatchPrePlacement/GetCandidatePrePlacementReport/" + id;
+            return $http.post(url);
+        }
+
         //saveCandidatePrePlacementActivity
         function saveCandidatePrePlacementActivity(candidatePrePlacement) {
             var url = "/BatchPrePlacement/SaveCandidatePrePlacementActivity",
                 data = {
                     candidatePrePlacement: candidatePrePlacement
+                };
+            return $http.post(url, data);
+        }
+
+        //saveCandidatePrePlacementReport
+        function saveCandidatePrePlacementReport(candidatePrePlacementReport) {
+            var url = "/BatchPrePlacement/SaveCandidatePrePlacementReport",
+                data = {
+                    candidatePrePlacementReport: candidatePrePlacementReport
                 };
             return $http.post(url, data);
         }
@@ -95,6 +113,17 @@
             var url = "/BatchPrePlacement/RetrieveCandidatePrePlacementReportByBatchPrePlacementId",
                 data = {
                     batchPrePlacementId: batchPrePlacementId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
+
+            return $http.post(url, data);
+        }
+
+        function searchCandidatePrePlacementData(admissionId,Paging, OrderBy ){
+            var url = "/BatchPrePlacement/CandidatePrePlacementDataByAdmissionId",
+                data = {
+                    admissionId: admissionId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };
