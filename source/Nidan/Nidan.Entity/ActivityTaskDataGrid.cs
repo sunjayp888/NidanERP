@@ -31,25 +31,28 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AssignTo { get; set; }
 
+        [Key]
+        [Column(Order = 4)]
+        [StringLength(100)]
+        public string TaskPriority { get; set; }
+
         [StringLength(202)]
         public string AssignToName { get; set; }
 
         [Key]
-        [Column(Order = 4, TypeName = "date")]
+        [Column(Order = 5, TypeName = "date")]
         public DateTime StartDate { get; set; }
-
-        [Key]
-        [Column(Order = 5)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StartHour { get; set; }
 
         [Key]
         [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StartMinute { get; set; }
+        public int StartHour { get; set; }
 
         [Key]
         [Column(Order = 7)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StartMinute { get; set; }
+
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
@@ -67,22 +70,28 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EndMinute { get; set; }
 
-        [Key]
-        [Column(Order = 11)]
         [StringLength(10)]
         public string EndTimeSpan { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 11)]
         public string Remark { get; set; }
 
         [Key]
-        [Column(Order = 13)]
+        [Column(Order = 12)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CreatedBy { get; set; }
 
         [StringLength(202)]
         public string CreatedByName { get; set; }
+
+        [Key]
+        [Column(Order = 13)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int MonitoredById { get; set; }
+
+        [StringLength(202)]
+        public string MonitoredByName { get; set; }
 
         public int? NumberOfDays { get; set; }
 

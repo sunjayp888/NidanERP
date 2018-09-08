@@ -1663,21 +1663,33 @@ namespace Nidan.Business
             //activityTask.CentreId = centreId;
             activityTask.Activity = null;
             var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
-            //var emailData = new EmailData()
-            //{
-            //    BCCAddressList = new List<string> { "developer@nidantech.com" },
-            //    Body = String.Format("Dear {0}, We are in receipt of your payment of Rs.{1}, towards your instalment number-{2} and for the month of {3}.Please find attached your receipt for the like amount. ", enquiryData.FirstName, candidateFee.PaidAmount, candidateFee.InstallmentNumber, candidateFee.PaymentDate.Value.ToString("MMMM")),
-            //    //"For your information, your next instalment date is {4} and the amount is {5}.Your pending balance is {6}.We trust you find the same in order."
-            //    Subject = "Greetings From NEST",
-            //    IsHtml = true,
-            //    ToAddressList = new List<string> { enquiryData.EmailId }
-            //};
+            var activityTaskGrid = _nidanDataService.RetrieveActivityTaskDataGrids(organisationId, e => e.ActivityTaskId == data.ActivityTaskId).Items.FirstOrDefault();
+            var template =
+                "<style> table, tr, td {border: 1px solid black}</style><table>" +
+                "<tr><td>Activity Name</td><td>"+activityTaskGrid.ActivityName+"</td></tr>" +
+                "<tr><td>Task Name</td><td>"+activityTaskGrid.Name+"</td></tr>" +
+                "<tr><td>Task Priority</td><td>" + activityTaskGrid.TaskPriority + "</td></tr>" +
+                "<tr><td>Start Date</td><td>"+activityTaskGrid.StartDate.ToString("dd-MM-yyyy")+"</td></tr>" +
+                "<tr><td>End Date</td><td>" + activityTaskGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Number Of Days</td><td>" + activityTaskGrid.NumberOfDays + "</td></tr>" +
+                "<tr><td>Assigned By</td><td>" + activityTaskGrid.CreatedByName + "</td></tr>" +
+                "<tr><td>Monitered By</td><td>" + activityTaskGrid.MonitoredByName + "</td></tr>" +
+                "<tr><td>Remarks</td><td>" + activityTaskGrid.Remark + "</td></tr></ table >";
+            var emailData = new EmailData()
+            {
+                
+                BCCAddressList = new List<string> { "developer@nidantech.com" },
+                Body = template,
+                Subject = "Activity Management Create",
+                IsHtml = true,
+                ToAddressList = new List<string> { "developer@nidantech.com" }
+            };
 
-            //var installmentReciept = new Dictionary<string, byte[]>
-            //{
-            //    //{enquiryData.FirstName + " " +enquiryData.LastName+" Installment Detail.pdf",document}
-            //};
-            //_emailService.SendEmail(emailData, installmentReciept);
+            var installmentReciept = new Dictionary<string, byte[]>
+            {
+                //{enquiryData.FirstName + " " +enquiryData.LastName+" Installment Detail.pdf",document}
+            };
+            _emailService.SendEmail(emailData, installmentReciept);
             return data;
         }
 
@@ -1691,6 +1703,35 @@ namespace Nidan.Business
                 activityData.TaskStateId = (int)Enum.TaskState.InProgress;
                 _nidanDataService.UpdateOrganisationEntityEntry(organisationId, activityData);
             }
+            var activityTaskStateGrid = _nidanDataService.RetrieveActivityTaskStateDataGrids(organisationId, e => e.ActivityTaskStateId == data.ActivityTaskStateId).Items.FirstOrDefault();
+            var template =
+                "<style> table, tr, td {border: 1px solid black}</style><table>" +
+                "<tr><td>Activity Name</td><td>" + activityTaskStateGrid.ActivityName + "</td></tr>" +
+                "<tr><td>Task Name</td><td>" + activityTaskStateGrid.ActivityTaskName + "</td></tr>" +
+                "<tr><td>Task Priority</td><td>" + activityTaskStateGrid.TaskPriority + "</td></tr>" +
+                "<tr><td>Start Date</td><td>" + activityTaskStateGrid.StartDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>End Date</td><td>" + activityTaskStateGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Task Status</td><td>" + activityTaskStateGrid.TaskStateName + "</td></tr>" +
+                "<tr><td>Status Date</td><td>" + activityTaskStateGrid.ActivityTaskStateDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Problem</td><td>" + activityTaskStateGrid.Problem + "</td></tr>" +
+                "<tr><td>Solution</td><td>" + activityTaskStateGrid.Solution + "</td></tr>" +
+                "<tr><td>Time Taken</td><td>" + activityTaskStateGrid.NumberOfHours + " : "+activityTaskStateGrid.NumberOfMinutes+"</td></tr>" +
+                "<tr><td>Remarks</td><td>" + activityTaskStateGrid.Remark + "</td></tr></ table >";
+            var emailData = new EmailData()
+            {
+
+                BCCAddressList = new List<string> { "developer@nidantech.com" },
+                Body = template,
+                Subject = "Activity Management Add Task Status",
+                IsHtml = true,
+                ToAddressList = new List<string> { "developer@nidantech.com" }
+            };
+
+            var installmentReciept = new Dictionary<string, byte[]>
+            {
+                //{enquiryData.FirstName + " " +enquiryData.LastName+" Installment Detail.pdf",document}
+            };
+            _emailService.SendEmail(emailData, installmentReciept);
             return data;
         }
 
@@ -5750,6 +5791,10 @@ namespace Nidan.Business
             return _nidanDataService.RetrieveModuleExamQuestionSetGrid(organisationId, predicate, orderBy, paging);
         }
 
+        public PagedResult<ActivityTaskStateDataGrid> RetrieveActivityTaskStateDataGrids(int organisationId, Expression<Func<ActivityTaskStateDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            return _nidanDataService.RetrieveActivityTaskStateDataGrids(organisationId, predicate, orderBy, paging);
+        }
     }
 }
 

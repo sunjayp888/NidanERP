@@ -32,7 +32,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="btnAddTaskStatus" type="button" class="btn btn-primary" ng-click="model.openAddTaskStatus(@Model.ActivityTask.ActivityTaskId)" data-toggle="modal" data-target="#addTaskStatus">Add Task Status</button>
+                                    @if (Model.ActivityTaskStatus != "Completed")
+                                    {
+                                        <button id="btnAddTaskStatus" type="button" class="btn btn-primary" ng-click="model.openAddTaskStatus(@Model.ActivityTask.ActivityTaskId)" data-toggle="modal" data-target="#addTaskStatus">Add Task Status</button>
+                                    }
+                                    
                                     <a href="@Url.Action("Index")" class="btn btn-success" role="button">
                                         Finish
                                     </a>

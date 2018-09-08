@@ -3915,7 +3915,7 @@ namespace Nidan.Data
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
                 var searchData = context.Database
-                    .SqlQuery<ActivityTaskDataGrid>("SearchStock @SearchKeyword", category).ToList();
+                    .SqlQuery<ActivityTaskDataGrid>("SearchActivityTask @SearchKeyword", category).ToList();
 
                 var data = searchData.ToList().AsQueryable()
                     .Where(predicate)
@@ -5264,7 +5264,7 @@ namespace Nidan.Data
                 var category = new SqlParameter("@SearchKeyword", searchKeyword);
 
                 var searchData = context.Database
-                    .SqlQuery<ActivityDataGrid>("SearchStock @SearchKeyword", category).ToList();
+                    .SqlQuery<ActivityDataGrid>("SearchActivity @SearchKeyword", category).ToList();
 
                 var data = searchData.ToList().AsQueryable()
                     .Where(predicate)
@@ -5511,6 +5511,28 @@ namespace Nidan.Data
                     .CandidatePrePlacementReports
                     .AsNoTracking()
                     .Where(e => e.CandidatePrePlacement.BatchPrePlacement.BatchId == batchid);
+            }
+        }
+
+        public PagedResult<ActivityTaskStateDataGrid> RetrieveActivityTaskStateDataGrids(int organisationId, Expression<Func<ActivityTaskStateDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null)
+        {
+            using (ReadUncommitedTransactionScope)
+            using (var context = _databaseFactory.Create(organisationId))
+            {
+
+                return context
+                    .ActivityTaskStateDataGrids
+                    .AsNoTracking()
+                    .Where(predicate)
+                    .OrderBy(orderBy ?? new List<OrderBy>
+                        {
+                            new OrderBy
+                            {
+                                Property = "ActivityTaskStateId",
+                                Direction = System.ComponentModel.ListSortDirection.Ascending
+                            }
+                        }
+                    ).Paginate(paging);
             }
         }
 
