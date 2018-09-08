@@ -225,17 +225,63 @@ namespace Nidan.Controllers
             return this.JsonNet(data);
         }
 
+        [Authorize(Roles = "Admin , SuperAdmin")]
+        public ActionResult GetCandidatePrePlacementReport(int id)
+        {
+            var userOrganisationId = UserOrganisationId;
+            var data = _nidanBusinessService.RetrieveCandidatePrePlacementReport(userOrganisationId, id);
+            return this.JsonNet(data);
+        }
+
         [HttpPost]
         public ActionResult RetrieveCandidatePrePlacementReportByBatchPrePlacementId(int batchPrePlacementId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centreId = UserCentreId;
-            var batchPrePlacementData =_nidanBusinessService.RetrieveBatchPrePlacement(organisationId, batchPrePlacementId);
-            var candidatePrePlacementData = _nidanBusinessService.RetrieveCandidatePrePlacements(organisationId,centreId, e => e.BatchPrePlacementId == batchPrePlacementId);
-
-            var data = _nidanBusinessService.RetrieveCandidatePrePlacementGrids(organisationId, centreId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchPrePlacementId == batchPrePlacementId, orderBy, paging);
+            var data = _nidanBusinessService.RetrieveCandidatePrePlacementReportGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.BatchpreplacementId == batchPrePlacementId, orderBy, paging);
             return this.JsonNet(data);
+        }
+
+        // GET: BatchPrePlacement/CandidatePrePlacementData/{id}
+        public ActionResult CandidatePrePlacementData()
+        {
+            return View(new BatchPrePlacementViewModel());
+        }
+
+        [HttpPost]
+        public ActionResult CandidatePrePlacementDataByAdmissionId(int admissionId, Paging paging, List<OrderBy> orderBy)
+        {
+            var organisationId = UserOrganisationId;
+            var data = _nidanBusinessService.RetrieveCandidatePrePlacementDataGrid(organisationId, e => e.AdmissionId == admissionId);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SaveCandidatePrePlacementReport(CandidatePrePlacementReportViewModel candidatePrePlacementReportViewModel)
+        {
+            var organisationId = UserOrganisationId;
+            var centreId = UserCentreId;
+            var personnelId = UserPersonnelId;
+            var candidatePrePlacementReportData = _nidanBusinessService.RetrieveCandidatePrePlacementReport(organisationId, candidatePrePlacementReportViewModel.CandidatePrePlacementReport.CandidatePrePlacementReportId);
+            try
+            {
+                candidatePrePlacementReportViewModel.CandidatePrePlacementReport.OrganisationId = organisationId;
+                candidatePrePlacementReportViewModel.CandidatePrePlacementReport.CentreId = centreId;
+                candidatePrePlacementReportViewModel.CandidatePrePlacementReport.CreatedBy = personnelId;
+                candidatePrePlacementReportViewModel.CandidatePrePlacementReport.StudentCode = candidatePrePlacementReportData.StudentCode;
+                int id = candidatePrePlacementReportViewModel.CandidatePrePlacementReport.CandidatePrePlacementReportId;
+                if (id != 0)
+                {
+                    candidatePrePlacementReportViewModel.CandidatePrePlacementReport = _nidanBusinessService.UpdateCandidatePrePlacementReport(organisationId, candidatePrePlacementReportViewModel.CandidatePrePlacementReport);
+                    return this.JsonNet(true);
+                }
+                return this.JsonNet(true);
+            }
+            catch (Exception e)
+            {
+                return this.JsonNet(false);
+            }
         }
     }
 }

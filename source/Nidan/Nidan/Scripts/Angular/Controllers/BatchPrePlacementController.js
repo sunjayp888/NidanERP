@@ -15,6 +15,7 @@
         vm.batchPrePlacementId;
         vm.prePlacementActivityId;
         vm.candidatePrePlacementId;
+        vm.candidatePrePlacementReportId;
         vm.paging = new Paging;
         vm.pageChanged = pageChanged;
         vm.orderBy = new OrderBy;
@@ -28,11 +29,19 @@
         vm.openCandidatePrePlacementActivityModalPopUp = openCandidatePrePlacementActivityModalPopUp;
         vm.saveCandidatePrePlacementActivity = saveCandidatePrePlacementActivity;
         vm.openCandidatePrePlacementUpdateModalPopUp = openCandidatePrePlacementUpdateModalPopUp;
-        vm.retrieveCandidatePrePlacementReportByBatchPrePlacementId =retrieveCandidatePrePlacementReportByBatchPrePlacementId;
+        vm.retrieveCandidatePrePlacementReportByBatchPrePlacementId = retrieveCandidatePrePlacementReportByBatchPrePlacementId;
+        vm.openCandidatePrePlacementReportUpdateModalPopUp = openCandidatePrePlacementReportUpdateModalPopUp;
         vm.searchKeyword = "";
         vm.searchMessage = "";
+        vm.candidatePrePlacementReports = [];
+        vm.candidatePrePlacementData = [];
+        vm.admissionId;
+        vm.studentCode;
+        vm.viewCandidatePrePlacementData = viewCandidatePrePlacementData;
+        vm.searchCandidatePrePlacementData = searchCandidatePrePlacementData;
+        vm.saveCandidatePrePlacementReport = saveCandidatePrePlacementReport;
         vm.initialise = initialise;
-
+            
         function initialise() {
             vm.orderBy.property = "ScheduledStartDate";
             vm.orderBy.direction = "Descending";
@@ -50,7 +59,7 @@
                 });
         }
 
-       function searchBatchPrePlacement(searchKeyword) {
+        function searchBatchPrePlacement(searchKeyword) {
             vm.searchKeyword = searchKeyword;
             vm.fromDate = null;
             vm.toDate = null;
@@ -83,6 +92,8 @@
                 searchBatchPrePlacement(vm.searchKeyword);
             } else if (vm.fromDate && vm.toDate) {
                 searchBatchPrePlacementByDate(vm.fromDate, vm.toDate);
+            } else if (vm.batchPrePlacementId) {
+                retrieveCandidatePrePlacementReportByBatchPrePlacementId(vm.batchPrePlacementId);
             }
             else {
                 return retrieveBatchPrePlacements();
@@ -102,61 +113,120 @@
             $window.location.href = "/BatchPrePlacement/Edit/" + id;
         }
 
-       function viewBatchPrePlacement(batchPrePlacementId) {
+        function viewBatchPrePlacement(batchPrePlacementId) {
             $window.location.href = "/BatchPrePlacement/View/" + batchPrePlacementId;
-       }
+        }
 
-       function retrieveCandidatePrePlacementByBatchPrePlacementId(batchPrePlacementId) {
-           vm.orderBy.property = "ScheduledStartDate";
-           vm.orderBy.direction = "Ascending";
-           vm.orderBy.class = "asc";
-           vm.batchPrePlacementId = batchPrePlacementId;
-           return BatchPrePlacementService.retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId, vm.paging, vm.orderBy)
+        function retrieveCandidatePrePlacementByBatchPrePlacementId(batchPrePlacementId) {
+            vm.orderBy.property = "ScheduledStartDate";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            vm.batchPrePlacementId = batchPrePlacementId;
+            return BatchPrePlacementService.retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.candidatePrePlacements = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
                     return vm.candidatePrePlacements;
                 });
-       }
+        }
 
-       function openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId) {
-           vm.batchPrePlacementId = batchPrePlacementId;
-           return BatchPrePlacementService.openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId);
-       }
+        function openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId) {
+            vm.batchPrePlacementId = batchPrePlacementId;
+            return BatchPrePlacementService.openCandidatePrePlacementActivityModalPopUp(batchPrePlacementId);
+        }
 
-       function saveCandidatePrePlacementActivity() {
-           var candidatePrePlacement = {
-               CandidatePrePlacementId:vm.candidatePrePlacementId===0?0:vm.candidatePrePlacementId,
-               BatchPrePlacementId: vm.batchPrePlacementId,
-               PrePlacementActivityId: $("#CandidatePrePlacement_PrePlacementActivityId").val(),
-               ScheduledStartDate: $("#txtScheduledStartDate").val(),
-               ScheduledEndDate: $("#txtScheduledEndDate").val(),
-               Remark: $("#txtRemark").val()
-                }
-           return BatchPrePlacementService.saveCandidatePrePlacementActivity(candidatePrePlacement)
-                    .then(function (response) {
-                   retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId);
-               });
-       }
+        function saveCandidatePrePlacementActivity() {
+            var candidatePrePlacement = {
+                CandidatePrePlacementId: vm.candidatePrePlacementId === 0 ? 0 : vm.candidatePrePlacementId,
+                BatchPrePlacementId: vm.batchPrePlacementId,
+                PrePlacementActivityId: $("#CandidatePrePlacement_PrePlacementActivityId").val(),
+                ScheduledStartDate: $("#txtScheduledStartDate").val(),
+                ScheduledEndDate: $("#txtScheduledEndDate").val(),
+                Remark: $("#txtRemark").val()
+            }
+            return BatchPrePlacementService.saveCandidatePrePlacementActivity(candidatePrePlacement)
+                .then(function (response) {
+                    retrieveCandidatePrePlacementByBatchPrePlacementId(vm.batchPrePlacementId);
+                });
+        }
 
-       function openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId) {
-           vm.candidatePrePlacementId = candidatePrePlacementId;
-           return BatchPrePlacementService.openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId);
-       }
+        function saveCandidatePrePlacementReport(candidatePrePlacementId, studentCode) {
+            var candidatePrePlacementReport = {
+                CandidatePrePlacementReportId: vm.candidatePrePlacementReportId === 0 ? 0 : vm.candidatePrePlacementReportId,
+                AdmissionId: vm.admissionId,
+                ActualStartDate: $("#txtActualStartDate").val(),
+                ActualEndDate: $("#txtActualEndDate").val(),
+                MarkObtained: $("#txtMarkObtained").val(),
+                TotalMark: $("#txtTotalMark").val(),
+                Remark: $("#txtRemark").val(),
+                CandidatePrePlacementId: candidatePrePlacementId,
+                StudentCode: vm.studentCode
+            }
+            return BatchPrePlacementService.saveCandidatePrePlacementReport(candidatePrePlacementReport)
+                .then(function (response) {
+                    viewCandidatePrePlacementData(vm.admissionId);
+                });
+        }
 
-       function retrieveCandidatePrePlacementReportByBatchPrePlacementId(batchPrePlacementId) {
-            vm.orderBy.property = "ScheduledStartDate";
+        function openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId) {
+            vm.candidatePrePlacementId = candidatePrePlacementId;
+            return BatchPrePlacementService.openCandidatePrePlacementUpdateModalPopUp(candidatePrePlacementId);
+        }
+
+        function openCandidatePrePlacementReportUpdateModalPopUp(candidatePrePlacementReportId, candidatePrePlacementId,studentCode) {
+            vm.candidatePrePlacementReportId = candidatePrePlacementReportId;
+            vm.candidatePrePlacementId = candidatePrePlacementId;
+            vm.studentCode = studentCode;
+            return BatchPrePlacementService.openCandidatePrePlacementReportUpdateModalPopUp(candidatePrePlacementReportId);
+        }
+
+        function retrieveCandidatePrePlacementReportByBatchPrePlacementId(batchPrePlacementId) {
+            vm.orderBy.property = "AdmissionId";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
             vm.batchPrePlacementId = batchPrePlacementId;
             return BatchPrePlacementService.retrieveCandidatePrePlacementReportByBatchPrePlacementId(vm.batchPrePlacementId, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.candidatePrePlacements = response.data.Items;
+                    vm.candidatePrePlacementReports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    return vm.candidatePrePlacements;
+                    return vm.candidatePrePlacementReports;
                 });
+        }
+
+        function viewCandidatePrePlacementData(admissionId) {
+            vm.admissionId = admissionId;
+            window.location.href = "/BatchPrePlacement/CandidatePrePlacementData?admissionId=" + admissionId;
+        }
+
+        function searchCandidatePrePlacementData(admissionId) {
+            vm.admissionId = admissionId == undefined ? getUrlParameter("admissionId") : admissionId;
+            vm.orderBy.property = "AdmissionId";
+            vm.orderBy.direction = "Ascending";
+            vm.orderBy.class = "asc";
+            return BatchPrePlacementService.searchCandidatePrePlacementData(vm.admissionId, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.candidatePrePlacementData = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    return vm.candidatePrePlacementData;
+                });
+        }
+
+        function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
         }
     }
 
