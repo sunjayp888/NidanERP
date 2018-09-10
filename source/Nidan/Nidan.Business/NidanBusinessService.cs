@@ -1253,9 +1253,9 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            //SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
             //Send SMS
-            //SendRegistrationSms(registrationData);
+            SendRegistrationSms(registrationData);
             return data;
         }
 
@@ -1665,24 +1665,26 @@ namespace Nidan.Business
             var data = _nidanDataService.CreateActivityTask(organisationId, activityTask);
             var activityTaskGrid = _nidanDataService.RetrieveActivityTaskDataGrids(organisationId, e => e.ActivityTaskId == data.ActivityTaskId).Items.FirstOrDefault();
             var template =
-                "<style> table, tr, td {border: 1px solid black}</style><table>" +
-                "<tr><td>Activity Name</td><td>"+activityTaskGrid.ActivityName+"</td></tr>" +
-                "<tr><td>Task Name</td><td>"+activityTaskGrid.Name+"</td></tr>" +
-                "<tr><td>Task Priority</td><td>" + activityTaskGrid.TaskPriority + "</td></tr>" +
-                "<tr><td>Start Date</td><td>"+activityTaskGrid.StartDate.ToString("dd-MM-yyyy")+"</td></tr>" +
-                "<tr><td>End Date</td><td>" + activityTaskGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
-                "<tr><td>Number Of Days</td><td>" + activityTaskGrid.NumberOfDays + "</td></tr>" +
-                "<tr><td>Assigned By</td><td>" + activityTaskGrid.CreatedByName + "</td></tr>" +
-                "<tr><td>Monitered By</td><td>" + activityTaskGrid.MonitoredByName + "</td></tr>" +
-                "<tr><td>Remarks</td><td>" + activityTaskGrid.Remark + "</td></tr></ table >";
+                "Dear " + activityTaskGrid.AssignToName + ",<br/><br/>" +
+                "<tr><td>Activity Name</td><td> : "+activityTaskGrid.ActivityName+"</td></tr>" +
+                "<tr><td>Task Name</td><td> : " + activityTaskGrid.Name+"</td></tr>" +
+                "<tr><td>Task Priority</td><td> : " + activityTaskGrid.TaskPriority + "</td></tr>" +
+                "<tr><td>Start Date</td><td> : " + activityTaskGrid.StartDate.ToString("dd-MM-yyyy")+"</td></tr>" +
+                "<tr><td>End Date</td><td> : " + activityTaskGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Number Of Days</td><td> : " + activityTaskGrid.NumberOfDays + "</td></tr>" +
+                "<tr><td>Assigned By</td><td> : " + activityTaskGrid.CreatedByName + "</td></tr>" +
+                "<tr><td>Monitered By</td><td> : " + activityTaskGrid.MonitoredByName + "</td></tr>" +
+                "<tr><td>Remarks</td><td> : " + activityTaskGrid.Remark + "</td></tr></table>" +
+                "<br/><br/><b>Thanks and Regards</b><br /><br /><b>Activity Management Team</b>";
             var emailData = new EmailData()
             {
                 
-                BCCAddressList = new List<string> { "developer@nidantech.com" },
+                BCCAddressList = new List<string> { },
                 Body = template,
-                Subject = "Activity Management Create",
+                Subject = activityTaskGrid.ActivityName,
                 IsHtml = true,
-                ToAddressList = new List<string> { "developer@nidantech.com" }
+                ToAddressList = new List<string> { activityTaskGrid.AssignToEmail },
+                CCAddressList = new List<string> { activityTaskGrid.MonitoredByEmail }
             };
 
             var installmentReciept = new Dictionary<string, byte[]>
@@ -1705,26 +1707,30 @@ namespace Nidan.Business
             }
             var activityTaskStateGrid = _nidanDataService.RetrieveActivityTaskStateDataGrids(organisationId, e => e.ActivityTaskStateId == data.ActivityTaskStateId).Items.FirstOrDefault();
             var template =
-                "<style> table, tr, td {border: 1px solid black}</style><table>" +
-                "<tr><td>Activity Name</td><td>" + activityTaskStateGrid.ActivityName + "</td></tr>" +
-                "<tr><td>Task Name</td><td>" + activityTaskStateGrid.ActivityTaskName + "</td></tr>" +
-                "<tr><td>Task Priority</td><td>" + activityTaskStateGrid.TaskPriority + "</td></tr>" +
-                "<tr><td>Start Date</td><td>" + activityTaskStateGrid.StartDate.ToString("dd-MM-yyyy") + "</td></tr>" +
-                "<tr><td>End Date</td><td>" + activityTaskStateGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
-                "<tr><td>Task Status</td><td>" + activityTaskStateGrid.TaskStateName + "</td></tr>" +
-                "<tr><td>Status Date</td><td>" + activityTaskStateGrid.ActivityTaskStateDate.ToString("dd-MM-yyyy") + "</td></tr>" +
-                "<tr><td>Problem</td><td>" + activityTaskStateGrid.Problem + "</td></tr>" +
-                "<tr><td>Solution</td><td>" + activityTaskStateGrid.Solution + "</td></tr>" +
-                "<tr><td>Time Taken</td><td>" + activityTaskStateGrid.NumberOfHours + " : "+activityTaskStateGrid.NumberOfMinutes+"</td></tr>" +
-                "<tr><td>Remarks</td><td>" + activityTaskStateGrid.Remark + "</td></tr></ table >";
+                "Dear " + activityTaskStateGrid.CreatedByName + ",<br/><br/>" +
+                "<tr><td>Task Updated By</td><td> : " + activityTaskStateGrid.AssignToName + "</td></tr>" +
+                "<tr><td>Group Name</td><td> : " + activityTaskStateGrid.ActivityAssigneeGroupName + "</td></tr>" +
+                "<tr><td>Activity Name</td><td> : " + activityTaskStateGrid.ActivityName + "</td></tr>" +
+                "<tr><td>Task Name</td><td> : " + activityTaskStateGrid.ActivityTaskName + "</td></tr>" +
+                "<tr><td>Task Priority</td><td> : " + activityTaskStateGrid.TaskPriority + "</td></tr>" +
+                "<tr><td>Start Date</td><td> : " + activityTaskStateGrid.StartDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>End Date</td><td> : " + activityTaskStateGrid.EndDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Task Status</td><td> : " + activityTaskStateGrid.TaskStateName + "</td></tr>" +
+                "<tr><td>Status Date</td><td> : " + activityTaskStateGrid.ActivityTaskStateDate.ToString("dd-MM-yyyy") + "</td></tr>" +
+                "<tr><td>Problem</td><td> : " + activityTaskStateGrid.Problem + "</td></tr>" +
+                "<tr><td>Solution</td><td> : " + activityTaskStateGrid.Solution + "</td></tr>" +
+                "<tr><td>Time Taken</td><td> : " + activityTaskStateGrid.NumberOfHours + " Hr "+activityTaskStateGrid.NumberOfMinutes+" Min</td></tr>" +
+                "<tr><td>Remarks</td><td> : " + activityTaskStateGrid.Remark + "</td></tr></ table >" +
+                "<br/><br/><b>Thanks and Regards</b><br /><br /><b>Activity Management Team</b>";
             var emailData = new EmailData()
             {
 
-                BCCAddressList = new List<string> { "developer@nidantech.com" },
+                BCCAddressList = new List<string> { },
                 Body = template,
-                Subject = "Activity Management Add Task Status",
+                Subject = activityTaskStateGrid.ActivityName,
                 IsHtml = true,
-                ToAddressList = new List<string> { "developer@nidantech.com" }
+                ToAddressList = new List<string> { activityTaskStateGrid.CreatedByEmail },
+                CCAddressList= new List<string> { activityTaskStateGrid.MonitoredByEmail }
             };
 
             var installmentReciept = new Dictionary<string, byte[]>
@@ -4683,10 +4689,10 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            //SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
 
             //Send SMS
-            //SendInstallmetnSms(candidateFee);
+            SendInstallmetnSms(candidateFee);
             return data;
         }
 

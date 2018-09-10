@@ -31,6 +31,9 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AssignTo { get; set; }
 
+        [StringLength(256)]
+        public string AssignToEmail { get; set; }
+
         [Key]
         [Column(Order = 4)]
         [StringLength(100)]
@@ -82,6 +85,9 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CreatedBy { get; set; }
 
+        [StringLength(256)]
+        public string CreatedByEmail { get; set; }
+
         [StringLength(202)]
         public string CreatedByName { get; set; }
 
@@ -93,6 +99,20 @@ namespace Nidan.Entity
         [StringLength(202)]
         public string MonitoredByName { get; set; }
 
+        [StringLength(256)]
+        public string MonitoredByEmail { get; set; }
+
+        [StringLength(1000)]
+        public string ActivityAssigneeGroupName { get; set; }
+
+        [Key]
+        [Column(Order = 14)]
+        [StringLength(202)]
+        public string HeadName { get; set; }
+
+        [StringLength(256)]
+        public string HeadEmail { get; set; }
+
         public int? NumberOfDays { get; set; }
 
         public int? LastTaskStateId { get; set; }
@@ -103,24 +123,24 @@ namespace Nidan.Entity
         public int? NumberOfDaysDelayed { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 15)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 16)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         [Key]
-        [Column(Order = 16, TypeName = "date")]
+        [Column(Order = 17, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [StringLength(100)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 18)]
         public string SearchField { get; set; }
     }
 }

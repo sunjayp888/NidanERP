@@ -46,26 +46,27 @@ namespace Nidan.Entity
         [Column(Order = 7, TypeName = "date")]
         public DateTime EndDate { get; set; }
 
-        [Column(TypeName = "date")]
+        [Key]
+        [Column(Order = 8, TypeName = "date")]
         public DateTime ActivityTaskStateDate { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 9)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TaskStateId { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 10)]
         [StringLength(500)]
         public string TaskStateName { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 11)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 11)]
+        [Column(Order = 12)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
@@ -73,18 +74,57 @@ namespace Nidan.Entity
 
         public string Solution { get; set; }
 
-        [Key]
-        [Column(Order = 12)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int NumberOfHours { get; set; }
+        public int? NumberOfHours { get; set; }
+
+        public int? NumberOfMinutes { get; set; }
 
         [Key]
         [Column(Order = 13)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int NumberOfMinutes { get; set; }
+        public string Remark { get; set; }
 
         [Key]
         [Column(Order = 14)]
-        public string Remark { get; set; }
+        [StringLength(202)]
+        public string AssignToName { get; set; }
+
+        [Key]
+        [Column(Order = 15)]
+        [StringLength(256)]
+        public string AssignToEmail { get; set; }
+
+        [Key]
+        [Column(Order = 16)]
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
+
+        [Key]
+        [Column(Order = 17)]
+        [StringLength(256)]
+        public string CreatedByEmail { get; set; }
+
+        [Key]
+        [Column(Order = 18)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ActivityAssigneeGroupId { get; set; }
+
+        [Key]
+        [Column(Order = 19)]
+        [StringLength(256)]
+        public string HeadEmail { get; set; }
+
+        [Key]
+        [Column(Order = 20)]
+        [StringLength(256)]
+        public string MonitoredByEmail { get; set; }
+
+        [Key]
+        [Column(Order = 21)]
+        [StringLength(1000)]
+        public string ActivityAssigneeGroupName { get; set; }
+
+        [Key]
+        [Column(Order = 22)]
+        [StringLength(202)]
+        public string HeadName { get; set; }
     }
 }

@@ -99,7 +99,7 @@
                                     </li>
                                 }
 
-                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                             <a><i class="fa fa-pencil-square-o"></i> Assessment <span class="fa fa-chevron-down"></span></a>
@@ -108,7 +108,7 @@
                                                 <li><a href='@Url.Action("Index", "Assessment")'>Assessment</a></li>
                                             </ul>
                                         </li>
-                                }
+                                }*@
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
@@ -125,30 +125,31 @@
                                     </li>
                                 }
 
-                                @if (User.IsSuperAdmin())
-                                {
-                                    <li>
-                                        <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            @if (User.IsInAnyRoles("SuperAdmin"))
-                                            {
-                                                <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
+                               @if (User.IsSuperAdmin())
+                               {
+                                <li>
+                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        @if (User.IsInAnyRoles("SuperAdmin"))
+                                        {
+                                            <li><a href='@Url.Action("Index", "CentrePettyCash")'>Centre Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Expense", "Report")'>Available Petty Cash</a></li>
                                                 <li><a href='@Url.Action("Index", "ExpenseHeader")'>Expense Header</a></li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
+                                                <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                               }
 
-                                @if (Model.CentreType != "Franchise")
-                                {
-                                    <li>
-                                        <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="nav child_menu">
-                                            <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
-                                        </ul>
-                                    </li>
-                                }
+                            @*@if (Model.CentreType != "Franchise" && !User.IsInAnyRoles("User") && !User.IsSuperAdmin())
+                            {
+                                <li>
+                                    <a><i class="fa fa-money"></i> Petty Cash <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href='@Url.Action("TermsAndCondition", "Expense")'>Expense</a></li>
+                                    </ul>
+                                </li>
+                            }*@
 
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
@@ -201,6 +202,16 @@
                                         </ul>
                                     </li>
                                 }
+                                @if (User.IsInAnyRoles("Admin", "User"))
+                                {
+                                    <li>
+                                        <a><i class="fa fa-gear"></i> Activity Management <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href='@Url.Action("Index", "Activity")'>Activity</a></li>
+                                            <li><a href='@Url.Action("Index", "ActivityTask")'>Activity Task</a></li>
+                                        </ul>
+                                    </li>
+                                }
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     @*<li>
@@ -210,19 +221,19 @@
                                             </ul>
                                         </li>*@
                                 }
-                                @if (User.IsInAnyRoles("SuperAdmin"))
+                                @*@if (User.IsInAnyRoles("SuperAdmin"))
                                 {
                                     <li>
                                             <a><i class="fa fa-graduation-cap"></i>Placement<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                @*<li><a href='@Url.Action("Index", "Company")'>Company</a></li>
-                                                <li><a href='@Url.Action("Index", "CompanyFollowUp")'>Company Follow-Up</a></li>*@
+                                                <li><a href='@Url.Action("Index", "Company")'>Company</a></li>
+                                                <li><a href='@Url.Action("Index", "CompanyFollowUp")'>Company Follow-Up</a></li>
                                                 <li><a href='@Url.Action("Index", "BatchPrePlacement")'>Pre-Placement</a></li>
-                                                @*<li><a href='@Url.Action("Index", "CandidateFinalPlacement")'>Final Placement</a></li>
-                                                <li><a href='@Url.Action("Index", "CandidatePostPlacement")'>Post Placement</a></li>*@
+                                                <li><a href='@Url.Action("Index", "CandidateFinalPlacement")'>Final Placement</a></li>
+                                                <li><a href='@Url.Action("Index", "CandidatePostPlacement")'>Post Placement</a></li>
                                             </ul>
                                         </li>
-                                }
+                                }*@
                             </ul>
                         </div>
                     </div>
