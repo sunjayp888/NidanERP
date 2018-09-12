@@ -75,7 +75,7 @@ namespace Nidan.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var centres = _nidanBusinessService.RetrieveCentres(organisationId, e => true);
+            //var centres = _nidanBusinessService.RetrieveCentres(organisationId, e => true);
             var batches = _nidanBusinessService.RetrieveBatches(organisationId, e => e.CentreId == centreId);
             var batchPrePlacement = _nidanBusinessService.RetrieveBatchPrePlacement(organisationId, id.Value);
             var candidatePrePlacements = _nidanBusinessService.RetrieveCandidatePrePlacements(organisationId, centreId, e => e.BatchPrePlacementId == id.Value).Items.Select(e => e.PrePlacementActivityId).ToList();
@@ -87,7 +87,7 @@ namespace Nidan.Controllers
             var viewModel = new BatchPrePlacementViewModel
             {
                 BatchPrePlacement = batchPrePlacement,
-                Centres = new SelectList(centres, "CentreId", "Name"),
+                //Centres = new SelectList(centres, "CentreId", "Name"),
                 CentreId = batchPrePlacement.CentreId,
                 Batches = new SelectList(batches, "BatchId", "Name"),
                 BatchId = batchPrePlacement.BatchId,

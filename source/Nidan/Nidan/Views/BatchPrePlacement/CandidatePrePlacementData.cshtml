@@ -53,7 +53,7 @@
                                             <td><span ng-bind="candidatePrePlacementDataGrid.ActualEndDate|date : 'dd/MMM/yyyy'"></span></td>
                                             <td><span ng-bind="candidatePrePlacementDataGrid.MarkObtained"></span></td>
                                             <td><span ng-bind="candidatePrePlacementDataGrid.TotalMark"></span></td>
-                                            <td><span ng-bind="candidatePrePlacementDataGrid.Remarks"></span></td>
+                                            <td><span ng-bind="candidatePrePlacementDataGrid.Remark"></span></td>
                                             <td><span ng-bind="candidatePrePlacementDataGrid.IsDocumentUploadedDone"></span></td>
                                             <td>
                                                 <div class="btn-group pull-right">
@@ -92,4 +92,32 @@
     @Html.HiddenFor(model => model.CandidatePrePlacementReport.StudentCode)
     @Html.Partial("_CandidatePrePlacementReport")
 </div>
+@section scripts {
+    <script>
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
+            daysOfTheWeek: ['M', 'T', 'W', 'T', 'F'],
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+        moment.weekdays(true);
 
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('#txtActualStartDate').val(moment().format('DD MMMM YYYY'));
+            $('#txtActualEndDate').val(moment().format('DD MMMM YYYY'));
+            $(".date")
+                .on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
+        });
+
+    </script>
+    }
