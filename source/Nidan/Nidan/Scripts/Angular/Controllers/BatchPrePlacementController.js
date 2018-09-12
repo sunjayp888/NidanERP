@@ -40,6 +40,7 @@
         vm.viewCandidatePrePlacementData = viewCandidatePrePlacementData;
         vm.searchCandidatePrePlacementData = searchCandidatePrePlacementData;
         vm.saveCandidatePrePlacementReport = saveCandidatePrePlacementReport;
+        vm.assigning = false;
         vm.initialise = initialise;
             
         function initialise() {
@@ -140,7 +141,10 @@
             var candidatePrePlacement = {
                 CandidatePrePlacementId: vm.candidatePrePlacementId === 0 ? 0 : vm.candidatePrePlacementId,
                 BatchPrePlacementId: vm.batchPrePlacementId,
-                PrePlacementActivityId: $("#CandidatePrePlacement_PrePlacementActivityId").val(),
+                PrePlacementActivityId: $("#CandidatePrePlacement_PrePlacementActivityId :selected").val(),
+                //$("#elementId :selected").text();
+                //var e  $document.getElementById("CandidatePrePlacement_PrePlacementActivityId"),
+                //PrePlacementActivityId : e.options[e.selectedIndex].value,
                 ScheduledStartDate: $("#txtScheduledStartDate").val(),
                 ScheduledEndDate: $("#txtScheduledEndDate").val(),
                 Remark: $("#txtRemark").val()
