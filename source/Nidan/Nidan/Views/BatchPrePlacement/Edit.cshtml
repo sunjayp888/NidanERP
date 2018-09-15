@@ -42,7 +42,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CandidatePrePlacement.PrePlacementActivityId, "Pre-Placement Activity", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.DropDownListFor(model => model.CandidatePrePlacement.PrePlacementActivityId, Model.PrePlacementActivities, null, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.DropDownListFor(model => model.CandidatePrePlacement.PrePlacementActivityId, Model.PrePlacementActivities, "Select Pre-Placement Activity", new { @class = "form-control col-md-7 col-xs-12" })
                     @Html.ValidationMessageFor(model => model.CandidatePrePlacement.PrePlacementActivityId, "", new { @class = "help-block" })
                 </div>
                 <button id="btnAddPrePlacementActivity" type="button" class="btn btn-info" ng-click="model.openCandidatePrePlacementActivityModalPopUp(@Model.BatchPrePlacement.BatchPrePlacementId)" data-toggle="modal" data-target="#candidatePrePlacementActivityModal">Add</button>
@@ -162,6 +162,5 @@
 
      //$('#btnAddPrePlacementActivity').click(function() {
     //$('#CandidatePrePlacement_PrePlacementActivityId option:selected').remove();
-});
 </script>
 }

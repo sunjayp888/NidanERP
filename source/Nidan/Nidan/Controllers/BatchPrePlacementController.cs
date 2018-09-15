@@ -203,6 +203,8 @@ namespace Nidan.Controllers
                 int id = candidatePrePlacementViewModel.CandidatePrePlacement.CandidatePrePlacementId;
                 if (id != 0)
                 {
+                    var candidatePrePlacementData = _nidanBusinessService.RetrieveCandidatePrePlacement(organisationId, id);
+                    candidatePrePlacementViewModel.CandidatePrePlacement.PrePlacementActivityId = candidatePrePlacementData.PrePlacementActivityId;
                     candidatePrePlacementViewModel.CandidatePrePlacement = _nidanBusinessService.UpdateCandidatePrePlacement(organisationId, candidatePrePlacementViewModel.CandidatePrePlacement);
                     return this.JsonNet(true);
                 }
