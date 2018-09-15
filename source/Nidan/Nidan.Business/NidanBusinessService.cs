@@ -1913,9 +1913,11 @@ namespace Nidan.Business
                     CreatedBy = personnelId,
                     OrganisationId = organisationId,
                     AdmissionId = item,
-                    StudentCode = registrationData.StudentCode
+                    StudentCode = registrationData.StudentCode,
+                    CreatedDate=DateTime.UtcNow.Date
                 });
             }
+            var data = candidatePrePlacementReportList;
             _nidanDataService.Create<CandidatePrePlacementReport>(organisationId, candidatePrePlacementReportList);
         }
 
