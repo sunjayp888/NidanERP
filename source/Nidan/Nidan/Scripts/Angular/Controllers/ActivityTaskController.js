@@ -168,12 +168,20 @@
                 TaskStateId: $("#dropStatus").val(),
                 CompletedDate: $("#txtCompletedDate").val(),
                 Remark: $("#txtRemark").val(),
-                CentreId: $("#ActivityTask_CentreId").val()
-                // Remark: $("#txtRemark").val(),
+                CentreId: $("#ActivityTask_CentreId").val(),
+                Problem: $("#txtProblem").val(),
+                Solution: $("#txtSolution").val(),
+                NumberOfHours: $('#Hours :selected').val(),
+                NumberOfMinutes: $('#Minutes :selected').val()
             }
             return ActivityTaskService.createTaskStatus(activityTaskState)
                 .then(function () {
                     retrieveActivityTaskStatesByActivityTaskId(vm.activityTaskId);
+                    $("#txtProblem").val("");
+                    $("#txtSolution").val("");
+                    $("#txtNumberOfHours").val("");
+                    $("#txtNumberOfMinutes").val("");
+                    $("#txtRemark").val("");
                 });
         }
     }

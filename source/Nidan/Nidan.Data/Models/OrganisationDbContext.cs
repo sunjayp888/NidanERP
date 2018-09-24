@@ -92,7 +92,6 @@ namespace Nidan.Data
                         organisationFilterable.OrganisationId = _organisationId.Value;
                 }
             }
-
             return base.SaveChanges();
         }
 

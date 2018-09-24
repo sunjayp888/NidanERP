@@ -10,7 +10,10 @@ namespace Nidan.Business.Enum
     {
         Registration = 1,
         Admission,
-        Installment
+        Installment,
+        Prospectus,
+        ExamFee,
+        RegistrationPostPlacement
     }
 
     public enum FeePaymentMethod

@@ -360,6 +360,9 @@
   .scheduler .schedule-area-container {
     width: 65%;
   }
+  .mobileDevice {
+    display: none;
+  }
 }
 .multi-line-text-area {
   height: 100px;
@@ -368,4 +371,9 @@
 .row-total-background {
   background: #73879C !important;
   color: white !important;
+}
+.wordwrap {
+  table-layout: fixed;
+  word-wrap: break-word;
+  max-width: 300px;
 }

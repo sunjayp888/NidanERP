@@ -14,9 +14,17 @@ namespace Nidan.Entity
         public int ActivityTaskId { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? CompletedDate { get; set; }
+        public DateTime CompletedDate { get; set; }
 
         public int TaskStateId { get; set; }
+
+        public int NumberOfHours { get; set; }
+
+        public int NumberOfMinutes { get; set; }
+
+        public string Problem { get; set; }
+
+        public string Solution { get; set; }
 
         [Required]
         public string Remark { get; set; }

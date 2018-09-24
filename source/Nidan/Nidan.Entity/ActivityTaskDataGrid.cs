@@ -31,25 +31,31 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int AssignTo { get; set; }
 
+        [StringLength(256)]
+        public string AssignToEmail { get; set; }
+
+        [Key]
+        [Column(Order = 4)]
+        [StringLength(100)]
+        public string TaskPriority { get; set; }
+
         [StringLength(202)]
         public string AssignToName { get; set; }
 
         [Key]
-        [Column(Order = 4, TypeName = "date")]
+        [Column(Order = 5, TypeName = "date")]
         public DateTime StartDate { get; set; }
-
-        [Key]
-        [Column(Order = 5)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StartHour { get; set; }
 
         [Key]
         [Column(Order = 6)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StartMinute { get; set; }
+        public int StartHour { get; set; }
 
         [Key]
         [Column(Order = 7)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StartMinute { get; set; }
+
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
@@ -67,22 +73,45 @@ namespace Nidan.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int EndMinute { get; set; }
 
-        [Key]
-        [Column(Order = 11)]
         [StringLength(10)]
         public string EndTimeSpan { get; set; }
 
         [Key]
-        [Column(Order = 12)]
+        [Column(Order = 11)]
         public string Remark { get; set; }
+
+        [Key]
+        [Column(Order = 12)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CreatedBy { get; set; }
+
+        [StringLength(256)]
+        public string CreatedByEmail { get; set; }
+
+        [StringLength(202)]
+        public string CreatedByName { get; set; }
 
         [Key]
         [Column(Order = 13)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int CreatedBy { get; set; }
+        public int MonitoredById { get; set; }
 
         [StringLength(202)]
-        public string CreatedByName { get; set; }
+        public string MonitoredByName { get; set; }
+
+        [StringLength(256)]
+        public string MonitoredByEmail { get; set; }
+
+        [StringLength(1000)]
+        public string ActivityAssigneeGroupName { get; set; }
+
+        [Key]
+        [Column(Order = 14)]
+        [StringLength(202)]
+        public string HeadName { get; set; }
+
+        [StringLength(256)]
+        public string HeadEmail { get; set; }
 
         public int? NumberOfDays { get; set; }
 
@@ -94,24 +123,24 @@ namespace Nidan.Entity
         public int? NumberOfDaysDelayed { get; set; }
 
         [Key]
-        [Column(Order = 14)]
+        [Column(Order = 15)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 15)]
+        [Column(Order = 16)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
 
         [Key]
-        [Column(Order = 16, TypeName = "date")]
+        [Column(Order = 17, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [StringLength(100)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 17)]
+        [Column(Order = 18)]
         public string SearchField { get; set; }
     }
 }

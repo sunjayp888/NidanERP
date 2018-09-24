@@ -21,7 +21,7 @@ namespace Nidan.Controllers
         // GET: ActivityAssigneeGroup
         public ActionResult Index()
         {
-            return View();
+            return View(new BaseViewModel());
         }
 
         // GET: ActivityAssigneeGroup/Create
@@ -31,9 +31,11 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
+            var personnels = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
             var viewModel = new ActivityAssigneeGroupViewModel()
             {
                 Centres = new SelectList(centres, "CentreId", "Name"),
+                Personnels = new SelectList(personnels, "PersonnelId", "Fullname"),
                 ActivityAssigneeGroup = new ActivityAssigneeGroup()
             };
             return View(viewModel);
@@ -54,6 +56,7 @@ namespace Nidan.Controllers
                 return RedirectToAction("Edit", "ActivityAssigneeGroup", new { id = activityAssigneeGroupViewModel.ActivityAssigneeGroup.ActivityAssigneeGroupId });
             }
             activityAssigneeGroupViewModel.Centres = new SelectList(NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId).ToList());
+            activityAssigneeGroupViewModel.Personnels = new SelectList(NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList());
             return View(activityAssigneeGroupViewModel);
         }
 
@@ -67,6 +70,7 @@ namespace Nidan.Controllers
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
             var centres = NidanBusinessService.RetrieveCentres(organisationId, e => isSuperAdmin || e.CentreId == UserCentreId);
+            var personnels = NidanBusinessService.RetrievePersonnels(organisationId, e => true).Items.ToList();
             var activityAssigneeGroup = NidanBusinessService.RetrieveActivityAssigneeGroup(organisationId, id.Value, e => true);
             if (activityAssigneeGroup == null)
             {
@@ -75,6 +79,7 @@ namespace Nidan.Controllers
             var viewModel = new ActivityAssigneeGroupViewModel
             {
                 Centres = new SelectList(centres, "CentreId", "Name"),
+                Personnels = new SelectList(personnels, "PersonnelId", "Fullname"),
                 ActivityAssigneeGroup = activityAssigneeGroup
             };
             return View(viewModel);

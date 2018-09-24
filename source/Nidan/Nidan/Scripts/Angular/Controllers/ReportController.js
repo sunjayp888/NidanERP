@@ -87,6 +87,8 @@
         vm.retrieveCentrePettyCashByCentreId = retrieveCentrePettyCashByCentreId;
         vm.viewCentrePettyCashByCentreId = viewCentrePettyCashByCentreId;
         vm.searchExpenseDetailReportByDate = searchExpenseDetailReportByDate;
+        vm.searchCandidateFeeReportByDate = searchCandidateFeeReportByDate;
+        vm.searchCandidateOtherFeeReportByDate = searchCandidateOtherFeeReportByDate;
 
         function initialise() {
             vm.orderBy.property = "ReportId";
@@ -336,6 +338,9 @@
             if (path[2] == "BankDepositeProcessReportByMonth") {
                 searchBankDepositeReportByMonthAndYear(vm.centreId, vm.fromMonth, vm.toMonth, vm.fromYear, vm.toYear);
             }
+            if (path[2] == "CandidateFee") {
+                searchCandidateFeeReportByDate(vm.fromDate, vm.toDate);
+            }
         }
 
         function downloadFixAssetByCentreIdAssetClassId(centreId, assetClassId) {
@@ -580,6 +585,38 @@
             vm.orderBy.class = "asc";
             order("ExpenseGeneratedDate");
             return ReportService.searchExpenseDetailReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function searchCandidateFeeReportByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "PaymentDate";
+            vm.orderBy.class = "asc";
+            order("PaymentDate");
+            return ReportService.searchCandidateFeeReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+                .then(function (response) {
+                    vm.reports = response.data.Items;
+                    vm.paging.totalPages = response.data.TotalPages;
+                    vm.paging.totalResults = response.data.TotalResults;
+                    vm.searchMessage = vm.reports.length === 0 ? "No Records Found" : "";
+                    return vm.reports;
+                });
+        }
+
+        function searchCandidateOtherFeeReportByDate(fromDate, toDate) {
+            vm.fromDate = fromDate;
+            vm.toDate = toDate;
+            vm.orderBy.property = "StudentCodeNumber";
+            vm.orderBy.class = "asc";
+            order("StudentCodeNumber");
+            return ReportService.searchCandidateOtherFeeReportByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.reports = response.data.Items;
                     vm.paging.totalPages = response.data.TotalPages;

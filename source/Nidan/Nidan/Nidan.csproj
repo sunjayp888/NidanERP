@@ -27,7 +27,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -254,6 +255,7 @@
     <Compile Include="Controllers\BatchAttendanceController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\BatchPlannerController.cs" />
+    <Compile Include="Controllers\BatchPrePlacementController.cs" />
     <Compile Include="Controllers\BatchTrainerController.cs" />
     <Compile Include="Controllers\CandidateAssessmentQuestionAnswerController.cs" />
     <Compile Include="Controllers\CandidateFeeController.cs" />
@@ -279,12 +281,14 @@
     <Compile Include="Controllers\FixAssetController.cs" />
     <Compile Include="Controllers\FixAssetMappingController.cs" />
     <Compile Include="Controllers\FollowUpController.cs" />
+    <Compile Include="Controllers\GovernmentMobilizationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MobilizationController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\ModuleExamSetController.cs" />
+    <Compile Include="Controllers\OtherFeeController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\PersonnelController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -318,6 +322,7 @@
     <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\BatchAttendanceViewModel.cs" />
     <Compile Include="Models\BatchPlannerViewModel.cs" />
+    <Compile Include="Models\BatchPrePlacementViewModel.cs" />
     <Compile Include="Models\BatchViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentQuestionAnswerViewModel.cs" />
     <Compile Include="Models\CandidateAssessmentViewModel.cs" />
@@ -326,6 +331,8 @@
     <Compile Include="Models\CandidateFinalPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePostPlacementViewModel.cs" />
     <Compile Include="Models\CandidatePrePlacementActivityViewModel.cs" />
+    <Compile Include="Models\CandidatePrePlacementReportViewModel.cs" />
+    <Compile Include="Models\CandidatePrePlacementViewModel.cs" />
     <Compile Include="Models\CentrePettyCashViewModel.cs" />
     <Compile Include="Models\CentreViewModel.cs" />
     <Compile Include="Models\AssessmentViewModel.cs" />
@@ -343,6 +350,7 @@
     <Compile Include="Models\FixAssetMappingViewModel.cs" />
     <Compile Include="Models\FixAssetViewModel.cs" />
     <Compile Include="Models\FollowUpViewModel.cs" />
+    <Compile Include="Models\GovernmentMobilizationViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Authorization\IdentityModels.cs" />
     <Compile Include="Models\JsonNetResult.cs" />
@@ -352,6 +360,7 @@
     <Compile Include="Models\ModuleExamSetViewModel.cs" />
     <Compile Include="Models\ModuleViewModel.cs" />
     <Compile Include="Models\ExpenseViewModel.cs" />
+    <Compile Include="Models\OtherFeeViewModel.cs" />
     <Compile Include="Models\PartnerViewModel.cs" />
     <Compile Include="Models\PersonnelProfileViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
@@ -1172,12 +1181,14 @@
     <Content Include="Scripts\Angular\Controllers\BankDepositeDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchAttendanceController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchPlannerController.js" />
+    <Content Include="Scripts\Angular\Controllers\BatchPrePlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\BatchTrainerController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateFinalPlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidateInstallmentController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidatePostPlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementActivityController.js" />
+    <Content Include="Scripts\Angular\Controllers\CandidatePrePlacementController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseController.js" />
     <Content Include="Scripts\Angular\Controllers\BrainstormingController.js" />
     <Content Include="Scripts\Angular\Controllers\CentreCourseInstallmentController.js" />
@@ -1207,10 +1218,12 @@
     <Content Include="Scripts\Angular\Controllers\FollowUpController.js" />
     <Content Include="Scripts\Angular\Controllers\CounsellingDocumentController.js" />
     <Content Include="Scripts\Angular\Controllers\FollowUpHistoryController.js" />
+    <Content Include="Scripts\Angular\Controllers\GovernmentMobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\HomeController.js" />
     <Content Include="Scripts\Angular\Controllers\MobilizationController.js" />
     <Content Include="Scripts\Angular\Controllers\ExpenseController.js" />
     <Content Include="Scripts\Angular\Controllers\ModuleExamSetController.js" />
+    <Content Include="Scripts\Angular\Controllers\OtherFeeController.js" />
     <Content Include="Scripts\Angular\Controllers\PartnerController.js" />
     <Content Include="Scripts\Angular\Controllers\PersonnelProfileController.js" />
     <Content Include="Scripts\Angular\Controllers\PlacementDocumentController.js" />
@@ -1243,6 +1256,7 @@
     <Content Include="Scripts\Angular\Services\BankDepositeService.js" />
     <Content Include="Scripts\Angular\Services\BatchAttendanceService.js" />
     <Content Include="Scripts\Angular\Services\BatchPlannerService.js" />
+    <Content Include="Scripts\Angular\Services\BatchPrePlacementService.js" />
     <Content Include="Scripts\Angular\Services\BatchTrainerService.js" />
     <Content Include="Scripts\Angular\Services\BrainstormingService.js" />
     <Content Include="Scripts\Angular\Services\CandidateFeeService.js" />
@@ -1275,11 +1289,13 @@
     <Content Include="Scripts\Angular\Services\FollowUpHistoryService.js" />
     <Content Include="Scripts\Angular\Services\FollowUpService.js" />
     <Content Include="Scripts\Angular\Services\CounsellingDocumentService.js" />
+    <Content Include="Scripts\Angular\Services\GovernmentMobilizationService.js" />
     <Content Include="Scripts\Angular\Services\HomeService.js" />
     <Content Include="Scripts\Angular\Services\MobilizationService.js" />
     <Content Include="Scripts\Angular\Services\ModuleExamSetService.js" />
     <Content Include="Scripts\Angular\Services\ModuleService.js" />
     <Content Include="Scripts\Angular\Services\ExpenseService.js" />
+    <Content Include="Scripts\Angular\Services\OtherFeeService.js" />
     <Content Include="Scripts\Angular\Services\PartnerService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelProfileService.js" />
     <Content Include="Scripts\Angular\Services\PersonnelService.js" />
@@ -1861,6 +1877,30 @@
     <Content Include="Views\CandidatePostPlacement\_CandidatePostPlacement.cshtml" />
     <Content Include="Views\CandidateFinalPlacement\_PlacementDocument.cshtml" />
     <Content Include="Views\Report\ExpenseDetailReport.cshtml" />
+    <Content Include="Views\BatchPrePlacement\Index.cshtml" />
+    <Content Include="Views\BatchPrePlacement\Create.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_BatchPrePlacement.cshtml" />
+    <Content Include="Views\BatchPrePlacement\Edit.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementActivity.cshtml" />
+    <Content Include="Views\BatchPrePlacement\View.cshtml" />
+    <Content Include="Views\Registration\OtherFee.cshtml" />
+    <Content Include="Views\Registration\_OtherFeeRegistration.cshtml" />
+    <Content Include="Views\Admission\OtherFee.cshtml" />
+    <Content Include="Views\Admission\_OtherFeeAdmission.cshtml" />
+    <Content Include="Views\Report\CandidateFee.cshtml" />
+    <Content Include="Views\OtherFee\Index.cshtml" />
+    <Content Include="Views\OtherFee\Create.cshtml" />
+    <Content Include="Views\OtherFee\_OtherFee.cshtml" />
+    <Content Include="Views\Report\CandidateOtherFeeReport.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Index.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Create.cshtml" />
+    <Content Include="Views\GovernmentMobilization\_GovernmentMobilization.cshtml" />
+    <Content Include="Views\GovernmentMobilization\Edit.cshtml" />
+    <Content Include="Views\Shared\_MobilizerLayout.cshtml" />
+    <Content Include="Views\GovernmentMobilization\View.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\BatchPrePlacement\CandidatePrePlacementData.cshtml" />
+    <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementReport.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

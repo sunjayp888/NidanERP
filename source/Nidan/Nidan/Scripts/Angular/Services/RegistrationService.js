@@ -11,13 +11,13 @@
         var service = {
             retrieveRegistrations: retrieveRegistrations,
             searchRegistrationByDate: searchRegistrationByDate,
-            //viewCandidateFee: viewCandidateFee,
             retrieveEnquiries: retrieveEnquiries,
             canDeleteRegistration: canDeleteRegistration,
             deleteRegistration: deleteRegistration,
             searchEnquiry: searchEnquiry,
             searchRegistration: searchRegistration,
-            retrieveTodaysRegistrations: retrieveTodaysRegistrations
+            retrieveTodaysRegistrations: retrieveTodaysRegistrations,
+            retrieveCandidateFees: retrieveCandidateFees
         };
 
         return service;
@@ -99,6 +99,17 @@
         function deleteRegistration(id) {
             var url = "/Registration/Delete",
                 data = { id: id };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateFees(candidateInstallmentId, Paging, OrderBy) {
+            var url = "/Registration/RetrieveCandidateFees",
+                data = {
+                    candidateInstallmentId: candidateInstallmentId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
             return $http.post(url, data);
         }

@@ -102,8 +102,8 @@
                                             }
                                             <th ng-click="model.order('CandidateName')" ng-class="model.orderClass('CandidateName')">Candidate Name</th>
                                             <th ng-click="model.order('Mobile')" ng-class="model.orderClass('Mobile')">Mobile</th>
-                                            <th ng-click="model.order('PaymentMode')" ng-class="model.orderClass('PaymentMode')">Payment Mode</th>
-                                            <th ng-click="model.order('RegistrationAmount')" ng-class="model.orderClass('RegistrationAmount')">Registration Fees</th>
+                                            @*<th ng-click="model.order('CourseId')" ng-class="model.orderClass('CourseId')">Course</th>*@
+                                            <th ng-click="model.order('RegistrationFeePaid')" ng-class="model.orderClass('RegistrationFeePaid')">Registration Fees</th>
                                             <th ng-click="model.order('RegistrationDate')" ng-class="model.orderClass('RegistrationDate')">Registration Date</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -117,8 +117,8 @@
                                             }
                                             <td><span ng-bind="registration.CandidateName"></span></td>
                                             <td><span ng-bind="registration.Mobile"></span></td>
-                                            <td><span ng-bind="registration.PaymentMode"></span></td>
-                                            <td><i class="fa fa-inr"></i> <span ng-bind="registration.RegistrationAmount"></span>.00</td>
+                                            @*<td><span ng-bind="registration.Registration.Course.Name"></span></td>*@
+                                            <td><i class="fa fa-inr"></i> <span ng-bind="registration.RegistrationFeePaid"></span>.00</td>
                                             <td><span ng-bind="registration.RegistrationDate|date : format : shortDate"></span></td>
                                             <td><button ng-if="!Is.AdmissionDone" type="button" class="btn btn-round btn-danger btn-xs">Admission Pending</button></td>
                                             <td>
@@ -136,7 +136,7 @@
                                                             </li>
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Registration/Download/{{registration.CandidateFeeId}}">
-                                                                    Download
+                                                                    Download Receipt
                                                                 </a>
                                                             </li>
                                                         }
@@ -147,7 +147,11 @@
                                                                     Edit
                                                                 </a>
                                                             </li>
-                                                           
+                                                            <li>
+                                                                <a style="cursor: pointer;" ng-href="/Registration/OtherFee/{{registration.RegistrationId}}">
+                                                                    Other Fee
+                                                                </a>
+                                                            </li>
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Admission/Create/{{registration.RegistrationId}}">
                                                                     Create Admission

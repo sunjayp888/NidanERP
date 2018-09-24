@@ -15,7 +15,8 @@
             searchAdmission: searchAdmission,
             retrieveDocumentsType: retrieveDocumentsType,
             searchAdmissionByDate: searchAdmissionByDate,
-            retrieveTodaysAdmissions: retrieveTodaysAdmissions
+            retrieveTodaysAdmissions: retrieveTodaysAdmissions,
+            retrieveCandidateFees: retrieveCandidateFees
         };
 
         return service;
@@ -85,6 +86,17 @@
         function deleteAdmission(id) {
             var url = "/Admission/Delete",
                 data = { id: id };
+
+            return $http.post(url, data);
+        }
+
+        function retrieveCandidateFees(candidateInstallmentId, Paging, OrderBy) {
+            var url = "/Admission/RetrieveCandidateFees",
+                data = {
+                    candidateInstallmentId: candidateInstallmentId,
+                    paging: Paging,
+                    orderBy: new Array(OrderBy)
+                };
 
             return $http.post(url, data);
         }

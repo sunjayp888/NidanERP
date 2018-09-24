@@ -1,0 +1,100 @@
+﻿@using Nidan.Extensions
+@model Nidan.Models.RegistrationViewModel
+
+@Html.HiddenFor(e => e.StudentCode)
+@Html.HiddenFor(e => e.EnquiryId)
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Course</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Registration.Course.Name" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Registration Date</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.Registration.RegistrationDate" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Down Payment</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.CandidateInstallment.DownPayment" class="form-control col-lg-4">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-dark">Registration Fee Paid</button>
+                </span>
+                <input type="text" disabled="disabled" value="@Model.PaidAmount" class="form-control col-lg-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CandidateFee.FeeTypeId, "Fee Against", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CandidateFee.FeeTypeId, Model.FeeTypes, "Select Fee Type", new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.FeeTypeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CandidateFee.PaymentModeId, "Payment Mode", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.DropDownListFor(model => model.CandidateFee.PaymentModeId, Model.PaymentModes, null, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.PaymentModeId, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CandidateFee.PaidAmount, "Amount Paid", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.CandidateFee.PaidAmount, new { @class = "form-control col-md-7 col-xs-12", @maxlength = "9" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.PaidAmount, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">Sum Of Rupees</label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div id="divDisplayWords" style="font-size: 15px; font-family: Arial;" class="form-control col-md-7 col-xs-12"></div>
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.CandidateFee.BankName, "Bank Name", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.CandidateFee.BankName, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.BankName, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.CandidateFee.ChequeNumber, "Cheque Number", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        @Html.TextBoxFor(model => model.CandidateFee.ChequeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.ChequeNumber, "", new { @class = "help-block" })
+    </div>
+</div>
+
+<div class="form-group bank-details-textbox">
+    @Html.LabelFor(model => model.CandidateFee.ChequeDate, "Cheque Date", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+    <div class="col-md-6 col-sm-6 col-xs-12 dob">
+        @Html.TextBoxFor(model => model.CandidateFee.ChequeDate, "{0:dd MMMM yyyy}", new { @class = "form-control col-md-7 col-xs-12 date" })
+        @Html.ValidationMessageFor(model => model.CandidateFee.ChequeDate, "", new { @class = "help-block" })
+    </div>
+</div>

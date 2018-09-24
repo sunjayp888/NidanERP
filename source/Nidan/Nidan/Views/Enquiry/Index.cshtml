@@ -115,9 +115,6 @@
                                             <th>Created By</th>
                                             <th>Candidate Name</th>
                                             <th>Contact No</th>
-                                            @*<th ng-click="model.order('EmailId')" ng-class="model.orderClass('EmailId')">Email Id</th>*@
-                                            @*<th ng-click="model.order('CourseOffered')" ng-class="model.orderClass('CourseOffered')">Course Offered</th>*@
-                                            @*<th ng-click="model.order('Remarks')" ng-class="model.orderClass('Remarks')">Remarks</th>*@
                                             <th>Status</th>
                                             <th>Lead Date</th>
                                             <th>Follow-Up Date</th>
@@ -134,11 +131,7 @@
                                         <td><span ng-bind="enquiry.CreatedByName"></span></td>
                                         <td><span ng-bind="enquiry.CandidateName"></span></td>
                                         <td><span ng-bind="enquiry.Mobile"></span></td>
-                                        @*<td><span ng-bind="enquiry.EmailId"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Course.Name"></span></td>*@
-                                        @*<td><span ng-bind="enquiry.Remarks"></span></td>*@
                                         <td class="col-lg-4">
-
                                             <button ng-if="enquiry.IsCounsellingDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Counselling Pending</button>
                                             <button ng-if="enquiry.IsCounsellingDone=='Yes'" type="button" class="btn btn-round btn-success btn-xs">Counselling Done</button>
                                             <button ng-if="enquiry.IsRegistrationDone=='NO'" type="button" class="btn btn-round btn-danger btn-xs">Registration Pending</button>
@@ -160,7 +153,6 @@
                                                             </a>
                                                         </li>
 													}
-
 														 @if (User.IsInAnyRoles("Admin"))
 														 {
 															<li>
@@ -168,20 +160,17 @@
                                                                 Edit
                                                             </a>
                                                         </li>
-
-                                                        <li ng-if="enquiry.IsCounsellingDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
-                                                                Create Counselling
-                                                            </a>
-                                                        </li>
-
-                                                        @*<li ng-if="enquiry.IsRegistrationDone=='NO'">
-                                                            <a style="cursor: pointer;" ng-href="/Registration/Create/{{enquiry.EnquiryId}}">
-                                                                Create Registration
-                                                            </a>
-                                                        </li>*@
+														     <li ng-if="enquiry.IsCounsellingDone=='NO'">
+														         <a style="cursor: pointer;" ng-href="/Counselling/Create/{{enquiry.EnquiryId}}">
+														             Create Counselling
+														         </a>
+														     </li>
+														     <li>
+														         <a style="cursor: pointer;" ng-href="/OtherFee/Create/{{enquiry.EnquiryId}}">
+														             Other Fee
+														         </a>
+														     </li>
 														}
-                                                    
                                                 </ul>
                                             </div>
                                         </td>

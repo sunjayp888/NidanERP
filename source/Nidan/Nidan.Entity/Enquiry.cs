@@ -16,6 +16,7 @@ namespace Nidan.Entity
             Registrations = new HashSet<Registration>();
             EnquiryDate = DateTime.UtcNow.Date;
             FollowUpDate = DateTime.UtcNow.AddDays(2);
+            OtherFees = new HashSet<OtherFee>();
         }
         public int EnquiryId { get; set; }
 
@@ -222,5 +223,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OtherFee> OtherFees { get; set; }
     }
 }

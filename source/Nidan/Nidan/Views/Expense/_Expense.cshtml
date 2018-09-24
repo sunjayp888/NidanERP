@@ -19,10 +19,10 @@
 </div>
 
 <div ng-controller="ExpenseController as model">
-    <div class="form-group" ng-init="model.expenseHeaderId='@Model.Expense.ExpenseHeaderId'">
+    <div class="form-group" ng-init="model.expenseHeaderId='@Model.Expense.ExpenseHeaderId';model.centreId=@Model.CentreId">
         @Html.LabelFor(model => model.Expense.ExpenseHeaderId, "Expense Head", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
         <div class="col-md-6 col-sm-6 col-xs-12">
-            @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12", ng_model = "model.expenseHeaderId", ng_change = "model.expenseLimitCheck()" })
+            @Html.DropDownListFor(model => model.Expense.ExpenseHeaderId, Model.ExpenseHeaders, "Select Expense Head", new { @class = "form-control col-md-7 col-xs-12", ng_model = "model.expenseHeaderId", ng_change = "model.expenseLimitCheck(model.centreId)" })
             @Html.ValidationMessageFor(model => model.Expense.ExpenseHeaderId, "", new { @class = "help-block" })
         </div>
     </div>

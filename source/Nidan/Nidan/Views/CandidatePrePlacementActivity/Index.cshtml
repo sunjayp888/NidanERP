@@ -141,12 +141,12 @@
                                                     @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                     {
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementActivityId==null" ng-href="/CandidatePrePlacementActivity/Create/{{candidatePrePlacementActivity.AdmissionId}}">
+                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementId==null" ng-href="/CandidatePrePlacementActivity/Create/{{candidatePrePlacementActivity.AdmissionId}}">
                                                                 Pre-Placement
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementActivityId!=null" ng-href="/CandidatePrePlacementActivity/Edit/{{candidatePrePlacementActivity.CandidatePrePlacementActivityId}}">
+                                                            <a style="cursor: pointer;" ng-if="candidatePrePlacementActivity.CandidatePrePlacementId!=null" ng-href="/CandidatePrePlacementActivity/Edit/{{candidatePrePlacementActivity.CandidatePrePlacementId}}">
                                                                 Pre-Placement
                                                             </a>
                                                         </li>

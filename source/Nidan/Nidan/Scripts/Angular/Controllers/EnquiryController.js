@@ -137,10 +137,6 @@
             $window.location.href = "/Enquiry/View/" + enquiryId;
         }
 
-        //function deleteAEnquiry(id) {
-        //    return EnquiryService.deleteEnquiry(id).then(function () { initialise(); });
-        //};
-
         function retrieveCourses(sectorId) {
             return EnquiryService.retrieveCourses(sectorId).then(function() {
                 vm.courses = response.data;

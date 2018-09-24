@@ -12,6 +12,7 @@ namespace Nidan.Entity
         public Religion()
         {
             Enquiries = new HashSet<Enquiry>();
+            GovernmentMobilizations = new HashSet<GovernmentMobilization>();
         }
         public int ReligionId { get; set; }
 
@@ -25,5 +26,8 @@ namespace Nidan.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enquiry> Enquiries { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GovernmentMobilization> GovernmentMobilizations { get; set; }
     }
 }

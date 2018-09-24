@@ -97,6 +97,12 @@
         function pageChanged() {
             if (vm.searchKeyword) {
                 searchBankDeposite(vm.searchKeyword);
+            }
+            else if (vm.fromDate && vm.toDate) {
+                searchBankDepositeByDate(vm.fromDate, vm.toDate);
+            }
+            else if (vm.centreId && vm.fromDate && vm.toDate) {
+                searchBankDepositeByDateByCentreId(vm.fromDate, vm.toDate);
             } else {
                 return retrieveBankDeposites();
             }

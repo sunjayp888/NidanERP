@@ -32,7 +32,11 @@
                         <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
                             <div class="form-group">
                                 <div class="pull-right">
-                                    <button id="btnAddTaskStatus" type="button" class="btn btn-primary" ng-click="model.openAddTaskStatus(@Model.ActivityTask.ActivityTaskId)" data-toggle="modal" data-target="#addTaskStatus">Add Task Status</button>
+                                    @if (Model.ActivityTaskStatus != "Completed")
+                                    {
+                                        <button id="btnAddTaskStatus" type="button" class="btn btn-primary" ng-click="model.openAddTaskStatus(@Model.ActivityTask.ActivityTaskId)" data-toggle="modal" data-target="#addTaskStatus">Add Task Status</button>
+                                    }
+                                    
                                     <a href="@Url.Action("Index")" class="btn btn-success" role="button">
                                         Finish
                                     </a>
@@ -71,6 +75,10 @@
                                         <tr role="row">
                                             <th ng-click="model.order('CompletedDate')" ng-class="model.orderClass('CompletedDate')">Actioned Date</th>
                                             <th ng-click="model.order('TaskStateId')" ng-class="model.orderClass('TaskStateId')">Status</th>
+                                            <th ng-click="model.order('Problem')" ng-class="model.orderClass('Problem')">Problem</th>
+                                            <th ng-click="model.order('Solution')" ng-class="model.orderClass('Solution')">Solution</th>
+                                            <th ng-click="model.order('NumberOfHours')" ng-class="model.orderClass('NumberOfHours')">Number Of Hours</th>
+                                            <th ng-click="model.order('NumberOfMinutes')" ng-class="model.orderClass('NumberOfMinutes')">Number Of Minutes</th>
                                             <th ng-click="model.order('Remark')" ng-class="model.orderClass('Remark')">Remark</th>
                                         </tr>
                                     </thead>
@@ -78,6 +86,10 @@
                                         <tr ng-repeat="activityTaskState in model.activityTaskStates" class="odd gradeX">
                                             <td><span ng-bind="activityTaskState.CompletedDate|date : format : shortDate"></span></td>
                                             <td><span ng-bind="activityTaskState.TaskState.Name"></span></td>
+                                            <td><span ng-bind="activityTaskState.Problem"></span></td>
+                                            <td><span ng-bind="activityTaskState.Solution"></span></td>
+                                            <td><span ng-bind="activityTaskState.NumberOfHours"></span></td>
+                                            <td><span ng-bind="activityTaskState.NumberOfMinutes"></span></td>
                                             <td><span ng-bind="activityTaskState.Remark"></span></td>
                                         </tr>
                                     </tbody>
@@ -144,6 +156,9 @@
             $('#ActivityTask_Remark').attr("disabled", true);
             $('#txtNumberOfDays').attr("disabled", true);
             $('#txtNumberOfHours').attr("disabled", true);
+            $('#ActivityTask_MonitoredById').attr("disabled", true);
+            $('#txtEscalateTo').attr("disabled", true);
+            $('#ActivityTask_TaskPriority').attr("disabled", true);
         });
         var daterangepickerOptions = {
             autoApply: true,
@@ -192,6 +207,17 @@
                 function(ev, picker) {
                     $(this).val(picker.startDate.format('DD MMMM YYYY'));
                 });
+        });
+
+        // For Escalate Textbox on off
+        $('#divEscalate').hide();
+        $("#dropStatus").change(function() {
+            if ($('#dropStatus :selected').text() == "Escalate") {
+                $('#divEscalate').show();
+                $('#txtEscalateTo').val("@Model.MonitoredByName");
+            } else {
+                $('#divEscalate').hide();
+            }
         });
     </script>
 }
