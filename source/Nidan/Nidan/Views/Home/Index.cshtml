@@ -5,8 +5,8 @@
     ViewBag.Title = "Home";
     var startOfWeekDate = DateTime.UtcNow.StartOfWeek(DayOfWeek.Monday);
     var endOfWeekDate = startOfWeekDate.AddDays(6);
-    var startOfWeek = startOfWeekDate.ToShortDateString();
-    var endOfWeek = startOfWeekDate.AddDays(6).ToShortDateString();
+    var startOfWeek = startOfWeekDate.ToString("dd-MM-yyyy");
+    var endOfWeek = startOfWeekDate.AddDays(6).ToString("dd-MM-yyyy");
 }
 
 @*For Admin and Superadmin*@
@@ -17,7 +17,7 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
-                        Today's Count<small> (@DateTime.UtcNow.ToShortDateString() @DateTime.UtcNow.ToString("dddd"))</small>
+                        Today's Count<small> (@DateTime.UtcNow.ToString("dd-MM-yyyy") @DateTime.UtcNow.ToString("dddd"))</small>
                     </h2>
                     <div class="clearfix"></div>
                 </div>
@@ -215,7 +215,7 @@
 }
 
 @*For User*@
-@if (User.IsInAnyRoles("User"))
+@*@if (User.IsInAnyRoles("User"))
 {
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -241,7 +241,7 @@
             </div>
         </div>
     </div>
-}
+}*@
 
 @*For User*@
 @if (User.IsInAnyRoles("Trainer"))

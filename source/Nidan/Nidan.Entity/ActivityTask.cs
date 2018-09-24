@@ -32,7 +32,6 @@ namespace Nidan.Entity
 
         public int StartMinute { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string StartTimeSpan { get; set; }
 
@@ -43,12 +42,14 @@ namespace Nidan.Entity
 
         public int EndMinute { get; set; }
 
-        [Required]
         [StringLength(10)]
         public string EndTimeSpan { get; set; }
 
         [Required]
         public string Remark { get; set; }
+
+        [Required]
+        public string TaskPriority { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime CreatedDate { get; set; }
@@ -58,6 +59,8 @@ namespace Nidan.Entity
         public int CentreId { get; set; }
 
         public int OrganisationId { get; set; }
+
+        public int MonitoredById { get; set; }
 
         public virtual Activity Activity { get; set; }
 

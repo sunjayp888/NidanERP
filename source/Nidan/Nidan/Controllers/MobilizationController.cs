@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Nidan.Business.Dto;
@@ -24,7 +23,6 @@ namespace Nidan.Controllers
         {
         }
         // GET: Mobilization
-
         public ActionResult Index()
         {
             return View(new BaseViewModel());

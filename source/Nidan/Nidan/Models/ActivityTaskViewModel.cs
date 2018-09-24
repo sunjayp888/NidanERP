@@ -16,9 +16,16 @@ namespace Nidan.Models
         public SelectList AssignToList { get; set; }
         public SelectList Centres { get; set; }
         public SelectList TaskStates { get; set; }
+        public SelectList MonitoredByList { get; set; }
         public IEnumerable<SelectListItem> HoursList { get; set; }
         public IEnumerable<SelectListItem> MinutesList { get; set; }
+        public IEnumerable<SelectListItem> TaskPriorityList { get; set; }
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
         public int ActivityTaskId { get; set; }
+        public int MonitoredById { get; set; }
+        public string MonitoredByName { get; set; }
+        public string ActivityTaskStatus { get; set; }
         public double NumberOfDays { get; set; }
         public TimeSpan NumberOfHours { get; set; }
         public List<HoursType> HoursType => new List<HoursType>()
@@ -34,7 +41,19 @@ namespace Nidan.Models
             new HoursType() { Id = 09,Name = "09"},
             new HoursType() { Id = 10,Name = "10"},
             new HoursType() { Id = 11,Name = "11"},
-            new HoursType() { Id = 12,Name = "12"}
+            new HoursType() { Id = 12,Name = "12"},
+            new HoursType() { Id = 13,Name = "13"},
+            new HoursType() { Id = 14,Name = "14"},
+            new HoursType() { Id = 15,Name = "15"},
+            new HoursType() { Id = 16,Name = "16"},
+            new HoursType() { Id = 17,Name = "17"},
+            new HoursType() { Id = 18,Name = "18"},
+            new HoursType() { Id = 19,Name = "19"},
+            new HoursType() { Id = 20,Name = "20"},
+            new HoursType() { Id = 21,Name = "21"},
+            new HoursType() { Id = 22,Name = "22"},
+            new HoursType() { Id = 23,Name = "23"},
+            new HoursType() { Id = 24,Name = "24"}
         };
 
         public List<MinutesType> MinutesType => new List<MinutesType>()
@@ -100,7 +119,19 @@ namespace Nidan.Models
             new MinutesType() {Id = 58,Name = "58"},
             new MinutesType() {Id = 59,Name = "59"},
             new MinutesType() {Id = 60,Name = "60"}
-
         };
+
+        public List<TaskPriority> TaskPriority => new List<TaskPriority>()
+        {
+            new TaskPriority() {Name = "High",Value = "High"},
+            new TaskPriority() {Name = "Medium",Value = "Medium"},
+            new TaskPriority() {Name = "Low",Value = "Low"}
+        };
+    }
+
+    public class TaskPriority
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -49,6 +49,7 @@ namespace Nidan.Data.Interfaces
         ActivityTask CreateActivityTask(int organisationId, ActivityTask activityTask);
         ActivityTaskState CreateActivityTaskState(int organisationId, ActivityTaskState activityTaskState);
         EventManagement CreateEventManagement(int organisationId, EventManagement eventManagement);
+        CandidatePrePlacementReport CreateCandidatePrePlacementReport(int organisationId, CandidatePrePlacementReport candidatePrePlacementReport);
 
         // Retrieve
         PagedResult<Event> RetrieveEvents(int organisationId, Expression<Func<Event, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -145,8 +146,6 @@ namespace Nidan.Data.Interfaces
         PagedResult<CandidateInstallmentGrid> RetrieveCandidateInstallmentGrid(int organisationId, Expression<Func<CandidateInstallmentGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseHeader> RetrieveExpenseHeaders(int organisationId, Expression<Func<ExpenseHeader, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         ExpenseHeader RetrieveExpenseHeader(int organisationId, int expenseHeaderId, Expression<Func<ExpenseHeader, bool>> predicate);
-        PagedResult<OtherFee> RetrieveOtherFees(int organisationId, int centreId, Expression<Func<OtherFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
-        OtherFee RetrieveOtherFee(int organisationId, int centreId, int otherFeeId, Expression<Func<OtherFee, bool>> predicate);
         PagedResult<Project> RetrieveProjects(int organisationId, Expression<Func<Project, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         Project RetrieveProject(int organisationId, int projectId, Expression<Func<Project, bool>> predicate);
         PagedResult<CentrePettyCash> RetrieveCentrePettyCashs(int organisationId, int centreId, Expression<Func<CentrePettyCash, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
@@ -275,6 +274,32 @@ namespace Nidan.Data.Interfaces
         PagedResult<LeadSource> RetrieveLeadSources(int organisationId, Expression<Func<LeadSource, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<City> RetrieveCities(int organisationId, Expression<Func<City, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
         PagedResult<ExpenseHeaderGrid> RetrieveExpenseHeaderGrid(int organisationId, Expression<Func<ExpenseHeaderGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementSearchFields(int organisationId, int centreId, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchPrePlacement> RetrieveBatchPrePlacements(int organisationId,int centreId, Expression<Func<BatchPrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        BatchPrePlacement RetrieveBatchPrePlacement(int organisationId, int batchPrePlacementId);
+        PagedResult<BatchPrePlacementSearchField> RetrieveBatchPrePlacementBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<BatchPrePlacementSearchField, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementGrid> RetrieveCandidatePrePlacementGrids(int organisationId, int centreId, Expression<Func<CandidatePrePlacementGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacement> RetrieveCandidatePrePlacements(int organisationId, int centreId, Expression<Func<CandidatePrePlacement, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacement RetrieveCandidatePrePlacement(int organisationId, int candidatePrePlacementId);
+        PagedResult<PrePlacementActivity> RetrievePrePlacementActivities(int organisationId, Expression<Func<PrePlacementActivity, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        CandidatePrePlacementReport RetrieveCandidatePrePlacementReport(int organisationId, int candidatePrePlacementReportId);
+        PagedResult<CandidatePrePlacementReport> RetrieveCandidatePrePlacementReports(int organisationId, Expression<Func<CandidatePrePlacementReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BatchCandidate> RetrieveBatchCandidates(int organisationId, Expression<Func<BatchCandidate, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<FeeType> RetrieveFeeTypes(int organisationId, Expression<Func<FeeType, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateFeeReport> RetrieveCandidateFeeReports(int organisationId, Expression<Func<CandidateFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateRegistrationFee> RetrieveCandidateRegistrationFee(int organisationId, Expression<Func<CandidateRegistrationFee, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        OtherFee RetrieveOtherFee(int organisationId, int otherFeeId);
+        PagedResult<OtherFeeGrid> RetrieveOtherFees(int organisationId, Expression<Func<OtherFeeGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<OnlineExam> RetrieveOnlineExams(int organisationId, Expression<Func<OnlineExam, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidateOtherFeeReport> RetrieveCandidateOtherFeeReport(int organisationId, Expression<Func<CandidateOtherFeeReport, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizations(int organisationId, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        GovernmentMobilization RetrieveGovernmentMobilization(int organisationId, int governmentMobilizationId);
+        PagedResult<DistrictBlock> RetrieveDistrictBlocks(int organisationId, Expression<Func<DistrictBlock, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<BlockPanchayat> RetrieveBlockPanchayats(int organisationId, Expression<Func<BlockPanchayat, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<GovernmentMobilizationGrid> RetrieveGovernmentMobilizationBySearchKeyword(int organisationId, string searchKeyword, Expression<Func<GovernmentMobilizationGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<ActivityTaskStateDataGrid> RetrieveActivityTaskStateDataGrids(int organisationId, Expression<Func<ActivityTaskStateDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementReportGrid> RetrieveCandidatePrePlacementReportGrid(int organisationId, Expression<Func<CandidatePrePlacementReportGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
+        PagedResult<CandidatePrePlacementDataGrid> RetrieveCandidatePrePlacementDataGrid(int organisationId, Expression<Func<CandidatePrePlacementDataGrid, bool>> predicate, List<OrderBy> orderBy = null, Paging paging = null);
 
         // Update
         T UpdateEntityEntry<T>(T t) where T : class;

@@ -14,6 +14,7 @@ namespace Nidan.Entity
         {
             CandidateFees = new HashSet<CandidateFee>();
             BankDeposites=new HashSet<BankDeposite>();
+            OtherFees = new HashSet<OtherFee>();
         }
 
         public int PaymentModeId { get; set; }
@@ -30,9 +31,9 @@ namespace Nidan.Entity
         public virtual ICollection<CandidateFee> CandidateFees { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OtherFee> OtherFees { get; set; }
+        public virtual ICollection<BankDeposite> BankDeposites { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BankDeposite> BankDeposites { get; set; }
+        public virtual ICollection<OtherFee> OtherFees { get; set; }
     }
 }

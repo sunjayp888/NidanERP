@@ -11,5 +11,6 @@ namespace Nidan.Models
     {
         public ActivityAssigneeGroup ActivityAssigneeGroup { get; set; }
         public SelectList Centres { get; set; }
+        public SelectList Personnels { get; set; }
     }
 }

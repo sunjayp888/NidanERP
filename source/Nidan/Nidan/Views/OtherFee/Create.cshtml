@@ -1,0 +1,312 @@
+﻿@using Nidan.Entity
+@model Nidan.Models.OtherFeeViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2><button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;@Model.CandidateName</button>  @Model.Enquiry.Mobile<small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(model => model.StudentCode)
+                    @Html.HiddenFor(model => model.OtherFee.StudentCode)
+                    @Html.HiddenFor(model => model.OtherFee.EnquiryId)
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @if (ViewContext.ViewData.ModelState.Any(x => x.Key == ""))
+                        {
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                                    @Html.ValidationSummary(false, null, new { @class = "row alert alert-error" })
+                                </div>
+                            </div>
+                        }
+                        @Html.Partial("_OtherFee", Model)
+                        <div class="col-md-6 col-sm-12 col-xs-12 col-md-offset-3">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-controller="OtherFeeController as model" ng-init="model.retrieveOtherFeeByEnquiryId(@Model.EnquiryId)">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            @*<div class="x_title">*@
+            @*<h2>
+                        Centres <small></small>
+                    </h2>*@
+            <div class="clearfix"></div>
+            @*</div>*@
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                </p>
+                <div id="datatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.Partial("Pagination/_pageSize")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table wt-responsive-table class="table table-striped table-bordered jambo_table table-hover dataTable no-footer" role="grid" aria-describedby="datatable-fixed-header_info">
+                                <thead>
+                                <tr role="row">
+                                    <th>Payment Date</th>
+                                    <th>Fee Type</th>
+                                    <th>Receipt Number</th>
+                                    <th>Paid Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="otherFee in model.otherFees" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
+                                    <td><span ng-bind="otherFee.PaymentDate|date : format : shortDate"></span></td>
+                                    <td ng-if="otherFee.FeeTypeId==7">Online Exam</td>
+                                    <td ng-if="otherFee.FeeTypeId==8">Other</td>
+                                    <td ng-if="otherFee.FeeTypeId==4">Prospectus Fee</td>
+                                    <td><span ng-bind="otherFee.ReceiptNumber"></span></td>
+                                    <td><i class="fa fa-inr"></i> <span ng-bind="otherFee.PaidAmount"></span></td>
+                                    <td>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-click="$event.originalEvent.ngClickHandled = true">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </a>
+                                            <ul class="dropdown-menu slidedown">
+                                                <li>
+                                                    <a style="cursor: pointer;" ng-href="/OtherFee/DownloadOtherFee/{{otherFee.OtherFeeId}}">
+                                                        Download Receipt
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @Html.Partial("Pagination/_pagination")
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label ng-bind="model.searchMessage"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <a href="@Url.Action("Index","Enquiry")" class="btn btn-primary" role="button">
+        <span class="fa fa-chevron-left"></span>&nbsp;Back to list
+    </a>
+</div>
+@section scripts {
+    <script>
+        $("#OtherFee_PaidAmount").val("");
+
+        var daterangepickerOptions = {
+            autoApply: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            showCustomRangeLabel: false,
+            opens: 'left',
+            minDate: moment().subtract('2', 'days').format('DD MMMM YYYY'),
+            maxDate: moment().format('DD MMMM YYYY'),
+            onSelect: function () {
+                selectedDate = moment().format('DD MMMM YYYY');
+            },
+            locale: {
+                "format": "DD MMMM YYYY"
+            }
+        };
+        moment.weekdays(true);
+
+        jQuery(function () {
+            jQuery(".date").daterangepicker(daterangepickerOptions);
+            $('#OtherFee_PaymentDate').val(moment().format('DD MMMM YYYY'));
+            $(".date")
+                .on('apply.daterangepicker',
+                    function (ev, picker) {
+                        $(this).val(picker.startDate.format('DD MMMM YYYY'));
+                    });
+        });
+        //Description Validation
+        $('.description').hide();
+        $("#OtherFee_FeeTypeId")
+            .change(function () {
+                if ($('#OtherFee_FeeTypeId :selected').text() == "Other") {
+                    $('.description').show();
+                } else {
+                    $('.description').hide();
+                }
+            });
+
+        $('.onlineExamId').hide();
+        $("#OtherFee_FeeTypeId")
+            .change(function () {
+                if ($('#OtherFee_FeeTypeId :selected').text() == "Online Exam") {
+                    $('.onlineExamId').show();
+                } else {
+                    $('.onlineExamId').hide();
+                }
+            });
+
+        //Rupees In Words
+        $('#OtherFee_PaidAmount')
+            .keyup(function () {
+                var inputNumber = $('#OtherFee_PaidAmount').val();
+                var str = new String(inputNumber);
+                var splt = str.split("");
+                var rev = splt.reverse();
+                var once = ['Zero', ' One', ' Two', ' Three', ' Four', ' Five', ' Six', ' Seven', ' Eight', ' Nine'];
+                var twos = ['Ten', ' Eleven', ' Twelve', ' Thirteen', ' Fourteen', ' Fifteen', ' Sixteen', ' Seventeen', ' Eighteen', ' Nineteen'];
+                var tens = ['', 'Ten', ' Twenty', ' Thirty', ' Forty', ' Fifty', ' Sixty', ' Seventy', ' Eighty', ' Ninety'];
+
+                numLength = rev.length;
+                var word = new Array();
+                var j = 0;
+
+                for (i = 0; i < numLength; i++) {
+                    switch (i) {
+
+                    case 0:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = '' + once[rev[i]];
+                        }
+                        word[j] = word[j];
+                        break;
+
+                    case 1:
+                        aboveTens();
+                        break;
+
+                    case 2:
+                        if (rev[i] == 0) {
+                            word[j] = '';
+                        }
+                        else if ((rev[i - 1] == 0) || (rev[i - 2] == 0)) {
+                            word[j] = once[rev[i]] + " Hundred ";
+                        }
+                        else {
+                            word[j] = once[rev[i]] + " Hundred and";
+                        }
+                        break;
+
+                    case 3:
+                        if (rev[i] == 0 || rev[i + 1] == 1) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if ((rev[i + 1] != 0) || (rev[i] > 0)) {
+                            word[j] = word[j] + " Thousand";
+                        }
+                        break;
+
+
+                    case 4:
+                        aboveTens();
+                        break;
+
+                    case 5:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Lakh";
+                        }
+
+                        break;
+
+                    case 6:
+                        aboveTens();
+                        break;
+
+                    case 7:
+                        if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                            word[j] = '';
+                        }
+                        else {
+                            word[j] = once[rev[i]];
+                        }
+                        if (rev[i + 1] !== '0' || rev[i] > '0') {
+                            word[j] = word[j] + " Crore";
+                        }
+                        break;
+
+                    case 8:
+                        aboveTens();
+                        break;
+
+                    //            This is optional.
+
+                    //            case 9:
+                    //                if ((rev[i] == 0) || (rev[i + 1] == 1)) {
+                    //                    word[j] = '';
+                    //                }
+                    //                else {
+                    //                    word[j] = once[rev[i]];
+                    //                }
+                    //                if (rev[i + 1] !== '0' || rev[i] > '0') {
+                    //                    word[j] = word[j] + " Arab";
+                    //                }
+                    //                break;
+
+                    //            case 10:
+                    //                aboveTens();
+                    //                break;
+
+                    default: break;
+                    }
+                    j++;
+                }
+
+                function aboveTens() {
+                    if (rev[i] == 0) { word[j] = ''; }
+                    else if (rev[i] == 1) { word[j] = twos[rev[i - 1]]; }
+                    else { word[j] = tens[rev[i]]; }
+                }
+
+                word.reverse();
+                var finalOutput = '';
+                for (i = 0; i < numLength; i++) {
+                    finalOutput = finalOutput + word[i];
+                }
+                $('#divDisplayWords').html(finalOutput + " Only");
+
+            });
+
+        $('.bank-details-textbox').hide();
+        $("#OtherFee_PaymentModeId").change(function () {
+            if ($('#OtherFee_PaymentModeId :selected').text() == "Cheque") {
+                $('.bank-details-textbox').show();
+                $("#OtherFee_BankName").val("");
+                $("#OtherFee_ChequeNo").val("");
+            } else {
+                $('.bank-details-textbox').hide();
+            }
+        });
+
+    </script>
+}

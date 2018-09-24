@@ -141,17 +141,22 @@
 														}
 														@if (User.IsInAnyRoles("Admin"))
 														{
-                                                            <li ng-if="admission.BatchName==null">
-                                                                <a style="cursor: pointer;" ng-href="/Admission/AssignBatch/{{admission.AdmissionId}}">
-                                                                    Assign Batch
-                                                                </a>
-                                                            </li>
+														    <li ng-if="admission.BatchName==null">
+														        <a style="cursor: pointer;" ng-href="/Admission/AssignBatch/{{admission.AdmissionId}}">
+														            Assign Batch
+														        </a>
+														    </li>
+														    <li>
+														        <a style="cursor: pointer;" ng-href="/Admission/OtherFee/{{admission.AdmissionId}}">
+														            Other Fee
+														        </a>
+														    </li>
                                                         }
                                                         @if (User.IsInAnyRoles("Admin","SuperAdmin"))
                                                         {
                                                             <li>
                                                                 <a style="cursor: pointer;" ng-href="/Admission/Download/{{admission.AdmissionId}}">
-                                                                    Download
+                                                                    Download Receipt
                                                                 </a>
                                                             </li>
                                                         }

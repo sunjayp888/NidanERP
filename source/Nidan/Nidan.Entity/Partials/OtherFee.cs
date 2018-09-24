@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Nidan.Entity.Interfaces;
-using System;
-
 
 namespace Nidan.Entity
 {
@@ -11,23 +14,23 @@ namespace Nidan.Entity
     {
         private class OtherFeeMetadata
         {
-            [Display(Name = "Expense Head")]
-            public int ExpenseHeaderId { get; set; }
+            [Display(Name = "Fee Type")]
+            public int FeeTypeId { get; set; }
 
-            [Display(Name = "Project")]
-            public int ProjectId { get; set; }
+            [Display(Name = "Online Exam")]
+            public int OnlineExamId { get; set; }
 
-            [Display(Name = "Cash Memo Number")]
-            public string CashMemo { get; set; }
+            [Display(Name = "Description")]
+            public string Description { get; set; }
 
-            [Display(Name = "Debit Amount")]
-            public decimal DebitAmount { get; set; }
+            [Display(Name = "Paid Amount")]
+            public decimal PaidAmount { get; set; }
 
-            [Display(Name = "Rupees In Word")]
-            public string RupeesInWord { get; set; }
+            [Display(Name = "Payment Date")]
+            public DateTime PaymentDate { get; set; }
 
-            [Display(Name = "Paid To")]
-            public string PaidTo { get; set; }
+            [Display(Name = "Remarks")]
+            public string Remark { get; set; }
         }
     }
 }

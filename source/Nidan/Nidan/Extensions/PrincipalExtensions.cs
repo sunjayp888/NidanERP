@@ -20,5 +20,17 @@ namespace Nidan.Extensions
             var roles = new string[] { "SuperAdmin" };
             return roles.Any(r => principal.IsInRole(r));
         }
+
+        public static bool IsMobilizer(this IPrincipal principal)
+        {
+            var roles = new string[] { "Mobilizer" };
+            return roles.Any(r => principal.IsInRole(r));
+        }
+
+        public static bool IsAdmin(this IPrincipal principal)
+        {
+            var roles = new string[] { "Admin" };
+            return roles.Any(r => principal.IsInRole(r));
+        }
     }
 }

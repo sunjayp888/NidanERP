@@ -52,8 +52,6 @@
                     toDate: ToDate,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
-
-
                 };
 
             return $http.post(url, data);
@@ -66,7 +64,6 @@
                     toDate: ToDate,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
-                    
                 };
 
             return $http.post(url, data);
