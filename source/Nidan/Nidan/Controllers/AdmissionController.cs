@@ -115,15 +115,24 @@ namespace Nidan.Controllers
             var enquiryData = NidanBusinessService.RetrieveEnquiry(organisationId, enquiryId);
             if (ModelState.IsValid)
             {
-                admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission, admissionViewModel.CandidateFee);
-                // Create Personnel
-                var personnel = Personnel(organisationId, enquiryData);
-                admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
-                admissionViewModel.Admission.Batch = null;
-                admissionViewModel.Admission.Registration = null;
-                admissionViewModel.Admission.CreatedBy = personnelId;
-                NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
-                CreateCandidateUserAndRole(personnel);
+                try
+                {
+                    admissionViewModel.Admission = NidanBusinessService.CreateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission, admissionViewModel.CandidateFee);
+                    // Create Personnel
+                    var personnel = Personnel(organisationId, enquiryData);
+                    admissionViewModel.Admission.PersonnelId = personnel.PersonnelId;
+                    admissionViewModel.Admission.Batch = null;
+                    admissionViewModel.Admission.Registration = null;
+                    admissionViewModel.Admission.CreatedBy = personnelId;
+                    NidanBusinessService.UpdateAdmission(organisationId, centreId, personnelId, admissionViewModel.Admission);
+
+                    CreateCandidateUserAndRole(personnel);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex);
+                }
+
                 return RedirectToAction("Index");
             }
             admissionViewModel.Courses = new SelectList(NidanBusinessService.RetrieveCourses(organisationId, e => true).ToList(), "CourseId", "Name");
@@ -366,7 +375,7 @@ namespace Nidan.Controllers
             var admission = _nidanBusinessService.RetrieveAdmission(organisationId, centreId, id.Value);
             var registration = _nidanBusinessService.RetrieveRegistration(organisationId, centreId, admission.RegistrationId);
             var paymentModes = _nidanBusinessService.RetrievePaymentModes(organisationId, e => true);
-            var feeTypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId ==5 || e.FeeTypeId==8);
+            var feeTypes = _nidanBusinessService.RetrieveFeeTypes(organisationId, e => e.FeeTypeId == 5 || e.FeeTypeId == 8);
             var admissionGrid = _nidanBusinessService.RetrieveAdmissionGrid(organisationId, e => e.AdmissionId == id.Value).Items.FirstOrDefault();
             if (registration == null)
             {
@@ -390,7 +399,7 @@ namespace Nidan.Controllers
                 CandidateInstallment = registration.CandidateInstallment,
                 CourseInstallment = registration.CourseInstallment,
                 PaidAmount = admissionGrid.PaidAmount.Value,
-                CandidateInstallmentId=registration.CandidateInstallmentId
+                CandidateInstallmentId = registration.CandidateInstallmentId
             };
             return View(viewModel);
         }
@@ -503,7 +512,7 @@ namespace Nidan.Controllers
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
-            var data = NidanBusinessService.RetrieveCandidateFees(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == candidateInstallmentId && p.FeeTypeId!=3, orderBy, paging);
+            var data = NidanBusinessService.RetrieveCandidateFees(organisationId, p => (isSuperAdmin || p.CentreId == UserCentreId) && p.CandidateInstallmentId == candidateInstallmentId && p.FeeTypeId != 3, orderBy, paging);
             return this.JsonNet(data);
         }
 
