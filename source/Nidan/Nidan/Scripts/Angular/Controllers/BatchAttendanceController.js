@@ -127,17 +127,17 @@
         }
 
         function pageChanged() {
-            vm.fromDate = $("#fromDate").val();
-            vm.toDate = $("#toDate").val();
             var path = window.location.pathname.split('/');
-            if (path[2] == "BatchAttendance") {
-                searchBatchAttendanceByDate(fromDate, toDate, batchId);
+            if (vm.fromDate && vm.toDate) {
+                searchBatchAttendanceByDate(vm.fromDate, vm.toDate, vm.batchId);
             }
-            if (path[3] == "Create") {
+            else if (path[3] == "Create") {
                 retrieveBatchAttendancesByBatchId();
             }
-
-
+            else
+            {
+                retrieveBatchAttendances();
+            }
         }
 
         function order(property) {
@@ -208,9 +208,10 @@
                     vm.allItemsSelected = false;
                 }
             }
-            var subjectId = $("#BatchAttendance_SubjectId").val();
-            var sessionId = $("#BatchAttendance_SubjectId").val();
-            var batchId = $("#BatchAttendance_BatchId").val();
+            var subjectId = $('#BatchAttendance_SubjectId :selected').val();
+            //var sessionId = $('#BatchAttendance_SessionId :selected').val();
+            var sessionId = 1;
+            var batchId = $('#BatchAttendance_BatchId :selected').val();
             return BatchAttendanceService.markAttendance(batchId, subjectId, sessionId, vm.batchAttendances).then(function (response) {
                 vm.batches = response.data.Items;
                 return vm.batches;

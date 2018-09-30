@@ -390,6 +390,7 @@
 @section scripts{
     <script>
         $('#admissionSubmit').attr('disabled', true);
+        $('#Admission_Registration_CandidateInstallment_PaymentMethodMonthly').attr('checked', false);
         //Submit Button Blur after Click
         $(document).on('submit',
             'form',
@@ -415,6 +416,7 @@
             $('#downpayment').show();
             $('#lumpsum').hide();
             $('#IsAdmissionAmountOverrideDiv').show();
+            $('#admissionSubmit').attr('disabled', false);
             overrideValidation();
         });
         $('#Admission_Registration_CandidateInstallment_PaymentMethodLumpsum').click(function() {

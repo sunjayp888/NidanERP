@@ -1072,7 +1072,14 @@ namespace Nidan.Business
                 _nidanDataService.Create<FollowUpHistory>(organisationId, followUpHistory);
             }
             //Email
-            SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            try
+            {
+                SendCandidateEnrollmentEmail(organisationId, centreId, admissionData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             //send SMS
             SendAdmissionSms(admissionData);
             return admissionData;
@@ -1253,7 +1260,14 @@ namespace Nidan.Business
             var data = CandidateRegistration(organisationId, centreId, studentCode, registration, candidateFeeData.CandidateFeeId, personnelId);
             var registrationData = RetrieveRegistration(organisationId, data.RegistrationId);
             //Send Email
-            SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            try
+            {
+                SendCandidateRegistrationEmail(organisationId, centreId, registrationData);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             //Send SMS
             SendRegistrationSms(registrationData);
             return data;
@@ -4691,8 +4705,14 @@ namespace Nidan.Business
             var data = _nidanDataService.UpdateOrganisationEntityEntry<CandidateFee>(organisationId, candidateFee);
 
             //Send Email
-            SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
-
+            try
+            {
+                SendCandidateInstallmentEmail(organisationId, candidateFee.CentreId, data);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             //Send SMS
             SendInstallmetnSms(candidateFee);
             return data;
@@ -5391,7 +5411,7 @@ namespace Nidan.Business
                 TotalCourseFee = candidateFeeData.CandidateInstallment.CourseFee.ToString(),
                 TotalInstallment = totalInstallment,
                 InstallmentNumber = candidateFeeData.InstallmentNumber.ToString(),
-                State = candidateFeeData.Centre.State.Name,
+                State = centre.State.Name,
                 Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
                 Cgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
                 Sgst = gstnumber == null || course.IsExampted ? 0 : (decimal)candidateFeeData.PaidAmount / 100 * 9,
@@ -5509,7 +5529,7 @@ namespace Nidan.Business
                 TotalAmountPaid = candidateFee.Sum(e => e.PaidAmount).ToString(),
                 BalanceFee = admission.Registration.CandidateInstallment.PaymentMethod != "LumpsumAmount" ? (admission.Registration.CandidateInstallment.CourseFee - candidateFee.Sum(e => e.PaidAmount)).ToString()
                             : (admission.Registration.CandidateInstallment.LumpsumAmount - candidateFee.Sum(e => e.PaidAmount)).ToString(),
-                State = admission.Centre.State.Name,
+                State = centre.State.Name,
                 Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
                 Cgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
                 Sgst = gstnumber == null || course.IsExampted ? 0 : paidAmount / 100 * 9,
@@ -5607,7 +5627,7 @@ namespace Nidan.Business
                 InvoiceNumber = otherFeeData.ReceiptNumber,
                 RecievedAmount = otherFeeData.PaidAmount.ToString(),
                 MobileNumber = enquiry.Mobile.ToString(),
-                State = otherFeeData.Centre.State.Name,
+                State = centre.State.Name,
                 Gstin = gstnumber == null ? "Not Applicable" : gstnumber.GstNumber,
                 Cgst = 0,
                 Sgst = 0,

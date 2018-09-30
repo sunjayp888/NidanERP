@@ -209,12 +209,58 @@ namespace Nidan.Controllers
             return View(viewModel);
         }
 
+        // GET: Report/Activity
+        public ActionResult Activity()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report/ActivityTask
+        public ActionResult ActivityTask()
+        {
+            return View(new BaseViewModel());
+        }
+
+        // GET: Report/ActivityTaskState
+        public ActionResult ActivityTaskState()
+        {
+            return View(new BaseViewModel());
+        }
+
         [HttpPost]
         public ActionResult SearchEnquiryByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsSuperAdmin();
             var centreId = UserCentreId;
             var data = NidanBusinessService.RetrieveEnquiryDataGrid(UserOrganisationId, p => (isSuperAdmin || p.CentreId == centreId) && p.EnquiryDate >= fromDate && p.EnquiryDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchActivityByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var organisationId = UserOrganisationId;
+            var activityIds = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging).Items.Select(e => e.ActivityId);
+            var data = NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => (isSuperAdmin || activityIds.Contains(e.ActivityId) || e.CreatedBy == UserPersonnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchActivityTaskByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging);
+            return this.JsonNet(data);
+        }
+
+        [HttpPost]
+        public ActionResult SearchActivityTaskByActivityId(int activityId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveActivityTaskStateDataGrids(UserOrganisationId, e => e.ActivityId == activityId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -381,6 +427,41 @@ namespace Nidan.Controllers
                         p.EnquiryDate <= toDate).Items.ToList();
             string csv = data.GetCSV();
             return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("{0}_EnquiryReport-({1} To {2}).csv", centreName, fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadActivityCSVByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var organisationId = UserOrganisationId;
+            var centre = NidanBusinessService.RetrieveCentre(UserOrganisationId, UserCentreId);
+            var activityIds = NidanBusinessService.RetrieveActivityTaskDataGrids(organisationId, e => isSuperAdmin || e.AssignTo == UserPersonnelId, orderBy, paging).Items.Select(e => e.ActivityId);
+            var data = NidanBusinessService.RetrieveActivityDataGrids(UserOrganisationId, e => (isSuperAdmin || activityIds.Contains(e.ActivityId) || e.CreatedBy == UserPersonnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging).Items.ToList();
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("ActivityReport-({0} To {1}).csv", fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadActivityTaskCSVByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId) && e.StartDate >= fromDate && e.StartDate <= toDate, orderBy, paging).Items.ToList();
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("ActivityTaskReport-({0} To {1}).csv", fromDate.ToString("dd-MM-yyyy"), toDate.ToString("dd-MM-yyyy")));
+        }
+
+        [HttpPost]
+        public ActionResult DownloadActivityTaskStateCSVByDate(int activityId, Paging paging, List<OrderBy> orderBy)
+        {
+            bool isSuperAdmin = User.IsSuperAdmin();
+            var organisationId = UserOrganisationId;
+            var personnelId = UserPersonnelId;
+            var data = NidanBusinessService.RetrieveActivityTaskDataGrids(UserOrganisationId, e => (isSuperAdmin || e.AssignTo == personnelId || e.CreatedBy == personnelId) && e.ActivityId == activityId, orderBy, paging).Items.ToList();
+            var activityName = data.FirstOrDefault().ActivityName;
+            string csv = data.GetCSV();
+            return File(new System.Text.UTF8Encoding().GetBytes(csv), "text/csv", string.Format("ActivityTaskStatusReport-({0}).csv", activityName));
         }
 
         [HttpPost]
