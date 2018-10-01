@@ -213,6 +213,10 @@
             var sessionId = 1;
             var batchId = $('#BatchAttendance_BatchId :selected').val();
             return BatchAttendanceService.markAttendance(batchId, subjectId, sessionId, vm.batchAttendances).then(function (response) {
+                if (response.data == true)
+                {
+                    $window.location.href = "/BatchAttendance/Index";
+                }
                 vm.batches = response.data.Items;
                 return vm.batches;
             });
