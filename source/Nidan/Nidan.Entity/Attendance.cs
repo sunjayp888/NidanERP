@@ -27,17 +27,21 @@ namespace Nidan.Entity
         [StringLength(2)]
         public string Direction { get; set; }
 
-        public int? CentreId { get; set; }
+        public int CentreId { get; set; }
 
-        public int? OrganisationId { get; set; }
+        public int OrganisationId { get; set; }
 
-        public int? InHour { get; set; }
+        [Required]
+        public int InHour { get; set; }
 
-        public int? InMinute { get; set; }
+        [Required]
+        public int InMinute { get; set; }
 
-        public int? OutHour { get; set; }
+        [Required]
+        public int OutHour { get; set; }
 
-        public int? OutMinute { get; set; }
+        [Required]
+        public int OutMinute { get; set; }
 
         [StringLength(5)]
         public string InTimeSpan { get; set; }
