@@ -24,5 +24,7 @@ namespace Nidan.Business.Models
         public string BiometricLogTime { get; set; }
         public string Direction { get; set; }
         public string Topic { get; set; }
+        public int SubjectId { get; set; }
+        public int SessionId { get; set; }
     }
 }
