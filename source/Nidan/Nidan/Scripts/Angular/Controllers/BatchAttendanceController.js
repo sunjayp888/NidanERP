@@ -102,13 +102,23 @@
             vm.orderBy.property = "StudentCode";
             vm.orderBy.direction = "Ascending";
             vm.orderBy.class = "asc";
-            return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.MarkDate, vm.paging, vm.orderBy)
-                    .then(function (response) {
-                        vm.batchAttendances = response.data;
-                        vm.paging.totalPages = response.data.TotalPages;
-                        vm.paging.totalResults = response.data.TotalResults;
-                        return vm.batchAttendances;
-                    });
+            if (vm.type != "")
+            {
+                return BatchAttendanceService.retrieveBatchAttendancesByBatchId(vm.type, vm.MarkDate, vm.paging, vm.orderBy)
+                   .then(function (response) {
+                       vm.batchAttendances = response.data;
+                       var test = vm.batchAttendances.filter(e=>e.IsPresent === true)[0];
+                       if (test != undefined)
+                       {
+                           $("#BatchAttendance_SubjectId").val(test.SubjectId);
+                           $("#BatchAttendance_SessionId").val(test.SessionId);
+                           $("#BatchAttendance_Topic").val(test.Topic);
+                       }
+                       vm.paging.totalPages = response.data.TotalPages;
+                       vm.paging.totalResults = response.data.TotalResults;
+                       return vm.batchAttendances;
+                   });
+            }
         }
 
         function getBiometricData() {

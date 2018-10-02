@@ -4149,6 +4149,12 @@ namespace Nidan.Business
             //var candidatesByBatchId = RetrieveAttendanceGrid(organisationId, e => e.BatchId == batchId && studentCodes.Contains(e.StudentCode)).Items.ToList();
             var todaysBiometricAttendance = RetrieveBiometricAttendanceGrid(organisationId, e => studentCodes.Contains(e.StudentCode) && DbFunctions.TruncateTime(e.LogDateTime) == date);
             var todaysAttendance = RetrieveAttendances(organisationId, e => studentCodes.Contains(e.StudentCode) && DbFunctions.TruncateTime(e.AttendanceDate) == date && e.IsPresent == true);
+            var isAttendance = todaysAttendance.Items.Any();
+            var attendanceId = isAttendance?todaysAttendance.Items.FirstOrDefault().AttendanceId:0;
+            var batchAttendanceDataByAttendanceId = RetrieveBatchAttendances(organisationId, e => e.AttendanceId == attendanceId).Items.FirstOrDefault();
+            var subjectId = batchAttendanceDataByAttendanceId?.SubjectId ?? 0;
+            var sessionId = batchAttendanceDataByAttendanceId?.SessionId ?? 0;
+            var topic = batchAttendanceDataByAttendanceId?.Topic ?? string.Empty;
             var studentAttendance = new List<StudentAttendance>();
             foreach (var candidate in allCandidatesByBatchId)
             {
@@ -4171,7 +4177,9 @@ namespace Nidan.Business
                     OrganisationId = organisationId,
                     BiometricLogTime = biometricResult?.LogDateTime.ToString(),
                     Direction = biometricResult?.Direction,
-                    Topic = String.Empty
+                    Topic = topic,
+                    SubjectId=subjectId,
+                    SessionId=sessionId
                 });
             }
             return studentAttendance;
