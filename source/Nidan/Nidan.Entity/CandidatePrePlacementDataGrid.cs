@@ -32,6 +32,16 @@ namespace Nidan.Entity
         [StringLength(353)]
         public string CandidateName { get; set; }
 
+        [Key]
+        [Column(Order = 4)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long Mobile { get; set; }
+
+        [Key]
+        [Column(Order = 5)]
+        [StringLength(500)]
+        public string EmailId { get; set; }
+
         [StringLength(500)]
         public string StudentCode { get; set; }
 
@@ -48,40 +58,40 @@ namespace Nidan.Entity
         public string Remark { get; set; }
 
         [Key]
-        [Column(Order = 4)]
+        [Column(Order = 6)]
         public bool IsDocumentUploaded { get; set; }
 
         [Key]
-        [Column(Order = 5)]
+        [Column(Order = 7)]
         [StringLength(3)]
         public string IsDocumentUploadedDone { get; set; }
 
         [Key]
-        [Column(Order = 6)]
+        [Column(Order = 8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CreatedBy { get; set; }
 
         [Key]
-        [Column(Order = 7, TypeName = "date")]
+        [Column(Order = 9, TypeName = "date")]
         public DateTime CreatedDate { get; set; }
 
         [Key]
-        [Column(Order = 8)]
+        [Column(Order = 10)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CentreId { get; set; }
 
         [Key]
-        [Column(Order = 9)]
+        [Column(Order = 11)]
         [StringLength(500)]
         public string CentreName { get; set; }
 
         [Key]
-        [Column(Order = 10)]
+        [Column(Order = 12)]
         [StringLength(202)]
         public string CreatedByName { get; set; }
 
         [Key]
-        [Column(Order = 11)]
+        [Column(Order = 13)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OrganisationId { get; set; }
     }

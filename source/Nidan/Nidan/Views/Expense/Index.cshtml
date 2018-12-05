@@ -39,53 +39,51 @@
                             <div class="col-lg-12">
                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                 {
-                                    <div class="col-lg-1">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Centre</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <select id="dropCentre" class="form-control col-md-7 col-xs-12" ng-model="item">
-                                                <option value="0">Select Centre</option>
-                                                <option data-ng-repeat="centre in model.centres" ng-model="model.centreId" value="{{centre.CentreId}}">{{centre.Name}}</option>
-                                            </select>
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Centre</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <select id="dropCentre" class="form-control col-md-7 col-xs-12" ng-model="item">
+                                                    <option value="0">Select Centre</option>
+                                                    <option data-ng-repeat="centre in model.centres" ng-model="model.centreId" value="{{centre.CentreId}}">{{centre.CentreCode}}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 }
-                                <div class="col-lg-1">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>From Date</label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">From Date</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <input type="text" ng-model="fromDate" class="form-control col-md-7 col-xs-12 date">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">To Date</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-1">
-                                    <div class="form-group">
-                                        <label>To Date</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="form-group">
-                                        <input type="text" ng-model="toDate" class="form-control col-md-7 col-xs-12 date">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-1">
-                                    <div class="form-group">
+                            
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         @if (User.IsInAnyRoles("SuperAdmin"))
                                         {
-                                            <input type="button" ng-click="model.searchExpenseByDateCentreId(fromDate,toDate,model.centreId)" value="Search" class="btn btn-primary">
+                                            <input type="button" ng-click="model.searchExpenseByDateCentreId(fromDate,toDate,model.centreId)" value="Search" class=" btn btn-primary">
                                         }
                                         @if (User.IsInAnyRoles("Admin"))
                                         {
-                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-primary">
+                                            <input type="button" ng-click="model.searchExpenseByDate(fromDate,toDate)" value="Search" class="btn btn-round btn-info">
                                         }
                                     </div>
+                                
                                 </div>
+                              </div>
                             </div>
                         </div>
                     </div>

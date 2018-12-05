@@ -100,6 +100,7 @@
         }
 
         function searchExpenseByDateCentreId(fromDate, toDate, centreId) {
+            //searchExpenseByDate(fromDate, toDate);
             vm.fromDate = fromDate;
             vm.toDate = toDate;
             vm.centreId = $('#dropCentre').val();
@@ -109,12 +110,12 @@
             //vm.batchId = batchId;
             return ExpenseService.searchExpenseByDateCentreId(vm.fromDate, vm.toDate, vm.centreId, vm.paging, vm.orderBy)
                 .then(function (response) {
-                    vm.expenses = response.data.Items;
-                    setTotals(vm.expenses);
+                    vm.expenseHeaders = response.data;
+                    setTotals(vm.expenseHeaders);
                     vm.paging.totalPages = response.data.TotalPages;
                     vm.paging.totalResults = response.data.TotalResults;
-                    vm.searchMessage = vm.expenses.length === 0 ? "No Records Found" : "";
-                    return vm.expenses;
+                    vm.searchMessage = vm.expenseHeaders.length === 0 ? "No Records Found" : "";
+                    return vm.expenseHeaders;
                 });
         }
 
