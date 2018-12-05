@@ -4995,10 +4995,10 @@ namespace Nidan.Data
             {
                 return context
                     .OtherFees
-                    .Include(p=>p.Organisation)
+                    .Include(p => p.Organisation)
                     .Include(p => p.Centre)
-                    .Include(p=>p.Centre.State)
-                    .Include(p=>p.FeeType)
+                    .Include(p => p.Centre.State)
+                    .Include(p => p.FeeType)
                     .AsNoTracking()
                     .SingleOrDefault(p => p.OtherFeeId == otherFeeId);
             }
