@@ -57,11 +57,12 @@
             return $http.post(url, data);
         }
 
-        function searchExpenseHeaderGridByDate(FromDate, ToDate, Paging, OrderBy) {
+        function searchExpenseHeaderGridByDate(CentreId,FromDate, ToDate, Paging, OrderBy) {
             var url = "/Expense/SearchExpenseHeaderGridByDate",
                 data = {
                     fromDate: FromDate,
                     toDate: ToDate,
+                    centreId: CentreId,
                     paging: Paging,
                     orderBy: new Array(OrderBy)
                 };

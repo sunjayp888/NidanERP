@@ -83,7 +83,7 @@ namespace Nidan.Controllers
                 var monthlyExpenseByExpenseHeader = NidanBusinessService.RetrieveExpenses(organisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate.Month == currentMonth && e.ExpenseGeneratedDate.Year == currentYear && e.ExpenseHeaderId == expenseViewModel.Expense.ExpenseHeaderId);
                 var totalMonthlyExpenseByExpenseHeader = monthlyExpenseByExpenseHeader.Items.Sum(e => e.DebitAmount);
                 var balanceLimit = limitAmount - totalMonthlyExpenseByExpenseHeader;
-                var isExpenseLimitExceed = expenseViewModel.Expense.DebitAmount > balanceLimit;   
+                var isExpenseLimitExceed = expenseViewModel.Expense.DebitAmount > balanceLimit;
                 expenseViewModel.ExpenseHeaders = new SelectList(NidanBusinessService.RetrieveExpenseHeaders(organisationId, e => true).Items.ToList());
                 if (isExpenseLimitExceed)
                 {
@@ -103,7 +103,7 @@ namespace Nidan.Controllers
                 expenseViewModel.Expense.PersonnelId = personnelId;
                 expenseViewModel.Expense.CreatedBy = personnelId;
                 expenseViewModel.Expense.PaymentModeId = (int)PaymentMode.Cash;
-                expenseViewModel.Expense.CreatedBy = personnelId;  
+                expenseViewModel.Expense.CreatedBy = personnelId;
                 expenseViewModel.Expense = NidanBusinessService.CreateExpense(organisationId, centreId, expenseViewModel.Expense, expenseViewModel.SelectedProjectIds);
                 return RedirectToAction("Index");
             }
@@ -282,8 +282,7 @@ namespace Nidan.Controllers
         public ActionResult SearchByDateCentreId(DateTime fromDate, DateTime toDate, int centreId, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
-            var centreIdData = centreId == null ? UserCentreId : centreId;
-            var data = NidanBusinessService.RetriveExpenseHeaderSummaryReportByDate(UserOrganisationId, centreIdData, fromDate, toDate, orderBy, paging);
+            var data = NidanBusinessService.RetrieveExpenses(UserOrganisationId, centreId, e => e.CentreId == centreId && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate && e.CentreId == centreId, orderBy, paging);
             return this.JsonNet(data);
         }
 
@@ -303,15 +302,15 @@ namespace Nidan.Controllers
             var data = NidanBusinessService.RetrieveCentres(organisationId);
             return this.JsonNet(data);
         }
-        
+
         [HttpPost]
-        public ActionResult SearchExpenseHeaderGridByDate(DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
+        public ActionResult SearchExpenseHeaderGridByDate(int? centreId, DateTime fromDate, DateTime toDate, Paging paging, List<OrderBy> orderBy)
         {
             bool isSuperAdmin = User.IsInAnyRoles("SuperAdmin");
             var organisationId = UserOrganisationId;
-            var centreId = UserCentreId;
+            int centredata = centreId ?? UserCentreId;
             //var data = NidanBusinessService.RetrieveExpenseHeaderGrid(organisationId, e => (isSuperAdmin || e.CentreId == centreId) && e.ExpenseGeneratedDate >= fromDate && e.ExpenseGeneratedDate <= toDate, orderBy, paging);
-            var data = NidanBusinessService.RetriveExpenseHeaderSummaryReportByDate(organisationId,centreId, fromDate,toDate);
+            var data = NidanBusinessService.RetriveExpenseHeaderSummaryReportByDate(organisationId, centredata, fromDate, toDate);
             return this.JsonNet(data);
         }
     }

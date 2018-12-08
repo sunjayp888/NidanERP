@@ -98,12 +98,13 @@
             if (vm.searchKeyword) {
                 searchBankDeposite(vm.searchKeyword);
             }
+            else if (vm.centreId && vm.fromDate && vm.toDate) {
+                searchBankDepositeByDateByCentreId(vm.centreId, vm.fromDate, vm.toDate);
+            }
             else if (vm.fromDate && vm.toDate) {
                 searchBankDepositeByDate(vm.fromDate, vm.toDate);
             }
-            else if (vm.centreId && vm.fromDate && vm.toDate) {
-                searchBankDepositeByDateByCentreId(vm.fromDate, vm.toDate);
-            } else {
+            else {
                 return retrieveBankDeposites();
             }
         }
@@ -126,12 +127,17 @@
         }
 
         function updateIsCleared(bankDepositeId) {
-            $window.location.href = "/BankDeposite/UpdateIsCleared/" + bankDepositeId;
+            return BankDepositeService.updateIsCleared(bankDepositeId).then(function () {
+                pageChanged();
+            });
         }
 
         function updateIsBounced(bankDepositeId) {
-            $window.location.href = "/BankDeposite/UpdateIsBounced/" + bankDepositeId;
+            return BankDepositeService.updateIsBounced(bankDepositeId).then(function () {
+                pageChanged();
+            });
         }
+
 
         function retrievePaymentModes() {
             return BankDepositeService.retrievePaymentModes()

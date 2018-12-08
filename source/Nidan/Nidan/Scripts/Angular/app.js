@@ -14,7 +14,7 @@
         'ngBootbox',
         'moment-module',
         'ui.select',
-        'timer'
+        //'timer'
     ]);
 
 
