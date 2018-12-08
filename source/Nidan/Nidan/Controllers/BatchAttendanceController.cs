@@ -15,7 +15,7 @@ namespace Nidan.Controllers
 {
     public class BatchAttendanceController : BaseController
     {
-        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month,DateTime.UtcNow.Day, 0, 0, 0);
+        private readonly DateTime _todayUTC = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, 0, 0, 0);
 
         public BatchAttendanceController(INidanBusinessService nidanBusinessService) : base(nidanBusinessService)
         {
@@ -87,8 +87,8 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var batchData = NidanBusinessService.RetrieveBatch(organisationId, batchId);
-            var subjectIds =NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId).Select(e => e.SubjectId).ToList();
-            var subjectdata =NidanBusinessService.RetrieveSubjects(UserOrganisationId, e => subjectIds.Contains(e.SubjectId)).ToList();
+            var subjectIds = NidanBusinessService.RetrieveSubjectCourses(UserOrganisationId, e => e.CourseId == batchData.CourseId).Select(e => e.SubjectId).ToList();
+            var subjectdata = NidanBusinessService.RetrieveSubjects(UserOrganisationId, e => subjectIds.Contains(e.SubjectId)).ToList();
             return this.JsonNet(subjectdata);
         }
 
@@ -97,7 +97,7 @@ namespace Nidan.Controllers
         {
             var organisationId = UserOrganisationId;
             var subjectData = NidanBusinessService.RetrieveSubject(organisationId, subjectId);
-            var sessiondata =NidanBusinessService.RetrieveSessions(UserOrganisationId, e => e.SubjectId == subjectData.SubjectId).Items.ToList();
+            var sessiondata = NidanBusinessService.RetrieveSessions(UserOrganisationId, e => e.SubjectId == subjectData.SubjectId).Items.ToList();
             return this.JsonNet(sessiondata);
         }
 

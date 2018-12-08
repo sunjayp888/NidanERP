@@ -1901,6 +1901,8 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\BatchPrePlacement\CandidatePrePlacementData.cshtml" />
     <Content Include="Views\BatchPrePlacement\_CandidatePrePlacementReport.cshtml" />
+    <Content Include="Views\Report\Activity.cshtml" />
+    <Content Include="Views\Report\ActivityTask.cshtml" />
     <None Include="Web.UAT.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
