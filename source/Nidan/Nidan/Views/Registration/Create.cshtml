@@ -179,6 +179,13 @@
                     $('#btn_submit').attr('disabled', false);
                 }
             }
+        else if (course == "NEST IT - Basic Computer Awareness") {
+                if (registrationFee < 500) {
+                    $('#btn_submit').attr('disabled', true);
+                } else {
+                    $('#btn_submit').attr('disabled', false);
+                }
+            }
             else if (registrationFee < 1000) {
                 $('#btn_submit').attr('disabled', true);
             } else {

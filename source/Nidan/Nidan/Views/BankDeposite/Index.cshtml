@@ -139,7 +139,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="bankDeposite in model.bankDeposites" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled || model.viewBankDeposite(bankDeposite.BankDepositeId)">
+                                            <tr ng-repeat="bankDeposite in model.bankDeposites" class="odd gradeX" ng-click="$event.originalEvent.ngClickHandled">
                                                 @if (User.IsInAnyRoles("SuperAdmin"))
                                                 {
                                                     <td><span ng-bind="bankDeposite.CentreName"></span></td>
@@ -184,12 +184,12 @@
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a style="cursor: pointer;" ng-if="!bankDeposite.IsBounced && !bankDeposite.IsCleared" ng-href="/BankDeposite/UpdateIsCleared/{{bankDeposite.BankDepositeId}}">
+                                                                    <a style="cursor: pointer;" ng-if="!bankDeposite.IsBounced && !bankDeposite.IsCleared" ng-click="model.updateIsCleared(bankDeposite.BankDepositeId)">
                                                                         Clear
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a style="cursor: pointer;" ng-if="!bankDeposite.IsBounced && !bankDeposite.IsCleared" ng-href="/BankDeposite/UpdateIsBounced/{{bankDeposite.BankDepositeId}}">
+                                                                    <a style="cursor: pointer;" ng-if="!bankDeposite.IsBounced && !bankDeposite.IsCleared" ng-click="model.updateIsBounced(bankDeposite.BankDepositeId)">
                                                                         Bounced
                                                                     </a>
                                                                 </li>

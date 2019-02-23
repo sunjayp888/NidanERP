@@ -5,10 +5,8 @@
 }
 <div ng-controller="BatchPrePlacementController as model" ng-init="model.searchCandidatePrePlacementData(model.admissionId)">
     <div class="page-title">
-        <div class="title_left">
-            <h3>
-                Candidate Pre-Placement Report <small></small>
-            </h3>
+        <div class="x_title">
+            <h2><button type="button" class="btn btn-round btn-info btn-lg"><i class="fa fa-user"></i> &nbsp;{{model.candidatePrePlacementData[0].CandidateName}}</button>  {{model.candidatePrePlacementData[0].Mobile}} / {{model.candidatePrePlacementData[0].EmailId}}</h2>
         </div>
     </div>
     <div class="row">

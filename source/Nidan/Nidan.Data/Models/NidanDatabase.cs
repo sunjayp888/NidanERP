@@ -3726,30 +3726,6 @@ namespace Nidan.Data.Models
                 .Property(e => e.IsMockInterview)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.PrePlacementActivityName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.CandidateName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.StudentCode)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.Remark)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.IsDocumentUploadedDone)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
-                .Property(e => e.CentreName)
-                .IsUnicode(false);
-
             modelBuilder.Entity<ActivityTaskDataGrid>()
                .Property(e => e.ActivityName)
                .IsUnicode(false);
@@ -3852,6 +3828,34 @@ namespace Nidan.Data.Models
 
             modelBuilder.Entity<ActivityTaskStateDataGrid>()
                 .Property(e => e.ActivityAssigneeGroupName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.PrePlacementActivityName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.CandidateName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.EmailId)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.StudentCode)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.Remark)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.IsDocumentUploadedDone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CandidatePrePlacementDataGrid>()
+                .Property(e => e.CentreName)
                 .IsUnicode(false);
 
             base.OnModelCreating(modelBuilder);

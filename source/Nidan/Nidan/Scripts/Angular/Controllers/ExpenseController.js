@@ -100,9 +100,10 @@
         }
 
         function searchExpenseByDateCentreId(fromDate, toDate, centreId) {
+            vm.centreId = $('#dropCentre').val();
+            searchExpenseHeaderGridByDate(vm.centreId,fromDate, toDate);
             vm.fromDate = fromDate;
             vm.toDate = toDate;
-            vm.centreId = $('#dropCentre').val();
             vm.orderBy.property = "ExpenseGeneratedDate";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
@@ -119,7 +120,7 @@
         }
 
         function searchExpenseByDate(fromDate, toDate) {
-            searchExpenseHeaderGridByDate(fromDate, toDate);
+            searchExpenseHeaderGridByDate(null,fromDate, toDate);
             vm.fromDate = fromDate;
             vm.toDate = toDate;
             vm.orderBy.property = "ExpenseGeneratedDate";
@@ -136,13 +137,14 @@
                 });
         }
 
-        function searchExpenseHeaderGridByDate(fromDate, toDate) {
+        function searchExpenseHeaderGridByDate(centreId,fromDate, toDate) {
             vm.fromDate = fromDate;
             vm.toDate = toDate;
+            vm.centreId = $('#dropCentre').val();
             vm.orderBy.property = "ExpenseHeaderId";
             vm.orderBy.direction = "Descending";
             vm.orderBy.class = "desc";
-            return ExpenseService.searchExpenseHeaderGridByDate(vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
+            return ExpenseService.searchExpenseHeaderGridByDate(vm.centreId,vm.fromDate, vm.toDate, vm.paging, vm.orderBy)
                 .then(function (response) {
                     vm.expenseHeaders = response.data;
                     //vm.paging.totalPages = response.data.TotalPages;

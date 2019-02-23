@@ -14,7 +14,9 @@
             retrievePaymentModes: retrievePaymentModes,
             retrieveCentres: retrieveCentres,
             searchBankDepositeByDate: searchBankDepositeByDate,
-            searchBankDepositeByDateByCentreId: searchBankDepositeByDateByCentreId
+            searchBankDepositeByDateByCentreId: searchBankDepositeByDateByCentreId,
+            updateIsCleared: updateIsCleared,
+            updateIsBounced: updateIsBounced
         };
 
         return service;
@@ -76,6 +78,24 @@
 
             var url = "/BankDeposite/GetCentres";
             return $http.post(url);
+        }
+
+        function updateIsCleared(bankDepositeId) {
+            var url = "/BankDeposite/UpdateIsCleared",
+                data = {
+                    bankDepositeId: bankDepositeId
+                };
+
+            return $http.post(url, data);
+        }
+
+        function updateIsBounced(bankDepositeId) {
+            var url = "/BankDeposite/UpdateIsBounced",
+                data = {
+                    bankDepositeId: bankDepositeId
+                };
+
+            return $http.post(url, data);
         }
     }
 })();

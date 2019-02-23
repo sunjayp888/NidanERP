@@ -183,39 +183,31 @@ namespace Nidan.Controllers
         }
 
         //Update IsCleared
-        public ActionResult UpdateIsCleared(int? id)
+        public ActionResult UpdateIsCleared(int bankDepositeId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             var organisationId = UserOrganisationId;
-            var bankDepositeData = NidanBusinessService.RetrieveBankDeposite(organisationId, id.Value, e => true);
+            var bankDepositeData = NidanBusinessService.RetrieveBankDeposite(organisationId, bankDepositeId, e => true);
             if (bankDepositeData == null)
             {
                 return HttpNotFound();
             }
             bankDepositeData.IsCleared = true;
             NidanBusinessService.UpdateBankDeposite(organisationId, bankDepositeData);
-            return RedirectToAction("Index");
+            return this.JsonNet("");
         }
 
         //Update UpdateIsBounced
-        public ActionResult UpdateIsBounced(int? id)
+        public ActionResult UpdateIsBounced(int bankDepositeId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             var organisationId = UserOrganisationId;
-            var bankDepositeData = NidanBusinessService.RetrieveBankDeposite(organisationId, id.Value, e => true);
+            var bankDepositeData = NidanBusinessService.RetrieveBankDeposite(organisationId, bankDepositeId, e => true);
             if (bankDepositeData == null)
             {
                 return HttpNotFound();
             }
             bankDepositeData.IsBounced = true;
             NidanBusinessService.UpdateBankDeposite(organisationId, bankDepositeData);
-            return RedirectToAction("Index");
+            return this.JsonNet("");
         }
 
         [HttpPost]
